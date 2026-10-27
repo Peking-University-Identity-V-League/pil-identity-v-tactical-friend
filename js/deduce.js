@@ -1,6 +1,6 @@
 
 import { dedAlert, dedAlertText, dedChainSvg, dedConclusion, dedLawBtn, dedLawBtnDouyin, dedLayouts, dedLegend, dedMapImage, dedMapTitle, dedMapTitleEn, dedMapWrap, dedProgress, dedResetBtn, dedRuleList, dedSteps, deduceView } from './core/dom.js';
-import { TAC_LS_KEY, saveRegionSel } from './core/persist.js';
+import { saveRegionSel } from './core/persist.js';
 import { S } from './core/state.js';
 import { cnNum, loadImageWithStatus, mountImageOverlays } from './core/utils.js';
 import { MAPS_DATA } from './data/maps.js';
@@ -429,7 +429,6 @@ export function enterDeduce() {
   if (!map) return;
   if (S.dedMap !== map) {
     S.dedMap = map;
-    S.dedMarks = {};
     S.dedSelectedStep = null;
     dedMapTitle.textContent = MAPS_DATA[S.currentMapId].mapName;
     dedMapTitleEn.textContent = MAPS_DATA[S.currentMapId].mapNameEn;
@@ -444,10 +443,6 @@ export function enterDeduce() {
       + `<span class="rule-text"> — ${r.text}</span></li>`).join('');
   }
   
-  try {
-    const pd = JSON.parse(localStorage.getItem(TAC_LS_KEY) || 'null');
-    if (pd && pd.dedMarks && pd.dedMarks[S.currentMapId]) S.dedMarks = pd.dedMarks[S.currentMapId];
-  } catch (err) {  }
   renderDeduction();
 }
 
@@ -624,6 +619,7 @@ export function resetDedMarks() {
   S.dedMarks = {};
   S.dedSelectedStep = null;
   renderDeduction();
+  saveRegionSel();
 }
 
 dedResetBtn.addEventListener('click', resetDedMarks);

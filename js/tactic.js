@@ -1,6 +1,8 @@
 
 import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacItemSection, tacMStyleBody, tacMStyleToggle, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacticView } from './core/dom.js';
-import { saveRegionSel, tacBoard, tacDisplay, tacMeasureStyle, tacPersisted, tacSave } from './core/persist.js';
+import { restoredMeasureIds, saveRegionSel, tacBoard, tacDisplay, tacMeasureStyle, tacPersisted, tacSave } from './core/persist.js';
+import { measureBaseAt, simulateMovement } from './core/measurements.js';
+import { getTreasureRings } from './core/treasure.js';
 import { S } from './core/state.js';
 import { $, loadImageWithStatus, mountImageOverlays } from './core/utils.js';
 import { cipherOf, mapsZonesRelative } from './data/geo.js';
@@ -170,10 +172,10 @@ export let tacCamp = 'survivor';
 export let tacApplyScope = 'chain';
 
 
-export let tacBuffSeq = 0;
+export let tacBuffSeq = restoredMeasureIds.buff;
 
          
-export let tacLcSeq = 0;
+export let tacLcSeq = restoredMeasureIds.config;
 
            
 
@@ -206,7 +208,7 @@ export const tacSegExpanded = new Set();
 export let tacChainRoute = null;
 
     
-export let tacRouteSeq = 0;
+export let tacRouteSeq = restoredMeasureIds.route;
 
          
 export let tacSelMeasure = null;
@@ -259,10 +261,6 @@ export function syncTacImage() {
   syncTacDungeonText();
   if (url === tacImageState.loaded) return;
   tacImageState.loaded = url;
-  if (S.tacSkipDungeonReset) S.tacSkipDungeonReset = false; 
-  else S.tacDungeonIndex = 0; 
-  syncTacDungeonText();
-  renderTacLandmarks();
   const [mw, mh] = MAPS_DATA[S.currentMapId].mapSize;
   tacMapWrap.style.aspectRatio = `${mw} / ${mh}`;
   loadImageWithStatus({
@@ -281,6 +279,8 @@ export function syncTacImage() {
 
 export function renderTacCiphers() {
   if (!tacMapWrap) return;
+  // The prediction remains visible and must update even when cipher icons do not.
+  renderTacTreasure();
   tacMapWrap.querySelectorAll('.tac-cipher').forEach((el) => el.remove());
   if (!tacDisplay.ciphers || !cipherIcon.loaded) return;
   const map = MAPS_DATA[S.currentMapId];
@@ -299,7 +299,6 @@ export function renderTacCiphers() {
     el.style.width = `${tacDisplay.cipherSize}cqw`;
     tacMapWrap.appendChild(el);
   });
-  renderTacTreasure();
 }
 
 
@@ -307,6 +306,7 @@ export function switchTacCipher(step) {
   const count = MAPS_DATA[S.currentMapId].cipherCombinations.length;
   S.currentCipherIndex = (S.currentCipherIndex + step + count) % count;
   syncTacImage();
+  saveRegionSel();
 }
 
  
@@ -446,36 +446,15 @@ export function renderTacFixedSpawns() {
 export function renderTacTreasure() {
   if (!tacMapWrap) return;
   tacMapWrap.querySelectorAll('.tac-treasure-ring').forEach((el) => el.remove());
-  const map = MAPS_DATA[S.currentMapId];
-  if (!map.widthM) return;
-  const token = tacBoard().tokens.explorer;
-  if (!token || !token.showTreasureRange) return;
-  const [imgW, imgH] = map.mapSize;
-  const mpp = map.widthM / imgW;
-  const ex = token.x * imgW, ey = token.y * imgH;
-  const outerPct = (TAC_TREASURE_RULE.ringM[1] * 2 / map.widthM) * 100;
-  const innerStop = `${(TAC_TREASURE_RULE.ringM[0] / TAC_TREASURE_RULE.ringM[1]) * 100}%`;
-  // 同机不连续：冒险家当前贴近的那台机（最近一处书页）下一轮排除，淡蓝标出
-  let exclCid = null, exclDist = Infinity;
-  (map.cipherCombinations[S.currentCipherIndex] || []).forEach((cid) => {
-    const c = cipherOf(S.currentMapId, cid);
-    if (!c) return;
-    const d = Math.hypot((c.location[0] - ex) * mpp, (c.location[1] - ey) * mpp);
-    if (d < exclDist) { exclDist = d; exclCid = cid; }
-  });
-  if (exclDist > TAC_TREASURE_RULE.ringM[1] + 0.7) exclCid = null;
-  (map.cipherCombinations[S.currentCipherIndex] || []).forEach((cid) => {
-    const c = cipherOf(S.currentMapId, cid);
-    if (!c) return;
-    const dx = (c.location[0] - ex) * mpp;
-    const dy = (c.location[1] - ey) * mpp;
-    if (Math.hypot(dx, dy) > TAC_TREASURE_RULE.rangeM) return;
+  const rings = getTreasureRings(MAPS_DATA[S.currentMapId], tacBoard().tokens.explorer,
+    S.currentCipherIndex, TAC_TREASURE_RULE);
+  rings.forEach((ring) => {
     const el = document.createElement('div');
-    el.className = 'tac-treasure-ring' + (cid === exclCid ? ' excluded' : '');
-    el.style.left = `${(c.location[0] / imgW) * 100}%`;
-    el.style.top = `${(c.location[1] / imgH) * 100}%`;
-    el.style.width = `${outerPct}%`;
-    el.style.setProperty('--treasure-inner', innerStop);
+    el.className = 'tac-treasure-ring' + (ring.excluded ? ' excluded' : '');
+    el.style.left = `${ring.x * 100}%`;
+    el.style.top = `${ring.y * 100}%`;
+    el.style.width = `${ring.outerRadius * 200}%`;
+    el.style.setProperty('--treasure-inner', `${ring.innerRadius / ring.outerRadius * 100}%`);
     tacMapWrap.appendChild(el);
   });
 }
@@ -2076,7 +2055,7 @@ export function tacEditTarget() {
 
 
 export function tacBaseAt(lc, i) {
-  return lc.bases.find((b) => b.from <= i && b.to > i) || lc.bases[0];
+  return measureBaseAt(lc, i);
 }
 
 
@@ -2157,8 +2136,9 @@ export function tacAddBuffEntry(entry) {
   if (entry.extra) rows.push({ ...entry.extra, type: entry.type, key: entry.key });
   const linkId = rows.length > 1 ? ++tacBuffSeq : null;
   const tgt = tacEditTarget();
-  const base = tgt.pending ? tacPending.base : tacBaseAt(tgt.lc, tgt.from);
-  if (base.fixed) { 
+  const bases = tgt.pending ? [tacPending.base]
+    : Array.from({ length: tgt.to - tgt.from }, (_, i) => tacBaseAt(tgt.lc, tgt.from + i));
+  if (bases.every((base) => base.fixed)) {
     showToast(translate("application.tacAddBuffEntry"));
     return false;
   }
@@ -2169,8 +2149,8 @@ export function tacAddBuffEntry(entry) {
     states = (Object.values(TAC_MOVEMENT_BUFFS.other).flat()
       .find((t) => t.key === entry.key) || {}).states;
   }
-  const state = tacStateOf(base);
-  if (!tacStateMatches(states, state)) {
+  const state = tacStateOf(bases[0]);
+  if (!bases.some((base) => !base.fixed && tacStateMatches(states, tacStateOf(base)))) {
     showToast(translate("application.tacAddBuffEntryAlternate", { name: TAC_MOVEMENT_SURVIVOR.stateNames[state] || state }));
     return false;
   }
@@ -2216,59 +2196,11 @@ export function tacAppendSegCfg(lc, oldN) {
 
 export function tacSimLine(segs, lc) {
   const widthM = MAPS_DATA[S.currentMapId].widthM;
-  const n = segs.length;
   const dists = segs.map((m) => {
     const { units, dw } = tacMeasureLen(m);
     return units / dw * widthM;
   });
-  const buffs = lc.buffs
-    .map((b) => ({ ...b,
-      from: Math.max(0, Math.min(n, b.from ?? 0)),
-      to: Math.max(0, Math.min(n, b.to ?? n)) }))
-    .filter((b) => b.to > b.from);
-  const arrival = [0];
-  const out = [];
-  let t = 0;
-  for (let i = 0; i < n; i++) {
-    const dist = dists[i];
-    const base = tacBaseAt(lc, i);
-    const baseSpeed = base.speed;
-    const inDomain = buffs.filter((b) => b.from <= i && b.to >= i + 1);
-    const seg = { dist, t: 0, t0: dist / baseSpeed, parts: [] };
-    let rest = dist;
-    while (rest > 1e-9) {
-      const active = inDomain.filter((b) =>
-        !b.duration || t < arrival[b.from] + b.duration - 1e-9);
-      
-      const addMult = Math.max(0.01, 1 + active.filter((b) => !b.postMult)
-        .reduce((a, b) => a + ((b.mult ?? 1) - 1), 0));
-      const mult = active.filter((b) => b.postMult)
-        .reduce((a, b) => a * (b.mult ?? 1), addMult);
-      const v = baseSpeed * mult;
-      const pct = (mult - 1) * 100;
-      let dt = rest / v;
-      for (const b of active) {
-        if (!b.duration) continue;
-        const rem = arrival[b.from] + b.duration - t;
-        if (rem < dt) dt = Math.max(0, rem);
-      }
-      const d = v * dt;
-      const last = seg.parts[seg.parts.length - 1];
-      if (last && Math.abs(last.v - v) < 1e-9) { last.dist += d; last.t += dt; }
-      else seg.parts.push({ dist: d, t: dt, v, pct });
-      seg.t += dt;
-      t += dt;
-      rest -= d;
-    }
-    arrival[i + 1] = t;
-    out.push(seg);
-  }
-  return {
-    total: t,
-    t0: out.reduce((a, s) => a + s.t0, 0),
-    dist: dists.reduce((a, b) => a + b, 0),
-    arrival, segs: out,
-  };
+  return simulateMovement(dists, lc, tacBuffAppliesToBase);
 }
 
 
@@ -2398,38 +2330,35 @@ export function tacApplyBaseInput(base) {
 }
 
 
+export function tacBuffAppliesToBase(b, base) {
+  const state = tacStateOf(base);
+  if (base.fixed) return false;
+  if (b.type === 'trait') {
+    const td = Object.values(TAC_MOVEMENT_BUFFS.trait).flat().find((t) => t.key === b.key);
+    if (!td) return true;
+    if (td.roles && td.roles.length && !td.roles.includes(base.role)) return false;
+    if (td.forms && td.forms.length && !td.forms.includes(base.form || 0)) return false;
+    if (base.stKey === 'role' && base.camp === 'survivor' && base.role) {
+      const roleName = (TAC_ROLES[base.role] || {}).name;
+      if (roleName && td.role !== roleName) return false;
+    }
+    return tacStateMatches(td.states, state);
+  }
+  if (b.type === 'talent') {
+    const tb = TAC_MOVEMENT_BUFFS.talent[b.key];
+    return !tb || tacStateMatches(tb.states, state);
+  }
+  if (b.type === 'other') {
+    const ob = Object.values(TAC_MOVEMENT_BUFFS.other).flat().find((t) => t.key === b.key);
+    return !ob || tacStateMatches(ob.states, state);
+  }
+  return true;
+}
+
 export function tacPurgeInvalidBuffs() {
   const tgt = tacEditTarget();
   const base = tgt.pending ? tacPending.base : tacBaseAt(tgt.lc, tgt.from);
-  const state = tacStateOf(base);
-  const fixed = !!base.fixed;
-  const keep = (b) => {
-    if (fixed) return false; 
-    if (b.type === 'trait') {
-      const td = Object.values(TAC_MOVEMENT_BUFFS.trait).flat().find((t) => t.key === b.key);
-      if (!td) return true;
-      if (td.roles && td.roles.length && !td.roles.includes(base.role)) return false; 
-      if (td.forms && td.forms.length && !td.forms.includes(base.form || 0)) return false; 
-      
-      if (base.stKey === 'role' && base.camp === 'survivor' && base.role) {
-        const roleName = (TAC_ROLES[base.role] || {}).name;
-        if (roleName && td.role !== roleName) return false;
-      }
-      if (!tacStateMatches(td.states, state)) return false; 
-      return true;
-    }
-    if (b.type === 'talent') {
-      const tb = TAC_MOVEMENT_BUFFS.talent[b.key];
-      if (tb && !tacStateMatches(tb.states, state)) return false;
-      return true;
-    }
-    if (b.type === 'other') {
-      const ob = Object.values(TAC_MOVEMENT_BUFFS.other).flat().find((t) => t.key === b.key);
-      if (ob && !tacStateMatches(ob.states, state)) return false;
-      return true;
-    }
-    return true; 
-  };
+  const keep = (buff) => tacBuffAppliesToBase(buff, base);
   if (tgt.pending) {
     tacPending.buffs = tacPending.buffs.filter(keep);
   } else {
@@ -2907,12 +2836,13 @@ export function updateTacMeasureInfo() {
     + translate("application.headHtmlAlternate");
   const segRow = (label, s, mIdx, sel) => {
     const multi = s.parts.length > 1;
+    const part = s.parts[0];
     const open = tacSegExpanded.has(mIdx);
     let r = `<tr class="tac-seg-sum${multi ? '' : ' no-exp'}${sel ? ' sel' : ''}" data-seg="${mIdx}">`
       + `<td>${label}${multi ? `<i class="tac-expand">${open ? '↑' : '↓'}</i>` : ''}</td>`
       + `<td><b>${tacFmtD(s.dist)}</b></td><td><b>${fmt(s.t)}</b></td>`
-      + `<td>${multi ? '--' : `<b>${fmt(s.parts[0].v)}</b>`}</td>`
-      + `<td>${multi ? '--' : `<b>${Math.round(s.parts[0].pct)}%</b>`}</td>`
+      + `<td>${multi || !part ? '--' : `<b>${fmt(part.v)}</b>`}</td>`
+      + `<td>${multi || !part ? '--' : `<b>${Math.round(part.pct)}%</b>`}</td>`
       + `<td>${fmt(s.t0)}</td></tr>`;
     if (multi && open) {
       const baseSpeed = s.dist / s.t0;
@@ -3723,6 +3653,8 @@ export function tacLoadImg(src) {
 
 export async function tacExportImage() {
   const map = MAPS_DATA[S.currentMapId];
+  const treasureRings = getTreasureRings(map, tacBoard().tokens.explorer,
+    S.currentCipherIndex, TAC_TREASURE_RULE);
   const [W0, H0] = map.mapSize;
   const wrapW = tacMapWrap.clientWidth || 1;
   const wrapH = tacMapWrap.clientHeight || 1;
@@ -3774,6 +3706,30 @@ export async function tacExportImage() {
     mapsZonesRelative[S.currentMapId].forEach((z) =>
       ctx.strokeRect(PX(z.x), PY(z.y), z.width * W / vw, z.height * H / vh));
   }
+
+  // Treasure rings are DOM overlays, so the SVG clone above does not include them.
+  // Scale their map-relative geometry with the same crop transform as landmarks.
+  ctx.save();
+  const ringScale = W / vw;
+  const strokeScale = ringScale / wrapW;
+  ctx.lineWidth = 2 * strokeScale;
+  ctx.setLineDash([4 * strokeScale, 3 * strokeScale]);
+  treasureRings.forEach((ring) => {
+    const x = PX(ring.x), y = PY(ring.y);
+    const outer = ring.outerRadius * ringScale;
+    const inner = ring.innerRadius * ringScale;
+    ctx.fillStyle = ring.excluded ? 'rgba(124, 196, 255, 0.28)' : 'rgba(255, 213, 79, 0.3)';
+    ctx.beginPath();
+    ctx.arc(x, y, outer, 0, Math.PI * 2);
+    ctx.moveTo(x + inner, y);
+    ctx.arc(x, y, inner, 0, Math.PI * 2, true);
+    ctx.fill('evenodd');
+    ctx.strokeStyle = ring.excluded ? 'rgba(124, 196, 255, 0.9)' : 'rgba(255, 213, 79, 0.9)';
+    ctx.beginPath();
+    ctx.arc(x, y, Math.max(0, outer - ctx.lineWidth / 2), 0, Math.PI * 2);
+    ctx.stroke();
+  });
+  ctx.restore();
 
   const [ciphIcon, dungeonIcon, doorIcon] = await Promise.all([
     tacLoadImg(CIPHER_ICON_URL), tacLoadImg(DUNGEON_ICON_URL),
@@ -4366,6 +4322,7 @@ tacMapWrap.addEventListener('pointerup', (e) => {
     tacMapWrap.classList.remove('grabbing');
     return;
   }
+  const changed = tacDrawing || tacDrag || tacDragItem || tacDragText || tacDragMeasure;
   if (tacDrawing) {
     const p = tacPos(e);
     const dx = (tacDrawing.x2 - tacDrawing.x1) * p.W;
@@ -4388,9 +4345,11 @@ tacMapWrap.addEventListener('pointerup', (e) => {
   tacDragText = null;
   tacDragMeasure = null;
   tacAbyssFinalize(); 
+  if (changed) tacSave();
 });
 
 tacMapWrap.addEventListener('pointercancel', () => {
+  const changed = tacDrag || tacDragItem || tacDragText || tacDragMeasure;
   tacPanDrag = null;
   tacMapWrap.classList.remove('grabbing');
   tacDrawing = null;
@@ -4400,6 +4359,7 @@ tacMapWrap.addEventListener('pointercancel', () => {
   tacDragMeasure = null;
   tacAbyssFinalize(); 
   renderTacArrows();
+  if (changed) tacSave();
 });
 
 
@@ -4492,8 +4452,11 @@ tacArrowSvg.addEventListener('click', (e) => {
       renderTacBoard();
       return;
     }
+    // Removing one segment also changes its neighbours' route IDs and configs.
+    // structuredClone preserves shared configs in the complete undo snapshot.
+    const measures = structuredClone(board.measures);
     const removed = tacDeleteMeasureAt(idx);
-    if (removed) tacUndoStack.push({ type: 'delMeasure', measure: removed, idx });
+    if (removed) tacUndoStack.push({ type: 'restoreMeasures', measures });
     renderTacBoard();
     return;
   }
@@ -4501,6 +4464,7 @@ tacArrowSvg.addEventListener('click', (e) => {
   const idx = +g.dataset.idx;
   const [removed] = tacBoard().arrows.splice(idx, 1);
   if (removed) tacUndoStack.push({ type: 'delArrow', arrow: removed, idx });
+  tacSave();
   renderTacArrows();
   updateTacPanel();
 });
@@ -4592,8 +4556,9 @@ export function tacUndo() {
   } else if (act.type === 'addMeasure') {
     board.measures.pop();
     tacSegExpanded.clear();
-  } else if (act.type === 'delMeasure') {
-    board.measures.splice(act.idx, 0, act.measure);
+  } else if (act.type === 'restoreMeasures') {
+    board.measures = act.measures;
+    tacSelMeasure = null;
     tacSegExpanded.clear();
   } else if (act.type === 'delMeasures') { 
     act.list.forEach(({ measure, idx }) => board.measures.splice(idx, 0, measure));
