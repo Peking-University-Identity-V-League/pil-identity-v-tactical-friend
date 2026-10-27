@@ -1106,5 +1106,17 @@
   "ui.tacZoomIn.label": "＋",
   "ui.tacZoomIn.title": "放大地图",
   "ui.tacZoomOut.title": "缩小地图",
-  "ui.tacZoomPan.title": "拖动模式：拖动地图（放大后可用）"
+  "ui.tacZoomPan.title": "拖动模式：拖动地图（放大后可用）",
+  "game.rocketChair": "狂欢之椅",
+  "application.syncTacChairText": "第 {index} / {count} 组椅子",
+  "application.syncTacChairBasementText": "地下室 {index} / {count}",
+  "application.renderTacChairs": "狂欢之椅（第 {index} / {count} 组）",
+  "application.renderTacChairsFixed": "狂欢之椅（固定）",
+  "application.renderTacChairsBasement": "地下室狂欢之椅（第 {index} / {count} 处）",
+  "ui.tacChairPrev.title": "上一组椅子刷点",
+  "ui.tacChairNext.title": "下一组椅子刷点",
+  "ui.tacChairBasementPrev.title": "上一处地下室",
+  "ui.tacChairBasementNext.title": "下一处地下室",
+  "ui.tacShowChairBasement.label": "地下室",
+  "ui.tacShowChairBasement.title": "显示所选地下室的狂欢之椅"
 }

@@ -295,6 +295,8 @@ export const tacSnapDungeonEl = $('tacSnapDungeon');
 
 export const tacSnapDoorEl = $('tacSnapDoor');
 
+export const tacSnapChairEl = $('tacSnapChair');
+
 export const tacSnapPointEl = $('tacSnapPoint');
 
 export const tacDelSegOnlyEl = $('tacDelSegOnly');
@@ -306,3 +308,15 @@ export const tacSelGlowEl = $('tacSelGlow');
 export const tacDispCipherText = $('tacDispCipherText');
 
 export const tacDungeonText = $('tacDungeonText');
+
+export const tacShowChairsEl = $('tacShowChairs');
+
+export const tacChairSizeEl = $('tacChairSize');
+
+export const tacChairSizeDefEl = $('tacChairSizeDef');
+
+export const tacChairText = $('tacChairText');
+
+export const tacShowChairBasementEl = $('tacShowChairBasement');
+
+export const tacChairBasementText = $('tacChairBasementText');

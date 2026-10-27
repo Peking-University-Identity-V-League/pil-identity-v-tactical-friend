@@ -16,4 +16,6 @@ export const S = {
   dedMarks: {},             
   dedSelectedStep: null,    
   tacDungeonIndex: 0,       
+  tacChairIndex: 0,         
+  tacChairBasementIndex: 0, 
 };
