@@ -1,0 +1,4714 @@
+
+import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacItemSection, tacMStyleBody, tacMStyleToggle, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacticView } from './core/dom.js';
+import { saveRegionSel, tacBoard, tacDisplay, tacMeasureStyle, tacPersisted, tacSave } from './core/persist.js';
+import { S } from './core/state.js';
+import { $, loadImageWithStatus, mountImageOverlays } from './core/utils.js';
+import { cipherOf, mapsZonesRelative } from './data/geo.js';
+import { MAPS_DATA, getImageUrl } from './data/maps.js';
+import { DUNGEON_ICON_URL, ESCAPE_DOOR_ICON_URL, TAC_ABYSS_MAX_M, TAC_BASE_STATES, TAC_DISPLAY_DEFAULT, TAC_FIXED_BASES, TAC_ITEM_TYPES, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_OTHER_BUFFS, TAC_ROLES, TAC_ROLE_BASES, TAC_STATE_NAMES, TAC_SURVIVOR_SPEED, TAC_SVG_NS, TAC_TALENT_BUFFS, TAC_TRAIT_BUFFS, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
+import { CIPHER_ICON_URL, cipherIcon } from './region.js';
+
+import { translate } from './core/i18n.js';
+
+export const { loading: tacLoading, error: tacImageError } =
+  mountImageOverlays(tacMapWrap);
+
+
+
+
+export function tacItemMetersToPercent(meters) {
+  const widthM = MAPS_DATA[S.currentMapId].widthM;
+  return widthM ? (meters * 2 / widthM) * 100 : null;
+}
+
+
+export function tacRangeDefaultKey(cfg, hideByDefault) {
+  if (hideByDefault) return 'off';
+  const m = cfg.modes.find((x) => x.size_m);
+  return (m || cfg.modes[0]).key;
+}
+
+
+export function tacRangeModeOf(cfg, inst, hideByDefault) {
+  if (!cfg) return null;
+  const key = (inst && inst.rangeMode)
+    || (inst && inst.hideRange ? 'off' : null)
+    || tacRangeDefaultKey(cfg, hideByDefault);
+  return cfg.modes.find((m) => m.key === key)
+    || cfg.modes.find((m) => m.key === 'off') || cfg.modes[0];
+}
+
+
+
+export function tacRangeMetersOf(cfg, inst, hideByDefault) {
+  const mode = tacRangeModeOf(cfg, inst, hideByDefault);
+  if (!mode || !mode.size_m) return null;
+  const s = mode.size_m;
+  const instM = inst ? (inst.rangeMeters ?? inst.meters) : undefined;
+  let base;
+  if (typeof s === 'number') base = s;
+  else if (Array.isArray(s.options)) base = instM ?? s.options[0];
+  else base = instM ?? s.max;
+  if (mode.fearMods) {
+    const pick = (opts, v) => (opts.find((o) => o[0] === v) || opts[0])[2];
+    return base
+      * pick(mode.fearMods.hunter, inst && inst.fearHunter)
+      * pick(mode.fearMods.survivor, inst && inst.fearSurv);
+  }
+  return base;
+}
+
+
+export function tacItemRangeMode(it) {
+  return tacRangeModeOf((TAC_ITEM_TYPES[it.kind] || {}).ranges, it, false);
+}
+
+export function tacItemMeters(it) {
+  return tacRangeMetersOf((TAC_ITEM_TYPES[it.kind] || {}).ranges, it, false);
+}
+
+
+
+export function tacItemSizePercent(it) {
+  const meters = tacItemMeters(it);
+  return meters === null ? null : tacItemMetersToPercent(meters);
+}
+
+
+export function tacStateOf(base) {
+  if (!base) return 'run';
+  if (base.fixed) return 'fixed';
+  if (base.stKey) return base.stKey;
+  return base.camp === 'hunter' ? 'hunter' : 'run';
+}
+
+export function tacStateMatches(buffStates, state) {
+  
+  if (!buffStates) return state === 'run' || state === 'walk' || state === 'crouch'
+    || state === 'role' || state === 'hunter' || state === 'custom';
+  return buffStates.includes(state);
+}
+
+
+export function tacLevelLabel(key, i) {
+  return key === 'stratus' ? [translate("application.entriesZero"), translate("application.entriesOne")][i] : translate("application.tacLevelLabel", { value: i + 1 });
+}
+
+
+
+export function tacRoleRangeMode(role, token) {
+  return tacRangeModeOf((TAC_ROLES[role] || {}).ranges, token, true);
+}
+
+
+export function tacRoleRangeMeters(role, token) {
+  return tacRangeMetersOf((TAC_ROLES[role] || {}).ranges, token, true);
+}
+
+
+export function syncTacDisplayUI() {
+  tacShowZonesEl.checked = tacDisplay.zones;
+  tacShowCiphersEl.checked = tacDisplay.ciphers;
+  tacCipherSizeEl.value = tacDisplay.cipherSize;
+  tacCipherSizeDefEl.checked = tacDisplay.cipherSize === TAC_DISPLAY_DEFAULT.cipherSize;
+  tacShowDungeonEl.checked = tacDisplay.dungeon;
+  tacDungeonSizeEl.value = tacDisplay.dungeonSize;
+  tacDungeonSizeDefEl.checked = tacDisplay.dungeonSize === TAC_DISPLAY_DEFAULT.dungeonSize;
+  tacShowDoorsEl.checked = tacDisplay.doors;
+  tacDoorSizeEl.value = tacDisplay.doorSize;
+  tacDoorSizeDefEl.checked = tacDisplay.doorSize === TAC_DISPLAY_DEFAULT.doorSize;
+  tacDoorLockEl.checked = tacDisplay.doorLock;
+  tacSnapCipherEl.checked = tacDisplay.snap.cipher;
+  tacSnapDungeonEl.checked = tacDisplay.snap.dungeon;
+  tacSnapDoorEl.checked = tacDisplay.snap.door;
+  tacSnapPointEl.checked = tacDisplay.snap.point;
+  tacDelSegOnlyEl.checked = tacDisplay.delSegOnly;
+  tacShowCoordsEl.checked = tacDisplay.showCoords;
+  tacSelGlowEl.checked = tacDisplay.selGlow;
+  const cropEl = $('tacExportCrop');
+  if (cropEl) cropEl.checked = tacDisplay.exportCrop;
+}
+
+export let tacTool = 'select';
+
+      
+export let tacPlaceRole = null;
+
+     
+export let tacPlaceItem = null;
+
+     
+export let tacSelected = null;
+
+      
+export let tacSelectedItem = null;
+
+  
+export let tacArrowColor = '#ef4444';
+
+export let tacArrowWidth = 4;
+
+export let tacDrawShape = 'arrow';
+
+   
+export let tacDrawing = null;
+
+       
+export let tacMeasurePending = null;
+
+ 
+export let tacMeasureHover = null;
+
+  
+
+export let tacMeasureMode = 'single';
+
+
+export let tacCamp = 'survivor';
+
+   
+export let tacApplyScope = 'chain';
+
+
+export let tacBuffSeq = 0;
+
+         
+export let tacLcSeq = 0;
+
+           
+
+export const tacPending = { base: { name: translate("characters.camps.survivor"), speed: TAC_SURVIVOR_SPEED }, buffs: [] };
+
+export let tacBaseDetailOpen = false;
+
+ 
+export let tacBaseMergeOn = true;
+
+   
+export let tacLastRoleVal = null;
+
+ 
+export let tacBuffDetailOpen = false;
+
+ 
+export let tacResultOpen = true;
+
+    
+
+export const tacBuffFilter = { from: 0, to: 0, all: true };
+
+export let tacTargetSig = '';
+
+      
+export const tacSegExpanded = new Set();
+
+ 
+export let tacChainRoute = null;
+
+    
+export let tacRouteSeq = 0;
+
+         
+export let tacSelMeasure = null;
+
+    
+export let tacDragMeasure = null;
+
+   
+export let tacGreenSegs = new Map();
+
+ 
+export let tacDrag = null;
+
+          
+export let tacDragItem = null;
+
+      
+export let tacSelectedText = null;
+
+  
+export let tacDragText = null;
+
+      
+export let tacTextPlacing = false;
+
+  
+export let tacItemRole = null;
+
+      
+export let tacManageSel = null;
+
+     
+
+export const tacImageState = { url: null, timer: null, loaded: null };
+
+export const tacUndoStack = [];
+
+     
+
+
+
+export function syncTacImage() {
+  const url = getImageUrl(S.currentMapId);
+  const count = MAPS_DATA[S.currentMapId].cipherCombinations.length;
+  
+  tacDispCipherText.textContent = translate("region.updateCipherText", { index: S.currentCipherIndex + 1, count: count });
+  renderTacCiphers();
+  renderTacZones();
+  renderTacLandmarks();
+  syncTacDungeonText();
+  if (url === tacImageState.loaded) return;
+  tacImageState.loaded = url;
+  if (S.tacSkipDungeonReset) S.tacSkipDungeonReset = false; 
+  else S.tacDungeonIndex = 0; 
+  syncTacDungeonText();
+  renderTacLandmarks();
+  const [mw, mh] = MAPS_DATA[S.currentMapId].mapSize;
+  tacMapWrap.style.aspectRatio = `${mw} / ${mh}`;
+  loadImageWithStatus({
+    url,
+    img: tacMapImage,
+    loading: tacLoading,
+    error: tacImageError,
+    state: tacImageState,
+    onReady: (w, h) => {
+      tacMapWrap.style.aspectRatio = `${w} / ${h}`;
+      renderTacArrows();
+    },
+  });
+}
+
+
+export function renderTacCiphers() {
+  if (!tacMapWrap) return;
+  tacMapWrap.querySelectorAll('.tac-cipher').forEach((el) => el.remove());
+  if (!tacDisplay.ciphers || !cipherIcon.loaded) return;
+  const map = MAPS_DATA[S.currentMapId];
+  const [imgW, imgH] = map.mapSize;
+  map.cipherCombinations[S.currentCipherIndex].forEach((cid) => {
+    const c = cipherOf(S.currentMapId, cid);
+    if (!c) return;
+    const el = document.createElement('img');
+    el.className = 'tac-cipher';
+    el.src = CIPHER_ICON_URL;
+    el.alt = c.name;
+    el.title = c.name;
+    el.draggable = false;
+    el.style.left = `${(c.location[0] / imgW) * 100}%`;
+    el.style.top = `${(c.location[1] / imgH) * 100}%`;
+    el.style.width = `${tacDisplay.cipherSize}cqw`;
+    tacMapWrap.appendChild(el);
+  });
+}
+
+
+export function switchTacCipher(step) {
+  const count = MAPS_DATA[S.currentMapId].cipherCombinations.length;
+  S.currentCipherIndex = (S.currentCipherIndex + step + count) % count;
+  syncTacImage();
+}
+
+ 
+
+
+export function renderTacZones() {
+  if (!tacMapWrap) return;
+  tacMapWrap.querySelectorAll('.tac-zone').forEach((el) => el.remove());
+  if (!tacDisplay.zones) return;
+  mapsZonesRelative[S.currentMapId].forEach((z) => {
+    const el = document.createElement('div');
+    el.className = 'tac-zone';
+    el.style.left = `${z.x * 100}%`;
+    el.style.top = `${z.y * 100}%`;
+    el.style.width = `${z.width * 100}%`;
+    el.style.height = `${z.height * 100}%`;
+    tacMapWrap.appendChild(el);
+  });
+}
+
+
+export function tacDoorPoints(map) {
+  const d = map.escapeDoors;
+  if (tacDisplay.doorLock && d.length >= 4) return [d[2], d[3]];
+  return d.slice(0, 2);
+}
+
+
+export function renderTacLandmarks() {
+  if (!tacMapWrap) return;
+  tacMapWrap.querySelectorAll('.tac-dungeon, .tac-door').forEach((el) => el.remove());
+  const map = MAPS_DATA[S.currentMapId];
+  const [imgW, imgH] = map.mapSize;
+  if (tacDisplay.dungeon && map.dungeons.length) {
+    const pt = map.dungeons[S.tacDungeonIndex % map.dungeons.length];
+    const el = document.createElement('img');
+    el.className = 'tac-dungeon';
+    el.src = DUNGEON_ICON_URL;
+    el.alt = translate("game.dungeon");
+    el.title = translate("application.renderTacLandmarks", { index: S.tacDungeonIndex + 1, count: map.dungeons.length });
+    el.draggable = false;
+    el.style.left = `${(pt[0] / imgW) * 100}%`;
+    el.style.top = `${(pt[1] / imgH) * 100}%`;
+    el.style.width = `${tacDisplay.dungeonSize}cqw`;
+    tacMapWrap.appendChild(el);
+  }
+  if (tacDisplay.doors) {
+    const lockMode = tacDisplay.doorLock && map.escapeDoors.length >= 4;
+    tacDoorPoints(map).forEach((pt, i) => {
+      const el = document.createElement('img');
+      el.className = 'tac-door';
+      el.src = ESCAPE_DOOR_ICON_URL;
+      el.alt = translate("application.renderTacLandmarksAlternate", { value: i + 1 });
+      el.title = translate("application.renderTacLandmarksFourth", { value: i + 1, valueSecondary: lockMode ? translate("application.renderTacLandmarksThird") : '' });
+      el.draggable = false;
+      el.style.left = `${(pt[0] / imgW) * 100}%`;
+      el.style.top = `${(pt[1] / imgH) * 100}%`;
+      el.style.width = `${tacDisplay.doorSize}cqw`;
+      tacMapWrap.appendChild(el);
+    });
+  }
+  renderTacFixedSpawns(); 
+}
+
+
+export function renderTacFixedSpawns() {
+  if (!tacMapWrap) return;
+  tacMapWrap.querySelectorAll('.tac-fixed-spawn, .tac-fixed-spawn-range').forEach((el) => el.remove());
+  const map = MAPS_DATA[S.currentMapId];
+  const [imgW, imgH] = map.mapSize;
+  const tokens = tacBoard().tokens;
+  for (const [role, cfg] of Object.entries(map.fixedSpawns || {})) {
+    const token = tokens[role];
+    if (!token) continue;
+    
+    
+    if (token.showFixedSpawnRange && cfg.rangeM && cfg.rangeScreenM && map.widthM) {
+      const [screenW, screenH] = cfg.rangeScreenM[token.fixedSpawnDevice === 'ios' ? 'ios' : 'pc'];
+      const outerW = cfg.rangeM * 2 + screenW;
+      const outerH = cfg.rangeM * 2 + screenH;
+      const sizePct = (outerW / map.widthM) * 100;
+      const radiusXPct = (cfg.rangeM / outerW) * 100;
+      const radiusYPct = (cfg.rangeM / outerH) * 100;
+      cfg.points.forEach((pt) => {
+        const p = cfg.camera ? pt.p : pt;
+        const rangeEl = document.createElement('div');
+        rangeEl.className = 'tac-fixed-spawn-range';
+        rangeEl.style.width = `${sizePct}%`;
+        rangeEl.style.aspectRatio = `${outerW} / ${outerH}`;
+        rangeEl.style.borderRadius = `${radiusXPct}% / ${radiusYPct}%`;
+        rangeEl.style.left = `${(p[0] / imgW) * 100}%`;
+        rangeEl.style.top = `${(p[1] / imgH) * 100}%`;
+        tacMapWrap.appendChild(rangeEl);
+      });
+    }
+    if (!token.showFixedSpawns) continue;
+    cfg.points.forEach((pt) => {
+      const p = Array.isArray(pt) ? pt : pt.p;
+      let el;
+      if (cfg.camera) {
+        
+        el = document.createElement('div');
+        const deg = Math.atan2(pt.d[1], pt.d[0]) * 180 / Math.PI;
+        const dirs = ['right', 'down', 'left', 'up'];
+        const dir = dirs[((Math.round(deg / 90) % 4) + 4) % 4];
+        el.innerHTML =
+          `<svg class="cam-dir ${dir}" viewBox="0 0 16 16" aria-hidden="true">`
+          + '<path d="M5 2 L12 8 L5 14" fill="none" stroke="#7dd3fc"'
+          + ' stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+          + (cfg.icon
+            ? `<img class="cam-icon" src="${cfg.icon}" alt="${cfg.label}" draggable="false">`
+            : '<div class="cam-dot"></div>');
+      } else {
+        
+        const iconUrl = (TAC_ITEM_TYPES[pt.icon || cfg.icon] || {}).icon || '';
+        if (iconUrl) {
+          el = document.createElement('img');
+          el.src = iconUrl;
+          el.alt = cfg.label;
+          el.draggable = false;
+        } else {
+          el = document.createElement('div');
+          el.className = 'cam-dot';
+        }
+      }
+      el.className = 'tac-fixed-spawn';
+      el.style.left = `${(p[0] / imgW) * 100}%`;
+      el.style.top = `${(p[1] / imgH) * 100}%`;
+      tacMapWrap.appendChild(el);
+    });
+  }
+}
+
+export function syncTacDungeonText() {
+  const n = MAPS_DATA[S.currentMapId].dungeons.length;
+  tacDungeonText.textContent = translate("application.syncTacDungeonText", { index: S.tacDungeonIndex + 1, value: n });
+}
+
+export function switchTacDungeon(step) {
+  const n = MAPS_DATA[S.currentMapId].dungeons.length;
+  if (!n) return;
+  S.tacDungeonIndex = (S.tacDungeonIndex + step + n) % n;
+  syncTacDungeonText();
+  renderTacLandmarks();
+  saveRegionSel(); 
+}
+
+
+export function tacSnapTarget(p, excl) {
+  const map = MAPS_DATA[S.currentMapId];
+  const [imgW, imgH] = map.mapSize;
+  const pts = [];
+  if (tacDisplay.snap.cipher && tacDisplay.ciphers) {
+    map.cipherCombinations[S.currentCipherIndex].forEach((cid) => {
+      const c = cipherOf(S.currentMapId, cid);
+      if (c) pts.push({
+        x: c.location[0] / imgW, y: c.location[1] / imgH,
+        size: tacDisplay.cipherSize, kind: 'cipher',
+      });
+    });
+  }
+  if (tacDisplay.snap.dungeon && tacDisplay.dungeon && map.dungeons.length) {
+    const pt = map.dungeons[S.tacDungeonIndex % map.dungeons.length];
+    pts.push({
+      x: pt[0] / imgW, y: pt[1] / imgH,
+      size: tacDisplay.dungeonSize, kind: 'dungeon',
+    });
+  }
+  if (tacDisplay.snap.door && tacDisplay.doors) {
+    tacDoorPoints(map).forEach((pt) =>
+      pts.push({
+        x: pt[0] / imgW, y: pt[1] / imgH,
+        size: tacDisplay.doorSize, kind: 'door',
+      }));
+  }
+  if (tacDisplay.snap.point) {
+    const b = tacBoard();
+    
+    b.arrows.forEach((a) => {
+      if (a.shape !== 'arrow') return;
+      pts.push({ x: a.x1, y: a.y1, kind: 'point', color: a.color });
+      pts.push({ x: a.x2, y: a.y2, kind: 'point', color: a.color });
+    });
+    
+    b.measures.forEach((m, mi) => {
+      pts.push({ x: m.x1, y: m.y1, kind: 'point', color: m.color, seg: mi, which: 'a' });
+      pts.push({ x: m.x2, y: m.y2, kind: 'point', color: m.color, seg: mi, which: 'b' });
+    });
+  }
+  const near = (pt, q) => Math.abs(pt.x - q.x) < 1e-6 && Math.abs(pt.y - q.y) < 1e-6;
+  let best = null, bestD = Infinity;
+  pts.forEach((pt) => {
+    if (excl) {
+      
+      if (excl.seg != null && pt.seg === excl.seg && pt.which === excl.which) return;
+      if (near(pt, excl)) return;
+    }
+    const d = Math.hypot((p.x - pt.x) * p.W, (p.y - pt.y) * p.H);
+    if (d < bestD) { bestD = d; best = pt; }
+  });
+  if (!best) return null;
+  
+  const radius = best.kind === 'point' ? 12 : (best.size / 100) * p.W / 2 + 10;
+  return bestD <= radius ? best : null;
+}
+
+export function tacSnapLandmark(p, excl) {
+  const t = tacSnapTarget(p, excl);
+  return t ? { ...p, x: t.x, y: t.y } : p;
+}
+
+
+export const tacZoomState = { scale: 1, tx: 0, ty: 0, pan: false, locked: false };
+
+export let tacPanDrag = null;
+
+export function tacZoomEls() {
+  return {
+    lock: $('tacZoomLock'),
+    out: $('tacZoomOut'), inn: $('tacZoomIn'),
+    val: $('tacZoomVal'), pan: $('tacZoomPan'),
+  };
+}
+
+
+export function tacUpdateTouchAction() {
+  const own = tacTool === 'draw' || tacTool === 'measure'
+    || tacZoomState.scale > TAC_ZOOM_MIN || tacZoomState.pan;
+  tacMapWrap.style.touchAction = own ? 'none' : '';
+}
+
+
+export function tacSetZoomLock(on) {
+  tacZoomState.locked = on;
+  tacUpdateTouchAction();
+  const { lock } = tacZoomEls();
+  if (!lock) return;
+  lock.classList.toggle('active', on);
+  lock.innerHTML = on ? TAC_ZOOM_LOCK_ICONS.locked : TAC_ZOOM_LOCK_ICONS.unlocked;
+  lock.title = on ? translate("application.tacSetZoomLock")
+    : translate("application.tacSetZoomLockAlternate");
+}
+
+
+export function tacApplyZoom() {
+  const s = tacZoomState.scale;
+  const w = tacMapWrap.clientWidth, h = tacMapWrap.clientHeight;
+  const minTx = Math.min(0, w - w * s), minTy = Math.min(0, h - h * s);
+  tacZoomState.tx = Math.min(0, Math.max(minTx, tacZoomState.tx));
+  tacZoomState.ty = Math.min(0, Math.max(minTy, tacZoomState.ty));
+  tacMapWrap.style.transform =
+    `translate(${tacZoomState.tx}px, ${tacZoomState.ty}px) scale(${s})`;
+  tacUpdateTouchAction();
+  const { out, inn, val, pan } = tacZoomEls();
+  if (!out) return;
+  val.textContent = Math.round(s * 100) + '%';
+  out.disabled = s <= TAC_ZOOM_MIN;
+  inn.disabled = s >= TAC_ZOOM_MAX;
+  
+  pan.disabled = s <= TAC_ZOOM_MIN;
+  if (s <= TAC_ZOOM_MIN && tacZoomState.pan) tacSetPanMode(false);
+}
+
+
+export function tacZoomTo(next, anchorX, anchorY) {
+  next = Math.min(TAC_ZOOM_MAX, Math.max(TAC_ZOOM_MIN, next));
+  if (next === tacZoomState.scale) return;
+  const w = tacMapWrap.clientWidth, h = tacMapWrap.clientHeight;
+  const ax = anchorX !== undefined ? anchorX * w : w / 2;
+  const ay = anchorY !== undefined ? anchorY * h : h / 2;
+  const s0 = tacZoomState.scale;
+  
+  const px = tacZoomState.tx + ax * s0, py = tacZoomState.ty + ay * s0;
+  tacZoomState.scale = next;
+  tacZoomState.tx = px - ax * next;
+  tacZoomState.ty = py - ay * next;
+  tacApplyZoom();
+}
+
+export function tacZoomStep(dir, anchorX, anchorY) {
+  const cur = tacZoomState.scale;
+  
+  const next = dir > 0 ? Math.min(TAC_ZOOM_MAX, cur * 1.25)
+    : Math.max(TAC_ZOOM_MIN, cur / 1.25);
+  tacZoomTo(Math.round(next * 100) / 100, anchorX, anchorY);
+}
+
+
+export function tacSetPanMode(on) {
+  if (on && tacZoomState.scale <= TAC_ZOOM_MIN) return; 
+  tacZoomState.pan = on;
+  tacUpdateTouchAction();
+  tacMapWrap.classList.remove('grabbing');
+  const { pan } = tacZoomEls();
+  if (pan) pan.classList.toggle('active', on);
+  tacticView.classList.toggle('tac-panning', on);
+  if (on) {
+    
+    tacSelected = null; tacSelectedItem = null; tacSelectedText = null;
+    tacSelMeasure = null; tacPlaceRole = null; tacPlaceItem = null;
+    tacTextPlacing = false; updateTacTextUi();
+    renderTacBoard(); updateTacPanel();
+  }
+}
+
+export function tacZoomInit() {
+  const { lock, out, inn, pan } = tacZoomEls();
+  if (!out) return;
+  lock.addEventListener('click', () => tacSetZoomLock(!tacZoomState.locked));
+  out.addEventListener('click', () => tacZoomStep(-1));
+  inn.addEventListener('click', () => tacZoomStep(1));
+  pan.addEventListener('click', () => tacSetPanMode(!tacZoomState.pan));
+  const cropEl = $('tacExportCrop');
+  if (cropEl) cropEl.addEventListener('change', () => {
+    tacDisplay.exportCrop = cropEl.checked;
+    tacSave();
+  });
+}
+
+tacZoomInit();
+
+
+export function tacZoomReset() {
+  tacZoomState.scale = 1; tacZoomState.tx = 0; tacZoomState.ty = 0;
+  tacPanDrag = null;
+  tacMapWrap.classList.remove('grabbing');
+  tacZoomState.pan = false;
+  const { pan } = tacZoomEls();
+  if (pan) pan.classList.remove('active');
+  tacticView.classList.remove('tac-panning');
+  tacApplyZoom();
+}
+
+
+export function tacHexRgba(hex, a) {
+  const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(hex || '');
+  if (!m) return null;
+  let h = m[1];
+  if (h.length === 3) h = h.split('').map((c) => c + c).join('');
+  const n = parseInt(h, 16);
+  return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${a})`;
+}
+
+
+export function tacDragMeasureExcl() {
+  if (!tacDragMeasure) return null;
+  return {
+    x: tacDragMeasure.ox, y: tacDragMeasure.oy,
+    seg: tacDragMeasure.idx, which: tacDragMeasure.end,
+  };
+}
+
+export function tacUpdateSnapRipple(p) {
+  if (!tacSnapRipple) return;
+  const active = (tacTool === 'draw' || tacTool === 'measure') && p
+    ? tacSnapTarget(p, tacDragMeasureExcl()) : null;
+  if (active) {
+    tacSnapRipple.style.left = `${active.x * 100}%`;
+    tacSnapRipple.style.top = `${active.y * 100}%`;
+    tacSnapRipple.classList.toggle('door', active.kind === 'door'); 
+    if (active.kind === 'point') { 
+      const c = tacHexRgba(active.color, 0.95);
+      const g = tacHexRgba(active.color, 0.55);
+      if (c) tacSnapRipple.style.setProperty('--snap-c', c);
+      if (g) tacSnapRipple.style.setProperty('--snap-g', g);
+    } else {
+      tacSnapRipple.style.removeProperty('--snap-c');
+      tacSnapRipple.style.removeProperty('--snap-g');
+    }
+    tacSnapRipple.classList.add('show');
+  } else {
+    tacSnapRipple.classList.remove('show');
+  }
+}
+
+
+export function tacUpdateCoordsTip(p, e) {
+  if (!tacCoordsTip) return;
+  if (!tacDisplay.showCoords || !p) {
+    tacCoordsTip.classList.remove('show');
+    return;
+  }
+  const [imgW, imgH] = MAPS_DATA[S.currentMapId].mapSize;
+  tacCoordsTip.textContent = `${Math.round(p.x * imgW)}, ${Math.round(p.y * imgH)}`;
+  tacCoordsTip.style.left = `${p.x * 100}%`;
+  tacCoordsTip.style.top = `${p.y * 100}%`;
+  
+  tacCoordsTip.style.transform =
+    `translate(${p.x > 0.82 ? 'calc(-100% - 14px)' : '14px'}, `
+    + `${p.y > 0.85 ? 'calc(-100% - 14px)' : '14px'})`;
+  tacCoordsTip.classList.add('show');
+}
+
+
+export function bindTacDisplayRow(toggleEl, sliderEl, defEl, onToggle, onSize) {
+  toggleEl.addEventListener('change', () => { onToggle(toggleEl.checked); tacSave(); });
+  sliderEl.addEventListener('input', () => {
+    onSize(parseFloat(sliderEl.value));
+    defEl.checked = parseFloat(sliderEl.value) === defEl._default;
+    tacSave();
+  });
+  defEl.addEventListener('change', () => {
+    if (!defEl.checked) return;
+    sliderEl.value = defEl._default;
+    sliderEl.dispatchEvent(new Event('input'));
+  });
+}
+
+tacCipherSizeDefEl._default = TAC_DISPLAY_DEFAULT.cipherSize;
+
+tacDungeonSizeDefEl._default = TAC_DISPLAY_DEFAULT.dungeonSize;
+
+tacDoorSizeDefEl._default = TAC_DISPLAY_DEFAULT.doorSize;
+
+
+tacShowZonesEl.addEventListener('change', () => {
+  tacDisplay.zones = tacShowZonesEl.checked;
+  renderTacZones();
+  tacSave();
+});
+
+bindTacDisplayRow(tacShowCiphersEl, tacCipherSizeEl, tacCipherSizeDefEl,
+  (v) => { tacDisplay.ciphers = v; renderTacCiphers(); },
+  (v) => { tacDisplay.cipherSize = v; renderTacCiphers(); });
+
+bindTacDisplayRow(tacShowDungeonEl, tacDungeonSizeEl, tacDungeonSizeDefEl,
+  (v) => { tacDisplay.dungeon = v; renderTacLandmarks(); },
+  (v) => { tacDisplay.dungeonSize = v; renderTacLandmarks(); });
+
+bindTacDisplayRow(tacShowDoorsEl, tacDoorSizeEl, tacDoorSizeDefEl,
+  (v) => { tacDisplay.doors = v; renderTacLandmarks(); },
+  (v) => { tacDisplay.doorSize = v; renderTacLandmarks(); });
+
+
+tacDoorLockEl.addEventListener('change', () => {
+  tacDisplay.doorLock = tacDoorLockEl.checked;
+  renderTacLandmarks();
+  tacSave();
+});
+
+
+tacSnapCipherEl.addEventListener('change', () => {
+  tacDisplay.snap.cipher = tacSnapCipherEl.checked;
+  tacSave();
+});
+
+tacSnapDungeonEl.addEventListener('change', () => {
+  tacDisplay.snap.dungeon = tacSnapDungeonEl.checked;
+  tacSave();
+});
+
+tacSnapDoorEl.addEventListener('change', () => {
+  tacDisplay.snap.door = tacSnapDoorEl.checked;
+  tacSave();
+});
+
+tacSnapPointEl.addEventListener('change', () => {
+  tacDisplay.snap.point = tacSnapPointEl.checked;
+  tacSave();
+});
+
+
+tacDelSegOnlyEl.addEventListener('change', () => {
+  tacDisplay.delSegOnly = tacDelSegOnlyEl.checked;
+  tacSave();
+});
+
+
+tacShowCoordsEl.addEventListener('change', () => {
+  tacDisplay.showCoords = tacShowCoordsEl.checked;
+  tacUpdateCoordsTip(null);
+  tacSave();
+});
+
+
+tacSelGlowEl.addEventListener('change', () => {
+  tacDisplay.selGlow = tacSelGlowEl.checked;
+  renderTacBoard();
+  tacSave();
+});
+
+$('tacDispCipherPrev').addEventListener('click', () => switchTacCipher(-1));
+
+$('tacDispCipherNext').addEventListener('click', () => switchTacCipher(1));
+
+$('tacDungeonPrev').addEventListener('click', () => switchTacDungeon(-1));
+
+$('tacDungeonNext').addEventListener('click', () => switchTacDungeon(1));
+
+
+if (tacPersisted && tacPersisted.display) {
+  const sd = tacPersisted.display;
+  Object.assign(tacDisplay, sd);
+  tacDisplay.snap = Object.assign({ cipher: true, dungeon: true, door: true, point: true }, sd.snap || {});
+}
+
+if (tacPersisted && tacPersisted.mstyle) {
+  if (tacPersisted.mstyle.single) Object.assign(tacMeasureStyle.single, tacPersisted.mstyle.single);
+  if (tacPersisted.mstyle.chain) Object.assign(tacMeasureStyle.chain, tacPersisted.mstyle.chain);
+}
+
+syncTacDisplayUI();
+
+
+export function arrowNode(a, W, H, idx) {
+  const x1 = a.x1 * W, y1 = a.y1 * H;
+  const x2 = a.x2 * W, y2 = a.y2 * H;
+  const dx = x2 - x1, dy = y2 - y1;
+  const len = Math.hypot(dx, dy) || 1;
+  const ux = dx / len, uy = dy / len;
+  const px = -uy, py = ux;
+  const headLen = Math.min(a.width * 4.2, len * 0.8);
+  const headW = a.width * 3;
+  const bx = x2 - ux * headLen, by = y2 - uy * headLen;
+
+  const g = document.createElementNS(TAC_SVG_NS, 'g');
+  if (idx >= 0) g.dataset.idx = idx;
+
+  const hit = document.createElementNS(TAC_SVG_NS, 'line');
+  hit.setAttribute('x1', x1); hit.setAttribute('y1', y1);
+  hit.setAttribute('x2', x2); hit.setAttribute('y2', y2);
+  hit.setAttribute('stroke', 'rgba(0,0,0,0)');
+  hit.setAttribute('stroke-width', Math.max(16, a.width * 4));
+
+  const line = document.createElementNS(TAC_SVG_NS, 'line');
+  line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+  line.setAttribute('x2', bx); line.setAttribute('y2', by);
+  line.setAttribute('stroke', a.color);
+  line.setAttribute('stroke-width', a.width);
+  line.setAttribute('stroke-linecap', 'round');
+
+  const head = document.createElementNS(TAC_SVG_NS, 'polygon');
+  head.setAttribute('points',
+    `${x2},${y2} ${bx + px * headW / 2},${by + py * headW / 2} `
+    + `${bx - px * headW / 2},${by - py * headW / 2}`);
+  head.setAttribute('fill', a.color);
+
+  g.append(hit, line, head);
+  return g;
+}
+
+
+export function circleNode(a, W, H, idx) {
+  const x1 = a.x1 * W, y1 = a.y1 * H;
+  const x2 = a.x2 * W, y2 = a.y2 * H;
+  const cx = (x1 + x2) / 2, cy = (y1 + y2) / 2;
+  const rx = Math.abs(x2 - x1) / 2, ry = Math.abs(y2 - y1) / 2;
+
+  const g = document.createElementNS(TAC_SVG_NS, 'g');
+  if (idx >= 0) g.dataset.idx = idx;
+
+  const hit = document.createElementNS(TAC_SVG_NS, 'ellipse');
+  hit.setAttribute('cx', cx); hit.setAttribute('cy', cy);
+  hit.setAttribute('rx', rx); hit.setAttribute('ry', ry);
+  hit.setAttribute('fill', 'none');
+  hit.setAttribute('stroke', 'rgba(0,0,0,0)');
+  hit.setAttribute('stroke-width', Math.max(16, a.width * 4));
+
+  const ring = document.createElementNS(TAC_SVG_NS, 'ellipse');
+  ring.setAttribute('cx', cx); ring.setAttribute('cy', cy);
+  ring.setAttribute('rx', rx); ring.setAttribute('ry', ry);
+  ring.setAttribute('fill', 'none');
+  ring.setAttribute('stroke', a.color);
+  ring.setAttribute('stroke-width', a.width);
+  ring.setAttribute('stroke-dasharray', `${a.width * 3} ${a.width * 2}`);
+
+  g.append(hit, ring);
+  return g;
+}
+
+
+export function rectNode(a, W, H, idx) {
+  const x1 = a.x1 * W, y1 = a.y1 * H;
+  const x2 = a.x2 * W, y2 = a.y2 * H;
+  const x = Math.min(x1, x2), y = Math.min(y1, y2);
+  const w = Math.abs(x2 - x1), h = Math.abs(y2 - y1);
+
+  const g = document.createElementNS(TAC_SVG_NS, 'g');
+  if (idx >= 0) g.dataset.idx = idx;
+
+  const hit = document.createElementNS(TAC_SVG_NS, 'rect');
+  hit.setAttribute('x', x); hit.setAttribute('y', y);
+  hit.setAttribute('width', w); hit.setAttribute('height', h);
+  hit.setAttribute('fill', 'none');
+  hit.setAttribute('stroke', 'rgba(0,0,0,0)');
+  hit.setAttribute('stroke-width', Math.max(16, a.width * 4));
+
+  const box = document.createElementNS(TAC_SVG_NS, 'rect');
+  box.setAttribute('x', x); box.setAttribute('y', y);
+  box.setAttribute('width', w); box.setAttribute('height', h);
+  box.setAttribute('fill', 'none');
+  box.setAttribute('stroke', a.color);
+  box.setAttribute('stroke-width', a.width);
+  box.setAttribute('stroke-dasharray', `${a.width * 3} ${a.width * 2}`);
+
+  g.append(hit, box);
+  return g;
+}
+
+
+export function shapeNode(a, W, H, idx) {
+  if (a.shape === 'circle') return circleNode(a, W, H, idx);
+  if (a.shape === 'rect') return rectNode(a, W, H, idx);
+  return arrowNode(a, W, H, idx);
+}
+
+
+export function tacMeasureLen(m) {
+  const [dw, dh] = MAPS_DATA[S.currentMapId].mapSize;
+  return { units: Math.hypot((m.x2 - m.x1) * dw, (m.y2 - m.y1) * dh), dw };
+}
+
+
+export function tacMeasureText(m) {
+  const { units, dw } = tacMeasureLen(m);
+  const widthM = MAPS_DATA[S.currentMapId].widthM;
+  return widthM ? `${(units / dw * widthM).toFixed(1)}m` : units.toFixed(1);
+}
+
+
+export function tacLinkPartner(idx) {
+  const items = tacBoard().items;
+  const it = items[idx];
+  const def = it && TAC_ITEM_TYPES[it.kind];
+  if (!def || def.render !== 'link') return null;
+  const list = items.map((o, i) => ({ o, i })).filter(({ o }) => o.kind === it.kind);
+  const pos = list.findIndex(({ i }) => i === idx);
+  if (pos < 0) return null;
+  const partnerPos = pos % 2 === 0 ? pos + 1 : pos - 1;
+  return partnerPos < list.length ? list[partnerPos].o : null;
+}
+
+
+
+export function tacClampLinkPos(idx, x, y) {
+  const it = tacBoard().items[idx];
+  const def = it && TAC_ITEM_TYPES[it.kind];
+  const widthM = MAPS_DATA[S.currentMapId].widthM;
+  if (!def || def.render !== 'link' || !def.linkMaxM || !widthM) return { x, y };
+  const partner = tacLinkPartner(idx);
+  if (!partner) return { x, y };
+  const [dw, dh] = MAPS_DATA[S.currentMapId].mapSize;
+  const ux = (x - partner.x) * dw, uy = (y - partner.y) * dh;
+  const units = Math.hypot(ux, uy);
+  const maxUnits = def.linkMaxM / widthM * dw; 
+  if (units <= maxUnits || units < 1e-9) return { x, y };
+  const k = maxUnits / units;
+  return { x: partner.x + (x - partner.x) * k, y: partner.y + (y - partner.y) * k };
+}
+
+
+
+
+export function tacClampRoleLinkPos(idx, x, y) {
+  const it = tacBoard().items[idx];
+  const def = it && TAC_ITEM_TYPES[it.kind];
+  const widthM = MAPS_DATA[S.currentMapId].widthM;
+  if (!def || !def.linkToRole || !def.linkMaxM || !widthM) return { x, y };
+  const tk = tacBoard().tokens[def.linkToRole];
+  if (!tk) return { x, y };
+  const [dw, dh] = MAPS_DATA[S.currentMapId].mapSize;
+  const ux = (x - tk.x) * dw, uy = (y - tk.y) * dh;
+  const units = Math.hypot(ux, uy);
+  const maxUnits = def.linkMaxM / widthM * dw;
+  if (units <= maxUnits || units < 1e-9) return { x, y };
+  const k = maxUnits / units;
+  return { x: tk.x + (x - tk.x) * k, y: tk.y + (y - tk.y) * k };
+}
+
+
+
+export function tacClampTokenToLinkedItems(role, x, y) {
+  const widthM = MAPS_DATA[S.currentMapId].widthM;
+  if (!widthM) return { x, y };
+  const [dw, dh] = MAPS_DATA[S.currentMapId].mapSize;
+  let cx = x, cy = y;
+  for (const it of tacBoard().items) {
+    const def = TAC_ITEM_TYPES[it.kind];
+    if (!def || def.linkToRole !== role || !def.linkMaxM) continue;
+    const ux = (cx - it.x) * dw, uy = (cy - it.y) * dh;
+    const units = Math.hypot(ux, uy);
+    const maxUnits = def.linkMaxM / widthM * dw;
+    if (units > maxUnits && units > 1e-9) {
+      const k = maxUnits / units;
+      cx = it.x + (cx - it.x) * k;
+      cy = it.y + (cy - it.y) * k;
+    }
+  }
+  return { x: cx, y: cy };
+}
+
+
+export function tacMeasureSegColor(m) {
+  return m.color || TAC_MEASURE_DEFAULT[m.chain != null ? 'chain' : 'single'].color;
+}
+
+
+export function tacShadeColor(hex, f) {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
+  if (!m) return hex;
+  const n = parseInt(m[1], 16);
+  let r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  if (f <= 1) { r *= f; g *= f; b *= f; }
+  else {
+    const t = Math.min(1, f - 1);
+    r += (255 - r) * t; g += (255 - g) * t; b += (255 - b) * t;
+  }
+  return `rgb(${Math.round(r)},${Math.round(g)},${Math.round(b)})`;
+}
+
+
+export function tacBuffSegColor(segColor, pct) {
+  const k = Math.min(1, Math.abs(pct) / 120);
+  return pct > 0
+    ? tacShadeColor(segColor, 1 + 0.25 + 0.35 * k)
+    : tacShadeColor(segColor, 1 - (0.25 + 0.35 * k));
+}
+
+
+
+
+
+
+export function measureNode(m, W, H, idx, chain, sel) {
+  const x1 = m.x1 * W, y1 = m.y1 * H;
+  const x2 = m.x2 * W, y2 = m.y2 * H;
+  const g = document.createElementNS(TAC_SVG_NS, 'g');
+  if (idx >= 0) g.dataset.midx = idx;
+
+  const segWidth = m.width || TAC_MEASURE_DEFAULT[chain ? 'chain' : 'single'].width;
+
+  const hit = document.createElementNS(TAC_SVG_NS, 'line');
+  hit.setAttribute('x1', x1); hit.setAttribute('y1', y1);
+  hit.setAttribute('x2', x2); hit.setAttribute('y2', y2);
+  hit.setAttribute('stroke', 'rgba(0,0,0,0)');
+  hit.setAttribute('stroke-width', Math.max(16, segWidth * 4));
+
+  const segColor = tacMeasureSegColor(m);
+
+  const line = document.createElementNS(TAC_SVG_NS, 'line');
+  line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+  line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+  line.setAttribute('stroke', segColor);
+  line.setAttribute('stroke-width', sel ? segWidth + 1 : segWidth);
+  line.setAttribute('stroke-dasharray', `${segWidth * 8 / 3} ${segWidth * 2}`);
+  line.setAttribute('stroke-linecap', 'round');
+  line.setAttribute('opacity', sel ? '1' : '0.7');
+
+  
+  
+  const buffRanges = tacGreenSegs.get(m) || [];
+  const greenLines = buffRanges.map(([f1, f2, pct]) => {
+    const gl = document.createElementNS(TAC_SVG_NS, 'line');
+    gl.setAttribute('x1', x1 + (x2 - x1) * f1);
+    gl.setAttribute('y1', y1 + (y2 - y1) * f1);
+    gl.setAttribute('x2', x1 + (x2 - x1) * f2);
+    gl.setAttribute('y2', y1 + (y2 - y1) * f2);
+    gl.setAttribute('stroke', tacBuffSegColor(segColor, pct));
+    gl.setAttribute('stroke-width', sel ? segWidth + 1 : segWidth);
+    gl.setAttribute('stroke-dasharray', `${segWidth * 8 / 3} ${segWidth * 2}`);
+    gl.setAttribute('stroke-linecap', 'round');
+    gl.setAttribute('opacity', sel ? '1' : '0.85');
+    return gl;
+  });
+
+  if (chain) {
+    g.append(hit, line, ...greenLines);
+    return g;
+  }
+
+  
+  const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+  const dx = x2 - x1, dy = y2 - y1;
+  const len = Math.hypot(dx, dy) || 1;
+  const nx = -dy / len, ny = dx / len;
+  const s = ((W / 2 - mx) * nx + (H / 2 - my) * ny) >= 0 ? 1 : -1;
+  const text = document.createElementNS(TAC_SVG_NS, 'text');
+  text.setAttribute('x', mx + nx * 14 * s);
+  text.setAttribute('y', my + ny * 14 * s);
+  text.setAttribute('class', 'tac-measure-label');
+  text.style.fill = segColor; 
+  text.textContent = tacMeasureText(m);
+
+  g.append(hit, line, ...greenLines, text);
+  return g;
+}
+
+
+
+export function chainTotalNode(segs, W, H, sel) {
+  const lens = segs.map((m) =>
+    Math.hypot((m.x2 - m.x1) * W, (m.y2 - m.y1) * H));
+  const total = lens.reduce((a, b) => a + b, 0) || 1;
+  
+  let acc = 0, px = 0, py = 0, nx = 0, ny = 1;
+  for (let i = 0; i < segs.length; i++) {
+    const m = segs[i];
+    if (acc + lens[i] >= total / 2) {
+      const t = lens[i] ? (total / 2 - acc) / lens[i] : 0;
+      const x1 = m.x1 * W, y1 = m.y1 * H, x2 = m.x2 * W, y2 = m.y2 * H;
+      px = x1 + (x2 - x1) * t; py = y1 + (y2 - y1) * t;
+      const l = lens[i] || 1;
+      nx = -(y2 - y1) / l; ny = (x2 - x1) / l;
+      break;
+    }
+    acc += lens[i];
+  }
+  const s = ((W / 2 - px) * nx + (H / 2 - py) * ny) >= 0 ? 1 : -1;
+  let units = 0, dw = 1;
+  segs.forEach((m) => {
+    const r = tacMeasureLen(m);
+    units += r.units; dw = r.dw;
+  });
+  const widthM = MAPS_DATA[S.currentMapId].widthM;
+  const text = document.createElementNS(TAC_SVG_NS, 'text');
+  text.setAttribute('x', px + nx * 14 * s);
+  text.setAttribute('y', py + ny * 14 * s);
+  text.setAttribute('class', 'tac-measure-label tac-chain-label');
+  text.style.fill = tacMeasureSegColor(segs[0]); 
+  if (sel) text.setAttribute('style',
+    `fill:${text.style.fill};stroke:#1e3a8a;stroke-width:4;`
+      + 'paint-order:stroke;font-size:15px;');
+  text.textContent = widthM
+    ? `${(units / dw * widthM).toFixed(1)}m` : units.toFixed(1);
+  return text;
+}
+
+
+export function tacAbyssItem() {
+  return tacBoard().items.find((it) =>
+    it.kind === 'spearfishing' && it.abyss && it.abyss.on) || null;
+}
+
+
+export function tacAbyssMeters(a, b) {
+  const map = MAPS_DATA[S.currentMapId];
+  if (!map.widthM) return null;
+  const [dw, dh] = map.mapSize;
+  return Math.hypot((a.x - b.x) * dw, (a.y - b.y) * dh) / dw * map.widthM;
+}
+
+
+export function tacAbyssRecord(p) {
+  const it = tacAbyssItem();
+  const nt = tacBoard().tokens.Naiad;
+  if (!it || !nt || !it.abyss.recording) return;
+  const ab = it.abyss;
+  const last = ab.trail[ab.trail.length - 1];
+  if (last && Math.hypot((nt.x - last.x) * p.W, (nt.y - last.y) * p.H) < 5) return;
+  ab.done = null; 
+  const m = tacAbyssMeters(nt, it);
+  if (m !== null && m > TAC_ABYSS_MAX_M) {
+    const k = TAC_ABYSS_MAX_M / m;
+    ab.trail.push({ x: it.x + (nt.x - it.x) * k, y: it.y + (nt.y - it.y) * k });
+    ab.done = ab.trail.slice();
+    ab.recording = false;
+    renderTacArrows();
+    return;
+  }
+  ab.trail.push({ x: nt.x, y: nt.y });
+  renderTacArrows();
+}
+
+
+export function tacAbyssFinalize() {
+  const it = tacAbyssItem();
+  if (!it || !it.abyss.recording) return;
+  const ab = it.abyss;
+  ab.recording = false;
+  if (ab.trail.length >= 2) ab.done = ab.trail.slice();
+  ab.trail = [];
+  renderTacArrows();
+}
+
+export function renderTacArrows() {
+  const W = tacMapWrap.clientWidth;
+  const H = tacMapWrap.clientHeight;
+  if (!W || !H) return;
+  tacArrowSvg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  tacArrowSvg.innerHTML = '';
+  
+  
+  const linkGroups = {};
+  tacBoard().items.forEach((it) => {
+    const def = TAC_ITEM_TYPES[it.kind];
+    if (def && def.render === 'link') (linkGroups[it.kind] ||= []).push(it);
+  });
+  for (const [kind, list] of Object.entries(linkGroups)) {
+    const def = TAC_ITEM_TYPES[kind];
+    for (let i = 0; i + 1 < list.length; i += 2) {
+      const a = list[i], b = list[i + 1];
+      const line = document.createElementNS(TAC_SVG_NS, 'line');
+      line.setAttribute('x1', a.x * W); line.setAttribute('y1', a.y * H);
+      line.setAttribute('x2', b.x * W); line.setAttribute('y2', b.y * H);
+      line.setAttribute('stroke', def.linkColor || def.color);
+      line.setAttribute('stroke-width', def.linkWidth || 5);
+      line.setAttribute('stroke-linecap', 'round');
+      tacArrowSvg.appendChild(line);
+    }
+  }
+  
+  
+  
+  tacBoard().items.forEach((it) => {
+    const def = TAC_ITEM_TYPES[it.kind];
+    if (!def || !def.linkToRole) return;
+    const tk = tacBoard().tokens[def.linkToRole];
+    if (!tk || tk.hideLink) return;
+    const line = document.createElementNS(TAC_SVG_NS, 'line');
+    line.setAttribute('x1', tk.x * W); line.setAttribute('y1', tk.y * H);
+    line.setAttribute('x2', it.x * W); line.setAttribute('y2', it.y * H);
+    line.setAttribute('stroke', def.linkColor || def.color || '#f8fafc');
+    line.setAttribute('stroke-width', def.linkWidth || 2);
+    line.setAttribute('stroke-linecap', 'round');
+    tacArrowSvg.appendChild(line);
+  });
+  
+  
+  tacBoard().items.forEach((it) => {
+    const ab = it.abyss;
+    if (it.kind !== 'spearfishing' || !ab || !ab.on) return;
+    const nt = tacBoard().tokens.Naiad;
+    if (!nt) return;
+    const g = document.createElementNS(TAC_SVG_NS, 'g');
+    g.setAttribute('pointer-events', 'none');
+    const hx = it.x * W, hy = it.y * H;
+    const toPx = (q) => `${(q.x * W).toFixed(1)},${(q.y * H).toFixed(1)}`;
+    const live = ab.recording && ab.trail.length >= 2 ? ab.trail : null;
+    if (ab.done && ab.done.length >= 2) {
+      
+      const poly = document.createElementNS(TAC_SVG_NS, 'polygon');
+      poly.setAttribute('points', [`${hx},${hy}`, ...ab.done.map(toPx)].join(' '));
+      poly.setAttribute('fill', 'rgba(125, 211, 252, 0.18)');
+      poly.setAttribute('stroke', '#7dd3fc');
+      poly.setAttribute('stroke-width', 2.5);
+      poly.setAttribute('stroke-dasharray', '9 7');
+      poly.setAttribute('stroke-linejoin', 'round');
+      g.appendChild(poly);
+      const cx = (hx + ab.done.reduce((s, q) => s + q.x * W, 0)) / (ab.done.length + 1);
+      const cy = (hy + ab.done.reduce((s, q) => s + q.y * H, 0)) / (ab.done.length + 1);
+      const label = document.createElementNS(TAC_SVG_NS, 'text');
+      label.setAttribute('x', cx);
+      label.setAttribute('y', cy);
+      label.setAttribute('text-anchor', 'middle');
+      label.setAttribute('dominant-baseline', 'middle');
+      label.setAttribute('fill', '#bae6fd');
+      label.setAttribute('font-size', 14);
+      label.setAttribute('paint-order', 'stroke');
+      label.setAttribute('stroke', 'rgba(15, 23, 42, 0.7)');
+      label.setAttribute('stroke-width', 3);
+      label.textContent = translate("application.renderTacArrows");
+      g.appendChild(label);
+    } else if (live) {
+      
+      const poly = document.createElementNS(TAC_SVG_NS, 'polygon');
+      poly.setAttribute('points', [`${hx},${hy}`, ...live.map(toPx)].join(' '));
+      poly.setAttribute('fill', 'rgba(125, 211, 252, 0.08)');
+      poly.setAttribute('stroke', 'rgba(125, 211, 252, 0.65)');
+      poly.setAttribute('stroke-width', 2);
+      poly.setAttribute('stroke-dasharray', '6 6');
+      poly.setAttribute('stroke-linejoin', 'round');
+      g.appendChild(poly);
+    } else {
+      
+      const line = document.createElementNS(TAC_SVG_NS, 'line');
+      line.setAttribute('x1', hx);
+      line.setAttribute('y1', hy);
+      line.setAttribute('x2', nt.x * W);
+      line.setAttribute('y2', nt.y * H);
+      line.setAttribute('stroke', 'rgba(125, 211, 252, 0.8)');
+      line.setAttribute('stroke-width', 2);
+      line.setAttribute('stroke-dasharray', '6 6');
+      g.appendChild(line);
+    }
+    tacArrowSvg.appendChild(g);
+  });
+  tacBoard().arrows.forEach((a, i) =>
+    tacArrowSvg.appendChild(shapeNode(a, W, H, i)));
+  
+  
+  
+  tacGreenSegs = new Map(); 
+  const widthM = MAPS_DATA[S.currentMapId].widthM;
+  if (widthM) {
+    const measures = tacBoard().measures;
+    
+    const groups = [];
+    const byChain = new Map();
+    measures.forEach((m) => {
+      if (m.chain == null) { groups.push([m]); return; }
+      if (!byChain.has(m.chain)) { byChain.set(m.chain, [m]); groups.push(byChain.get(m.chain)); }
+      else byChain.get(m.chain).push(m);
+    });
+    groups.forEach((group) => {
+      const lc = group[0].lc;
+      if (!lc || !lc.buffs.length) return;
+      const sim = tacSimLine(group, lc);
+      sim.segs.forEach((s, i) => {
+        const ranges = [];
+        let acc = 0;
+        for (const p of s.parts) {
+          const f1 = acc / s.dist; acc += p.dist; const f2 = acc / s.dist;
+          if (Math.abs(p.pct) <= 0.05) continue;
+          const last = ranges[ranges.length - 1];
+          if (last && Math.abs(last[2] - p.pct) < 1e-9
+              && Math.abs(last[1] - f1) < 1e-9) last[1] = f2;
+          else ranges.push([f1, f2, p.pct]);
+        }
+        if (ranges.length) tacGreenSegs.set(group[i], ranges);
+      });
+    });
+  }
+  const chainGroups = {};
+  tacBoard().measures.forEach((m, i) => {
+    if (m.chain != null) (chainGroups[m.chain] = chainGroups[m.chain] || []).push(i);
+  });
+  const selLineNow = tacSelLine();
+  const selSet = selLineNow ? new Set(selLineNow.segs) : null;
+  const isSel = (m) => !!(selSet && selSet.has(m)); 
+  tacBoard().measures.forEach((m, i) =>
+    tacArrowSvg.appendChild(measureNode(m, W, H, i, m.chain != null, isSel(m))));
+  Object.entries(chainGroups).forEach(([id, idxs]) => {
+    
+    const chainSel = !!(selLineNow && selLineNow.chain === +id);
+    tacArrowSvg.appendChild(chainTotalNode(
+      idxs.map((i) => tacBoard().measures[i]), W, H, chainSel));
+  });
+  
+  if (selLineNow) {
+    selLineNow.segs.forEach((m, k) => {
+      if (k === 0) tacArrowSvg.appendChild(
+        tacLetterNode(m.x1 * W, m.y1 * H, tacLetter(0)));
+      tacArrowSvg.appendChild(
+        tacLetterNode(m.x2 * W, m.y2 * H, tacLetter(k + 1)));
+    });
+  }
+  
+  if (tacMeasurePending) {
+    const st = tacMeasureStyle[tacMeasureMode];
+    const cx = tacMeasurePending.x * W, cy = tacMeasurePending.y * H;
+    const ring = document.createElementNS(TAC_SVG_NS, 'circle');
+    ring.setAttribute('cx', cx); ring.setAttribute('cy', cy);
+    ring.setAttribute('r', 7); ring.setAttribute('fill', 'none');
+    ring.setAttribute('stroke', st.color); ring.setAttribute('stroke-width', 2);
+    const core = document.createElementNS(TAC_SVG_NS, 'circle');
+    core.setAttribute('cx', cx); core.setAttribute('cy', cy);
+    core.setAttribute('r', 2.5); core.setAttribute('fill', st.color);
+    tacArrowSvg.append(ring, core);
+    if (tacMeasureHover) {
+      tacArrowSvg.appendChild(measureNode(
+        { x1: tacMeasurePending.x, y1: tacMeasurePending.y,
+          x2: tacMeasureHover.x, y2: tacMeasureHover.y,
+          color: st.color, width: st.width }, W, H, -1, tacChainRoute !== null));
+    }
+  }
+  
+  if (tacDrawing) {
+    tacArrowSvg.appendChild(shapeNode(
+      { ...tacDrawing, shape: tacDrawShape, color: tacArrowColor, width: tacArrowWidth }, W, H, -1));
+  }
+}
+
+
+export function renderTacBoard() {
+  tacSave(); 
+  tacMapWrap.querySelectorAll('.tac-token, .tac-role-circle, .tac-item-circle, .tac-item-pin, .tac-measure-dot, .tac-text')
+    .forEach((el) => el.remove());
+  renderTacFixedSpawns(); 
+  const board = tacBoard();
+  
+  board.items.forEach((it, idx) => {
+    const def = TAC_ITEM_TYPES[it.kind];
+    if (!def) return;
+    
+    const sizePct = tacItemSizePercent(it); 
+    const el = document.createElement('div');
+    el.className = (sizePct !== null ? 'tac-item-circle' : 'tac-item-pin')
+      + (tacSelectedItem === idx && tacDisplay.selGlow ? ' selected' : '')
+      + (it.glow ? ' glow' : '');
+    el.dataset.idx = idx;
+    el.style.left = `${it.x * 100}%`;
+    el.style.top = `${it.y * 100}%`;
+    el.style.setProperty('--ic', def.color || '#e2e8f0');
+    el.title = def.name;
+    if (sizePct !== null) {
+      el.style.width = `${sizePct}%`;
+      
+      if (def.fill) el.style.setProperty('--ic-fill', def.fill);
+      if (def.glow) el.style.setProperty('--ic-glow', def.glow);
+      
+      
+      
+      el.insertAdjacentHTML('beforeend',
+        '<svg class="tac-item-edge" viewBox="0 0 100 100" aria-hidden="true">'
+        + '<circle cx="50" cy="50" r="45" fill="none" stroke="rgba(0,0,0,0)"'
+        + ' stroke-width="10"/></svg>');
+    }
+    
+    
+    if (def.icon && !it.hideIcon) {
+      el.insertAdjacentHTML('beforeend',
+        `<img src="${def.icon}" alt="${def.name}" draggable="false">`);
+      const img = el.querySelector('img');
+      
+      const isz = it.iconSize ?? 3.4;
+      img.style.width = `${isz}cqw`;
+      img.style.height = `${isz}cqw`;
+    } else {
+      el.insertAdjacentHTML('beforeend', '<div class="tac-item-dot"></div>');
+    }
+    tacMapWrap.appendChild(el);
+  });
+  for (const [role, t] of Object.entries(board.tokens)) {
+    const def = TAC_ROLES[role] || {};
+    
+    const rgM = tacRoleRangeMeters(role, t);
+    const rgPct = rgM === null ? null : tacItemMetersToPercent(rgM);
+    if (rgPct !== null) {
+      const rg = document.createElement('div');
+      rg.className = 'tac-role-circle';
+      rg.dataset.role = role;
+      rg.style.left = `${t.x * 100}%`;
+      rg.style.top = `${t.y * 100}%`;
+      rg.style.width = `${rgPct}%`;
+      tacMapWrap.appendChild(rg);
+    }
+    const el = document.createElement('div');
+    
+    const showIcon = def.icon && !t.hideIcon;
+    el.className = 'tac-token' + (showIcon ? ' has-img' : '')
+      + (tacSelected === role && tacDisplay.selGlow ? ' selected' : '')
+      + (t.glow ? ' glow' : '');
+    el.dataset.role = role;
+    el.style.left = `${t.x * 100}%`;
+    el.style.top = `${t.y * 100}%`;
+    el.style.width = `${t.size}%`;
+    el.style.fontSize = `min(26px, ${t.size * 0.42}cqw)`;
+    el.style.setProperty('--rc', def.color || '#fff');
+    if (showIcon) {
+      el.innerHTML = `<img src="${def.icon}" alt="${def.name}" draggable="false">`;
+      el.title = def.name;
+    } else {
+      el.textContent = (def.name || role).charAt(0);
+      el.title = def.name || role;
+    }
+    tacMapWrap.appendChild(el);
+  }
+  
+  const chainFirst = {}, chainLast = {};
+  board.measures.forEach((m, i) => {
+    if (m.chain == null) return;
+    if (chainFirst[m.chain] === undefined) chainFirst[m.chain] = i;
+    chainLast[m.chain] = i;
+  });
+  board.measures.forEach((m, idx) => {
+    const isChain = m.chain != null;
+    const isChainStart = isChain && chainFirst[m.chain] === idx;
+    const isChainEnd = isChain && chainLast[m.chain] === idx;
+    [['x1', 'y1', 'a'], ['x2', 'y2', 'b']].forEach(([kx, ky, end]) => {
+      
+      if (isChain && !((isChainStart && end === 'a') || (isChainEnd && end === 'b'))) return;
+      const dot = document.createElement('div');
+      dot.className = 'tac-measure-dot';
+      dot.dataset.idx = idx;
+      dot.dataset.end = end;
+      dot.style.left = `${m[kx] * 100}%`;
+      dot.style.top = `${m[ky] * 100}%`;
+      const dotColor = tacMeasureSegColor(m);
+      dot.style.background = dotColor; 
+      dot.style.boxShadow = `0 0 6px ${dotColor}`;
+      dot.title = translate("application.renderTacBoard");
+      tacMapWrap.appendChild(dot);
+    });
+  });
+  
+  board.texts.forEach((t, idx) => {
+    const el = document.createElement('div');
+    el.className = 'tac-text' + (tacSelectedText === idx ? ' selected' : '');
+    el.dataset.idx = idx;
+    el.style.left = `${t.x * 100}%`;
+    el.style.top = `${t.y * 100}%`;
+    el.style.color = t.color;
+    el.style.fontSize = `${Math.max(2.2, t.size * 0.18)}cqw`;
+    el.textContent = t.text;
+    tacMapWrap.appendChild(el);
+  });
+  renderTacArrows();
+  updateTacPanel();
+}
+
+
+export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
+  opts = opts || {};
+  const curMode = tacRangeModeOf(cfg, inst, hideByDefault);
+  
+  const modeRow = document.createElement('div');
+  modeRow.className = 'tac-manage-row';
+  modeRow.innerHTML = `<div class="tac-range-opts">`
+    + cfg.modes.map((m) =>
+      `<button type="button" data-v="${m.key}" class="tac-range-opt`
+      + `${curMode.key === m.key ? ' active' : ''}">${m.label}</button>`).join('')
+    + `</div>`;
+  modeRow.querySelectorAll('.tac-range-opt').forEach((b) => {
+    b.addEventListener('click', () => {
+      inst.rangeMode = b.dataset.v;
+      delete inst.hideRange; 
+      renderTacBoard(); 
+    });
+  });
+  settings.appendChild(modeRow);
+  if (!curMode.size_m) return; 
+  const card = curMode.card || translate("application.card");
+  const s = curMode.size_m;
+  const meters = tacRangeMetersOf(cfg, inst, hideByDefault);
+  const cardRow = document.createElement('div');
+  cardRow.className = 'tac-manage-row';
+  if (typeof s === 'number' && !curMode.fearMods) {
+    
+    cardRow.innerHTML = translate("application.buildTacRangeRows", { card: card, state: s });
+  } else if (Array.isArray(s.options)) {
+    
+    cardRow.innerHTML = `<label>${card} ${meters}m</label>`
+      + `<div class="tac-range-opts">`
+      + s.options.map((v, i) =>
+        `<button type="button" data-v="${v}" class="tac-range-opt`
+        + `${meters === v ? ' active' : ''}">${(s.labels || [])[i] || `${v}m`}</button>`).join('')
+      + `</div>`;
+    cardRow.querySelectorAll('.tac-range-opt').forEach((b) => {
+      b.addEventListener('click', () => {
+        inst.rangeMeters = parseFloat(b.dataset.v);
+        delete inst.meters;
+        renderTacBoard();
+      });
+    });
+  } else if (curMode.fearMods) {
+    
+    cardRow.innerHTML = translate("application.buildTacRangeRowsAlternate", { card: card, value: meters.toFixed(2), state: s });
+  } else {
+    
+    cardRow.innerHTML =
+      `<label>${card}</label>`
+      + `<div class="tac-range-mid">`
+      + `<span class="tac-range-end">${s.min}m</span>`
+      + `<input type="range" min="${s.min}" max="${s.max}" step="0.1" value="${meters}">`
+      + `<span class="tac-range-end">${s.max}m</span>`
+      + `</div>`
+      + `<span class="tac-range-val">${meters.toFixed(1)}m</span>`;
+    const sl = cardRow.querySelector('input');
+    sl.addEventListener('input', () => {
+      inst.rangeMeters = parseFloat(sl.value);
+      delete inst.meters;
+      cardRow.querySelector('.tac-range-val').textContent = `${inst.rangeMeters.toFixed(1)}m`;
+      if (opts.softUpdate) opts.softUpdate();
+      else renderTacBoard();
+    });
+  }
+  settings.appendChild(cardRow);
+  
+  if (curMode.fearMods) {
+    [['fearHunter', 'hunter'], ['fearSurv', 'survivor']].forEach(([field, gkey]) => {
+      const gopts = curMode.fearMods[gkey];
+      const defKey = gopts[0][0];
+      const grp = document.createElement('div');
+      grp.className = 'tac-manage-row';
+      grp.innerHTML = `<div class="tac-range-opts">`
+        + gopts.map(([v, label]) =>
+          `<button type="button" data-v="${v}" class="tac-range-opt`
+          + `${(inst[field] || defKey) === v ? ' active' : ''}">${label}</button>`).join('')
+        + `</div>`;
+      grp.querySelectorAll('.tac-range-opt').forEach((b) => {
+        b.addEventListener('click', () => {
+          inst[field] = b.dataset.v;
+          grp.querySelectorAll('.tac-range-opt').forEach((x) =>
+            x.classList.toggle('active', x === b));
+          const valEl = settings.querySelector('.tac-fear-val');
+          if (valEl) valEl.textContent = tacRangeMetersOf(cfg, inst, hideByDefault).toFixed(2);
+          if (opts.softUpdate) opts.softUpdate();
+          else renderTacBoard();
+        });
+      });
+      settings.appendChild(grp);
+    });
+  }
+}
+
+export function renderTacManage() {
+  const board = tacBoard();
+  tacManageList.innerHTML = '';
+  const roleOrder = Object.keys(TAC_ROLES).filter((r) =>
+    board.tokens[r] || board.items.some((it) => it.role === r));
+  const campOrder = { survivor: 0, hunter: 1, other: 2 };
+  roleOrder.sort((a, b) =>
+    (campOrder[(TAC_ROLES[a] || {}).camp] ?? 0)
+    - (campOrder[(TAC_ROLES[b] || {}).camp] ?? 0));
+
+  
+  const entries = [];
+  roleOrder.forEach((role) => {
+    if (board.tokens[role]) entries.push({ type: 'role', role });
+    board.items.forEach((it, idx) => {
+      if (it.role === role) entries.push({ type: 'item', idx });
+    });
+  });
+
+  if (!entries.length) {
+    tacManageSel = null;
+    tacManageList.innerHTML =
+      translate("application.renderTacManage");
+    return;
+  }
+
+  
+  const isSelEntry = (e) => tacManageSel && e.type === tacManageSel.type
+    && (e.type === 'role' ? e.role === tacManageSel.role : e.idx === tacManageSel.idx);
+  if (tacManageSel && !entries.some(isSelEntry)) tacManageSel = null;
+
+  
+  const grid = document.createElement('div');
+  grid.className = 'tac-manage-grid';
+  entries.forEach((e) => {
+    const isRole = e.type === 'role';
+    const def = isRole
+      ? (TAC_ROLES[e.role] || {})
+      : (TAC_ITEM_TYPES[board.items[e.idx].kind] || {});
+    const btn = document.createElement('button');
+    btn.className = 'tac-manage-btn' + (isSelEntry(e) ? ' active' : '');
+    btn.title = def.name || e.role;
+    btn.innerHTML =
+      `${def.icon ? `<img src="${def.icon}" alt="${def.name}" draggable="false">` : ''}`
+      + `<span class="tac-manage-btn-name">${def.name || e.role}</span>`;
+    btn.addEventListener('click', () => {
+      tacManageSel = isRole ? { type: 'role', role: e.role } : { type: 'item', idx: e.idx };
+      
+      if (isRole) { tacSelected = e.role; tacSelectedItem = null; }
+      else { tacSelectedItem = e.idx; tacSelected = null; }
+      renderTacBoard();
+    });
+    grid.appendChild(btn);
+  });
+  tacManageList.appendChild(grid);
+
+  
+  const settings = document.createElement('div');
+  settings.className = 'tac-manage-settings';
+  tacManageList.appendChild(settings);
+  if (!tacManageSel) {
+    settings.innerHTML =
+      translate("application.renderTacManageAlternate");
+    return;
+  }
+
+  
+  if (tacManageSel.type === 'role') {
+    const role = tacManageSel.role;
+    const token = board.tokens[role];
+    const rgCfg = (TAC_ROLES[role] || {}).ranges; 
+    const rangeShown = !!rgCfg && tacRoleRangeMode(role, token).key !== 'off';
+    const isRoleDefault = () =>
+      token.size === TAC_MANAGE_DEFAULT.roleSize && !rangeShown && !token.hideIcon;
+
+    
+    
+    if (rgCfg) {
+      
+      
+      const syncRoleCircleWidth = () => {
+        const el = tacMapWrap.querySelector(`.tac-role-circle[data-role="${role}"]`);
+        const m = tacRoleRangeMeters(role, token);
+        if (el && m !== null) el.style.width = `${tacItemMetersToPercent(m)}%`;
+      };
+      buildTacRangeRows(settings, rgCfg, token, true, { softUpdate: syncRoleCircleWidth });
+    }
+    
+    
+    if (Object.values(TAC_ITEM_TYPES).some((d) => d.linkToRole === role)) {
+      const lkRow = document.createElement('div');
+      lkRow.className = 'tac-manage-row';
+      lkRow.innerHTML =
+        `<label class="tac-manage-hide"><input type="checkbox"`
+        + translate("application.renderTacManageThird", { value: token.hideLink ? ' checked' : '' });
+      lkRow.querySelector('input').addEventListener('change', (e) => {
+        token.hideLink = e.target.checked;
+        renderTacArrows();
+      });
+      settings.appendChild(lkRow);
+    }
+    
+    
+    if (role === 'Naiad') {
+      const spearfishing = board.items.find((it) => it.kind === 'spearfishing');
+      if (spearfishing) {
+        const abRow = document.createElement('div');
+        abRow.className = 'tac-manage-row';
+        abRow.innerHTML =
+          `<label class="tac-manage-abyss"><input type="checkbox"`
+          + translate("application.renderTacManageFourth", { value: spearfishing.abyss && spearfishing.abyss.on ? ' checked' : '' })
+          + translate("application.renderTacManageFifth", {  })
+          + translate("application.renderTacManageSixth", { tacAbyssMaxM: TAC_ABYSS_MAX_M });
+        abRow.querySelector('input').addEventListener('change', (e) => {
+          if (e.target.checked) spearfishing.abyss = { on: true, recording: false, trail: [], done: null };
+          else delete spearfishing.abyss;
+          renderTacArrows();
+        });
+        settings.appendChild(abRow);
+      }
+    }
+const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
+    if (fixedSpawnCfg) {
+      const fsRow = document.createElement('div');
+      fsRow.className = 'tac-manage-row';
+      fsRow.innerHTML =
+        `<label class="tac-manage-glow"><input type="checkbox"`
+        + translate("application.renderTacManageSeventh", { value: token.showFixedSpawns ? ' checked' : '', label: fixedSpawnCfg.label });
+      fsRow.querySelector('input').addEventListener('change', (e) => {
+        token.showFixedSpawns = e.target.checked;
+        renderTacFixedSpawns();
+        tacSave(); 
+      });
+      settings.appendChild(fsRow);
+      
+      
+      if (fixedSpawnCfg.rangeM && fixedSpawnCfg.rangeScreenM && MAPS_DATA[S.currentMapId].widthM) {
+        const dev = token.fixedSpawnDevice === 'ios' ? 'ios' : 'pc';
+        const [devW, devH] = fixedSpawnCfg.rangeScreenM[dev];
+        const radioName = `tac-fsdev-${S.currentMapId}-${role}`;
+        const rangeRow = document.createElement('div');
+        rangeRow.className = 'tac-manage-row';
+        rangeRow.innerHTML =
+          `<label class="tac-manage-glow"><input type="checkbox"`
+          + translate("application.renderTacManageEighth", { value: token.showFixedSpawnRange ? ' checked' : '', rangeM: fixedSpawnCfg.rangeM, devW: devW, devH: devH })
+          + `<label class="tac-manage-glow"><input type="radio" name="${radioName}"${dev === 'pc' ? ' checked' : ''}>PC</label>`
+          + `<label class="tac-manage-glow"><input type="radio" name="${radioName}"${dev === 'ios' ? ' checked' : ''}>IOS</label>`;
+        rangeRow.querySelector('input[type="checkbox"]').addEventListener('change', (e) => {
+          token.showFixedSpawnRange = e.target.checked;
+          renderTacFixedSpawns();
+          tacSave();
+        });
+        const [pcRadio, iosRadio] = rangeRow.querySelectorAll('input[type="radio"]');
+        const theory = rangeRow.querySelector('.tac-fsdev-theory');
+        const onDevChange = (next) => {
+          token.fixedSpawnDevice = next;
+          const [w, h] = fixedSpawnCfg.rangeScreenM[next];
+          theory.textContent = translate("application.onDevChange", { rangeM: fixedSpawnCfg.rangeM, width: w, height: h });
+          renderTacFixedSpawns();
+          tacSave();
+        };
+        pcRadio.addEventListener('change', () => { if (pcRadio.checked) onDevChange('pc'); });
+        iosRadio.addEventListener('change', () => { if (iosRadio.checked) onDevChange('ios'); });
+        settings.appendChild(rangeRow);
+      }
+    }
+    
+    const row = document.createElement('div');
+    row.className = 'tac-manage-row';
+    row.innerHTML =
+      translate("application.renderTacManageNinth", {  })
+      + `<input type="range" min="3" max="12" step="0.5" value="${token.size}"></label>`
+      + `<label class="tac-manage-hide"><input type="checkbox"`
+      + translate("application.renderTacManageTenth", { value: token.hideIcon ? ' checked' : '' })
+      + `<label class="tac-manage-glow"><input type="checkbox"`
+      + translate("application.renderTacManageEleventh", { value: token.glow ? ' checked' : '' })
+      + `<label class="tac-manage-def"><input type="checkbox"`
+      + translate("application.renderTacManageTwelfth", { value: isRoleDefault() ? ' checked' : '' })
+      + translate("application.renderTacManageThirteenth", {  });
+    const slider = row.querySelector('input[type="range"]');
+    const [hideCb, glowCb, defCb] = row.querySelectorAll('input[type="checkbox"]');
+    slider.addEventListener('input', () => {
+      token.size = parseFloat(slider.value);
+      const el = tacMapWrap.querySelector(`.tac-token[data-role="${role}"]`);
+      if (el) {
+        el.style.width = `${token.size}%`;
+        el.style.fontSize = `min(26px, ${token.size * 0.42}cqw)`;
+      }
+      defCb.checked = isRoleDefault();
+    });
+    
+    hideCb.addEventListener('change', () => {
+      token.hideIcon = hideCb.checked;
+      renderTacBoard();
+    });
+    
+    glowCb.addEventListener('change', () => {
+      token.glow = glowCb.checked;
+      renderTacBoard();
+    });
+    defCb.addEventListener('change', () => {
+      if (!defCb.checked) return;
+      token.size = TAC_MANAGE_DEFAULT.roleSize;
+      token.hideIcon = false;
+      if (rgCfg) { 
+        delete token.rangeMode;
+        delete token.rangeMeters;
+      }
+      renderTacBoard();
+    });
+    
+    row.querySelector('.tac-manage-del').addEventListener('click', () => {
+      const snapshot = { ...board.tokens[role] };
+      delete board.tokens[role];
+      tacUndoStack.push({ type: 'remove', role, token: snapshot });
+      if (tacSelected === role) tacSelected = null;
+      tacManageSel = null;
+      renderTacBoard();
+    });
+    settings.appendChild(row);
+    return;
+  }
+
+  
+  const idx = tacManageSel.idx;
+  const it = board.items[idx];
+  const itDef = TAC_ITEM_TYPES[it.kind] || {};
+  const rgCfg = (itDef.ranges && itDef.ranges.modes) ? itDef.ranges : null;
+  const curIcon = it.iconSize ?? TAC_MANAGE_DEFAULT.iconSize;
+  
+  const syncCircleWidth = () => {
+    const el = tacMapWrap.querySelector(`.tac-item-circle[data-idx="${idx}"]`);
+    if (el) el.style.width = `${tacItemSizePercent(it)}%`;
+  };
+  
+  const defModeKey = rgCfg ? tacRangeDefaultKey(rgCfg, false) : null;
+  const itemRangeIsDefault = () => {
+    if (!rgCfg) return true;
+    const mode = tacRangeModeOf(rgCfg, it, false);
+    if (mode.key !== defModeKey) return false;
+    const s = mode.size_m;
+    const instM = it.rangeMeters ?? it.meters;
+    if (s && Array.isArray(s.options) && instM !== undefined && instM !== s.options[0]) return false;
+    if (s && typeof s === 'object' && !Array.isArray(s.options)
+      && instM !== undefined && instM !== s.max) return false;
+    if (mode.fearMods && (it.fearHunter || it.fearSurv)) return false;
+    return true;
+  };
+  const isDefault = !it.hideIcon
+    && curIcon === TAC_MANAGE_DEFAULT.iconSize
+    && itemRangeIsDefault();
+
+  
+  const refreshDefault = () => {
+    defCb.checked = !it.hideIcon
+      && (it.iconSize ?? TAC_MANAGE_DEFAULT.iconSize)
+        === TAC_MANAGE_DEFAULT.iconSize
+      && itemRangeIsDefault();
+  };
+
+  
+  if (rgCfg) {
+    buildTacRangeRows(settings, rgCfg, it, false,
+      { softUpdate: () => { syncCircleWidth(); refreshDefault(); } });
+  }
+
+  
+  const row = document.createElement('div');
+  row.className = 'tac-manage-row';
+  row.innerHTML =
+    translate("application.renderTacManageNinth", {  })
+    + `<input type="range" min="1.5" max="10" step="0.2" value="${curIcon}"></label>`
+    + `<label class="tac-manage-hide"><input type="checkbox"`
+    + translate("application.renderTacManageTenth", { value: it.hideIcon ? ' checked' : '' })
+    + `<label class="tac-manage-glow"><input type="checkbox"`
+    + translate("application.renderTacManageEleventh", { value: it.glow ? ' checked' : '' })
+    + `<label class="tac-manage-def"><input type="checkbox"`
+    + translate("application.renderTacManageTwelfth", { value: isDefault ? ' checked' : '' })
+    + translate("application.renderTacManageThirteenth", {  });
+  settings.appendChild(row);
+  const sizeSlider = row.querySelector('input[type="range"]');
+  const [hideCb, glowCb, defCb] = row.querySelectorAll('input[type="checkbox"]');
+
+  sizeSlider.addEventListener('input', () => {
+    it.iconSize = parseFloat(sizeSlider.value);
+    const el = tacMapWrap.querySelector(
+      `.tac-item-circle[data-idx="${idx}"] img, .tac-item-pin[data-idx="${idx}"] img`);
+    if (el) { el.style.width = `${it.iconSize}cqw`; el.style.height = `${it.iconSize}cqw`; }
+    refreshDefault();
+  });
+  hideCb.addEventListener('change', () => {
+    it.hideIcon = hideCb.checked;
+    renderTacBoard();
+  });
+  
+  glowCb.addEventListener('change', () => {
+    it.glow = glowCb.checked;
+    renderTacBoard();
+  });
+  defCb.addEventListener('change', () => {
+    if (!defCb.checked) return;
+    
+    
+    delete it.rangeMode;
+    delete it.rangeMeters;
+    delete it.hideRange;
+    delete it.meters;
+    delete it.fearHunter;
+    delete it.fearSurv;
+    it.iconSize = TAC_MANAGE_DEFAULT.iconSize;
+    it.hideIcon = false;
+    renderTacBoard(); 
+  });
+  
+  row.querySelector('.tac-manage-del').addEventListener('click', () => {
+    const removed = board.items[idx];
+    board.items.splice(idx, 1);
+    tacUndoStack.push({ type: 'delItem', item: { ...removed }, idx });
+    if (tacSelectedItem === idx) tacSelectedItem = null;
+    tacManageSel = null;
+    renderTacBoard();
+  });
+}
+
+export function updateTacPanel() {
+  const board = tacBoard();
+  renderTacManage();
+  [tacRolesEl, tacRolesHunterEl, tacRolesOtherEl].forEach((box) =>
+    box.querySelectorAll('.tac-role').forEach((btn) => {
+      const role = btn.dataset.role;
+      btn.classList.toggle('placed', !!board.tokens[role]);
+      btn.classList.toggle('armed', tacPlaceRole === role);
+      btn.classList.toggle('selected', tacSelected === role);
+    }));
+  tacticView.classList.toggle('tac-placing', !!(tacPlaceRole || tacPlaceItem));
+
+  
+  const selItem = tacSelectedItem !== null ? board.items[tacSelectedItem] : null;
+  const activeRole = tacPlaceRole || tacSelected
+    || (tacPlaceItem && tacPlaceItem.role)
+    || (selItem && selItem.role);
+  const activeDef = activeRole ? TAC_ROLES[activeRole] : null;
+  const showItems = !!(activeDef && activeDef.items && activeDef.items.length);
+  tacItemSection.style.display = showItems ? '' : 'none';
+  if (showItems) {
+    
+    const activeBtn =
+      tacRolesEl.querySelector(`.tac-role[data-role="${activeRole}"]`)
+      || tacRolesHunterEl.querySelector(`.tac-role[data-role="${activeRole}"]`)
+      || tacRolesOtherEl.querySelector(`.tac-role[data-role="${activeRole}"]`);
+        
+    if (activeBtn && (tacItemRole !== activeRole
+        || activeBtn.nextSibling !== tacItemSection))
+      buildTacItems(activeRole, activeBtn);
+    
+    if (tacPlaceItem && tacPlaceItem.role !== activeRole) tacPlaceItem = null;
+    document.querySelectorAll('.tac-item').forEach((btn) => {
+      btn.classList.toggle('armed',
+        !!tacPlaceItem && tacPlaceItem.kind === btn.dataset.kind);
+    });
+  } else {
+    tacPlaceItem = null;
+    tacItemRole = null;
+    
+    tacItemSection.style.display = 'none';
+    document.querySelectorAll('.tac-item-section').forEach((s) => {
+      if (s !== tacItemSection) s.remove();
+    });
+  }
+
+  
+
+  renderTacTextList();
+  tacWidthVal.textContent = tacArrowWidth;
+  tacUndoBtn.disabled = tacUndoStack.length === 0;
+  updateTacMeasureInfo();
+}
+
+
+
+
+export function tacLetter(i) {
+  let s = '';
+  let k = i + 1;
+  while (k > 0) {
+    s = String.fromCharCode(65 + ((k - 1) % 26)) + s;
+    k = Math.floor((k - 1) / 26);
+  }
+  return s;
+}
+
+
+export function tacLetterNode(x, y, txt) {
+  const t = document.createElementNS(TAC_SVG_NS, 'text');
+  t.setAttribute('x', x);
+  t.setAttribute('y', y - 11);
+  t.setAttribute('class', 'tac-mletter');
+  t.textContent = txt;
+  return t;
+}
+
+
+export function tacFmtD(v) {
+  return (Math.round(v * 100) / 100).toFixed(2).replace(/\.?0+$/, '');
+}
+
+
+export function tacSelLine() {
+  const all = tacBoard().measures;
+  const m = tacSelMeasure && tacSelMeasure.idx != null ? all[tacSelMeasure.idx] : null;
+  if (!m || !m.lc) return null;
+  if (m.chain == null) return { segs: [m], lc: m.lc, n: 1, selSeg: 0, chain: null };
+  const segs = all.filter((x) => x.chain === m.chain && x.lc === m.lc);
+  return { segs, lc: m.lc, n: segs.length,
+    selSeg: Math.max(0, segs.indexOf(m)), chain: m.chain };
+}
+
+
+export function tacEditTarget() {
+  const L = tacSelLine();
+  if (!L) return { pending: true };
+  if (L.chain == null) return { pending: false, lc: L.lc, from: 0, to: 1, n: 1 };
+  if (tacApplyScope === 'chain') return { pending: false, lc: L.lc, from: 0, to: L.n, n: L.n };
+  return { pending: false, lc: L.lc, from: L.selSeg, to: L.selSeg + 1, n: L.n };
+}
+
+
+export function tacBaseAt(lc, i) {
+  return lc.bases.find((b) => b.from <= i && b.to > i) || lc.bases[0];
+}
+
+
+export function tacApplyBase(lc, from, to, base) {
+  const nb = [];
+  for (const b of lc.bases) {
+    if (b.to <= from || b.from >= to) { nb.push(b); continue; }
+    if (b.from < from) nb.push({ ...b, to: from });
+    if (b.to > to) nb.push({ ...b, from: to });
+  }
+  nb.push({ from, to, ...base });
+  nb.sort((a, b) => a.from - b.from);
+  lc.bases = nb;
+  tacNormLc(lc); 
+}
+
+
+export function tacRemoveBuffsIn(lc, from, to, pred) {
+  const nb = [];
+  for (const b of lc.buffs) {
+    if (!pred(b) || b.to <= from || b.from >= to) { nb.push(b); continue; }
+    if (b.from < from) nb.push({ ...b, id: ++tacBuffSeq, to: from });
+    if (b.to > to) nb.push({ ...b, id: ++tacBuffSeq, from: to });
+  }
+  lc.buffs = nb;
+}
+
+
+export function tacTraitRoleInTarget() {
+  const tgt = tacEditTarget();
+  const bs = tgt.pending
+    ? tacPending.buffs
+    : tgt.lc.buffs.filter((b) => b.from < tgt.to && b.to > tgt.from);
+  const tr = bs.find((b) => b.type === 'trait');
+  if (!tr) return null;
+  const td = Object.values(TAC_TRAIT_BUFFS).flat().find((t) => t.key === tr.key);
+  return td ? td.role : (tr.name || '').split(' · ')[0];
+}
+
+
+export function tacClearTraitOfRole(roleName) {
+  if (!roleName) return;
+  const tgt = tacEditTarget();
+  const match = (b) => {
+    if (b.type !== 'trait') return false;
+    if (b.name === roleName || String(b.name || '').indexOf(roleName + ' · ') === 0) return true;
+    return Object.values(TAC_TRAIT_BUFFS).flat() 
+      .some((t) => t.key === b.key && t.role === roleName);
+  };
+  if (tgt.pending) {
+    tacPending.buffs = tacPending.buffs.filter((b) => !match(b));
+  } else {
+    tacRemoveBuffsIn(tgt.lc, tgt.from, tgt.to, match);
+  }
+}
+
+
+export function tacApplyTrait(lc, from, to, def, roleName) {
+  tacRemoveBuffsIn(lc, from, to, (b) => {
+    if (b.type !== 'trait') return false;
+    const td = Object.values(TAC_TRAIT_BUFFS).flat().find((t) => t.key === b.key);
+    const bRole = td ? td.role : (b.name || '').split(' · ')[0];
+    return bRole !== roleName;
+  });
+  if (def) {
+    lc.buffs.push({
+      id: ++tacBuffSeq, type: 'trait', key: def.key, name: def.name,
+      mult: def.mult, duration: def.duration || 0,
+      from, to,
+    });
+  }
+}
+
+
+export function tacAddBuffEntry(entry) {
+  const rows = [{ ...entry }];
+  delete rows[0].extra;
+  if (entry.extra) rows.push({ ...entry.extra, type: entry.type, key: entry.key });
+  const linkId = rows.length > 1 ? ++tacBuffSeq : null;
+  const tgt = tacEditTarget();
+  const base = tgt.pending ? tacPending.base : tacBaseAt(tgt.lc, tgt.from);
+  if (base.fixed) { 
+    showToast(translate("application.tacAddBuffEntry"));
+    return false;
+  }
+  
+  let states = null;
+  if (entry.type === 'talent') states = (TAC_TALENT_BUFFS[entry.key] || {}).states;
+  else if (entry.type === 'other') {
+    states = (Object.values(TAC_OTHER_BUFFS).flat()
+      .find((t) => t.key === entry.key) || {}).states;
+  }
+  const state = tacStateOf(base);
+  if (!tacStateMatches(states, state)) {
+    showToast(translate("application.tacAddBuffEntryAlternate", { name: TAC_STATE_NAMES[state] || state }));
+    return false;
+  }
+  if (tgt.pending) {
+    rows.forEach((r) => tacPending.buffs.push(
+      { ...r, id: ++tacBuffSeq, from: null, to: null, linkId }));
+    return true;
+  }
+  const { lc, from, to } = tgt;
+  rows.forEach((r) => lc.buffs.push({ ...r, id: ++tacBuffSeq, from, to, linkId }));
+  return true;
+}
+
+
+export function tacNewLineCfg(n) {
+  const lc = {
+    lid: ++tacLcSeq,
+    bases: [{ from: 0, to: n, ...tacPending.base }],
+    buffs: tacPending.buffs.map((b) => ({ ...b, id: ++tacBuffSeq, from: 0, to: n })),
+  };
+  tacNormLc(lc);
+  return lc;
+}
+
+
+export function tacExtendLineCfg(lc, oldN) {
+  const newN = oldN + 1;
+  lc.bases.forEach((b) => { if (b.to === oldN) b.to = newN; });
+  lc.buffs.forEach((b) => { if (b.to === oldN) b.to = newN; });
+  tacNormLc(lc); 
+}
+
+
+export function tacAppendSegCfg(lc, oldN) {
+  lc.bases.push({ from: oldN, to: oldN + 1, ...tacPending.base });
+  lc.bases.sort((a, b) => a.from - b.from);
+  tacNormLc(lc);
+  for (const b of tacPending.buffs) {
+    lc.buffs.push({ ...b, id: ++tacBuffSeq, from: oldN, to: oldN + 1 });
+  }
+}
+
+
+export function tacSimLine(segs, lc) {
+  const widthM = MAPS_DATA[S.currentMapId].widthM;
+  const n = segs.length;
+  const dists = segs.map((m) => {
+    const { units, dw } = tacMeasureLen(m);
+    return units / dw * widthM;
+  });
+  const buffs = lc.buffs
+    .map((b) => ({ ...b,
+      from: Math.max(0, Math.min(n, b.from ?? 0)),
+      to: Math.max(0, Math.min(n, b.to ?? n)) }))
+    .filter((b) => b.to > b.from);
+  const arrival = [0];
+  const out = [];
+  let t = 0;
+  for (let i = 0; i < n; i++) {
+    const dist = dists[i];
+    const base = tacBaseAt(lc, i);
+    const baseSpeed = base.speed;
+    const inDomain = buffs.filter((b) => b.from <= i && b.to >= i + 1);
+    const seg = { dist, t: 0, t0: dist / baseSpeed, parts: [] };
+    let rest = dist;
+    while (rest > 1e-9) {
+      const active = inDomain.filter((b) =>
+        !b.duration || t < arrival[b.from] + b.duration - 1e-9);
+      
+      const addMult = Math.max(0.01, 1 + active.filter((b) => !b.postMult)
+        .reduce((a, b) => a + ((b.mult ?? 1) - 1), 0));
+      const mult = active.filter((b) => b.postMult)
+        .reduce((a, b) => a * (b.mult ?? 1), addMult);
+      const v = baseSpeed * mult;
+      const pct = (mult - 1) * 100;
+      let dt = rest / v;
+      for (const b of active) {
+        if (!b.duration) continue;
+        const rem = arrival[b.from] + b.duration - t;
+        if (rem < dt) dt = Math.max(0, rem);
+      }
+      const d = v * dt;
+      const last = seg.parts[seg.parts.length - 1];
+      if (last && Math.abs(last.v - v) < 1e-9) { last.dist += d; last.t += dt; }
+      else seg.parts.push({ dist: d, t: dt, v, pct });
+      seg.t += dt;
+      t += dt;
+      rest -= d;
+    }
+    arrival[i + 1] = t;
+    out.push(seg);
+  }
+  return {
+    total: t,
+    t0: out.reduce((a, s) => a + s.t0, 0),
+    dist: dists.reduce((a, b) => a + b, 0),
+    arrival, segs: out,
+  };
+}
+
+
+export function tacSpeedForms(key) {
+  if (key === 'survivor') return { forms: [{ name: translate("characters.camps.survivor"), speed: TAC_SURVIVOR_SPEED }], dual: false };
+  const sp = (TAC_ROLES[key] || {}).speed;
+  if (sp == null) return null;
+  if (typeof sp === 'number') return { forms: [{ name: '', speed: sp }], dual: false };
+  const forms = Object.entries(sp).map(([name, speed]) => ({ name, speed }));
+  return { forms, dual: true };
+}
+
+
+export function syncTacSpeedForm() {
+  const key = tacSpeedRole.value;
+  if (key === 'role') { 
+    const sig = 'role';
+    if (tacSpeedForm.dataset.sig !== sig) {
+      tacSpeedForm.innerHTML = Object.entries(TAC_ROLE_BASES).map(([k, d]) =>
+        `<option value="${k}">${d.name} ${d.speed}m/s</option>`).join('');
+      tacSpeedForm.dataset.sig = sig;
+    }
+    tacSpeedForm.style.display = '';
+    return;
+  }
+  if (key === 'fixed') { 
+    const sig = 'fixed';
+    if (tacSpeedForm.dataset.sig !== sig) {
+      tacSpeedForm.innerHTML = Object.entries(TAC_FIXED_BASES).map(([k, d]) =>
+        `<option value="${k}">${d.name} ${d.speed}m/s</option>`).join('');
+      tacSpeedForm.dataset.sig = sig;
+    }
+    tacSpeedForm.style.display = '';
+    return;
+  }
+  const info = tacSpeedForms(key);
+  if (info && info.dual) {
+    if (tacSpeedForm.dataset.sig !== key) {
+      tacSpeedForm.innerHTML = info.forms.map((f, i) =>
+        translate("application.syncTacSpeedForm", { index: i, name: f.name, speed: f.speed })).join('');
+      tacSpeedForm.dataset.sig = key;
+    }
+    tacSpeedForm.style.display = '';
+  } else {
+    tacSpeedForm.style.display = 'none';
+    tacSpeedForm.dataset.sig = key;
+  }
+}
+
+
+export function tacBuildRoleOptions() {
+  if (tacCamp === 'survivor') {
+    
+    let opts = Object.entries(TAC_BASE_STATES).map(([k, st]) =>
+      `<option value="${k}">${st.name} ${st.speed}m/s</option>`).join('');
+    opts += translate("application.tacBuildRoleOptions");
+    opts += translate("application.tacBuildRoleOptionsAlternate");
+    tacSpeedRole.innerHTML = opts + translate("application.tacBuildRoleOptionsThird");
+    tacSpeedRole.value = 'run';
+    return;
+  }
+  let opts = '';
+  for (const [key, def] of Object.entries(TAC_ROLES)) {
+    if (def.camp !== 'hunter') continue;
+    const sp0 = (def.speed != null && typeof def.speed === 'object')
+      ? Object.values(def.speed)[0] : def.speed;
+    opts += sp0
+      ? translate("application.tacBuildRoleOptionsFourth", { key: key, value: key === 'hellEmber' ? ' selected' : '', name: def.name, sp0: sp0 })
+      : translate("application.tacBuildRoleOptionsFifth", { key: key, name: def.name });
+  }
+  tacSpeedRole.innerHTML = opts + translate("application.tacBuildRoleOptionsThird");
+  tacSpeedRole.value = 'hellEmber';
+}
+
+
+export function tacSetCamp(camp) {
+  if (tacCamp === camp) return;
+  tacCamp = camp;
+  tacCampToggle.querySelectorAll('.side-btn').forEach((b) =>
+    b.classList.toggle('active', b.dataset.camp === camp));
+  tacBuildRoleOptions();
+}
+
+
+export function tacPanelBase() {
+  const v = parseFloat(tacBaseSpeedEl.value);
+  const speed = v > 0 ? v : TAC_SURVIVOR_SPEED;
+  const key = tacSpeedRole.value;
+  if (key === 'custom') {
+    return { name: translate("application.name"), speed, camp: tacCamp, role: null, form: 0, stKey: 'custom' };
+  }
+  if (tacCamp === 'survivor' && TAC_BASE_STATES[key]) { 
+    return { name: TAC_BASE_STATES[key].name, speed: TAC_BASE_STATES[key].speed,
+      camp: 'survivor', role: null, form: 0, stKey: key };
+  }
+  if (key === 'role') { 
+    const rb = TAC_ROLE_BASES[tacSpeedForm.value] || TAC_ROLE_BASES.survivor;
+    return { name: rb.name, speed: rb.speed, camp: 'survivor',
+      role: rb.role, form: rb.form || 0, stKey: 'role' };
+  }
+  if (key === 'fixed') { 
+    const fd = TAC_FIXED_BASES[tacSpeedForm.value] || Object.values(TAC_FIXED_BASES)[0];
+    return { name: fd.name, speed: fd.speed, camp: 'survivor',
+      role: fd.role, form: fd.form || 0, stKey: 'fixed', fixed: true };
+  }
+  const role = key;
+  const def = TAC_ROLES[role] || {};
+  const camp = def.camp || tacCamp;
+  const info = tacSpeedForms(role);
+  if (info && info.dual) {
+    const fi = Math.min(info.forms.length - 1, +tacSpeedForm.value || 0);
+    const fn = info.forms[fi].name;
+    return { name: fn === (def.name || role) ? fn : (def.name || role) + ' ' + fn, 
+      speed, camp, role, form: fi };
+  }
+  return { name: def.name || role, speed, camp, role, form: 0 };
+}
+
+
+export function tacApplyBaseInput(base) {
+  const tgt = tacEditTarget();
+  if (tgt.pending) tacPending.base = { ...base };
+  else tacApplyBase(tgt.lc, tgt.from, tgt.to, base);
+  tacPurgeInvalidBuffs(); 
+  updateTacMeasureInfo();
+  renderTacArrows();
+}
+
+
+export function tacPurgeInvalidBuffs() {
+  const tgt = tacEditTarget();
+  const base = tgt.pending ? tacPending.base : tacBaseAt(tgt.lc, tgt.from);
+  const state = tacStateOf(base);
+  const fixed = !!base.fixed;
+  const keep = (b) => {
+    if (fixed) return false; 
+    if (b.type === 'trait') {
+      const td = Object.values(TAC_TRAIT_BUFFS).flat().find((t) => t.key === b.key);
+      if (!td) return true;
+      if (td.roles && td.roles.length && !td.roles.includes(base.role)) return false; 
+      if (td.forms && td.forms.length && !td.forms.includes(base.form || 0)) return false; 
+      
+      if (base.stKey === 'role' && base.camp === 'survivor' && base.role) {
+        const roleName = (TAC_ROLES[base.role] || {}).name;
+        if (roleName && td.role !== roleName) return false;
+      }
+      if (!tacStateMatches(td.states, state)) return false; 
+      return true;
+    }
+    if (b.type === 'talent') {
+      const tb = TAC_TALENT_BUFFS[b.key];
+      if (tb && !tacStateMatches(tb.states, state)) return false;
+      return true;
+    }
+    if (b.type === 'other') {
+      const ob = Object.values(TAC_OTHER_BUFFS).flat().find((t) => t.key === b.key);
+      if (ob && !tacStateMatches(ob.states, state)) return false;
+      return true;
+    }
+    return true; 
+  };
+  if (tgt.pending) {
+    tacPending.buffs = tacPending.buffs.filter(keep);
+  } else {
+    const { lc, from, to } = tgt;
+    tacRemoveBuffsIn(lc, from, to, (b) => !keep(b));
+  }
+}
+
+
+export function tacSyncSpeedPanel() {
+  const tgt = tacEditTarget();
+  const sig = tgt.pending ? 'pending' : `L${tgt.lc.lid}:${tgt.from}-${tgt.to}`;
+  const base = tgt.pending ? tacPending.base : tacBaseAt(tgt.lc, tgt.from);
+  if (sig !== tacTargetSig) {
+    tacTargetSig = sig;
+    if (base.camp && base.camp !== tacCamp) tacSetCamp(base.camp);
+    if (tacCamp === 'survivor') {
+      if (base.stKey && TAC_BASE_STATES[base.stKey]) { 
+        tacSpeedRole.value = base.stKey;
+        syncTacSpeedForm();
+      } else if (base.fixed || base.stKey === 'fixed') { 
+        tacSpeedRole.value = 'fixed';
+        syncTacSpeedForm();
+        tacSpeedForm.value = `${base.role}:${base.form || 0}`;
+        if (!tacSpeedForm.value) tacSpeedForm.selectedIndex = 0;
+      } else if (base.stKey === 'role' || (base.role && TAC_ROLES[base.role])) { 
+        tacSpeedRole.value = 'role';
+        syncTacSpeedForm();
+        tacSpeedForm.value = base.role ? `${base.role}:${base.form || 0}` : 'survivor';
+        if (!tacSpeedForm.value) tacSpeedForm.selectedIndex = 0;
+      } else if (base.name === translate("application.name")) {
+        tacSpeedRole.value = 'custom';
+        syncTacSpeedForm();
+      }
+    } else if (base.role) {
+      tacSpeedRole.value = base.role;
+      syncTacSpeedForm();
+      tacSpeedForm.value = String(base.form || 0);
+    } else if (base.name === translate("application.name")) {
+      tacSpeedRole.value = 'custom';
+      syncTacSpeedForm();
+    }
+    tacBaseSpeedEl.value = Math.round(base.speed * 100) / 100;
+  } else {
+    if (document.activeElement !== tacBaseSpeedEl) {
+      tacBaseSpeedEl.value = Math.round(base.speed * 100) / 100;
+    }
+    let wantRole;
+    if (tacCamp === 'survivor') {
+      wantRole = (base.stKey && TAC_BASE_STATES[base.stKey]) ? base.stKey
+        : (base.fixed || base.stKey === 'fixed') ? 'fixed'
+        : (base.stKey === 'role' || (base.role && TAC_ROLES[base.role])) ? 'role'
+        : (base.name === translate("application.name") ? 'custom' : null);
+    } else {
+      wantRole = base.role || (base.name === translate("application.name") ? 'custom' : null);
+    }
+    if (wantRole && tacSpeedRole.value !== wantRole
+        && tacSpeedRole.querySelector(`option[value="${wantRole}"]`)) {
+      tacSpeedRole.value = wantRole; 
+      syncTacSpeedForm();
+      if ((wantRole === 'role' || wantRole === 'fixed') && tacCamp === 'survivor') {
+        tacSpeedForm.value = base.role ? `${base.role}:${base.form || 0}` : 'survivor';
+        if (!tacSpeedForm.value) tacSpeedForm.selectedIndex = 0;
+      } else if (base.role) tacSpeedForm.value = String(base.form || 0);
+    }
+  }
+  { 
+    const info = tacSpeedForms(tacSpeedRole.value);
+    tacLastRoleVal = (info && info.dual)
+      ? `${tacSpeedRole.value}:${tacSpeedForm.value || 0}`
+      : tacSpeedRole.value;
+  }
+}
+
+
+export function tacSyncStatus() {
+  const L = tacSelLine();
+  let s1, s2;
+  if (L) {
+    s1 = (L.chain != null && tacApplyScope === 'seg')
+      ? translate("application.tacSyncStatus", { value: tacLetter(L.selSeg), valueSecondary: tacLetter(L.selSeg + 1) }) 
+      : translate("application.tacSyncStatus", { value: tacLetter(0), valueSecondary: tacLetter(L.n) });
+    s2 = L.chain == null
+      ? translate("application.tacSyncStatusAlternate")
+      : (tacApplyScope === 'chain' ? translate("application.tacSyncStatusThird") : translate("application.tacSyncStatusFourth"));
+  } else {
+    s1 = translate("application.tacSyncStatusFifth");
+    s2 = tacMeasureMode === 'chain'
+      ? (tacApplyScope === 'chain' ? translate("application.tacSyncStatusSixth") : translate("application.tacSyncStatusSeventh"))
+      : translate("application.tacSyncStatusEighth");
+  }
+  tacStatusEl.innerHTML = s1;
+  tacStatus2El.textContent = s2;
+  tacDeselectBtn.disabled = !L;
+}
+
+
+export function tacSplitBases(lc) {
+  const nb = [];
+  lc.bases.forEach((b) => {
+    for (let i = b.from; i < b.to; i++) nb.push({ ...b, from: i, to: i + 1 });
+  });
+  lc.bases = nb;
+}
+
+export function tacMergeBases(lc) {
+  const nb = [];
+  lc.bases.forEach((b) => {
+    const last = nb[nb.length - 1];
+    if (last && last.to === b.from && last.name === b.name
+        && Math.abs(last.speed - b.speed) < 1e-9) last.to = b.to;
+    else nb.push({ ...b });
+  });
+  lc.bases = nb;
+}
+
+export function tacNormLc(lc) {
+  if (tacBaseMergeOn) tacMergeBases(lc); else tacSplitBases(lc);
+}
+
+export function tacNormalizeBases() {
+  const seen = new Set();
+  tacBoard().measures.forEach((m) => {
+    if (m.lc && !seen.has(m.lc)) { seen.add(m.lc); tacNormLc(m.lc); }
+  });
+}
+
+
+export function tacBaseDisplayRows(lc) {
+  const out = [];
+  lc.bases.forEach((b, i) => {
+    const last = out[out.length - 1];
+    if (tacBaseMergeOn && last && last.to === b.from && last.name === b.name
+        && Math.abs(last.speed - b.speed) < 1e-9) {
+      last.to = b.to;
+      last.idxs.push(i);
+    } else {
+      out.push({ from: b.from, to: b.to, name: b.name, speed: b.speed, idxs: [i] });
+    }
+  });
+  return out;
+}
+
+
+export function tacDeleteBase(lc, idxs) {
+  const b = lc.bases[idxs[0]];
+  if (!b) return;
+  const { from } = b;
+  const to = lc.bases[idxs[idxs.length - 1]].to;
+  const prev = lc.bases.filter((x) => x.to === from)[0];
+  if (prev) {
+    prev.to = to; 
+    lc.bases = lc.bases.filter((x, i) => !idxs.includes(i));
+  } else {
+    const dft = b.camp === 'hunter'
+      ? { name: TAC_ROLES.hellEmber.name, speed: TAC_ROLES.hellEmber.speed,
+          camp: 'hunter', role: 'hellEmber', form: 0 }
+      : { name: translate("characters.camps.survivor"), speed: TAC_SURVIVOR_SPEED,
+          camp: 'survivor', role: null, form: 0 };
+    lc.bases = lc.bases.filter((x, i) => !idxs.includes(i));
+    for (let i = from; i < to; i++) {
+      lc.bases.push({ from: i, to: i + 1, ...dft }); 
+    }
+  }
+  lc.bases.sort((a, c) => a.from - c.from);
+  tacNormLc(lc);
+}
+
+
+export function renderTacBaseDetail() {
+  tacBaseDetailToggle.textContent = translate("application.renderTacBaseDetail", { value: tacBaseDetailOpen ? '▾' : '▸' });
+  tacBaseDetailBody.style.display = tacBaseDetailOpen ? '' : 'none';
+  if (!tacBaseDetailOpen) {
+    tacBaseMergeBox.style.display = 'none';
+    return;
+  }
+  const tgt = tacEditTarget();
+  if (tgt.pending) {
+    tacBaseMergeBox.style.display = 'none';
+    const b = tacPending.base;
+    tacBaseDetailBody.innerHTML =
+      translate("application.renderTacBaseDetailAlternate")
+      + `<tr><td>${b.name}</td><td class="tac-col-speed"><b>${Math.round(b.speed * 100) / 100}</b></td>`
+      + '<td class="tac-col-pt">—</td><td class="tac-col-pt">—</td><td class="tac-col-del"></td></tr></table>';
+    return;
+  }
+  tacBaseMergeBox.style.display = '';
+  const L = tacSelLine();
+  const rows = tacBaseDisplayRows(tgt.lc);
+  tacBaseDetailBody.innerHTML =
+    translate("application.renderTacBaseDetailAlternate")
+    + rows.map((r, i) => `<tr class="tac-base-row" data-brow="${i}"><td>${r.name}</td>`
+      + `<td class="tac-col-speed"><b>${Math.round(r.speed * 100) / 100}</b></td>`
+      + `<td class="tac-col-pt">${tacLetter(r.from)}</td>`
+      + `<td class="tac-col-pt">${tacLetter(r.to)}</td>`
+      + translate("application.renderTacBaseDetailThird", { index: i })).join('')
+    + '</table>';
+  
+  tacBaseDetailBody.querySelectorAll('[data-brow]').forEach((tr) => {
+    tr.addEventListener('click', (e) => {
+      if (e.target.closest('[data-basedel]')) return;
+      const r = rows[+tr.dataset.brow];
+      if (!r || !L) return;
+      const segIdx = tacApplyScope === 'seg' ? r.from : 0;
+      const m = L.segs[Math.min(segIdx, L.segs.length - 1)];
+      const idx = tacBoard().measures.indexOf(m);
+      if (idx < 0) return;
+      tacSelMeasure = { idx };
+      renderTacArrows();
+      updateTacMeasureInfo();
+    });
+  });
+  
+  tacBaseDetailBody.querySelectorAll('[data-basedel]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const t2 = tacEditTarget();
+      if (t2.pending) return;
+      const r = rows[+btn.dataset.basedel];
+      if (!r) return;
+      tacDeleteBase(t2.lc, r.idxs);
+      updateTacMeasureInfo();
+      renderTacArrows();
+    });
+  });
+}
+
+
+export function tacLetterOptions(n, sel) {
+  let s = '';
+  for (let i = 0; i <= n; i++) {
+    s += `<option value="${i}"${i === sel ? ' selected' : ''}>${tacLetter(i)}</option>`;
+  }
+  return s;
+}
+
+
+export function renderTacBuffDetail() {
+  tacBuffDetailToggle.textContent = translate("application.renderTacBuffDetail", { value: tacBuffDetailOpen ? '▾' : '▸' });
+  tacBuffDetailBody.style.display = tacBuffDetailOpen ? '' : 'none';
+  if (!tacBuffDetailOpen) {
+    tacBuffFilterBox.style.display = 'none';
+    tacBuffFilterBox.innerHTML = '';
+    return;
+  }
+  const tgt = tacEditTarget();
+  const buffs = tgt.pending ? tacPending.buffs : tgt.lc.buffs;
+  const n = tgt.pending ? 0 : tgt.n;
+
+  
+  let shown = buffs;
+  if (tgt.pending) {
+    tacBuffFilterBox.style.display = 'none';
+    tacBuffFilterBox.innerHTML = '';
+  } else {
+    if (tacBuffFilter.all || tacBuffFilter.to > n || tacBuffFilter.from >= n) {
+      tacBuffFilter.from = 0;
+      tacBuffFilter.to = n;
+      tacBuffFilter.all = true;
+    }
+    tacBuffFilterBox.innerHTML = translate("application.renderTacBuffDetailAlternate")
+      + `<select id="tacBuffFilterFrom"${tacBuffFilter.all ? ' disabled' : ''}>${tacLetterOptions(n, tacBuffFilter.from)}</select>`
+      + `<select id="tacBuffFilterTo"${tacBuffFilter.all ? ' disabled' : ''}>${tacLetterOptions(n, tacBuffFilter.to)}</select>`
+      + translate("application.renderTacBuffDetailThird", { value: tacBuffFilter.all ? ' checked' : '' });
+    tacBuffFilterBox.style.display = '';
+    if (!tacBuffFilter.all) {
+      shown = buffs.filter((b) =>
+        b.from >= tacBuffFilter.from && b.to <= tacBuffFilter.to);
+    }
+  }
+
+  const rowsHtml = shown.map((b) => {
+    
+    const amp = b.postMult
+      ? `×${Math.round(b.mult * 100)}%`
+      : `${Math.round((b.mult - 1) * 100)}%`;
+    const dur = b.duration ? b.duration : '—';
+    const fromCell = tgt.pending ? '—'
+      : `<select data-bfrom="${b.id}">${tacLetterOptions(n, Math.min(b.from, n))}</select>`;
+    const toCell = tgt.pending ? '—'
+      : `<select data-bto="${b.id}">${tacLetterOptions(n, Math.min(b.to, n))}</select>`;
+    return `<tr><td>${b.name}</td><td class="tac-col-speed2">${amp}</td><td class="tac-col-speed2">${dur}</td>`
+      + `<td class="tac-col-pt">${fromCell}</td><td class="tac-col-pt">${toCell}</td>`
+      + translate("application.rowsHtml", { id: b.id });
+  }).join('');
+
+  tacBuffDetailBody.innerHTML =
+    (shown.length
+      ? translate("application.renderTacBuffDetailFourth")
+        + rowsHtml + '</table>'
+      : `<div class="tac-detail-empty">${buffs.length ? translate("application.renderTacBuffDetailFifth") : translate("application.renderTacBuffDetailSixth")}</div>`);
+
+  
+  const fromSel = $('tacBuffFilterFrom');
+  const allCb = $('tacBuffFilterAll');
+  if (fromSel) {
+    fromSel.addEventListener('change', () => {
+      tacBuffFilter.from = +fromSel.value;
+      if (tacBuffFilter.to <= tacBuffFilter.from) {
+        tacBuffFilter.to = tacBuffFilter.from + 1;
+      }
+      tacBuffFilter.all = false;
+      renderTacBuffDetail();
+    });
+    $('tacBuffFilterTo').addEventListener('change', () => {
+      tacBuffFilter.to = +$('tacBuffFilterTo').value;
+      if (tacBuffFilter.to <= tacBuffFilter.from) {
+        tacBuffFilter.from = tacBuffFilter.to - 1;
+      }
+      tacBuffFilter.all = false;
+      renderTacBuffDetail();
+    });
+    allCb.addEventListener('change', () => {
+      tacBuffFilter.all = allCb.checked;
+      renderTacBuffDetail();
+    });
+  }
+  
+  tacBuffDetailBody.querySelectorAll('select[data-bfrom]').forEach((sel) => {
+    sel.addEventListener('change', () => {
+      const t2 = tacEditTarget();
+      if (t2.pending) return;
+      const b = t2.lc.buffs.find((x) => x.id === +sel.dataset.bfrom);
+      if (!b) return;
+      b.from = +sel.value;
+      if (b.to <= b.from) b.to = b.from + 1;
+      updateTacMeasureInfo();
+      renderTacArrows();
+    });
+  });
+  tacBuffDetailBody.querySelectorAll('select[data-bto]').forEach((sel) => {
+    sel.addEventListener('change', () => {
+      const t2 = tacEditTarget();
+      if (t2.pending) return;
+      const b = t2.lc.buffs.find((x) => x.id === +sel.dataset.bto);
+      if (!b) return;
+      b.to = +sel.value;
+      if (b.to <= b.from) b.from = b.to - 1;
+      updateTacMeasureInfo();
+      renderTacArrows();
+    });
+  });
+  
+  tacBuffDetailBody.querySelectorAll('[data-bdel]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const t2 = tacEditTarget();
+      const list = t2.pending ? tacPending.buffs : t2.lc.buffs;
+      const b = list.find((x) => x.id === +btn.dataset.bdel);
+      if (!b) return;
+      const keep = b.linkId ? (x) => x.linkId !== b.linkId : (x) => x.id !== b.id;
+      if (t2.pending) tacPending.buffs = list.filter(keep);
+      else t2.lc.buffs = list.filter(keep);
+      updateTacMeasureInfo();
+      renderTacArrows();
+    });
+  });
+}
+
+
+export function buildTacTraitList() {
+  const rows = TAC_TRAIT_BUFFS[tacCamp] || [];
+  tacTraitList.innerHTML = rows.map((t) => {
+    let desc = t.levels
+      ? `${t.levels.map((m) => `${Math.round((m - 1) * 100)}%`).join('/')}`
+        + translate("application.desc", { count: t.levels.length })
+        + (t.duration ? ` ${t.duration}s` : translate("application.descAlternate"))
+      : `${Math.round((t.mult - 1) * 100)}%${t.postMult ? translate("application.descThird") : ''}`
+        + (t.duration ? ` ${t.duration}s` : translate("application.descAlternate"));
+    if (t.states) { 
+      desc += translate("application.buildTacTraitList", { name: t.states.map((k) => (TAC_BASE_STATES[k] || {}).name || k).join('/') });
+    }
+    if (t.forms) { 
+      desc += t.key === 'windWings' ? translate("application.buildTacTraitListAlternate") : translate("application.buildTacTraitListThird");
+    }
+    const lv = t.levels
+      ? `<select data-tlv="${t.key}">`
+        + t.levels.map((_, i) =>
+          `<option value="${i}"${i === t.levels.length - 1 ? ' selected' : ''}>${tacLevelLabel(t.key, i)}</option>`).join('')
+        + '</select>'
+      : '';
+    return `<div class="tac-talent-row"><span class="tac-talent-name">${t.role} · ${t.name}`
+      + `<small>${desc}</small></span>${lv}`
+      + translate("application.buildTacTraitListFourth", { key: t.key });
+  }).join('');
+}
+
+
+export function buildTacOtherList() {
+  const rows = TAC_OTHER_BUFFS[tacCamp] || [];
+  tacOtherList.innerHTML = rows.map((t) => {
+    let desc = t.levels
+      ? `${t.levels.map((m) => `${Math.round((m - 1) * 100)}%`).join('/')}`
+        + translate("application.desc", { count: t.levels.length })
+        + (t.duration ? ` ${t.duration}s` : translate("application.descAlternate"))
+      : `${Math.round((t.mult - 1) * 100)}%`
+        + (t.duration ? ` ${t.duration}s` : translate("application.descAlternate"));
+    if (t.states) {
+      desc += translate("application.buildTacTraitList", { name: t.states.map((k) => (TAC_BASE_STATES[k] || {}).name || k).join('/') });
+    }
+    const lv = t.levels
+      ? `<select data-olv="${t.key}">`
+        + t.levels.map((_, i) =>
+          translate("application.lv", { index: i, count: i === t.levels.length - 1 ? ' selected' : '', value: i + 1 })).join('')
+        + '</select>'
+      : '';
+    return `<div class="tac-talent-row"><span class="tac-talent-name">${t.name}`
+      + `<small>${desc}</small></span>${lv}`
+      + translate("application.buildTacOtherList", { key: t.key });
+  }).join('');
+}
+
+
+export function buildTacTalentList() {
+  const rows = Object.entries(TAC_TALENT_BUFFS)
+    .filter(([, b]) => !b.camp || b.camp === tacCamp);
+  tacTalentList.innerHTML = rows.map(([k, b]) => {
+    let desc = b.levels
+      ? `${b.levels.map((m) => `${Math.round((m - 1) * 100)}%`).join('/')}`
+        + translate("application.desc", { count: b.levels.length }) + (b.duration ? ` ${b.duration}s` : translate("application.descAlternate"))
+      : `${Math.round((b.mult - 1) * 100)}%` + (b.duration ? ` ${b.duration}s` : translate("application.descAlternate"));
+    const lv = b.levels
+      ? `<select data-lv="${k}">`
+        + b.levels.map((_, i) =>
+          translate("application.lv", { index: i, count: i === b.levels.length - 1 ? ' selected' : '', value: i + 1 })).join('')
+        + '</select>'
+      : '';
+    if (b.states) {
+      desc += translate("application.buildTacTraitList", { name: b.states.map((k2) => (TAC_BASE_STATES[k2] || {}).name || k2).join('/') });
+    }
+    return `<div class="tac-talent-row"><span class="tac-talent-name">${b.name}`
+      + `<small>${desc}${b.extra ? translate("application.buildTacTalentList", { name: b.extra.name }) : ''}</small></span>${lv}`
+      + translate("application.buildTacTalentListAlternate", { key: k });
+  }).join('');
+}
+
+
+export function updateTacMeasureInfo() {
+  
+  if (tacTool !== 'measure') return;
+  tacSave(); 
+  tacSyncStatus();
+  tacSyncSpeedPanel();
+  renderTacBaseDetail();
+  renderTacBuffDetail();
+
+  const all = tacBoard().measures;
+  const widthM = MAPS_DATA[S.currentMapId].widthM;
+
+  
+  let single = null, chainSegs = null, selIdx = null;
+  if (tacSelMeasure && tacSelMeasure.idx != null && all[tacSelMeasure.idx]) {
+    const m = all[tacSelMeasure.idx];
+    if (m.chain != null) {
+      chainSegs = all.map((x, i) => ({ m: x, i })).filter((x) => x.m.chain === m.chain);
+      selIdx = tacSelMeasure.idx;
+    } else {
+      single = { m, i: tacSelMeasure.idx };
+    }
+  }
+  if (!single && !chainSegs) {
+    if (tacMeasureMode === 'chain') {
+      const lastChain = all.length ? all[all.length - 1].chain : null;
+      const activeChain = tacChainRoute !== null ? tacChainRoute : lastChain;
+      if (activeChain !== null && activeChain !== undefined) {
+        chainSegs = all.map((m, i) => ({ m, i })).filter((x) => x.m.chain === activeChain);
+      }
+    } else {
+      for (let i = all.length - 1; i >= 0; i--) {
+        if (all[i].chain == null) { single = { m: all[i], i }; break; }
+      }
+    }
+  }
+
+  const fmt = (v) => (v == null ? '--' : (Math.round(v * 100) / 100).toFixed(2));
+  const headHtml = translate("application.headHtml")
+    + translate("application.headHtmlAlternate");
+  const segRow = (label, s, mIdx, sel) => {
+    const multi = s.parts.length > 1;
+    const open = tacSegExpanded.has(mIdx);
+    let r = `<tr class="tac-seg-sum${multi ? '' : ' no-exp'}${sel ? ' sel' : ''}" data-seg="${mIdx}">`
+      + `<td>${label}${multi ? `<i class="tac-expand">${open ? '↑' : '↓'}</i>` : ''}</td>`
+      + `<td><b>${tacFmtD(s.dist)}</b></td><td><b>${fmt(s.t)}</b></td>`
+      + `<td>${multi ? '--' : `<b>${fmt(s.parts[0].v)}</b>`}</td>`
+      + `<td>${multi ? '--' : `<b>${Math.round(s.parts[0].pct)}%</b>`}</td>`
+      + `<td>${fmt(s.t0)}</td></tr>`;
+    if (multi && open) {
+      const baseSpeed = s.dist / s.t0;
+      r += s.parts.map((p) => `<tr class="tac-sub-row"><td></td>`
+        + `<td>${tacFmtD(p.dist)}</td><td>${fmt(p.t)}</td>`
+        + `<td>${fmt(p.v)}</td><td>${Math.round(p.pct)}%</td>`
+        + `<td>${fmt(p.dist / baseSpeed)}</td></tr>`).join('');
+    }
+    return r;
+  };
+  const CN = translate("application.cn");
+
+  let html;
+  if (chainSegs && chainSegs.length) {
+    if (!widthM || !chainSegs[0].m.lc) {
+      html = translate("application.updateTacMeasureInfo");
+    } else {
+      const sim = tacSimLine(chainSegs.map((x) => x.m), chainSegs[0].m.lc);
+      html = headHtml
+        + translate("application.updateTacMeasureInfoAlternate", { value: tacLetter(0), count: tacLetter(sim.segs.length) })
+        + `<td><b>${tacFmtD(sim.dist)}</b></td><td><b>${fmt(sim.total)}</b></td>`
+        + '<td>--</td><td>--</td>'
+        + `<td>${fmt(sim.t0)}</td></tr>`
+        + sim.segs.map((s, si) => segRow(
+            translate("application.updateTacMeasureInfoThird", { value: CN[si] || (si + 1), valueSecondary: tacLetter(si), valueTertiary: tacLetter(si + 1) }),
+            s, chainSegs[si].i, selIdx === chainSegs[si].i)).join('')
+        + '</table>';
+      if (tacMeasurePending) {
+        html += '<div class="tac-result-empty" style="margin-top:6px">'
+          + translate("application.updateTacMeasureInfoFourth");
+      }
+    }
+  } else if (single) {
+    if (!widthM || !single.m.lc) {
+      html = translate("application.updateTacMeasureInfo");
+    } else {
+      const sim = tacSimLine([single.m], single.m.lc);
+      html = headHtml
+        + segRow(translate("application.updateTacMeasureInfoFifth", { value: tacLetter(0), valueSecondary: tacLetter(1) }), sim.segs[0], single.i,
+            !!(tacSelMeasure && tacSelMeasure.idx === single.i))
+        + '</table>';
+    }
+  } else {
+    html = `<div class="tac-result-empty">${tacMeasureMode === 'chain'
+      ? translate("application.updateTacMeasureInfoSixth")
+      : translate("application.updateTacMeasureInfoSeventh")}</div>`;
+  }
+  tacResult.innerHTML = html;
+  
+  tacResult.querySelectorAll('tr.tac-seg-sum[data-seg]').forEach((tr) => {
+    tr.addEventListener('click', () => {
+      const idx = +tr.dataset.seg;
+      
+      if (!tr.classList.contains('no-exp')) {
+        if (tacSegExpanded.has(idx)) tacSegExpanded.delete(idx);
+        else tacSegExpanded.add(idx);
+      }
+      tacSelMeasure = { idx };
+      renderTacArrows();
+      updateTacMeasureInfo();
+    });
+  });
+}
+
+
+export function buildTacSpeedPanel() {
+  tacBuildRoleOptions(); 
+
+  
+  function tacSyncScopeVis() {
+    tacScopeWrap.style.display = tacMeasureMode === 'chain' ? '' : 'none';
+  }
+
+  
+  tacCampToggle.querySelectorAll('.side-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (tacCamp === btn.dataset.camp) return;
+      tacSetCamp(btn.dataset.camp);
+      
+      {
+        const tgt = tacEditTarget();
+        if (tgt.pending) {
+          tacPending.buffs = tacPending.buffs.filter((b) => b.type !== 'trait' && b.type !== 'talent');
+        } else {
+          tacRemoveBuffsIn(tgt.lc, tgt.from, tgt.to,
+            (b) => b.type === 'trait' || b.type === 'talent');
+        }
+      }
+      let dft;
+      if (tacCamp === 'survivor') {
+        dft = { name: translate("application.nameAlternate"), speed: TAC_BASE_STATES.run.speed, camp: 'survivor', role: null, form: 0, stKey: 'run' };
+      } else {
+        const info = tacSpeedForms(tacSpeedRole.value);
+        const f0 = info ? info.forms[0] : { name: '', speed: TAC_SURVIVOR_SPEED };
+        tacSpeedForm.value = '0';
+        dft = { name: (TAC_ROLES[tacSpeedRole.value] || {}).name + (info && info.dual ? ' ' + f0.name : ''),
+          speed: f0.speed, camp: 'hunter', role: tacSpeedRole.value, form: 0 };
+      }
+      tacBaseSpeedEl.value = dft.speed;
+      syncTacSpeedForm();
+      tacApplyBaseInput(dft);
+    });
+  });
+  
+  tacScopeToggle.querySelectorAll('.side-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (tacApplyScope === btn.dataset.scope) return;
+      tacApplyScope = btn.dataset.scope;
+      tacScopeToggle.querySelectorAll('.side-btn').forEach((b) =>
+        b.classList.toggle('active', b === btn));
+      if (tacApplyScope === 'seg') { 
+        const L = tacSelLine();
+        if (L && L.chain != null) {
+          const all = tacBoard().measures;
+          tacSelMeasure = { idx: all.indexOf(L.segs[0]) };
+        }
+      }
+      tacTargetSig = ''; 
+      updateTacMeasureInfo();
+      renderTacArrows();
+    });
+  });
+  
+  tacDeselectBtn.addEventListener('click', () => {
+    tacSelMeasure = null;
+    renderTacArrows();
+    updateTacMeasureInfo();
+  });
+  
+  
+  
+  
+  tacSpeedRole.addEventListener('change', () => {
+    const prev = tacLastRoleVal; 
+    const prevKey = String(prev || '').split(':')[0];
+    const prevName = tacCamp === 'hunter'
+      ? ((TAC_ROLES[prevKey] || {}).name
+        || (TAC_BASE_STATES[prevKey] ? null : (tacTraitRoleInTarget() || null)))
+      : null; 
+    syncTacSpeedForm();
+    const info = tacSpeedForms(tacSpeedRole.value);
+    if (info) { 
+      tacSpeedForm.value = '0';
+      tacBaseSpeedEl.value = info.forms[0].speed;
+    }
+    if (tacSpeedRole.value === 'role' || tacSpeedRole.value === 'fixed') {
+      
+      if (!tacSpeedForm.value) tacSpeedForm.selectedIndex = 0;
+      tacBaseSpeedEl.value = tacPanelBase().speed;
+    }
+    if (prevName && tacSpeedRole.value !== prevKey) tacClearTraitOfRole(prevName);
+    tacApplyBaseInput(tacPanelBase());
+  });
+  tacSpeedForm.addEventListener('change', () => {
+    if (tacSpeedRole.value === 'role' || tacSpeedRole.value === 'fixed') {
+      
+      const pb = tacPanelBase();
+      tacBaseSpeedEl.value = pb.speed;
+      tacApplyBaseInput(pb);
+      return;
+    }
+    
+    const info = tacSpeedForms(tacSpeedRole.value);
+    const fi = Math.min(info.forms.length - 1, +tacSpeedForm.value || 0);
+    if (info) tacBaseSpeedEl.value = info.forms[fi].speed;
+    tacApplyBaseInput(tacPanelBase());
+  });
+  
+  tacBaseSpeedEl.addEventListener('input', () => {
+    const v = parseFloat(tacBaseSpeedEl.value);
+    if (!(v > 0)) return;
+    const cur = tacSpeedRole.value;
+    if (cur !== 'custom') {
+      let info, sp;
+      if (TAC_BASE_STATES[cur]) { info = null; sp = TAC_BASE_STATES[cur].speed; } 
+      else if (cur === 'role' || cur === 'fixed') { info = null; sp = tacPanelBase().speed; } 
+      else {
+        info = tacSpeedForms(cur);
+        const fi = info && info.dual ? (Math.min(info.forms.length - 1, +tacSpeedForm.value || 0)) : 0;
+        sp = info ? info.forms[fi].speed : null;
+      }
+      if (sp == null || Math.abs(sp - v) > 1e-9) { 
+        
+        const prevName = tacCamp === 'hunter'
+          ? ((TAC_ROLES[cur] || {}).name || (TAC_ROLES[tacLastRoleVal] || {}).name)
+          : null;
+        tacSpeedRole.value = 'custom';
+        syncTacSpeedForm();
+        if (prevName) tacClearTraitOfRole(prevName); 
+      } else { 
+        tacApplyBaseInput(tacPanelBase());
+        return;
+      }
+    }
+    tacApplyBaseInput({ name: translate("application.name"), speed: v, camp: tacCamp, role: null, form: 0 });
+  });
+  
+  tacTraitAddBtn.addEventListener('click', () => {
+    buildTacTraitList();
+    tacTraitModal.style.display = 'flex';
+  });
+  tacTraitClose.addEventListener('click', () => {
+    tacTraitModal.style.display = 'none';
+  });
+  tacTraitModal.addEventListener('click', (e) => {
+    if (e.target === tacTraitModal) tacTraitModal.style.display = 'none';
+  });
+  tacTraitList.addEventListener('click', (e) => {
+    const btn = e.target.closest('.tac-talent-add');
+    if (!btn) return;
+    const def = (TAC_TRAIT_BUFFS[tacCamp] || []).find((t) => t.key === btn.dataset.tk);
+    if (!def) return;
+    const tgt0 = tacEditTarget();
+    const base0 = tgt0.pending ? tacPending.base : tacBaseAt(tgt0.lc, tgt0.from);
+    
+    if (base0.fixed) {
+      tacTraitModal.style.display = 'none';
+      showToast(translate("application.tacAddBuffEntry"));
+      return;
+    }
+    
+    const state0 = tacStateOf(base0);
+    if (!tacStateMatches(def.states, state0)) {
+      tacTraitModal.style.display = 'none';
+      if (tacCamp === 'survivor') {
+        showToast(translate("application.tacAddBuffEntryAlternate", { name: TAC_STATE_NAMES[state0] || state0 }));
+      } else {
+        showToast(translate("application.buildTacSpeedPanel", { role: def.role, name: def.name, nameSecondary: (def.states || []).map((k) => (TAC_BASE_STATES[k] || {}).name || k).join('/') }));
+      }
+      return;
+    }
+    
+    
+    if (tacCamp === 'survivor' && base0.stKey === 'role' && base0.role) {
+      const roleName = (TAC_ROLES[base0.role] || {}).name;
+      if (roleName && def.role !== roleName) {
+        tacTraitModal.style.display = 'none';
+        showToast(translate("application.buildTacSpeedPanelAlternate"));
+        return;
+      }
+    }
+    const lvSel = tacTraitList.querySelector(`select[data-tlv="${def.key}"]`);
+    const lv = lvSel ? +lvSel.value : null;
+    const entry = {
+      key: def.key,
+      name: def.levels
+        ? `${def.role} · ${def.name} ${tacLevelLabel(def.key, lv)}`
+        : `${def.role} · ${def.name}`,
+      mult: def.levels ? def.levels[lv ?? def.levels.length - 1] : def.mult,
+      duration: def.duration || 0,
+    };
+    if (def.postMult) entry.postMult = true; 
+    
+    
+    let rKey = null, traitBase = null;
+    if (tacCamp === 'hunter') {
+      rKey = Object.keys(TAC_ROLES).find((k) => TAC_ROLES[k].name === def.role) || null;
+      if (rKey) {
+        const sp = TAC_ROLES[rKey].speed;
+        const forms = typeof sp === 'object' ? Object.entries(sp) : [[def.role, sp]];
+        let fi = 0;
+        if (def.forms && def.forms.length) fi = def.forms[0]; 
+        traitBase = { name: `${def.role}${forms.length > 1 ? ' ' + forms[fi][0] : ''}`,
+          speed: forms[fi][1], camp: 'hunter', role: rKey, form: fi };
+      }
+    }
+    const tgt = tacEditTarget();
+    if (tgt.pending) {
+      
+      tacPending.buffs = tacPending.buffs.filter((b) => {
+        if (b.type !== 'trait') return true;
+        const td = Object.values(TAC_TRAIT_BUFFS).flat().find((t) => t.key === b.key);
+        const bRole = td ? td.role : (b.name || '').split(' · ')[0];
+        return bRole === def.role;
+      });
+      tacPending.buffs.push({
+        id: ++tacBuffSeq, type: 'trait', ...entry, from: null, to: null,
+      });
+      if (traitBase) {
+        tacPending.base = { ...traitBase };
+        tacTargetSig = '';
+      }
+    } else {
+      tacApplyTrait(tgt.lc, tgt.from, tgt.to, entry, def.role);
+      if (traitBase) {
+        tacApplyBase(tgt.lc, tgt.from, tgt.to, traitBase);
+        tacTargetSig = '';
+      }
+    }
+    
+    if (tacCamp === 'hunter' && rKey
+        && tacSpeedRole.querySelector(`option[value="${rKey}"]`)) {
+      tacSpeedRole.value = rKey;
+      syncTacSpeedForm();
+      if (traitBase) tacSpeedForm.value = String(traitBase.form || 0);
+      const info2 = tacSpeedForms(tacSpeedRole.value);
+      tacLastRoleVal = (info2 && info2.dual)
+        ? `${tacSpeedRole.value}:${tacSpeedForm.value || 0}`
+        : tacSpeedRole.value;
+    }
+    tacTraitModal.style.display = 'none'; 
+    showToast(translate("application.buildTacSpeedPanelThird", { name: entry.name }));
+    updateTacMeasureInfo();
+    renderTacArrows();
+  });
+  
+  tacOtherAddBtn.addEventListener('click', () => {
+    buildTacOtherList();
+    tacOtherModal.style.display = 'flex';
+  });
+  tacOtherClose.addEventListener('click', () => {
+    tacOtherModal.style.display = 'none';
+  });
+  tacOtherModal.addEventListener('click', (e) => {
+    if (e.target === tacOtherModal) tacOtherModal.style.display = 'none';
+  });
+  tacOtherList.addEventListener('click', (e) => {
+    const btn = e.target.closest('.tac-talent-add');
+    if (!btn) return;
+    const def = (TAC_OTHER_BUFFS[tacCamp] || []).find((t) => t.key === btn.dataset.ok);
+    if (!def) return;
+    const lvSel = tacOtherList.querySelector(`select[data-olv="${def.key}"]`);
+    const lv = lvSel ? +lvSel.value : null;
+    const name = def.levels ? translate("application.nameThird", { name: def.name, value: lv + 1 }) : def.name;
+    const entry = {
+      type: 'other', key: def.key, name,
+      mult: def.levels ? def.levels[lv ?? def.levels.length - 1] : def.mult,
+      duration: def.duration || 0,
+    };
+    tacOtherModal.style.display = 'none'; 
+    if (tacAddBuffEntry(entry)) {
+      showToast(translate("application.buildTacSpeedPanelThird", { name: name }));
+      updateTacMeasureInfo();
+      renderTacArrows();
+    }
+  });
+  
+  tacTalentAddBtn.addEventListener('click', () => {
+    buildTacTalentList();
+    tacTalentModal.style.display = 'flex';
+  });
+  tacTalentClose.addEventListener('click', () => {
+    tacTalentModal.style.display = 'none';
+  });
+  tacTalentModal.addEventListener('click', (e) => {
+    if (e.target === tacTalentModal) tacTalentModal.style.display = 'none';
+  });
+  tacTalentList.addEventListener('click', (e) => {
+    const btn = e.target.closest('.tac-talent-add');
+    if (!btn) return;
+    const k = btn.dataset.k;
+    const def = TAC_TALENT_BUFFS[k];
+    if (!def) return;
+    const lvSel = tacTalentList.querySelector(`select[data-lv="${k}"]`);
+    const lv = lvSel ? +lvSel.value : null;
+    const mult = def.levels ? def.levels[lv ?? def.levels.length - 1] : def.mult;
+    const name = def.levels ? translate("application.nameThird", { name: def.name, value: lv + 1 }) : def.name;
+    const entry = { type: 'talent', key: k, name, mult, duration: def.duration || 0 };
+    if (def.extra) entry.extra = { name: def.extra.name, mult: def.extra.mult, duration: 0 };
+    tacTalentModal.style.display = 'none'; 
+    if (tacAddBuffEntry(entry)) {
+      showToast(translate("application.buildTacSpeedPanelThird", { name: name }));
+      updateTacMeasureInfo();
+      renderTacArrows();
+    }
+  });
+  
+  tacBuffAddBtn.addEventListener('click', () => {
+    tacBuffModal.style.display = 'flex';
+  });
+  tacBuffClose.addEventListener('click', () => {
+    tacBuffModal.style.display = 'none';
+  });
+  tacBuffModal.addEventListener('click', (e) => {
+    if (e.target === tacBuffModal) tacBuffModal.style.display = 'none';
+  });
+  tacBuffOk.addEventListener('click', () => {
+    const pct = parseFloat(tacBuffPct.value);
+    tacBuffModal.style.display = 'none'; 
+    if (!pct) { showToast(translate("application.buildTacSpeedPanelFourth")); return; }
+    const dur = parseFloat(tacBuffDur.value) || 0; 
+    const name = (tacBuffName.value || '').trim() || translate("application.name");
+    const ok = tacAddBuffEntry({ type: 'custom', key: '', name, mult: 1 + pct / 100, duration: dur });
+    if (ok) {
+      tacBuffName.value = '';
+      tacBuffPct.value = '';
+      tacBuffDur.value = '';
+      showToast(translate("application.buildTacSpeedPanelThird", { name: name }));
+      updateTacMeasureInfo();
+      renderTacArrows();
+    }
+  });
+  
+  $('tacHelpBtn').addEventListener('click', () => {
+    $('tacHelpModal').style.display = 'flex';
+  });
+  $('tacHelpClose').addEventListener('click', () => {
+    $('tacHelpModal').style.display = 'none';
+  });
+  $('tacHelpModal').addEventListener('click', (e) => {
+    if (e.target === $('tacHelpModal')) $('tacHelpModal').style.display = 'none';
+  });
+  
+  tacBaseDetailToggle.addEventListener('click', () => {
+    tacBaseDetailOpen = !tacBaseDetailOpen;
+    renderTacBaseDetail();
+  });
+  tacBaseMerge.addEventListener('change', () => {
+    tacBaseMergeOn = tacBaseMerge.checked;
+    tacNormalizeBases(); 
+    tacTargetSig = '';
+    renderTacBaseDetail();
+    updateTacMeasureInfo();
+    renderTacArrows();
+  });
+  tacBuffDetailToggle.addEventListener('click', () => {
+    tacBuffDetailOpen = !tacBuffDetailOpen;
+    renderTacBuffDetail();
+  });
+  tacResultToggle.addEventListener('click', () => {
+    tacResultOpen = !tacResultOpen;
+    tacResultToggle.textContent = translate("application.buildTacSpeedPanelFifth", { value: tacResultOpen ? '▾' : '▸' });
+    tacResultBody.style.display = tacResultOpen ? '' : 'none';
+  });
+
+  syncTacSpeedForm();
+  tacBaseSpeedEl.value = tacPending.base.speed;
+  
+  tacMStyleToggle.addEventListener('click', () => {
+    const open = tacMStyleBody.style.display === 'none'; 
+    tacMStyleBody.style.display = open ? '' : 'none';
+    tacMStyleToggle.classList.toggle('open', open);
+    tacMStyleToggle.textContent = open ? translate("application.buildTacSpeedPanelSixth") : translate("application.buildTacSpeedPanelSeventh");
+  });
+  
+  tacMeasureModesEl.querySelectorAll('.side-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      tacMeasureMode = btn.dataset.mmode;
+      tacMeasureModesEl.querySelectorAll('.side-btn').forEach((b) =>
+        b.classList.toggle('active', b === btn));
+      tacChainRoute = null;
+      tacMeasurePending = null;
+      tacMeasureHover = null;
+      tacSelMeasure = null;
+      tacSyncScopeVis(); 
+      syncTacMeasureStyleUI();
+      renderTacBoard();
+      updateTacMeasureInfo();
+    });
+  });
+  
+  tacMeasureColorsEl.querySelectorAll('.tac-color').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      tacMeasureStyle[tacMeasureMode].color = btn.dataset.color;
+      tacMeasureColorsEl.querySelectorAll('.tac-color').forEach((b) =>
+        b.classList.toggle('active', b === btn));
+      tacSave();
+    });
+  });
+  tacMeasureWidthEl.addEventListener('input', () => {
+    tacMeasureStyle[tacMeasureMode].width = parseInt(tacMeasureWidthEl.value, 10);
+    tacMeasureWidthVal.textContent = tacMeasureWidthEl.value;
+    tacSave();
+  });
+  syncTacMeasureStyleUI();
+  tacSyncScopeVis();
+}
+
+
+export function syncTacMeasureStyleUI() {
+  const st = tacMeasureStyle[tacMeasureMode];
+  tacMeasureColorsEl.querySelectorAll('.tac-color').forEach((b) =>
+    b.classList.toggle('active', b.dataset.color === st.color));
+  tacMeasureWidthEl.value = st.width;
+  tacMeasureWidthVal.textContent = st.width;
+}
+
+buildTacSpeedPanel();
+
+
+export function enterTactic() {
+  tacMapTitle.textContent = MAPS_DATA[S.currentMapId].mapName;
+  tacMapTitleEn.textContent = MAPS_DATA[S.currentMapId].mapNameEn;
+  tacMeasurePending = null;
+  tacMeasureHover = null;
+  tacChainRoute = null;
+  tacSelMeasure = null;
+  syncTacImage();
+  renderTacBoard();
+}
+
+
+export function syncTacSubCards() {
+  tacManageCard.style.display = tacTool === 'select' ? '' : 'none';
+  tacRolesCard.style.display = tacTool === 'roles' ? '' : 'none';
+  tacDrawCard.style.display = tacTool === 'draw' ? '' : 'none';
+  tacTextCard.style.display = tacTool === 'draw' ? '' : 'none';
+  tacMeasureCard.style.display = tacTool === 'measure' ? '' : 'none';
+  tacDisplayCard.style.display = tacTool === 'display' ? '' : 'none';
+}
+
+export function setTacTool(tool) {
+  tacTool = tool;
+  tacUpdateTouchAction(); 
+  tacPlaceRole = null;
+  tacPlaceItem = null;
+  tacDrawing = null;
+  tacMeasurePending = null;
+  tacMeasureHover = null;
+  tacTextPlacing = false;
+  updateTacTextUi();
+  tacChainRoute = null; 
+  tacSelMeasure = null; 
+  tacticView.querySelectorAll('.tac-tool').forEach((b) =>
+    b.classList.toggle('active', !!b.dataset.tool && b.dataset.tool === tool));
+  tacticView.classList.toggle('tac-mode-draw', tool === 'draw');
+  tacticView.classList.toggle('tac-mode-delete', tool === 'delete');
+  tacticView.classList.toggle('tac-mode-measure', tool === 'measure');
+  if (tacZoomState.pan) tacSetPanMode(false); 
+  syncTacSubCards();
+  renderTacArrows();
+  updateTacPanel();
+}
+
+
+tacticView.querySelectorAll('.tac-tool[data-tool]').forEach((btn) =>
+  btn.addEventListener('click', () => setTacTool(btn.dataset.tool)));
+
+
+export function buildTacRoles() {
+  const campBoxes = {
+    survivor: tacRolesEl, hunter: tacRolesHunterEl, other: tacRolesOtherEl,
+  };
+  Object.values(campBoxes).forEach((box) => { box.innerHTML = ''; });
+  for (const [role, def] of Object.entries(TAC_ROLES)) {
+    const btn = document.createElement('button');
+    btn.className = 'tac-role';
+    btn.dataset.role = role;
+    btn.style.setProperty('--rc', def.color || '#fff');
+    btn.innerHTML = def.icon
+      ? `<span class="tac-role-dot tac-role-img">`
+        + `<img src="${def.icon}" alt="${def.name}" draggable="false"></span>${def.name}`
+      : `<span class="tac-role-dot">${(def.name || role).charAt(0)}</span>${def.name}`;
+    btn.addEventListener('click', () => onTacRoleClick(role));
+    (campBoxes[def.camp] || tacRolesEl).appendChild(btn);
+  }
+}
+
+buildTacRoles();
+
+
+tacticView.querySelectorAll('.tac-camp-header').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const camp = btn.closest('.tac-camp');
+    camp.classList.toggle('collapsed');
+    if (camp.classList.contains('collapsed')) {
+      const inCamp = (r) => r && (TAC_ROLES[r] || {}).camp === btn.dataset.camp;
+      if (inCamp(tacSelected) || inCamp(tacPlaceRole)) {
+        tacSelected = null;
+        tacPlaceRole = null;
+      }
+      if (tacPlaceItem && inCamp(tacPlaceItem.role)) tacPlaceItem = null;
+      if (tacSelectedItem !== null) {
+        const it = tacBoard().items[tacSelectedItem];
+        if (it && inCamp(it.role)) tacSelectedItem = null;
+      }
+      renderTacBoard();
+    }
+  });
+});
+
+
+export function onTacRoleClick(role) {
+  if (tacBoard().tokens[role]) {
+    tacSelected = tacSelected === role ? null : role;
+    tacPlaceRole = null;
+  } else {
+    
+    if (tacTool !== 'roles') setTacTool('roles');
+    tacPlaceRole = role;
+    tacSelected = null;
+  }
+  tacSelectedItem = null;
+  renderTacBoard();
+}
+
+
+
+
+export function buildTacItems(role, activeBtn) {
+  const def = TAC_ROLES[role];
+  tacItemRole = role;
+  
+  document.querySelectorAll('.tac-item-section').forEach((s) => {
+    if (s !== tacItemSection) s.remove();
+  });
+  const grid = activeBtn.parentElement;
+  
+  let cols = 4;
+  const tracks = getComputedStyle(grid).gridTemplateColumns;
+  if (tracks && tracks !== 'none') cols = tracks.split(' ').length || 4;
+  activeBtn.after(tacItemSection);
+  const lead = Array.from(grid.children).indexOf(tacItemSection) % cols;
+  const firstRow = Math.max(1, cols - lead);
+  
+  const rows = [];
+  for (let i = 0, n = firstRow; i < def.items.length; i += n, n = cols)
+    rows.push(def.items.slice(i, i + n));
+  
+  const sections = [tacItemSection];
+  for (let r = 1; r < rows.length; r++) {
+    const s = tacItemSection.cloneNode(false);
+    s.removeAttribute('id');
+    const inner = document.createElement('div');
+    inner.className = 'tac-items';
+    s.appendChild(inner);
+    sections.push(s);
+  }
+  rows.forEach((chunk, r) => {
+    const sec = sections[r];
+    sec.style.display = '';
+    sec.style.setProperty('--tac-item-cols', Math.max(1, chunk.length));
+    const box = sec.querySelector('.tac-items');
+    box.innerHTML = '';
+    chunk.forEach((kind) => {
+      const it = TAC_ITEM_TYPES[kind];
+      const btn = document.createElement('button');
+      btn.className = 'tac-item';
+      btn.dataset.kind = kind;
+      btn.style.setProperty('--ic', it.color);
+      btn.title = it.name;
+      btn.innerHTML =
+        `<span class="tac-item-dot"><img src="${it.icon}" alt="${it.name}" draggable="false"></span>${it.name}`;
+      btn.addEventListener('click', () => onTacItemClick(role, kind));
+      box.appendChild(btn);
+    });
+  });
+  
+  activeBtn.after(...sections);
+}
+
+
+export function onTacItemClick(role, kind) {
+  if (tacPlaceItem && tacPlaceItem.kind === kind) {
+    tacPlaceItem = null;
+  } else {
+    const def = TAC_ROLES[role];
+    
+    const perKind = Array.isArray(def.maxItems);
+    const limit = perKind
+      ? def.maxItems[def.items.indexOf(kind)] : def.maxItems;
+    const count = tacBoard().items.filter((i) =>
+      i.role === role && (!perKind || i.kind === kind)).length;
+    if (limit && count >= limit) {
+      const itemName = (TAC_ITEM_TYPES[kind] || {}).name || translate("application.itemName");
+      showToast(translate("application.onTacItemClick", { name: itemName, limit: limit }));
+      return;
+    }
+    if (tacTool !== 'roles') setTacTool('roles');
+    tacPlaceItem = { role, kind };
+    tacPlaceRole = null;
+    tacSelected = null;
+    tacSelectedItem = null;
+  }
+  renderTacBoard();
+}
+
+
+tacShapesEl.querySelectorAll('.tac-shape').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    tacDrawShape = btn.dataset.shape;
+    tacShapesEl.querySelectorAll('.tac-shape').forEach((b) =>
+      b.classList.toggle('active', b === btn));
+  });
+});
+
+
+tacColorsEl.querySelectorAll('.tac-color').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    tacArrowColor = btn.dataset.color;
+    tacColorsEl.querySelectorAll('.tac-color').forEach((b) =>
+      b.classList.toggle('active', b === btn));
+  });
+});
+
+tacWidthEl.addEventListener('input', () => {
+  tacArrowWidth = parseInt(tacWidthEl.value, 10);
+  tacWidthVal.textContent = tacArrowWidth;
+});
+
+
+tacTextColorsEl.querySelectorAll('.tac-color').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    tacTextStyle.color = btn.dataset.color;
+    tacTextColorsEl.querySelectorAll('.tac-color').forEach((b) =>
+      b.classList.toggle('active', b === btn));
+    
+    if (tacSelectedText !== null && tacBoard().texts[tacSelectedText]) {
+      tacBoard().texts[tacSelectedText].color = btn.dataset.color;
+      renderTacBoard();
+    }
+  });
+});
+
+tacTextSizeEl.addEventListener('input', () => {
+  tacTextStyle.size = parseInt(tacTextSizeEl.value, 10);
+  tacTextSizeVal.textContent = tacTextStyle.size;
+  if (tacSelectedText !== null && tacBoard().texts[tacSelectedText]) {
+    tacBoard().texts[tacSelectedText].size = tacTextStyle.size;
+    renderTacBoard();
+  }
+});
+
+
+export function updateTacTextUi() {
+  tacTextAddBtn.classList.toggle('active', tacTextPlacing);
+  tacTextAddBtn.textContent = tacTextPlacing ? translate("application.updateTacTextUi") : translate("application.updateTacTextUiAlternate");
+  tacTextHint.textContent = tacTextPlacing
+    ? translate("application.updateTacTextUiThird")
+    : translate("application.updateTacTextUiFourth");
+}
+
+tacTextAddBtn.addEventListener('click', () => {
+  if (tacTextPlacing) {
+    tacTextPlacing = false;
+  } else {
+    tacTextPlacing = true;
+    tacPlaceRole = null;
+    tacPlaceItem = null;
+  }
+  updateTacTextUi();
+});
+
+
+export function renderTacTextList() {
+  
+  const ae = document.activeElement;
+  if (ae && ae.tagName === 'INPUT' && tacTextList.contains(ae)) return;
+  const texts = tacBoard().texts;
+  tacTextList.innerHTML = '';
+  if (!texts.length) {
+    tacTextList.innerHTML =
+      translate("application.renderTacTextList");
+    return;
+  }
+  if (tacSelectedText !== null && !texts[tacSelectedText]) tacSelectedText = null;
+  texts.forEach((t, idx) => {
+    const row = document.createElement('div');
+    row.className = 'tac-text-row' + (tacSelectedText === idx ? ' sel' : '');
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = t.text;
+    input.maxLength = 60;
+    input.addEventListener('input', () => {
+      t.text = input.value;
+      renderTacBoard();
+    });
+    input.addEventListener('focus', () => {
+      tacSelectedText = idx;
+      
+      tacTextStyle.color = t.color;
+      tacTextStyle.size = t.size;
+      tacTextSizeEl.value = t.size;
+      tacTextSizeVal.textContent = t.size;
+      tacTextColorsEl.querySelectorAll('.tac-color').forEach((b) =>
+        b.classList.toggle('active', b.dataset.color === t.color));
+      renderTacBoard();
+      renderTacTextList();
+    });
+    const done = document.createElement('button');
+    done.className = 'tac-text-done';
+    done.type = 'button';
+    done.textContent = '√';
+    done.title = translate("application.renderTacTextListAlternate");
+    done.addEventListener('click', () => {
+      if (tacSelectedText === idx) tacSelectedText = null;
+      if (document.activeElement && tacTextList.contains(document.activeElement))
+        document.activeElement.blur();
+      renderTacBoard();
+    });
+    const del = document.createElement('button');
+    del.className = 'tac-text-del';
+    del.type = 'button';
+    del.textContent = '✕';
+    del.title = translate("application.renderTacTextListThird");
+    del.addEventListener('click', () => {
+      const removed = tacBoard().texts[idx];
+      tacBoard().texts.splice(idx, 1);
+      tacUndoStack.push({ type: 'delText', text: { ...removed }, idx });
+      if (tacSelectedText === idx) tacSelectedText = null;
+      renderTacBoard();
+    });
+    row.append(input, done, del);
+    tacTextList.appendChild(row);
+  });
+}
+
+
+export function tacLoadImg(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+
+export async function tacExportImage() {
+  const map = MAPS_DATA[S.currentMapId];
+  const [W0, H0] = map.mapSize;
+  const wrapW = tacMapWrap.clientWidth || 1;
+  const wrapH = tacMapWrap.clientHeight || 1;
+  
+  const cropOn = tacDisplay.exportCrop && tacZoomState.scale > 1;
+  
+  const vx = cropOn ? -tacZoomState.tx / (tacZoomState.scale * wrapW) : 0;
+  const vy = cropOn ? -tacZoomState.ty / (tacZoomState.scale * wrapH) : 0;
+  const vw = cropOn ? 1 / tacZoomState.scale : 1;
+  const vh = cropOn ? 1 / tacZoomState.scale : 1;
+  const W = Math.round(W0 * vw), H = Math.round(H0 * vh);
+  const cv = document.createElement('canvas');
+  cv.width = W;
+  cv.height = H;
+  const ctx = cv.getContext('2d');
+  const sx = W / wrapW, sy = H / wrapH;
+  
+  const PX = (rx) => (rx - vx) * W / vw;
+  const PY = (ry) => (ry - vy) * H / vh;
+
+  
+  const chainFirst = {}, chainLast = {};
+  tacBoard().measures.forEach((m, i) => {
+    if (m.chain == null) return;
+    if (chainFirst[m.chain] === undefined) chainFirst[m.chain] = i;
+    chainLast[m.chain] = i;
+  });
+
+  
+  const base = await tacLoadImg(map.mapImage);
+  if (base) ctx.drawImage(base, vx * W0, vy * H0, W0 * vw, H0 * vh, 0, 0, W, H);
+  else { ctx.fillStyle = '#1e293b'; ctx.fillRect(0, 0, W, H); }
+
+  
+  const svgClone = tacArrowSvg.cloneNode(true);
+  svgClone.setAttribute('xmlns', TAC_SVG_NS);
+  svgClone.setAttribute('width', W0);
+  svgClone.setAttribute('height', H0);
+  const svgUrl = URL.createObjectURL(new Blob(
+    [new XMLSerializer().serializeToString(svgClone)], { type: 'image/svg+xml' }));
+  const svgImg = await tacLoadImg(svgUrl);
+  URL.revokeObjectURL(svgUrl);
+  if (svgImg) ctx.drawImage(svgImg, vx * W0, vy * H0, W0 * vw, H0 * vh, 0, 0, W, H);
+
+  
+  if (tacDisplay.zones) {
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
+    ctx.lineWidth = Math.max(1.5, W / 400);
+    mapsZonesRelative[S.currentMapId].forEach((z) =>
+      ctx.strokeRect(PX(z.x), PY(z.y), z.width * W / vw, z.height * H / vh));
+  }
+
+  const [ciphIcon, dungeonIcon, doorIcon] = await Promise.all([
+    tacLoadImg(CIPHER_ICON_URL), tacLoadImg(DUNGEON_ICON_URL),
+    tacLoadImg(ESCAPE_DOOR_ICON_URL)]);
+
+  
+  if (tacDisplay.ciphers && ciphIcon) {
+    const size = tacDisplay.cipherSize / 100 * W;
+    map.cipherCombinations[S.currentCipherIndex].forEach((cid) => {
+      const c = cipherOf(S.currentMapId, cid);
+      if (!c) return;
+      const x = PX(c.location[0] / W0), y = PY(c.location[1] / H0);
+      ctx.drawImage(ciphIcon, x - size / 2, y - size / 2, size, size);
+    });
+  }
+  
+  if (tacDisplay.dungeon && dungeonIcon && map.dungeons.length) {
+    const pt = map.dungeons[S.tacDungeonIndex % map.dungeons.length];
+    const size = tacDisplay.dungeonSize / 100 * W;
+    ctx.drawImage(dungeonIcon,
+      PX(pt[0] / W0) - size / 2, PY(pt[1] / H0) - size / 2, size, size);
+  }
+  
+  if (tacDisplay.doors && doorIcon) {
+    const size = tacDisplay.doorSize / 100 * W;
+    tacDoorPoints(map).forEach((pt) => ctx.drawImage(doorIcon,
+      PX(pt[0] / W0) - size / 2, PY(pt[1] / H0) - size / 2, size, size));
+  }
+
+  const board = tacBoard();
+  
+  const itemIconCache = {};
+  await Promise.all(board.items.map(async (it) => {
+    const def = TAC_ITEM_TYPES[it.kind];
+    if (def && def.icon && !it.hideIcon && itemIconCache[it.kind] === undefined)
+      itemIconCache[it.kind] = await tacLoadImg(def.icon);
+  }));
+  for (const it of board.items) {
+    const def = TAC_ITEM_TYPES[it.kind];
+    if (!def) continue;
+    const x = PX(it.x), y = PY(it.y);
+    const sizePct = tacItemSizePercent(it);
+    if (sizePct !== null) {
+      const d = sizePct / 100 * W;
+      ctx.save();
+      if (def.fill) { ctx.fillStyle = def.fill; }
+      ctx.strokeStyle = def.color || '#e2e8f0';
+      ctx.setLineDash([W / 60, W / 90]);
+      ctx.lineWidth = Math.max(1.5, W / 350);
+      ctx.beginPath();
+      ctx.arc(x, y, d / 2, 0, Math.PI * 2);
+      if (def.fill) ctx.fill();
+      ctx.globalAlpha = 0.9;
+      ctx.stroke();
+      ctx.restore();
+    }
+    const icon = itemIconCache[it.kind];
+    if (icon) {
+      const isz = (it.iconSize ?? 3.4) / 100 * W;
+      ctx.drawImage(icon, x - isz / 2, y - isz / 2, isz, isz);
+    } else if (!def.icon || it.hideIcon) {
+      ctx.fillStyle = def.color || '#e2e8f0';
+      ctx.beginPath();
+      ctx.arc(x, y, Math.max(3, W / 200), 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  
+  for (const [role, t] of Object.entries(board.tokens)) {
+    const def = TAC_ROLES[role] || {};
+    const x = PX(t.x), y = PY(t.y);
+    const d = t.size / 100 * W;
+    if (def.icon) {
+      const img = await tacLoadImg(def.icon);
+      if (img) { ctx.drawImage(img, x - d / 2, y - d / 2, d, d); continue; }
+    }
+    ctx.save();
+    ctx.fillStyle = def.color || '#fff';
+    ctx.beginPath();
+    ctx.arc(x, y, d / 2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#0f172a';
+    ctx.font = `800 ${d * 0.42}px 'Noto Sans SC', sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText((def.name || role).charAt(0), x, y);
+    ctx.restore();
+  }
+  
+  ctx.save();
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.lineJoin = 'round';
+  board.texts.forEach((t) => {
+    const px = Math.max(2.2, t.size * 0.18) / 100 * wrapW * sx;
+    ctx.font = `700 ${px}px 'Noto Sans SC', sans-serif`;
+    const lines = String(t.text).split('\n');
+    const lh = px * 1.35;
+    lines.forEach((line, i) => {
+      const ty = PY(t.y) + (i - (lines.length - 1) / 2) * lh;
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
+      ctx.lineWidth = Math.max(2, px / 6);
+      ctx.strokeText(line, PX(t.x), ty);
+      ctx.fillStyle = t.color;
+      ctx.fillText(line, PX(t.x), ty);
+    });
+  });
+  ctx.restore();
+
+  
+  ctx.save();
+  ctx.lineWidth = Math.max(1.5, W / 400);
+  board.measures.forEach((m, idx) => {
+    const isChain = m.chain != null;
+    if (isChain && !(chainFirst[m.chain] === idx || chainLast[m.chain] === idx)) return;
+    const dotColor = tacMeasureSegColor(m);
+    [['x1', 'y1'], ['x2', 'y2']].forEach(([kx, ky]) => {
+      if (isChain) {
+        const isStartEnd =
+          (chainFirst[m.chain] === idx && kx === 'x1')
+          || (chainLast[m.chain] === idx && kx === 'x2');
+        if (!isStartEnd) return;
+      }
+      ctx.fillStyle = dotColor;
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.7)';
+      ctx.beginPath();
+      ctx.arc(PX(m[kx]), PY(m[ky]), 6 * sx, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    });
+  });
+  ctx.restore();
+
+  
+  const fileName = translate("application.fileName", { name: map.mapName });
+  const download = (blobUrl) => {
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  };
+  try {
+    if (cv.toBlob) {
+      cv.toBlob(async (blob) => {
+        if (!blob) { showToast(translate("application.tacExportImage")); return; }
+        const file = new File([blob], fileName, { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({ files: [file] });
+            return;
+          } catch (err) {
+            if (err && err.name === 'AbortError') return; 
+          }
+        }
+        const url = URL.createObjectURL(blob);
+        download(url);
+        setTimeout(() => URL.revokeObjectURL(url), 4000);
+        showToast(translate("application.tacExportImageAlternate"));
+      }, 'image/png');
+    } else {
+      download(cv.toDataURL('image/png'));
+      showToast(translate("application.tacExportImageAlternate"));
+    }
+  } catch (err) {
+    showToast(translate("application.tacExportImageThird"));
+  }
+}
+
+tacExportBtn.addEventListener('click', tacExportImage);
+
+
+export function tacPos(e) {
+  const r = tacMapWrap.getBoundingClientRect();
+  const clamp01 = (v) => Math.min(0.995, Math.max(0.005, v));
+  return {
+    x: clamp01((e.clientX - r.left) / r.width),
+    y: clamp01((e.clientY - r.top) / r.height),
+    W: r.width,
+    H: r.height,
+  };
+}
+
+tacMapWrap.addEventListener('pointerdown', (e) => {
+  if (e.button !== 0) return;
+  
+  if (tacZoomState.pan) {
+    tacPanDrag = { startX: e.clientX, startY: e.clientY,
+      baseTx: tacZoomState.tx, baseTy: tacZoomState.ty };
+    tacMapWrap.classList.add('grabbing');
+    tacMapWrap.setPointerCapture(e.pointerId);
+    return;
+  }
+  const tokenEl = e.target.closest('.tac-token');
+  const itemEl = e.target.closest('.tac-item-circle, .tac-item-pin');
+  const textEl = e.target.closest('.tac-text');
+  const p = tacPos(e);
+
+  
+  if (tacTextPlacing) {
+    const content = (tacTextInput.value || '').trim() || translate("application.content");
+    tacBoard().texts.push({
+      x: p.x, y: p.y, text: content,
+      color: tacTextStyle.color, size: tacTextStyle.size,
+    });
+    tacUndoStack.push({ type: 'addText' });
+    tacSelectedText = tacBoard().texts.length - 1;
+    tacTextPlacing = false;
+    updateTacTextUi();
+    renderTacBoard();
+    return;
+  }
+
+  
+  if (tacTool === 'delete') {
+    if (tokenEl) {
+      const role = tokenEl.dataset.role;
+      const snapshot = { ...tacBoard().tokens[role] };
+      delete tacBoard().tokens[role];
+      tacUndoStack.push({ type: 'remove', role, token: snapshot });
+      if (tacSelected === role) tacSelected = null;
+      renderTacBoard();
+    } else if (itemEl) {
+      const idx = +itemEl.dataset.idx;
+      const removed = tacBoard().items[idx];
+      tacBoard().items.splice(idx, 1);
+      tacUndoStack.push({ type: 'delItem', item: { ...removed }, idx });
+      if (tacSelectedItem === idx) tacSelectedItem = null;
+      renderTacBoard();
+    } else if (textEl) {
+      const idx = +textEl.dataset.idx;
+      const removed = tacBoard().texts[idx];
+      tacBoard().texts.splice(idx, 1);
+      tacUndoStack.push({ type: 'delText', text: { ...removed }, idx });
+      if (tacSelectedText === idx) tacSelectedText = null;
+      renderTacBoard();
+    }
+    return;
+  }
+
+  
+  if (textEl) {
+    tacSelectedText = +textEl.dataset.idx;
+    tacDragText = { idx: tacSelectedText };
+    tacMapWrap.setPointerCapture(e.pointerId);
+    tacSelected = null;
+    tacSelectedItem = null;
+    renderTacBoard();
+    return;
+  }
+
+  
+  if (tacSelectedText !== null) {
+    tacSelectedText = null;
+    tacMapWrap.querySelectorAll('.tac-text.selected').forEach((el) =>
+      el.classList.remove('selected'));
+    updateTacPanel();
+  }
+
+  
+  
+  if (tacTool === 'draw') {
+    const sp = tacSnapLandmark(p);
+    tacDrawing = { x1: sp.x, y1: sp.y, x2: sp.x, y2: sp.y };
+    tacMapWrap.setPointerCapture(e.pointerId);
+    return;
+  }
+
+  
+  if (tacTool === 'measure') {
+    const dotEl = e.target.closest('.tac-measure-dot');
+    if (dotEl) {
+      
+      const mIdx = +dotEl.dataset.idx;
+      const m0 = tacBoard().measures[mIdx];
+      const isA = dotEl.dataset.end === 'a';
+      tacDragMeasure = {
+        idx: mIdx, end: dotEl.dataset.end,
+        ox: m0 ? (isA ? m0.x1 : m0.x2) : null,
+        oy: m0 ? (isA ? m0.y1 : m0.y2) : null,
+      };
+      tacMapWrap.setPointerCapture(e.pointerId);
+      return;
+    }
+    
+    const gEl = e.target.closest('g[data-midx]');
+    if (gEl && !tacMeasurePending) {
+      const idx = +gEl.dataset.midx;
+      if (tacBoard().measures[idx]) {
+        tacSelMeasure = { idx };
+        renderTacArrows();
+        updateTacMeasureInfo();
+        return;
+      }
+    }
+    if (!tacMeasurePending) {
+      const sp = tacSnapLandmark(p); 
+      tacMeasurePending = { x: sp.x, y: sp.y };
+      tacMeasureHover = null;
+      tacSelMeasure = null; 
+      
+      if (tacMeasureMode === 'chain') tacChainRoute = ++tacRouteSeq;
+    } else {
+      const sp = tacSnapLandmark(p);
+      
+      const d = Math.hypot((sp.x - tacMeasurePending.x) * p.W,
+        (sp.y - tacMeasurePending.y) * p.H);
+      if (d >= 10) {
+        const st = tacMeasureStyle[tacMeasureMode];
+        const board = tacBoard();
+        const chain = tacMeasureMode === 'chain' ? tacChainRoute : null;
+        
+        
+        let lc = null;
+        if (chain != null) {
+          const prev = board.measures.filter((m) => m.chain === chain);
+          if (prev.length && prev[0].lc) {
+            lc = prev[0].lc;
+            if (tacApplyScope === 'chain') tacExtendLineCfg(lc, prev.length);
+            else tacAppendSegCfg(lc, prev.length);
+          }
+        }
+        if (!lc) lc = tacNewLineCfg(1);
+        board.measures.push({
+          x1: tacMeasurePending.x, y1: tacMeasurePending.y,
+          x2: sp.x, y2: sp.y,
+          chain,
+          color: st.color, width: st.width,
+          lc,
+        });
+        tacUndoStack.push({ type: 'addMeasure' });
+        
+        tacMeasurePending = tacMeasureMode === 'chain' ? { x: sp.x, y: sp.y } : null;
+        tacMeasureHover = null;
+        renderTacBoard();
+        return;
+      }
+    }
+    renderTacArrows();
+    updateTacMeasureInfo();
+    return;
+  }
+
+  
+  if (tokenEl) {
+    tacSelected = tokenEl.dataset.role;
+    tacSelectedItem = null;
+    tacPlaceRole = null;
+    tacPlaceItem = null;
+    tacManageSel = { type: 'role', role: tacSelected }; 
+    tacDrag = { role: tacSelected };
+    
+    const abIt = tacAbyssItem();
+    if (abIt && tacSelected === 'Naiad') {
+      const t0 = tacBoard().tokens.Naiad;
+      abIt.abyss.recording = true;
+      abIt.abyss.trail = [{ x: t0.x, y: t0.y }];
+    }
+    tacMapWrap.setPointerCapture(e.pointerId);
+    tacMapWrap.querySelectorAll('.tac-token').forEach((el) =>
+      el.classList.toggle('selected', el === tokenEl && tacDisplay.selGlow));
+    updateTacPanel();
+    return;
+  }
+  if (itemEl) {
+    const idx = +itemEl.dataset.idx;
+    tacSelectedItem = idx;
+    tacSelected = null;
+    tacPlaceRole = null;
+    tacPlaceItem = null;
+    tacManageSel = { type: 'item', idx }; 
+    
+    const it0 = tacBoard().items[idx];
+    const abyssLocked = !!(it0 && it0.abyss && it0.abyss.on && tacBoard().tokens.Naiad);
+    tacDragItem = abyssLocked
+      ? null : { idx, pushingItems: new Set(), pushingRoles: new Set() };
+    tacMapWrap.setPointerCapture(e.pointerId);
+    tacMapWrap.querySelectorAll('.tac-item-circle, .tac-item-pin').forEach((el) =>
+      el.classList.toggle('selected', +el.dataset.idx === idx && tacDisplay.selGlow));
+    updateTacPanel();
+    return;
+  }
+  if (tacPlaceItem) {
+    const def = TAC_ITEM_TYPES[tacPlaceItem.kind];
+    
+    if (def && def.maxCount
+        && tacBoard().items.filter((o) => o.kind === tacPlaceItem.kind).length
+          >= def.maxCount) {
+      showToast(translate("application.message", { name: def.name, count: def.maxCount }));
+      return;
+    }
+    const item = {
+      role: tacPlaceItem.role, kind: tacPlaceItem.kind,
+      x: p.x, y: p.y,
+    };
+    tacBoard().items.push(item);
+    
+    let cl = tacClampLinkPos(tacBoard().items.length - 1, p.x, p.y);
+    
+    cl = tacClampRoleLinkPos(tacBoard().items.length - 1, cl.x, cl.y);
+    item.x = cl.x; item.y = cl.y;
+    tacUndoStack.push({ type: 'addItem' });
+    tacSelectedItem = tacBoard().items.length - 1;
+    tacManageSel = { type: 'item', idx: tacSelectedItem };
+    tacPlaceItem = null;
+    renderTacBoard();
+    return;
+  }
+  if (tacPlaceRole) {
+    
+    
+    const rp = tacClampTokenToLinkedItems(tacPlaceRole, p.x, p.y);
+    tacBoard().tokens[tacPlaceRole] =
+      { x: rp.x, y: rp.y, size: TAC_MANAGE_DEFAULT.roleSize };
+    tacUndoStack.push({ type: 'place', role: tacPlaceRole });
+    tacSelected = tacPlaceRole;
+    tacManageSel = { type: 'role', role: tacPlaceRole };
+    tacPlaceRole = null;
+    renderTacBoard();
+    return;
+  }
+  
+  if (tacSelected || tacSelectedItem !== null || tacSelectedText !== null) {
+    tacSelected = null;
+    tacSelectedItem = null;
+    tacSelectedText = null;
+    renderTacBoard();
+  }
+});
+
+tacMapWrap.addEventListener('pointermove', (e) => {
+  
+  if (tacPanDrag) {
+    tacZoomState.tx = tacPanDrag.baseTx + (e.clientX - tacPanDrag.startX);
+    tacZoomState.ty = tacPanDrag.baseTy + (e.clientY - tacPanDrag.startY);
+    tacApplyZoom();
+    return;
+  }
+  const p = tacPos(e);
+  
+  tacUpdateSnapRipple(p);
+  tacUpdateCoordsTip(p, e);
+  
+  if (tacDragMeasure) {
+    const m = tacBoard().measures[tacDragMeasure.idx];
+    if (!m) { tacDragMeasure = null; return; }
+    const sp = tacSnapLandmark(p, tacDragMeasureExcl());
+    if (tacDragMeasure.end === 'a') { m.x1 = sp.x; m.y1 = sp.y; }
+    else { m.x2 = sp.x; m.y2 = sp.y; }
+    const dot = tacMapWrap.querySelector(
+      `.tac-measure-dot[data-idx="${tacDragMeasure.idx}"][data-end="${tacDragMeasure.end}"]`);
+    if (dot) {
+      dot.style.left = `${sp.x * 100}%`;
+      dot.style.top = `${sp.y * 100}%`;
+    }
+    renderTacArrows();
+    updateTacMeasureInfo();
+    return;
+  }
+  
+  if (tacMeasurePending) {
+    const sp = tacSnapLandmark(p);
+    tacMeasureHover = { x: sp.x, y: sp.y };
+    renderTacArrows();
+    updateTacMeasureInfo();
+    return;
+  }
+  if (tacDrawing) {
+    const sp = tacSnapLandmark(p);
+    tacDrawing.x2 = sp.x;
+    tacDrawing.y2 = sp.y;
+    renderTacArrows();
+  } else if (tacDrag) {
+    const t = tacBoard().tokens[tacDrag.role];
+    if (!t) { tacDrag = null; return; }
+    
+    const cl = tacClampTokenToLinkedItems(tacDrag.role, p.x, p.y);
+    t.x = cl.x;
+    t.y = cl.y;
+    const el = tacMapWrap.querySelector(`.tac-token[data-role="${tacDrag.role}"]`);
+    if (el) {
+      el.style.left = `${t.x * 100}%`;
+      el.style.top = `${t.y * 100}%`;
+    }
+    
+    const rg = tacMapWrap.querySelector(`.tac-role-circle[data-role="${tacDrag.role}"]`);
+    if (rg) {
+      rg.style.left = `${t.x * 100}%`;
+      rg.style.top = `${t.y * 100}%`;
+    }
+    tacAbyssRecord(p); 
+    
+    if (tacBoard().items.some((it) =>
+      (TAC_ITEM_TYPES[it.kind] || {}).linkToRole === tacDrag.role)) {
+      renderTacArrows();
+    }
+  } else if (tacDragText) {
+    const t = tacBoard().texts[tacDragText.idx];
+    if (!t) { tacDragText = null; return; }
+    t.x = p.x;
+    t.y = p.y;
+    const el = tacMapWrap.querySelector(`.tac-text[data-idx="${tacDragText.idx}"]`);
+    if (el) {
+      el.style.left = `${t.x * 100}%`;
+      el.style.top = `${t.y * 100}%`;
+    }
+  } else if (tacDragItem) {
+    const it = tacBoard().items[tacDragItem.idx];
+    if (!it) { tacDragItem = null; return; }
+    
+    
+    let cl = tacClampLinkPos(tacDragItem.idx, p.x, p.y);
+    cl = tacClampRoleLinkPos(tacDragItem.idx, cl.x, cl.y);
+    const mdx = cl.x - it.x, mdy = cl.y - it.y; 
+    it.x = cl.x;
+    it.y = cl.y;
+    const el = tacMapWrap.querySelector(
+      `.tac-item-circle[data-idx="${tacDragItem.idx}"], .tac-item-pin[data-idx="${tacDragItem.idx}"]`);
+    if (el) {
+      el.style.left = `${it.x * 100}%`;
+      el.style.top = `${it.y * 100}%`;
+    }
+    
+    
+    
+    const dragDef = TAC_ITEM_TYPES[it.kind];
+    if (dragDef && dragDef.pushes && (mdx || mdy)) {
+      const clamp01 = (v) => Math.min(0.995, Math.max(0.005, v));
+      
+      
+      const ox = it.x - mdx, oy = (it.y - mdy) * p.H / p.W;
+      const nx = it.x, ny = it.y * p.H / p.W;
+      const segDx = nx - ox, segDy = ny - oy;
+      const segLen2 = segDx * segDx + segDy * segDy;
+      const dragPct = tacItemSizePercent(it) ?? 0;
+      const tryPush = (x, y, size) => {
+        const px = x, py = y * p.H / p.W;
+        let tt = 0;
+        if (segLen2 > 0) {
+          tt = ((px - ox) * segDx + (py - oy) * segDy) / segLen2;
+          tt = Math.min(1, Math.max(0, tt));
+        }
+        const ddx = px - (ox + segDx * tt);
+        const ddy = py - (oy + segDy * tt);
+        return Math.hypot(ddx, ddy) < (dragPct + size) / 200;
+      };
+      const board = tacBoard();
+      
+      board.items.forEach((other, oi) => {
+        if (oi === tacDragItem.idx) return;
+        const oDef = TAC_ITEM_TYPES[other.kind];
+        if (!oDef || !oDef.pushable) return;
+        if (!tacDragItem.pushingItems.has(oi)
+            && !tryPush(other.x, other.y, tacItemSizePercent(other) ?? 0)) return;
+        tacDragItem.pushingItems.add(oi);
+        other.x = clamp01(other.x + mdx * 0.3);
+        other.y = clamp01(other.y + mdy * 0.3);
+        const oEl = tacMapWrap.querySelector(
+          `.tac-item-circle[data-idx="${oi}"], .tac-item-pin[data-idx="${oi}"]`);
+        if (oEl) {
+          oEl.style.left = `${other.x * 100}%`;
+          oEl.style.top = `${other.y * 100}%`;
+        }
+      });
+      
+      for (const [role, t] of Object.entries(board.tokens)) {
+        if ((TAC_ROLES[role] || {}).camp !== 'hunter') continue;
+        if (!tacDragItem.pushingRoles.has(role)
+            && !tryPush(t.x, t.y, 0)) continue;
+        tacDragItem.pushingRoles.add(role);
+        
+        t.x = clamp01(t.x + mdx);
+        t.y = clamp01(t.y + mdy);
+        const tEl = tacMapWrap.querySelector(`.tac-token[data-role="${role}"]`);
+        if (tEl) {
+          tEl.style.left = `${t.x * 100}%`;
+          tEl.style.top = `${t.y * 100}%`;
+        }
+      }
+    }
+    renderTacArrows(); 
+  }
+});
+
+tacMapWrap.addEventListener('pointerup', (e) => {
+  if (tacPanDrag) {
+    tacPanDrag = null;
+    tacMapWrap.classList.remove('grabbing');
+    return;
+  }
+  if (tacDrawing) {
+    const p = tacPos(e);
+    const dx = (tacDrawing.x2 - tacDrawing.x1) * p.W;
+    const dy = (tacDrawing.y2 - tacDrawing.y1) * p.H;
+    
+    const bigEnough = tacDrawShape === 'arrow'
+      ? Math.hypot(dx, dy) > 20
+      : Math.abs(dx) > 20 && Math.abs(dy) > 20;
+    if (bigEnough) {
+      tacBoard().arrows.push(
+        { ...tacDrawing, shape: tacDrawShape, color: tacArrowColor, width: tacArrowWidth });
+      tacUndoStack.push({ type: 'addArrow' });
+    }
+    tacDrawing = null;
+    renderTacArrows();
+    updateTacPanel();
+  }
+  tacDrag = null;
+  tacDragItem = null;
+  tacDragText = null;
+  tacDragMeasure = null;
+  tacAbyssFinalize(); 
+});
+
+tacMapWrap.addEventListener('pointercancel', () => {
+  tacPanDrag = null;
+  tacMapWrap.classList.remove('grabbing');
+  tacDrawing = null;
+  tacDrag = null;
+  tacDragItem = null;
+  tacDragText = null;
+  tacDragMeasure = null;
+  tacAbyssFinalize(); 
+  renderTacArrows();
+});
+
+
+tacMapWrap.addEventListener('pointerleave', () => {
+  tacUpdateSnapRipple(null);
+  tacUpdateCoordsTip(null);
+  if (tacMeasurePending && tacMeasureHover) {
+    tacMeasureHover = null;
+    renderTacArrows();
+    updateTacMeasureInfo();
+  }
+});
+
+
+tacMapWrap.addEventListener('wheel', (e) => {
+  const tokenEl = e.target.closest('.tac-token');
+  const itemEl = e.target.closest('.tac-item-circle, .tac-item-pin');
+  
+  if (!tokenEl && !itemEl) {
+    e.preventDefault();
+    if (tacZoomState.locked) return; 
+    const r = tacMapWrap.getBoundingClientRect(); 
+    
+    const ax = (e.clientX - r.left) / (tacZoomState.scale * tacMapWrap.clientWidth);
+    const ay = (e.clientY - r.top) / (tacZoomState.scale * tacMapWrap.clientHeight);
+    tacZoomStep(e.deltaY < 0 ? 1 : -1, ax, ay);
+    return;
+  }
+  if (tokenEl) {
+    e.preventDefault();
+    const role = tokenEl.dataset.role;
+    const t = tacBoard().tokens[role];
+    if (!t) return;
+    t.size = Math.min(12, Math.max(3, t.size + (e.deltaY < 0 ? 0.5 : -0.5)));
+    tacSelected = role;
+    tacSelectedItem = null;
+    tacManageSel = { type: 'role', role };
+    renderTacBoard();
+  } else if (itemEl) {
+    e.preventDefault();
+    const idx = +itemEl.dataset.idx;
+    const it = tacBoard().items[idx];
+    if (!it) return;
+    
+    
+    const mode = tacItemRangeMode(it);
+    const s = mode && mode.size_m;
+    if (s && Array.isArray(s.options)) {
+      const cur = it.rangeMeters ?? it.meters ?? s.options[0];
+      const i = Math.max(0, s.options.indexOf(cur));
+      const j = Math.min(s.options.length - 1,
+        Math.max(0, i + (e.deltaY < 0 ? 1 : -1)));
+      it.rangeMeters = s.options[j];
+      delete it.meters;
+    } else if (s && typeof s === 'object' && !mode.fearMods) {
+      const cur = it.rangeMeters ?? it.meters ?? s.max;
+      it.rangeMeters = Math.round(Math.min(s.max,
+        Math.max(s.min,
+          cur + (e.deltaY < 0 ? 0.1 : -0.1))) * 100) / 100;
+      delete it.meters;
+    }
+    tacSelectedItem = idx;
+    tacSelected = null;
+    tacManageSel = { type: 'item', idx };
+    renderTacBoard();
+  }
+}, { passive: false });
+
+
+tacArrowSvg.addEventListener('click', (e) => {
+  if (tacTool !== 'delete') return;
+  const g = e.target.closest('g');
+  if (!g) return;
+  if (g.dataset.midx !== undefined) {
+    const idx = +g.dataset.midx;
+    const board = tacBoard();
+    const m = board.measures[idx];
+    
+    if (m && m.chain != null && !tacDisplay.delSegOnly) {
+      const removedList = [];
+      for (let i = board.measures.length - 1; i >= 0; i--) {
+        if (board.measures[i].chain === m.chain) {
+          removedList.unshift({ measure: board.measures[i], idx: i });
+          board.measures.splice(i, 1);
+        }
+      }
+      tacUndoStack.push({ type: 'delMeasures', list: removedList });
+      tacSegExpanded.clear();
+      tacSelMeasure = null;
+      renderTacBoard();
+      return;
+    }
+    const removed = tacDeleteMeasureAt(idx);
+    if (removed) tacUndoStack.push({ type: 'delMeasure', measure: removed, idx });
+    renderTacBoard();
+    return;
+  }
+  if (g.dataset.idx === undefined) return;
+  const idx = +g.dataset.idx;
+  const [removed] = tacBoard().arrows.splice(idx, 1);
+  if (removed) tacUndoStack.push({ type: 'delArrow', arrow: removed, idx });
+  renderTacArrows();
+  updateTacPanel();
+});
+
+
+export function tacDeleteMeasureAt(idx) {
+  const board = tacBoard();
+  const m = board.measures[idx];
+  if (!m) return null;
+  
+  const sliceCfg = (lc, off, len) => {
+    const nl = {
+      lid: ++tacLcSeq,
+      bases: lc.bases
+        .filter((b) => b.to > off && b.from < off + len)
+        .map((b) => ({ ...b, from: Math.max(0, b.from - off), to: Math.min(len, b.to - off) })),
+      buffs: lc.buffs
+        .filter((b) => b.to > off && b.from < off + len)
+        .map((b) => ({ ...b, id: ++tacBuffSeq,
+          from: Math.max(0, b.from - off), to: Math.min(len, b.to - off) })),
+    };
+    tacNormLc(nl);
+    return nl;
+  };
+  if (m.chain == null) { 
+    board.measures.splice(idx, 1);
+  } else {
+    const chainIdxs = board.measures
+      .map((x, i) => ({ x, i }))
+      .filter((p) => p.x.chain === m.chain)
+      .map((p) => p.i);
+    const pos = chainIdxs.indexOf(idx);
+    const leftIdxs = chainIdxs.slice(0, pos);
+    const rightIdxs = chainIdxs.slice(pos + 1);
+    board.measures.splice(idx, 1); 
+    if (leftIdxs.length) {
+      const lc = board.measures[leftIdxs[0]].lc;
+      const cfg = sliceCfg(lc, 0, leftIdxs.length);
+      if (rightIdxs.length) {
+        
+        const chainL = leftIdxs.length > 1
+          ? ++tacRouteSeq : null;
+        leftIdxs.forEach((mi) => {
+          const mm = board.measures[mi];
+          mm.chain = chainL; mm.lc = cfg;
+          mm.color = tacMeasureStyle[tacMeasureMode].color;
+          mm.width = tacMeasureStyle[tacMeasureMode].width;
+        });
+      } else {
+        
+        leftIdxs.forEach((mi) => { board.measures[mi].lc = cfg; });
+      }
+    }
+    if (rightIdxs.length) {
+      const lc = board.measures[rightIdxs[0] - 1].lc; 
+      const cfg = sliceCfg(lc, pos + 1, rightIdxs.length);
+      const chain = rightIdxs.length > 1 ? ++tacRouteSeq : null;
+      rightIdxs.forEach((ri) => {
+        const mm = board.measures[ri - 1];
+        mm.chain = chain; mm.lc = cfg;
+        mm.color = tacMeasureStyle[tacMeasureMode].color;
+        mm.width = tacMeasureStyle[tacMeasureMode].width;
+      });
+    }
+  }
+  tacSegExpanded.clear(); 
+  tacSelMeasure = null;   
+  return m;
+}
+
+
+export function tacUndo() {
+  const act = tacUndoStack.pop();
+  if (!act) return;
+  const board = tacBoard();
+  if (act.type === 'addArrow') board.arrows.pop();
+  else if (act.type === 'delArrow') board.arrows.splice(act.idx, 0, act.arrow);
+  else if (act.type === 'place') {
+    delete board.tokens[act.role];
+    if (tacSelected === act.role) tacSelected = null;
+  } else if (act.type === 'remove') {
+    board.tokens[act.role] = { ...act.token };
+  } else if (act.type === 'addItem') {
+    board.items.pop();
+    tacSelectedItem = null;
+  } else if (act.type === 'delItem') {
+    board.items.splice(act.idx, 0, act.item);
+    tacSelectedItem = null;
+  } else if (act.type === 'addMeasure') {
+    board.measures.pop();
+    tacSegExpanded.clear();
+  } else if (act.type === 'delMeasure') {
+    board.measures.splice(act.idx, 0, act.measure);
+    tacSegExpanded.clear();
+  } else if (act.type === 'delMeasures') { 
+    act.list.forEach(({ measure, idx }) => board.measures.splice(idx, 0, measure));
+    tacSegExpanded.clear();
+  } else if (act.type === 'clear') {
+    board.tokens = act.tokens;
+    board.arrows = act.arrows;
+    board.items = act.items || [];
+    board.measures = act.measures || [];
+    board.texts = act.texts || [];
+    tacSelectedText = null;
+  } else if (act.type === 'addText') {
+    board.texts.pop();
+    tacSelectedText = null;
+  } else if (act.type === 'delText') {
+    board.texts.splice(act.idx, 0, act.text);
+  }
+  renderTacBoard();
+}
+
+export function tacClear() {
+  const board = tacBoard();
+  if (!Object.keys(board.tokens).length && !board.arrows.length && !board.items.length && !board.measures.length && !board.texts.length)
+    return;
+  tacUndoStack.push({ type: 'clear', tokens: board.tokens,
+    arrows: board.arrows, items: board.items, measures: board.measures,
+    texts: board.texts });
+  board.tokens = {};
+  board.arrows = [];
+  board.items = [];
+  board.measures = [];
+  board.texts = [];
+  tacSelected = null;
+  tacSelectedItem = null;
+  tacSelectedText = null;
+  tacPlaceRole = null;
+  tacPlaceItem = null;
+  tacDrawing = null;
+  tacMeasurePending = null;
+  tacMeasureHover = null;
+  renderTacBoard();
+}
+
+tacUndoBtn.addEventListener('click', tacUndo);
+
+tacClearBtn.addEventListener('click', tacClear);
+
+
+
+
+window.addEventListener('keydown', (e) => {
+  if (S.currentTab !== 'tactic' || e.target.tagName === 'INPUT') return;
+  if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'z') {
+    e.preventDefault();
+    tacUndo();
+    return;
+  }
+  const nudge = {
+    w: [0, -1], arrowup: [0, -1],
+    s: [0, 1], arrowdown: [0, 1],
+    a: [-1, 0], arrowleft: [-1, 0],
+    d: [1, 0], arrowright: [1, 0],
+  }[e.key.toLowerCase()];
+  if (nudge) {
+    
+    if (tacZoomState.pan) {
+      if (tacZoomState.locked) return; 
+      e.preventDefault();
+      const step = 30; 
+      tacZoomState.tx += nudge[0] * step;
+      tacZoomState.ty += nudge[1] * step;
+      tacApplyZoom();
+      return;
+    }
+    const rect = tacMapWrap.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return;
+    const dx = nudge[0] / rect.width;   
+    const dy = nudge[1] / rect.height;
+    const clamp01 = (v) => Math.min(1, Math.max(0, v));
+    if (tacSelected && tacBoard().tokens[tacSelected]) {
+      const t = tacBoard().tokens[tacSelected];
+      
+      const cl = tacClampTokenToLinkedItems(
+        tacSelected, clamp01(t.x + dx), clamp01(t.y + dy));
+      t.x = cl.x;
+      t.y = cl.y;
+      renderTacBoard();
+      e.preventDefault();
+    } else if (tacSelectedItem !== null && tacBoard().items[tacSelectedItem]) {
+      const it = tacBoard().items[tacSelectedItem];
+      
+      if (it.abyss && it.abyss.on && tacBoard().tokens.Naiad) {
+        e.preventDefault();
+        return;
+      }
+      
+      
+      let cl = tacClampLinkPos(
+        tacSelectedItem, clamp01(it.x + dx), clamp01(it.y + dy));
+      cl = tacClampRoleLinkPos(tacSelectedItem, cl.x, cl.y);
+      it.x = cl.x;
+      it.y = cl.y;
+      renderTacBoard();
+      e.preventDefault();
+    } else if (tacSelectedText !== null && tacBoard().texts[tacSelectedText]) {
+      const t = tacBoard().texts[tacSelectedText];
+      t.x = clamp01(t.x + dx);
+      t.y = clamp01(t.y + dy);
+      renderTacBoard();
+      e.preventDefault();
+    }
+    return;
+  }
+  if (e.key === 'Escape') {
+    if ($('tacHelpModal') && $('tacHelpModal').style.display !== 'none') {
+      $('tacHelpModal').style.display = 'none';
+      return;
+    }
+    tacPlaceRole = null;
+    tacPlaceItem = null;
+    tacSelected = null;
+    tacSelectedItem = null;
+    tacSelectedText = null;
+    tacTextPlacing = false;
+    updateTacTextUi();
+    tacDrawing = null;
+    tacMeasurePending = null;
+    tacMeasureHover = null;
+    tacSelMeasure = null; 
+    tacChainRoute = null; 
+    renderTacBoard();
+  } else if (e.key === 'Delete' || e.key === 'Backspace') {
+    const board = tacBoard();
+    if (tacSelected && board.tokens[tacSelected]) {
+      tacUndoStack.push({ type: 'remove', role: tacSelected,
+        token: { ...board.tokens[tacSelected] } });
+      delete board.tokens[tacSelected];
+      tacSelected = null;
+      renderTacBoard();
+    } else if (tacSelectedItem !== null && board.items[tacSelectedItem]) {
+      const removed = board.items[tacSelectedItem];
+      board.items.splice(tacSelectedItem, 1);
+      tacUndoStack.push({ type: 'delItem', item: { ...removed }, idx: tacSelectedItem });
+      tacSelectedItem = null;
+      renderTacBoard();
+    } else if (tacSelectedText !== null && board.texts[tacSelectedText]) {
+      const removed = board.texts[tacSelectedText];
+      board.texts.splice(tacSelectedText, 1);
+      tacUndoStack.push({ type: 'delText', text: { ...removed }, idx: tacSelectedText });
+      tacSelectedText = null;
+      renderTacBoard();
+    }
+  }
+});
+
+
+new ResizeObserver(() => {
+  if (tacticView.classList.contains('active')) { renderTacArrows(); tacApplyZoom(); }
+}).observe(tacMapWrap);
+
+
+export function tacResetTransient() {
+  tacPlaceRole = null;
+  tacPlaceItem = null;
+  tacSelected = null;
+  tacSelectedItem = null;
+  tacDrawing = null;
+  tacDrag = null;
+  tacDragItem = null;
+  tacDragText = null;
+  tacItemRole = null;
+  tacSelectedText = null;
+  tacUndoStack.length = 0;
+  tacZoomReset(); 
+  setTacTool('select');
+}
