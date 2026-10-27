@@ -151,18 +151,18 @@ export const MAPS_DATA = [
         translate("maps.armsFactory.zoneNamesSix"), translate("maps.armsFactory.zoneNamesSeven"), translate("maps.armsFactory.zoneNamesEight")
       ];
       const ciphers = [
-        { id: 'M_4', name: translate("maps.armsFactory.m4.name"),     location: [284, 529], feature: translate("maps.armsFactory.m4.feature"), locked: true },
-        { id: 'M_1', name: translate("maps.armsFactory.m1.name"),   location: [444, 103], feature: translate("maps.armsFactory.m1.feature") },
-        { id: 'M_2', name: translate("maps.armsFactory.m2.name"),   location: [459, 296], feature: translate("maps.armsFactory.m2.feature") },
-        { id: 'M_3', name: translate("maps.armsFactory.m3.name"),   location: [399, 378], feature: translate("maps.armsFactory.m3.feature") },
-        { id: 'E_1', name: translate("maps.armsFactory.e1.name"), location: [576, 174], feature: translate("maps.armsFactory.e1.feature") },
-        { id: 'E_2', name: translate("maps.armsFactory.e2.name"),     location: [606, 260], feature: translate("maps.armsFactory.e1.feature") },
-        { id: 'E_3', name: translate("maps.armsFactory.e3.name"),   location: [543, 523], feature: translate("maps.armsFactory.e3.feature") },
-        { id: 'E_4', name: translate("maps.armsFactory.e4.name"),   location: [503, 569], feature: translate("maps.armsFactory.e3.feature") },
-        { id: 'W_1', name: translate("maps.armsFactory.w1.name"),   location: [241, 85], feature: translate("maps.armsFactory.w1.feature") },
-        { id: 'W_2', name: translate("maps.armsFactory.w2.name"),     location: [251, 193], feature: translate("maps.armsFactory.w1.feature") },
-        { id: 'W_3', name: translate("maps.armsFactory.w3.name"), location: [182, 249], feature: translate("maps.armsFactory.w1.feature") },
-        { id: 'W_4', name: translate("maps.armsFactory.w4.name"),   location: [107, 486], feature: translate("maps.armsFactory.w4.feature") },
+        { id: 'M_4', name: translate("maps.armsFactory.cipher.m4.name"),     location: [284, 529], feature: translate("maps.armsFactory.cipher.m4.feature"), locked: true },
+        { id: 'M_1', name: translate("maps.armsFactory.cipher.m1.name"),   location: [444, 103], feature: translate("maps.armsFactory.cipher.m1.feature") },
+        { id: 'M_2', name: translate("maps.armsFactory.cipher.m2.name"),   location: [459, 296], feature: translate("maps.armsFactory.cipher.m2.feature") },
+        { id: 'M_3', name: translate("maps.armsFactory.cipher.m3.name"),   location: [399, 378], feature: translate("maps.armsFactory.cipher.m3.feature") },
+        { id: 'E_1', name: translate("maps.armsFactory.cipher.e1.name"), location: [576, 174], feature: translate("maps.armsFactory.cipher.e1.feature") },
+        { id: 'E_2', name: translate("maps.armsFactory.cipher.e2.name"),     location: [606, 260], feature: translate("maps.armsFactory.cipher.e1.feature") },
+        { id: 'E_3', name: translate("maps.armsFactory.cipher.e3.name"),   location: [543, 523], feature: translate("maps.armsFactory.cipher.e3.feature") },
+        { id: 'E_4', name: translate("maps.armsFactory.cipher.e4.name"),   location: [503, 569], feature: translate("maps.armsFactory.cipher.e3.feature") },
+        { id: 'W_1', name: translate("maps.armsFactory.cipher.w1.name"),   location: [241, 85], feature: translate("maps.armsFactory.cipher.w1.feature") },
+        { id: 'W_2', name: translate("maps.armsFactory.cipher.w2.name"),     location: [251, 193], feature: translate("maps.armsFactory.cipher.w1.feature") },
+        { id: 'W_3', name: translate("maps.armsFactory.cipher.w3.name"), location: [182, 249], feature: translate("maps.armsFactory.cipher.w1.feature") },
+        { id: 'W_4', name: translate("maps.armsFactory.cipher.w4.name"),   location: [107, 486], feature: translate("maps.armsFactory.cipher.w4.feature") },
       ];
       
       const cipherCombinations = [
@@ -182,11 +182,11 @@ export const MAPS_DATA = [
       const law_urls = ['https://www.bilibili.com/video/BV1oauC6kEy9', 'https://v.douyin.com/b_OabxYks7k/'];
       const fixedHint = translate("maps.armsFactory.fixedHint");
       const hints = [
-      translate("maps.armsFactory.hintsZero"),
-      translate("maps.armsFactory.hintsOne"),
-      translate("maps.armsFactory.hintsZero"),
-      translate("maps.armsFactory.hintsThree"),
-      translate("maps.armsFactory.hintsZero")
+      translate("maps.armsFactory.hint.zero"),
+      translate("maps.armsFactory.hint.one"),
+      translate("maps.armsFactory.hint.zero"),
+      translate("maps.armsFactory.hint.three"),
+      translate("maps.armsFactory.hint.zero")
     ];
       
       
@@ -293,15 +293,15 @@ export const MAPS_DATA = [
     deduction: (() => {
       const { fixed, region, exactly, either } = dedHelpers(ciphers);
       const rules = [
-        fixed([translate("maps.armsFactory.m4.name")]),
-        region(translate("maps.armsFactory.rules"), 2, 3, [translate("maps.armsFactory.w1.name"), translate("maps.armsFactory.w2.name"), translate("maps.armsFactory.w3.name"), translate("maps.armsFactory.w4.name")]),
-        region(translate("maps.armsFactory.rulesAlternate"), 2, 3, [translate("maps.armsFactory.m1.name"), translate("maps.armsFactory.m2.name"), translate("maps.armsFactory.m3.name"), translate("maps.armsFactory.m4.name")]),
-        region(translate("maps.armsFactory.rulesThird"), 2, 2, [translate("maps.armsFactory.e1.name"), translate("maps.armsFactory.e2.name"), translate("maps.armsFactory.e3.name"), translate("maps.armsFactory.e4.name")]),
-        either([translate("maps.armsFactory.e1.name"), translate("maps.armsFactory.e2.name")]),
-        either([translate("maps.armsFactory.e3.name"), translate("maps.armsFactory.e4.name")]),
-        either([translate("maps.armsFactory.m2.name"), translate("maps.armsFactory.m1.name")]),
-        exactly(2, [translate("maps.armsFactory.w4.name"), translate("maps.armsFactory.m3.name"), translate("maps.armsFactory.m2.name")]),
-        exactly(2, [translate("maps.armsFactory.m1.name"), translate("maps.armsFactory.w1.name"), translate("maps.armsFactory.w2.name"), translate("maps.armsFactory.w3.name")]),
+        fixed([translate("maps.armsFactory.cipher.m4.name")]),
+        region(translate("maps.armsFactory.rules"), 2, 3, [translate("maps.armsFactory.cipher.w1.name"), translate("maps.armsFactory.cipher.w2.name"), translate("maps.armsFactory.cipher.w3.name"), translate("maps.armsFactory.cipher.w4.name")]),
+        region(translate("maps.armsFactory.rulesAlternate"), 2, 3, [translate("maps.armsFactory.cipher.m1.name"), translate("maps.armsFactory.cipher.m2.name"), translate("maps.armsFactory.cipher.m3.name"), translate("maps.armsFactory.cipher.m4.name")]),
+        region(translate("maps.armsFactory.rulesThird"), 2, 2, [translate("maps.armsFactory.cipher.e1.name"), translate("maps.armsFactory.cipher.e2.name"), translate("maps.armsFactory.cipher.e3.name"), translate("maps.armsFactory.cipher.e4.name")]),
+        either([translate("maps.armsFactory.cipher.e1.name"), translate("maps.armsFactory.cipher.e2.name")]),
+        either([translate("maps.armsFactory.cipher.e3.name"), translate("maps.armsFactory.cipher.e4.name")]),
+        either([translate("maps.armsFactory.cipher.m2.name"), translate("maps.armsFactory.cipher.m1.name")]),
+        exactly(2, [translate("maps.armsFactory.cipher.w4.name"), translate("maps.armsFactory.cipher.m3.name"), translate("maps.armsFactory.cipher.m2.name")]),
+        exactly(2, [translate("maps.armsFactory.cipher.m1.name"), translate("maps.armsFactory.cipher.w1.name"), translate("maps.armsFactory.cipher.w2.name"), translate("maps.armsFactory.cipher.w3.name")]),
       ];
       return makeDeduction({
         mapImage, mapSize, ciphers, cipherCombinations, rules,
@@ -323,17 +323,17 @@ export const MAPS_DATA = [
         translate("maps.sacredHeartHospital.zoneNamesSix"), translate("maps.sacredHeartHospital.zoneNamesSeven"), translate("maps.sacredHeartHospital.zoneNamesEight")
       ];
       const ciphers = [
-        { id: 'A_1', name: translate("maps.sacredHeartHospital.a1.name"),   location: [356, 297], feature: translate("maps.sacredHeartHospital.a1.feature") },
-        { id: 'A_2', name: translate("maps.sacredHeartHospital.a2.name"),       location: [324, 396], feature: translate("maps.sacredHeartHospital.a1.feature") },
-        { id: 'B_1', name: translate("maps.armsFactory.w2.name"),       location: [510, 147], feature: translate("maps.sacredHeartHospital.b1.feature") },
-        { id: 'B_2', name: translate("maps.sacredHeartHospital.b2.name"), location: [377, 77], feature: translate("maps.sacredHeartHospital.b1.feature") },
-        { id: 'B_3', name: translate("maps.sacredHeartHospital.b3.name"), location: [248, 96], feature: translate("maps.sacredHeartHospital.b1.feature") },
-        { id: 'C_1', name: translate("maps.sacredHeartHospital.c1.name"),   location: [149, 202], feature: translate("maps.sacredHeartHospital.c1.feature") },
-        { id: 'C_2', name: translate("maps.sacredHeartHospital.c2.name"),     location: [129, 415], feature: translate("maps.sacredHeartHospital.c1.feature") },
-        { id: 'C_3', name: translate("maps.sacredHeartHospital.c3.name"), location: [226, 480], feature: translate("maps.sacredHeartHospital.c1.feature") },
-        { id: 'D_1', name: translate("maps.sacredHeartHospital.d1.name"),   location: [422, 470], feature: translate("maps.sacredHeartHospital.d1.feature") },
-        { id: 'D_2', name: translate("maps.sacredHeartHospital.d2.name"),   location: [520, 506], feature: translate("maps.sacredHeartHospital.d1.feature") },
-        { id: 'D_3', name: translate("maps.sacredHeartHospital.d3.name"),     location: [527, 346], feature: translate("maps.sacredHeartHospital.d1.feature") },
+        { id: 'A_1', name: translate("maps.sacredHeartHospital.cipher.a1.name"),   location: [356, 297], feature: translate("maps.sacredHeartHospital.cipher.a1.feature") },
+        { id: 'A_2', name: translate("maps.sacredHeartHospital.cipher.a2.name"),       location: [324, 396], feature: translate("maps.sacredHeartHospital.cipher.a1.feature") },
+        { id: 'B_1', name: translate("maps.armsFactory.cipher.w2.name"),       location: [510, 147], feature: translate("maps.sacredHeartHospital.cipher.b1.feature") },
+        { id: 'B_2', name: translate("maps.sacredHeartHospital.cipher.b2.name"), location: [377, 77], feature: translate("maps.sacredHeartHospital.cipher.b1.feature") },
+        { id: 'B_3', name: translate("maps.sacredHeartHospital.cipher.b3.name"), location: [248, 96], feature: translate("maps.sacredHeartHospital.cipher.b1.feature") },
+        { id: 'C_1', name: translate("maps.sacredHeartHospital.cipher.c1.name"),   location: [149, 202], feature: translate("maps.sacredHeartHospital.cipher.c1.feature") },
+        { id: 'C_2', name: translate("maps.sacredHeartHospital.cipher.c2.name"),     location: [129, 415], feature: translate("maps.sacredHeartHospital.cipher.c1.feature") },
+        { id: 'C_3', name: translate("maps.sacredHeartHospital.cipher.c3.name"), location: [226, 480], feature: translate("maps.sacredHeartHospital.cipher.c1.feature") },
+        { id: 'D_1', name: translate("maps.sacredHeartHospital.cipher.d1.name"),   location: [422, 470], feature: translate("maps.sacredHeartHospital.cipher.d1.feature") },
+        { id: 'D_2', name: translate("maps.sacredHeartHospital.cipher.d2.name"),   location: [520, 506], feature: translate("maps.sacredHeartHospital.cipher.d1.feature") },
+        { id: 'D_3', name: translate("maps.sacredHeartHospital.cipher.d3.name"),     location: [527, 346], feature: translate("maps.sacredHeartHospital.cipher.d1.feature") },
       ];
       
       const cipherCombinations = [
@@ -353,10 +353,10 @@ export const MAPS_DATA = [
       const fixedHint = translate("maps.sacredHeartHospital.fixedHint");
       const hints = [
       '',
-      translate("maps.sacredHeartHospital.hintsOne"),
-      translate("maps.sacredHeartHospital.hintsTwo"),
-      translate("maps.sacredHeartHospital.hintsThree"),
-      translate("maps.sacredHeartHospital.hintsFour")
+      translate("maps.sacredHeartHospital.hint.one"),
+      translate("maps.sacredHeartHospital.hint.two"),
+      translate("maps.sacredHeartHospital.hint.three"),
+      translate("maps.sacredHeartHospital.hint.four")
     ];
       
       const fixedSpawns = {
@@ -460,18 +460,18 @@ export const MAPS_DATA = [
     deduction: (() => {
       const { exactly, either, same, atLeast1, chain } = dedHelpers(ciphers);
       const rules = [
-        either([translate("maps.sacredHeartHospital.a1.name"), translate("maps.sacredHeartHospital.a2.name")]),
-        exactly(2, [translate("maps.armsFactory.w2.name"), translate("maps.sacredHeartHospital.b2.name"), translate("maps.sacredHeartHospital.b3.name")]),
-        exactly(2, [translate("maps.sacredHeartHospital.c1.name"), translate("maps.sacredHeartHospital.c2.name"), translate("maps.sacredHeartHospital.c3.name")]),
-        exactly(2, [translate("maps.sacredHeartHospital.d1.name"), translate("maps.sacredHeartHospital.d2.name"), translate("maps.sacredHeartHospital.d3.name")]),
-        same([translate("maps.armsFactory.w2.name"), translate("maps.sacredHeartHospital.d1.name")]),
-        same([translate("maps.sacredHeartHospital.b2.name"), translate("maps.sacredHeartHospital.d2.name")]),
-        same([translate("maps.sacredHeartHospital.b3.name"), translate("maps.sacredHeartHospital.d3.name")]),
-        exactly(2, [translate("maps.sacredHeartHospital.a2.name"), translate("maps.sacredHeartHospital.c3.name"), translate("maps.sacredHeartHospital.d1.name")]),
-        atLeast1([translate("maps.sacredHeartHospital.c1.name"), translate("maps.armsFactory.w2.name")]),
+        either([translate("maps.sacredHeartHospital.cipher.a1.name"), translate("maps.sacredHeartHospital.cipher.a2.name")]),
+        exactly(2, [translate("maps.armsFactory.cipher.w2.name"), translate("maps.sacredHeartHospital.cipher.b2.name"), translate("maps.sacredHeartHospital.cipher.b3.name")]),
+        exactly(2, [translate("maps.sacredHeartHospital.cipher.c1.name"), translate("maps.sacredHeartHospital.cipher.c2.name"), translate("maps.sacredHeartHospital.cipher.c3.name")]),
+        exactly(2, [translate("maps.sacredHeartHospital.cipher.d1.name"), translate("maps.sacredHeartHospital.cipher.d2.name"), translate("maps.sacredHeartHospital.cipher.d3.name")]),
+        same([translate("maps.armsFactory.cipher.w2.name"), translate("maps.sacredHeartHospital.cipher.d1.name")]),
+        same([translate("maps.sacredHeartHospital.cipher.b2.name"), translate("maps.sacredHeartHospital.cipher.d2.name")]),
+        same([translate("maps.sacredHeartHospital.cipher.b3.name"), translate("maps.sacredHeartHospital.cipher.d3.name")]),
+        exactly(2, [translate("maps.sacredHeartHospital.cipher.a2.name"), translate("maps.sacredHeartHospital.cipher.c3.name"), translate("maps.sacredHeartHospital.cipher.d1.name")]),
+        atLeast1([translate("maps.sacredHeartHospital.cipher.c1.name"), translate("maps.armsFactory.cipher.w2.name")]),
         chain(translate("maps.sacredHeartHospital.rules"), 'no', true,
-          [translate("maps.armsFactory.w2.name"), translate("maps.sacredHeartHospital.b2.name"), translate("maps.sacredHeartHospital.b3.name"), translate("maps.sacredHeartHospital.c1.name"), translate("maps.sacredHeartHospital.c2.name"),
-            translate("maps.sacredHeartHospital.c3.name"), translate("maps.sacredHeartHospital.d1.name"), translate("maps.sacredHeartHospital.d2.name"), translate("maps.sacredHeartHospital.d3.name")],
+          [translate("maps.armsFactory.cipher.w2.name"), translate("maps.sacredHeartHospital.cipher.b2.name"), translate("maps.sacredHeartHospital.cipher.b3.name"), translate("maps.sacredHeartHospital.cipher.c1.name"), translate("maps.sacredHeartHospital.cipher.c2.name"),
+            translate("maps.sacredHeartHospital.cipher.c3.name"), translate("maps.sacredHeartHospital.cipher.d1.name"), translate("maps.sacredHeartHospital.cipher.d2.name"), translate("maps.sacredHeartHospital.cipher.d3.name")],
           translate("maps.sacredHeartHospital.rulesAlternate")
             + translate("maps.sacredHeartHospital.rulesThird")),
       ];
@@ -495,17 +495,17 @@ export const MAPS_DATA = [
         translate("maps.theRedChurch.zoneNamesSix"), translate("maps.theRedChurch.zoneNamesSeven"), translate("maps.theRedChurch.zoneNamesEight")
       ];
       const ciphers = [
-        { id: 'E_4', name: translate("maps.theRedChurch.e4.name"),       location: [527, 435], feature: translate("maps.theRedChurch.e4.feature"), zoneLabel: translate("maps.theRedChurch.e4.zoneLabel"), locked: true },
-        { id: 'E_1', name: translate("maps.theRedChurch.e1.name"),       location: [444, 160], feature: translate("maps.theRedChurch.e1.feature"), zoneLabel: translate("maps.theRedChurch.e1.zoneLabel") },
-        { id: 'E_2', name: translate("maps.armsFactory.w3.name"),   location: [511, 242], feature: translate("maps.theRedChurch.e2.feature"), zoneLabel: translate("maps.theRedChurch.e2.zoneLabel") },
-        { id: 'E_3', name: translate("maps.armsFactory.m2.name"),     location: [401, 272], feature: translate("maps.theRedChurch.e3.feature"), zoneLabel: translate("maps.theRedChurch.e2.zoneLabel") },
-        { id: 'M_1', name: translate("maps.armsFactory.w2.name"),       location: [287, 143], feature: translate("maps.theRedChurch.m1.feature"), zoneLabel: translate("maps.theRedChurch.m1.zoneLabel") },
-        { id: 'M_2', name: translate("maps.theRedChurch.m2.name"),       location: [296, 313], feature: translate("maps.theRedChurch.m2.feature"), zoneLabel: translate("maps.theRedChurch.m2.zoneLabel") },
-        { id: 'M_3', name: translate("maps.theRedChurch.m3.name"),   location: [342, 499], feature: translate("maps.theRedChurch.m3.feature"), zoneLabel: translate("maps.theRedChurch.m3.zoneLabel") },
-        { id: 'W_1', name: translate("maps.theRedChurch.w1.name"),     location: [121, 177], feature: translate("maps.theRedChurch.w1.feature"), zoneLabel: translate("maps.theRedChurch.w1.zoneLabel") },
-        { id: 'W_2', name: translate("maps.theRedChurch.w2.name"), location: [168, 240], feature: translate("maps.theRedChurch.w2.feature"), zoneLabel: translate("maps.theRedChurch.w2.zoneLabel") },
-        { id: 'W_3', name: translate("maps.theRedChurch.w3.name"), location: [131, 356], feature: translate("maps.theRedChurch.w3.feature"), zoneLabel: translate("maps.theRedChurch.w2.zoneLabel") },
-        { id: 'W_4', name: translate("maps.theRedChurch.w4.name"),     location: [128, 475], feature: translate("maps.theRedChurch.w4.feature"), zoneLabel: translate("maps.theRedChurch.w4.zoneLabel") },
+        { id: 'E_4', name: translate("maps.theRedChurch.cipher.e4.name"),       location: [527, 435], feature: translate("maps.theRedChurch.cipher.e4.feature"), zoneLabel: translate("maps.theRedChurch.e4.zoneLabel"), locked: true },
+        { id: 'E_1', name: translate("maps.theRedChurch.cipher.e1.name"),       location: [444, 160], feature: translate("maps.theRedChurch.cipher.e1.feature"), zoneLabel: translate("maps.theRedChurch.e1.zoneLabel") },
+        { id: 'E_2', name: translate("maps.armsFactory.cipher.w3.name"),   location: [511, 242], feature: translate("maps.theRedChurch.cipher.e2.feature"), zoneLabel: translate("maps.theRedChurch.e2.zoneLabel") },
+        { id: 'E_3', name: translate("maps.armsFactory.cipher.m2.name"),     location: [401, 272], feature: translate("maps.theRedChurch.cipher.e3.feature"), zoneLabel: translate("maps.theRedChurch.e2.zoneLabel") },
+        { id: 'M_1', name: translate("maps.armsFactory.cipher.w2.name"),       location: [287, 143], feature: translate("maps.theRedChurch.cipher.m1.feature"), zoneLabel: translate("maps.theRedChurch.m1.zoneLabel") },
+        { id: 'M_2', name: translate("maps.theRedChurch.cipher.m2.name"),       location: [296, 313], feature: translate("maps.theRedChurch.cipher.m2.feature"), zoneLabel: translate("maps.theRedChurch.m2.zoneLabel") },
+        { id: 'M_3', name: translate("maps.theRedChurch.cipher.m3.name"),   location: [342, 499], feature: translate("maps.theRedChurch.cipher.m3.feature"), zoneLabel: translate("maps.theRedChurch.m3.zoneLabel") },
+        { id: 'W_1', name: translate("maps.theRedChurch.cipher.w1.name"),     location: [121, 177], feature: translate("maps.theRedChurch.cipher.w1.feature"), zoneLabel: translate("maps.theRedChurch.w1.zoneLabel") },
+        { id: 'W_2', name: translate("maps.theRedChurch.cipher.w2.name"), location: [168, 240], feature: translate("maps.theRedChurch.cipher.w2.feature"), zoneLabel: translate("maps.theRedChurch.w2.zoneLabel") },
+        { id: 'W_3', name: translate("maps.theRedChurch.cipher.w3.name"), location: [131, 356], feature: translate("maps.theRedChurch.cipher.w3.feature"), zoneLabel: translate("maps.theRedChurch.w2.zoneLabel") },
+        { id: 'W_4', name: translate("maps.theRedChurch.cipher.w4.name"),     location: [128, 475], feature: translate("maps.theRedChurch.cipher.w4.feature"), zoneLabel: translate("maps.theRedChurch.w4.zoneLabel") },
       ];
       
       const cipherCombinations = [
@@ -524,11 +524,11 @@ export const MAPS_DATA = [
       const law_urls = ['https://www.bilibili.com/video/BV169Y66PEiS', 'https://v.douyin.com/t7aa5IHJh9M'];
       const fixedHint = translate("maps.theRedChurch.fixedHint");
       const hints = [
-      translate("maps.theRedChurch.hintsZero"),
-      translate("maps.theRedChurch.hintsOne"),
-      translate("maps.theRedChurch.hintsTwo"),
+      translate("maps.theRedChurch.hint.zero"),
+      translate("maps.theRedChurch.hint.one"),
+      translate("maps.theRedChurch.hint.two"),
       '',
-      translate("maps.theRedChurch.hintsFour")
+      translate("maps.theRedChurch.hint.four")
     ];
       
       const fixedSpawns = {
@@ -629,22 +629,22 @@ export const MAPS_DATA = [
     deduction: (() => {
       const { fixed, region, exactly, atLeast1, chain } = dedHelpers(ciphers);
       const rules = [
-        fixed([translate("maps.theRedChurch.e4.name")]),
-        region(translate("maps.theRedChurch.rules"), 2, 3, [translate("maps.theRedChurch.w1.name"), translate("maps.theRedChurch.w2.name"), translate("maps.theRedChurch.w3.name"), translate("maps.theRedChurch.w4.name")]),
-        region(translate("maps.armsFactory.rulesAlternate"), 2, 3, [translate("maps.armsFactory.w2.name"), translate("maps.theRedChurch.m2.name"), translate("maps.theRedChurch.m3.name")]),
-        region(translate("maps.theRedChurch.rulesAlternate"), 2, 3, [translate("maps.theRedChurch.e1.name"), translate("maps.armsFactory.w3.name"), translate("maps.armsFactory.m2.name"), translate("maps.theRedChurch.e4.name")]),
-        atLeast1([translate("maps.theRedChurch.w1.name"), translate("maps.theRedChurch.w2.name")]),
-        atLeast1([translate("maps.theRedChurch.w3.name"), translate("maps.theRedChurch.w4.name")]),
+        fixed([translate("maps.theRedChurch.cipher.e4.name")]),
+        region(translate("maps.theRedChurch.rules"), 2, 3, [translate("maps.theRedChurch.cipher.w1.name"), translate("maps.theRedChurch.cipher.w2.name"), translate("maps.theRedChurch.cipher.w3.name"), translate("maps.theRedChurch.cipher.w4.name")]),
+        region(translate("maps.armsFactory.rulesAlternate"), 2, 3, [translate("maps.armsFactory.cipher.w2.name"), translate("maps.theRedChurch.cipher.m2.name"), translate("maps.theRedChurch.cipher.m3.name")]),
+        region(translate("maps.theRedChurch.rulesAlternate"), 2, 3, [translate("maps.theRedChurch.cipher.e1.name"), translate("maps.armsFactory.cipher.w3.name"), translate("maps.armsFactory.cipher.m2.name"), translate("maps.theRedChurch.cipher.e4.name")]),
+        atLeast1([translate("maps.theRedChurch.cipher.w1.name"), translate("maps.theRedChurch.cipher.w2.name")]),
+        atLeast1([translate("maps.theRedChurch.cipher.w3.name"), translate("maps.theRedChurch.cipher.w4.name")]),
         chain(translate("maps.chain"), 'yes', false,
-          [translate("maps.theRedChurch.w3.name"), translate("maps.theRedChurch.w2.name"), translate("maps.armsFactory.m2.name"), translate("maps.armsFactory.w3.name")],
+          [translate("maps.theRedChurch.cipher.w3.name"), translate("maps.theRedChurch.cipher.w2.name"), translate("maps.armsFactory.cipher.m2.name"), translate("maps.armsFactory.cipher.w3.name")],
           translate("maps.theRedChurch.rulesThird")),
-        exactly(2, [translate("maps.theRedChurch.m2.name"), translate("maps.armsFactory.m2.name"), translate("maps.theRedChurch.m3.name")]),
-        exactly(2, [translate("maps.armsFactory.w2.name"), translate("maps.theRedChurch.e1.name"), translate("maps.theRedChurch.m3.name")]),
-        exactly(2, [translate("maps.theRedChurch.w1.name"), translate("maps.theRedChurch.w4.name"), translate("maps.armsFactory.w3.name")]),
-        exactly(2, [translate("maps.theRedChurch.w3.name"), translate("maps.theRedChurch.w4.name"), translate("maps.theRedChurch.m2.name")]),
-        exactly(3, [translate("maps.theRedChurch.w1.name"), translate("maps.armsFactory.w2.name"), translate("maps.theRedChurch.m2.name"), translate("maps.theRedChurch.m3.name")]),
-        atLeast1([translate("maps.theRedChurch.w1.name"), translate("maps.armsFactory.w2.name")]),
-        atLeast1([translate("maps.theRedChurch.w4.name"), translate("maps.theRedChurch.m3.name")]),
+        exactly(2, [translate("maps.theRedChurch.cipher.m2.name"), translate("maps.armsFactory.cipher.m2.name"), translate("maps.theRedChurch.cipher.m3.name")]),
+        exactly(2, [translate("maps.armsFactory.cipher.w2.name"), translate("maps.theRedChurch.cipher.e1.name"), translate("maps.theRedChurch.cipher.m3.name")]),
+        exactly(2, [translate("maps.theRedChurch.cipher.w1.name"), translate("maps.theRedChurch.cipher.w4.name"), translate("maps.armsFactory.cipher.w3.name")]),
+        exactly(2, [translate("maps.theRedChurch.cipher.w3.name"), translate("maps.theRedChurch.cipher.w4.name"), translate("maps.theRedChurch.cipher.m2.name")]),
+        exactly(3, [translate("maps.theRedChurch.cipher.w1.name"), translate("maps.armsFactory.cipher.w2.name"), translate("maps.theRedChurch.cipher.m2.name"), translate("maps.theRedChurch.cipher.m3.name")]),
+        atLeast1([translate("maps.theRedChurch.cipher.w1.name"), translate("maps.armsFactory.cipher.w2.name")]),
+        atLeast1([translate("maps.theRedChurch.cipher.w4.name"), translate("maps.theRedChurch.cipher.m3.name")]),
         ];
       return makeDeduction({
         mapImage, mapSize, ciphers, cipherCombinations, rules, hints,
@@ -667,17 +667,17 @@ export const MAPS_DATA = [
         translate("maps.lakesideVillage.zoneNamesNine"), translate("maps.lakesideVillage.zoneNamesTen"), translate("maps.lakesideVillage.zoneNamesEleven")
       ];
       const ciphers = [
-        { id: 'E_1', name: translate("maps.lakesideVillage.e1.name"),     location: [1132, 680], feature: translate("maps.lakesideVillage.e1.feature"), locked: true },
-        { id: 'E_2', name: translate("maps.lakesideVillage.e2.name"), location: [993, 364], feature: translate("maps.lakesideVillage.e2.feature") },
-        { id: 'E_3', name: translate("maps.lakesideVillage.e3.name"), location: [976, 857], feature: translate("maps.lakesideVillage.e3.feature") },
-        { id: 'M_1', name: translate("maps.lakesideVillage.m1.name"), location: [709, 325], feature: translate("maps.lakesideVillage.m1.feature") },
-        { id: 'M_2', name: translate("maps.lakesideVillage.m2.name"),     location: [651, 719], feature: translate("maps.lakesideVillage.m2.feature") },
-        { id: 'M_3', name: translate("maps.armsFactory.e2.name"),     location: [719, 994], feature: translate("maps.lakesideVillage.m3.feature") },
-        { id: 'W_1', name: translate("maps.lakesideVillage.w1.name"),   location: [387, 245], feature: translate("maps.lakesideVillage.w1.feature") },
-        { id: 'W_2', name: translate("maps.armsFactory.w2.name"),     location: [467, 352], feature: translate("maps.lakesideVillage.w1.feature") },
-        { id: 'W_3', name: translate("maps.lakesideVillage.w3.name"),     location: [370, 656], feature: translate("maps.lakesideVillage.w3.feature") },
-        { id: 'W_4', name: translate("maps.lakesideVillage.w4.name"), location: [393, 830], feature: translate("maps.lakesideVillage.w4.feature") },
-        { id: 'W_5', name: translate("maps.lakesideVillage.w5.name"), location: [307, 963], feature: translate("maps.lakesideVillage.w4.feature") },
+        { id: 'E_1', name: translate("maps.lakesideVillage.cipher.e1.name"),     location: [1132, 680], feature: translate("maps.lakesideVillage.cipher.e1.feature"), locked: true },
+        { id: 'E_2', name: translate("maps.lakesideVillage.cipher.e2.name"), location: [993, 364], feature: translate("maps.lakesideVillage.cipher.e2.feature") },
+        { id: 'E_3', name: translate("maps.lakesideVillage.cipher.e3.name"), location: [976, 857], feature: translate("maps.lakesideVillage.cipher.e3.feature") },
+        { id: 'M_1', name: translate("maps.lakesideVillage.cipher.m1.name"), location: [709, 325], feature: translate("maps.lakesideVillage.cipher.m1.feature") },
+        { id: 'M_2', name: translate("maps.lakesideVillage.cipher.m2.name"),     location: [651, 719], feature: translate("maps.lakesideVillage.cipher.m2.feature") },
+        { id: 'M_3', name: translate("maps.armsFactory.cipher.e2.name"),     location: [719, 994], feature: translate("maps.lakesideVillage.cipher.m3.feature") },
+        { id: 'W_1', name: translate("maps.lakesideVillage.cipher.w1.name"),   location: [387, 245], feature: translate("maps.lakesideVillage.cipher.w1.feature") },
+        { id: 'W_2', name: translate("maps.armsFactory.cipher.w2.name"),     location: [467, 352], feature: translate("maps.lakesideVillage.cipher.w1.feature") },
+        { id: 'W_3', name: translate("maps.lakesideVillage.cipher.w3.name"),     location: [370, 656], feature: translate("maps.lakesideVillage.cipher.w3.feature") },
+        { id: 'W_4', name: translate("maps.lakesideVillage.cipher.w4.name"), location: [393, 830], feature: translate("maps.lakesideVillage.cipher.w4.feature") },
+        { id: 'W_5', name: translate("maps.lakesideVillage.cipher.w5.name"), location: [307, 963], feature: translate("maps.lakesideVillage.cipher.w4.feature") },
       ];
       
       const cipherCombinations = [
@@ -806,22 +806,22 @@ export const MAPS_DATA = [
     deduction: (() => {
       const { fixed, region, exactly, either, same, chain } = dedHelpers(ciphers);
       const rules = [
-        fixed([translate("maps.lakesideVillage.e1.name")]),
+        fixed([translate("maps.lakesideVillage.cipher.e1.name")]),
         region(translate("maps.armsFactory.rules"), 2, 3,
-          [translate("maps.lakesideVillage.w1.name"), translate("maps.armsFactory.w2.name"), translate("maps.lakesideVillage.w3.name"), translate("maps.lakesideVillage.w4.name"), translate("maps.lakesideVillage.w5.name")]),
-        region(translate("maps.lakesideVillage.rules"), 2, 3, [translate("maps.lakesideVillage.m1.name"), translate("maps.lakesideVillage.m2.name"), translate("maps.armsFactory.e2.name")]),
-        region(translate("maps.armsFactory.rulesThird"), 2, 3, [translate("maps.lakesideVillage.e2.name"), translate("maps.lakesideVillage.e1.name"), translate("maps.lakesideVillage.e3.name")]),
-        region(translate("maps.lakesideVillage.rulesAlternate"), 2, 3, [translate("maps.lakesideVillage.w1.name"), translate("maps.armsFactory.w2.name"), translate("maps.lakesideVillage.m1.name"), translate("maps.lakesideVillage.e2.name")]),
-        region(translate("maps.lakesideVillage.rulesThird"), 2, 3, [translate("maps.lakesideVillage.w3.name"), translate("maps.lakesideVillage.m2.name"), translate("maps.lakesideVillage.e1.name")]),
+          [translate("maps.lakesideVillage.cipher.w1.name"), translate("maps.armsFactory.cipher.w2.name"), translate("maps.lakesideVillage.cipher.w3.name"), translate("maps.lakesideVillage.cipher.w4.name"), translate("maps.lakesideVillage.cipher.w5.name")]),
+        region(translate("maps.lakesideVillage.rules"), 2, 3, [translate("maps.lakesideVillage.cipher.m1.name"), translate("maps.lakesideVillage.cipher.m2.name"), translate("maps.armsFactory.cipher.e2.name")]),
+        region(translate("maps.armsFactory.rulesThird"), 2, 3, [translate("maps.lakesideVillage.cipher.e2.name"), translate("maps.lakesideVillage.cipher.e1.name"), translate("maps.lakesideVillage.cipher.e3.name")]),
+        region(translate("maps.lakesideVillage.rulesAlternate"), 2, 3, [translate("maps.lakesideVillage.cipher.w1.name"), translate("maps.armsFactory.cipher.w2.name"), translate("maps.lakesideVillage.cipher.m1.name"), translate("maps.lakesideVillage.cipher.e2.name")]),
+        region(translate("maps.lakesideVillage.rulesThird"), 2, 3, [translate("maps.lakesideVillage.cipher.w3.name"), translate("maps.lakesideVillage.cipher.m2.name"), translate("maps.lakesideVillage.cipher.e1.name")]),
         region(translate("maps.lakesideVillage.rulesFourth"), 2, 3,
-          [translate("maps.lakesideVillage.w4.name"), translate("maps.lakesideVillage.w5.name"), translate("maps.armsFactory.e2.name"), translate("maps.lakesideVillage.e3.name")]),
-        either([translate("maps.lakesideVillage.w1.name"), translate("maps.armsFactory.w2.name")]),
-        either([translate("maps.lakesideVillage.w4.name"), translate("maps.lakesideVillage.w5.name")]),
-        same([translate("maps.lakesideVillage.e2.name"), translate("maps.armsFactory.e2.name")]),
-        exactly(2, [translate("maps.lakesideVillage.m1.name"), translate("maps.lakesideVillage.e2.name"), translate("maps.lakesideVillage.e3.name")]),
-        exactly(2, [translate("maps.lakesideVillage.e2.name"), translate("maps.lakesideVillage.m2.name"), translate("maps.lakesideVillage.w3.name")]),
+          [translate("maps.lakesideVillage.cipher.w4.name"), translate("maps.lakesideVillage.cipher.w5.name"), translate("maps.armsFactory.cipher.e2.name"), translate("maps.lakesideVillage.cipher.e3.name")]),
+        either([translate("maps.lakesideVillage.cipher.w1.name"), translate("maps.armsFactory.cipher.w2.name")]),
+        either([translate("maps.lakesideVillage.cipher.w4.name"), translate("maps.lakesideVillage.cipher.w5.name")]),
+        same([translate("maps.lakesideVillage.cipher.e2.name"), translate("maps.armsFactory.cipher.e2.name")]),
+        exactly(2, [translate("maps.lakesideVillage.cipher.m1.name"), translate("maps.lakesideVillage.cipher.e2.name"), translate("maps.lakesideVillage.cipher.e3.name")]),
+        exactly(2, [translate("maps.lakesideVillage.cipher.e2.name"), translate("maps.lakesideVillage.cipher.m2.name"), translate("maps.lakesideVillage.cipher.w3.name")]),
         chain(translate("maps.lakesideVillage.rulesFifth"), 'yes', false,
-          [translate("maps.lakesideVillage.w1.name"), translate("maps.armsFactory.w2.name"), translate("maps.lakesideVillage.w3.name"), translate("maps.lakesideVillage.w4.name"), translate("maps.lakesideVillage.w5.name")],
+          [translate("maps.lakesideVillage.cipher.w1.name"), translate("maps.armsFactory.cipher.w2.name"), translate("maps.lakesideVillage.cipher.w3.name"), translate("maps.lakesideVillage.cipher.w4.name"), translate("maps.lakesideVillage.cipher.w5.name")],
           translate("maps.lakesideVillage.rulesSixth")
             + translate("maps.lakesideVillage.rulesSeventh")),
       ];
@@ -846,17 +846,17 @@ export const MAPS_DATA = [
         translate("maps.moonlitRiverPark.zoneNamesNine"), translate("maps.moonlitRiverPark.zoneNamesTen"), translate("maps.moonlitRiverPark.zoneNamesEleven")
       ];
       const ciphers = [
-        { id: 'M_1', name: translate("maps.moonlitRiverPark.m1.name"),       location: [711, 261], feature: translate("maps.moonlitRiverPark.m1.feature"), locked: true },
-        { id: 'E_1', name: translate("maps.moonlitRiverPark.e1.name"),     location: [967, 757], feature: translate("maps.lakesideVillage.e1.feature"), locked: true },
-        { id: 'E_2', name: translate("maps.moonlitRiverPark.e2.name"),    location: [1371, 311], feature: translate("maps.moonlitRiverPark.e2.feature") },
-        { id: 'E_3', name: translate("maps.moonlitRiverPark.e3.name"),  location: [1036, 289], feature: translate("maps.moonlitRiverPark.e3.feature") },
-        { id: 'E_4', name: translate("maps.moonlitRiverPark.e4.name"),   location: [1174, 517], feature: translate("maps.moonlitRiverPark.e4.feature") },
-        { id: 'E_5', name: translate("maps.moonlitRiverPark.e5.name"), location: [1323, 769], feature: translate("maps.moonlitRiverPark.e5.feature") },
-        { id: 'W_1', name: translate("maps.moonlitRiverPark.w1.name"),     location: [257, 301], feature: translate("maps.moonlitRiverPark.w1.feature") },
-        { id: 'W_2', name: translate("maps.moonlitRiverPark.w2.name"),       location: [72, 464], feature: translate("maps.moonlitRiverPark.w1.feature") },
-        { id: 'W_3', name: translate("maps.moonlitRiverPark.w3.name"),    location: [165, 753], feature: translate("maps.moonlitRiverPark.w3.feature") },
-        { id: 'W_4', name: translate("maps.moonlitRiverPark.w4.name"),   location: [444, 873], feature: translate("maps.moonlitRiverPark.w4.feature") },
-        { id: 'W_5', name: translate("maps.moonlitRiverPark.w5.name"),    location: [517, 607], feature: translate("maps.moonlitRiverPark.w1.feature") },
+        { id: 'M_1', name: translate("maps.moonlitRiverPark.cipher.m1.name"),       location: [711, 261], feature: translate("maps.moonlitRiverPark.cipher.m1.feature"), locked: true },
+        { id: 'E_1', name: translate("maps.moonlitRiverPark.cipher.e1.name"),     location: [967, 757], feature: translate("maps.moonlitRiverPark.cipher.e1.feature"), locked: true },
+        { id: 'E_2', name: translate("maps.moonlitRiverPark.cipher.e2.name"),    location: [1371, 311], feature: translate("maps.moonlitRiverPark.cipher.e2.feature") },
+        { id: 'E_3', name: translate("maps.moonlitRiverPark.cipher.e3.name"),  location: [1036, 289], feature: translate("maps.moonlitRiverPark.cipher.e3.feature") },
+        { id: 'E_4', name: translate("maps.moonlitRiverPark.cipher.e4.name"),   location: [1174, 517], feature: translate("maps.moonlitRiverPark.cipher.e4.feature") },
+        { id: 'E_5', name: translate("maps.moonlitRiverPark.cipher.e5.name"), location: [1323, 769], feature: translate("maps.moonlitRiverPark.cipher.e5.feature") },
+        { id: 'W_1', name: translate("maps.moonlitRiverPark.cipher.w1.name"),     location: [257, 301], feature: translate("maps.moonlitRiverPark.cipher.w1.feature") },
+        { id: 'W_2', name: translate("maps.moonlitRiverPark.cipher.w2.name"),       location: [72, 464], feature: translate("maps.moonlitRiverPark.cipher.w1.feature") },
+        { id: 'W_3', name: translate("maps.moonlitRiverPark.cipher.w3.name"),    location: [165, 753], feature: translate("maps.moonlitRiverPark.cipher.w3.feature") },
+        { id: 'W_4', name: translate("maps.moonlitRiverPark.cipher.w4.name"),   location: [444, 873], feature: translate("maps.moonlitRiverPark.cipher.w4.feature") },
+        { id: 'W_5', name: translate("maps.moonlitRiverPark.cipher.w5.name"),    location: [517, 607], feature: translate("maps.moonlitRiverPark.cipher.w1.feature") },
       ];
       
       const cipherCombinations = [
@@ -984,18 +984,18 @@ export const MAPS_DATA = [
     deduction: (() => {
       const { fixed, region, exactly, either, chain } = dedHelpers(ciphers);
       const rules = [
-        fixed([translate("maps.moonlitRiverPark.m1.name"), translate("maps.moonlitRiverPark.e1.name")]),
+        fixed([translate("maps.moonlitRiverPark.cipher.m1.name"), translate("maps.moonlitRiverPark.cipher.e1.name")]),
         region(translate("maps.moonlitRiverPark.rules"), 3, 3,
-          [translate("maps.moonlitRiverPark.w1.name"), translate("maps.moonlitRiverPark.w2.name"), translate("maps.moonlitRiverPark.w3.name"), translate("maps.moonlitRiverPark.w4.name"), translate("maps.moonlitRiverPark.w5.name")]),
+          [translate("maps.moonlitRiverPark.cipher.w1.name"), translate("maps.moonlitRiverPark.cipher.w2.name"), translate("maps.moonlitRiverPark.cipher.w3.name"), translate("maps.moonlitRiverPark.cipher.w4.name"), translate("maps.moonlitRiverPark.cipher.w5.name")]),
         region(translate("maps.moonlitRiverPark.rulesAlternate"), 3, 3,
-          [translate("maps.moonlitRiverPark.e2.name"), translate("maps.moonlitRiverPark.e3.name"), translate("maps.moonlitRiverPark.e4.name"), translate("maps.moonlitRiverPark.e1.name"), translate("maps.moonlitRiverPark.e5.name")]),
+          [translate("maps.moonlitRiverPark.cipher.e2.name"), translate("maps.moonlitRiverPark.cipher.e3.name"), translate("maps.moonlitRiverPark.cipher.e4.name"), translate("maps.moonlitRiverPark.cipher.e1.name"), translate("maps.moonlitRiverPark.cipher.e5.name")]),
         chain(translate("maps.moonlitRiverPark.rulesThird"), 'no', true,
-          [translate("maps.moonlitRiverPark.w1.name"), translate("maps.moonlitRiverPark.w2.name"), translate("maps.moonlitRiverPark.w3.name"), translate("maps.moonlitRiverPark.w4.name"), translate("maps.moonlitRiverPark.w5.name")],
+          [translate("maps.moonlitRiverPark.cipher.w1.name"), translate("maps.moonlitRiverPark.cipher.w2.name"), translate("maps.moonlitRiverPark.cipher.w3.name"), translate("maps.moonlitRiverPark.cipher.w4.name"), translate("maps.moonlitRiverPark.cipher.w5.name")],
           translate("maps.moonlitRiverPark.rulesFourth")
             + translate("maps.moonlitRiverPark.rulesFifth")),
-        either([translate("maps.moonlitRiverPark.w4.name"), translate("maps.moonlitRiverPark.e3.name")]),
-        either([translate("maps.moonlitRiverPark.w3.name"), translate("maps.moonlitRiverPark.e4.name")]),
-        exactly(2, [translate("maps.moonlitRiverPark.w5.name"), translate("maps.moonlitRiverPark.w4.name"), translate("maps.moonlitRiverPark.e5.name")]),
+        either([translate("maps.moonlitRiverPark.cipher.w4.name"), translate("maps.moonlitRiverPark.cipher.e3.name")]),
+        either([translate("maps.moonlitRiverPark.cipher.w3.name"), translate("maps.moonlitRiverPark.cipher.e4.name")]),
+        exactly(2, [translate("maps.moonlitRiverPark.cipher.w5.name"), translate("maps.moonlitRiverPark.cipher.w4.name"), translate("maps.moonlitRiverPark.cipher.e5.name")]),
       ];
       return makeDeduction({
         mapImage, mapSize, ciphers, cipherCombinations, rules,
@@ -1018,18 +1018,18 @@ export const MAPS_DATA = [
         translate("maps.armsFactory.zoneNamesSix"), translate("maps.zoneNamesSeven"), translate("maps.zoneNamesEight")
       ];
       const ciphers = [
-        { id: 'E_1', name: translate("maps.e1.name"),   location: [508, 113], feature: translate("maps.e1.feature") },
-        { id: 'E_2', name: translate("maps.armsFactory.e1.name"), location: [647, 198], feature: translate("maps.e2.feature") },
-        { id: 'E_3', name: translate("maps.e3.name"),   location: [550, 318], feature: translate("maps.e2.feature") },
-        { id: 'E_4', name: translate("maps.e4.name"), location: [643, 462], feature: translate("maps.e2.feature") },
-        { id: 'M_1', name: translate("maps.armsFactory.w2.name"),     location: [346, 177], feature: translate("maps.m1.feature") },
-        { id: 'M_2', name: translate("maps.lakesideVillage.m2.name"),     location: [344, 281], feature: translate("maps.m2.feature") },
-        { id: 'M_3', name: translate("maps.armsFactory.e3.name"),   location: [351, 526], feature: translate("maps.m3.feature") },
-        { id: 'M_4', name: translate("maps.armsFactory.e4.name"),   location: [457, 516], feature: translate("maps.m3.feature") },
-        { id: 'W_1', name: translate("maps.armsFactory.w3.name"), location: [135, 126], feature: translate("maps.w1.feature") },
-        { id: 'W_2', name: translate("maps.theRedChurch.e1.name"),     location: [133, 340], feature: translate("maps.w2.feature") },
-        { id: 'W_3', name: translate("maps.w3.name"),     location: [206, 308], feature: translate("maps.w2.feature") },
-        { id: 'W_4', name: translate("maps.armsFactory.w4.name"),   location: [88, 533], feature: translate("maps.w4.feature") },
+        { id: 'E_1', name: translate("maps.default.cipher.e1.name"),   location: [508, 113], feature: translate("maps.e1.feature") },
+        { id: 'E_2', name: translate("maps.armsFactory.cipher.e1.name"), location: [647, 198], feature: translate("maps.e2.feature") },
+        { id: 'E_3', name: translate("maps.default.cipher.e3.name"),   location: [550, 318], feature: translate("maps.e2.feature") },
+        { id: 'E_4', name: translate("maps.default.cipher.e4.name"), location: [643, 462], feature: translate("maps.e2.feature") },
+        { id: 'M_1', name: translate("maps.armsFactory.cipher.w2.name"),     location: [346, 177], feature: translate("maps.m1.feature") },
+        { id: 'M_2', name: translate("maps.lakesideVillage.cipher.m2.name"),     location: [344, 281], feature: translate("maps.m2.feature") },
+        { id: 'M_3', name: translate("maps.armsFactory.cipher.e3.name"),   location: [351, 526], feature: translate("maps.m3.feature") },
+        { id: 'M_4', name: translate("maps.armsFactory.cipher.e4.name"),   location: [457, 516], feature: translate("maps.m3.feature") },
+        { id: 'W_1', name: translate("maps.armsFactory.cipher.w3.name"), location: [135, 126], feature: translate("maps.w1.feature") },
+        { id: 'W_2', name: translate("maps.theRedChurch.cipher.e1.name"),     location: [133, 340], feature: translate("maps.w2.feature") },
+        { id: 'W_3', name: translate("maps.default.cipher.w3.name"),     location: [206, 308], feature: translate("maps.w2.feature") },
+        { id: 'W_4', name: translate("maps.armsFactory.cipher.w4.name"),   location: [88, 533], feature: translate("maps.w4.feature") },
       ];
       
       const cipherCombinations = [
@@ -1154,21 +1154,21 @@ export const MAPS_DATA = [
       law_urls, fixedHint, hints,
     deduction: (() => {
       const { region, exactly, chain, implies, link } = dedHelpers(ciphers);
-      const EAST = [translate("maps.e1.name"), translate("maps.armsFactory.e1.name"), translate("maps.e3.name"), translate("maps.e4.name")];
-      const WEST = [translate("maps.armsFactory.w3.name"), translate("maps.theRedChurch.e1.name"), translate("maps.w3.name"), translate("maps.armsFactory.w4.name")];
+      const EAST = [translate("maps.default.cipher.e1.name"), translate("maps.armsFactory.cipher.e1.name"), translate("maps.default.cipher.e3.name"), translate("maps.default.cipher.e4.name")];
+      const WEST = [translate("maps.armsFactory.cipher.w3.name"), translate("maps.theRedChurch.cipher.e1.name"), translate("maps.default.cipher.w3.name"), translate("maps.armsFactory.cipher.w4.name")];
       const rules = [
         region(translate("maps.theRedChurch.rules"), 2, 3, WEST),
-        region(translate("maps.armsFactory.rulesAlternate"), 2, 3, [translate("maps.armsFactory.w2.name"), translate("maps.lakesideVillage.m2.name"), translate("maps.armsFactory.e3.name"), translate("maps.armsFactory.e4.name")]),
+        region(translate("maps.armsFactory.rulesAlternate"), 2, 3, [translate("maps.armsFactory.cipher.w2.name"), translate("maps.lakesideVillage.cipher.m2.name"), translate("maps.armsFactory.cipher.e3.name"), translate("maps.armsFactory.cipher.e4.name")]),
         region(translate("maps.theRedChurch.rulesAlternate"), 2, 3, EAST),
-        implies(translate("maps.nameAlternate"), [translate("maps.theRedChurch.e1.name"), translate("maps.w3.name")], [translate("maps.armsFactory.w2.name")],
+        implies(translate("maps.nameAlternate"), [translate("maps.theRedChurch.cipher.e1.name"), translate("maps.default.cipher.w3.name")], [translate("maps.armsFactory.cipher.w2.name")],
           translate("maps.rules")),
-        exactly(2, [translate("maps.armsFactory.w3.name"), translate("maps.armsFactory.w2.name"), translate("maps.lakesideVillage.m2.name")]),
-        exactly(2, [translate("maps.armsFactory.w4.name"), translate("maps.armsFactory.w2.name"), translate("maps.e1.name")]),
-        chain(translate("maps.chain"), 'yes', false, [translate("maps.theRedChurch.e1.name"), translate("maps.w3.name"), translate("maps.lakesideVillage.m2.name"), translate("maps.e3.name")],
+        exactly(2, [translate("maps.armsFactory.cipher.w3.name"), translate("maps.armsFactory.cipher.w2.name"), translate("maps.lakesideVillage.cipher.m2.name")]),
+        exactly(2, [translate("maps.armsFactory.cipher.w4.name"), translate("maps.armsFactory.cipher.w2.name"), translate("maps.default.cipher.e1.name")]),
+        chain(translate("maps.chain"), 'yes', false, [translate("maps.theRedChurch.cipher.e1.name"), translate("maps.default.cipher.w3.name"), translate("maps.lakesideVillage.cipher.m2.name"), translate("maps.default.cipher.e3.name")],
           translate("maps.rulesAlternate")),
-        link(translate("maps.rulesThird"), EAST, translate("maps.e1.name"), true,
+        link(translate("maps.rulesThird"), EAST, translate("maps.default.cipher.e1.name"), true,
           translate("maps.rulesFourth")),
-        link(translate("maps.rulesFifth"), WEST, translate("maps.e4.name"), false,
+        link(translate("maps.rulesFifth"), WEST, translate("maps.default.cipher.e4.name"), false,
           translate("maps.rulesSixth")),
       ];
       return makeDeduction({
@@ -1194,19 +1194,19 @@ export const MAPS_DATA = [
         translate("maps.eversleepingTown.zoneNamesNine")
       ];
       const ciphers = [
-        { id: 'W_1', name: translate("maps.theRedChurch.e1.name"),     location: [101, 462], feature: translate("maps.eversleepingTown.w1.feature"), locked: true },
-        { id: 'W_2', name: translate("maps.eversleepingTown.w2.name"),    location: [161, 234], feature: translate("maps.eversleepingTown.w2.feature") },
-        { id: 'W_3', name: translate("maps.eversleepingTown.w3.name"),    location: [258, 206], feature: translate("maps.eversleepingTown.w2.feature") },
-        { id: 'E_1', name: translate("maps.eversleepingTown.e1.name"), location: [520, 174], feature: translate("maps.eversleepingTown.e1.feature") },
-        { id: 'E_2', name: translate("maps.eversleepingTown.e2.name"), location: [662, 196], feature: translate("maps.eversleepingTown.e1.feature") },
-        { id: 'E_3', name: translate("maps.eversleepingTown.e3.name"),    location: [552, 412], feature: translate("maps.eversleepingTown.e3.feature") },
-        { id: 'E_4', name: translate("maps.eversleepingTown.e4.name"),      location: [656, 496], feature: translate("maps.eversleepingTown.e3.feature") },
-        { id: 'E_5', name: translate("maps.eversleepingTown.e5.name"),      location: [546, 711], feature: translate("maps.eversleepingTown.e5.feature") },
-        { id: 'E_6', name: translate("maps.eversleepingTown.e6.name"),      location: [470, 623], feature: translate("maps.eversleepingTown.e5.feature") },
-        { id: 'M_1', name: translate("maps.eversleepingTown.m1.name"),    location: [454, 144], feature: translate("maps.eversleepingTown.m1.feature") },
-        { id: 'M_2', name: translate("maps.eversleepingTown.m2.name"),  location: [388, 359], feature: translate("maps.eversleepingTown.m1.feature") },
-        { id: 'M_3', name: translate("maps.eversleepingTown.m3.name"),  location: [374, 500], feature: translate("maps.eversleepingTown.m3.feature") },
-        { id: 'M_4', name: translate("maps.eversleepingTown.m4.name"),  location: [318, 559], feature: translate("maps.eversleepingTown.m3.feature") },
+        { id: 'W_1', name: translate("maps.theRedChurch.cipher.e1.name"),     location: [101, 462], feature: translate("maps.eversleepingTown.cipher.w1.feature"), locked: true },
+        { id: 'W_2', name: translate("maps.eversleepingTown.cipher.w2.name"),    location: [161, 234], feature: translate("maps.eversleepingTown.cipher.w2.feature") },
+        { id: 'W_3', name: translate("maps.eversleepingTown.cipher.w3.name"),    location: [258, 206], feature: translate("maps.eversleepingTown.cipher.w2.feature") },
+        { id: 'E_1', name: translate("maps.eversleepingTown.cipher.e1.name"), location: [520, 174], feature: translate("maps.eversleepingTown.cipher.e1.feature") },
+        { id: 'E_2', name: translate("maps.eversleepingTown.cipher.e2.name"), location: [662, 196], feature: translate("maps.eversleepingTown.cipher.e1.feature") },
+        { id: 'E_3', name: translate("maps.eversleepingTown.cipher.e3.name"),    location: [552, 412], feature: translate("maps.eversleepingTown.cipher.e3.feature") },
+        { id: 'E_4', name: translate("maps.eversleepingTown.cipher.e4.name"),      location: [656, 496], feature: translate("maps.eversleepingTown.cipher.e3.feature") },
+        { id: 'E_5', name: translate("maps.eversleepingTown.cipher.e5.name"),      location: [546, 711], feature: translate("maps.eversleepingTown.cipher.e5.feature") },
+        { id: 'E_6', name: translate("maps.eversleepingTown.cipher.e6.name"),      location: [470, 623], feature: translate("maps.eversleepingTown.cipher.e5.feature") },
+        { id: 'M_1', name: translate("maps.eversleepingTown.cipher.m1.name"),    location: [454, 144], feature: translate("maps.eversleepingTown.cipher.m1.feature") },
+        { id: 'M_2', name: translate("maps.eversleepingTown.cipher.m2.name"),  location: [388, 359], feature: translate("maps.eversleepingTown.cipher.m1.feature") },
+        { id: 'M_3', name: translate("maps.eversleepingTown.cipher.m3.name"),  location: [374, 500], feature: translate("maps.eversleepingTown.cipher.m3.feature") },
+        { id: 'M_4', name: translate("maps.eversleepingTown.cipher.m4.name"),  location: [318, 559], feature: translate("maps.eversleepingTown.cipher.m3.feature") },
       ];
       
       const cipherCombinations = [
@@ -1331,18 +1331,18 @@ export const MAPS_DATA = [
     deduction: (() => {
       const { fixed, region, either, atMost1 } = dedHelpers(ciphers);
       const rules = [
-        fixed([translate("maps.theRedChurch.e1.name")]),
-        region(translate("maps.theRedChurch.rules"), 2, 2, [translate("maps.theRedChurch.e1.name"), translate("maps.eversleepingTown.w2.name"), translate("maps.eversleepingTown.w3.name")]),
+        fixed([translate("maps.theRedChurch.cipher.e1.name")]),
+        region(translate("maps.theRedChurch.rules"), 2, 2, [translate("maps.theRedChurch.cipher.e1.name"), translate("maps.eversleepingTown.cipher.w2.name"), translate("maps.eversleepingTown.cipher.w3.name")]),
         region(translate("maps.armsFactory.rulesAlternate"), 2, 2,
-          [translate("maps.eversleepingTown.m1.name"), translate("maps.eversleepingTown.m2.name"), translate("maps.eversleepingTown.m3.name"), translate("maps.eversleepingTown.m4.name")]),
+          [translate("maps.eversleepingTown.cipher.m1.name"), translate("maps.eversleepingTown.cipher.m2.name"), translate("maps.eversleepingTown.cipher.m3.name"), translate("maps.eversleepingTown.cipher.m4.name")]),
         region(translate("maps.theRedChurch.rulesAlternate"), 3, 3,
-          [translate("maps.eversleepingTown.e1.name"), translate("maps.eversleepingTown.e2.name"), translate("maps.eversleepingTown.e3.name"), translate("maps.eversleepingTown.e4.name"), translate("maps.eversleepingTown.e5.name"), translate("maps.eversleepingTown.e6.name")]),
-        either([translate("maps.eversleepingTown.w2.name"), translate("maps.eversleepingTown.w3.name")]),
-        either([translate("maps.eversleepingTown.e1.name"), translate("maps.eversleepingTown.e2.name")]),
-        either([translate("maps.eversleepingTown.e3.name"), translate("maps.eversleepingTown.e4.name")]),
-        either([translate("maps.eversleepingTown.e5.name"), translate("maps.eversleepingTown.e6.name")]),
-        atMost1([translate("maps.eversleepingTown.m3.name"), translate("maps.eversleepingTown.m4.name")]),
-        atMost1([translate("maps.eversleepingTown.m1.name"), translate("maps.eversleepingTown.m4.name")]),
+          [translate("maps.eversleepingTown.cipher.e1.name"), translate("maps.eversleepingTown.cipher.e2.name"), translate("maps.eversleepingTown.cipher.e3.name"), translate("maps.eversleepingTown.cipher.e4.name"), translate("maps.eversleepingTown.cipher.e5.name"), translate("maps.eversleepingTown.cipher.e6.name")]),
+        either([translate("maps.eversleepingTown.cipher.w2.name"), translate("maps.eversleepingTown.cipher.w3.name")]),
+        either([translate("maps.eversleepingTown.cipher.e1.name"), translate("maps.eversleepingTown.cipher.e2.name")]),
+        either([translate("maps.eversleepingTown.cipher.e3.name"), translate("maps.eversleepingTown.cipher.e4.name")]),
+        either([translate("maps.eversleepingTown.cipher.e5.name"), translate("maps.eversleepingTown.cipher.e6.name")]),
+        atMost1([translate("maps.eversleepingTown.cipher.m3.name"), translate("maps.eversleepingTown.cipher.m4.name")]),
+        atMost1([translate("maps.eversleepingTown.cipher.m1.name"), translate("maps.eversleepingTown.cipher.m4.name")]),
         ];
       return makeDeduction({
         mapImage, mapSize, ciphers, cipherCombinations, rules,
@@ -1364,18 +1364,18 @@ export const MAPS_DATA = [
         translate("maps.chinaTown.zoneNamesSix"), translate("maps.chinaTown.zoneNamesSeven"), translate("maps.chinaTown.zoneNamesEight")
       ];
       const ciphers = [
-        { id: 'E_2', name: translate("maps.chinaTown.e2.name"),   location: [1094, 563], feature: translate("maps.lakesideVillage.e1.feature"), locked: true },
-        { id: 'E_1', name: translate("maps.chinaTown.e1.name"),     location: [1042, 249], feature: translate("maps.chinaTown.e1.feature") },
-        { id: 'E_3', name: translate("maps.chinaTown.e3.name"),   location: [1103, 841], feature: translate("maps.chinaTown.e3.feature") },
-        { id: 'M_1', name: translate("maps.chinaTown.m1.name"),     location: [760, 332], feature: translate("maps.chinaTown.m1.feature") },
-        { id: 'M_2', name: translate("maps.chinaTown.m2.name"),     location: [705, 630], feature: translate("maps.chinaTown.m2.feature") },
-        { id: 'M_3', name: translate("maps.chinaTown.m3.name"),   location: [500, 694], feature: translate("maps.chinaTown.m3.feature") },
-        { id: 'M_4', name: translate("maps.chinaTown.m4.name"),   location: [454, 818], feature: translate("maps.chinaTown.m3.feature") },
-        { id: 'M_5', name: translate("maps.chinaTown.m5.name"),     location: [881, 976], feature: translate("maps.chinaTown.m5.feature") },
-        { id: 'W_1', name: translate("maps.chinaTown.w1.name"), location: [344, 220], feature: translate("maps.chinaTown.w1.feature") },
-        { id: 'W_2', name: translate("maps.chinaTown.w2.name"), location: [407, 341], feature: translate("maps.chinaTown.w1.feature") },
-        { id: 'W_3', name: translate("maps.chinaTown.w3.name"),   location: [118, 534], feature: translate("maps.chinaTown.w3.feature") },
-        { id: 'W_4', name: translate("maps.chinaTown.w4.name"),   location: [176, 792], feature: translate("maps.chinaTown.w4.feature") },
+        { id: 'E_2', name: translate("maps.chinaTown.cipher.e2.name"),   location: [1094, 563], feature: translate("maps.chinaTown.cipher.e2.feature"), locked: true },
+        { id: 'E_1', name: translate("maps.chinaTown.cipher.e1.name"),     location: [1042, 249], feature: translate("maps.chinaTown.cipher.e1.feature") },
+        { id: 'E_3', name: translate("maps.chinaTown.cipher.e3.name"),   location: [1103, 841], feature: translate("maps.chinaTown.cipher.e3.feature") },
+        { id: 'M_1', name: translate("maps.chinaTown.cipher.m1.name"),     location: [760, 332], feature: translate("maps.chinaTown.cipher.m1.feature") },
+        { id: 'M_2', name: translate("maps.chinaTown.cipher.m2.name"),     location: [705, 630], feature: translate("maps.chinaTown.cipher.m2.feature") },
+        { id: 'M_3', name: translate("maps.chinaTown.cipher.m3.name"),   location: [500, 694], feature: translate("maps.chinaTown.cipher.m3.feature") },
+        { id: 'M_4', name: translate("maps.chinaTown.cipher.m4.name"),   location: [454, 818], feature: translate("maps.chinaTown.cipher.m3.feature") },
+        { id: 'M_5', name: translate("maps.chinaTown.cipher.m5.name"),     location: [881, 976], feature: translate("maps.chinaTown.cipher.m5.feature") },
+        { id: 'W_1', name: translate("maps.chinaTown.cipher.w1.name"), location: [344, 220], feature: translate("maps.chinaTown.cipher.w1.feature") },
+        { id: 'W_2', name: translate("maps.chinaTown.cipher.w2.name"), location: [407, 341], feature: translate("maps.chinaTown.cipher.w1.feature") },
+        { id: 'W_3', name: translate("maps.chinaTown.cipher.w3.name"),   location: [118, 534], feature: translate("maps.chinaTown.cipher.w3.feature") },
+        { id: 'W_4', name: translate("maps.chinaTown.cipher.w4.name"),   location: [176, 792], feature: translate("maps.chinaTown.cipher.w4.feature") },
       ];
       
       const cipherCombinations = [
@@ -1395,11 +1395,11 @@ export const MAPS_DATA = [
       const law_urls = ['https://www.bilibili.com/video/BV1QGpF6CEos',''];
       const fixedHint = translate("maps.chinaTown.fixedHint");
       const hints = [
-      translate("maps.chinaTown.hintsZero"),
-      translate("maps.chinaTown.hintsOne"),
+      translate("maps.chinaTown.hint.zero"),
+      translate("maps.chinaTown.hint.one"),
       '',
-      translate("maps.chinaTown.hintsThree"),
-      translate("maps.chinaTown.hintsFour"),
+      translate("maps.chinaTown.hint.three"),
+      translate("maps.chinaTown.hint.four"),
       ''
     ];
       
@@ -1504,25 +1504,25 @@ export const MAPS_DATA = [
       const { fixed, region, either, same, atLeast1, atMost1, chainRun, allAbsent }
         = dedHelpers(ciphers);
       
-      const special = allAbsent([translate("maps.chinaTown.m1.name"), translate("maps.chinaTown.m2.name")], [translate("maps.chinaTown.e1.name"), translate("maps.chinaTown.e3.name"), translate("maps.chinaTown.m5.name")],
+      const special = allAbsent([translate("maps.chinaTown.cipher.m1.name"), translate("maps.chinaTown.cipher.m2.name")], [translate("maps.chinaTown.cipher.e1.name"), translate("maps.chinaTown.cipher.e3.name"), translate("maps.chinaTown.cipher.m5.name")],
         translate("maps.chinaTown.special"));
       const rules = [
-        fixed([translate("maps.chinaTown.e2.name")]),
-        region(translate("maps.theRedChurch.rules"), 2, 3, [translate("maps.chinaTown.w1.name"), translate("maps.chinaTown.w2.name"), translate("maps.chinaTown.w3.name"), translate("maps.chinaTown.w4.name")]),
-        region(translate("maps.armsFactory.rulesAlternate"), 2, 3, [translate("maps.chinaTown.m1.name"), translate("maps.chinaTown.m2.name"), translate("maps.chinaTown.m3.name"), translate("maps.chinaTown.m4.name"), translate("maps.chinaTown.m5.name")]),
-        region(translate("maps.theRedChurch.rulesAlternate"), 2, 3, [translate("maps.chinaTown.e1.name"), translate("maps.chinaTown.e2.name"), translate("maps.chinaTown.e3.name")]),
-        either([translate("maps.chinaTown.w1.name"), translate("maps.chinaTown.w2.name")]),
-        either([translate("maps.chinaTown.m4.name"), translate("maps.chinaTown.m3.name")]),
-        same([translate("maps.chinaTown.m2.name"), translate("maps.chinaTown.m4.name")]),
-        atLeast1([translate("maps.chinaTown.m5.name"), translate("maps.chinaTown.e3.name")], translate("maps.chinaTown.rules")),
-        atLeast1([translate("maps.chinaTown.w4.name"), translate("maps.chinaTown.m4.name")], translate("maps.chinaTown.rules")),
-        atLeast1([translate("maps.chinaTown.e1.name"), translate("maps.chinaTown.e3.name")], translate("maps.chinaTown.rules")),
-        atMost1([translate("maps.chinaTown.m1.name"), translate("maps.chinaTown.m2.name")]),
-        atMost1([translate("maps.chinaTown.w2.name"), translate("maps.chinaTown.w3.name")]),
-        chainRun(translate("maps.chain"), [translate("maps.chinaTown.w1.name"), translate("maps.chinaTown.m1.name"), translate("maps.chinaTown.e1.name"), translate("maps.chinaTown.e3.name")],
+        fixed([translate("maps.chinaTown.cipher.e2.name")]),
+        region(translate("maps.theRedChurch.rules"), 2, 3, [translate("maps.chinaTown.cipher.w1.name"), translate("maps.chinaTown.cipher.w2.name"), translate("maps.chinaTown.cipher.w3.name"), translate("maps.chinaTown.cipher.w4.name")]),
+        region(translate("maps.armsFactory.rulesAlternate"), 2, 3, [translate("maps.chinaTown.cipher.m1.name"), translate("maps.chinaTown.cipher.m2.name"), translate("maps.chinaTown.cipher.m3.name"), translate("maps.chinaTown.cipher.m4.name"), translate("maps.chinaTown.cipher.m5.name")]),
+        region(translate("maps.theRedChurch.rulesAlternate"), 2, 3, [translate("maps.chinaTown.cipher.e1.name"), translate("maps.chinaTown.cipher.e2.name"), translate("maps.chinaTown.cipher.e3.name")]),
+        either([translate("maps.chinaTown.cipher.w1.name"), translate("maps.chinaTown.cipher.w2.name")]),
+        either([translate("maps.chinaTown.cipher.m4.name"), translate("maps.chinaTown.cipher.m3.name")]),
+        same([translate("maps.chinaTown.cipher.m2.name"), translate("maps.chinaTown.cipher.m4.name")]),
+        atLeast1([translate("maps.chinaTown.cipher.m5.name"), translate("maps.chinaTown.cipher.e3.name")], translate("maps.chinaTown.rules")),
+        atLeast1([translate("maps.chinaTown.cipher.w4.name"), translate("maps.chinaTown.cipher.m4.name")], translate("maps.chinaTown.rules")),
+        atLeast1([translate("maps.chinaTown.cipher.e1.name"), translate("maps.chinaTown.cipher.e3.name")], translate("maps.chinaTown.rules")),
+        atMost1([translate("maps.chinaTown.cipher.m1.name"), translate("maps.chinaTown.cipher.m2.name")]),
+        atMost1([translate("maps.chinaTown.cipher.w2.name"), translate("maps.chinaTown.cipher.w3.name")]),
+        chainRun(translate("maps.chain"), [translate("maps.chinaTown.cipher.w1.name"), translate("maps.chinaTown.cipher.m1.name"), translate("maps.chinaTown.cipher.e1.name"), translate("maps.chinaTown.cipher.e3.name")],
           translate("maps.chinaTown.rulesAlternate")),
         chainRun(translate("maps.chain"),
-          [translate("maps.chinaTown.w4.name"), translate("maps.chinaTown.m4.name"), translate("maps.chinaTown.m5.name"), translate("maps.chinaTown.e3.name"), translate("maps.chinaTown.m2.name"), translate("maps.chinaTown.w3.name"), translate("maps.chinaTown.w4.name")],
+          [translate("maps.chinaTown.cipher.w4.name"), translate("maps.chinaTown.cipher.m4.name"), translate("maps.chinaTown.cipher.m5.name"), translate("maps.chinaTown.cipher.e3.name"), translate("maps.chinaTown.cipher.m2.name"), translate("maps.chinaTown.cipher.w3.name"), translate("maps.chinaTown.cipher.w4.name")],
           translate("maps.chinaTown.rulesThird")),
         special,
       ];
@@ -1546,21 +1546,21 @@ export const MAPS_DATA = [
         translate("maps.darkwoods.zoneNamesSix"), translate("maps.darkwoods.zoneNamesSeven"), translate("maps.darkwoods.zoneNamesEight")
       ];
       const ciphers = [
-        { id: 'W_1', name: translate("maps.armsFactory.w3.name"),     location: [379, 265], feature: translate("maps.darkwoods.w1.feature") },
-        { id: 'W_2', name: translate("maps.darkwoods.w2.name"),       location: [261, 442], feature: translate("maps.darkwoods.w1.feature") },
-        { id: 'W_3', name: translate("maps.darkwoods.w3.name"),   location: [412, 728], feature: translate("maps.darkwoods.w3.feature") },
-        { id: 'W_4', name: translate("maps.darkwoods.w4.name"),   location: [412, 952], feature: translate("maps.darkwoods.w3.feature") },
-        { id: 'M_1', name: translate("maps.darkwoods.m1.name"), location: [534, 278], feature: translate("maps.darkwoods.m1.feature") },
-        { id: 'M_2', name: translate("maps.darkwoods.m2.name"), location: [648, 406], feature: translate("maps.darkwoods.m1.feature") },
-        { id: 'E_3', name: translate("maps.armsFactory.e1.name"),     location: [1059, 548], feature: translate("maps.darkwoods.e3.feature") },
-        { id: 'M_3', name: translate("maps.darkwoods.m3.name"), location: [788, 651], feature: translate("maps.darkwoods.e3.feature") },
-        { id: 'E_1', name: translate("maps.darkwoods.e1.name"),     location: [1097, 213], feature: translate("maps.darkwoods.e1.feature") },
-        { id: 'E_2', name: translate("maps.darkwoods.e2.name"),     location: [896, 399], feature: translate("maps.darkwoods.e1.feature") },
-        { id: 'E_4', name: translate("maps.darkwoods.e4.name"),     location: [881, 915], feature: translate("maps.darkwoods.e4.feature") },
-        { id: 'E_5', name: translate("maps.darkwoods.e5.name"),       location: [1074, 880], feature: translate("maps.darkwoods.e4.feature") },
-        { id: 'M_4', name: translate("maps.darkwoods.m4.name"),     location: [673, 733], feature: translate("maps.darkwoods.m4.feature") },
-        { id: 'M_5', name: translate("maps.darkwoods.m5.name"),     location: [778, 988], feature: translate("maps.darkwoods.m4.feature") },
-        { id: 'M_6', name: translate("maps.darkwoods.m6.name"),     location: [633, 1098], feature: translate("maps.darkwoods.m4.feature") },
+        { id: 'W_1', name: translate("maps.armsFactory.cipher.w3.name"),     location: [379, 265], feature: translate("maps.darkwoods.cipher.w1.feature") },
+        { id: 'W_2', name: translate("maps.darkwoods.cipher.w2.name"),       location: [261, 442], feature: translate("maps.darkwoods.cipher.w1.feature") },
+        { id: 'W_3', name: translate("maps.darkwoods.cipher.w3.name"),   location: [412, 728], feature: translate("maps.darkwoods.cipher.w3.feature") },
+        { id: 'W_4', name: translate("maps.darkwoods.cipher.w4.name"),   location: [412, 952], feature: translate("maps.darkwoods.cipher.w3.feature") },
+        { id: 'M_1', name: translate("maps.darkwoods.cipher.m1.name"), location: [534, 278], feature: translate("maps.darkwoods.cipher.m1.feature") },
+        { id: 'M_2', name: translate("maps.darkwoods.cipher.m2.name"), location: [648, 406], feature: translate("maps.darkwoods.cipher.m1.feature") },
+        { id: 'E_3', name: translate("maps.armsFactory.cipher.e1.name"),     location: [1059, 548], feature: translate("maps.darkwoods.cipher.e3.feature") },
+        { id: 'M_3', name: translate("maps.darkwoods.cipher.m3.name"), location: [788, 651], feature: translate("maps.darkwoods.cipher.e3.feature") },
+        { id: 'E_1', name: translate("maps.darkwoods.cipher.e1.name"),     location: [1097, 213], feature: translate("maps.darkwoods.cipher.e1.feature") },
+        { id: 'E_2', name: translate("maps.darkwoods.cipher.e2.name"),     location: [896, 399], feature: translate("maps.darkwoods.cipher.e1.feature") },
+        { id: 'E_4', name: translate("maps.darkwoods.cipher.e4.name"),     location: [881, 915], feature: translate("maps.darkwoods.cipher.e4.feature") },
+        { id: 'E_5', name: translate("maps.darkwoods.cipher.e5.name"),       location: [1074, 880], feature: translate("maps.darkwoods.cipher.e4.feature") },
+        { id: 'M_4', name: translate("maps.darkwoods.cipher.m4.name"),     location: [673, 733], feature: translate("maps.darkwoods.cipher.m4.feature") },
+        { id: 'M_5', name: translate("maps.darkwoods.cipher.m5.name"),     location: [778, 988], feature: translate("maps.darkwoods.cipher.m4.feature") },
+        { id: 'M_6', name: translate("maps.darkwoods.cipher.m6.name"),     location: [633, 1098], feature: translate("maps.darkwoods.cipher.m4.feature") },
       ];
       
       const cipherCombinations = [
@@ -1689,25 +1689,25 @@ export const MAPS_DATA = [
       const { region, either, atMost1, same, chain } = dedHelpers(ciphers);
       const rules = [
         region(translate("maps.theRedChurch.rules"), 2, 2,
-          [translate("maps.darkwoods.w2.name"), translate("maps.armsFactory.w3.name"), translate("maps.darkwoods.w4.name"), translate("maps.darkwoods.w3.name")]),
+          [translate("maps.darkwoods.cipher.w2.name"), translate("maps.armsFactory.cipher.w3.name"), translate("maps.darkwoods.cipher.w4.name"), translate("maps.darkwoods.cipher.w3.name")]),
         region(translate("maps.armsFactory.rulesAlternate"), 2, 3,
-          [translate("maps.darkwoods.m1.name"), translate("maps.darkwoods.m2.name"), translate("maps.darkwoods.m3.name"), translate("maps.darkwoods.m4.name"),
-            translate("maps.darkwoods.m5.name"), translate("maps.darkwoods.m6.name")]),
+          [translate("maps.darkwoods.cipher.m1.name"), translate("maps.darkwoods.cipher.m2.name"), translate("maps.darkwoods.cipher.m3.name"), translate("maps.darkwoods.cipher.m4.name"),
+            translate("maps.darkwoods.cipher.m5.name"), translate("maps.darkwoods.cipher.m6.name")]),
         region(translate("maps.theRedChurch.rulesAlternate"), 2, 3,
-          [translate("maps.darkwoods.e1.name"), translate("maps.darkwoods.e2.name"), translate("maps.armsFactory.e1.name"), translate("maps.darkwoods.e4.name"), translate("maps.darkwoods.e5.name")]),
-        either([translate("maps.darkwoods.w2.name"), translate("maps.armsFactory.w3.name")]),
-        either([translate("maps.darkwoods.w4.name"), translate("maps.darkwoods.w3.name")]),
-        either([translate("maps.darkwoods.m1.name"), translate("maps.darkwoods.m2.name")]),
-        either([translate("maps.darkwoods.e1.name"), translate("maps.darkwoods.e2.name")]),
-        either([translate("maps.armsFactory.e1.name"), translate("maps.darkwoods.m3.name")]),
-        either([translate("maps.darkwoods.e4.name"), translate("maps.darkwoods.e5.name")]),
+          [translate("maps.darkwoods.cipher.e1.name"), translate("maps.darkwoods.cipher.e2.name"), translate("maps.armsFactory.cipher.e1.name"), translate("maps.darkwoods.cipher.e4.name"), translate("maps.darkwoods.cipher.e5.name")]),
+        either([translate("maps.darkwoods.cipher.w2.name"), translate("maps.armsFactory.cipher.w3.name")]),
+        either([translate("maps.darkwoods.cipher.w4.name"), translate("maps.darkwoods.cipher.w3.name")]),
+        either([translate("maps.darkwoods.cipher.m1.name"), translate("maps.darkwoods.cipher.m2.name")]),
+        either([translate("maps.darkwoods.cipher.e1.name"), translate("maps.darkwoods.cipher.e2.name")]),
+        either([translate("maps.armsFactory.cipher.e1.name"), translate("maps.darkwoods.cipher.m3.name")]),
+        either([translate("maps.darkwoods.cipher.e4.name"), translate("maps.darkwoods.cipher.e5.name")]),
         region(translate("maps.darkwoods.rules"), 1, 2,
-          [translate("maps.darkwoods.m4.name"), translate("maps.darkwoods.m3.name"), translate("maps.darkwoods.m5.name"), translate("maps.darkwoods.m6.name")]),
-        atMost1([translate("maps.darkwoods.m4.name"), translate("maps.darkwoods.m3.name")]),
-        same([translate("maps.darkwoods.m3.name"), translate("maps.darkwoods.m5.name")]),
+          [translate("maps.darkwoods.cipher.m4.name"), translate("maps.darkwoods.cipher.m3.name"), translate("maps.darkwoods.cipher.m5.name"), translate("maps.darkwoods.cipher.m6.name")]),
+        atMost1([translate("maps.darkwoods.cipher.m4.name"), translate("maps.darkwoods.cipher.m3.name")]),
+        same([translate("maps.darkwoods.cipher.m3.name"), translate("maps.darkwoods.cipher.m5.name")]),
         chain(translate("maps.chain"), 'yes', false,
-          [translate("maps.darkwoods.e5.name"), translate("maps.darkwoods.e4.name"), translate("maps.darkwoods.w4.name"), translate("maps.darkwoods.w3.name"), translate("maps.darkwoods.w2.name"),
-            translate("maps.armsFactory.w3.name"), translate("maps.darkwoods.m1.name"), translate("maps.darkwoods.m2.name"), translate("maps.darkwoods.e2.name"), translate("maps.darkwoods.e1.name")],
+          [translate("maps.darkwoods.cipher.e5.name"), translate("maps.darkwoods.cipher.e4.name"), translate("maps.darkwoods.cipher.w4.name"), translate("maps.darkwoods.cipher.w3.name"), translate("maps.darkwoods.cipher.w2.name"),
+            translate("maps.armsFactory.cipher.w3.name"), translate("maps.darkwoods.cipher.m1.name"), translate("maps.darkwoods.cipher.m2.name"), translate("maps.darkwoods.cipher.e2.name"), translate("maps.darkwoods.cipher.e1.name")],
           translate("maps.darkwoods.rulesAlternate")
             + translate("maps.darkwoods.rulesThird")
             + translate("maps.lakesideVillage.rulesSeventh")),
@@ -1723,7 +1723,7 @@ export const MAPS_DATA = [
 
 
 export const CIPHER_EXTRA = {
-  4: [{ id: 'E_0', location: [768, 550], name: translate("maps.e0.name"), feature: translate("maps.e0.feature") }],
+  4: [{ id: 'E_0', location: [768, 550], name: translate("maps.default.cipher.e0.name"), feature: translate("maps.e0.feature") }],
 };
 
 

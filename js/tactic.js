@@ -177,7 +177,7 @@ export let tacLcSeq = 0;
 
            
 
-export const tacPending = { base: { name: translate("characters.camps.survivor"), speed: TAC_MOVEMENT_SURVIVOR.baseSpeed }, buffs: [] };
+export const tacPending = { base: { name: translate("characters.camps.survivor"), speed: TAC_MOVEMENT_SURVIVOR.states.run.speed }, buffs: [] };
 
 export let tacBaseDetailOpen = false;
 
@@ -2216,7 +2216,7 @@ export function tacSimLine(segs, lc) {
 
 
 export function tacSpeedForms(key) {
-  if (key === 'survivor') return { forms: [{ name: translate("characters.camps.survivor"), speed: TAC_MOVEMENT_SURVIVOR.baseSpeed }], dual: false };
+  if (key === 'survivor') return { forms: [{ name: translate("characters.camps.survivor"), speed: TAC_MOVEMENT_SURVIVOR.states.run.speed }], dual: false };
   const sp = (TAC_ROLES[key] || {}).speed;
   if (sp == null) return null;
   if (typeof sp === 'number') return { forms: [{ name: '', speed: sp }], dual: false };
@@ -2298,7 +2298,7 @@ export function tacSetCamp(camp) {
 
 export function tacPanelBase() {
   const v = parseFloat(tacBaseSpeedEl.value);
-  const speed = v > 0 ? v : TAC_MOVEMENT_SURVIVOR.baseSpeed;
+  const speed = v > 0 ? v : TAC_MOVEMENT_SURVIVOR.states.run.speed;
   const key = tacSpeedRole.value;
   if (key === 'custom') {
     return { name: translate("application.name"), speed, camp: tacCamp, role: null, form: 0, stKey: 'custom' };
@@ -2530,7 +2530,7 @@ export function tacDeleteBase(lc, idxs) {
     const dft = b.camp === 'hunter'
       ? { name: TAC_ROLES.hellEmber.name, speed: TAC_ROLES.hellEmber.speed,
           camp: 'hunter', role: 'hellEmber', form: 0 }
-      : { name: translate("characters.camps.survivor"), speed: TAC_MOVEMENT_SURVIVOR.baseSpeed,
+      : { name: translate("characters.camps.survivor"), speed: TAC_MOVEMENT_SURVIVOR.states.run.speed,
           camp: 'survivor', role: null, form: 0 };
     lc.bases = lc.bases.filter((x, i) => !idxs.includes(i));
     for (let i = from; i < to; i++) {
@@ -2949,7 +2949,7 @@ export function buildTacSpeedPanel() {
         dft = { name: translate("application.nameAlternate"), speed: TAC_MOVEMENT_SURVIVOR.states.run.speed, camp: 'survivor', role: null, form: 0, stKey: 'run' };
       } else {
         const info = tacSpeedForms(tacSpeedRole.value);
-        const f0 = info ? info.forms[0] : { name: '', speed: TAC_MOVEMENT_SURVIVOR.baseSpeed };
+        const f0 = info ? info.forms[0] : { name: '', speed: TAC_MOVEMENT_SURVIVOR.states.run.speed };
         tacSpeedForm.value = '0';
         dft = { name: (TAC_ROLES[tacSpeedRole.value] || {}).name + (info && info.dual ? ' ' + f0.name : ''),
           speed: f0.speed, camp: 'hunter', role: tacSpeedRole.value, form: 0 };
