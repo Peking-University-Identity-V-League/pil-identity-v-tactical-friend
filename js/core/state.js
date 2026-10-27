@@ -16,5 +16,4 @@ export const S = {
   dedMarks: {},             
   dedSelectedStep: null,    
   tacDungeonIndex: 0,       
-  tacSkipDungeonReset: false, 
 };

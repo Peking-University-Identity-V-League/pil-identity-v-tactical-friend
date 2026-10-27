@@ -83,7 +83,21 @@ npm run dev -- --host 127.0.0.1 --port 7200
 - 动态 `import()`；
 - `fetch()` 加载 `locales/zh-CN.json`。
 
-直接通过 `file://` 打开时，浏览器可能因安全策略阻止模块或语言包加载。因此，日常开发请使用 `npm run dev`。
+直接通过 `file://` 打开时，浏览器可能因安全策略阻止模块或语言包加载。因此，日常开发请使用 `npm run dev`，也可以在 VS Code 中用 Live Server 打开 `index.html`；后一种方式不需要 Node.js 或 npm。
+
+### 1.4 自动化测试
+
+本地预览无需安装第三方依赖；运行测试需要安装开发依赖及 Chromium：
+
+```bash
+npm ci
+npx playwright install chromium
+npm run verify
+```
+
+`npm test` 运行测算、旧存档恢复、书页范围的单元测试，以及开发服务器的 HTTP 集成测试；`npm run test:e2e` 运行浏览器回归测试，并自动启动本地服务器。Linux 首次安装浏览器时如缺少系统库，可使用 `npx playwright install --with-deps chromium`。
+
+浏览器测试覆盖绘图、拖动、刷新、快速切页与切图、推演重置、折线编辑、固定速度、零长度测距、撤销，以及书页范围刷新和 PNG 导出。导出测试检查实际下载图片中的普通圈、排除圈及缩放平移后的裁剪位置。外部图片使用测试资源替代，不验证图片服务可用性或最新游戏数值。GitHub Actions 会在推送和 PR 时运行同一套检查。
 
 ---
 
@@ -94,8 +108,17 @@ npm run dev -- --host 127.0.0.1 --port 7200
 ```text
 app/
 ├── index.html                  ← 页面骨架：四个视图、卡片、按钮、弹窗
-├── package.json               ← 项目信息与 npm 启动命令
+├── package.json               ← 项目信息、npm 启动与测试命令
+├── package-lock.json          ← 测试依赖版本锁定
+├── playwright.config.js       ← 浏览器回归测试配置
+├── .gitignore                 ← 忽略依赖、测试产物和 *.local.md 文档
 ├── README.md                  ← 项目说明文档
+│
+├── .github/workflows/test.yml ← 推送与 PR 的自动化测试
+├── tests/
+│   ├── unit/                  ← 测算与存档恢复的单元测试
+│   ├── server/                ← 开发服务器的 HTTP 集成测试
+│   └── e2e/                   ← 浏览器交互与刷新回归测试
 │
 ├── css/
 │   └── style.css              ← 全部样式：布局、组件、地图标记、响应式
@@ -119,6 +142,8 @@ app/
     │   ├── dom.js             ← DOM 元素引用、toast 提示、少量共享 UI 状态
     │   ├── utils.js           ← $、数字显示、图片加载等通用工具
     │   ├── persist.js         ← localStorage 持久化与默认值
+    │   ├── measurements.js    ← 折线配置恢复、编号和移动时间计算
+    │   ├── treasure.js        ← 页面与导出共用的书页范围计算
     │   └── i18n.js            ← 多语言加载、翻译、插值、语言切换
     │
     └── data/
@@ -135,6 +160,7 @@ app/
 | `css/` | 外观和装修 | 颜色、尺寸、布局、动画、响应式 |
 | `locales/` | 多语言词典 | 用户能看到的翻译文案 |
 | `scripts/` | 开发辅助工具 | 本地启动脚本，不属于浏览器业务逻辑 |
+| `tests/` | 回归检查 | 计算逻辑测试和浏览器交互测试 |
 | `js/core/` | 公共工具箱 | 多页面共享的状态、DOM、存档、翻译、工具函数 |
 | `js/data/` | 游戏资料库 | 地图、角色、道具、速度、坐标和规则数据 |
 | 根级 `js/*.js` | 各页面的大脑 | 首页、外壳和三个业务页面的行为 |
@@ -176,11 +202,11 @@ app/
 | 改封禁密码机的计算方式 | `js/data/geo.js` | `calculateLockCipher` |
 | 新增角色 | `js/data/tactic-data.js` | `TAC_ROLES`，必要时同时改 `TAC_ITEM_TYPES` 和语言包 |
 | 新增道具 | `js/data/tactic-data.js` | `TAC_ITEM_TYPES`，并加入拥有者的 `items` |
-| 改角色基础速度或形态速度 | `js/data/tactic-data.js` | `TAC_BASE_STATES`、`TAC_ROLE_BASES`、`TAC_FIXED_BASES`、`TAC_ROLES` |
-| 改特质、天赋、其它加成 | `js/data/tactic-data.js` | `TAC_TRAIT_BUFFS`、`TAC_TALENT_BUFFS`、`TAC_OTHER_BUFFS` |
+| 改角色基础速度或形态速度 | `js/data/tactic-data.js` | `TAC_MOVEMENT_SURVIVOR.states`、`TAC_MOVEMENT_SURVIVOR.roles`、`TAC_MOVEMENT_SURVIVOR.fixed`、`TAC_ROLES` |
+| 改特质、天赋、其它加成 | `js/data/tactic-data.js` | `TAC_MOVEMENT_BUFFS.trait`、`TAC_MOVEMENT_BUFFS.talent`、`TAC_MOVEMENT_BUFFS.other` |
 | 改战术面板放置、拖动、删除 | `js/tactic.js` | `tacMapWrap.addEventListener('pointerdown'` 及后续事件 |
 | 改范围圈、箭头、测距线外观逻辑 | `js/tactic.js` | `shapeNode`、`measureNode`、`renderTacArrows` |
-| 改移动时间计算 | `js/tactic.js` | `tacSimLine`、`updateTacMeasureInfo` |
+| 改移动时间计算 | `js/core/measurements.js`、`js/tactic.js` | `simulateMovement`、`tacSimLine`、`updateTacMeasureInfo` |
 | 改导出图片 | `js/tactic.js` | `tacExportImage` |
 | 改快捷键 | `js/tactic.js` | `window.addEventListener('keydown'` |
 | 改默认图标大小、缩放范围 | `js/data/tactic-data.js` | `TAC_DISPLAY_DEFAULT`、`TAC_MANAGE_DEFAULT`、`TAC_ZOOM_MIN/MAX` |
@@ -240,7 +266,8 @@ enterMap(mapId) → selectMap(mapId) → 默认进入战术面板
 
 - 记录项目名称 `pil-identity-v-tool`；
 - 声明 `"type": "module"`，让 Node.js 启动脚本使用 ES Module；
-- 提供 `npm run dev` 命令。
+- 提供 `npm run dev` 和自动化测试命令；
+- 声明仅用于测试的 Playwright 开发依赖，网页运行不依赖 npm 包。
 
 当前核心命令等价于：
 
@@ -259,6 +286,7 @@ node scripts/dev-server.js
 - 把 `/` 映射到 `index.html`；
 - 根据扩展名返回 HTML、CSS、JS、JSON、PNG、SVG 等内容；
 - 禁止访问项目目录之外的文件；
+- 对无法解析或解码的 URL 返回 400，保持服务器继续运行；
 - 设置 `Cache-Control: no-cache`，减少开发时旧缓存干扰。
 
 需要修改默认端口时，搜索 `7100`。需要支持新的本地静态文件类型时，修改 `mimeTypes`。
@@ -481,14 +509,14 @@ deduce(map, marks)
 
 | 函数 | 用途 |
 |---|---|
-| `enterDeduce()` | 进入推演页，绑定地图并恢复标记 |
+| `enterDeduce()` | 进入推演页，绑定地图并显示已恢复的标记 |
 | `toggleDedMark(id)` | 在“有 → 无 → 取消”之间循环 |
 | `renderDeduction()` | 一次完整刷新 |
 | `renderDedTopBar()` | 更新进度和结论 |
 | `renderDedMap()` | 绘制点位、连线和依据范围 |
 | `renderDedSteps()` | 显示逐条推演依据 |
 | `renderDedLayouts()` | 显示全部布局及候选状态 |
-| `resetDedMarks()` | 清空手动标记 |
+| `resetDedMarks()` | 清空手动标记并保存 |
 | `markKind()` | 决定必刷、手动、推断、未知等标记类型 |
 | `updateLawBtn()` | 更新教学链接按钮状态 |
 
@@ -506,6 +534,7 @@ deduce(map, marks)
 | `renderTacZones()` | 绘制区域划分 |
 | `renderTacLandmarks()` | 绘制地窖和逃生门 |
 | `renderTacFixedSpawns()` | 绘制固定角色点位 |
+| `renderTacTreasure()` | 绘制冒险家书页范围，隐藏密码机图标时仍随机组更新 |
 | `switchTacCipher()`、`switchTacDungeon()` | 切换密码机组和地窖组 |
 | `tacSnapTarget()`、`tacSnapLandmark()` | 计算绘图吸附目标 |
 
@@ -555,7 +584,8 @@ deduce(map, marks)
 | 函数 | 用途 |
 |---|---|
 | `tacNewLineCfg()` | 新建一条线的速度配置 |
-| `tacSimLine()` | 按各段基础速度和加成模拟移动 |
+| `tacSimLine()` | 将线段换算为米，调用 `simulateMovement()` 计算时间 |
+| `tacBuffAppliesToBase()` | 判断加成是否适用于当前段的角色、形态与状态 |
 | `tacBuildRoleOptions()` | 构建基础速度角色选项 |
 | `tacSyncSpeedPanel()` | 同步速度设置面板 |
 | `tacAddBuffEntry()` | 添加一条加成 |
@@ -573,7 +603,7 @@ deduce(map, marks)
 
 | 函数或事件 | 用途 |
 |---|---|
-| `tacExportImage()` | 将当前战术板导出为 PNG |
+| `tacExportImage()` | 将当前战术板与书页范围导出为 PNG，支持缩放后的视口裁剪 |
 | `tacUndo()` | 根据操作记录撤销 |
 | `tacClear()` | 清空当前地图战术板，可撤销 |
 | `tacDeleteMeasureAt()` | 删除测距线段并处理折线配置 |
@@ -603,7 +633,6 @@ deduce(map, marks)
 | `currentTab` | 当前页签 |
 | `dedMap`、`dedMarks`、`dedSelectedStep` | 推演页数据、标记和选中依据 |
 | `tacDungeonIndex` | 战术面板当前地窖组 |
-| `tacSkipDungeonReset` | 恢复存档时避免覆盖地窖组 |
 
 如果新增的状态只在一个函数或一个模块中使用，不必放进 `S`；真正需要跨模块共享时再添加。
 
@@ -638,14 +667,34 @@ export const dedSteps = $('dedSteps');
 - 保存每张地图的战术板；
 - 保存战术显示设置和测算样式；
 - 保存区域选择、密码机组、推演标记和地窖组；
-- 进入地图时恢复区域状态；
-- 通过约 400ms 防抖合并高频写入。
+- 进入地图时恢复区域状态、推演标记和地窖组；
+- 通过约 400ms 防抖统一写入完整快照，页面隐藏或离开时写入待保存内容；
+- 加载旧存档后恢复折线共享配置，并续接路线、配置和加成编号。
 
 详细存档结构见[本地存档](#12-本地存档)。
 
 ## 9.5 `js/core/i18n.js`：多语言
 
 负责语言包加载、翻译、参数插值、静态 HTML 翻译和语言切换。详细用法见[多语言系统](#11-多语言系统)。
+
+## 9.6 `js/core/measurements.js`：测算与折线恢复
+
+这个模块不依赖 DOM，可直接进行单元测试：
+
+| 导出 | 用途 |
+|---|---|
+| `restoreMeasureReferences()` | 按地图和路线恢复 JSON 序列化丢失的共享配置引用 |
+| `measureIdCounters()` | 从所有地图的存档中取得已使用的最大编号 |
+| `measureBaseAt()` | 查找某一段的基础速度配置 |
+| `simulateMovement()` | 按各段距离、速度、加成及持续时间计算移动结果 |
+
+固定速度段不受加成影响；其它段通过 `tacBuffAppliesToBase()` 判断加成适用范围。限时加成从其起点开始计时，经过不适用的线段时仍会消耗持续时间。零长度段返回零距离、零时间，由结果面板显示。
+
+## 9.7 `js/core/treasure.js`：书页范围计算
+
+`getTreasureRings()` 根据当前地图、冒险家位置、密码机组和 `TAC_TREASURE_RULE`，返回范围圈的相对坐标、内外半径和排除状态。页面显示与 PNG 导出共用这份计算结果，避免切换机组或新增显示层时出现不一致。
+
+函数不依赖 DOM 或密码机图标的加载状态。书页规则数值仍放在 `js/data/tactic-data.js`；显示样式由页面 CSS 和导出绘制代码处理。
 
 ---
 
@@ -787,19 +836,19 @@ MAPS_DATA
 
 | 常量 | 用途 |
 |---|---|
-| `TAC_SURVIVOR_SPEED` | 通用求生者跑动速度 |
-| `TAC_BASE_STATES` | 跑、走、蹲、爬的基础速度 |
-| `TAC_ROLE_BASES` | 角色或角色形态的基础速度 |
-| `TAC_FIXED_BASES` | 不允许继续添加加成的固定速度状态 |
-| `TAC_STATE_NAMES` | 基础状态的显示名称 |
+| `TAC_MOVEMENT_SURVIVOR.states.run.speed` | 通用求生者跑动速度 |
+| `TAC_MOVEMENT_SURVIVOR.states` | 跑、走、蹲、爬的基础速度 |
+| `TAC_MOVEMENT_SURVIVOR.roles` | 角色或角色形态的基础速度 |
+| `TAC_MOVEMENT_SURVIVOR.fixed` | 不允许继续添加加成的固定速度状态 |
+| `TAC_MOVEMENT_SURVIVOR.stateNames` | 基础状态的显示名称 |
 
 ### 加成相关数据
 
 | 常量 | 对应界面 |
 |---|---|
-| `TAC_TRAIT_BUFFS` | 特质加成 |
-| `TAC_TALENT_BUFFS` | 天赋加成 |
-| `TAC_OTHER_BUFFS` | 其它加成 |
+| `TAC_MOVEMENT_BUFFS.trait` | 特质加成 |
+| `TAC_MOVEMENT_BUFFS.talent` | 天赋加成 |
+| `TAC_MOVEMENT_BUFFS.other` | 其它加成 |
 
 常见字段：
 
@@ -1003,7 +1052,9 @@ identityV.locale
 | `dungeon` | 各地图地窖组 |
 | `selDisplay` | 区域选择页显示设置 |
 
-`saveRegionSel()` 和 `tacSave()` 都会先读取已有存档，再合并后写回，避免互相覆盖。
+`saveRegionSel()` 会立即记录当前地图的选区、推演标记和地窖快照，再与 `tacSave()` 共用一个 400ms 防抖保存任务，一次写入全部待保存数据。切图从内存快照恢复，不必等待写入完成；页面隐藏或离开时立即写入尚未保存的修改。
+
+仍使用 `idv5_tactic_v1` 和原有字段。加载旧存档时，`core/measurements.js` 会重建同一地图、同一折线各段共享的配置引用；新路线、配置及加成编号从已有存档的最大值继续分配。
 
 ### 12.3 清除存档排查问题
 
@@ -1089,9 +1140,9 @@ location.reload();
 
 ## 13.7 修改或新增加成
 
-- 特质：修改 `TAC_TRAIT_BUFFS`；
-- 天赋：修改 `TAC_TALENT_BUFFS`；
-- 其它：修改 `TAC_OTHER_BUFFS`。
+- 特质：修改 `TAC_MOVEMENT_BUFFS.trait`；
+- 天赋：修改 `TAC_MOVEMENT_BUFFS.talent`；
+- 其它：修改 `TAC_MOVEMENT_BUFFS.other`。
 
 步骤：
 

@@ -27,7 +27,14 @@ const projectRoot = resolve(import.meta.dirname, '..');
 const { host, port } = readCommandLineArguments();
 
 const server = createServer((request, response) => {
-  const requestPath = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
+  let requestPath;
+  try {
+    requestPath = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
+  } catch {
+    response.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
+    response.end('Bad request');
+    return;
+  }
   const relativePath = requestPath === '/' ? 'index.html' : requestPath.replace(/^\/+/, '');
   const absolutePath = resolve(projectRoot, relativePath);
   const isInsideProject = absolutePath === projectRoot || absolutePath.startsWith(`${projectRoot}${sep}`);
@@ -46,5 +53,5 @@ const server = createServer((request, response) => {
 });
 
 server.listen(port, host, () => {
-  console.log(`Development server available at http://${host}:${port}/`);
+  console.log(`Development server available at http://${host}:${server.address().port}/`);
 });

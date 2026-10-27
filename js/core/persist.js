@@ -5,6 +5,7 @@ import { TAC_DISPLAY_DEFAULT, TAC_MEASURE_DEFAULT } from '../data/tactic-data.js
 import { selDisplay, updateLockCipher } from '../region.js';
 import { sideToggle } from './dom.js';
 import { S } from './state.js';
+import { measureIdCounters, restoreMeasureReferences } from './measurements.js';
 
 
 
@@ -30,60 +31,78 @@ try { tacPersisted = JSON.parse(localStorage.getItem(TAC_LS_KEY) || 'null'); } c
 
 if (tacPersisted && tacPersisted.boards) Object.assign(tacBoards, tacPersisted.boards);
 
+export const restoredMeasureIds = measureIdCounters(tacBoards);
+restoreMeasureReferences(tacBoards);
+
+// Capture map-specific changes when they happen, not when the debounce expires.
+// The in-memory copies also let a rapid switch restore edits not yet on disk.
+const savedRegions = structuredClone(tacPersisted?.regions || {});
+const savedDedMarks = structuredClone(tacPersisted?.dedMarks || {});
+const savedDungeons = structuredClone(tacPersisted?.dungeon || {});
+
 export let tacSaveTimer = null;
 
+export function flushSave() {
+  if (tacSaveTimer === null) return;
+  clearTimeout(tacSaveTimer);
+  tacSaveTimer = null;
+  try {
+    const data = {
+      ...tacPersisted,
+      v: 1,
+      map: S.currentMapId,
+      boards: tacBoards,
+      display: tacDisplay,
+      mstyle: tacMeasureStyle,
+      regions: savedRegions,
+      dedMarks: savedDedMarks,
+      dungeon: savedDungeons,
+      selDisplay,
+    };
+    localStorage.setItem(TAC_LS_KEY, JSON.stringify(data));
+  } catch (err) {
+    console.warn('Unable to save local board data.', err);
+  }
+}
 
 export function tacSave() {
   clearTimeout(tacSaveTimer);
-  tacSaveTimer = setTimeout(() => {
-    try {
-      const data = JSON.parse(localStorage.getItem(TAC_LS_KEY) || '{}');
-      data.v = 1;
-      data.map = S.currentMapId;
-      data.boards = tacBoards;
-      data.display = tacDisplay;
-      data.mstyle = tacMeasureStyle;
-      localStorage.setItem(TAC_LS_KEY, JSON.stringify(data));
-    } catch (err) {  }
-  }, 400);
+  tacSaveTimer = setTimeout(flushSave, 400);
 }
 
+window.addEventListener('pagehide', flushSave);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') flushSave();
+});
 
 export function saveRegionSel() {
-  if (typeof S.dedMarks === 'undefined') return; 
-  clearTimeout(tacSaveTimer);
-  tacSaveTimer = setTimeout(() => {
-    try {
-      const data = JSON.parse(localStorage.getItem(TAC_LS_KEY) || '{}');
-      data.v = 1;
-      data.map = S.currentMapId;
-      data.regions = Object.assign(data.regions || {}, {
-        [S.currentMapId]: {
-          side: S.currentSide,
-          cipher: S.currentCipherIndex,
-          surv: S.survivorState,
-          hunt: S.hunterState,
-          sel: S.selectedCipherIndex,
-        },
-      });
-      data.dedMarks = Object.assign(data.dedMarks || {}, { [S.currentMapId]: S.dedMarks });
-      data.dungeon = Object.assign(data.dungeon || {}, { [S.currentMapId]: S.tacDungeonIndex });
-      data.selDisplay = selDisplay; 
-      localStorage.setItem(TAC_LS_KEY, JSON.stringify(data));
-    } catch (err) {  }
-  }, 400);
+  savedRegions[S.currentMapId] = {
+    side: S.currentSide,
+    cipher: S.currentCipherIndex,
+    surv: [...S.survivorState],
+    hunt: [...S.hunterState],
+    sel: S.selectedCipherIndex,
+  };
+  savedDedMarks[S.currentMapId] = { ...S.dedMarks };
+  savedDungeons[S.currentMapId] = S.tacDungeonIndex;
+  tacSave();
 }
 
 
 export function restoreRegionSel(mapId) {
-  let d = null;
-  try { d = JSON.parse(localStorage.getItem(TAC_LS_KEY) || 'null'); } catch (err) { d = null; }
-  const r = d && d.regions && d.regions[mapId];
+  S.dedMarks = { ...savedDedMarks[mapId] };
+  S.dedSelectedStep = null;
+  S.tacDungeonIndex = Math.min(
+    Math.max(0, MAPS_DATA[mapId].dungeons.length - 1),
+    Math.max(0, savedDungeons[mapId] | 0),
+  );
+  const r = savedRegions[mapId];
   if (!r) return;
   const zones = mapsZonesRelative[mapId];
-  if (Array.isArray(r.surv) && r.surv.length === zones.length) {
-    S.survivorState = r.surv;
-    S.hunterState = r.hunt;
+  if (Array.isArray(r.surv) && r.surv.length === zones.length
+      && Array.isArray(r.hunt) && r.hunt.length === zones.length) {
+    S.survivorState = [...r.surv];
+    S.hunterState = [...r.hunt];
   }
   const count = MAPS_DATA[mapId].cipherCombinations.length;
   S.currentCipherIndex = Math.min(Math.max(0, r.cipher | 0), count - 1);
@@ -95,11 +114,6 @@ export function restoreRegionSel(mapId) {
     });
   }
   S.chooseState = [...(S.currentSide === 1 ? S.survivorState : S.hunterState)];
-  if (d.dungeon && typeof d.dungeon[mapId] === 'number'
-      && typeof S.tacSkipDungeonReset !== 'undefined') {
-    S.tacDungeonIndex = Math.max(0, d.dungeon[mapId] | 0); 
-    S.tacSkipDungeonReset = true; 
-  }
   updateLockCipher(); 
 }
 
