@@ -5,7 +5,7 @@ import { S } from './core/state.js';
 import { $, loadImageWithStatus, mountImageOverlays } from './core/utils.js';
 import { cipherOf, mapsZonesRelative } from './data/geo.js';
 import { MAPS_DATA, getImageUrl } from './data/maps.js';
-import { DUNGEON_ICON_URL, ESCAPE_DOOR_ICON_URL, TAC_ABYSS_MAX_M, TAC_BASE_STATES, TAC_DISPLAY_DEFAULT, TAC_FIXED_BASES, TAC_ITEM_TYPES, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_OTHER_BUFFS, TAC_ROLES, TAC_ROLE_BASES, TAC_STATE_NAMES, TAC_SURVIVOR_SPEED, TAC_SVG_NS, TAC_TALENT_BUFFS, TAC_TRAIT_BUFFS, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
+import { DUNGEON_ICON_URL, ESCAPE_DOOR_ICON_URL, TAC_ABYSS_MAX_M, TAC_DISPLAY_DEFAULT, TAC_ITEM_TYPES, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_MOVEMENT_SURVIVOR, TAC_OTHER_BUFFS, TAC_ROLES, TAC_SVG_NS, TAC_TALENT_BUFFS, TAC_TRAIT_BUFFS, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
 import { CIPHER_ICON_URL, cipherIcon } from './region.js';
 
 import { translate } from './core/i18n.js';
@@ -177,7 +177,7 @@ export let tacLcSeq = 0;
 
            
 
-export const tacPending = { base: { name: translate("characters.camps.survivor"), speed: TAC_SURVIVOR_SPEED }, buffs: [] };
+export const tacPending = { base: { name: translate("characters.camps.survivor"), speed: TAC_MOVEMENT_SURVIVOR.baseSpeed }, buffs: [] };
 
 export let tacBaseDetailOpen = false;
 
@@ -2114,7 +2114,7 @@ export function tacAddBuffEntry(entry) {
   }
   const state = tacStateOf(base);
   if (!tacStateMatches(states, state)) {
-    showToast(translate("application.tacAddBuffEntryAlternate", { name: TAC_STATE_NAMES[state] || state }));
+    showToast(translate("application.tacAddBuffEntryAlternate", { name: TAC_MOVEMENT_SURVIVOR.stateNames[state] || state }));
     return false;
   }
   if (tgt.pending) {
@@ -2216,7 +2216,7 @@ export function tacSimLine(segs, lc) {
 
 
 export function tacSpeedForms(key) {
-  if (key === 'survivor') return { forms: [{ name: translate("characters.camps.survivor"), speed: TAC_SURVIVOR_SPEED }], dual: false };
+  if (key === 'survivor') return { forms: [{ name: translate("characters.camps.survivor"), speed: TAC_MOVEMENT_SURVIVOR.baseSpeed }], dual: false };
   const sp = (TAC_ROLES[key] || {}).speed;
   if (sp == null) return null;
   if (typeof sp === 'number') return { forms: [{ name: '', speed: sp }], dual: false };
@@ -2230,7 +2230,7 @@ export function syncTacSpeedForm() {
   if (key === 'role') { 
     const sig = 'role';
     if (tacSpeedForm.dataset.sig !== sig) {
-      tacSpeedForm.innerHTML = Object.entries(TAC_ROLE_BASES).map(([k, d]) =>
+      tacSpeedForm.innerHTML = Object.entries(TAC_MOVEMENT_SURVIVOR.roles).map(([k, d]) =>
         `<option value="${k}">${d.name} ${d.speed}m/s</option>`).join('');
       tacSpeedForm.dataset.sig = sig;
     }
@@ -2240,7 +2240,7 @@ export function syncTacSpeedForm() {
   if (key === 'fixed') { 
     const sig = 'fixed';
     if (tacSpeedForm.dataset.sig !== sig) {
-      tacSpeedForm.innerHTML = Object.entries(TAC_FIXED_BASES).map(([k, d]) =>
+      tacSpeedForm.innerHTML = Object.entries(TAC_MOVEMENT_SURVIVOR.fixed).map(([k, d]) =>
         `<option value="${k}">${d.name} ${d.speed}m/s</option>`).join('');
       tacSpeedForm.dataset.sig = sig;
     }
@@ -2265,7 +2265,7 @@ export function syncTacSpeedForm() {
 export function tacBuildRoleOptions() {
   if (tacCamp === 'survivor') {
     
-    let opts = Object.entries(TAC_BASE_STATES).map(([k, st]) =>
+    let opts = Object.entries(TAC_MOVEMENT_SURVIVOR.states).map(([k, st]) =>
       `<option value="${k}">${st.name} ${st.speed}m/s</option>`).join('');
     opts += translate("application.tacBuildRoleOptions");
     opts += translate("application.tacBuildRoleOptionsAlternate");
@@ -2298,22 +2298,22 @@ export function tacSetCamp(camp) {
 
 export function tacPanelBase() {
   const v = parseFloat(tacBaseSpeedEl.value);
-  const speed = v > 0 ? v : TAC_SURVIVOR_SPEED;
+  const speed = v > 0 ? v : TAC_MOVEMENT_SURVIVOR.baseSpeed;
   const key = tacSpeedRole.value;
   if (key === 'custom') {
     return { name: translate("application.name"), speed, camp: tacCamp, role: null, form: 0, stKey: 'custom' };
   }
-  if (tacCamp === 'survivor' && TAC_BASE_STATES[key]) { 
-    return { name: TAC_BASE_STATES[key].name, speed: TAC_BASE_STATES[key].speed,
+  if (tacCamp === 'survivor' && TAC_MOVEMENT_SURVIVOR.states[key]) { 
+    return { name: TAC_MOVEMENT_SURVIVOR.states[key].name, speed: TAC_MOVEMENT_SURVIVOR.states[key].speed,
       camp: 'survivor', role: null, form: 0, stKey: key };
   }
   if (key === 'role') { 
-    const rb = TAC_ROLE_BASES[tacSpeedForm.value] || TAC_ROLE_BASES.survivor;
+    const rb = TAC_MOVEMENT_SURVIVOR.roles[tacSpeedForm.value] || TAC_MOVEMENT_SURVIVOR.roles.survivor;
     return { name: rb.name, speed: rb.speed, camp: 'survivor',
       role: rb.role, form: rb.form || 0, stKey: 'role' };
   }
   if (key === 'fixed') { 
-    const fd = TAC_FIXED_BASES[tacSpeedForm.value] || Object.values(TAC_FIXED_BASES)[0];
+    const fd = TAC_MOVEMENT_SURVIVOR.fixed[tacSpeedForm.value] || Object.values(TAC_MOVEMENT_SURVIVOR.fixed)[0];
     return { name: fd.name, speed: fd.speed, camp: 'survivor',
       role: fd.role, form: fd.form || 0, stKey: 'fixed', fixed: true };
   }
@@ -2390,7 +2390,7 @@ export function tacSyncSpeedPanel() {
     tacTargetSig = sig;
     if (base.camp && base.camp !== tacCamp) tacSetCamp(base.camp);
     if (tacCamp === 'survivor') {
-      if (base.stKey && TAC_BASE_STATES[base.stKey]) { 
+      if (base.stKey && TAC_MOVEMENT_SURVIVOR.states[base.stKey]) { 
         tacSpeedRole.value = base.stKey;
         syncTacSpeedForm();
       } else if (base.fixed || base.stKey === 'fixed') { 
@@ -2422,7 +2422,7 @@ export function tacSyncSpeedPanel() {
     }
     let wantRole;
     if (tacCamp === 'survivor') {
-      wantRole = (base.stKey && TAC_BASE_STATES[base.stKey]) ? base.stKey
+      wantRole = (base.stKey && TAC_MOVEMENT_SURVIVOR.states[base.stKey]) ? base.stKey
         : (base.fixed || base.stKey === 'fixed') ? 'fixed'
         : (base.stKey === 'role' || (base.role && TAC_ROLES[base.role])) ? 'role'
         : (base.name === translate("application.name") ? 'custom' : null);
@@ -2530,7 +2530,7 @@ export function tacDeleteBase(lc, idxs) {
     const dft = b.camp === 'hunter'
       ? { name: TAC_ROLES.hellEmber.name, speed: TAC_ROLES.hellEmber.speed,
           camp: 'hunter', role: 'hellEmber', form: 0 }
-      : { name: translate("characters.camps.survivor"), speed: TAC_SURVIVOR_SPEED,
+      : { name: translate("characters.camps.survivor"), speed: TAC_MOVEMENT_SURVIVOR.baseSpeed,
           camp: 'survivor', role: null, form: 0 };
     lc.bases = lc.bases.filter((x, i) => !idxs.includes(i));
     for (let i = from; i < to; i++) {
@@ -2741,7 +2741,7 @@ export function buildTacTraitList() {
       : `${Math.round((t.mult - 1) * 100)}%${t.postMult ? translate("application.descThird") : ''}`
         + (t.duration ? ` ${t.duration}s` : translate("application.descAlternate"));
     if (t.states) { 
-      desc += translate("application.buildTacTraitList", { name: t.states.map((k) => (TAC_BASE_STATES[k] || {}).name || k).join('/') });
+      desc += translate("application.buildTacTraitList", { name: t.states.map((k) => (TAC_MOVEMENT_SURVIVOR.states[k] || {}).name || k).join('/') });
     }
     if (t.forms) { 
       desc += t.key === 'windWings' ? translate("application.buildTacTraitListAlternate") : translate("application.buildTacTraitListThird");
@@ -2769,7 +2769,7 @@ export function buildTacOtherList() {
       : `${Math.round((t.mult - 1) * 100)}%`
         + (t.duration ? ` ${t.duration}s` : translate("application.descAlternate"));
     if (t.states) {
-      desc += translate("application.buildTacTraitList", { name: t.states.map((k) => (TAC_BASE_STATES[k] || {}).name || k).join('/') });
+      desc += translate("application.buildTacTraitList", { name: t.states.map((k) => (TAC_MOVEMENT_SURVIVOR.states[k] || {}).name || k).join('/') });
     }
     const lv = t.levels
       ? `<select data-olv="${t.key}">`
@@ -2799,7 +2799,7 @@ export function buildTacTalentList() {
         + '</select>'
       : '';
     if (b.states) {
-      desc += translate("application.buildTacTraitList", { name: b.states.map((k2) => (TAC_BASE_STATES[k2] || {}).name || k2).join('/') });
+      desc += translate("application.buildTacTraitList", { name: b.states.map((k2) => (TAC_MOVEMENT_SURVIVOR.states[k2] || {}).name || k2).join('/') });
     }
     return `<div class="tac-talent-row"><span class="tac-talent-name">${b.name}`
       + `<small>${desc}${b.extra ? translate("application.buildTacTalentList", { name: b.extra.name }) : ''}</small></span>${lv}`
@@ -2946,10 +2946,10 @@ export function buildTacSpeedPanel() {
       }
       let dft;
       if (tacCamp === 'survivor') {
-        dft = { name: translate("application.nameAlternate"), speed: TAC_BASE_STATES.run.speed, camp: 'survivor', role: null, form: 0, stKey: 'run' };
+        dft = { name: translate("application.nameAlternate"), speed: TAC_MOVEMENT_SURVIVOR.states.run.speed, camp: 'survivor', role: null, form: 0, stKey: 'run' };
       } else {
         const info = tacSpeedForms(tacSpeedRole.value);
-        const f0 = info ? info.forms[0] : { name: '', speed: TAC_SURVIVOR_SPEED };
+        const f0 = info ? info.forms[0] : { name: '', speed: TAC_MOVEMENT_SURVIVOR.baseSpeed };
         tacSpeedForm.value = '0';
         dft = { name: (TAC_ROLES[tacSpeedRole.value] || {}).name + (info && info.dual ? ' ' + f0.name : ''),
           speed: f0.speed, camp: 'hunter', role: tacSpeedRole.value, form: 0 };
@@ -2993,7 +2993,7 @@ export function buildTacSpeedPanel() {
     const prevKey = String(prev || '').split(':')[0];
     const prevName = tacCamp === 'hunter'
       ? ((TAC_ROLES[prevKey] || {}).name
-        || (TAC_BASE_STATES[prevKey] ? null : (tacTraitRoleInTarget() || null)))
+        || (TAC_MOVEMENT_SURVIVOR.states[prevKey] ? null : (tacTraitRoleInTarget() || null)))
       : null; 
     syncTacSpeedForm();
     const info = tacSpeedForms(tacSpeedRole.value);
@@ -3030,7 +3030,7 @@ export function buildTacSpeedPanel() {
     const cur = tacSpeedRole.value;
     if (cur !== 'custom') {
       let info, sp;
-      if (TAC_BASE_STATES[cur]) { info = null; sp = TAC_BASE_STATES[cur].speed; } 
+      if (TAC_MOVEMENT_SURVIVOR.states[cur]) { info = null; sp = TAC_MOVEMENT_SURVIVOR.states[cur].speed; } 
       else if (cur === 'role' || cur === 'fixed') { info = null; sp = tacPanelBase().speed; } 
       else {
         info = tacSpeedForms(cur);
@@ -3081,9 +3081,9 @@ export function buildTacSpeedPanel() {
     if (!tacStateMatches(def.states, state0)) {
       tacTraitModal.style.display = 'none';
       if (tacCamp === 'survivor') {
-        showToast(translate("application.tacAddBuffEntryAlternate", { name: TAC_STATE_NAMES[state0] || state0 }));
+        showToast(translate("application.tacAddBuffEntryAlternate", { name: TAC_MOVEMENT_SURVIVOR.stateNames[state0] || state0 }));
       } else {
-        showToast(translate("application.buildTacSpeedPanel", { role: def.role, name: def.name, nameSecondary: (def.states || []).map((k) => (TAC_BASE_STATES[k] || {}).name || k).join('/') }));
+        showToast(translate("application.buildTacSpeedPanel", { role: def.role, name: def.name, nameSecondary: (def.states || []).map((k) => (TAC_MOVEMENT_SURVIVOR.states[k] || {}).name || k).join('/') }));
       }
       return;
     }

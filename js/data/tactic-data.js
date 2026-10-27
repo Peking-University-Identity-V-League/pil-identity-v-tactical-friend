@@ -4,32 +4,26 @@ import { translate } from '../core/i18n.js';
 export const TAC_SVG_NS = 'http://www.w3.org/2000/svg';
 
 
-export const TAC_SURVIVOR_SPEED = 3.8;
-
-
-export const TAC_BASE_STATES = {
-  run: { name: translate("movement.states.run"), speed: 3.8 },
-  walk: { name: translate("movement.states.walk"), speed: 2.11 },
-  crouch: { name: translate("movement.states.crouch"), speed: 1.14 },
-  crawl: { name: translate("movement.states.crawl"), speed: 0.44 },
+export const TAC_MOVEMENT_SURVIVOR = {
+  baseSpeed: 3.8,
+  states: {
+    run: { name: translate("movement.survivor.run"), speed: 3.8 },
+    walk: { name: translate("movement.survivor.walk"), speed: 2.11 },
+    crouch: { name: translate("movement.survivor.crouch"), speed: 1.14 },
+    crawl: { name: translate("movement.survivor.crawl"), speed: 0.44 },
+  },
+  roles: {
+    'survivor': { name: translate("characters.camps.survivor"), speed: 3.8, role: null },
+    'wildling:0': { name: translate("movement.survivor.wildling0"), speed: 3.65, role: 'wildling', form: 0 },
+    'prodigy:0': { name: translate("movement.survivor.prodigy0"), speed: 3.92, role: 'prodigy', form: 0 },
+  },
+  fixed: {
+    'toyMerchant:0': { name: translate("movement.survivor.toyMerchant0"), speed: 5.74, role: 'toyMerchant', form: 0 },
+    'prodigy:1': { name: translate("movement.survivor.prodigy1"), speed: 3.8, role: 'prodigy', form: 1 },
+  },
+  stateNames: { run: translate("tactic.run"), walk: translate("movement.survivor.walk"), crouch: translate("movement.survivor.crouch"), crawl: translate("movement.survivor.crawl"),
+    role: translate("ui.common.roles"), fixed: translate("movement.survivor.fixed"), custom: translate("application.name"), hunter: translate("characters.camps.hunter") },
 };
-
-
-export const TAC_ROLE_BASES = {
-  'survivor': { name: translate("characters.camps.survivor"), speed: 3.8, role: null },
-  'wildling:0': { name: translate("tactic.wildling0.name"), speed: 3.65, role: 'wildling', form: 0 },
-  'prodigy:0': { name: translate("tactic.prodigy0.name"), speed: 3.92, role: 'prodigy', form: 0 },
-};
-
-
-export const TAC_FIXED_BASES = {
-  'toyMerchant:0': { name: translate("tactic.toyMerchant0.name"), speed: 5.74, role: 'toyMerchant', form: 0 },
-  'prodigy:1': { name: translate("tactic.prodigy1.name"), speed: 3.8, role: 'prodigy', form: 1 },
-};
-
-
-export const TAC_STATE_NAMES = { run: translate("tactic.run"), walk: translate("movement.states.walk"), crouch: translate("movement.states.crouch"), crawl: translate("movement.states.crawl"),
-  role: translate("ui.common.roles"), fixed: translate("tactic.fixed"), custom: translate("application.name"), hunter: translate("characters.camps.hunter") };
 
 
 export const TAC_TRAIT_BUFFS = {
@@ -139,8 +133,8 @@ export const TAC_ITEM_TYPES = {
   flashlight: {
     name: translate("items.flashlight.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 8 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.flashlight.range.card.application"), size_m: 8 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/e/e3/an2z7q5vnl5bcm6q7f6e9c3jboe6bl9.png/120px-%E6%89%8B%E7%94%B5%E7%AD%92.png',
   },
@@ -207,8 +201,8 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.fastMusicbox.name"),
     render: 'circle',
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: { min: 6.3, max: 9 } },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.fastMusicbox.range.card.application"), size_m: { min: 6.3, max: 9 } },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     color: '#f472b6',
     fill: 'rgba(244, 114, 182, 0.22)',
@@ -219,8 +213,8 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.slowMusicbox.name"),
     render: 'circle',
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: { min: 6.3, max: 9 } },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.slowMusicbox.range.card.application"), size_m: { min: 6.3, max: 9 } },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     color: '#60a5fa',
     fill: 'rgba(96, 165, 250, 0.22)',
@@ -239,8 +233,8 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.meteoriteMagnetN.name"),
     render: 'circle',
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 4.5 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.meteoriteMagnetN.range.card.application"), size_m: 4.5 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     color: '#ef4444',
     fill: 'rgba(239, 68, 68, 0.22)',
@@ -251,8 +245,8 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.meteoriteMagnetS.name"),
     render: 'circle',
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 4.5 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.meteoriteMagnetS.range.card.application"), size_m: 4.5 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     color: '#1d4ed8',
     fill: 'rgba(29, 78, 216, 0.22)',
@@ -307,8 +301,8 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.swarm.name"),
     render: 'circle',
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 1.2 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.swarm.range.card.application"), size_m: 1.2 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     color: '#d4a373',
     fill: 'rgba(212, 163, 115, 0.22)',
@@ -320,8 +314,8 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.drawingBoard.name"),
     render: 'circle',
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 12 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.drawingBoard.range.card.application"), size_m: 12 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     color: '#60a5fa',
     fill: 'rgba(96, 165, 250, 0.22)',
@@ -331,16 +325,16 @@ export const TAC_ITEM_TYPES = {
   cricketBat: {
     name: translate("items.cricketBat.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.labelAlternate"), card: translate("tactic.show.card"), size_m: { min: 3.73, max: 7.45 } },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.labelAlternate"), card: translate("items.cricketBat.range.card.show"), size_m: { min: 3.73, max: 7.45 } },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/7/7e/19s98s5y8v0pz05ifj94fvyubyjssvd.png/120px-%E5%87%BB%E7%90%83%E6%89%8B%E9%81%93%E5%85%B7.png',
   },
   catapult: {
     name: translate("items.catapult.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 21.9 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.catapult.range.card.application"), size_m: 21.9 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/be/q00bu5gdar393rxoi65gjmhpfcko4cl.png/90px-%E7%8E%A9%E5%85%B7%E5%95%86%E9%81%93%E5%85%B71.png',
   },
@@ -360,9 +354,9 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.memoryFragment.name"),
     
     ranges: { modes: [
-      { key: 'shardImpact', label: translate("tactic.shardImpact.label"), card: translate("tactic.shardImpact.card"),
-        size_m: { options: [6.1, 10.3], labels: [translate("tactic.sizeM.tacItemTypesZero"), translate("tactic.sizeM.tacItemTypesOne")] } },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'shardImpact', label: translate("items.memoryFragment.range.label.shardImpact"), card: translate("items.memoryFragment.range.card.shardImpact"),
+        size_m: { options: [6.1, 10.3], labels: [translate("items.memoryFragment.range.sizeM.zero"), translate("items.memoryFragment.range.sizeM.one")] } },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/f9/asmvxiz04rw0af5of7ic2lzyorwjsz0.png/120px-%E5%9B%9E%E5%BF%86%E7%A2%8E%E7%89%87.png',
   },
@@ -414,8 +408,8 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.airbag.name"),
     render: 'circle',
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 4.2 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.airbag.range.card.application"), size_m: 4.2 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     color: '#f8fafc',
     fill: 'rgba(248, 250, 252, 0.22)',
@@ -434,8 +428,8 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.stormGlassRainfall.name"),
     render: 'circle',
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 4 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.stormGlassRainfall.range.card.application"), size_m: 4 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     color: '#f8fafc',
     fill: 'rgba(248, 250, 252, 0.22)',
@@ -453,8 +447,8 @@ export const TAC_ITEM_TYPES = {
   thurible: {
     name: translate("items.thurible.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 16.9 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.thurible.range.card.application"), size_m: 16.9 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/c/c2/2w71hgyr6ozvswrc8fvzz14gaxh27ng.png/90px-%E8%BF%B7%E7%83%9F%E7%82%89.png',
   },
@@ -474,8 +468,8 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.propUmbrellaAnxiousRoutine.name"),
     render: 'circle',
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 12.7 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.propUmbrellaAnxiousRoutine.range.card.application"), size_m: 12.7 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     color: '#18181b',
     fill: 'rgba(24, 24, 27, 0.22)',
@@ -501,8 +495,8 @@ export const TAC_ITEM_TYPES = {
   lianzhua: {
     name: translate("items.lianzhua.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.labelThird"), card: translate("application.card"), size_m: 4.2 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.labelThird"), card: translate("items.lianzhua.range.card.application"), size_m: 4.2 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     maxCount: 1,
     linkToRole: 'gameKeeper',
@@ -514,8 +508,8 @@ export const TAC_ITEM_TYPES = {
   trap: {
     name: translate("items.trap.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.labelFourth"), card: translate("application.card"), size_m: 20 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.labelFourth"), card: translate("items.trap.range.card.application"), size_m: 20 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/d/dd/40u7gtj5cvffk3e4dy5edl1ntd56kdh.png/90px-%E9%B9%BF%E5%A4%B40%E9%98%B6%E6%8A%80%E8%83%BD2.png',
   },
@@ -523,8 +517,8 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.umbrella.name"),
     render: 'circle',
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 9.3 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.umbrella.range.card.application"), size_m: 9.3 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     maxCount: 1,           
     linkToRole: 'wuchang', 
@@ -547,24 +541,24 @@ export const TAC_ITEM_TYPES = {
   hiddenDream: {
     name: translate("items.hiddenDream.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 20 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.hiddenDream.range.card.application"), size_m: 20 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/3/33/265axozop5uoe1opp2e6gj8noxlby8e.png',
   },
   peacefulPine: {
     name: translate("items.peacefulPine.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 20.5 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.peacefulPine.range.card.application"), size_m: 20.5 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/29/00c30uaryazol4s5ec4iuk19kr773o2.png/90px-%E7%88%B1%E5%93%AD%E9%AC%BC2%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   spearfishing: {
     name: translate("items.spearfishing.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 4 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.spearfishing.range.card.application"), size_m: 4 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/be/3b3skletdo6z31k2wti92rsxisja1tg.png/90px-%E6%B8%94%E5%A5%B30%E9%98%B6%E6%8A%80%E8%83%BD.png',
@@ -572,8 +566,8 @@ export const TAC_ITEM_TYPES = {
   hieroglyphicGraveyard: {
     name: translate("items.hieroglyphicGraveyard.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 26 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.hieroglyphicGraveyard.range.card.application"), size_m: 26 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/d/d1/dqvmem9kl2u7mpz88bgrlwhgti6cac8.png',
   },
@@ -585,8 +579,8 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.electromagneticFieldN.name"),
     render: 'circle',
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 4.5 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.electromagneticFieldN.range.card.application"), size_m: 4.5 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     color: '#ef4444',
     fill: 'rgba(239, 68, 68, 0.22)',
@@ -597,8 +591,8 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.electromagneticFieldS.name"),
     render: 'circle',
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 4.5 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.electromagneticFieldS.range.card.application"), size_m: 4.5 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     color: '#1d4ed8',
     fill: 'rgba(29, 78, 216, 0.22)',
@@ -612,24 +606,24 @@ export const TAC_ITEM_TYPES = {
   corruptedOstracon: {
     name: translate("items.corruptedOstracon.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 9 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.corruptedOstracon.range.card.application"), size_m: 9 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/35/6tyw4qniiw51aohhjwxjv4wq8yj28ud.png/90px-%E6%97%B6%E7%A9%BA%E4%B9%8B%E5%BD%B10%E9%98%B6%E6%8A%80%E8%83%BD4.png',
   },
   ancientVisage: {
     name: translate("items.ancientVisage.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 9 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.ancientVisage.range.card.application"), size_m: 9 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/d/da/c2qmk7cs5shwl528wzkkmma6i2v8ael.png',
   },
   contactPoint: {
     name: translate("items.contactPoint.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 3 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.contactPoint.range.card.application"), size_m: 3 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/c/c6/t5t9qmg4vouffmvsxnzq6mizonmjzvr.png',
   },
@@ -637,8 +631,8 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.cueBall.name"),
     render: 'circle',
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 4 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.cueBall.range.card.application"), size_m: 4 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     color: '#18181b',
     fill: 'rgba(24, 24, 27, 0.22)',
@@ -648,32 +642,32 @@ export const TAC_ITEM_TYPES = {
   cage: {
     name: translate("items.cage.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: { options: [9, 12, 15] } },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.cage.range.card.application"), size_m: { options: [9, 12, 15] } },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/67/kqp54mjbpln0aytlr986ko5j4y7cy4t.png/90px-%E2%80%9C%E8%B7%9B%E8%84%9A%E7%BE%8A%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD1.png',
   },
   bestialAwakening: {
     name: translate("items.bestialAwakening.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 48 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.bestialAwakening.range.card.application"), size_m: 48 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/8/89/agxycu6xg1opqj3xo7tpix753cvfkzz.png',
   },
   heightenedSenses: {
     name: translate("items.heightenedSenses.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 25 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.heightenedSenses.range.card.application"), size_m: 25 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/91/hu0fnv6ev967sdypg7bgso8f6ch8jzr.png/90px-%E2%80%9C%E5%BF%83%E5%85%BD%E2%80%9D1%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   peeper: {
     name: translate("items.peeper.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 13 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.peeper.range.card.application"), size_m: 13 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/ba/4sgjzcxl8526632orcqqgwkt5pv9s4f.png',
   },
@@ -687,96 +681,93 @@ export const TAC_ITEM_TYPES = {
   },
   fearRadius: {
     name: translate("items.fearRadius.name"),
-    
-    
-    
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 32,
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.fearRadius.range.card.application"), size_m: 32,
         fearMods: {
-          hunter: [['hunter', translate("characters.camps.hunter"), 1], ['beauty', translate("tactic.fearMods.tacItemTypesOne"), 0.8], ['prajna', translate("tactic.fearMods.tacItemTypesOneAlternate"), 1.1]],
-          survivor: [['survivor', translate("characters.camps.survivor"), 1], ['prisoner', translate("tactic.fearMods.tacItemTypesOneThird"), 0.8], ['archer', translate("tactic.fearMods.tacItemTypesOneFourth"), 0.76]],
+          hunter: [['hunter', translate("characters.camps.hunter"), 1], ['beauty', translate("items.fearRadius.range.fearMods.one"), 0.8], ['prajna', translate("items.fearRadius.range.fearMods.oneAlternate"), 1.1]],
+          survivor: [['survivor', translate("characters.camps.survivor"), 1], ['prisoner', translate("items.fearRadius.range.fearMods.oneThird"), 0.8], ['archer', translate("items.fearRadius.range.fearMods.oneFourth"), 0.76]],
         } },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/2/24/dv1pstoj7a8ftqf9l3jazt1cpe4sxwo.png',
   },
   webersLaw: {
     name: translate("items.webersLaw.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 18 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.webersLaw.range.card.application"), size_m: 18 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/2/28/4opnhwv5mnc78m81u6ulz3t2b50yhxj.png',
   },
   sneak: {
     name: translate("items.sneak.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 22 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.sneak.range.card.application"), size_m: 22 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/1/13/o8d12vi02km7ozis0f2io312tsynodg.png',
   },
   tinnitus: {
     name: translate("items.tinnitus.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 36 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.tinnitus.range.card.application"), size_m: 36 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/f/f5/2546goc080xvxx8kde4sk2h1vry3k4n.png',
   },
   addiction: {
     name: translate("items.addiction.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 20 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.addiction.range.card.application"), size_m: 20 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/e/eb/flp1movyr3427678u7a854cde31icqk.png',
   },
   nostalgic: {
     name: translate("items.nostalgic.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 32 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.nostalgic.range.card.application"), size_m: 32 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/e/ef/80q87s7z71ecm5yhz07bd9lo3hs1g8c.png',
   },
   skittish: {
     name: translate("items.skittish.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 12 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.skittish.range.card.application"), size_m: 12 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/0/0c/dmvkzw1a11nxskx0hhoq6bnfslsvw9c.png',
   },
   deerHunt: {
     name: translate("items.deerHunt.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 18 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.deerHunt.range.card.application"), size_m: 18 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/b7/d9ojgfgmihbwmaw6vkmbg96it0s2eb3.png',
   },
   streetSweeper: {
     name: translate("items.streetSweeper.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: { options: [30, 45, 60] } },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.streetSweeper.range.card.application"), size_m: { options: [30, 45, 60] } },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/bd/re4lu3k5iknzh748yg85tcdvla2b0t2.png',
   },
   obsession: {
     name: translate("items.obsession.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 16 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.obsession.range.card.application"), size_m: 16 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/6/6b/ra1r6rk9depicpmew855rzug25sy8ut.png',
   },
   famine: {
     name: translate("items.famine.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("tactic.show.label"), card: translate("application.card"), size_m: 16 },
-      { key: 'off', label: translate("tactic.off.label") },
+      { key: 'show', label: translate("tactic.range.show.label"), card: translate("items.famine.range.card.application"), size_m: 16 },
+      { key: 'off', label: translate("tactic.range.label.off") },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/4/45/73txs9wv78r9rrh0ghil23wf6tx4c3s.png',
   },
@@ -807,8 +798,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("tactic.show1.label"), card: translate("tactic.show1.card"), size_m: 8 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'show1', label: translate("characters.thief.range.label.show1"), card: translate("characters.thief.range.card.show1"), size_m: 8 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['flashlight'],
@@ -831,9 +822,9 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("tactic.show1.labelAlternate"), card: translate("tactic.show1.cardAlternate"), size_m: 60 },
-        { key: 'show2', label: translate("tactic.show2.label"), card: translate("tactic.show2.card"), size_m: 70 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'show1', label: translate("characters.explorer.range.label.show1"), card: translate("characters.explorer.range.card.show1"), size_m: 60 },
+        { key: 'show2', label: translate("characters.explorer.range.label.show2"), card: translate("characters.explorer.range.card.show2"), size_m: 70 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['gulliversTravels'],
@@ -850,8 +841,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("tactic.show1.labelThird"), card: translate("tactic.show1.cardThird"), size_m: 10 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'show1', label: translate("characters.coordinator.range.label.show1"), card: translate("characters.coordinator.range.card.show1"), size_m: 10 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['flareGun'],
@@ -874,11 +865,11 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'perspectiveOutline', label: translate("tactic.perspectiveOutline.label"), card: translate("tactic.perspectiveOutline.card"), size_m: 25.3 },
-        { key: 'soundWaveSlow', label: translate("tactic.soundWaveSlow.label"), card: translate("tactic.soundWaveSlow.card"),
+        { key: 'perspectiveOutline', label: translate("characters.theMindsEye.range.label.perspectiveOutline"), card: translate("characters.theMindsEye.range.card.perspectiveOutline"), size_m: 25.3 },
+        { key: 'soundWaveSlow', label: translate("characters.theMindsEye.range.label.soundWaveSlow"), card: translate("characters.theMindsEye.range.card.soundWaveSlow"),
           size_m: { options: [6.8, 25.3],
-            labels: [translate("tactic.sizeM.tacRolesZero"), translate("tactic.sizeM.tacRolesOne")] } },
-        { key: 'off', label: translate("tactic.off.label") },
+            labels: [translate("characters.theMindsEye.range.sizeM.zero"), translate("characters.theMindsEye.range.sizeM.one")] } },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['cane'],
@@ -901,8 +892,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("tactic.show1.labelFourth"), card: translate("tactic.show1.cardFourth"), size_m: 15.2 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'show1', label: translate("characters.cowboy.range.label.show1"), card: translate("characters.cowboy.range.card.show1"), size_m: 15.2 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['lasso'],
@@ -913,8 +904,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("tactic.show1.labelFifth"), card: translate("tactic.show1.cardFifth"), size_m: 8.44 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'show1', label: translate("characters.femaleDancer.range.label.show1"), card: translate("characters.femaleDancer.range.card.show1"), size_m: 8.44 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['fastMusicbox', 'slowMusicbox'],
@@ -939,9 +930,9 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("tactic.show1.labelSixth"), card: translate("tactic.show1.cardSixth"), size_m: 14.5 },
-        { key: 'show2', label: translate("tactic.show2.labelAlternate"), card: translate("tactic.show2.cardAlternate"), size_m: 18 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'show1', label: translate("characters.prospector.range.label.show1"), card: translate("characters.prospector.range.card.show1"), size_m: 14.5 },
+        { key: 'show2', label: translate("characters.prospector.range.label.show2"), card: translate("characters.prospector.range.card.show2"), size_m: 18 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['meteoriteMagnetN', 'meteoriteMagnetS'],
@@ -952,8 +943,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'cursedEmblemParalyze', label: translate("tactic.cursedEmblemParalyze.label"), card: translate("tactic.cursedEmblemParalyze.card"), size_m: 5.1 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'cursedEmblemParalyze', label: translate("characters.enchantress.range.label.cursedEmblemParalyze"), card: translate("characters.enchantress.range.card.cursedEmblemParalyze"), size_m: 5.1 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['cursedEmblem'],
@@ -964,10 +955,10 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("tactic.show1.labelSeventh"), card: translate("tactic.show1.cardSeventh"),
+        { key: 'show1', label: translate("characters.wildling.range.label.show1"), card: translate("characters.wildling.range.card.show1"),
           size_m: { options: [15, 17],
-            labels: [translate("tactic.sizeM.tacRolesZeroAlternate"), translate("tactic.sizeM.tacRolesOneAlternate")] } },
-        { key: 'off', label: translate("tactic.off.label") },
+            labels: [translate("characters.wildling.range.sizeM.zeroAlternate"), translate("characters.wildling.range.sizeM.oneAlternate")] } },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['wildlingPartner'],
@@ -978,10 +969,10 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("tactic.show1.labelEighth"), card: translate("tactic.show1.cardEighth"),
+        { key: 'show1', label: translate("characters.acrobat.range.label.show1"), card: translate("characters.acrobat.range.card.show1"),
           size_m: { options: [4, 7.5, 12],
-            labels: [translate("tactic.sizeM.tacRolesZeroThird"), translate("tactic.sizeM.tacRolesOneThird"), translate("tactic.sizeM.tacRolesTwo")] } },
-        { key: 'off', label: translate("tactic.off.label") },
+            labels: [translate("characters.acrobat.range.sizeM.zeroThird"), translate("characters.acrobat.range.sizeM.oneThird"), translate("characters.acrobat.range.sizeM.two")] } },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['bomb'],
@@ -992,8 +983,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'poseidonWatchHypnotize', label: translate("tactic.poseidonWatchHypnotize.label"), card: translate("tactic.poseidonWatchHypnotize.card"), size_m: 27 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'poseidonWatchHypnotize', label: translate("characters.firstOfficer.range.label.poseidonWatchHypnotize"), card: translate("characters.firstOfficer.range.card.poseidonWatchHypnotize"), size_m: 27 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['poseidonWatch'],
@@ -1010,8 +1001,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'cursedEmblemParalyze', label: translate("tactic.cursedEmblemParalyze.labelAlternate"), card: translate("tactic.cursedEmblemParalyze.cardAlternate"), size_m: 16.9 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'cursedEmblemParalyze', label: translate("characters.postman.range.label.cursedEmblemParalyze"), card: translate("characters.postman.range.card.cursedEmblemParalyze"), size_m: 16.9 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['letter', 'postDog'],
@@ -1022,8 +1013,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'severeElectricCurrent', label: translate("tactic.severeElectricCurrent.label"), card: translate("tactic.severeElectricCurrent.card"), size_m: 9.7 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'severeElectricCurrent', label: translate("characters.graveKeeper.range.label.severeElectricCurrent"), card: translate("characters.graveKeeper.range.card.severeElectricCurrent"), size_m: 9.7 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['shovel'],
@@ -1034,8 +1025,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'severeElectricCurrent', label: translate("tactic.severeElectricCurrent.labelAlternate"), card: translate("tactic.severeElectricCurrent.cardAlternate"), size_m: 5.9 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'severeElectricCurrent', label: translate("characters.prisoner.range.label.severeElectricCurrent"), card: translate("characters.prisoner.range.card.severeElectricCurrent"), size_m: 5.9 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['insulatingGloves', 'severeElectricCurrent'],
@@ -1060,8 +1051,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("tactic.show1.labelNinth"), card: translate("tactic.show1.cardNinth"), size_m: 15.2 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'show1', label: translate("characters.batter.range.label.show1"), card: translate("characters.batter.range.card.show1"), size_m: 15.2 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['cricketBat'],
@@ -1079,9 +1070,9 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'subjectiveAnchoring', label: translate("tactic.subjectiveAnchoring.label"), card: translate("tactic.subjectiveAnchoring.card"), size_m: 13 },
-        { key: 'bond', label: translate("tactic.bond.label"), card: translate("tactic.bond.card"), size_m: 13 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'subjectiveAnchoring', label: translate("characters.psychologist.range.label.subjectiveAnchoring"), card: translate("characters.psychologist.range.card.subjectiveAnchoring"), size_m: 13 },
+        { key: 'bond', label: translate("characters.psychologist.range.label.bond"), card: translate("characters.psychologist.range.card.bond"), size_m: 13 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['whistle'],
@@ -1092,8 +1083,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'bond', label: translate("tactic.bond.label"), card: translate("tactic.bond.card"), size_m: 13 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'bond', label: translate("characters.patient.range.label.bond"), card: translate("characters.patient.range.card.bond"), size_m: 13 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['grapplingHook'],
@@ -1104,10 +1095,10 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'metaphor', label: translate("tactic.metaphor.label"), card: translate("tactic.metaphor.card"),
+        { key: 'metaphor', label: translate("characters.novelist.range.label.metaphor"), card: translate("characters.novelist.range.card.metaphor"),
           size_m: { options: [13.5, 9.8],
-            labels: [translate("tactic.sizeM.tacRolesZeroFourth"), translate("tactic.sizeM.tacRolesOneFourth")] } },
-        { key: 'off', label: translate("tactic.off.label") },
+            labels: [translate("characters.novelist.range.sizeM.zeroFourth"), translate("characters.novelist.range.sizeM.oneFourth")] } },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['sketchBook'],
@@ -1124,10 +1115,10 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show', label: translate("tactic.show.labelFifth"), card: translate("tactic.show.cardAlternate"),
+        { key: 'show', label: translate("characters.weepingClown.range.label.show"), card: translate("characters.weepingClown.range.card.show"),
           size_m: { options: [6, 3],
-            labels: [translate("tactic.sizeM.tacRolesZeroFifth"), translate("tactic.sizeM.tacRolesOneFifth")] } },
-        { key: 'off', label: translate("tactic.off.label") },
+            labels: [translate("characters.weepingClown.range.sizeM.zeroFifth"), translate("characters.weepingClown.range.sizeM.oneFifth")] } },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['rocket'],
@@ -1144,11 +1135,11 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'cangFeng', label: translate("tactic.cangFeng.label"), card: translate("tactic.cangFeng.card"),
+        { key: 'cangFeng', label: translate("characters.antiquarian.range.label.cangFeng"), card: translate("characters.antiquarian.range.card.cangFeng"),
           size_m: { options: [4.9, 3.5, 4.7],
-            labels: [translate("tactic.sizeM.tacRolesZeroSixth"), translate("tactic.sizeM.tacRolesOneSixth"), translate("tactic.sizeM.tacRolesTwoAlternate")] } },
-        { key: 'cangZhuo', label: translate("tactic.cangZhuo.label"), card: translate("tactic.cangZhuo.card"), size_m: 12.7 },
-        { key: 'off', label: translate("tactic.off.label") },
+            labels: [translate("characters.antiquarian.range.sizeM.zeroSixth"), translate("characters.antiquarian.range.sizeM.oneSixth"), translate("characters.antiquarian.range.sizeM.twoAlternate")] } },
+        { key: 'cangZhuo', label: translate("characters.antiquarian.range.label.cangZhuo"), card: translate("characters.antiquarian.range.card.cangZhuo"), size_m: 12.7 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['mechanicalFlute'],
@@ -1165,8 +1156,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'phantomPlacement', label: translate("tactic.phantomPlacement.label"), card: translate("tactic.phantomPlacement.card"), size_m: 15 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'phantomPlacement', label: translate("characters.journalist.range.label.phantomPlacement"), card: translate("characters.journalist.range.card.phantomPlacement"), size_m: 15 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['camera'],
@@ -1177,9 +1168,9 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("tactic.show1.labelTenth"), card: translate("tactic.show1.cardTenth"), size_m: 18.5 },
-        { key: 'show2', label: translate("tactic.show2.labelThird"), card: translate("tactic.show2.cardThird"), size_m: 12.7 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'show1', label: translate("characters.aeroplanist.range.label.show1"), card: translate("characters.aeroplanist.range.card.show1"), size_m: 18.5 },
+        { key: 'show2', label: translate("characters.aeroplanist.range.label.show2"), card: translate("characters.aeroplanist.range.card.show2"), size_m: 12.7 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['jetpack'],
@@ -1190,8 +1181,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'inspire', label: translate("tactic.inspire.label"), card: translate("tactic.inspire.card"), size_m: 20 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'inspire', label: translate("characters.cheerleader.range.label.inspire"), card: translate("characters.cheerleader.range.card.inspire"), size_m: 20 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['pompoms'],
@@ -1208,10 +1199,10 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'airbagSpray', label: translate("tactic.airbagSpray.label"), card: translate("tactic.airbagSpray.card"),
+        { key: 'airbagSpray', label: translate("characters.fireInvestigator.range.label.airbagSpray"), card: translate("characters.fireInvestigator.range.card.airbagSpray"),
           size_m: { options: [4.2, 12.64],
-            labels: [translate("tactic.sizeM.tacRolesZeroSeventh"), translate("tactic.sizeM.tacRolesOneSeventh")] } },
-        { key: 'off', label: translate("tactic.off.label") },
+            labels: [translate("characters.fireInvestigator.range.sizeM.zeroSeventh"), translate("characters.fireInvestigator.range.sizeM.oneSeventh")] } },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['airbag'],
@@ -1223,8 +1214,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'conceal', label: translate("tactic.conceal.label"), card: translate("tactic.conceal.card"), size_m: 18 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'conceal', label: translate("characters.faroLady.range.label.conceal"), card: translate("characters.faroLady.range.card.conceal"), size_m: 18 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['aromatherapyCane'],
@@ -1235,9 +1226,9 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'tacticalForesight', label: translate("tactic.tacticalForesight.label"), card: translate("tactic.tacticalForesight.card"), size_m: 13 },
-        { key: 'honorResonance', label: translate("tactic.honorResonance.label"), card: translate("tactic.honorResonance.card"), size_m: 7 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'tacticalForesight', label: translate("characters.knight.range.label.tacticalForesight"), card: translate("characters.knight.range.card.tacticalForesight"), size_m: 13 },
+        { key: 'honorResonance', label: translate("characters.knight.range.label.honorResonance"), card: translate("characters.knight.range.card.honorResonance"), size_m: 7 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['helmet'],
@@ -1248,8 +1239,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'warmRain', label: translate("tactic.warmRain.label"), card: translate("tactic.warmRain.card"), size_m: 32 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'warmRain', label: translate("characters.meteorologist.range.label.warmRain"), card: translate("characters.meteorologist.range.card.warmRain"), size_m: 32 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['stormGlassRainfall'],
@@ -1260,11 +1251,11 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'dragonBoneBow', label: translate("tactic.dragonBoneBow.label"), card: translate("tactic.dragonBoneBow.card"),
+        { key: 'dragonBoneBow', label: translate("characters.archer.range.label.dragonBoneBow"), card: translate("characters.archer.range.card.dragonBoneBow"),
           size_m: { options: [18, 12],
-            labels: [translate("tactic.sizeM.tacRolesZeroEighth"), translate("tactic.sizeM.tacRolesOneEighth")] } },
-        { key: 'armCrossbow', label: translate("tactic.armCrossbow.label"), card: translate("tactic.armCrossbow.card"), size_m: 4.5 },
-        { key: 'off', label: translate("tactic.off.label") },
+            labels: [translate("characters.archer.range.sizeM.zeroEighth"), translate("characters.archer.range.sizeM.oneEighth")] } },
+        { key: 'armCrossbow', label: translate("characters.archer.range.label.armCrossbow"), card: translate("characters.archer.range.card.armCrossbow"), size_m: 4.5 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['keelBow', 'crossBow'],
@@ -1287,9 +1278,9 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'muletaDash', label: translate("tactic.muletaDash.label"), card: translate("tactic.muletaDash.card"), size_m: 6 },
-        { key: 'muletaSweep', label: translate("tactic.muletaSweep.label"), card: translate("tactic.muletaSweep.card"), size_m: 2.25 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'muletaDash', label: translate("characters.matador.range.label.muletaDash"), card: translate("characters.matador.range.card.muletaDash"), size_m: 6 },
+        { key: 'muletaSweep', label: translate("characters.matador.range.label.muletaSweep"), card: translate("characters.matador.range.card.muletaSweep"), size_m: 2.25 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['muleta'],
@@ -1300,8 +1291,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'emotionAccumulation', label: translate("tactic.emotionAccumulation.label"), card: translate("tactic.emotionAccumulation.card"), size_m: 20.3 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'emotionAccumulation', label: translate("characters.mimeArtist.range.label.emotionAccumulation"), card: translate("characters.mimeArtist.range.card.emotionAccumulation"), size_m: 20.3 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['propUmbrellaAnxiousRoutine'],
@@ -1312,7 +1303,7 @@ export const TAC_ROLES = {
     name: translate("characters.prodigy.name"),
     camp: 'survivor',
     items: ['hamster'],
-    speed: { [translate("tactic.speed.tacRoles")]: 3.92, [translate("tactic.speed.tacRolesAlternate")]: 3.8 },
+    speed: { [translate("characters.prodigy.speed.exhibition")]: 3.92, [translate("characters.prodigy.speed.pushBall")]: 3.8 },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/08/ejzgnfep2tdh21cx73mskh1svrj4uur.png/90px-%E2%80%9C%E7%A5%9E%E7%AB%A5%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   hellEmber: {
@@ -1321,8 +1312,8 @@ export const TAC_ROLES = {
     speed: 4.73,
     ranges: {
       modes: [
-        { key: 'emotionAccumulation', label: translate("tactic.emotionAccumulation.labelAlternate"), card: translate("tactic.emotionAccumulation.cardAlternate"), size_m: { min: 0, max: 55 } },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'emotionAccumulation', label: translate("characters.hellEmber.range.label.emotionAccumulation"), card: translate("characters.hellEmber.range.card.emotionAccumulation"), size_m: { min: 0, max: 55 } },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     items: ['phantom','puppet1','puppet2'],
@@ -1331,7 +1322,7 @@ export const TAC_ROLES = {
   smileyFace: {
     name: translate("characters.smileyFace.name"),
     camp: 'hunter',
-    speed: { [translate("characters.smileyFace.name")]: 4.56, [translate("tactic.speed.tacRolesThird")]: 7.07, [translate("tactic.speed.tacRolesFourth")]: 7.39, [translate("tactic.speed.tacRolesFifth")]: 9.12 },
+    speed: { [translate("characters.smileyFace.name")]: 4.56, [translate("characters.smileyFace.speed.rocketDash0")]: 7.07, [translate("characters.smileyFace.speed.rocketDash1")]: 7.39, [translate("characters.smileyFace.speed.rocketDash2")]: 9.12 },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/55/ob4f8gqvpcfw0sarr5ule5mpmzxby7l.png/90px-%E5%B0%8F%E4%B8%91%E5%A4%B4%E5%83%8F.png',
   },
   gameKeeper: {
@@ -1356,7 +1347,7 @@ export const TAC_ROLES = {
   Geisha: {
     name: translate("characters.geisha.name"),
     camp: 'hunter',
-    speed: { [translate("tactic.speed.tacRolesSixth")]: 4.73, [translate("tactic.speed.tacRolesSeventh")]: 4.56 },
+    speed: { [translate("characters.geisha.speed.beautyForm")]: 4.73, [translate("characters.geisha.speed.prajnaForm")]: 4.56 },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/bd/qcstapls4hnm6fckekl6l6890h19vst.png/90px-%E7%BA%A2%E8%9D%B6%E5%A4%B4%E5%83%8F.png',
   },
   theFeaster: {
@@ -1368,7 +1359,7 @@ export const TAC_ROLES = {
   wuchang: {
     name: translate("characters.wuchang.name"),
     camp: 'hunter',
-    speed: { [translate("tactic.speed.tacRolesEighth")]: 4.73, [translate("tactic.speed.tacRolesNinth")]: 4.56 },
+    speed: { [translate("characters.wuchang.speed.xieBian")]: 4.73, [translate("characters.wuchang.speed.fanWuJiu")]: 4.56 },
     items: ['umbrella'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/2a/gd5yd3hfaohhj2pozgqf2cfivpadbn6.png/90px-%E5%AE%BF%E4%BC%9E%E4%B9%8B%E9%AD%82%E5%A4%B4%E5%83%8F.png',
   },
@@ -1388,16 +1379,16 @@ export const TAC_ROLES = {
     
     ranges: {
       modes: [
-        { key: 'followerControl', label: translate("tactic.followerControl.label"), card: translate("tactic.followerControl.card"),
+        { key: 'followerControl', label: translate("characters.dreamWitch.range.label.followerControl"), card: translate("characters.dreamWitch.range.card.followerControl"),
           size_m: { options: [42.2, 59.1],
-            labels: [translate("tactic.sizeM.tacRolesZeroNinth"), translate("tactic.sizeM.tacRolesOneNinth")] } },
-        { key: 'hiddenDream', label: translate("tactic.hiddenDream.label"), card: translate("tactic.hiddenDream.card"), size_m: 20 },
-        { key: 'off', label: translate("tactic.off.label") },
+            labels: [translate("characters.dreamWitch.range.sizeM.zeroNinth"), translate("characters.dreamWitch.range.sizeM.oneNinth")] } },
+        { key: 'hiddenDream', label: translate("characters.dreamWitch.range.label.hiddenDream"), card: translate("characters.dreamWitch.range.card.hiddenDream"), size_m: 20 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     name: translate("characters.dreamWitch.name"),
     camp: 'hunter',
-    speed: { [translate("tactic.speed.tacRolesTenth")]: 6.08, [translate("items.follower.name")]: 4.56 },
+    speed: { [translate("characters.dreamWitch.speed.originalBody")]: 6.08, [translate("items.follower.name")]: 4.56 },
     items: ['follower', 'witchMark', 'hiddenDream'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/6c/igl4l2j95ftovgiv85sdeidapbse4gu.png/90px-%E6%A2%A6%E4%B9%8B%E5%A5%B3%E5%B7%AB%E5%A4%B4%E5%83%8F.png',
   },
@@ -1454,7 +1445,7 @@ export const TAC_ROLES = {
   theBreakingWheel: {
     name: translate("characters.theBreakingWheel.name"),
     camp: 'hunter',
-    speed: { [translate("tactic.speed.tacRolesEleventh")]: 4.64, [translate("tactic.speed.tacRolesTwelfth")]: 10.13 },
+    speed: { [translate("characters.theBreakingWheel.speed.humanForm")]: 4.64, [translate("characters.theBreakingWheel.speed.wheelForm")]: 10.13 },
     items: ['nailBoard'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b4/a9kc3enyzxn84eu29l6lxszhvs3lhaf.png/90px-%E7%A0%B4%E8%BD%AE%E5%A4%B4%E5%83%8F.png',
   },
@@ -1513,13 +1504,13 @@ export const TAC_ROLES = {
     
     ranges: {
       modes: [
-        { key: 'ancientVisage', label: translate("tactic.ancientVisage.label"), card: translate("tactic.ancientVisage.card"), size_m: 15 },
-        { key: 'off', label: translate("tactic.off.label") },
+        { key: 'ancientVisage', label: translate("characters.theShadow.range.label.ancientVisage"), card: translate("characters.theShadow.range.card.ancientVisage"), size_m: 15 },
+        { key: 'off', label: translate("tactic.range.label.off") },
       ],
     },
     name: translate("characters.theShadow.name"),
     camp: 'hunter',
-    speed: { [translate("tactic.speed.tacRolesThirteenth")]: 4.64, [translate("items.yithian.name")]: 7.59 },
+    speed: { [translate("characters.theShadow.speed.ivy")]: 4.64, [translate("items.yithian.name")]: 7.59 },
     items: ['yithian', 'corruptedOstracon', 'ancientVisage'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b7/sm52k5nm0azevp1522d8fdx7p59d4nl.png/90px-%E6%97%B6%E7%A9%BA%E4%B9%8B%E5%BD%B1%E5%A4%B4%E5%83%8F.png',
   },
