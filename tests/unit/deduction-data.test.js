@@ -1,0 +1,96 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+
+// DOM/BOM 桩：让模块图在 node 下按浏览器入口（main.js）的求值顺序完成初始化
+const elStub = new Proxy(function () {}, {
+  get: (t, k) => (k === Symbol.toPrimitive ? () => '' : elStub),
+  apply: () => elStub,
+  set: () => true,
+});
+globalThis.document = {
+  getElementById: () => elStub,
+  querySelectorAll: () => [],
+  querySelector: () => elStub,
+  createElement: () => elStub,
+  addEventListener: () => {},
+  documentElement: elStub,
+  body: elStub,
+  title: '',
+};
+globalThis.window = {
+  location: { search: '', href: 'http://localhost/', assign() {}, reload() {} },
+  addEventListener: () => {},
+  removeEventListener: () => {},
+};
+globalThis.localStorage = { getItem: () => null, setItem: () => {} };
+Object.defineProperty(globalThis, 'navigator', { value: { language: 'zh-CN' }, configurable: true });
+globalThis.fetch = async () => { throw new Error('no fetch in unit test'); };
+globalThis.ResizeObserver = class { observe() {} unobserve() {} disconnect() {} };
+globalThis.requestAnimationFrame = (cb) => setTimeout(cb, 0);
+globalThis.Image = class { set src(v) {} };
+
+await import('../../js/main.js');
+const { MAPS_DATA } = await import('../../js/data/maps.js');
+const { deduce } = await import('../../js/deduce.js');
+const { translate } = await import('../../js/core/i18n.js');
+
+test('every map deduction has well-formed rules and ruleBook', () => {
+  for (const map of MAPS_DATA) {
+    const d = map.deduction;
+    assert.ok(d, `map ${map.mapId}: missing deduction`);
+    const n = d.ciphers.length;
+
+    assert.ok(Array.isArray(d.rules) && d.rules.length > 0, `map ${map.mapId}: no rules`);
+    assert.equal(d.ruleBook.length, d.rules.length, `map ${map.mapId}: ruleBook/rules length mismatch`);
+    assert.ok(d.emptyHint, `map ${map.mapId}: emptyHint missing`);
+
+    d.rules.forEach((r, i) => {
+      for (const p of r.positions) {
+        assert.ok(p >= 0 && p < n, `map ${map.mapId} rule#${i}(${r.kind}): position ${p} out of range ${n}`);
+      }
+      for (const key of ['pres', 'cons', 'targets', 'region']) {
+        for (const p of r[key]) {
+          assert.ok(p >= 0 && p < n, `map ${map.mapId} rule#${i}(${r.kind}): ${key} ${p} out of range`);
+        }
+      }
+      if (r.marker != null) {
+        assert.ok(r.marker >= 0 && r.marker < n, `map ${map.mapId} rule#${i}(link): marker out of range`);
+      }
+    });
+
+    d.configs.forEach((g, gi) => g.forEach((ci) => {
+      assert.ok(ci >= 0 && ci < n, `map ${map.mapId} config#${gi}: cipher index ${ci} out of range`);
+    }));
+  }
+});
+
+test('chinaTown chainRun loop closure: lion house + grocery => arcade and theater no', () => {
+  const map = MAPS_DATA.find((m) => m.ciphers.some(
+    (c) => c.name === translate('maps.chinaTown.cipher.m1.name')));
+  const d = map.deduction;
+  const idx = (key) => d.ciphers.findIndex((c) => c.name === translate(key));
+  const marks = {
+    [idx('maps.chinaTown.cipher.w3.name')]: 'yes', // 狮子楼
+    [idx('maps.chinaTown.cipher.w4.name')]: 'yes', // 杂货店
+  };
+  const { state } = deduce(d, marks);
+  assert.equal(state[idx('maps.chinaTown.cipher.m4.name')], 'no', // 红伞巷
+    '红伞巷 should be ruled out');
+  assert.equal(state[idx('maps.chinaTown.cipher.m2.name')], 'no', // 剧院
+    '剧院 should be ruled out');
+});
+
+test('solver resolves fixed rules from empty marks on every map', () => {
+  for (const map of MAPS_DATA) {
+    const d = map.deduction;
+    const { state } = deduce(d, {});
+    d.rules
+      .filter((r) => r.kind === 'fixed')
+      .forEach((r, fi) => {
+        for (const p of r.positions) {
+          assert.equal(state[p], 'yes',
+            `map ${map.mapId}: fixed rule#${fi} did not resolve position ${p}`);
+        }
+      });
+  }
+});

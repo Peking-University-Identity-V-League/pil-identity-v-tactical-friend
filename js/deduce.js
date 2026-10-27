@@ -232,7 +232,7 @@ export function deduce(map, marks) {
         }
       } else if (rule.kind === 'implies') {
         
-        const c = rule.cons;
+        const c = rule.cons[0];
         if (state[c] === 'no' && rule.pres.some((p) => state[p] === 'yes')) {
           if (!contraFrozen) {
             contradiction = translate("deduction.propagateEleventh", { name: rule.name, list: rule.list });
