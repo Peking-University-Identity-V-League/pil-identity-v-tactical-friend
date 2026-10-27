@@ -5,7 +5,7 @@ import { S } from './core/state.js';
 import { $, loadImageWithStatus, mountImageOverlays } from './core/utils.js';
 import { cipherOf, mapsZonesRelative } from './data/geo.js';
 import { MAPS_DATA, getImageUrl } from './data/maps.js';
-import { DUNGEON_ICON_URL, ESCAPE_DOOR_ICON_URL, TAC_ABYSS_MAX_M, TAC_DISPLAY_DEFAULT, TAC_ITEM_TYPES, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_MOVEMENT_SURVIVOR, TAC_OTHER_BUFFS, TAC_ROLES, TAC_SVG_NS, TAC_TALENT_BUFFS, TAC_TRAIT_BUFFS, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
+import { DUNGEON_ICON_URL, ESCAPE_DOOR_ICON_URL, TAC_ABYSS_MAX_M, TAC_DISPLAY_DEFAULT, TAC_ITEM_TYPES, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_MOVEMENT_SURVIVOR, TAC_MOVEMENT_BUFFS, TAC_ROLES, TAC_SVG_NS, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
 import { CIPHER_ICON_URL, cipherIcon } from './region.js';
 
 import { translate } from './core/i18n.js';
@@ -2055,7 +2055,7 @@ export function tacTraitRoleInTarget() {
     : tgt.lc.buffs.filter((b) => b.from < tgt.to && b.to > tgt.from);
   const tr = bs.find((b) => b.type === 'trait');
   if (!tr) return null;
-  const td = Object.values(TAC_TRAIT_BUFFS).flat().find((t) => t.key === tr.key);
+  const td = Object.values(TAC_MOVEMENT_BUFFS.trait).flat().find((t) => t.key === tr.key);
   return td ? td.role : (tr.name || '').split(' · ')[0];
 }
 
@@ -2066,7 +2066,7 @@ export function tacClearTraitOfRole(roleName) {
   const match = (b) => {
     if (b.type !== 'trait') return false;
     if (b.name === roleName || String(b.name || '').indexOf(roleName + ' · ') === 0) return true;
-    return Object.values(TAC_TRAIT_BUFFS).flat() 
+    return Object.values(TAC_MOVEMENT_BUFFS.trait).flat() 
       .some((t) => t.key === b.key && t.role === roleName);
   };
   if (tgt.pending) {
@@ -2080,7 +2080,7 @@ export function tacClearTraitOfRole(roleName) {
 export function tacApplyTrait(lc, from, to, def, roleName) {
   tacRemoveBuffsIn(lc, from, to, (b) => {
     if (b.type !== 'trait') return false;
-    const td = Object.values(TAC_TRAIT_BUFFS).flat().find((t) => t.key === b.key);
+    const td = Object.values(TAC_MOVEMENT_BUFFS.trait).flat().find((t) => t.key === b.key);
     const bRole = td ? td.role : (b.name || '').split(' · ')[0];
     return bRole !== roleName;
   });
@@ -2107,9 +2107,9 @@ export function tacAddBuffEntry(entry) {
   }
   
   let states = null;
-  if (entry.type === 'talent') states = (TAC_TALENT_BUFFS[entry.key] || {}).states;
+  if (entry.type === 'talent') states = (TAC_MOVEMENT_BUFFS.talent[entry.key] || {}).states;
   else if (entry.type === 'other') {
-    states = (Object.values(TAC_OTHER_BUFFS).flat()
+    states = (Object.values(TAC_MOVEMENT_BUFFS.other).flat()
       .find((t) => t.key === entry.key) || {}).states;
   }
   const state = tacStateOf(base);
@@ -2349,7 +2349,7 @@ export function tacPurgeInvalidBuffs() {
   const keep = (b) => {
     if (fixed) return false; 
     if (b.type === 'trait') {
-      const td = Object.values(TAC_TRAIT_BUFFS).flat().find((t) => t.key === b.key);
+      const td = Object.values(TAC_MOVEMENT_BUFFS.trait).flat().find((t) => t.key === b.key);
       if (!td) return true;
       if (td.roles && td.roles.length && !td.roles.includes(base.role)) return false; 
       if (td.forms && td.forms.length && !td.forms.includes(base.form || 0)) return false; 
@@ -2362,12 +2362,12 @@ export function tacPurgeInvalidBuffs() {
       return true;
     }
     if (b.type === 'talent') {
-      const tb = TAC_TALENT_BUFFS[b.key];
+      const tb = TAC_MOVEMENT_BUFFS.talent[b.key];
       if (tb && !tacStateMatches(tb.states, state)) return false;
       return true;
     }
     if (b.type === 'other') {
-      const ob = Object.values(TAC_OTHER_BUFFS).flat().find((t) => t.key === b.key);
+      const ob = Object.values(TAC_MOVEMENT_BUFFS.other).flat().find((t) => t.key === b.key);
       if (ob && !tacStateMatches(ob.states, state)) return false;
       return true;
     }
@@ -2732,7 +2732,7 @@ export function renderTacBuffDetail() {
 
 
 export function buildTacTraitList() {
-  const rows = TAC_TRAIT_BUFFS[tacCamp] || [];
+  const rows = TAC_MOVEMENT_BUFFS.trait[tacCamp] || [];
   tacTraitList.innerHTML = rows.map((t) => {
     let desc = t.levels
       ? `${t.levels.map((m) => `${Math.round((m - 1) * 100)}%`).join('/')}`
@@ -2760,7 +2760,7 @@ export function buildTacTraitList() {
 
 
 export function buildTacOtherList() {
-  const rows = TAC_OTHER_BUFFS[tacCamp] || [];
+  const rows = TAC_MOVEMENT_BUFFS.other[tacCamp] || [];
   tacOtherList.innerHTML = rows.map((t) => {
     let desc = t.levels
       ? `${t.levels.map((m) => `${Math.round((m - 1) * 100)}%`).join('/')}`
@@ -2785,7 +2785,7 @@ export function buildTacOtherList() {
 
 
 export function buildTacTalentList() {
-  const rows = Object.entries(TAC_TALENT_BUFFS)
+  const rows = Object.entries(TAC_MOVEMENT_BUFFS.talent)
     .filter(([, b]) => !b.camp || b.camp === tacCamp);
   tacTalentList.innerHTML = rows.map(([k, b]) => {
     let desc = b.levels
@@ -3066,7 +3066,7 @@ export function buildTacSpeedPanel() {
   tacTraitList.addEventListener('click', (e) => {
     const btn = e.target.closest('.tac-talent-add');
     if (!btn) return;
-    const def = (TAC_TRAIT_BUFFS[tacCamp] || []).find((t) => t.key === btn.dataset.tk);
+    const def = (TAC_MOVEMENT_BUFFS.trait[tacCamp] || []).find((t) => t.key === btn.dataset.tk);
     if (!def) return;
     const tgt0 = tacEditTarget();
     const base0 = tgt0.pending ? tacPending.base : tacBaseAt(tgt0.lc, tgt0.from);
@@ -3127,7 +3127,7 @@ export function buildTacSpeedPanel() {
       
       tacPending.buffs = tacPending.buffs.filter((b) => {
         if (b.type !== 'trait') return true;
-        const td = Object.values(TAC_TRAIT_BUFFS).flat().find((t) => t.key === b.key);
+        const td = Object.values(TAC_MOVEMENT_BUFFS.trait).flat().find((t) => t.key === b.key);
         const bRole = td ? td.role : (b.name || '').split(' · ')[0];
         return bRole === def.role;
       });
@@ -3175,7 +3175,7 @@ export function buildTacSpeedPanel() {
   tacOtherList.addEventListener('click', (e) => {
     const btn = e.target.closest('.tac-talent-add');
     if (!btn) return;
-    const def = (TAC_OTHER_BUFFS[tacCamp] || []).find((t) => t.key === btn.dataset.ok);
+    const def = (TAC_MOVEMENT_BUFFS.other[tacCamp] || []).find((t) => t.key === btn.dataset.ok);
     if (!def) return;
     const lvSel = tacOtherList.querySelector(`select[data-olv="${def.key}"]`);
     const lv = lvSel ? +lvSel.value : null;
@@ -3207,7 +3207,7 @@ export function buildTacSpeedPanel() {
     const btn = e.target.closest('.tac-talent-add');
     if (!btn) return;
     const k = btn.dataset.k;
-    const def = TAC_TALENT_BUFFS[k];
+    const def = TAC_MOVEMENT_BUFFS.talent[k];
     if (!def) return;
     const lvSel = tacTalentList.querySelector(`select[data-lv="${k}"]`);
     const lv = lvSel ? +lvSel.value : null;
