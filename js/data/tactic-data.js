@@ -374,7 +374,7 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.scale.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b5/d4rcr4pkvrw70yv8mhcqij5f8bzkq92.png/90px-%E6%95%99%E6%8E%88%E9%81%93%E5%85%B7.png',
   },
-partDrill: {
+  partDrill: {
     name: translate("items.partDrill.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/c/c6/3rm7g6xp5vugw5ru40ccyop6kig37ll.png',
   },
