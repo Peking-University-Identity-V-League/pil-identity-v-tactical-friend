@@ -5,7 +5,7 @@ import { S } from './core/state.js';
 import { $, loadImageWithStatus, mountImageOverlays } from './core/utils.js';
 import { cipherOf, mapsZonesRelative } from './data/geo.js';
 import { MAPS_DATA, getImageUrl } from './data/maps.js';
-import { DUNGEON_ICON_URL, ESCAPE_DOOR_ICON_URL, TAC_ABYSS_MAX_M, TAC_DISPLAY_DEFAULT, TAC_ITEM_TYPES, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_MOVEMENT_SURVIVOR, TAC_MOVEMENT_BUFFS, TAC_ROLES, TAC_SVG_NS, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
+import { DUNGEON_ICON_URL, ESCAPE_DOOR_ICON_URL, TAC_ABYSS_MAX_M, TAC_DISPLAY_DEFAULT, TAC_ITEM_TYPES, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_MOVEMENT_SURVIVOR, TAC_MOVEMENT_BUFFS, TAC_ROLES, TAC_SVG_NS, TAC_TREASURE_RULE, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
 import { CIPHER_ICON_URL, cipherIcon } from './region.js';
 
 import { translate } from './core/i18n.js';
@@ -299,6 +299,7 @@ export function renderTacCiphers() {
     el.style.width = `${tacDisplay.cipherSize}cqw`;
     tacMapWrap.appendChild(el);
   });
+  renderTacTreasure();
 }
 
 
@@ -420,12 +421,14 @@ export function renderTacFixedSpawns() {
             : '<div class="cam-dot"></div>');
       } else {
         
-        const iconUrl = (TAC_ITEM_TYPES[pt.icon || cfg.icon] || {}).icon || '';
+        const spawnDef = TAC_ITEM_TYPES[pt.icon || cfg.icon] || {};
+        const iconUrl = spawnDef.icon || '';
         if (iconUrl) {
           el = document.createElement('img');
           el.src = iconUrl;
           el.alt = cfg.label;
           el.draggable = false;
+          if (spawnDef.iconSize) el.style.width = `${spawnDef.iconSize}cqw`;
         } else {
           el = document.createElement('div');
           el.className = 'cam-dot';
@@ -437,6 +440,44 @@ export function renderTacFixedSpawns() {
       tacMapWrap.appendChild(el);
     });
   }
+}
+
+
+export function renderTacTreasure() {
+  if (!tacMapWrap) return;
+  tacMapWrap.querySelectorAll('.tac-treasure-ring').forEach((el) => el.remove());
+  const map = MAPS_DATA[S.currentMapId];
+  if (!map.widthM) return;
+  const token = tacBoard().tokens.explorer;
+  if (!token || !token.showTreasureRange) return;
+  const [imgW, imgH] = map.mapSize;
+  const mpp = map.widthM / imgW;
+  const ex = token.x * imgW, ey = token.y * imgH;
+  const outerPct = (TAC_TREASURE_RULE.ringM[1] * 2 / map.widthM) * 100;
+  const innerStop = `${(TAC_TREASURE_RULE.ringM[0] / TAC_TREASURE_RULE.ringM[1]) * 100}%`;
+  // 同机不连续：冒险家当前贴近的那台机（最近一处书页）下一轮排除，淡蓝标出
+  let exclCid = null, exclDist = Infinity;
+  (map.cipherCombinations[S.currentCipherIndex] || []).forEach((cid) => {
+    const c = cipherOf(S.currentMapId, cid);
+    if (!c) return;
+    const d = Math.hypot((c.location[0] - ex) * mpp, (c.location[1] - ey) * mpp);
+    if (d < exclDist) { exclDist = d; exclCid = cid; }
+  });
+  if (exclDist > TAC_TREASURE_RULE.ringM[1] + 0.7) exclCid = null;
+  (map.cipherCombinations[S.currentCipherIndex] || []).forEach((cid) => {
+    const c = cipherOf(S.currentMapId, cid);
+    if (!c) return;
+    const dx = (c.location[0] - ex) * mpp;
+    const dy = (c.location[1] - ey) * mpp;
+    if (Math.hypot(dx, dy) > TAC_TREASURE_RULE.rangeM) return;
+    const el = document.createElement('div');
+    el.className = 'tac-treasure-ring' + (cid === exclCid ? ' excluded' : '');
+    el.style.left = `${(c.location[0] / imgW) * 100}%`;
+    el.style.top = `${(c.location[1] / imgH) * 100}%`;
+    el.style.width = `${outerPct}%`;
+    el.style.setProperty('--treasure-inner', innerStop);
+    tacMapWrap.appendChild(el);
+  });
 }
 
 export function syncTacDungeonText() {
@@ -1373,7 +1414,8 @@ export function renderTacBoard() {
   tacSave(); 
   tacMapWrap.querySelectorAll('.tac-token, .tac-role-circle, .tac-item-circle, .tac-item-pin, .tac-measure-dot, .tac-text')
     .forEach((el) => el.remove());
-  renderTacFixedSpawns(); 
+  renderTacFixedSpawns();
+  renderTacTreasure();
   const board = tacBoard();
   
   board.items.forEach((it, idx) => {
@@ -1677,6 +1719,21 @@ export function renderTacManage() {
         if (el && m !== null) el.style.width = `${tacItemMetersToPercent(m)}%`;
       };
       buildTacRangeRows(settings, rgCfg, token, true, { softUpdate: syncRoleCircleWidth });
+    }
+    
+    
+    if (role === 'explorer') {
+      const trRow = document.createElement('div');
+      trRow.className = 'tac-manage-row';
+      trRow.innerHTML =
+        `<label class="tac-manage-glow"><input type="checkbox"`
+        + translate("application.renderTacManageTreasure", { value: token.showTreasureRange ? ' checked' : '' });
+      trRow.querySelector('input').addEventListener('change', (e) => {
+        token.showTreasureRange = e.target.checked;
+        renderTacTreasure();
+        tacSave();
+      });
+      settings.appendChild(trRow);
     }
     
     
@@ -4208,6 +4265,7 @@ tacMapWrap.addEventListener('pointermove', (e) => {
       rg.style.left = `${t.x * 100}%`;
       rg.style.top = `${t.y * 100}%`;
     }
+    if (t.showTreasureRange) renderTacTreasure();
     tacAbyssRecord(p); 
     
     if (tacBoard().items.some((it) =>

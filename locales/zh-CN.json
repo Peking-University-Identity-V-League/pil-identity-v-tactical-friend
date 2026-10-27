@@ -64,6 +64,7 @@
   "application.renderTacManageTenth": "{value}>隐藏图标</label>",
   "application.renderTacManageThird": "{value}>隐藏连线</label>",
   "application.renderTacManageThirteenth": "<button type=\"button\" class=\"tac-manage-del\">删除</button>",
+  "application.renderTacManageTreasure": "{value}>以当前位置推算可能刷密码书页的范围（需手动将冒险家移动至下一个密码书页刷新区，进行下一次推算）</label>",
   "application.renderTacManageTwelfth": "{value}>默认</label>",
   "application.renderTacTextList": "<div class=\"tac-manage-empty\">还没有添加文本</div>",
   "application.renderTacTextListAlternate": "完成编辑并取消选中",

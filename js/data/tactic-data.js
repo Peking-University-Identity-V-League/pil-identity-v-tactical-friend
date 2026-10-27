@@ -367,15 +367,18 @@ export const TAC_ITEM_TYPES = {
   },
   partDrill: {
     name: translate("items.partDrill.name"),
-    icon: 'https://patchwiki.biligame.com/images/dwrg/c/c6/3rm7g6xp5vugw5ru40ccyop6kig37ll.png',
+    icon: 'https://i0.hdslb.com/bfs/new_dyn/6f2652a4c70808eb0a437d56cdfb684f96830223.png@1192w.avif',
+    iconSize: 1.7,
   },
   partWindWing: {
     name: translate("items.partWindWing.name"),
-    icon: 'https://patchwiki.biligame.com/images/dwrg/c/c6/3rm7g6xp5vugw5ru40ccyop6kig37ll.png',
+    icon: 'https://i0.hdslb.com/bfs/new_dyn/71c214c8da2a75025e1d9626643b25c696830223.png@1192w.avif',
+    iconSize: 1.7,
   },
   partPropeller: {
     name: translate("items.partPropeller.name"),
-    icon: 'https://patchwiki.biligame.com/images/dwrg/c/c6/3rm7g6xp5vugw5ru40ccyop6kig37ll.png',
+    icon: 'https://i0.hdslb.com/bfs/new_dyn/dcdc3fe7c8923f49eb1ea04fcaa8ec6696830223.png@1192w.avif',
+    iconSize: 1.7,
   },
   mechanicalFlute: {
     name: translate("items.mechanicalFlute.name"),
@@ -1605,6 +1608,10 @@ export const TAC_ZOOM_LOCK_ICONS = {
 
 
 export const TAC_ABYSS_MAX_M = 57.5;
+
+
+
+export const TAC_TREASURE_RULE = { rangeM: 70, ringM: [5.5, 7.3] };
 
 
 
