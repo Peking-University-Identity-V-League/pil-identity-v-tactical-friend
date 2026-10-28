@@ -3917,17 +3917,21 @@ export async function tacExportImage() {
   const wrapW = tacMapWrap.clientWidth || 1;
   const wrapH = tacMapWrap.clientHeight || 1;
   
-  const W = Math.round(wrapW), H = Math.round(wrapH);
+  const cropOn = tacDisplay.exportCrop && tacZoomState.scale > 1;
 
-  const vx = -tacZoomState.tx / (tacZoomState.scale * wrapW);
-  const vy = -tacZoomState.ty / (tacZoomState.scale * wrapH);
-  const vw = 1 / tacZoomState.scale;
-  const vh = 1 / tacZoomState.scale;
+  const W = cropOn ? Math.round(wrapW) : W0;
+  const H = cropOn ? Math.round(wrapH) : H0;
+
+  const vx = cropOn ? -tacZoomState.tx / (tacZoomState.scale * wrapW) : 0;
+  const vy = cropOn ? -tacZoomState.ty / (tacZoomState.scale * wrapH) : 0;
+  const vw = cropOn ? 1 / tacZoomState.scale : 1;
+  const vh = cropOn ? 1 / tacZoomState.scale : 1;
   const cv = document.createElement('canvas');
   cv.width = W;
   cv.height = H;
   const ctx = cv.getContext('2d');
   const sx = W / wrapW, sy = H / wrapH;
+  const K = 1 / vw;
   
   const PX = (rx) => (rx - vx) * W / vw;
   const PY = (ry) => (ry - vy) * H / vh;
@@ -3959,7 +3963,7 @@ export async function tacExportImage() {
   
   if (tacDisplay.zones) {
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
-    ctx.lineWidth = Math.max(1.5, W / 400);
+    ctx.lineWidth = Math.max(1.5, W * K / 400);
     mapsZonesRelative[S.currentMapId].forEach((z) =>
       ctx.strokeRect(PX(z.x), PY(z.y), z.width * W / vw, z.height * H / vh));
   }
@@ -3994,7 +3998,7 @@ export async function tacExportImage() {
 
   
   if (tacDisplay.ciphers && ciphIcon) {
-    const size = tacDisplay.cipherSize / 100 * W;
+    const size = tacDisplay.cipherSize / 100 * W * K;
     map.cipherCombinations[S.currentCipherIndex].forEach((cid) => {
       const c = cipherOf(S.currentMapId, cid);
       if (!c) return;
@@ -4005,13 +4009,13 @@ export async function tacExportImage() {
   
   if (tacDisplay.dungeon && dungeonIcon && map.dungeons.length) {
     const pt = map.dungeons[S.tacDungeonIndex % map.dungeons.length];
-    const size = tacDisplay.dungeonSize / 100 * W;
+    const size = tacDisplay.dungeonSize / 100 * W * K;
     ctx.drawImage(dungeonIcon,
       PX(pt[0] / W0) - size / 2, PY(pt[1] / H0) - size / 2, size, size);
   }
   
   if (tacDisplay.doors && doorIcon) {
-    const size = tacDisplay.doorSize / 100 * W;
+    const size = tacDisplay.doorSize / 100 * W * K;
     tacDoorPoints(map).forEach((pt) => ctx.drawImage(doorIcon,
       PX(pt[0] / W0) - size / 2, PY(pt[1] / H0) - size / 2, size, size));
   }
@@ -4030,12 +4034,12 @@ export async function tacExportImage() {
     const x = PX(it.x), y = PY(it.y);
     const sizePct = tacItemSizePercent(it);
     if (sizePct !== null) {
-      const d = sizePct / 100 * W;
+      const d = sizePct / 100 * W * K;
       ctx.save();
       if (def.fill) { ctx.fillStyle = def.fill; }
       ctx.strokeStyle = def.color || '#e2e8f0';
-      ctx.setLineDash([W / 60, W / 90]);
-      ctx.lineWidth = Math.max(1.5, W / 350);
+      ctx.setLineDash([W * K / 60, W * K / 90]);
+      ctx.lineWidth = Math.max(1.5, W * K / 350);
       ctx.beginPath();
       ctx.arc(x, y, d / 2, 0, Math.PI * 2);
       if (def.fill) ctx.fill();
@@ -4045,12 +4049,12 @@ export async function tacExportImage() {
     }
     const icon = itemIconCache[it.kind];
     if (icon) {
-      const isz = (it.iconSize ?? 3.4) / 100 * W;
+      const isz = (it.iconSize ?? 3.4) / 100 * W * K;
       ctx.drawImage(icon, x - isz / 2, y - isz / 2, isz, isz);
     } else if (!def.icon || it.hideIcon) {
       ctx.fillStyle = def.color || '#e2e8f0';
       ctx.beginPath();
-      ctx.arc(x, y, Math.max(3, W / 200), 0, Math.PI * 2);
+      ctx.arc(x, y, Math.max(3, W * K / 200), 0, Math.PI * 2);
       ctx.fill();
     }
   }
@@ -4058,7 +4062,7 @@ export async function tacExportImage() {
   for (const [role, t] of Object.entries(board.tokens)) {
     const def = TAC_ROLES[role] || {};
     const x = PX(t.x), y = PY(t.y);
-    const d = t.size / 100 * W;
+    const d = t.size / 100 * W * K;
     if (def.icon) {
       const img = await tacLoadImg(def.icon);
       if (img) { ctx.drawImage(img, x - d / 2, y - d / 2, d, d); continue; }
@@ -4081,7 +4085,7 @@ export async function tacExportImage() {
   ctx.textBaseline = 'middle';
   ctx.lineJoin = 'round';
   board.texts.forEach((t) => {
-    const px = Math.max(2.2, t.size * 0.18) / 100 * wrapW * sx;
+    const px = Math.max(2.2, t.size * 0.18) / 100 * wrapW * sx * K;
     ctx.font = `700 ${px}px 'Noto Sans SC', sans-serif`;
     const lines = String(t.text).split('\n');
     const lh = px * 1.35;
@@ -4098,7 +4102,7 @@ export async function tacExportImage() {
 
   
   ctx.save();
-  ctx.lineWidth = Math.max(1.5, W / 400);
+  ctx.lineWidth = Math.max(1.5, W * K / 400);
   board.measures.forEach((m, idx) => {
     const isChain = m.chain != null;
     if (isChain && !(chainFirst[m.chain] === idx || chainLast[m.chain] === idx)) return;
@@ -4113,7 +4117,7 @@ export async function tacExportImage() {
       ctx.fillStyle = dotColor;
       ctx.strokeStyle = 'rgba(0, 0, 0, 0.7)';
       ctx.beginPath();
-      ctx.arc(PX(m[kx]), PY(m[ky]), 6 * sx, 0, Math.PI * 2);
+      ctx.arc(PX(m[kx]), PY(m[ky]), 6 * sx * K, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
     });

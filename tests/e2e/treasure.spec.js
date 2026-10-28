@@ -114,14 +114,15 @@ test('disabling, switching maps and deleting the explorer remove stale treasure 
 
 test('export includes both normal and excluded treasure rings only while enabled', async ({ page }, testInfo) => {
   await enableTreasure(page);
-  const wrap = await page.evaluate(() => {
-    const el = document.querySelector('#tacMapWrap');
-    return { width: el.clientWidth, height: el.clientHeight };
+  const mapSize = await page.evaluate(async () => {
+    const { MAPS_DATA } = await import('/js/data/maps.js');
+    return MAPS_DATA[0].mapSize;
   });
   const enabled = await exportPNG(page, testInfo, 'treasure-enabled');
   const shown = await inspectPNG(page, enabled);
-  expect(shown.width).toBe(wrap.width);
-  expect(shown.height).toBe(wrap.height);
+  // exportCrop off (default): the full map at its native resolution.
+  expect(shown.width).toBe(mapSize[0]);
+  expect(shown.height).toBe(mapSize[1]);
   expect(shown.gold).toBeGreaterThan(100);
   expect(shown.blue).toBeGreaterThan(100);
   await treasureToggle(page).uncheck();
@@ -140,6 +141,7 @@ test('zoomed and panned PNG crops keep treasure rings aligned and correctly size
     return { width: el.clientWidth, height: el.clientHeight };
   });
   await tool(page, 'display');
+  await page.locator('#tacExportCrop').check();
   await page.locator('#tacZoomIn').click();
   await page.locator('#tacZoomIn').click();
   await page.locator('#tacZoomPan').click();
