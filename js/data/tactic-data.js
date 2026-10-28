@@ -1656,7 +1656,7 @@ export const BOX_ICON_URL = 'https://i0.hdslb.com/bfs/new_dyn/'
   + 'a651cfc24c47f2fa125f20c90f5dda6896830223.png@1192w.avif';
 
 
-export const TAC_DISPLAY_DEFAULT = { cipherSize: 6, dungeonSize: 6, doorSize: 6, chairSize: 6, boxSize: 6 };
+export const TAC_DISPLAY_DEFAULT = { cipherSize: 6, dungeonSize: 6, doorSize: 6, chairSize: 6, boxSize: 1.5 };
 
 export const TAC_ZOOM_MIN = 1, TAC_ZOOM_MAX = 5;
 
