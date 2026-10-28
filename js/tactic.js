@@ -3826,13 +3826,12 @@ export async function tacExportImage() {
   const wrapW = tacMapWrap.clientWidth || 1;
   const wrapH = tacMapWrap.clientHeight || 1;
   
-  const cropOn = tacDisplay.exportCrop && tacZoomState.scale > 1;
-  
-  const vx = cropOn ? -tacZoomState.tx / (tacZoomState.scale * wrapW) : 0;
-  const vy = cropOn ? -tacZoomState.ty / (tacZoomState.scale * wrapH) : 0;
-  const vw = cropOn ? 1 / tacZoomState.scale : 1;
-  const vh = cropOn ? 1 / tacZoomState.scale : 1;
-  const W = Math.round(W0 * vw), H = Math.round(H0 * vh);
+  const W = Math.round(wrapW), H = Math.round(wrapH);
+
+  const vx = -tacZoomState.tx / (tacZoomState.scale * wrapW);
+  const vy = -tacZoomState.ty / (tacZoomState.scale * wrapH);
+  const vw = 1 / tacZoomState.scale;
+  const vh = 1 / tacZoomState.scale;
   const cv = document.createElement('canvas');
   cv.width = W;
   cv.height = H;
@@ -4581,13 +4580,16 @@ tacMapWrap.addEventListener('wheel', (e) => {
     return;
   }
 
-  if (tacZoomState.locked || tacZoomState.scale <= 1) return;
+  if (tacZoomState.locked) return;
+  const dir = e.deltaY < 0 ? 1 : -1;
+  if (dir > 0 && tacZoomState.scale >= TAC_ZOOM_MAX) return;
+  if (dir < 0 && tacZoomState.scale <= 1) return;
   e.preventDefault();
   const r = tacMapWrap.getBoundingClientRect();
 
   const ax = (e.clientX - r.left) / (tacZoomState.scale * tacMapWrap.clientWidth);
   const ay = (e.clientY - r.top) / (tacZoomState.scale * tacMapWrap.clientHeight);
-  tacZoomStep(e.deltaY < 0 ? 1 : -1, ax, ay);
+  tacZoomStep(dir, ax, ay);
 }, { passive: false });
 
 

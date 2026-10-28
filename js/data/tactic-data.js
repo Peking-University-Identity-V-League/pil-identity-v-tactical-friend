@@ -799,6 +799,13 @@ export const TAC_ROLES = {
   luckyGuy: {
     name: translate("characters.luckyGuy.name"),
     camp: 'survivor',
+    ranges: {
+      modes: [
+        { key: 'luckyGuy', label: translate("characters.luckyGuy.range.label.luckyGuy"),
+          size_m: { options: 25.3, labels: [translate("characters.luckyGuy.range.card.detectChestNearby")] } },
+        { key: 'off' },
+      ],
+    },
     items: ['luckyParcel'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/4/43/4lql67bftg4hb0bm3gvhlj12mf0hx6a.png/90px-%E5%B9%B8%E8%BF%90%E5%84%BF%E5%A4%B4%E5%83%8F.png',
   },
@@ -830,6 +837,13 @@ export const TAC_ROLES = {
   gardener: {
     name: translate("characters.gardener.name"),
     camp: 'survivor',
+    ranges: {
+      modes: [
+        { key: 'confidence', label: translate("characters.gardener.range.label.confidence"),
+          size_m: { options: 15, labels: [translate("characters.gardener.range.card.locateRocketChairNearby")] } },
+        { key: 'off' },
+      ],
+    },
     items: ['toolkit'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/f6/j9xl16i2incpfel2f5v06l2qrn65u6m.png/90px-%E5%9B%AD%E4%B8%81%E5%A4%B4%E5%83%8F.png',
   },
