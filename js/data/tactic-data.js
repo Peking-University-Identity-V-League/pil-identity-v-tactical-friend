@@ -543,6 +543,10 @@ export const TAC_ITEM_TYPES = {
     glow: 'rgba(34, 197, 94, 0.45)',
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/3f/98f3qxkbtphouvvzglqleqnf00t5mlv.png/90px-%E5%AE%BF%E4%BC%9E%E4%B9%8B%E9%AD%820%E9%98%B6%E6%8A%80%E8%83%BD1.png',
   },
+  timeJump: {
+    name: translate("items.timeJump.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/8/8c/21xhiccnzcn7z3xtbaffb88hdguodia.png/90px-%E6%91%84%E5%BD%B1%E5%B8%882%E9%98%B6%E6%8A%80%E8%83%BD.png',
+  },
   tentacle: {
     name: translate("items.tentacle.name"),
     ranges: { modes: [
@@ -573,16 +577,59 @@ export const TAC_ITEM_TYPES = {
       { key: 'show', label: translate("items.peacefulPine.name"), size_m: 20.5 },
       { key: 'off' },
     ] },
+    maxCount: 6, 
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/29/00c30uaryazol4s5ec4iuk19kr773o2.png/90px-%E7%88%B1%E5%93%AD%E9%AC%BC2%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
-  spearfishing: {
-    name: translate("items.spearfishing.name"),
+  resentfulSoul: {
+    name: translate("items.resentfulSoul.name"),
+    maxCount: 1,
+    linkToRole: 'axeBoy',
+    linkMaxM: 27,
+    linkColor: '#f8fafc',
+    linkWidth: 2,
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/7/76/j68ytwyvhnz5o8eymvxre4o6crjirlh.png/90px-%E7%88%B1%E5%93%AD%E9%AC%BC0%E9%98%B6%E6%8A%80%E8%83%BD1.png',
+  },
+  cat: {
+    name: translate("items.cat.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("items.spearfishing.name"), size_m: 4 },
+      { key: 'shadowStep', label: translate("items.cat.range.label.shadowStep"), 
+        size_m: { options: [3.38, 6.33, 10.5, 33.8], labels: [translate("items.cat.range.card.alertRadius"), translate("items.cat.range.card.paralysisArea"), translate("items.cat.range.card.locateSurvivor"), translate("items.cat.range.card.seenBySurvivor")] } },
       { key: 'off' },
     ] },
-    
-    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/be/3b3skletdo6z31k2wti92rsxisja1tg.png/90px-%E6%B8%94%E5%A5%B30%E9%98%B6%E6%8A%80%E8%83%BD.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/a/a4/h2c1hndne3n1j3cq9f7itl25r646agu.png',
+  },
+  guide: {
+    name: translate("items.guide.name"),
+    maxCount: 1,
+    linkToRole: 'disciple',
+    linkMaxM: 30,
+    linkColor: '#f8fafc',
+    linkWidth: 2,
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/bb/nnkr7l1hieew5jr1kx6m7mt6557aku7.png/90px-%E2%80%9C%E4%BD%BF%E5%BE%92%E2%80%9D1%E9%98%B6%E6%8A%80%E8%83%BD.png',
+  },
+  musicNote: {
+    name: translate("items.musicNote.name"),
+    render: 'link',
+    linkColor: '#f8fafc',
+    linkWidth: 2,
+    linkMaxM: 23,
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/38/dvl0ktwk8452koko8ldzj9prewp7ku5.png/90px-%E5%B0%8F%E6%8F%90%E7%90%B4%E5%AE%B60%E9%98%B6%E6%8A%80%E8%83%BD.png',
+  },
+  sculpture: {
+    name: translate("items.sculpture.name"),
+    render: 'link',
+    linkColor: '#f8fafc',
+    linkWidth: 2,
+    linkMaxM: 11,
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/12/7q7e3iajnfcsbu9f80i95d6acpbr41p.png/90px-%E9%9B%95%E5%88%BB%E5%AE%B60%E9%98%B6%E6%8A%80%E8%83%BD1.png',
+  },
+  sculptureOfNobility: {
+    name: translate("items.sculptureOfNobility.name"),
+    ranges: { modes: [
+      { key: 'show', label: translate("items.sculptureOfNobility.range.label.chargeTowardSurvivor"), size_m: 36 },
+      { key: 'off' },
+    ] },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/1d/eh2irolwokjiwzpyqh6paj92l9mnpan.png/90px-%E9%9B%95%E5%88%BB%E5%AE%B62%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   hieroglyphicGraveyard: {
     name: translate("items.hieroglyphicGraveyard.name"),
@@ -595,6 +642,14 @@ export const TAC_ITEM_TYPES = {
   nailBoard: {
     name: translate("items.nailBoard.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/fb/069n3cm9y1pgho74g25jbgsnaqilrjx.png/120px-%E7%A0%B4%E8%BD%AE0%E9%98%B6%E6%8A%80%E8%83%BD1.png',
+  },
+  spearfishing: {
+    name: translate("items.spearfishing.name"),
+    ranges: { modes: [
+      { key: 'show', label: translate("items.spearfishing.name"), size_m: 4 },
+      { key: 'off' },
+    ] },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/be/3b3skletdo6z31k2wti92rsxisja1tg.png/90px-%E6%B8%94%E5%A5%B30%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   electromagneticFieldN: {
     name: translate("items.electromagneticFieldN.name"),
@@ -703,7 +758,7 @@ export const TAC_ITEM_TYPES = {
   fearRadius: {
     name: translate("items.fearRadius.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("items.fearRadius.name"), size_m: 32,
+      { key: 'show', label: translate("items.fearRadius.name"), size_m: 32.07,
         fearMods: {
           hunter: [['hunter', translate("characters.camps.hunter"), 1], ['beauty', translate("items.fearRadius.range.fearMods.one"), 0.8], ['prajna', translate("items.fearRadius.range.fearMods.oneAlternate"), 1.1]],
           survivor: [['survivor', translate("characters.camps.survivor"), 1], ['prisoner', translate("items.fearRadius.range.fearMods.oneThird"), 0.8], ['archer', translate("items.fearRadius.range.fearMods.oneFourth"), 0.76]],
@@ -1405,13 +1460,6 @@ export const TAC_ROLES = {
     speed: { [translate("characters.geisha.speed.beautyForm")]: 4.73, [translate("characters.geisha.speed.prajnaForm")]: 4.56 },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/bd/qcstapls4hnm6fckekl6l6890h19vst.png/90px-%E7%BA%A2%E8%9D%B6%E5%A4%B4%E5%83%8F.png',
   },
-  theFeaster: {
-    name: translate("characters.theFeaster.name"),
-    camp: 'hunter',
-    speed: 4.64,
-    items: ['tentacle'],
-    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/30/3yr81lwbegfcgotyiis8yknwc2224is.png/90px-%E9%BB%84%E8%A1%A3%E4%B9%8B%E4%B8%BB%E5%A4%B4%E5%83%8F.png',
-  },
   wuchang: {
     name: translate("characters.wuchang.name"),
     camp: 'hunter',
@@ -1423,6 +1471,14 @@ export const TAC_ROLES = {
     name: translate("characters.photographer.name"),
     camp: 'hunter',
     speed: 4.64,
+    ranges: {
+      modes: [
+        { key: 'cameraWorld', label: translate("characters.photographer.range.label.cameraWorld"),
+          size_m: { options: 33, labels: [translate("characters.photographer.range.card.locateCamera")] } },
+        { key: 'off' },
+      ],
+    },
+    items: ['timeJump'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/c/c6/rmzvfbp2mi0ucb13xcj6t6dzgd41tlz.png/90px-%E6%91%84%E5%BD%B1%E5%B8%88%E5%A4%B4%E5%83%8F.png',
   },
   madEyes: {
@@ -1430,6 +1486,13 @@ export const TAC_ROLES = {
     camp: 'hunter',
     speed: 4.64,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/4/4a/kybq2j420o43mr2b0wi5qy4wgtmq65k.png/90px-%E7%96%AF%E7%9C%BC%E5%A4%B4%E5%83%8F.png',
+  },
+  theFeaster: {
+    name: translate("characters.theFeaster.name"),
+    camp: 'hunter',
+    speed: 4.64,
+    items: ['tentacle'],
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/30/3yr81lwbegfcgotyiis8yknwc2224is.png/90px-%E9%BB%84%E8%A1%A3%E4%B9%8B%E4%B8%BB%E5%A4%B4%E5%83%8F.png',
   },
   dreamWitch: {
     name: translate("characters.dreamWitch.name"),
@@ -1452,7 +1515,7 @@ export const TAC_ROLES = {
     name: translate("characters.axeBoy.name"),
     camp: 'hunter',
     speed: 4.56,
-    items: ['peacefulPine'],
+    items: ['peacefulPine', 'resentfulSoul'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/1c/jtvvska3lxcxlxq9vpto2mq2lj3l2q9.png/90px-%E7%88%B1%E5%93%AD%E9%AC%BC%E5%A4%B4%E5%83%8F.png',
   },
   evilReptilian: {
@@ -1477,19 +1540,21 @@ export const TAC_ROLES = {
     name: translate("characters.disciple.name"),
     camp: 'hunter',
     speed: 4.73,
+    items: ['cat', 'guide'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/fa/hbvpsmvnox9azfb2kj93nsmbv2a350r.png/90px-%E2%80%9C%E4%BD%BF%E5%BE%92%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   violinist: {
     name: translate("characters.violinist.name"),
     camp: 'hunter',
     speed: 4.64,
+    items: ['musicNote'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/0a/7mjm285tyi076r96jb62rl469no2wn2.png/90px-%E5%B0%8F%E6%8F%90%E7%90%B4%E5%AE%B6%E5%A4%B4%E5%83%8F.png',
   },
   sculptor: {
     name: translate("characters.sculptor.name"),
     camp: 'hunter',
     speed: 4.64,
-    items: ['hieroglyphicGraveyard'],
+    items: ['sculpture', 'sculptureOfNobility', 'hieroglyphicGraveyard'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/6a/b3mgw309lp8v5sqfzvrfroizdijrv50.png/90px-%E9%9B%95%E5%88%BB%E5%AE%B6%E5%A4%B4%E5%83%8F.png',
   },
   undead: {
