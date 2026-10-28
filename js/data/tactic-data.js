@@ -798,7 +798,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("characters.thief.range.label.show1"), card: translate("characters.thief.range.card.show1"), size_m: 8 },
+        { key: 'show1', label: translate("characters.thief.range.label.show1"), size_m: 8 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -822,8 +822,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("characters.explorer.range.label.show1"), card: translate("characters.explorer.range.card.show1"), size_m: 60 },
-        { key: 'show2', label: translate("characters.explorer.range.label.show2"), card: translate("characters.explorer.range.card.show2"), size_m: 70 },
+        { key: 'show1', label: translate("characters.explorer.range.label.show1"), size_m: 60 },
+        { key: 'show2', label: translate("characters.explorer.range.label.show2"), size_m: 70 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -841,7 +841,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("characters.coordinator.range.label.show1"), card: translate("characters.coordinator.range.card.show1"), size_m: 10 },
+        { key: 'show1', label: translate("characters.coordinator.range.label.show1"), size_m: 10 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -865,8 +865,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'perspectiveOutline', label: translate("characters.theMindsEye.range.label.perspectiveOutline"), card: translate("characters.theMindsEye.range.card.perspectiveOutline"), size_m: 25.3 },
-        { key: 'soundWaveSlow', label: translate("characters.theMindsEye.range.label.soundWaveSlow"), card: translate("characters.theMindsEye.range.card.soundWaveSlow"),
+        { key: 'perspectiveOutline', label: translate("characters.theMindsEye.range.label.perspectiveOutline"), size_m: 25.3 },
+        { key: 'soundWaveSlow', label: translate("characters.theMindsEye.range.label.soundWaveSlow"),
           size_m: { options: [6.8, 25.3],
             labels: [translate("characters.theMindsEye.range.sizeM.zero"), translate("characters.theMindsEye.range.sizeM.one")] } },
         { key: 'off', label: translate("characters.default.range.label.off") },
@@ -892,7 +892,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("characters.cowboy.range.label.show1"), card: translate("characters.cowboy.range.card.show1"), size_m: 15.2 },
+        { key: 'show1', label: translate("characters.cowboy.range.label.show1"), size_m: 15.2 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -904,7 +904,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("characters.femaleDancer.range.label.show1"), card: translate("characters.femaleDancer.range.card.show1"), size_m: 8.44 },
+        { key: 'show1', label: translate("characters.femaleDancer.range.label.show1"), size_m: 8.44 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -930,8 +930,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("characters.prospector.range.label.show1"), card: translate("characters.prospector.range.card.show1"), size_m: 14.5 },
-        { key: 'show2', label: translate("characters.prospector.range.label.show2"), card: translate("characters.prospector.range.card.show2"), size_m: 18 },
+        { key: 'show1', label: translate("characters.prospector.range.label.show1"), size_m: 14.5 },
+        { key: 'show2', label: translate("characters.prospector.range.label.show2"), size_m: 18 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -943,7 +943,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'cursedEmblemParalyze', label: translate("characters.enchantress.range.label.cursedEmblemParalyze"), card: translate("characters.enchantress.range.card.cursedEmblemParalyze"), size_m: 5.1 },
+        { key: 'cursedEmblemParalyze', label: translate("characters.enchantress.range.label.cursedEmblemParalyze"), size_m: 5.1 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -955,7 +955,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("characters.wildling.range.label.show1"), card: translate("characters.wildling.range.card.show1"),
+        { key: 'show1', label: translate("characters.wildling.range.label.show1"),
           size_m: { options: [15, 17],
             labels: [translate("characters.wildling.range.sizeM.zeroAlternate"), translate("characters.wildling.range.sizeM.oneAlternate")] } },
         { key: 'off', label: translate("characters.default.range.label.off") },
@@ -969,9 +969,9 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("characters.acrobat.range.label.show1"), card: translate("characters.acrobat.range.card.show1"),
+        { key: 'show1', label: translate("characters.acrobat.range.label.showRangeRiskyAcrobatics"),
           size_m: { options: [4, 7.5, 12],
-            labels: [translate("characters.acrobat.range.sizeM.zeroThird"), translate("characters.acrobat.range.sizeM.oneThird"), translate("characters.acrobat.range.sizeM.two")] } },
+            labels: [translate("characters.acrobat.range.sizeM.leapDefault"), translate("characters.acrobat.range.sizeM.leapMax"), translate("characters.acrobat.range.sizeM.leapAddSomersault")] } },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -983,7 +983,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'poseidonWatchHypnotize', label: translate("characters.firstOfficer.range.label.poseidonWatchHypnotize"), card: translate("characters.firstOfficer.range.card.poseidonWatchHypnotize"), size_m: 27 },
+        { key: 'poseidonWatchHypnotize', label: translate("characters.firstOfficer.range.label.poseidonWatchHypnotize"), size_m: 27 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1001,7 +1001,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'cursedEmblemParalyze', label: translate("characters.postman.range.label.cursedEmblemParalyze"), card: translate("characters.postman.range.card.cursedEmblemParalyze"), size_m: 16.9 },
+        { key: 'cursedEmblemParalyze', label: translate("characters.postman.range.label.cursedEmblemParalyze"), size_m: 16.9 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1013,7 +1013,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'severeElectricCurrent', label: translate("characters.graveKeeper.range.label.severeElectricCurrent"), card: translate("characters.graveKeeper.range.card.severeElectricCurrent"), size_m: 9.7 },
+        { key: 'severeElectricCurrent', label: translate("characters.graveKeeper.range.label.severeElectricCurrent"), size_m: 9.7 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1025,7 +1025,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'severeElectricCurrent', label: translate("characters.prisoner.range.label.severeElectricCurrent"), card: translate("characters.prisoner.range.card.severeElectricCurrent"), size_m: 5.9 },
+        { key: 'severeElectricCurrent', label: translate("characters.prisoner.range.label.severeElectricCurrent"), size_m: 5.9 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1051,7 +1051,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("characters.batter.range.label.show1"), card: translate("characters.batter.range.card.show1"), size_m: 15.2 },
+        { key: 'show1', label: translate("characters.batter.range.label.show1"), size_m: 15.2 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1070,8 +1070,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'subjectiveAnchoring', label: translate("characters.psychologist.range.label.subjectiveAnchoring"), card: translate("characters.psychologist.range.card.subjectiveAnchoring"), size_m: 13 },
-        { key: 'bond', label: translate("characters.psychologist.range.label.bond"), card: translate("characters.psychologist.range.card.bond"), size_m: 13 },
+        { key: 'subjectiveAnchoring', label: translate("characters.psychologist.range.label.subjectiveAnchoring"), size_m: 13 },
+        { key: 'bond', label: translate("characters.psychologist.range.label.bond"), size_m: 13 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1083,7 +1083,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'bond', label: translate("characters.patient.range.label.bond"), card: translate("characters.patient.range.card.bond"), size_m: 13 },
+        { key: 'bond', label: translate("characters.patient.range.label.bond"), size_m: 13 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1095,7 +1095,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'metaphor', label: translate("characters.novelist.range.label.metaphor"), card: translate("characters.novelist.range.card.metaphor"),
+        { key: 'metaphor', label: translate("characters.novelist.range.label.metaphor"),
           size_m: { options: [13.5, 9.8],
             labels: [translate("characters.novelist.range.sizeM.zeroFourth"), translate("characters.novelist.range.sizeM.oneFourth")] } },
         { key: 'off', label: translate("characters.default.range.label.off") },
@@ -1115,7 +1115,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show', label: translate("characters.weepingClown.range.label.show"), card: translate("characters.weepingClown.range.card.show"),
+        { key: 'show', label: translate("characters.weepingClown.range.label.show"),
           size_m: { options: [6, 3],
             labels: [translate("characters.weepingClown.range.sizeM.zeroFifth"), translate("characters.weepingClown.range.sizeM.oneFifth")] } },
         { key: 'off', label: translate("characters.default.range.label.off") },
@@ -1135,10 +1135,9 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'cangFeng', label: translate("characters.antiquarian.range.label.cangFeng"), card: translate("characters.antiquarian.range.card.cangFeng"),
-          size_m: { options: [4.9, 3.5, 4.7],
-            labels: [translate("characters.antiquarian.range.sizeM.zeroSixth"), translate("characters.antiquarian.range.sizeM.oneSixth"), translate("characters.antiquarian.range.sizeM.twoAlternate")] } },
-        { key: 'cangZhuo', label: translate("characters.antiquarian.range.label.cangZhuo"), card: translate("characters.antiquarian.range.card.cangZhuo"), size_m: 12.7 },
+        { key: 'cangFeng', label: translate("characters.antiquarian.range.label.showRangeConcealed"),
+          size_m: { options: [4.9, 3.5, 4.7, 12.7],
+            labels: [translate("characters.antiquarian.range.sizeM.flip"), translate("characters.antiquarian.range.sizeM.sweepSwing"), translate("characters.antiquarian.range.sizeM.stab"), translate("characters.antiquarian.range.sizeM.obscure")] } },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1156,7 +1155,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'phantomPlacement', label: translate("characters.journalist.range.label.phantomPlacement"), card: translate("characters.journalist.range.card.phantomPlacement"), size_m: 15 },
+        { key: 'phantomPlacement', label: translate("characters.journalist.range.label.phantomPlacement"), size_m: 15 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1168,8 +1167,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("characters.aeroplanist.range.label.show1"), card: translate("characters.aeroplanist.range.card.show1"), size_m: 18.5 },
-        { key: 'show2', label: translate("characters.aeroplanist.range.label.show2"), card: translate("characters.aeroplanist.range.card.show2"), size_m: 12.7 },
+        { key: 'show1', label: translate("characters.aeroplanist.range.label.showRangeJetpack"), size_m: 18.5 },
+        { key: 'show2', label: translate("characters.aeroplanist.range.label.showRangeEssentialTremor"), size_m: 12.7 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1181,7 +1180,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'inspire', label: translate("characters.cheerleader.range.label.inspire"), card: translate("characters.cheerleader.range.card.inspire"), size_m: 20 },
+        { key: 'inspire', label: translate("characters.cheerleader.range.label.inspire"), size_m: 20 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1199,7 +1198,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'airbagSpray', label: translate("characters.fireInvestigator.range.label.airbagSpray"), card: translate("characters.fireInvestigator.range.card.airbagSpray"),
+        { key: 'airbagSpray', label: translate("characters.fireInvestigator.range.label.airbagSpray"),
           size_m: { options: [4.2, 12.64],
             labels: [translate("characters.fireInvestigator.range.sizeM.zeroSeventh"), translate("characters.fireInvestigator.range.sizeM.oneSeventh")] } },
         { key: 'off', label: translate("characters.default.range.label.off") },
@@ -1214,7 +1213,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'conceal', label: translate("characters.faroLady.range.label.conceal"), card: translate("characters.faroLady.range.card.conceal"), size_m: 18 },
+        { key: 'conceal', label: translate("characters.faroLady.range.label.conceal"), size_m: 18 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1226,8 +1225,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'tacticalForesight', label: translate("characters.knight.range.label.tacticalForesight"), card: translate("characters.knight.range.card.tacticalForesight"), size_m: 13 },
-        { key: 'honorResonance', label: translate("characters.knight.range.label.honorResonance"), card: translate("characters.knight.range.card.honorResonance"), size_m: 7 },
+        { key: 'tacticalForesight', label: translate("characters.knight.range.label.tacticalForesight"), size_m: 13 },
+        { key: 'honorResonance', label: translate("characters.knight.range.label.honorResonance"), size_m: 7 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1239,7 +1238,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'warmRain', label: translate("characters.meteorologist.range.label.warmRain"), card: translate("characters.meteorologist.range.card.warmRain"), size_m: 32 },
+        { key: 'warmRain', label: translate("characters.meteorologist.range.label.warmRain"), size_m: 32 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1251,10 +1250,10 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'dragonBoneBow', label: translate("characters.archer.range.label.dragonBoneBow"), card: translate("characters.archer.range.card.dragonBoneBow"),
+        { key: 'dragonBoneBow', label: translate("characters.archer.range.label.dragonBoneBow"),
           size_m: { options: [18, 12],
             labels: [translate("characters.archer.range.sizeM.zeroEighth"), translate("characters.archer.range.sizeM.oneEighth")] } },
-        { key: 'armCrossbow', label: translate("characters.archer.range.label.armCrossbow"), card: translate("characters.archer.range.card.armCrossbow"), size_m: 4.5 },
+        { key: 'armCrossbow', label: translate("characters.archer.range.label.armCrossbow"), size_m: 4.5 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1278,8 +1277,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'muletaDash', label: translate("characters.matador.range.label.muletaDash"), card: translate("characters.matador.range.card.muletaDash"), size_m: 6 },
-        { key: 'muletaSweep', label: translate("characters.matador.range.label.muletaSweep"), card: translate("characters.matador.range.card.muletaSweep"), size_m: 2.25 },
+        { key: 'muletaDash', label: translate("characters.matador.range.label.muletaDash"), size_m: 6 },
+        { key: 'muletaSweep', label: translate("characters.matador.range.label.muletaSweep"), size_m: 2.25 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1291,7 +1290,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'emotionAccumulation', label: translate("characters.mimeArtist.range.label.emotionAccumulation"), card: translate("characters.mimeArtist.range.card.emotionAccumulation"), size_m: 20.3 },
+        { key: 'emotionAccumulation', label: translate("characters.mimeArtist.range.label.emotionAccumulation"), size_m: 20.3 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1312,7 +1311,7 @@ export const TAC_ROLES = {
     speed: 4.73,
     ranges: {
       modes: [
-        { key: 'emotionAccumulation', label: translate("characters.hellEmber.range.label.emotionAccumulation"), card: translate("characters.hellEmber.range.card.emotionAccumulation"), size_m: { min: 0, max: 55 } },
+        { key: 'emotionAccumulation', label: translate("characters.hellEmber.range.label.emotionAccumulation"), size_m: { min: 0, max: 55 } },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1379,10 +1378,10 @@ export const TAC_ROLES = {
     
     ranges: {
       modes: [
-        { key: 'followerControl', label: translate("characters.dreamWitch.range.label.followerControl"), card: translate("characters.dreamWitch.range.card.followerControl"),
+        { key: 'followerControl', label: translate("characters.dreamWitch.range.label.followerControl"),
           size_m: { options: [42.2, 59.1],
             labels: [translate("characters.dreamWitch.range.sizeM.zeroNinth"), translate("characters.dreamWitch.range.sizeM.oneNinth")] } },
-        { key: 'hiddenDream', label: translate("characters.dreamWitch.range.label.hiddenDream"), card: translate("characters.dreamWitch.range.card.hiddenDream"), size_m: 20 },
+        { key: 'hiddenDream', label: translate("characters.dreamWitch.range.label.hiddenDream"), size_m: 20 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1504,7 +1503,7 @@ export const TAC_ROLES = {
     
     ranges: {
       modes: [
-        { key: 'ancientVisage', label: translate("characters.theShadow.range.label.ancientVisage"), card: translate("characters.theShadow.range.card.ancientVisage"), size_m: 15 },
+        { key: 'ancientVisage', label: translate("characters.theShadow.range.label.ancientVisage"), size_m: 15 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },

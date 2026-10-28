@@ -1646,7 +1646,7 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
   modeRow.innerHTML = `<div class="tac-range-opts">`
     + cfg.modes.map((m) =>
       `<button type="button" data-v="${m.key}" class="tac-range-opt`
-      + `${curMode.key === m.key ? ' active' : ''}">${m.label}</button>`).join('')
+      + `${curMode.key === m.key ? ' active' : ''}">${(m.key !== 'off' && opts.labelPrefix || '') + m.label}</button>`).join('')
     + `</div>`;
   modeRow.querySelectorAll('.tac-range-opt').forEach((b) => {
     b.addEventListener('click', () => {
@@ -1657,7 +1657,7 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
   });
   settings.appendChild(modeRow);
   if (!curMode.size_m) return; 
-  const card = curMode.card || translate("application.card");
+  const card = curMode.card || curMode.label || translate("application.card");
   const s = curMode.size_m;
   const meters = tacRangeMetersOf(cfg, inst, hideByDefault);
   const cardRow = document.createElement('div');
@@ -1816,7 +1816,7 @@ export function renderTacManage() {
         const m = tacRoleRangeMeters(role, token);
         if (el && m !== null) el.style.width = `${tacItemMetersToPercent(m)}%`;
       };
-      buildTacRangeRows(settings, rgCfg, token, true, { softUpdate: syncRoleCircleWidth });
+      buildTacRangeRows(settings, rgCfg, token, true, { softUpdate: syncRoleCircleWidth, labelPrefix: translate("characters.default.range.label.showPrefix") });
     }
     
     
