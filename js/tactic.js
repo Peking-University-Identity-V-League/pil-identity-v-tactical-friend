@@ -1572,8 +1572,9 @@ export function renderTacBoard() {
       const img = el.querySelector('img');
       
       const isz = it.iconSize ?? 3.4;
-      img.style.width = `${isz}%`;
-      img.style.height = `${isz}%`;
+      const ipx = isz / 100 * tacMapWrap.clientWidth;
+      img.style.width = `${ipx}px`;
+      img.style.height = `${ipx}px`;
     } else {
       el.insertAdjacentHTML('beforeend', '<div class="tac-item-dot"></div>');
     }
@@ -2076,7 +2077,11 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     it.iconSize = parseFloat(sizeSlider.value);
     const el = tacMapWrap.querySelector(
       `.tac-item-circle[data-idx="${idx}"] img, .tac-item-pin[data-idx="${idx}"] img`);
-    if (el) { el.style.width = `${it.iconSize}%`; el.style.height = `${it.iconSize}%`; }
+    if (el) {
+      const px = it.iconSize / 100 * tacMapWrap.clientWidth;
+      el.style.width = `${px}px`;
+      el.style.height = `${px}px`;
+    }
     refreshDefault();
   });
   hideCb.addEventListener('change', () => {
@@ -4539,34 +4544,23 @@ tacMapWrap.addEventListener('pointerleave', () => {
 tacMapWrap.addEventListener('wheel', (e) => {
   const tokenEl = e.target.closest('.tac-token');
   const itemEl = e.target.closest('.tac-item-circle, .tac-item-pin');
-  
-  if (!tokenEl && !itemEl) {
-    e.preventDefault();
-    if (tacZoomState.locked) return; 
-    const r = tacMapWrap.getBoundingClientRect(); 
-    
-    const ax = (e.clientX - r.left) / (tacZoomState.scale * tacMapWrap.clientWidth);
-    const ay = (e.clientY - r.top) / (tacZoomState.scale * tacMapWrap.clientHeight);
-    tacZoomStep(e.deltaY < 0 ? 1 : -1, ax, ay);
-    return;
-  }
-  if (tokenEl) {
+
+  if (tokenEl && tacSelected === tokenEl.dataset.role) {
     e.preventDefault();
     const role = tokenEl.dataset.role;
     const t = tacBoard().tokens[role];
     if (!t) return;
     t.size = Math.min(12, Math.max(3, t.size + (e.deltaY < 0 ? 0.5 : -0.5)));
-    tacSelected = role;
-    tacSelectedItem = null;
-    tacManageSel = { type: 'role', role };
     renderTacBoard();
-  } else if (itemEl) {
+    return;
+  }
+  if (itemEl && tacSelectedItem === +itemEl.dataset.idx) {
     e.preventDefault();
     const idx = +itemEl.dataset.idx;
     const it = tacBoard().items[idx];
     if (!it) return;
-    
-    
+
+
     const mode = tacItemRangeMode(it);
     const s = mode && mode.size_m;
     if (s && Array.isArray(s.options)) {
@@ -4583,11 +4577,17 @@ tacMapWrap.addEventListener('wheel', (e) => {
           cur + (e.deltaY < 0 ? 0.1 : -0.1))) * 100) / 100;
       delete it.meters;
     }
-    tacSelectedItem = idx;
-    tacSelected = null;
-    tacManageSel = { type: 'item', idx };
     renderTacBoard();
+    return;
   }
+
+  if (tacZoomState.locked || tacZoomState.scale <= 1) return;
+  e.preventDefault();
+  const r = tacMapWrap.getBoundingClientRect();
+
+  const ax = (e.clientX - r.left) / (tacZoomState.scale * tacMapWrap.clientWidth);
+  const ay = (e.clientY - r.top) / (tacZoomState.scale * tacMapWrap.clientHeight);
+  tacZoomStep(e.deltaY < 0 ? 1 : -1, ax, ay);
 }, { passive: false });
 
 

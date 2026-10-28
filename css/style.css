@@ -119,7 +119,13 @@ body:not(.has-tabs) .header-nav { display: none; }
 
 :root {
   
-  --nav-left: max(16px, calc((100vw - 1474px) / 2 + 16px));
+  --container-max: 1474px;
+  --nav-left: max(16px, calc((100vw - var(--container-max)) / 2 + 16px));
+}
+@media (min-width: 1600px) {
+  :root {
+    --container-max: 1920px;
+  }
 }
 
 .back-btn {
@@ -196,7 +202,7 @@ body:not(.has-tabs) .header-nav { display: none; }
 .main-container {
   position: relative;
   z-index: 2;
-  max-width: 1474px;
+  max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 16px 21px;
   display: flex;
@@ -3521,7 +3527,7 @@ div.tac-fixed-spawn .cam-dir.up {
   position: absolute; 
   left: 50%; top: 50%;
   transform: translate(-50%, -50%);
-  width: 3.4%; height: 3.4%; 
+  width: 40px; height: 40px; 
   border-radius: 50%;
   object-fit: cover;
   pointer-events: auto; 
