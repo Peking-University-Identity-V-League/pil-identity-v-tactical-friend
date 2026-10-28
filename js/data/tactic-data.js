@@ -336,7 +336,7 @@ export const TAC_ITEM_TYPES = {
   cricketBat: {
     name: translate("items.cricketBat.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("items.default.range.label.showAlternate"), card: translate("items.cricketBat.range.card.show"), size_m: { min: 3.73, max: 7.45 } },
+      { key: 'cricketBatKnockBack', label: translate("items.cricketBat.range.label.cricketBatKnockBack"), size_m: { min: 3.73, max: 7.45 } },
       { key: 'off' },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/7/7e/19s98s5y8v0pz05ifj94fvyubyjssvd.png/120px-%E5%87%BB%E7%90%83%E6%89%8B%E9%81%93%E5%85%B7.png',
@@ -364,8 +364,8 @@ export const TAC_ITEM_TYPES = {
   memoryFragment: {
     name: translate("items.memoryFragment.name"),
     ranges: { modes: [
-      { key: 'shardImpact', label: translate("items.memoryFragment.range.label.shardImpact"), card: translate("items.memoryFragment.range.card.shardImpact"),
-        size_m: { options: [6.1, 10.3], labels: [translate("items.memoryFragment.range.sizeM.zero"), translate("items.memoryFragment.range.sizeM.one")] } },
+      { key: 'memoryFragmentImpact', label: translate("items.memoryFragment.range.label.memoryFragmentImpact"), 
+        size_m: { options: [6.1, 10.3], labels: [translate("items.memoryFragment.range.card.impact"), translate("items.memoryFragment.range.card.impactAddLaunchMax")] } },
       { key: 'off' },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/f9/asmvxiz04rw0af5of7ic2lzyorwjsz0.png/120px-%E5%9B%9E%E5%BF%86%E7%A2%8E%E7%89%87.png',
@@ -437,11 +437,11 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.helmet.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/3f/2srn3jrzo5atz18iopcn7430wridv6n.png/120px-%E2%80%9C%E9%AA%91%E5%A3%AB%E2%80%9D%E9%81%93%E5%85%B7.png',
   },
-  stormGlassRainfall: {
-    name: translate("items.stormGlassRainfall.name"),
+  stormGlass: {
+    name: translate("items.stormGlass.name"),
     render: 'circle',
     ranges: { modes: [
-      { key: 'show', label: translate("items.stormGlassRainfall.name"), size_m: 4 },
+      { key: 'rainfall', label: translate("items.stormGlass.range.label.rainfall"), size_m: 4 },
       { key: 'off' },
     ] },
     color: '#f8fafc',
@@ -477,11 +477,11 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.muleta.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/7/7f/ox395f4ntj1h4t9i04uatoneu35zyz3.png/120px-%E6%96%97%E7%89%9B%E5%A3%AB%E9%81%93%E5%85%B71.png',
   },
-  propUmbrellaAnxiousRoutine: {
-    name: translate("items.propUmbrellaAnxiousRoutine.name"),
+  propUmbrella: {
+    name: translate("items.propUmbrella.name"),
     render: 'circle',
     ranges: { modes: [
-      { key: 'show', label: translate("items.propUmbrellaAnxiousRoutine.name"), size_m: 12.7 },
+      { key: 'anxiousRoutine', label: translate("items.propUmbrella.range.label.anxiousRoutine"), size_m: 12.7 },
       { key: 'off' },
     ] },
     color: '#18181b',
@@ -505,10 +505,10 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.puppet2.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/a/a6/cdnjdljtwds6ly62lzyytmb6v84omae.png/90px-%E5%8E%82%E9%95%BF1%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
-  lianzhua: {
-    name: translate("items.lianzhua.name"),
+  chainHook: {
+    name: translate("items.chainHook.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("items.default.range.label.showThird"), size_m: 4.2 },
+      { key: 'show', label: translate("items.chainHook.range.label.shockwave"), size_m: 4.2 },
       { key: 'off' },
     ] },
     maxCount: 1,
@@ -521,7 +521,7 @@ export const TAC_ITEM_TYPES = {
   trap: {
     name: translate("items.trap.name"),
     ranges: { modes: [
-      { key: 'show', label: translate("items.default.range.label.showFourth"), size_m: 20 },
+      { key: 'show', label: translate("items.trap.range.label.destroyedByRocketChair"), size_m: 20 },
       { key: 'off' },
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/d/dd/40u7gtj5cvffk3e4dy5edl1ntd56kdh.png/90px-%E9%B9%BF%E5%A4%B40%E9%98%B6%E6%8A%80%E8%83%BD2.png',
@@ -542,6 +542,14 @@ export const TAC_ITEM_TYPES = {
     fill: 'rgba(34, 197, 94, 0.22)',
     glow: 'rgba(34, 197, 94, 0.45)',
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/3f/98f3qxkbtphouvvzglqleqnf00t5mlv.png/90px-%E5%AE%BF%E4%BC%9E%E4%B9%8B%E9%AD%820%E9%98%B6%E6%8A%80%E8%83%BD1.png',
+  },
+  tentacle: {
+    name: translate("items.tentacle.name"),
+    ranges: { modes: [
+      { key: 'show', label: translate("items.tentacle.range.label.tentacleHit"), size_m: 4.25 },
+      { key: 'off' },
+    ] },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/99/9q4qco9e4a4eb87ml89bf6lrnc7wmzc.png/90px-%E9%BB%84%E8%A1%A3%E4%B9%8B%E4%B8%BB0%E9%98%B6%E6%8A%80%E8%83%BD2.png',
   },
   follower: {
     name: translate("items.follower.name"),
@@ -788,8 +796,8 @@ export const TAC_ITEM_TYPES = {
 
 
 export const TAC_ROLES = {
-  lukcy: {
-    name: translate("characters.lukcy.name"),
+  luckyGuy: {
+    name: translate("characters.luckyGuy.name"),
     camp: 'survivor',
     items: ['luckyParcel'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/4/43/4lql67bftg4hb0bm3gvhlj12mf0hx6a.png/90px-%E5%B9%B8%E8%BF%90%E5%84%BF%E5%A4%B4%E5%83%8F.png',
@@ -1274,7 +1282,7 @@ export const TAC_ROLES = {
         { key: 'off' },
       ],
     },
-    items: ['stormGlassRainfall'],
+    items: ['stormGlass'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/d/d1/31tsfob5vzra69oorilz2powtnzcaxj.png/90px-%E6%B0%94%E8%B1%A1%E5%AD%A6%E5%AE%B6%E5%A4%B4%E5%83%8F.png',
   },
   archer: {
@@ -1327,7 +1335,7 @@ export const TAC_ROLES = {
         { key: 'off' },
       ],
     },
-    items: ['propUmbrellaAnxiousRoutine'],
+    items: ['propUmbrella'],
     maxItems: 3,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b4/ezpalvrvblo048p3uaf9ejyqlggq095.png/90px-%E9%BB%98%E5%89%A7%E8%89%BA%E4%BA%BA%E5%A4%B4%E5%83%8F.png',
   },
@@ -1362,7 +1370,7 @@ export const TAC_ROLES = {
     name: translate("characters.gameKeeper.name"),
     camp: 'hunter',
     speed: 4.64,
-    items: ['lianzhua', 'trap'],
+    items: ['chainHook', 'trap'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/e/e3/jr41oyh7dug7kstuwjaqpt0twtmuk4t.png/90px-%E9%B9%BF%E5%A4%B4%E5%A4%B4%E5%83%8F.png',
   },
   theRipper: {
@@ -1387,6 +1395,7 @@ export const TAC_ROLES = {
     name: translate("characters.theFeaster.name"),
     camp: 'hunter',
     speed: 4.64,
+    items: ['tentacle'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/30/3yr81lwbegfcgotyiis8yknwc2224is.png/90px-%E9%BB%84%E8%A1%A3%E4%B9%8B%E4%B8%BB%E5%A4%B4%E5%83%8F.png',
   },
   wuchang: {
