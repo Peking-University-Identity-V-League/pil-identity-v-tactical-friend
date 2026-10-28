@@ -1663,8 +1663,10 @@ body:not(.has-tabs) .header-nav { display: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 8%;
-  height: 8%;
+  width: 32px;
+  width: min(48px, 8cqw);
+  height: 32px;
+  height: min(48px, 8cqw);
   border: none;
   background: transparent;
   border-radius: 50%;
@@ -1680,17 +1682,23 @@ body:not(.has-tabs) .header-nav { display: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 7.4%;
-  height: 7.4%;
+  width: 30px;
+  width: min(46px, 7.4cqw);
+  height: 30px;
+  height: min(46px, 7.4cqw);
   border-radius: 50%;
 }
 .ded-marker-circle svg {
-  width: 67.6%;
-  height: 67.6%;
+  width: 20px;
+  width: min(32px, 5cqw);
+  height: 20px;
+  height: min(32px, 5cqw);
 }
 .ded-marker.locked .ded-marker-circle svg {
-  width: 59.5%;
-  height: 59.5%;
+  width: 17px;
+  width: min(28px, 4.4cqw);
+  height: 17px;
+  height: min(28px, 4.4cqw);
 }
 .ded-marker-label {
   position: absolute;
@@ -1749,8 +1757,10 @@ body:not(.has-tabs) .header-nav { display: none; }
   color: var(--inf-no);
 }
 .ded-marker.inf-no .ded-marker-circle svg {
-  width: 59.5%;
-  height: 59.5%;
+  width: 17px;
+  width: min(28px, 4.4cqw);
+  height: 17px;
+  height: min(28px, 4.4cqw);
 }
 .ded-marker.inf-no .ded-marker-label { color: var(--inf-no); }
 
@@ -1760,8 +1770,10 @@ body:not(.has-tabs) .header-nav { display: none; }
 }
 .ded-marker.unknown .ded-marker-circle::before {
   content: '';
-  width: 23%;
-  height: 23%;
+  width: 7px;
+  width: min(12px, 1.7cqw);
+  height: 7px;
+  height: min(12px, 1.7cqw);
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.7);
 }
@@ -1788,8 +1800,10 @@ body:not(.has-tabs) .header-nav { display: none; }
 }
 .scope-ring {
   position: absolute;
-  width: 12%;
-  height: 12%;
+  width: 48px;
+  width: min(72px, 12cqw);
+  height: 48px;
+  height: min(72px, 12cqw);
   border: 3px solid var(--secondary);
   border-radius: 50%;
   box-shadow: 0 0 14px rgba(244, 114, 182, 0.55),
