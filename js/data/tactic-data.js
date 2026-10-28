@@ -288,6 +288,12 @@ export const TAC_ITEM_TYPES = {
   },
   postDog: {
     name: translate("items.postDog.name"),
+    ranges: {
+      modes: [
+        { key: 'show', label: translate("items.postDog.range.card.postDogPounce"), size_m: 1.27 },
+        { key: 'off' },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/e/ed/fohz3k2zrkhum55m6ypco170bdqdypu.png/120px-%E9%80%81%E4%BF%A1%E7%8A%AC.png',
   },
   shovel: {
@@ -805,7 +811,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("characters.thief.range.label.show1"), size_m: 8 },
+        { key: 'preciseAim', label: translate("characters.thief.range.label.cunning"),
+          size_m: { options: 8, labels: [translate("characters.thief.range.card.flashlightShining")] } },
         { key: 'off' },
       ],
     },
@@ -874,10 +881,9 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'perspectiveOutline', label: translate("characters.theMindsEye.range.label.perspectiveOutline"), size_m: 25.3 },
-        { key: 'soundWaveSlow', label: translate("characters.theMindsEye.range.label.soundWaveSlow"),
-          size_m: { options: [6.8, 25.3],
-            labels: [translate("characters.theMindsEye.range.card.zero"), translate("characters.theMindsEye.range.card.one")] } },
+        { key: 'echo', label: translate("characters.theMindsEye.range.label.echo"),
+          size_m: { options: [25.3, 6.8, 25.3],
+            labels: [translate("characters.theMindsEye.range.card.tapTapLocatePosition"), translate("characters.theMindsEye.range.card.strikeInteractionSpeedReduceOne"), translate("characters.theMindsEye.range.card.strikeInteractionSpeedReduceTwo")] } },
         { key: 'off' },
       ],
     },
@@ -941,8 +947,9 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("characters.prospector.range.label.show1"), size_m: 14.5 },
-        { key: 'show2', label: translate("characters.prospector.range.label.show2"), size_m: 18 },
+        { key: 'magnet', label: translate("characters.prospector.range.label.magnet"),
+          size_m: { options: [14.5, 18],
+            labels: [translate("characters.prospector.range.card.magnetThrowMax"), translate("characters.prospector.range.card.stunReduce")] } },
         { key: 'off' },
       ],
     },
@@ -970,9 +977,9 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show1', label: translate("characters.wildling.range.label.show1"),
+        { key: 'wildlingPartner', label: translate("characters.wildling.range.label.wildlingPartner"),
           size_m: { options: [15, 17],
-            labels: [translate("characters.wildling.range.card.zeroAlternate"), translate("characters.wildling.range.card.oneAlternate")] } },
+            labels: [translate("characters.wildling.range.card.bumpMax"), translate("characters.wildling.range.card.bumpAddKnockBackMax")] } },
         { key: 'off' },
       ],
     },
@@ -1018,7 +1025,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'cursedEmblemParalyze', label: translate("characters.postman.range.label.cursedEmblemParalyze"), size_m: 16.9 },
+        { key: 'postDog', label: translate("characters.postman.range.label.postDog"),
+          size_m: { options: 16.9, labels: [translate("characters.postman.range.card.postDogDashMax")] } },
         { key: 'off' },
       ],
     },
@@ -1043,7 +1051,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'severeElectricCurrent', label: translate("characters.prisoner.range.label.severeElectricCurrent"), size_m: 5.9 },
+        { key: 'conductor', label: translate("characters.prisoner.range.label.conductor"),
+          size_m: { options: 5.9, labels: [translate("characters.prisoner.range.card.severeElectricCurrentStun")] } },
         { key: 'off' },
       ],
     },
@@ -1071,7 +1080,7 @@ export const TAC_ROLES = {
       modes: [
         { key: 'cricketBat', label: translate("characters.batter.range.label.cricketBat"),
           size_m: { options: [10.1, 17.55],
-            labels: [translate("characters.batter.range.card.cricketBatCanHit"), translate("characters.batter.range.card.cricketBatHitAndKnockBackMax")] } },
+            labels: [translate("characters.batter.range.card.cricketBatCanHit"), translate("characters.batter.range.card.cricketBatHitAddKnockBackMax")] } },
         { key: 'altruism', label: translate("characters.batter.range.label.altruism"), size_m: 15.2 },
         { key: 'off' },
       ],
@@ -1091,8 +1100,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'subjectiveAnchoring', label: translate("characters.psychologist.range.label.subjectiveAnchoring"), size_m: 13 },
-        { key: 'bond', label: translate("characters.psychologist.range.label.bond"), size_m: 13 },
+        { key: 'subjectiveAnchor', label: translate("characters.psychologist.range.label.subjectiveAnchor"), size_m: 13 },
+        { key: 'bonded', label: translate("characters.psychologist.range.label.bonded"), size_m: 13 },
         { key: 'off' },
       ],
     },
@@ -1104,7 +1113,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'bond', label: translate("characters.patient.range.label.bond"), size_m: 13 },
+        { key: 'bonded', label: translate("characters.patient.range.label.bonded"), size_m: 13 },
         { key: 'off' },
       ],
     },
@@ -1118,7 +1127,7 @@ export const TAC_ROLES = {
       modes: [
         { key: 'metaphor', label: translate("characters.novelist.range.label.metaphor"),
           size_m: { options: [13.5, 9.8],
-            labels: [translate("characters.novelist.range.card.zeroFourth"), translate("characters.novelist.range.card.oneFourth")] } },
+            labels: [translate("characters.novelist.range.card.metaphorDefault"), translate("characters.novelist.range.card.metaphorReduce")] } },
         { key: 'off' },
       ],
     },
@@ -1136,9 +1145,9 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'show', label: translate("characters.weepingClown.range.label.show"),
+        { key: 'explosion', label: translate("characters.weepingClown.range.label.explosion"),
           size_m: { options: [6, 3],
-            labels: [translate("characters.weepingClown.range.card.zeroFifth"), translate("characters.weepingClown.range.card.oneFifth")] } },
+            labels: [translate("characters.weepingClown.range.card.rocketExplode"), translate("characters.weepingClown.range.card.stunHunter")] } },
         { key: 'off' },
       ],
     },
@@ -1176,7 +1185,8 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'phantomPlacement', label: translate("characters.journalist.range.label.phantomPlacement"), size_m: 15 },
+        { key: 'exclusive', label: translate("characters.journalist.range.label.exclusive"),
+          size_m: { options: 15, labels: [translate("characters.journalist.range.card.phantomPlacement")] } },
         { key: 'off' },
       ],
     },
@@ -1248,7 +1258,7 @@ export const TAC_ROLES = {
     ranges: {
       modes: [
         { key: 'tacticalForesight', label: translate("characters.knight.range.label.tacticalForesight"), size_m: 13 },
-        { key: 'honorResonance', label: translate("characters.knight.range.label.honorResonance"), size_m: 7 },
+        { key: 'chivalrousSympathy', label: translate("characters.knight.range.label.chivalrousSympathy"), size_m: 7 },
         { key: 'off' },
       ],
     },
@@ -1299,8 +1309,9 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'muletaDash', label: translate("characters.matador.range.label.muletaDash"), size_m: 6 },
-        { key: 'muletaSweep', label: translate("characters.matador.range.label.muletaSweep"), size_m: 2.25 },
+        { key: 'muletaMastery', label: translate("characters.matador.range.label.muletaMastery"),
+          size_m: { options: [6, 2.25],
+            labels: [translate("characters.matador.range.card.muletaDash"), translate("characters.matador.range.card.muletaSweep")] } },
         { key: 'off' },
       ],
     },
@@ -1344,7 +1355,7 @@ export const TAC_ROLES = {
   smileyFace: {
     name: translate("characters.smileyFace.name"),
     camp: 'hunter',
-    speed: { [translate("characters.smileyFace.name")]: 4.56, [translate("characters.smileyFace.speed.rocketDash0")]: 7.07, [translate("characters.smileyFace.speed.rocketDash1")]: 7.39, [translate("characters.smileyFace.speed.rocketDash2")]: 9.12 },
+    speed: { [translate("characters.smileyFace.name")]: 4.56, [translate("characters.smileyFace.speed.rocketDashTierZero")]: 7.07, [translate("characters.smileyFace.speed.rocketDashTierOne")]: 7.39, [translate("characters.smileyFace.speed.rocketDashTierTwo")]: 9.12 },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/55/ob4f8gqvpcfw0sarr5ule5mpmzxby7l.png/90px-%E5%B0%8F%E4%B8%91%E5%A4%B4%E5%83%8F.png',
   },
   gameKeeper: {
