@@ -2,6 +2,10 @@
 
 PIL (Peking University Identity V League) Identity V Tactical Friend
 
+官网入口：[战术演练](https://pkuidv.com/tactical-friend/) · [备用入口](https://pkuidv.com/zhanshuyanlian/)
+
+官网发布工作流与本地构建说明见 [deploy/README.md](deploy/README.md)。
+
 url:
 https://www.bilibili.com/toy/pil-tactical-friend
 

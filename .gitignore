@@ -3,3 +3,5 @@ test-results/
 playwright-report/
 *.local.md
 /workspace/
+/deploy/dist/
+/deploy/.deployment-state.json
