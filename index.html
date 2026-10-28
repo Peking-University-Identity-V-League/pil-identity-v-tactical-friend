@@ -345,6 +345,22 @@
               </span>
             </div>
           </div>
+          <div class="tac-manage-entry" id="tacBoxEntry">
+            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="game.box"></span></div>
+            <div class="tac-manage-row tac-display-row">
+              <label class="tac-display-toggle"><input type="checkbox" id="tacShowBoxes"><span data-i18n="ui.common.show"></span></label>
+              <label class="tac-manage-slider"><span data-i18n="ui.tacManageSlider.label"></span><input type="range" id="tacBoxSize" min="1" max="12" step="0.5" value="1.5"></label>
+              <label class="tac-manage-def"><input type="checkbox" id="tacBoxSizeDef" checked><span data-i18n="ui.common.default"></span></label>
+            </div>
+            <div class="tac-manage-row tac-display-row">
+              <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacShowBoxBasement.title&quot;}"><input type="checkbox" id="tacShowBoxBasement"><span data-i18n="ui.tacShowBoxBasement.label"></span></label>
+              <span class="tac-display-mid">
+                <span class="switch-btn" id="tacBoxBasementPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacBoxBasementPrev.title&quot;}">‹</span>
+                <span class="tac-display-text" id="tacBoxBasementText"></span>
+                <span class="switch-btn" id="tacBoxBasementNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacBoxBasementNext.title&quot;}">›</span>
+              </span>
+            </div>
+          </div>
           <div class="tac-manage-entry">
             <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="game.escapeDoor"></span></div>
             <div class="tac-manage-row tac-display-row">
@@ -370,6 +386,7 @@
               <label class="tac-display-toggle"><input type="checkbox" id="tacSnapDungeon" checked><span data-i18n="game.dungeon"></span></label>
               <label class="tac-display-toggle"><input type="checkbox" id="tacSnapDoor" checked><span data-i18n="game.escapeDoor"></span></label>
               <label class="tac-display-toggle"><input type="checkbox" id="tacSnapChair" checked><span data-i18n="game.rocketChair"></span></label>
+              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapBox" checked><span data-i18n="game.box"></span></label>
               <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacDisplayToggle.titleFourth&quot;}"><input type="checkbox" id="tacSnapPoint" checked><span data-i18n="ui.tacDisplayToggle.labelFourth"></span></label>
             </div>
             <div class="tac-display-snap no-line">

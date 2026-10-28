@@ -1090,5 +1090,13 @@
   "ui.tacChairBasementPrev.title": "上一处地下室",
   "ui.tacChairBasementNext.title": "下一处地下室",
   "ui.tacShowChairBasement.label": "地下室",
-  "ui.tacShowChairBasement.title": "显示所选地下室的狂欢之椅"
+  "ui.tacShowChairBasement.title": "显示所选地下室的狂欢之椅",
+  "game.box": "箱子",
+  "application.syncTacBoxBasementText": "地下室 {index} / {count}",
+  "application.renderTacBoxesFixed": "箱子（固定）",
+  "application.renderTacBoxesBasement": "地下室箱子（第 {index} / {count} 处）",
+  "ui.tacBoxBasementPrev.title": "上一处地下室",
+  "ui.tacBoxBasementNext.title": "下一处地下室",
+  "ui.tacShowBoxBasement.label": "地下室",
+  "ui.tacShowBoxBasement.title": "显示所选地下室的箱子"
 }

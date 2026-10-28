@@ -1,5 +1,5 @@
 
-import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacItemSection, tacMStyleBody, tacMStyleToggle, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacShowChairBasementEl, tacChairBasementText, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacticView } from './core/dom.js';
+import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacItemSection, tacMStyleBody, tacMStyleToggle, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacShowChairBasementEl, tacChairBasementText, tacSnapBoxEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowBoxBasementEl, tacBoxBasementText, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacticView } from './core/dom.js';
 import { restoredMeasureIds, saveRegionSel, tacBoard, tacDisplay, tacMeasureStyle, tacPersisted, tacSave } from './core/persist.js';
 import { measureBaseAt, simulateMovement } from './core/measurements.js';
 import { getTreasureRings } from './core/treasure.js';
@@ -7,7 +7,7 @@ import { S } from './core/state.js';
 import { $, loadImageWithStatus, mountImageOverlays } from './core/utils.js';
 import { cipherOf, mapsZonesRelative } from './data/geo.js';
 import { MAPS_DATA, getImageUrl } from './data/maps.js';
-import { CHAIR_ICON_URL, DUNGEON_ICON_URL, ESCAPE_DOOR_ICON_URL, TAC_ABYSS_MAX_M, TAC_DISPLAY_DEFAULT, TAC_ITEM_TYPES, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_MOVEMENT_SURVIVOR, TAC_MOVEMENT_BUFFS, TAC_ROLES, TAC_SVG_NS, TAC_TREASURE_RULE, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
+import { BOX_ICON_URL, CHAIR_ICON_URL, DUNGEON_ICON_URL, ESCAPE_DOOR_ICON_URL, TAC_ABYSS_MAX_M, TAC_DISPLAY_DEFAULT, TAC_ITEM_TYPES, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_MOVEMENT_SURVIVOR, TAC_MOVEMENT_BUFFS, TAC_ROLES, TAC_SVG_NS, TAC_TREASURE_RULE, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
 import { CIPHER_ICON_URL, cipherIcon } from './region.js';
 
 import { translate } from './core/i18n.js';
@@ -121,6 +121,10 @@ export function syncTacDisplayUI() {
   tacChairSizeEl.value = tacDisplay.chairSize;
   tacChairSizeDefEl.checked = tacDisplay.chairSize === TAC_DISPLAY_DEFAULT.chairSize;
   tacShowChairBasementEl.checked = tacDisplay.chairsBasement;
+  tacShowBoxesEl.checked = tacDisplay.boxes;
+  tacBoxSizeEl.value = tacDisplay.boxSize;
+  tacBoxSizeDefEl.checked = tacDisplay.boxSize === TAC_DISPLAY_DEFAULT.boxSize;
+  tacShowBoxBasementEl.checked = tacDisplay.boxesBasement;
   tacShowDoorsEl.checked = tacDisplay.doors;
   tacDoorSizeEl.value = tacDisplay.doorSize;
   tacDoorSizeDefEl.checked = tacDisplay.doorSize === TAC_DISPLAY_DEFAULT.doorSize;
@@ -129,6 +133,7 @@ export function syncTacDisplayUI() {
   tacSnapDungeonEl.checked = tacDisplay.snap.dungeon;
   tacSnapDoorEl.checked = tacDisplay.snap.door;
   tacSnapChairEl.checked = tacDisplay.snap.chair;
+  tacSnapBoxEl.checked = tacDisplay.snap.box;
   tacSnapPointEl.checked = tacDisplay.snap.point;
   tacDelSegOnlyEl.checked = tacDisplay.delSegOnly;
   tacShowCoordsEl.checked = tacDisplay.showCoords;
@@ -269,6 +274,10 @@ export function syncTacImage() {
   syncTacChairBasementText();
   const chairEntry = $('tacChairEntry');
   if (chairEntry) chairEntry.style.display = MAPS_DATA[S.currentMapId].chairs ? '' : 'none';
+  renderTacBoxes();
+  syncTacBoxBasementText();
+  const boxEntry = $('tacBoxEntry');
+  if (boxEntry) boxEntry.style.display = MAPS_DATA[S.currentMapId].boxes ? '' : 'none';
   syncTacDungeonText();
   if (url === tacImageState.loaded) return;
   tacImageState.loaded = url;
@@ -563,6 +572,54 @@ export function switchTacChairBasement(step) {
   saveRegionSel();
 }
 
+export function renderTacBoxes() {
+  if (!tacMapWrap) return;
+  tacMapWrap.querySelectorAll('.tac-box').forEach((el) => el.remove());
+  const map = MAPS_DATA[S.currentMapId];
+  const bx = map.boxes;
+  if (!bx) return;
+  const [imgW, imgH] = map.mapSize;
+  // 箱子点格式与椅子相同：[x, z]（地面）或 [x, y, z]（带高度，如地下室/二楼）
+  const xz = (pt) => (pt.length > 2 ? [pt[0], pt[2]] : pt);
+  const draw = (pt, title) => {
+    const [px, pz] = xz(pt);
+    const el = document.createElement('img');
+    el.className = 'tac-box';
+    el.src = BOX_ICON_URL;
+    el.alt = translate("game.box");
+    el.title = title;
+    el.draggable = false;
+    el.style.left = `${(px / imgW) * 100}%`;
+    el.style.top = `${(pz / imgH) * 100}%`;
+    el.style.width = `${tacDisplay.boxSize}%`;
+    tacMapWrap.appendChild(el);
+  };
+  if (tacDisplay.boxes) {
+    bx.fixed.forEach((pt) => draw(pt, translate("application.renderTacBoxesFixed")));
+  }
+  if (tacDisplay.boxesBasement && bx.basements.length) {
+    const bIdx = S.tacBoxBasementIndex % bx.basements.length;
+    bx.basements[bIdx].forEach((pt) => draw(pt,
+      translate("application.renderTacBoxesBasement", { index: bIdx + 1, count: bx.basements.length })));
+  }
+}
+
+export function syncTacBoxBasementText() {
+  const bx = MAPS_DATA[S.currentMapId].boxes;
+  if (!bx || !bx.basements.length) { tacBoxBasementText.textContent = '--'; return; }
+  tacBoxBasementText.textContent = translate("application.syncTacBoxBasementText",
+    { index: S.tacBoxBasementIndex + 1, count: bx.basements.length });
+}
+
+export function switchTacBoxBasement(step) {
+  const bx = MAPS_DATA[S.currentMapId].boxes;
+  if (!bx || !bx.basements.length) return;
+  S.tacBoxBasementIndex = (S.tacBoxBasementIndex + step + bx.basements.length) % bx.basements.length;
+  syncTacBoxBasementText();
+  renderTacBoxes();
+  saveRegionSel();
+}
+
 
 export function tacSnapTarget(p, excl) {
   const map = MAPS_DATA[S.currentMapId];
@@ -603,6 +660,19 @@ export function tacSnapTarget(p, excl) {
     }
     if (tacDisplay.chairsBasement && ch.basements.length) {
       ch.basements[S.tacChairBasementIndex % ch.basements.length].forEach(pushChair);
+    }
+  }
+  if (tacDisplay.snap.box && map.boxes) {
+    const bx = map.boxes;
+    const pushBox = (pt) => {
+      const px = pt[0], pz = pt.length > 2 ? pt[2] : pt[1];
+      pts.push({ x: px / imgW, y: pz / imgH, size: tacDisplay.boxSize, kind: 'box' });
+    };
+    if (tacDisplay.boxes) {
+      bx.fixed.forEach(pushBox);
+    }
+    if (tacDisplay.boxesBasement && bx.basements.length) {
+      bx.basements[S.tacBoxBasementIndex % bx.basements.length].forEach(pushBox);
     }
   }
   if (tacDisplay.snap.point) {
@@ -845,6 +915,8 @@ tacDungeonSizeDefEl._default = TAC_DISPLAY_DEFAULT.dungeonSize;
 
 tacChairSizeDefEl._default = TAC_DISPLAY_DEFAULT.chairSize;
 
+tacBoxSizeDefEl._default = TAC_DISPLAY_DEFAULT.boxSize;
+
 tacDoorSizeDefEl._default = TAC_DISPLAY_DEFAULT.doorSize;
 
 
@@ -869,6 +941,16 @@ bindTacDisplayRow(tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl,
 tacShowChairBasementEl.addEventListener('change', () => {
   tacDisplay.chairsBasement = tacShowChairBasementEl.checked;
   renderTacChairs();
+  tacSave();
+});
+
+bindTacDisplayRow(tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl,
+  (v) => { tacDisplay.boxes = v; renderTacBoxes(); },
+  (v) => { tacDisplay.boxSize = v; renderTacBoxes(); });
+
+tacShowBoxBasementEl.addEventListener('change', () => {
+  tacDisplay.boxesBasement = tacShowBoxBasementEl.checked;
+  renderTacBoxes();
   tacSave();
 });
 
@@ -914,6 +996,11 @@ tacSnapChairEl.addEventListener('change', () => {
   tacSave();
 });
 
+tacSnapBoxEl.addEventListener('change', () => {
+  tacDisplay.snap.box = tacSnapBoxEl.checked;
+  tacSave();
+});
+
 tacSnapPointEl.addEventListener('change', () => {
   tacDisplay.snap.point = tacSnapPointEl.checked;
   tacSave();
@@ -955,11 +1042,15 @@ $('tacChairBasementPrev').addEventListener('click', () => switchTacChairBasement
 
 $('tacChairBasementNext').addEventListener('click', () => switchTacChairBasement(1));
 
+$('tacBoxBasementPrev').addEventListener('click', () => switchTacBoxBasement(-1));
+
+$('tacBoxBasementNext').addEventListener('click', () => switchTacBoxBasement(1));
+
 
 if (tacPersisted && tacPersisted.display) {
   const sd = tacPersisted.display;
   Object.assign(tacDisplay, sd);
-  tacDisplay.snap = Object.assign({ cipher: true, dungeon: true, door: true, chair: true, point: true }, sd.snap || {});
+  tacDisplay.snap = Object.assign({ cipher: true, dungeon: true, door: true, chair: true, box: true, point: true }, sd.snap || {});
 }
 
 if (tacPersisted && tacPersisted.mstyle) {
