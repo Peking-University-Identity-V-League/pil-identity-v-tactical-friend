@@ -288,6 +288,15 @@ export function syncTacImage() {
 }
 
 
+
+function setTacFontSize(el, units, cap) {
+  const w = tacMapWrap ? tacMapWrap.clientWidth : 360;
+  const px = units * w / 100;
+  el.style.fontSize = cap == null ? `${px}px` : `${Math.min(cap, px)}px`;
+  el.style.fontSize = cap == null ? `${units}cqw` : `min(${cap}px, ${units}cqw)`;
+}
+
+
 export function renderTacCiphers() {
   if (!tacMapWrap) return;
   // The prediction remains visible and must update even when cipher icons do not.
@@ -307,7 +316,7 @@ export function renderTacCiphers() {
     el.draggable = false;
     el.style.left = `${(c.location[0] / imgW) * 100}%`;
     el.style.top = `${(c.location[1] / imgH) * 100}%`;
-    el.style.width = `${tacDisplay.cipherSize}cqw`;
+    el.style.width = `${tacDisplay.cipherSize}%`;
     tacMapWrap.appendChild(el);
   });
 }
@@ -361,7 +370,7 @@ export function renderTacLandmarks() {
     el.draggable = false;
     el.style.left = `${(pt[0] / imgW) * 100}%`;
     el.style.top = `${(pt[1] / imgH) * 100}%`;
-    el.style.width = `${tacDisplay.dungeonSize}cqw`;
+    el.style.width = `${tacDisplay.dungeonSize}%`;
     tacMapWrap.appendChild(el);
   }
   if (tacDisplay.doors) {
@@ -375,7 +384,7 @@ export function renderTacLandmarks() {
       el.draggable = false;
       el.style.left = `${(pt[0] / imgW) * 100}%`;
       el.style.top = `${(pt[1] / imgH) * 100}%`;
-      el.style.width = `${tacDisplay.doorSize}cqw`;
+      el.style.width = `${tacDisplay.doorSize}%`;
       tacMapWrap.appendChild(el);
     });
   }
@@ -439,7 +448,7 @@ export function renderTacFixedSpawns() {
           el.src = iconUrl;
           el.alt = cfg.label;
           el.draggable = false;
-          if (spawnDef.iconSize) el.style.width = `${spawnDef.iconSize}cqw`;
+          if (spawnDef.iconSize) el.style.width = `${spawnDef.iconSize}%`;
         } else {
           el = document.createElement('div');
           el.className = 'cam-dot';
@@ -504,7 +513,7 @@ export function renderTacChairs() {
     el.draggable = false;
     el.style.left = `${(px / imgW) * 100}%`;
     el.style.top = `${(pz / imgH) * 100}%`;
-    el.style.width = `${tacDisplay.chairSize}cqw`;
+    el.style.width = `${tacDisplay.chairSize}%`;
     tacMapWrap.appendChild(el);
   };
   if (tacDisplay.chairs) {
@@ -866,6 +875,16 @@ tacShowChairBasementEl.addEventListener('change', () => {
 bindTacDisplayRow(tacShowDoorsEl, tacDoorSizeEl, tacDoorSizeDefEl,
   (v) => { tacDisplay.doors = v; renderTacLandmarks(); },
   (v) => { tacDisplay.doorSize = v; renderTacLandmarks(); });
+
+let tacResizeTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(tacResizeTimer);
+  tacResizeTimer = setTimeout(() => {
+    renderTacCiphers();
+    renderTacLandmarks();
+    renderTacBoard();
+  }, 150);
+});
 
 
 tacDoorLockEl.addEventListener('change', () => {
@@ -1553,8 +1572,8 @@ export function renderTacBoard() {
       const img = el.querySelector('img');
       
       const isz = it.iconSize ?? 3.4;
-      img.style.width = `${isz}cqw`;
-      img.style.height = `${isz}cqw`;
+      img.style.width = `${isz}%`;
+      img.style.height = `${isz}%`;
     } else {
       el.insertAdjacentHTML('beforeend', '<div class="tac-item-dot"></div>');
     }
@@ -1584,7 +1603,7 @@ export function renderTacBoard() {
     el.style.left = `${t.x * 100}%`;
     el.style.top = `${t.y * 100}%`;
     el.style.width = `${t.size}%`;
-    el.style.fontSize = `min(26px, ${t.size * 0.42}cqw)`;
+    setTacFontSize(el, t.size * 0.42, 26);
     el.style.setProperty('--rc', def.color || '#fff');
     if (showIcon) {
       el.innerHTML = `<img src="${def.icon}" alt="${def.name}" draggable="false">`;
@@ -1630,7 +1649,7 @@ export function renderTacBoard() {
     el.style.left = `${t.x * 100}%`;
     el.style.top = `${t.y * 100}%`;
     el.style.color = t.color;
-    el.style.fontSize = `${Math.max(2.2, t.size * 0.18)}cqw`;
+    setTacFontSize(el, Math.max(2.2, t.size * 0.18));
     el.textContent = t.text;
     tacMapWrap.appendChild(el);
   });
@@ -1952,7 +1971,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
       const el = tacMapWrap.querySelector(`.tac-token[data-role="${role}"]`);
       if (el) {
         el.style.width = `${token.size}%`;
-        el.style.fontSize = `min(26px, ${token.size * 0.42}cqw)`;
+        setTacFontSize(el, token.size * 0.42, 26);
       }
       defCb.checked = isRoleDefault();
     });
@@ -2057,7 +2076,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     it.iconSize = parseFloat(sizeSlider.value);
     const el = tacMapWrap.querySelector(
       `.tac-item-circle[data-idx="${idx}"] img, .tac-item-pin[data-idx="${idx}"] img`);
-    if (el) { el.style.width = `${it.iconSize}cqw`; el.style.height = `${it.iconSize}cqw`; }
+    if (el) { el.style.width = `${it.iconSize}%`; el.style.height = `${it.iconSize}%`; }
     refreshDefault();
   });
   hideCb.addEventListener('change', () => {

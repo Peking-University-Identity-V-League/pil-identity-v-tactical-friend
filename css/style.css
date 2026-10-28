@@ -2110,7 +2110,7 @@ details.ded-card[open] > summary .arrow { transform: rotate(90deg); }
 }
 @media (max-width: 480px) {
   .tab-btn { padding: 8px 10px; font-size: 11px; }
-  .ded-marker-label { font-size: min(14px, 3.4cqw); }
+  .ded-marker-label { font-size: 14px; font-size: min(14px, 3.4cqw); }
   .ded-conclusion { font-size: 12px; padding: 6px 12px; }
 }
 
@@ -2195,7 +2195,7 @@ details.ded-card[open] > summary .arrow { transform: rotate(90deg); }
 .tac-cipher {
   position: absolute;
   z-index: 2;
-  width: 6cqw;
+  width: 6%;
   transform: translate(-50%, -50%);
   pointer-events: none;
   user-select: none;
@@ -2841,7 +2841,7 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 .tac-snap-ripple {
   position: absolute;
   z-index: 6;
-  width: 9cqw;
+  width: 9%;
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
   border-radius: 50%;
@@ -2902,7 +2902,7 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 .tac-chair {
   position: absolute;
   z-index: 2;
-  width: 6cqw;
+  width: 6%;
   transform: translate(-50%, -50%);
   pointer-events: none;
   user-select: none;
@@ -2951,13 +2951,13 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
   user-select: none;
 }
 img.tac-fixed-spawn { 
-  width: 3.4cqw;
+  width: 3.4%;
   opacity: 0.92;
   filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.55));
 }
 div.tac-fixed-spawn { 
-  width: 3cqw;
-  height: 3cqw;
+  width: 3%;
+  height: 3%;
 }
 div.tac-fixed-spawn .cam-dot {
   position: absolute;
@@ -2979,26 +2979,26 @@ div.tac-fixed-spawn .cam-icon {
 div.tac-fixed-spawn .cam-dir {
   position: absolute;
   z-index: 3;
-  width: 1.3cqw;
-  height: 1.3cqw;
+  width: 1.3%;
+  height: 1.3%;
   overflow: visible;
   pointer-events: none;
   filter: drop-shadow(0 0 2px rgba(15, 23, 42, 0.9));
 }
 
 div.tac-fixed-spawn .cam-dir.right {
-  left: calc(100% + 0.3cqw); top: 50%; margin-top: -0.65cqw;
+  left: calc(100% + 0.3%); top: 50%; margin-top: -0.65%;
 }
 div.tac-fixed-spawn .cam-dir.down {
-  top: calc(100% + 0.3cqw); left: 50%; margin-left: -0.65cqw;
+  top: calc(100% + 0.3%); left: 50%; margin-left: -0.65%;
   transform: rotate(90deg);
 }
 div.tac-fixed-spawn .cam-dir.left {
-  right: calc(100% + 0.3cqw); top: 50%; margin-top: -0.65cqw;
+  right: calc(100% + 0.3%); top: 50%; margin-top: -0.65%;
   transform: rotate(180deg);
 }
 div.tac-fixed-spawn .cam-dir.up {
-  bottom: calc(100% + 0.3cqw); left: 50%; margin-left: -0.65cqw;
+  bottom: calc(100% + 0.3%); left: 50%; margin-left: -0.65%;
   transform: rotate(-90deg);
 }
 
@@ -3521,7 +3521,7 @@ div.tac-fixed-spawn .cam-dir.up {
   position: absolute; 
   left: 50%; top: 50%;
   transform: translate(-50%, -50%);
-  width: 3.4cqw; height: 3.4cqw; 
+  width: 3.4%; height: 3.4%; 
   border-radius: 50%;
   object-fit: cover;
   pointer-events: auto; 
