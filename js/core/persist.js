@@ -40,6 +40,7 @@ const savedRegions = structuredClone(tacPersisted?.regions || {});
 const savedDedMarks = structuredClone(tacPersisted?.dedMarks || {});
 const savedDungeons = structuredClone(tacPersisted?.dungeon || {});
 const savedChairs = structuredClone(tacPersisted?.chairs || {});
+const savedBoxes = structuredClone(tacPersisted?.boxes || {});
 
 export let tacSaveTimer = null;
 
@@ -59,6 +60,7 @@ export function flushSave() {
       dedMarks: savedDedMarks,
       dungeon: savedDungeons,
       chairs: savedChairs,
+      boxes: savedBoxes,
       selDisplay,
     };
     localStorage.setItem(TAC_LS_KEY, JSON.stringify(data));
@@ -88,6 +90,7 @@ export function saveRegionSel() {
   savedDedMarks[S.currentMapId] = { ...S.dedMarks };
   savedDungeons[S.currentMapId] = S.tacDungeonIndex;
   savedChairs[S.currentMapId] = { set: S.tacChairIndex, basement: S.tacChairBasementIndex };
+  savedBoxes[S.currentMapId] = { basement: S.tacBoxBasementIndex };
   tacSave();
 }
 
@@ -105,6 +108,9 @@ export function restoreRegionSel(mapId) {
     ? Math.min(Math.max(0, sc.set | 0), ch.sets.length - 1) : 0;
   S.tacChairBasementIndex = ch && ch.basements.length
     ? Math.min(Math.max(0, sc.basement | 0), ch.basements.length - 1) : 0;
+  const bx = MAPS_DATA[mapId].boxes;
+  S.tacBoxBasementIndex = bx && bx.basements.length
+    ? Math.min(Math.max(0, (savedBoxes[mapId] || {}).basement | 0), bx.basements.length - 1) : 0;
   const r = savedRegions[mapId];
   if (!r) return;
   const zones = mapsZonesRelative[mapId];
@@ -139,8 +145,10 @@ export const tacDisplay = {
   doorLock: false, 
   chairs: false, chairSize: TAC_DISPLAY_DEFAULT.chairSize,
   chairsBasement: false,
+  boxes: false, boxSize: TAC_DISPLAY_DEFAULT.boxSize,
+  boxesBasement: false,
   
-  snap: { cipher: true, dungeon: true, door: true, chair: true, point: true },
+  snap: { cipher: true, dungeon: true, door: true, chair: true, box: true, point: true },
   delSegOnly: false, 
   showCoords: false, 
   selGlow: true, 

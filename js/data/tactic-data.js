@@ -1652,8 +1652,11 @@ export const ESCAPE_DOOR_ICON_URL = 'https://patchwiki.biligame.com/images/dwrg/
 export const CHAIR_ICON_URL = 'https://i0.hdslb.com/bfs/new_dyn/'
   + 'f120fa1a2f8db7da9b90e20821aa86e3262863779.png@176w_192h.avif';
 
+export const BOX_ICON_URL = 'https://i0.hdslb.com/bfs/new_dyn/'
+  + 'a651cfc24c47f2fa125f20c90f5dda6896830223.png@1192w.avif';
 
-export const TAC_DISPLAY_DEFAULT = { cipherSize: 6, dungeonSize: 6, doorSize: 6, chairSize: 6 };
+
+export const TAC_DISPLAY_DEFAULT = { cipherSize: 6, dungeonSize: 6, doorSize: 6, chairSize: 6, boxSize: 6 };
 
 export const TAC_ZOOM_MIN = 1, TAC_ZOOM_MAX = 5;
 

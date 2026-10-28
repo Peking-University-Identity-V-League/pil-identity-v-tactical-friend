@@ -18,4 +18,5 @@ export const S = {
   tacDungeonIndex: 0,       
   tacChairIndex: 0,         
   tacChairBasementIndex: 0, 
+  tacBoxBasementIndex: 0,
 };

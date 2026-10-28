@@ -60,6 +60,15 @@ export const MAPS_DATA = [
         ],
       };
       
+      const boxes = {
+        fixed: [[129, 140], [570, 186], [202, 303], [382, 357]],
+        sets: [],
+        basements: [
+          [[547, -33, 458]],
+          [[343, -33, 229]],
+        ],
+      };
+      
       const escapeDoors = [[682, 240], [45, 320], [682, 260], [45, 300]];
       
       const widthM = 166.2;
@@ -171,7 +180,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, chairs, widthM,
+      cipherCombinations, dungeons, escapeDoors, chairs, boxes, widthM,
       fixedSpawns, 
       law_urls, fixedHint, hints,
     deduction: (() => {
@@ -242,6 +251,15 @@ export const MAPS_DATA = [
         [[296, -28, 282], [303, -28, 291], [312, -28, 298], [280, -28, 323]],
         ],
       };
+      const boxes = {
+        fixed: [[239, 58], [292, 108], [373, 1, 195], [150, 345], [391, 348], [366, 476], [564, 495]],
+        sets: [],
+        basements: [
+          [[267, -28, 279]],
+          [[514, -31, 179]],
+        ],
+      };
+      
       const escapeDoors = [[326, 530], [615, 88], [311, 530], [615, 104]];
       
       const widthM = 151.5;
@@ -350,7 +368,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, chairs, widthM,
+      cipherCombinations, dungeons, escapeDoors, chairs, boxes, widthM,
       fixedSpawns, 
       law_urls, fixedHint, hints,
     deduction: (() => {
@@ -428,6 +446,15 @@ export const MAPS_DATA = [
         ],
       };
 
+      const boxes = {
+        fixed: [[153, 142], [145, 261], [442, 370], [132, 381], [138, 470], [525, 477], [330, 497]],
+        sets: [],
+        basements: [
+          [[294, -25, 289]],
+          [[331, -28, 161]],
+        ],
+      };
+      
       const escapeDoors = [[297, 543], [474, 90], [283, 543], [488, 90]];
       
       const widthM = 153.5;
@@ -533,7 +560,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, chairs, widthM,
+      cipherCombinations, dungeons, escapeDoors, chairs, boxes, widthM,
       fixedSpawns, 
       law_urls, fixedHint, hints,
     deduction: (() => {
@@ -615,6 +642,15 @@ export const MAPS_DATA = [
         ],
       };
 
+      const boxes = {
+        fixed: [[157, 516], [346, 555], [230, 668], [854, 703], [195, 839], [818, 996], [324, 1065]],
+        sets: [],
+        basements: [
+          [[1056, -40, 760]],
+          [[601, -47, 250]],
+        ],
+      };
+      
       const escapeDoors = [[878, 1066], [200, 134], [834, 1066], [238, 134]];
       
       const widthM = 199.1;
@@ -725,7 +761,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, chairs, widthM,
+      cipherCombinations, dungeons, escapeDoors, chairs, boxes, widthM,
       fixedSpawns, 
       law_urls, fixedHint, hints,
     deduction: (() => {
@@ -808,6 +844,15 @@ export const MAPS_DATA = [
            [[961, -53, 775], [917, -53, 790], [997, -53, 809], [940, -53, 823]],
          ],
       };
+      const boxes = {
+        fixed: [[834, 184], [63, 223], [1280, 319], [855, 458], [1402, 781], [734, 789], [249, 802]],
+        sets: [],
+        basements: [
+          [[475, -59, 236]],
+          [[941, -53, 784]],
+        ],
+      };
+      
       const escapeDoors = [[1312, 88], [130, 946], [1340, 88], [101, 946]];
       
       const widthM = 184.4;
@@ -917,7 +962,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, chairs, widthM,
+      cipherCombinations, dungeons, escapeDoors, chairs, boxes, widthM,
       fixedSpawns, 
       law_urls, fixedHint, hints,
     deduction: (() => {
@@ -996,6 +1041,15 @@ export const MAPS_DATA = [
          ],
       };
 
+      const boxes = {
+        fixed: [[274, 115], [538, 166], [622, 234], [175, 337], [381, 402], [592, 423], [183, 556]],
+        sets: [],
+        basements: [
+          [[407, -32, 173]],
+          [[373, -32, 482]],
+        ],
+      };
+      
       const escapeDoors = [[64, 230], [612, 58], [64, 211], [630, 58]];
       
       const widthM = 168.6;
@@ -1103,7 +1157,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, chairs, widthM,
+      cipherCombinations, dungeons, escapeDoors, chairs, boxes, widthM,
       fixedSpawns, 
       law_urls, fixedHint, hints,
     deduction: (() => {
@@ -1185,6 +1239,15 @@ export const MAPS_DATA = [
         ],
       };
 
+      const boxes = {
+        fixed: [[231, 139], [576, 217], [302, 358], [180, 371], [428, 704]],
+        sets: [],
+        basements: [
+          [[704, -39, 587]],
+          [[512, -39, 95]],
+        ],
+      };
+      
       const escapeDoors = [[387, 20], [225, 616], [404, 20], [209, 616]];
       
       
@@ -1291,7 +1354,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, chairs, widthM,
+      cipherCombinations, dungeons, escapeDoors, chairs, boxes, widthM,
       fixedSpawns, 
       law_urls, fixedHint, hints,
     deduction: (() => {
@@ -1368,6 +1431,15 @@ export const MAPS_DATA = [
          ],
       };
 
+      const boxes = {
+        fixed: [[959, 1, 324], [225, 1, 527], [505, 1, 918], [950, 1, 1038]],
+        sets: [],
+        basements: [
+          [[969, -67, 892]],
+          [[173, -67, 776]],
+        ],
+      };
+      
       const escapeDoors = [[705, 1134], [780, 18], [667, 1134], [818, 18]];
       
       const widthM = 144.1;
@@ -1476,7 +1548,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, chairs, widthM,
+      cipherCombinations, dungeons, escapeDoors, chairs, boxes, widthM,
       fixedSpawns, 
       law_urls, fixedHint, hints,
     deduction: (() => {
@@ -1562,6 +1634,15 @@ export const MAPS_DATA = [
          ],
        };
 
+      const boxes = {
+        fixed: [[305, 125], [1023, 223], [503, 574], [966, 882], [418, 57, 983]],
+        sets: [],
+        basements: [
+          [[393, -66, 1042]],
+          [[1007, -68, 490]],
+        ],
+      };
+      
       const escapeDoors = [[1214, 772], [50, 224], [1214, 816], [50, 180]];
       
       const widthM = 133.8;
@@ -1671,7 +1752,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, chairs, widthM,
+      cipherCombinations, dungeons, escapeDoors, chairs, boxes, widthM,
       fixedSpawns, 
       law_urls, fixedHint, hints,
     deduction: (() => {
