@@ -1,0 +1,12 @@
+{
+  "name": "pil-tactical-deployment",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test --test-concurrency=1 scripts/*.test.mjs",
+    "preview": "python3 -m http.server 8787 --bind 127.0.0.1 --directory dist",
+    "deploy": "node scripts/deploy.mjs",
+    "verify:live": "node scripts/verify-live.mjs"
+  }
+}
