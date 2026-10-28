@@ -868,7 +868,7 @@ export const TAC_ROLES = {
         { key: 'perspectiveOutline', label: translate("characters.theMindsEye.range.label.perspectiveOutline"), size_m: 25.3 },
         { key: 'soundWaveSlow', label: translate("characters.theMindsEye.range.label.soundWaveSlow"),
           size_m: { options: [6.8, 25.3],
-            labels: [translate("characters.theMindsEye.range.sizeM.zero"), translate("characters.theMindsEye.range.sizeM.one")] } },
+            labels: [translate("characters.theMindsEye.range.card.zero"), translate("characters.theMindsEye.range.card.one")] } },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -957,7 +957,7 @@ export const TAC_ROLES = {
       modes: [
         { key: 'show1', label: translate("characters.wildling.range.label.show1"),
           size_m: { options: [15, 17],
-            labels: [translate("characters.wildling.range.sizeM.zeroAlternate"), translate("characters.wildling.range.sizeM.oneAlternate")] } },
+            labels: [translate("characters.wildling.range.card.zeroAlternate"), translate("characters.wildling.range.card.oneAlternate")] } },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -971,7 +971,7 @@ export const TAC_ROLES = {
       modes: [
         { key: 'show1', label: translate("characters.acrobat.range.label.showRangeRiskyAcrobatics"),
           size_m: { options: [4, 7.5, 12],
-            labels: [translate("characters.acrobat.range.sizeM.leapDefault"), translate("characters.acrobat.range.sizeM.leapMax"), translate("characters.acrobat.range.sizeM.leapAddSomersault")] } },
+            labels: [translate("characters.acrobat.range.card.leapDefault"), translate("characters.acrobat.range.card.leapMax"), translate("characters.acrobat.range.card.leapAddSomersault")] } },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1097,7 +1097,7 @@ export const TAC_ROLES = {
       modes: [
         { key: 'metaphor', label: translate("characters.novelist.range.label.metaphor"),
           size_m: { options: [13.5, 9.8],
-            labels: [translate("characters.novelist.range.sizeM.zeroFourth"), translate("characters.novelist.range.sizeM.oneFourth")] } },
+            labels: [translate("characters.novelist.range.card.zeroFourth"), translate("characters.novelist.range.card.oneFourth")] } },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1117,7 +1117,7 @@ export const TAC_ROLES = {
       modes: [
         { key: 'show', label: translate("characters.weepingClown.range.label.show"),
           size_m: { options: [6, 3],
-            labels: [translate("characters.weepingClown.range.sizeM.zeroFifth"), translate("characters.weepingClown.range.sizeM.oneFifth")] } },
+            labels: [translate("characters.weepingClown.range.card.zeroFifth"), translate("characters.weepingClown.range.card.oneFifth")] } },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1137,7 +1137,7 @@ export const TAC_ROLES = {
       modes: [
         { key: 'cangFeng', label: translate("characters.antiquarian.range.label.showRangeConcealed"),
           size_m: { options: [4.9, 3.5, 4.7, 12.7],
-            labels: [translate("characters.antiquarian.range.sizeM.flip"), translate("characters.antiquarian.range.sizeM.sweepSwing"), translate("characters.antiquarian.range.sizeM.stab"), translate("characters.antiquarian.range.sizeM.obscure")] } },
+            labels: [translate("characters.antiquarian.range.card.flip"), translate("characters.antiquarian.range.card.sweepSwing"), translate("characters.antiquarian.range.card.stab"), translate("characters.antiquarian.range.card.obscure")] } },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1200,7 +1200,7 @@ export const TAC_ROLES = {
       modes: [
         { key: 'airbagSpray', label: translate("characters.fireInvestigator.range.label.airbagSpray"),
           size_m: { options: [4.2, 12.64],
-            labels: [translate("characters.fireInvestigator.range.sizeM.zeroSeventh"), translate("characters.fireInvestigator.range.sizeM.oneSeventh")] } },
+            labels: [translate("characters.fireInvestigator.range.card.zeroSeventh"), translate("characters.fireInvestigator.range.card.oneSeventh")] } },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
     },
@@ -1252,7 +1252,7 @@ export const TAC_ROLES = {
       modes: [
         { key: 'dragonBoneBow', label: translate("characters.archer.range.label.dragonBoneBow"),
           size_m: { options: [18, 12],
-            labels: [translate("characters.archer.range.sizeM.zeroEighth"), translate("characters.archer.range.sizeM.oneEighth")] } },
+            labels: [translate("characters.archer.range.card.zeroEighth"), translate("characters.archer.range.card.oneEighth")] } },
         { key: 'armCrossbow', label: translate("characters.archer.range.label.armCrossbow"), size_m: 4.5 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
@@ -1380,7 +1380,7 @@ export const TAC_ROLES = {
       modes: [
         { key: 'followerControl', label: translate("characters.dreamWitch.range.label.followerControl"),
           size_m: { options: [42.2, 59.1],
-            labels: [translate("characters.dreamWitch.range.sizeM.zeroNinth"), translate("characters.dreamWitch.range.sizeM.oneNinth")] } },
+            labels: [translate("characters.dreamWitch.range.card.zeroNinth"), translate("characters.dreamWitch.range.card.oneNinth")] } },
         { key: 'hiddenDream', label: translate("characters.dreamWitch.range.label.hiddenDream"), size_m: 20 },
         { key: 'off', label: translate("characters.default.range.label.off") },
       ],
