@@ -826,7 +826,7 @@ export const TAC_ROLES = {
     camp: 'survivor',
     ranges: {
       modes: [
-        { key: 'preciseAim', label: translate("characters.thief.range.label.cunning"),
+        { key: 'cunning', label: translate("characters.thief.range.label.cunning"),
           size_m: { options: 8, labels: [translate("characters.thief.range.card.flashlightShining")] } },
         { key: 'off' },
       ],

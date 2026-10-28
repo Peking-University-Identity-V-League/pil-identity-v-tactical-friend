@@ -114,10 +114,14 @@ test('disabling, switching maps and deleting the explorer remove stale treasure 
 
 test('export includes both normal and excluded treasure rings only while enabled', async ({ page }, testInfo) => {
   await enableTreasure(page);
+  const wrap = await page.evaluate(() => {
+    const el = document.querySelector('#tacMapWrap');
+    return { width: el.clientWidth, height: el.clientHeight };
+  });
   const enabled = await exportPNG(page, testInfo, 'treasure-enabled');
   const shown = await inspectPNG(page, enabled);
-  expect(shown.width).toBe(750);
-  expect(shown.height).toBe(644);
+  expect(shown.width).toBe(wrap.width);
+  expect(shown.height).toBe(wrap.height);
   expect(shown.gold).toBeGreaterThan(100);
   expect(shown.blue).toBeGreaterThan(100);
   await treasureToggle(page).uncheck();
@@ -131,8 +135,11 @@ test('export includes both normal and excluded treasure rings only while enabled
 test('zoomed and panned PNG crops keep treasure rings aligned and correctly sized', async ({ page }, testInfo) => {
   await enableTreasure(page);
   const full = await exportPNG(page, testInfo, 'treasure-full');
+  const wrap = await page.evaluate(() => {
+    const el = document.querySelector('#tacMapWrap');
+    return { width: el.clientWidth, height: el.clientHeight };
+  });
   await tool(page, 'display');
-  await page.locator('#tacExportCrop').check();
   await page.locator('#tacZoomIn').click();
   await page.locator('#tacZoomIn').click();
   await page.locator('#tacZoomPan').click();
@@ -146,8 +153,9 @@ test('zoomed and panned PNG crops keep treasure rings aligned and correctly size
   });
   const cropped = await exportPNG(page, testInfo, 'treasure-cropped');
   const result = await inspectPNG(page, cropped, full, crop);
-  expect(result.width).toBe(Math.round(750 * crop.width));
-  expect(result.height).toBe(Math.round(644 * crop.height));
+  // The export always matches the on-screen map size, regardless of zoom.
+  expect(result.width).toBe(wrap.width);
+  expect(result.height).toBe(wrap.height);
   expect(result.gold).toBeGreaterThan(100);
   expect(result.blue).toBeGreaterThan(100);
   // Compare the ring colors to a crop of the actual full-map PNG, allowing
