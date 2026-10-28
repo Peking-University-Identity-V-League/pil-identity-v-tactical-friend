@@ -33,6 +33,58 @@ await import('../../js/main.js');
 const { MAPS_DATA } = await import('../../js/data/maps.js');
 const { deduce } = await import('../../js/deduce.js');
 const { translate } = await import('../../js/core/i18n.js');
+const { tacRangeMetersOf } = await import('../../js/tactic.js');
+const { TAC_ROLES } = await import('../../js/data/tactic-data.js');
+
+test('single-card range shape (coordinator) resolves meters', () => {
+  const cfg = TAC_ROLES.coordinator.ranges;
+  assert.equal(tacRangeMetersOf(cfg, {}, false), 10);
+  assert.equal(tacRangeMetersOf(cfg, { rangeMeters: 10 }, false), 10);
+  const mode = cfg.modes[0];
+  assert.equal(typeof mode.size_m.options, 'number');
+  assert.equal(mode.size_m.labels.length, 1);
+  assert.equal(mode.label, translate('characters.coordinator.range.label.preciseAim'));
+  assert.equal(mode.size_m.labels[0], translate('characters.coordinator.range.card.flareGunCanUse'));
+});
+
+
+test('buildTacRangeRows renders single-card and two-option shapes (dreamWitch)', async () => {
+  const { buildTacRangeRows } = await import('../../js/tactic.js');
+  const cfg = TAC_ROLES.dreamWitch.ranges;
+  const rows = [];
+  const keepCreate = globalThis.document.createElement;
+  globalThis.document.createElement = () => {
+    const el = {
+      innerHTML: '', className: '', dataset: {}, style: {},
+      appendChild() {}, querySelectorAll: () => [], querySelector: () => null,
+      addEventListener() {},
+    };
+    rows.push(el);
+    return el;
+  };
+  try {
+    const settings = { appendChild() {} };
+    const opts = { labelPrefix: '显示', labelPostfix: '范围' };
+
+    rows.length = 0;
+    buildTacRangeRows(settings, cfg, { rangeMode: 'hiddenDream' }, false, opts);
+    const single = rows.find((r) => r.innerHTML.includes('20m'));
+    assert.ok(single, 'single-card row rendered');
+    assert.ok(single.innerHTML.includes('tac-range-opt active'), 'single card shown as active option');
+    assert.ok(!single.innerHTML.includes('（固定）'), 'single-card row has no fixed suffix');
+
+    rows.length = 0;
+    buildTacRangeRows(settings, cfg, { rangeMode: 'follower' }, false, opts);
+    const multi = rows.find((r) => r.innerHTML.includes('42.2m'));
+    assert.ok(multi, 'two-option row rendered');
+    assert.ok(multi.innerHTML.includes('59.1'), 'both option values present');
+    assert.ok((multi.innerHTML.match(/tac-range-opt/g) || []).length >= 2, 'two option buttons rendered');
+    assert.ok(!multi.innerHTML.includes('（固定）'), 'two-option row not misrouted to single branch');
+  } finally {
+    globalThis.document.createElement = keepCreate;
+  }
+});
+
 
 test('every map deduction has well-formed rules and ruleBook', () => {
   for (const map of MAPS_DATA) {
