@@ -1,0 +1,3 @@
+# Enforce code owner review for these paths through the main branch rules.
+/.github/ @Reverune
+/deploy/ @Reverune
