@@ -50,6 +50,7 @@ export function tacRangeMetersOf(cfg, inst, hideByDefault) {
   let base;
   if (typeof s === 'number') base = s;
   else if (Array.isArray(s.options)) base = instM ?? s.options[0];
+  else if (s.options != null) base = instM ?? s.options;
   else base = instM ?? s.max;
   if (mode.fearMods) {
     const pick = (opts, v) => (opts.find((o) => o[0] === v) || opts[0])[2];
@@ -632,7 +633,7 @@ export function tacSnapLandmark(p, excl) {
 }
 
 
-export const tacZoomState = { scale: 1, tx: 0, ty: 0, pan: false, locked: false };
+export const tacZoomState = { scale: 1, tx: 0, ty: 0, pan: false, locked: true };
 
 export let tacPanDrag = null;
 
@@ -729,6 +730,7 @@ export function tacZoomInit() {
   const { lock, out, inn, pan } = tacZoomEls();
   if (!out) return;
   lock.addEventListener('click', () => tacSetZoomLock(!tacZoomState.locked));
+  tacSetZoomLock(tacZoomState.locked);
   out.addEventListener('click', () => tacZoomStep(-1));
   inn.addEventListener('click', () => tacZoomStep(1));
   pan.addEventListener('click', () => tacSetPanMode(!tacZoomState.pan));
@@ -1643,10 +1645,17 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
   
   const modeRow = document.createElement('div');
   modeRow.className = 'tac-manage-row';
+  const pairMode = curMode.key !== 'off' ? curMode
+    : (cfg.modes.find((x) => x.key !== 'off' && x.size_m)
+      || cfg.modes.find((x) => x.key !== 'off') || curMode);
   modeRow.innerHTML = `<div class="tac-range-opts">`
-    + cfg.modes.map((m) =>
-      `<button type="button" data-v="${m.key}" class="tac-range-opt`
-      + `${curMode.key === m.key ? ' active' : ''}">${(m.key !== 'off' && opts.labelPrefix || '') + m.label + (m.key !== 'off' && opts.labelPostfix || '')}</button>`).join('')
+    + cfg.modes.map((m) => {
+      const text = m.key === 'off'
+        ? (opts.hidePrefix || '') + (pairMode.label || '') + (opts.hidePostfix || '')
+        : (opts.labelPrefix || '') + m.label + (opts.labelPostfix || '');
+      return `<button type="button" data-v="${m.key}" class="tac-range-opt`
+        + `${curMode.key === m.key ? ' active' : ''}">${text}</button>`;
+    }).join('')
     + `</div>`;
   modeRow.querySelectorAll('.tac-range-opt').forEach((b) => {
     b.addEventListener('click', () => {
@@ -1657,7 +1666,8 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
   });
   settings.appendChild(modeRow);
   if (!curMode.size_m) return; 
-  const card = curMode.card || (curMode.label ? curMode.label + (opts.labelPostfix || '') : translate("application.card"));
+  const card = curMode.card ? curMode.card + (opts.labelPostfix || '')
+    : (curMode.label ? curMode.label + (opts.labelPostfix || '') : translate("application.card"));
   const s = curMode.size_m;
   const meters = tacRangeMetersOf(cfg, inst, hideByDefault);
   const cardRow = document.createElement('div');
@@ -1665,6 +1675,13 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
   if (typeof s === 'number' && !curMode.fearMods) {
     
     cardRow.innerHTML = translate("application.buildTacRangeRows", { card: card, state: s });
+  } else if (s.options != null && !Array.isArray(s.options)) {
+
+    const singleCard = ((s.labels || [])[0] || curMode.label || '') + (opts.labelPostfix || '');
+    cardRow.innerHTML = `<label>${singleCard} ${s.options}m</label>`
+      + `<div class="tac-range-opts">`
+      + `<button type="button" data-v="${s.options}" class="tac-range-opt active">${singleCard}</button>`
+      + `</div>`;
   } else if (Array.isArray(s.options)) {
     
     const optIdx = s.options.indexOf(meters);
@@ -1674,7 +1691,7 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
       + `<div class="tac-range-opts">`
       + s.options.map((v, i) =>
         `<button type="button" data-v="${v}" class="tac-range-opt`
-        + `${meters === v ? ' active' : ''}">${(s.labels || [])[i] || `${v}m`}</button>`).join('')
+        + `${meters === v ? ' active' : ''}">${(s.labels || [])[i] ? s.labels[i] + (opts.labelPostfix || '') : `${v}m`}</button>`).join('')
       + `</div>`;
     cardRow.querySelectorAll('.tac-range-opt').forEach((b) => {
       b.addEventListener('click', () => {
@@ -1819,7 +1836,7 @@ export function renderTacManage() {
         const m = tacRoleRangeMeters(role, token);
         if (el && m !== null) el.style.width = `${tacItemMetersToPercent(m)}%`;
       };
-      buildTacRangeRows(settings, rgCfg, token, true, { softUpdate: syncRoleCircleWidth, labelPrefix: translate("characters.default.range.label.showPrefix"), labelPostfix: translate("characters.default.range.label.showPostfix") });
+      buildTacRangeRows(settings, rgCfg, token, true, { softUpdate: syncRoleCircleWidth, labelPrefix: translate("characters.default.range.label.showPrefix"), labelPostfix: translate("characters.default.range.label.showPostfix"), hidePrefix: translate("characters.default.range.label.hidePrefix"), hidePostfix: translate("characters.default.range.label.hidePostfix") });
     }
     
     
@@ -1992,7 +2009,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     const s = mode.size_m;
     const instM = it.rangeMeters ?? it.meters;
     if (s && Array.isArray(s.options) && instM !== undefined && instM !== s.options[0]) return false;
-    if (s && typeof s === 'object' && !Array.isArray(s.options)
+    if (s && s.options == null && typeof s === 'object'
       && instM !== undefined && instM !== s.max) return false;
     if (mode.fearMods && (it.fearHunter || it.fearSurv)) return false;
     return true;
@@ -2012,7 +2029,11 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
   
   if (rgCfg) {
     buildTacRangeRows(settings, rgCfg, it, false,
-      { softUpdate: () => { syncCircleWidth(); refreshDefault(); } });
+      { softUpdate: () => { syncCircleWidth(); refreshDefault(); },
+        labelPrefix: translate("items.default.range.label.showPrefix"),
+        labelPostfix: translate("items.default.range.label.showPostfix"),
+        hidePrefix: translate("items.default.range.label.hidePrefix"),
+        hidePostfix: translate("items.default.range.label.hidePostfix") });
   }
 
   
