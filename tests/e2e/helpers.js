@@ -49,6 +49,14 @@ export async function waitForSave(page) {
 
 export const tool = (page, name) => page.locator(`.tac-tool[data-tool="${name}"]`).click();
 export const tab = (page, name) => page.locator(`.tab-btn[data-tab="${name}"]`).click();
+export async function pickRole(page, role) {
+  const btn = page.locator(`.tac-role[data-role="${role}"]`);
+  const camp = page.locator(`.tac-camp:has(.tac-role[data-role="${role}"])`);
+  if (await camp.evaluate((el) => el.classList.contains('collapsed'))) {
+    await camp.locator('.tac-camp-header').click();
+  }
+  await btn.click();
+}
 
 export async function point(page, x, y, selector = '#tacMapWrap') {
   const locator = page.locator(selector);

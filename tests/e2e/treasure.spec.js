@@ -1,5 +1,5 @@
 import { readFile } from 'node:fs/promises';
-import { test, expect, tool, clickPoint, point, drag, switchMap, waitForSave } from './helpers.js';
+import { test, expect, tool, clickPoint, point, drag, switchMap, waitForSave, pickRole } from './helpers.js';
 
 async function enableTreasure(page) {
   // Choose a central cipher so its excluded ring remains inside the cropped view.
@@ -14,7 +14,7 @@ async function enableTreasure(page) {
     return { x: candidates[0].location[0] / width, y: candidates[0].location[1] / height };
   });
   await tool(page, 'roles');
-  await page.locator('.tac-role[data-role="explorer"]').click();
+  await pickRole(page, 'explorer');
   await clickPoint(page, position.x, position.y);
   await tool(page, 'select');
   await treasureToggle(page).check();

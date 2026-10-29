@@ -7,7 +7,7 @@ import { S } from './core/state.js';
 import { $, loadImageWithStatus, mountImageOverlays } from './core/utils.js';
 import { cipherOf, mapsZonesRelative } from './data/geo.js';
 import { MAPS_DATA, getImageUrl } from './data/maps.js';
-import { BOX_ICON_URL, CHAIR_ICON_URL, DUNGEON_ICON_URL, ESCAPE_DOOR_ICON_URL, TAC_ABYSS_MAX_M, TAC_DISPLAY_DEFAULT, TAC_ITEM_TYPES, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_MOVEMENT_SURVIVOR, TAC_MOVEMENT_BUFFS, TAC_ROLES, TAC_SVG_NS, TAC_TREASURE_RULE, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
+import { BOX_ICON_URL, CHAIR_ICON_URL, DUNGEON_ICON_URL, ESCAPE_DOOR_ICON_URL, TAC_ABYSS_MAX_M, TAC_DISPLAY_DEFAULT, TAC_FIXED_SPAWN_ICONS, TAC_ITEM_TYPES, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_MOVEMENT_SURVIVOR, TAC_MOVEMENT_BUFFS, TAC_ROLES, TAC_SVG_NS, TAC_TREASURE_RULE, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
 import { CIPHER_ICON_URL, cipherIcon } from './region.js';
 
 import { translate } from './core/i18n.js';
@@ -273,16 +273,16 @@ export function syncTacImage() {
   syncTacChairText();
   syncTacBasementText();
   const chairEntry = $('tacChairEntry');
-  if (chairEntry) chairEntry.style.display = MAPS_DATA[S.currentMapId].chairs ? '' : 'none';
+  if (chairEntry) chairEntry.style.display = MAPS_DATA[S.currentMapId].rocketChairs ? '' : 'none';
   renderTacBoxes();
   const boxEntry = $('tacBoxEntry');
-  if (boxEntry) boxEntry.style.display = MAPS_DATA[S.currentMapId].boxes ? '' : 'none';
+  if (boxEntry) boxEntry.style.display = MAPS_DATA[S.currentMapId].chests ? '' : 'none';
   const basementEntry = $('tacBasementEntry');
   if (basementEntry) {
     const map = MAPS_DATA[S.currentMapId];
     const hasBasement = Boolean(
-      (map.chairs && map.chairs.basements && map.chairs.basements.length)
-      || (map.boxes && map.boxes.basements && map.boxes.basements.length));
+      (map.rocketChairs && map.rocketChairs.basements && map.rocketChairs.basements.length)
+      || (map.chests && map.chests.basements && map.chests.basements.length));
     basementEntry.style.display = hasBasement ? '' : 'none';
   }
   syncTacDungeonText();
@@ -417,63 +417,67 @@ export function renderTacFixedSpawns() {
   for (const [role, cfg] of Object.entries(map.fixedSpawns || {})) {
     const token = tokens[role];
     if (!token) continue;
-    
-    
-    if (token.showFixedSpawnRange && cfg.rangeM && cfg.rangeScreenM && map.widthM) {
-      const [screenW, screenH] = cfg.rangeScreenM[token.fixedSpawnDevice === 'ios' ? 'ios' : 'pc'];
-      const outerW = cfg.rangeM * 2 + screenW;
-      const outerH = cfg.rangeM * 2 + screenH;
-      const sizePct = (outerW / map.widthM) * 100;
-      const radiusXPct = (cfg.rangeM / outerW) * 100;
-      const radiusYPct = (cfg.rangeM / outerH) * 100;
-      cfg.points.forEach((pt) => {
-        const p = cfg.camera ? pt.p : pt;
-        const rangeEl = document.createElement('div');
-        rangeEl.className = 'tac-fixed-spawn-range';
-        rangeEl.style.width = `${sizePct}%`;
-        rangeEl.style.aspectRatio = `${outerW} / ${outerH}`;
-        rangeEl.style.borderRadius = `${radiusXPct}% / ${radiusYPct}%`;
-        rangeEl.style.left = `${(p[0] / imgW) * 100}%`;
-        rangeEl.style.top = `${(p[1] / imgH) * 100}%`;
-        tacMapWrap.appendChild(rangeEl);
+    const items = (Array.isArray(cfg.item) ? cfg.item : [cfg.item]).filter(Boolean);
+
+    if (token.showFixedSpawnRange) {
+      items.forEach((item) => {
+        if (!item.rangeM || !item.rangeScreenM || !map.widthM) return;
+        const [screenW, screenH] = item.rangeScreenM[token.fixedSpawnDevice === 'ios' ? 'ios' : 'pc'];
+        const outerW = item.rangeM * 2 + screenW;
+        const outerH = item.rangeM * 2 + screenH;
+        const sizePct = (outerW / map.widthM) * 100;
+        const radiusXPct = (item.rangeM / outerW) * 100;
+        const radiusYPct = (item.rangeM / outerH) * 100;
+        item.points.forEach((pt) => {
+          const p = item.flag_orientation ? pt.p : pt;
+          const rangeEl = document.createElement('div');
+          rangeEl.className = 'tac-fixed-spawn-range';
+          rangeEl.style.width = `${sizePct}%`;
+          rangeEl.style.aspectRatio = `${outerW} / ${outerH}`;
+          rangeEl.style.borderRadius = `${radiusXPct}% / ${radiusYPct}%`;
+          rangeEl.style.left = `${(p[0] / imgW) * 100}%`;
+          rangeEl.style.top = `${(p[1] / imgH) * 100}%`;
+          tacMapWrap.appendChild(rangeEl);
+        });
       });
     }
     if (!token.showFixedSpawns) continue;
-    cfg.points.forEach((pt) => {
-      const p = Array.isArray(pt) ? pt : pt.p;
-      let el;
-      if (cfg.camera) {
-        
-        el = document.createElement('div');
-        const deg = Math.atan2(pt.d[1], pt.d[0]) * 180 / Math.PI;
-        const dirs = ['right', 'down', 'left', 'up'];
-        const dir = dirs[((Math.round(deg / 90) % 4) + 4) % 4];
-        el.innerHTML =
-          `<svg class="cam-dir ${dir}" viewBox="0 0 16 16" aria-hidden="true">`
-          + '<path d="M5 2 L12 8 L5 14" fill="none" stroke="#7dd3fc"'
-          + ' stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-          + (cfg.icon
-            ? `<img class="cam-icon" src="${cfg.icon}" alt="${cfg.label}" draggable="false">`
-            : '<div class="cam-dot"></div>');
-      } else {
-        
-        const spawnDef = TAC_ITEM_TYPES[pt.icon || cfg.icon] || {};
-        const iconUrl = spawnDef.icon || '';
-        if (iconUrl) {
-          el = document.createElement('img');
-          el.src = iconUrl;
-          el.alt = cfg.label;
-          el.draggable = false;
-          if (spawnDef.iconSize) el.style.width = `${spawnDef.iconSize}%`;
-        } else {
+    items.forEach((item) => {
+      item.points.forEach((pt) => {
+        const p = Array.isArray(pt) ? pt : pt.p;
+        let el;
+        if (item.flag_orientation) {
+          const iconUrl = TAC_FIXED_SPAWN_ICONS[item.icon] || item.icon;
           el = document.createElement('div');
-          el.className = 'cam-dot';
+          const deg = Math.atan2(pt.d[1], pt.d[0]) * 180 / Math.PI;
+          const dirs = ['right', 'down', 'left', 'up'];
+          const dir = dirs[((Math.round(deg / 90) % 4) + 4) % 4];
+          el.innerHTML =
+            `<svg class="cam-dir ${dir}" viewBox="0 0 16 16" aria-hidden="true">`
+            + '<path d="M5 2 L12 8 L5 14" fill="none" stroke="#7dd3fc"'
+            + ' stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+            + (iconUrl
+              ? `<img class="cam-icon" src="${iconUrl}" alt="${cfg.label}" draggable="false">`
+              : '<div class="cam-dot"></div>');
+        } else {
+          const spawnDef = TAC_ITEM_TYPES[item.icon] || {};
+          const iconUrl = spawnDef.icon || '';
+          if (iconUrl) {
+            el = document.createElement('img');
+            el.src = iconUrl;
+            el.alt = cfg.label;
+            el.draggable = false;
+            if (spawnDef.iconSize) el.style.width = `${spawnDef.iconSize}%`;
+          } else {
+            el = document.createElement('div');
+            el.className = 'cam-dot';
+          }
         }
-      }
-      el.className = 'tac-fixed-spawn';
-      el.style.left = `${(p[0] / imgW) * 100}%`;
-      el.style.top = `${(p[1] / imgH) * 100}%`;
-      tacMapWrap.appendChild(el);
+        el.className = 'tac-fixed-spawn';
+        el.style.left = `${(p[0] / imgW) * 100}%`;
+        el.style.top = `${(p[1] / imgH) * 100}%`;
+        tacMapWrap.appendChild(el);
+      });
     });
   }
 }
@@ -514,7 +518,7 @@ export function renderTacChairs() {
   if (!tacMapWrap) return;
   tacMapWrap.querySelectorAll('.tac-chair').forEach((el) => el.remove());
   const map = MAPS_DATA[S.currentMapId];
-  const ch = map.chairs;
+  const ch = map.rocketChairs;
   if (!ch) return;
   const [imgW, imgH] = map.mapSize;
   // 椅子点格式：[x, z]（地面）或 [x, y, z]（地下室，y 为高度）
@@ -548,14 +552,14 @@ export function renderTacChairs() {
 }
 
 export function syncTacChairText() {
-  const ch = MAPS_DATA[S.currentMapId].chairs;
+  const ch = MAPS_DATA[S.currentMapId].rocketChairs;
   if (!ch || !ch.sets.length) { tacChairText.textContent = '--'; return; }
   tacChairText.textContent = translate("application.syncTacChairText",
     { index: S.tacChairIndex + 1, count: ch.sets.length });
 }
 
 export function switchTacChair(step) {
-  const ch = MAPS_DATA[S.currentMapId].chairs;
+  const ch = MAPS_DATA[S.currentMapId].rocketChairs;
   if (!ch || !ch.sets.length) return;
   S.tacChairIndex = (S.tacChairIndex + step + ch.sets.length) % ch.sets.length;
   syncTacChairText();
@@ -564,8 +568,8 @@ export function switchTacChair(step) {
 }
 
 export function syncTacBasementText() {
-  const ch = MAPS_DATA[S.currentMapId].chairs;
-  const bx = MAPS_DATA[S.currentMapId].boxes;
+  const ch = MAPS_DATA[S.currentMapId].rocketChairs;
+  const bx = MAPS_DATA[S.currentMapId].chests;
   const count = Math.max(
     ch && ch.basements ? ch.basements.length : 0,
     bx && bx.basements ? bx.basements.length : 0,
@@ -576,8 +580,8 @@ export function syncTacBasementText() {
 }
 
 export function switchTacBasement(step) {
-  const ch = MAPS_DATA[S.currentMapId].chairs;
-  const bx = MAPS_DATA[S.currentMapId].boxes;
+  const ch = MAPS_DATA[S.currentMapId].rocketChairs;
+  const bx = MAPS_DATA[S.currentMapId].chests;
   const count = Math.max(
     ch && ch.basements ? ch.basements.length : 0,
     bx && bx.basements ? bx.basements.length : 0,
@@ -599,7 +603,7 @@ export function renderTacBoxes() {
   if (!tacMapWrap) return;
   tacMapWrap.querySelectorAll('.tac-box').forEach((el) => el.remove());
   const map = MAPS_DATA[S.currentMapId];
-  const bx = map.boxes;
+  const bx = map.chests;
   if (!bx) return;
   const [imgW, imgH] = map.mapSize;
   // 箱子点格式与椅子相同：[x, z]（地面）或 [x, y, z]（带高度，如地下室/二楼）
@@ -656,8 +660,8 @@ export function tacSnapTarget(p, excl) {
         size: tacDisplay.doorSize, kind: 'door',
       }));
   }
-  if (tacDisplay.snap.chair && map.chairs) {
-    const ch = map.chairs;
+  if (tacDisplay.snap.chair && map.rocketChairs) {
+    const ch = map.rocketChairs;
     const pushChair = (pt) => {
       const px = pt[0], pz = pt.length > 2 ? pt[2] : pt[1];
       pts.push({ x: px / imgW, y: pz / imgH, size: tacDisplay.chairSize, kind: 'chair' });
@@ -670,8 +674,8 @@ export function tacSnapTarget(p, excl) {
       ch.basements[S.tacChairBasementIndex % ch.basements.length].forEach(pushChair);
     }
   }
-  if (tacDisplay.snap.box && map.boxes) {
-    const bx = map.boxes;
+  if (tacDisplay.snap.box && map.chests) {
+    const bx = map.chests;
     const pushBox = (pt) => {
       const px = pt[0], pz = pt.length > 2 ? pt[2] : pt[1];
       pts.push({ x: px / imgW, y: pz / imgH, size: tacDisplay.boxSize, kind: 'box' });
@@ -1258,6 +1262,91 @@ export function tacMeasureSegColor(m) {
 }
 
 
+export function tacMirrorParts() {
+  const board = tacBoard();
+  const bq = board.tokens.bloodyQueen;
+  if (!bq) return null;
+  const aq = board.items.find((it) => it.kind === 'aquaMirror');
+  const miIdx = board.items.findIndex((it) => it.kind === 'mirrorImage');
+  return { bq, aq, mi: miIdx >= 0 ? board.items[miIdx] : null, miIdx };
+}
+
+
+export function tacSyncMirror(moved = null) {
+  const board = tacBoard();
+  const parts = tacMirrorParts();
+  if (!parts) return false;
+  const { bq, aq } = parts;
+  let { mi, miIdx } = parts;
+  const clamp01 = (v) => Math.min(0.995, Math.max(0.005, v));
+  let changed = false;
+
+  if (!bq.showMirror || !aq) {
+    if (miIdx >= 0) { board.items.splice(miIdx, 1); changed = true; }
+    delete bq.mirrorAxis;
+    return changed;
+  }
+
+  const W = tacMapWrap.clientWidth || 1;
+  const H = tacMapWrap.clientHeight || 1;
+  if (!mi) {
+    mi = {
+      role: 'bloodyQueen', kind: 'mirrorImage',
+      x: clamp01(2 * aq.x - bq.x), y: clamp01(2 * aq.y - bq.y),
+    };
+    board.items.push(mi);
+    changed = true;
+    return changed;
+  }
+
+  if (bq.fixedMirror) {
+    if (!bq.mirrorAxis) {
+      const dx = (bq.x - aq.x) * W, dy = (bq.y - aq.y) * H;
+      const len = Math.hypot(dx, dy) || 1;
+      
+      bq.mirrorAxis = { x: aq.x, y: aq.y, nx: dx / len, ny: dy / len };
+      changed = true;
+    }
+    const ax = bq.mirrorAxis.x * W, ay = bq.mirrorAxis.y * H;
+    const reflect = (q) => {
+      const px = q.x * W, py = q.y * H;
+      const dot = (px - ax) * bq.mirrorAxis.nx + (py - ay) * bq.mirrorAxis.ny;
+      return { x: (px - 2 * dot * bq.mirrorAxis.nx) / W, y: (py - 2 * dot * bq.mirrorAxis.ny) / H };
+    };
+    if (moved === 'bq') {
+      const r = reflect(bq);
+      mi.x = clamp01(r.x); mi.y = clamp01(r.y); changed = true;
+    } else if (moved === 'mi') {
+      const r = reflect(mi);
+      bq.x = clamp01(r.x); bq.y = clamp01(r.y); changed = true;
+    }
+    return changed;
+  }
+
+  delete bq.mirrorAxis;
+  if (moved === 'mi') {
+    aq.x = clamp01((bq.x + mi.x) / 2);
+    aq.y = clamp01((bq.y + mi.y) / 2);
+    changed = true;
+  } else {
+    mi.x = clamp01(2 * aq.x - bq.x);
+    mi.y = clamp01(2 * aq.y - bq.y);
+    changed = true;
+  }
+  return changed;
+}
+
+
+function tacSyncMirrorEl(kind) {
+  const b = tacBoard();
+  const i2 = b.items.findIndex((o) => o.kind === kind);
+  const o2 = i2 >= 0 ? b.items[i2] : null;
+  const el2 = o2 && tacMapWrap.querySelector(
+    `.tac-item-circle[data-idx="${i2}"], .tac-item-pin[data-idx="${i2}"]`);
+  if (el2) { el2.style.left = `${o2.x * 100}%`; el2.style.top = `${o2.y * 100}%`; }
+}
+
+
 export function tacShadeColor(hex, f) {
   const m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
   if (!m) return hex;
@@ -1477,8 +1566,27 @@ export function renderTacArrows() {
     line.setAttribute('stroke-linecap', 'round');
     tacArrowSvg.appendChild(line);
   });
-  
-  
+
+
+  {
+    const bqTk = tacBoard().tokens.bloodyQueen;
+    const parts = tacMirrorParts();
+    if (bqTk && parts && parts.aq && bqTk.showMirrorLink !== false) {
+      const drawLine = (a, b) => {
+        const line = document.createElementNS(TAC_SVG_NS, 'line');
+        line.setAttribute('x1', a.x * W); line.setAttribute('y1', a.y * H);
+        line.setAttribute('x2', b.x * W); line.setAttribute('y2', b.y * H);
+        line.setAttribute('stroke', '#7dd3fc');
+        line.setAttribute('stroke-width', 2);
+        line.setAttribute('stroke-linecap', 'round');
+        tacArrowSvg.appendChild(line);
+      };
+      drawLine(bqTk, parts.aq);
+      if (parts.mi) drawLine(parts.mi, parts.aq);
+    }
+  }
+
+
   tacBoard().items.forEach((it) => {
     const ab = it.abyss;
     if (it.kind !== 'spearfishing' || !ab || !ab.on) return;
@@ -1631,11 +1739,21 @@ export function renderTacBoard() {
   renderTacFixedSpawns();
   renderTacTreasure();
   const board = tacBoard();
-  
+  const zMap = new Map();
+  {
+    const sorted = tacSortedEntries(board);
+    const n = sorted.length;
+    sorted.forEach((en, i) => zMap.set(en.key, String(100 + (n - i))));
+  }
+  const itemOcc = {};
+
   board.items.forEach((it, idx) => {
     const def = TAC_ITEM_TYPES[it.kind];
     if (!def) return;
-    
+    const ok = `${it.role}|${it.kind}`;
+    const o = (itemOcc[ok] = (itemOcc[ok] || 0) + 1) - 1;
+    const z = zMap.get(`i:${it.role}:${it.kind}:${o}`);
+
     const sizePct = tacItemSizePercent(it); 
     const el = document.createElement('div');
     el.className = (sizePct !== null ? 'tac-item-circle' : 'tac-item-pin')
@@ -1646,6 +1764,7 @@ export function renderTacBoard() {
     el.style.top = `${it.y * 100}%`;
     el.style.setProperty('--ic', def.color || '#e2e8f0');
     el.title = def.name;
+    if (z) el.style.zIndex = z;
     if (sizePct !== null) {
       el.style.width = `${sizePct}%`;
       
@@ -1677,7 +1796,8 @@ export function renderTacBoard() {
   });
   for (const [role, t] of Object.entries(board.tokens)) {
     const def = TAC_ROLES[role] || {};
-    
+    const z = zMap.get(`r:${role}`);
+
     const rgM = tacRoleRangeMeters(role, t);
     const rgPct = rgM === null ? null : tacItemMetersToPercent(rgM);
     if (rgPct !== null) {
@@ -1687,6 +1807,7 @@ export function renderTacBoard() {
       rg.style.left = `${t.x * 100}%`;
       rg.style.top = `${t.y * 100}%`;
       rg.style.width = `${rgPct}%`;
+      if (z) rg.style.zIndex = z;
       tacMapWrap.appendChild(rg);
     }
     const el = document.createElement('div');
@@ -1701,6 +1822,7 @@ export function renderTacBoard() {
     el.style.width = `${t.size}%`;
     setTacFontSize(el, t.size * 0.42, 26);
     el.style.setProperty('--rc', def.color || '#fff');
+    if (z) el.style.zIndex = z;
     if (showIcon) {
       el.innerHTML = `<img src="${def.icon}" alt="${def.name}" draggable="false">`;
       el.title = def.name;
@@ -1866,24 +1988,109 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
   }
 }
 
-export function renderTacManage() {
-  const board = tacBoard();
-  tacManageList.innerHTML = '';
+function tacManageDefaultEntries(board) {
   const roleOrder = Object.keys(TAC_ROLES).filter((r) =>
     board.tokens[r] || board.items.some((it) => it.role === r));
   const campOrder = { survivor: 0, hunter: 1, other: 2 };
   roleOrder.sort((a, b) =>
     (campOrder[(TAC_ROLES[a] || {}).camp] ?? 0)
     - (campOrder[(TAC_ROLES[b] || {}).camp] ?? 0));
-
-  
+  const occ = {};
   const entries = [];
   roleOrder.forEach((role) => {
-    if (board.tokens[role]) entries.push({ type: 'role', role });
+    if (board.tokens[role]) entries.push({ type: 'role', role, key: `r:${role}` });
     board.items.forEach((it, idx) => {
-      if (it.role === role) entries.push({ type: 'item', idx });
+      if (it.role !== role) return;
+      const k = `${role}|${it.kind}`;
+      const o = (occ[k] = (occ[k] || 0) + 1) - 1;
+      entries.push({ type: 'item', idx, key: `i:${role}:${it.kind}:${o}` });
     });
   });
+  entries.forEach((e, i) => { e.defIdx = i; });
+  return entries;
+}
+
+function tacSortedEntries(board) {
+  const entries = tacManageDefaultEntries(board);
+  const order = board.order || [];
+  const pos = new Map(order.map((k, i) => [k, i]));
+  entries.sort((a, b) => {
+    const pa = pos.has(a.key) ? pos.get(a.key) : order.length + a.defIdx;
+    const pb = pos.has(b.key) ? pos.get(b.key) : order.length + b.defIdx;
+    return pa - pb;
+  });
+  return entries;
+}
+
+let manageDrag = null;
+let suppressManageClick = 0;
+
+function attachManageDrag(btn, key) {
+  btn.addEventListener('pointerdown', (ev) => {
+    if (ev.button !== undefined && ev.button !== 0) return;
+    manageDrag = { key, btn, x: ev.clientX, y: ev.clientY, active: false, target: null };
+    const move = (e) => {
+      if (!manageDrag) return;
+      const dx = e.clientX - manageDrag.x;
+      const dy = e.clientY - manageDrag.y;
+      if (!manageDrag.active) {
+        if (Math.hypot(dx, dy) <= 8) return;
+        if (Math.abs(dy) > Math.abs(dx)) { manageDrag = null; return; }
+        manageDrag.active = true;
+        btn.classList.add('dragging');
+      }
+      e.preventDefault();
+      btn.style.setProperty('--dg-x', `${dx}px`);
+      btn.style.setProperty('--dg-y', `${dy}px`);
+      const el = document.elementFromPoint(e.clientX, e.clientY);
+      const t = el && el.closest ? el.closest('.tac-manage-btn') : null;
+      const nt = (t && t !== btn) ? t : null;
+      if (manageDrag.target !== nt) {
+        if (manageDrag.target) manageDrag.target.classList.remove('drag-over');
+        manageDrag.target = nt;
+        if (nt) nt.classList.add('drag-over');
+      }
+    };
+    const up = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      window.removeEventListener('pointercancel', up);
+      if (manageDrag && manageDrag.active) {
+        suppressManageClick = Date.now();
+        const tgt = manageDrag.target;
+        btn.classList.remove('dragging');
+        btn.style.removeProperty('--dg-x');
+        btn.style.removeProperty('--dg-y');
+        if (tgt) tgt.classList.remove('drag-over');
+        if (tgt) {
+          const board = tacBoard();
+          const keys = tacSortedEntries(board).map((en) => en.key);
+          const from = keys.indexOf(key);
+          const to = keys.indexOf(tgt.dataset.key);
+          if (from > -1 && to > -1) {
+            keys.splice(from, 1);
+            keys.splice(to, 0, key);
+            board.order = keys;
+            tacSave();
+            renderTacManage();
+            renderTacBoard();
+          }
+        }
+      }
+      manageDrag = null;
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+    window.addEventListener('pointercancel', up);
+  });
+}
+
+
+export function renderTacManage() {
+  const board = tacBoard();
+  board.order ||= [];
+  tacManageList.innerHTML = '';
+  const entries = tacSortedEntries(board);
 
   if (!entries.length) {
     tacManageSel = null;
@@ -1892,7 +2099,29 @@ export function renderTacManage() {
     return;
   }
 
-  
+  const info = document.createElement('div');
+  info.className = 'tac-manage-info';
+  info.innerHTML = `<span class="tac-manage-count">${
+    translate("ui.tacManageInfo.count", { count: entries.length })}</span>`;
+  const resetBtn = document.createElement('button');
+  resetBtn.type = 'button';
+  resetBtn.className = 'tac-manage-reset';
+  resetBtn.textContent = translate("ui.tacManageInfo.reset");
+  resetBtn.addEventListener('click', () => {
+    board.order = [];
+    tacSave();
+    renderTacManage();
+    renderTacBoard();
+  });
+  const side = document.createElement('span');
+  side.className = 'tac-manage-side';
+  const hint = document.createElement('span');
+  hint.className = 'tac-manage-hint';
+  hint.textContent = translate("ui.tacManageInfo.hint");
+  side.appendChild(hint);
+  side.appendChild(resetBtn);
+  info.appendChild(side);
+  tacManageList.appendChild(info);
   const isSelEntry = (e) => tacManageSel && e.type === tacManageSel.type
     && (e.type === 'role' ? e.role === tacManageSel.role : e.idx === tacManageSel.idx);
   if (tacManageSel && !entries.some(isSelEntry)) tacManageSel = null;
@@ -1908,10 +2137,13 @@ export function renderTacManage() {
     const btn = document.createElement('button');
     btn.className = 'tac-manage-btn' + (isSelEntry(e) ? ' active' : '');
     btn.title = def.name || e.role;
+    btn.dataset.key = e.key;
     btn.innerHTML =
       `${def.icon ? `<img src="${def.icon}" alt="${def.name}" draggable="false">` : ''}`
       + `<span class="tac-manage-btn-name">${def.name || e.role}</span>`;
+    attachManageDrag(btn, e.key);
     btn.addEventListener('click', () => {
+      if (Date.now() - suppressManageClick < 300) return;
       tacManageSel = isRole ? { type: 'role', role: e.role } : { type: 'item', idx: e.idx };
       
       if (isRole) { tacSelected = e.role; tacSelectedItem = null; }
@@ -1982,6 +2214,62 @@ export function renderTacManage() {
       });
       settings.appendChild(lkRow);
     }
+
+
+    if (role === 'bloodyQueen') {
+      const hasAqua = board.items.some((it) => it.kind === 'aquaMirror');
+      const hasMirror = board.items.some((it) => it.kind === 'mirrorImage');
+
+      const mqRow = document.createElement('div');
+      mqRow.className = 'tac-manage-row';
+      mqRow.innerHTML =
+        `<span class="tac-manage-mirror-title">`
+        + translate("ui.tacManageMirror.title", {  }) + `</span>`
+        + `<label class="tac-manage-glow"><input type="checkbox" data-mq="link"`
+        + translate("ui.tacManageMirror.link", { value: token.showMirrorLink !== false ? ' checked' : '' })
+        + `<label class="tac-manage-glow"><input type="checkbox" data-mq="show"`
+        + translate("ui.tacManageMirror.show", { value: token.showMirror ? ' checked' : '', disabled: hasAqua ? '' : ' disabled' })
+        + `<label class="tac-manage-glow"><input type="checkbox" data-mq="fix"`
+        + translate("ui.tacManageMirror.fix", { value: token.fixedMirror ? ' checked' : '', disabled: token.showMirror ? '' : ' disabled' })
+        + `<button type="button" class="tac-manage-swap"${token.showMirror && hasMirror ? '' : ' disabled'}>`
+        + translate("ui.tacManageMirror.swap", {  }) + `</button>`;
+
+      mqRow.querySelector('input[data-mq="link"]').addEventListener('change', (e) => {
+        token.showMirrorLink = e.target.checked;
+        renderTacArrows();
+        tacSave();
+      });
+      mqRow.querySelector('input[data-mq="show"]').addEventListener('change', (e) => {
+        token.showMirror = e.target.checked;
+        if (!token.showMirror) { token.fixedMirror = false; delete token.mirrorAxis; }
+        tacSyncMirror(null);
+        renderTacBoard();
+        renderTacArrows();
+        tacSave();
+        renderTacManage();
+      });
+      mqRow.querySelector('input[data-mq="fix"]').addEventListener('change', (e) => {
+        token.fixedMirror = e.target.checked;
+        delete token.mirrorAxis;
+        tacSyncMirror(null);
+        renderTacBoard();
+        renderTacArrows();
+        tacSave();
+        renderTacManage();
+      });
+      mqRow.querySelector('button').addEventListener('click', () => {
+        const parts = tacMirrorParts();
+        if (!parts || !parts.mi) return;
+        const bx = token.x, by = token.y;
+        token.x = parts.mi.x; token.y = parts.mi.y;
+        parts.mi.x = bx; parts.mi.y = by;
+        tacSyncMirror('bq');
+        renderTacBoard();
+        renderTacArrows();
+        tacSave();
+      });
+      settings.appendChild(mqRow);
+    }
     
     
     if (role === 'Naiad') {
@@ -2004,6 +2292,9 @@ export function renderTacManage() {
     }
 const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     if (fixedSpawnCfg) {
+      const fsRangeItem = (Array.isArray(fixedSpawnCfg.item)
+        ? fixedSpawnCfg.item : [fixedSpawnCfg.item])
+        .find((it) => it && it.rangeM && it.rangeScreenM);
       const fsRow = document.createElement('div');
       fsRow.className = 'tac-manage-row';
       fsRow.innerHTML =
@@ -2017,15 +2308,15 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
       settings.appendChild(fsRow);
       
       
-      if (fixedSpawnCfg.rangeM && fixedSpawnCfg.rangeScreenM && MAPS_DATA[S.currentMapId].widthM) {
+      if (fsRangeItem && MAPS_DATA[S.currentMapId].widthM) {
         const dev = token.fixedSpawnDevice === 'ios' ? 'ios' : 'pc';
-        const [devW, devH] = fixedSpawnCfg.rangeScreenM[dev];
+        const [devW, devH] = fsRangeItem.rangeScreenM[dev];
         const radioName = `tac-fsdev-${S.currentMapId}-${role}`;
         const rangeRow = document.createElement('div');
         rangeRow.className = 'tac-manage-row';
         rangeRow.innerHTML =
           `<label class="tac-manage-glow"><input type="checkbox"`
-          + translate("application.renderTacManageEighth", { value: token.showFixedSpawnRange ? ' checked' : '', rangeM: fixedSpawnCfg.rangeM, devW: devW, devH: devH })
+          + translate("application.renderTacManageEighth", { value: token.showFixedSpawnRange ? ' checked' : '', rangeM: fsRangeItem.rangeM, devW: devW, devH: devH })
           + `<label class="tac-manage-glow"><input type="radio" name="${radioName}"${dev === 'pc' ? ' checked' : ''}>PC</label>`
           + `<label class="tac-manage-glow"><input type="radio" name="${radioName}"${dev === 'ios' ? ' checked' : ''}>IOS</label>`;
         rangeRow.querySelector('input[type="checkbox"]').addEventListener('change', (e) => {
@@ -2037,8 +2328,8 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
         const theory = rangeRow.querySelector('.tac-fsdev-theory');
         const onDevChange = (next) => {
           token.fixedSpawnDevice = next;
-          const [w, h] = fixedSpawnCfg.rangeScreenM[next];
-          theory.textContent = translate("application.onDevChange", { rangeM: fixedSpawnCfg.rangeM, width: w, height: h });
+          const [w, h] = fsRangeItem.rangeScreenM[next];
+          theory.textContent = translate("application.onDevChange", { rangeM: fsRangeItem.rangeM, width: w, height: h });
           renderTacFixedSpawns();
           tacSave();
         };
@@ -2095,6 +2386,11 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     row.querySelector('.tac-manage-del').addEventListener('click', () => {
       const snapshot = { ...board.tokens[role] };
       delete board.tokens[role];
+      if (role === 'bloodyQueen') {
+        for (let i = board.items.length - 1; i >= 0; i -= 1) {
+          if (board.items[i].kind === 'mirrorImage') board.items.splice(i, 1);
+        }
+      }
       tacUndoStack.push({ type: 'remove', role, token: snapshot });
       if (tacSelected === role) tacSelected = null;
       tacManageSel = null;
@@ -2206,6 +2502,11 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
   row.querySelector('.tac-manage-del').addEventListener('click', () => {
     const removed = board.items[idx];
     board.items.splice(idx, 1);
+    if (removed.kind === 'aquaMirror') {
+      for (let i = board.items.length - 1; i >= 0; i -= 1) {
+        if (board.items[i].kind === 'mirrorImage') board.items.splice(i, 1);
+      }
+    }
     tacUndoStack.push({ type: 'delItem', item: { ...removed }, idx });
     if (tacSelectedItem === idx) tacSelectedItem = null;
     tacManageSel = null;
@@ -4027,8 +4328,8 @@ export async function tacExportImage() {
 
   // 狂欢之椅：固定椅 + 当前刷点组 + 当前地下室组
   const xzOf = (pt) => (pt.length > 2 ? [pt[0], pt[2]] : pt);
-  if (chairIcon && map.chairs) {
-    const ch = map.chairs;
+  if (chairIcon && map.rocketChairs) {
+    const ch = map.rocketChairs;
     const size = tacDisplay.chairSize / 100 * W * K;
     const drawChair = (pt) => {
       const [px, pz] = xzOf(pt);
@@ -4044,8 +4345,8 @@ export async function tacExportImage() {
   }
 
   // 箱子：固定箱 + 当前地下室组
-  if (boxIcon && map.boxes) {
-    const bx = map.boxes;
+  if (boxIcon && map.chests) {
+    const bx = map.chests;
     const size = tacDisplay.boxSize / 100 * W * K;
     const drawBox = (pt) => {
       const [px, pz] = xzOf(pt);
@@ -4062,65 +4363,69 @@ export async function tacExportImage() {
   for (const [role, cfg] of Object.entries(map.fixedSpawns || {})) {
     const token = boardTokens[role];
     if (!token) continue;
-    if (token.showFixedSpawnRange && cfg.rangeM && cfg.rangeScreenM && map.widthM) {
-      const [screenW, screenH] = cfg.rangeScreenM[token.fixedSpawnDevice === 'ios' ? 'ios' : 'pc'];
+    const fsItems = (Array.isArray(cfg.item) ? cfg.item : [cfg.item]).filter(Boolean);
+    fsItems.forEach((item) => {
+      if (!(token.showFixedSpawnRange && item.rangeM && item.rangeScreenM && map.widthM)) return;
+      const [screenW, screenH] = item.rangeScreenM[token.fixedSpawnDevice === 'ios' ? 'ios' : 'pc'];
       const metersToPxX = W / (vw * map.widthM);
       const metersToPxY = metersToPxX;
-      const outerW = (cfg.rangeM * 2 + screenW) * metersToPxX;
-      const outerH = (cfg.rangeM * 2 + screenH) * metersToPxY;
+      const outerW = (item.rangeM * 2 + screenW) * metersToPxX;
+      const outerH = (item.rangeM * 2 + screenH) * metersToPxY;
       ctx.save();
       ctx.strokeStyle = 'rgba(125, 211, 252, 0.85)';
       ctx.fillStyle = 'rgba(125, 211, 252, 0.08)';
       ctx.lineWidth = Math.max(1.2, W * K / 500);
       ctx.setLineDash([W * K / 50, W * K / 80]);
-      cfg.points.forEach((pt) => {
-        const p = cfg.camera ? pt.p : pt;
+      item.points.forEach((pt) => {
+        const p = item.flag_orientation ? pt.p : pt;
         ctx.beginPath();
         ctx.ellipse(PX(p[0] / W0), PY(p[1] / H0), outerW / 2, outerH / 2, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
       });
       ctx.restore();
-    }
+    });
     if (!token.showFixedSpawns) continue;
-    for (const pt of cfg.points) {
-      const p = Array.isArray(pt) ? pt : pt.p;
-      const x = PX(p[0] / W0), y = PY(p[1] / H0);
-      if (cfg.camera) {
-        // 朝向箭头 + 图标
-        const ang = Math.atan2(pt.d[1], pt.d[0]);
-        const arrowLen = 0.022 * W * K;
-        ctx.save();
-        ctx.strokeStyle = '#7dd3fc';
-        ctx.lineWidth = Math.max(1.5, W * K / 300);
-        ctx.lineCap = 'round';
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.lineTo(x + Math.cos(ang) * arrowLen, y + Math.sin(ang) * arrowLen);
-        ctx.stroke();
-        const head = arrowLen * 0.42;
-        ctx.beginPath();
-        ctx.moveTo(x + Math.cos(ang) * arrowLen, y + Math.sin(ang) * arrowLen);
-        ctx.lineTo(x + Math.cos(ang) * (arrowLen - head) + Math.cos(ang + Math.PI / 2) * head * 0.6,
-          y + Math.sin(ang) * (arrowLen - head) + Math.sin(ang + Math.PI / 2) * head * 0.6);
-        ctx.moveTo(x + Math.cos(ang) * arrowLen, y + Math.sin(ang) * arrowLen);
-        ctx.lineTo(x + Math.cos(ang) * (arrowLen - head) + Math.cos(ang - Math.PI / 2) * head * 0.6,
-          y + Math.sin(ang) * (arrowLen - head) + Math.sin(ang - Math.PI / 2) * head * 0.6);
-        ctx.stroke();
-        ctx.restore();
-        if (cfg.icon) {
-          const isz = 0.03 * W * K;
-          const camImg = await tacLoadImg(cfg.icon);
-          if (camImg) { ctx.drawImage(camImg, x - isz / 2, y - isz / 2, isz, isz); continue; }
-        }
-        ctx.save();
-        ctx.fillStyle = '#f8fafc';
-        ctx.beginPath();
-        ctx.arc(x, y, Math.max(2, W * K / 150), 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      } else {
-        const spawnDef = TAC_ITEM_TYPES[pt.icon || cfg.icon] || {};
+    for (const item of fsItems) {
+      for (const pt of item.points) {
+        const p = Array.isArray(pt) ? pt : pt.p;
+        const x = PX(p[0] / W0), y = PY(p[1] / H0);
+        if (item.flag_orientation) {
+          // 朝向箭头 + 图标
+          const ang = Math.atan2(pt.d[1], pt.d[0]);
+          const arrowLen = 0.022 * W * K;
+          ctx.save();
+          ctx.strokeStyle = '#7dd3fc';
+          ctx.lineWidth = Math.max(1.5, W * K / 300);
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + Math.cos(ang) * arrowLen, y + Math.sin(ang) * arrowLen);
+          ctx.stroke();
+          const head = arrowLen * 0.42;
+          ctx.beginPath();
+          ctx.moveTo(x + Math.cos(ang) * arrowLen, y + Math.sin(ang) * arrowLen);
+          ctx.lineTo(x + Math.cos(ang) * (arrowLen - head) + Math.cos(ang + Math.PI / 2) * head * 0.6,
+            y + Math.sin(ang) * (arrowLen - head) + Math.sin(ang + Math.PI / 2) * head * 0.6);
+          ctx.moveTo(x + Math.cos(ang) * arrowLen, y + Math.sin(ang) * arrowLen);
+          ctx.lineTo(x + Math.cos(ang) * (arrowLen - head) + Math.cos(ang - Math.PI / 2) * head * 0.6,
+            y + Math.sin(ang) * (arrowLen - head) + Math.sin(ang - Math.PI / 2) * head * 0.6);
+          ctx.stroke();
+          ctx.restore();
+          const fsIcon = TAC_FIXED_SPAWN_ICONS[item.icon] || item.icon;
+          if (fsIcon) {
+            const isz = 0.03 * W * K;
+            const camImg = await tacLoadImg(fsIcon);
+            if (camImg) { ctx.drawImage(camImg, x - isz / 2, y - isz / 2, isz, isz); continue; }
+          }
+          ctx.save();
+          ctx.fillStyle = '#f8fafc';
+          ctx.beginPath();
+          ctx.arc(x, y, Math.max(2, W * K / 150), 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        } else {
+          const spawnDef = TAC_ITEM_TYPES[item.icon] || {};
         if (spawnDef.icon) {
           const isz = (spawnDef.iconSize || 3.4) / 100 * W * K;
           const iconImg = await tacLoadImg(spawnDef.icon);
@@ -4132,6 +4437,7 @@ export async function tacExportImage() {
         ctx.arc(x, y, Math.max(2, W * K / 150), 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
+      }
       }
     }
   }
@@ -4482,7 +4788,10 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
     
     const it0 = tacBoard().items[idx];
     const abyssLocked = !!(it0 && it0.abyss && it0.abyss.on && tacBoard().tokens.Naiad);
-    tacDragItem = abyssLocked
+    const bqTk0 = tacBoard().tokens.bloodyQueen;
+    const mirrorLocked = !!(it0 && it0.kind === 'aquaMirror' && bqTk0
+      && bqTk0.showMirror && bqTk0.fixedMirror);
+    tacDragItem = (abyssLocked || mirrorLocked)
       ? null : { idx, pushingItems: new Set(), pushingRoles: new Set() };
     tacMapWrap.setPointerCapture(e.pointerId);
     tacMapWrap.querySelectorAll('.tac-item-circle, .tac-item-pin').forEach((el) =>
@@ -4513,6 +4822,7 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
     tacSelectedItem = tacBoard().items.length - 1;
     tacManageSel = { type: 'item', idx: tacSelectedItem };
     tacPlaceItem = null;
+    if (item.kind === 'aquaMirror') tacSyncMirror('aq');
     renderTacBoard();
     return;
   }
@@ -4600,7 +4910,15 @@ tacMapWrap.addEventListener('pointermove', (e) => {
     }
     if (t.showTreasureRange) renderTacTreasure();
     tacAbyssRecord(p); 
-    
+
+    if (tacDrag.role === 'bloodyQueen') {
+      const hadMirror = tacBoard().items.some((it) => it.kind === 'mirrorImage');
+      if (tacSyncMirror('bq')) {
+        if (!hadMirror) renderTacBoard();
+        else { tacSyncMirrorEl('mirrorImage'); renderTacArrows(); }
+      }
+    }
+
     if (tacBoard().items.some((it) =>
       (TAC_ITEM_TYPES[it.kind] || {}).linkToRole === tacDrag.role)) {
       renderTacArrows();
@@ -4630,6 +4948,28 @@ tacMapWrap.addEventListener('pointermove', (e) => {
     if (el) {
       el.style.left = `${it.x * 100}%`;
       el.style.top = `${it.y * 100}%`;
+    }
+
+    if (it.kind === 'aquaMirror' || it.kind === 'mirrorImage') {
+      const movedKind = it.kind === 'aquaMirror' ? 'aq' : 'mi';
+      const hadMirror = tacBoard().items.some((o) => o.kind === 'mirrorImage');
+      if (tacSyncMirror(movedKind)) {
+        if (!hadMirror) renderTacBoard();
+        else {
+          if (movedKind === 'aq') {
+            tacSyncMirrorEl('mirrorImage');
+          } else {
+            tacSyncMirrorEl('aquaMirror');
+            const tkEl = tacMapWrap.querySelector('.tac-token[data-role="bloodyQueen"]');
+            const bqTk = tacBoard().tokens.bloodyQueen;
+            if (tkEl && bqTk) {
+              tkEl.style.left = `${bqTk.x * 100}%`;
+              tkEl.style.top = `${bqTk.y * 100}%`;
+            }
+          }
+          renderTacArrows();
+        }
+      }
     }
     
     

@@ -3411,6 +3411,27 @@ div.tac-fixed-spawn .cam-dir.up {
 }
 .tac-manage-del:hover { background: rgba(239, 68, 68, 0.28); }
 
+.tac-manage-swap {
+  padding: 2px 12px;
+  border: 1px solid rgba(125, 211, 252, 0.5);
+  border-radius: var(--radius-sm);
+  background: rgba(125, 211, 252, 0.12);
+  color: #7dd3fc;
+  font-size: 12px;
+  cursor: pointer;
+}
+.tac-manage-swap:hover { background: rgba(125, 211, 252, 0.28); }
+.tac-manage-swap:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.tac-manage-mirror-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  opacity: 0.85;
+  white-space: nowrap;
+}
+
+
 .tac-manage-abyss-hint {
   flex: 1 1 100%;
   color: var(--color-text-dim, var(--text-secondary));
@@ -3426,10 +3447,50 @@ div.tac-fixed-spawn .cam-dir.up {
   border-radius: var(--radius-sm);
 }
 
+.tac-manage-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.tac-manage-info .tac-manage-count {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-align: left;
+}
+.tac-manage-info .tac-manage-count b { color: var(--text); }
+.tac-manage-side {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+.tac-manage-side .tac-manage-hint {
+  font-size: 11px;
+  color: var(--text-secondary);
+  opacity: 0.85;
+  text-align: right;
+}
+.tac-manage-reset {
+  flex: none;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.tac-manage-reset:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+
 .tac-manage-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
   gap: 8px;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
 }
 .tac-manage-btn {
   display: flex;
@@ -3443,8 +3504,24 @@ div.tac-fixed-spawn .cam-dir.up {
   border: 1px solid var(--border);
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.25s;
+  transition: background 0.25s, color 0.25s, border-color 0.25s, box-shadow 0.18s ease, opacity 0.25s;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  position: relative;
 }
+.tac-manage-btn.dragging {
+  opacity: 0.92;
+  cursor: grabbing;
+  z-index: 6;
+  pointer-events: none;
+  border-color: var(--accent);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+  transform: translate(var(--dg-x, 0px), var(--dg-y, 0px)) scale(1.06);
+  transition: box-shadow 0.18s ease;
+}
+.tac-manage-btn.drag-over { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
 .tac-manage-btn:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
 .tac-manage-btn.active {
   border-color: var(--accent);
@@ -3466,7 +3543,13 @@ div.tac-fixed-spawn .cam-dir.up {
   white-space: normal;
   overflow-wrap: anywhere;
 }
-.tac-manage-settings { display: flex; flex-direction: column; gap: 8px; }
+.tac-manage-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
 
 .tac-range-mid {
   flex: 1 1 auto;
