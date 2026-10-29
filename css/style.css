@@ -1699,6 +1699,10 @@ body:not(.has-tabs) .header-nav { display: none; }
 
 .ded-conclusion {
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   padding: 8px 16px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -2223,7 +2227,7 @@ details.ded-card[open] > summary .arrow { transform: rotate(90deg); }
     gap: 10px;
   }
   .deduce-view .top-bar .map-title-group { grid-column: 1 / -1; justify-self: center; }
-  .deduce-view .top-bar .ded-progress { grid-column: 1 / -1; justify-self: center; width: auto; }
+  .deduce-view .top-bar .ded-progress { grid-column: 1 / -1; justify-self: center; width: min(240px, 85%); }
   .deduce-view .action-bar { flex-wrap: wrap; row-gap: 8px; }
   .deduce-view .ded-legend { width: 100%; justify-content: center; }
   .deduce-view .ded-tip { width: 100%; text-align: center; }
@@ -2236,7 +2240,7 @@ details.ded-card[open] > summary .arrow { transform: rotate(90deg); }
     gap: 10px;
   }
   .deduce-view .top-bar .map-title-group { grid-column: 1 / -1; justify-self: center; }
-  .deduce-view .top-bar .ded-progress { grid-column: 1 / -1; justify-self: center; width: auto; }
+  .deduce-view .top-bar .ded-progress { grid-column: 1 / -1; justify-self: center; width: min(240px, 85%); }
   .deduce-view .action-bar { flex-wrap: wrap; row-gap: 8px; }
   .deduce-view .ded-legend { width: 100%; justify-content: center; }
   .deduce-view .ded-tip { width: 100%; text-align: center; }
@@ -2247,6 +2251,7 @@ details.ded-card[open] > summary .arrow { transform: rotate(90deg); }
     justify-items: center;
     gap: 10px;
   }
+  #selectView .top-bar .side-actions { justify-self: center; }
   #selectView .action-bar { flex-wrap: wrap; row-gap: 8px; }
   #selectView .legend-inline { order: 0; width: 100%; justify-content: center; }
   #selectView .selection-info { order: 1; width: 100%; justify-content: center; flex-wrap: wrap; }
