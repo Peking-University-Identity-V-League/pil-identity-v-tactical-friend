@@ -289,7 +289,7 @@
           <span class="ded-sec-en">Settings</span>
         </h3>
         <div class="tac-display-list">
-          
+
           <div class="tac-display-group">
             <div class="tac-display-group-label" data-i18n="ui.tacDisplayGroupLabel.label"></div>
             <div class="tac-manage-entry">
@@ -298,6 +298,17 @@
                 <label class="tac-display-toggle"><input type="checkbox" id="tacShowZones"><span data-i18n="ui.common.show"></span></label>
               </div>
             </div>
+          <div class="tac-manage-entry">
+            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="game.escapeDoor"></span></div>
+            <div class="tac-manage-row tac-display-row">
+              <label class="tac-display-toggle"><input type="checkbox" id="tacShowDoors" checked><span data-i18n="ui.common.show"></span></label>
+              <span class="tac-display-mid">
+                <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacDisplayToggle.title&quot;}"><input type="checkbox" id="tacDoorLock"><span data-i18n="ui.tacDisplayToggle.label"></span></label>
+              </span>
+              <label class="tac-manage-slider"><span data-i18n="ui.tacManageSlider.label"></span><input type="range" id="tacDoorSize" min="3" max="12" step="0.5" value="6"></label>
+              <label class="tac-manage-def"><input type="checkbox" id="tacDoorSizeDef" checked><span data-i18n="ui.common.default"></span></label>
+            </div>
+          </div>
           <div class="tac-manage-entry">
             <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="game.cipherMachine"></span></div>
             <div class="tac-manage-row tac-display-row">
@@ -336,14 +347,6 @@
               <label class="tac-manage-slider"><span data-i18n="ui.tacManageSlider.label"></span><input type="range" id="tacChairSize" min="3" max="12" step="0.5" value="6"></label>
               <label class="tac-manage-def"><input type="checkbox" id="tacChairSizeDef" checked><span data-i18n="ui.common.default"></span></label>
             </div>
-            <div class="tac-manage-row tac-display-row">
-              <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacShowChairBasement.title&quot;}"><input type="checkbox" id="tacShowChairBasement"><span data-i18n="ui.tacShowChairBasement.label"></span></label>
-              <span class="tac-display-mid">
-                <span class="switch-btn" id="tacChairBasementPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacChairBasementPrev.title&quot;}">‹</span>
-                <span class="tac-display-text" id="tacChairBasementText"></span>
-                <span class="switch-btn" id="tacChairBasementNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacChairBasementNext.title&quot;}">›</span>
-              </span>
-            </div>
           </div>
           <div class="tac-manage-entry" id="tacBoxEntry">
             <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="game.box"></span></div>
@@ -352,39 +355,32 @@
               <label class="tac-manage-slider"><span data-i18n="ui.tacManageSlider.label"></span><input type="range" id="tacBoxSize" min="1" max="12" step="0.5" value="1.5"></label>
               <label class="tac-manage-def"><input type="checkbox" id="tacBoxSizeDef" checked><span data-i18n="ui.common.default"></span></label>
             </div>
+          </div>
+          <div class="tac-manage-entry" id="tacBasementEntry">
+            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="ui.tacBasementName.label"></span></div>
             <div class="tac-manage-row tac-display-row">
+              <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacShowChairBasement.title&quot;}"><input type="checkbox" id="tacShowChairBasement"><span data-i18n="ui.tacShowChairBasement.label"></span></label>
               <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacShowBoxBasement.title&quot;}"><input type="checkbox" id="tacShowBoxBasement"><span data-i18n="ui.tacShowBoxBasement.label"></span></label>
               <span class="tac-display-mid">
-                <span class="switch-btn" id="tacBoxBasementPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacBoxBasementPrev.title&quot;}">‹</span>
-                <span class="tac-display-text" id="tacBoxBasementText"></span>
-                <span class="switch-btn" id="tacBoxBasementNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacBoxBasementNext.title&quot;}">›</span>
+                <span class="switch-btn" id="tacBasementPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacBasementPrev.title&quot;}">‹</span>
+                <span class="tac-display-text" id="tacBasementText"></span>
+                <span class="switch-btn" id="tacBasementNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacBasementNext.title&quot;}">›</span>
               </span>
-            </div>
-          </div>
-          <div class="tac-manage-entry">
-            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="game.escapeDoor"></span></div>
-            <div class="tac-manage-row tac-display-row">
-              <label class="tac-display-toggle"><input type="checkbox" id="tacShowDoors" checked><span data-i18n="ui.common.show"></span></label>
-              <span class="tac-display-mid">
-                <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacDisplayToggle.title&quot;}"><input type="checkbox" id="tacDoorLock"><span data-i18n="ui.tacDisplayToggle.label"></span></label>
-              </span>
-              <label class="tac-manage-slider"><span data-i18n="ui.tacManageSlider.label"></span><input type="range" id="tacDoorSize" min="3" max="12" step="0.5" value="6"></label>
-              <label class="tac-manage-def"><input type="checkbox" id="tacDoorSizeDef" checked><span data-i18n="ui.common.default"></span></label>
             </div>
           </div>
           <div class="tac-display-snap no-line">
-            <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacDisplayToggle.titleAlternate&quot;}"><input type="checkbox" id="tacShowCoords"><span data-i18n="ui.tacDisplayToggle.labelAlternate"></span></label>
-            <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacDisplayToggle.titleThird&quot;}"><input type="checkbox" id="tacSelGlow" checked><span data-i18n="ui.tacDisplayToggle.labelThird"></span></label>
+              <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacDisplayToggle.titleAlternate&quot;}"><input type="checkbox" id="tacShowCoords"><span data-i18n="ui.tacDisplayToggle.labelAlternate"></span></label>
+              <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacDisplayToggle.titleThird&quot;}"><input type="checkbox" id="tacSelGlow" checked><span data-i18n="ui.tacDisplayToggle.labelThird"></span></label>
+            </div>
           </div>
-          </div>
-          
+
           <div class="tac-display-group">
             <div class="tac-display-group-label" data-i18n="ui.tacDisplayGroupLabel.labelAlternate"></div>
             <div class="tac-display-snap no-line">
               <span class="tac-display-snap-label" data-i18n="ui.tacDisplaySnapLabel.label"></span>
+              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapDoor" checked><span data-i18n="game.escapeDoor"></span></label>
               <label class="tac-display-toggle"><input type="checkbox" id="tacSnapCipher" checked><span data-i18n="game.cipherMachine"></span></label>
               <label class="tac-display-toggle"><input type="checkbox" id="tacSnapDungeon" checked><span data-i18n="game.dungeon"></span></label>
-              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapDoor" checked><span data-i18n="game.escapeDoor"></span></label>
               <label class="tac-display-toggle"><input type="checkbox" id="tacSnapChair" checked><span data-i18n="game.rocketChair"></span></label>
               <label class="tac-display-toggle"><input type="checkbox" id="tacSnapBox" checked><span data-i18n="game.box"></span></label>
               <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacDisplayToggle.titleFourth&quot;}"><input type="checkbox" id="tacSnapPoint" checked><span data-i18n="ui.tacDisplayToggle.labelFourth"></span></label>
@@ -393,7 +389,7 @@
               <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacDisplayToggle.titleFifth&quot;}"><input type="checkbox" id="tacDelSegOnly"><span data-i18n="ui.tacDisplayToggle.labelFifth"></span></label>
             </div>
           </div>
-          
+
           <div class="tac-display-group">
             <div class="tac-display-group-label" data-i18n="ui.tacDisplayGroupLabel.labelThird"></div>
             <div class="tac-display-snap no-line">
@@ -703,26 +699,34 @@
         <div class="ded-more-body">
           <p class="ded-more-intro" data-i18n="ui.dedMore.intro"></p>
           <div class="ded-more-grid">
-            <a class="ded-more-cell ded-more-name" href="https://www.bilibili.com/video/BV1tfth63EoK" target="_blank" rel="noopener noreferrer"
+            <a class="ded-more-cell ded-more-name" href="https://website.homeworkkun.top/WIKI/%E8%AE%A1%E7%AE%97%E5%99%A8" target="_blank" rel="noopener noreferrer"
               data-i18n="ui.dedMore.name1"></a>
-            <a class="ded-more-cell ded-more-go" href="https://idvmap.funnytools.top" target="_blank" rel="noopener noreferrer"
+            <a class="ded-more-cell ded-more-go" href="https://website.homeworkkun.top" target="_blank" rel="noopener noreferrer"
               data-i18n="ui.dedMore.go" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.dedMore.goTitle1&quot;}"></a>
-            <a class="ded-more-cell ded-more-name" href="https://v.douyin.com/YHVQ5T_W8Hc" target="_blank" rel="noopener noreferrer"
+            <a class="ded-more-cell ded-more-name" href="https://www.bilibili.com/video/BV1YxhU6BEei" target="_blank" rel="noopener noreferrer"
               data-i18n="ui.dedMore.name2"></a>
-            <a class="ded-more-cell ded-more-go" href="https://mimaji.ok.kimi.link" target="_blank" rel="noopener noreferrer"
+            <a class="ded-more-cell ded-more-go" href="https://www.bilibili.com/toy/dwrgdraw" target="_blank" rel="noopener noreferrer"
               data-i18n="ui.dedMore.go" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.dedMore.goTitle2&quot;}"></a>
-            <a class="ded-more-cell ded-more-name" href="https://www.bilibili.com/video/BV166GP6yE1v" target="_blank" rel="noopener noreferrer"
-              data-i18n="ui.dedMore.name3"></a>
-            <a class="ded-more-cell ded-more-go" href="https://ban.guojam.xyz" target="_blank" rel="noopener noreferrer"
-              data-i18n="ui.dedMore.go" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.dedMore.goTitle3&quot;}"></a>
             <a class="ded-more-cell ded-more-name" href="https://www.bilibili.com/video/BV1YCctzDEGb" target="_blank" rel="noopener noreferrer"
-              data-i18n="ui.dedMore.name4"></a>
+              data-i18n="ui.dedMore.name3"></a>
             <a class="ded-more-cell ded-more-go" href="https://idv.ethan0ne.com" target="_blank" rel="noopener noreferrer"
+              data-i18n="ui.dedMore.go" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.dedMore.goTitle3&quot;}"></a>
+            <a class="ded-more-cell ded-more-name" href="https://www.bilibili.com/video/BV1tfth63EoK" target="_blank" rel="noopener noreferrer"
+              data-i18n="ui.dedMore.name4"></a>
+            <a class="ded-more-cell ded-more-go" href="https://idvmap.funnytools.top" target="_blank" rel="noopener noreferrer"
               data-i18n="ui.dedMore.go" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.dedMore.goTitle4&quot;}"></a>
-            <a class="ded-more-cell ded-more-name" href="https://www.bilibili.com/video/BV1jUaD6sE25" target="_blank" rel="noopener noreferrer"
+            <a class="ded-more-cell ded-more-name" href="https://v.douyin.com/YHVQ5T_W8Hc" target="_blank" rel="noopener noreferrer"
               data-i18n="ui.dedMore.name5"></a>
-            <a class="ded-more-cell ded-more-go" href="https://cage-arena.app.workbuddy.host" target="_blank" rel="noopener noreferrer"
+            <a class="ded-more-cell ded-more-go" href="https://mimaji.ok.kimi.link" target="_blank" rel="noopener noreferrer"
               data-i18n="ui.dedMore.go" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.dedMore.goTitle5&quot;}"></a>
+            <a class="ded-more-cell ded-more-name" href="https://www.bilibili.com/video/BV166GP6yE1v" target="_blank" rel="noopener noreferrer"
+              data-i18n="ui.dedMore.name6"></a>
+            <a class="ded-more-cell ded-more-go" href="https://ban.guojam.xyz" target="_blank" rel="noopener noreferrer"
+              data-i18n="ui.dedMore.go" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.dedMore.goTitle6&quot;}"></a>
+            <a class="ded-more-cell ded-more-name" href="https://www.bilibili.com/video/BV1jUaD6sE25" target="_blank" rel="noopener noreferrer"
+              data-i18n="ui.dedMore.name7"></a>
+            <a class="ded-more-cell ded-more-go" href="https://cage-arena.app.workbuddy.host" target="_blank" rel="noopener noreferrer"
+              data-i18n="ui.dedMore.go" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.dedMore.goTitle7&quot;}"></a>
           </div>
         </div>
       </details>

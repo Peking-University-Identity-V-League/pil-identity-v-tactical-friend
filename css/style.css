@@ -2218,18 +2218,28 @@ details.ded-card[open] > summary .arrow { transform: rotate(90deg); }
 
 @media (min-width: 769px) and (max-width: 1280px) {
   .deduce-view .top-bar {
-    grid-template-columns: auto 1fr auto;
-    justify-content: center;
-    justify-items: center;
+    grid-template-columns: auto auto;
+    justify-items: start;
+    gap: 10px;
   }
-  .deduce-view .top-bar .map-title-group { grid-column: 1 / -1; }
-  .deduce-view .top-bar .ded-progress { width: auto; }
+  .deduce-view .top-bar .map-title-group { grid-column: 1 / -1; justify-self: start; }
+  .deduce-view .top-bar .ded-progress { grid-column: 1 / -1; justify-self: start; width: auto; }
+  .deduce-view .action-bar { flex-wrap: wrap; row-gap: 8px; }
+  .deduce-view .ded-legend { width: 100%; justify-content: flex-start; }
+  .deduce-view .ded-tip { width: 100%; text-align: left; }
 }
 
 @media (min-width: 1281px) and (max-width: 1400px) {
-  .deduce-view .top-bar { grid-template-columns: auto 1fr auto; }
-  .deduce-view .top-bar .map-title-group { grid-column: 1 / -1; justify-self: center; }
-  .deduce-view .top-bar .ded-progress { justify-self: center; }
+  .deduce-view .top-bar {
+    grid-template-columns: auto auto;
+    justify-items: start;
+    gap: 10px;
+  }
+  .deduce-view .top-bar .map-title-group { grid-column: 1 / -1; justify-self: start; }
+  .deduce-view .top-bar .ded-progress { grid-column: 1 / -1; justify-self: start; width: auto; }
+  .deduce-view .action-bar { flex-wrap: wrap; row-gap: 8px; }
+  .deduce-view .ded-legend { width: 100%; justify-content: flex-start; }
+  .deduce-view .ded-tip { width: 100%; text-align: left; }
 }
 
 @media (max-width: 1180px) {
