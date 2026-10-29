@@ -2219,28 +2219,48 @@ details.ded-card[open] > summary .arrow { transform: rotate(90deg); }
 @media (min-width: 769px) and (max-width: 1280px) {
   .deduce-view .top-bar {
     grid-template-columns: auto auto;
-    justify-items: start;
+    justify-content: center;
     gap: 10px;
   }
-  .deduce-view .top-bar .map-title-group { grid-column: 1 / -1; justify-self: start; }
-  .deduce-view .top-bar .ded-progress { grid-column: 1 / -1; justify-self: start; width: auto; }
+  .deduce-view .top-bar .map-title-group { grid-column: 1 / -1; justify-self: center; }
+  .deduce-view .top-bar .ded-progress { grid-column: 1 / -1; justify-self: center; width: auto; }
   .deduce-view .action-bar { flex-wrap: wrap; row-gap: 8px; }
-  .deduce-view .ded-legend { width: 100%; justify-content: flex-start; }
-  .deduce-view .ded-tip { width: 100%; text-align: left; }
+  .deduce-view .ded-legend { width: 100%; justify-content: center; }
+  .deduce-view .ded-tip { width: 100%; text-align: center; }
 }
 
 @media (min-width: 1281px) and (max-width: 1400px) {
   .deduce-view .top-bar {
     grid-template-columns: auto auto;
-    justify-items: start;
+    justify-content: center;
     gap: 10px;
   }
-  .deduce-view .top-bar .map-title-group { grid-column: 1 / -1; justify-self: start; }
-  .deduce-view .top-bar .ded-progress { grid-column: 1 / -1; justify-self: start; width: auto; }
+  .deduce-view .top-bar .map-title-group { grid-column: 1 / -1; justify-self: center; }
+  .deduce-view .top-bar .ded-progress { grid-column: 1 / -1; justify-self: center; width: auto; }
   .deduce-view .action-bar { flex-wrap: wrap; row-gap: 8px; }
-  .deduce-view .ded-legend { width: 100%; justify-content: flex-start; }
-  .deduce-view .ded-tip { width: 100%; text-align: left; }
+  .deduce-view .ded-legend { width: 100%; justify-content: center; }
+  .deduce-view .ded-tip { width: 100%; text-align: center; }
 }
+@media (min-width: 769px) and (max-width: 1550px) {
+  #selectView .top-bar {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 10px;
+  }
+  #selectView .action-bar { flex-wrap: wrap; row-gap: 8px; }
+  #selectView .legend-inline { order: 0; width: 100%; justify-content: center; }
+  #selectView .selection-info { order: 1; width: 100%; justify-content: center; flex-wrap: wrap; }
+}
+
+@media (min-width: 769px) and (max-width: 1250px) {
+  .tactic-view .top-bar {
+    grid-template-columns: auto auto;
+    justify-content: center;
+    gap: 10px;
+  }
+  .tactic-view .top-bar .map-title-group { grid-column: 1 / -1; justify-self: center; }
+}
+
 
 @media (max-width: 1180px) {
   .header { flex-wrap: wrap; row-gap: 10px; }

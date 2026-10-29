@@ -3996,9 +3996,10 @@ export async function tacExportImage() {
   });
   ctx.restore();
 
-  const [ciphIcon, dungeonIcon, doorIcon] = await Promise.all([
+  const [ciphIcon, dungeonIcon, doorIcon, chairIcon, boxIcon] = await Promise.all([
     tacLoadImg(CIPHER_ICON_URL), tacLoadImg(DUNGEON_ICON_URL),
-    tacLoadImg(ESCAPE_DOOR_ICON_URL)]);
+    tacLoadImg(ESCAPE_DOOR_ICON_URL), tacLoadImg(CHAIR_ICON_URL),
+    tacLoadImg(BOX_ICON_URL)]);
 
   
   if (tacDisplay.ciphers && ciphIcon) {
@@ -4022,6 +4023,117 @@ export async function tacExportImage() {
     const size = tacDisplay.doorSize / 100 * W * K;
     tacDoorPoints(map).forEach((pt) => ctx.drawImage(doorIcon,
       PX(pt[0] / W0) - size / 2, PY(pt[1] / H0) - size / 2, size, size));
+  }
+
+  // 狂欢之椅：固定椅 + 当前刷点组 + 当前地下室组
+  const xzOf = (pt) => (pt.length > 2 ? [pt[0], pt[2]] : pt);
+  if (chairIcon && map.chairs) {
+    const ch = map.chairs;
+    const size = tacDisplay.chairSize / 100 * W * K;
+    const drawChair = (pt) => {
+      const [px, pz] = xzOf(pt);
+      ctx.drawImage(chairIcon, PX(px / W0) - size / 2, PY(pz / H0) - size / 2, size, size);
+    };
+    if (tacDisplay.chairs) {
+      ch.fixed.forEach(drawChair);
+      if (ch.sets.length) ch.sets[S.tacChairIndex % ch.sets.length].forEach(drawChair);
+    }
+    if (tacDisplay.chairsBasement && ch.basements.length) {
+      ch.basements[S.tacChairBasementIndex % ch.basements.length].forEach(drawChair);
+    }
+  }
+
+  // 箱子：固定箱 + 当前地下室组
+  if (boxIcon && map.boxes) {
+    const bx = map.boxes;
+    const size = tacDisplay.boxSize / 100 * W * K;
+    const drawBox = (pt) => {
+      const [px, pz] = xzOf(pt);
+      ctx.drawImage(boxIcon, PX(px / W0) - size / 2, PY(pz / H0) - size / 2, size, size);
+    };
+    if (tacDisplay.boxes) bx.fixed.forEach(drawBox);
+    if (tacDisplay.boxesBasement && bx.basements.length) {
+      bx.basements[S.tacBoxBasementIndex % bx.basements.length].forEach(drawBox);
+    }
+  }
+
+  // 固定点位（教授鳞片 / 摄影师摄像机 / 疯眼控制台及范围 / 小丑零件 / 冒险家书页）
+  const boardTokens = tacBoard().tokens;
+  for (const [role, cfg] of Object.entries(map.fixedSpawns || {})) {
+    const token = boardTokens[role];
+    if (!token) continue;
+    if (token.showFixedSpawnRange && cfg.rangeM && cfg.rangeScreenM && map.widthM) {
+      const [screenW, screenH] = cfg.rangeScreenM[token.fixedSpawnDevice === 'ios' ? 'ios' : 'pc'];
+      const metersToPxX = W / (vw * map.widthM);
+      const metersToPxY = metersToPxX;
+      const outerW = (cfg.rangeM * 2 + screenW) * metersToPxX;
+      const outerH = (cfg.rangeM * 2 + screenH) * metersToPxY;
+      ctx.save();
+      ctx.strokeStyle = 'rgba(125, 211, 252, 0.85)';
+      ctx.fillStyle = 'rgba(125, 211, 252, 0.08)';
+      ctx.lineWidth = Math.max(1.2, W * K / 500);
+      ctx.setLineDash([W * K / 50, W * K / 80]);
+      cfg.points.forEach((pt) => {
+        const p = cfg.camera ? pt.p : pt;
+        ctx.beginPath();
+        ctx.ellipse(PX(p[0] / W0), PY(p[1] / H0), outerW / 2, outerH / 2, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      });
+      ctx.restore();
+    }
+    if (!token.showFixedSpawns) continue;
+    for (const pt of cfg.points) {
+      const p = Array.isArray(pt) ? pt : pt.p;
+      const x = PX(p[0] / W0), y = PY(p[1] / H0);
+      if (cfg.camera) {
+        // 朝向箭头 + 图标
+        const ang = Math.atan2(pt.d[1], pt.d[0]);
+        const arrowLen = 0.022 * W * K;
+        ctx.save();
+        ctx.strokeStyle = '#7dd3fc';
+        ctx.lineWidth = Math.max(1.5, W * K / 300);
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + Math.cos(ang) * arrowLen, y + Math.sin(ang) * arrowLen);
+        ctx.stroke();
+        const head = arrowLen * 0.42;
+        ctx.beginPath();
+        ctx.moveTo(x + Math.cos(ang) * arrowLen, y + Math.sin(ang) * arrowLen);
+        ctx.lineTo(x + Math.cos(ang) * (arrowLen - head) + Math.cos(ang + Math.PI / 2) * head * 0.6,
+          y + Math.sin(ang) * (arrowLen - head) + Math.sin(ang + Math.PI / 2) * head * 0.6);
+        ctx.moveTo(x + Math.cos(ang) * arrowLen, y + Math.sin(ang) * arrowLen);
+        ctx.lineTo(x + Math.cos(ang) * (arrowLen - head) + Math.cos(ang - Math.PI / 2) * head * 0.6,
+          y + Math.sin(ang) * (arrowLen - head) + Math.sin(ang - Math.PI / 2) * head * 0.6);
+        ctx.stroke();
+        ctx.restore();
+        if (cfg.icon) {
+          const isz = 0.03 * W * K;
+          const camImg = await tacLoadImg(cfg.icon);
+          if (camImg) { ctx.drawImage(camImg, x - isz / 2, y - isz / 2, isz, isz); continue; }
+        }
+        ctx.save();
+        ctx.fillStyle = '#f8fafc';
+        ctx.beginPath();
+        ctx.arc(x, y, Math.max(2, W * K / 150), 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      } else {
+        const spawnDef = TAC_ITEM_TYPES[pt.icon || cfg.icon] || {};
+        if (spawnDef.icon) {
+          const isz = (spawnDef.iconSize || 3.4) / 100 * W * K;
+          const iconImg = await tacLoadImg(spawnDef.icon);
+          if (iconImg) { ctx.drawImage(iconImg, x - isz / 2, y - isz / 2, isz, isz); continue; }
+        }
+        ctx.save();
+        ctx.fillStyle = '#f8fafc';
+        ctx.beginPath();
+        ctx.arc(x, y, Math.max(2, W * K / 150), 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
   }
 
   const board = tacBoard();
