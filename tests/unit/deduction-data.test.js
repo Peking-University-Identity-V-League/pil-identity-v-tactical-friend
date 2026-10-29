@@ -48,7 +48,7 @@ test('single-card range shape (coordinator) resolves meters', () => {
 });
 
 
-test('buildTacRangeRows renders single-card and two-option shapes (dreamWitch)', async () => {
+test('buildTacRangeRows renders range manage box (dreamWitch)', async () => {
   const { buildTacRangeRows } = await import('../../js/tactic.js');
   const cfg = TAC_ROLES.dreamWitch.ranges;
   const rows = [];
@@ -64,22 +64,25 @@ test('buildTacRangeRows renders single-card and two-option shapes (dreamWitch)',
   };
   try {
     const settings = { appendChild() {} };
-    const opts = { labelPrefix: '显示', labelPostfix: '范围' };
+    const opts = { labelPrefix: '显示', labelPostfix: '范围', hostRole: 'dreamWitch' };
 
     rows.length = 0;
     buildTacRangeRows(settings, cfg, { rangeMode: 'hiddenDream' }, false, opts);
-    const single = rows.find((r) => r.innerHTML.includes('20m'));
-    assert.ok(single, 'single-card row rendered');
-    assert.ok(single.innerHTML.includes('tac-range-opt active'), 'single card shown as active option');
-    assert.ok(!single.innerHTML.includes('（固定）'), 'single-card row has no fixed suffix');
+    assert.ok(rows.some((r) => r.className === 'tac-manage-box'),
+      'range manage box rendered');
+    assert.ok(rows.some((r) => r.innerHTML.includes('20m')),
+      'hiddenDream description line rendered');
 
     rows.length = 0;
-    buildTacRangeRows(settings, cfg, { rangeMode: 'follower' }, false, opts);
-    const multi = rows.find((r) => r.innerHTML.includes('42.2m'));
-    assert.ok(multi, 'two-option row rendered');
-    assert.ok(multi.innerHTML.includes('59.1'), 'both option values present');
-    assert.ok((multi.innerHTML.match(/tac-range-opt/g) || []).length >= 2, 'two option buttons rendered');
-    assert.ok(!multi.innerHTML.includes('（固定）'), 'two-option row not misrouted to single branch');
+    buildTacRangeRows(settings, cfg, { rangeMode: 'follower', rangeMeters: 42.2 }, false, opts);
+    const optRow = rows.find((r) =>
+      (r.innerHTML.match(/tac-range-opt/g) || []).length >= 2
+      && r.innerHTML.includes('data-v="0"'));
+    assert.ok(optRow, 'follower option buttons rendered');
+    assert.ok(rows.some((r) => r.innerHTML.includes('42.2m')),
+      'follower description line rendered');
+    assert.ok(!rows.some((r) => r.innerHTML.includes('（固定）')),
+      'no fixed suffix anywhere');
   } finally {
     globalThis.document.createElement = keepCreate;
   }
