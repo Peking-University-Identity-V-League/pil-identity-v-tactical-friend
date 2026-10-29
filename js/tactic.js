@@ -2086,6 +2086,98 @@ function attachManageDrag(btn, key) {
 }
 
 
+function tacManageBox(settings, titleKey) {
+  const box = document.createElement('div');
+  box.className = 'tac-manage-box';
+  const title = document.createElement('span');
+  title.className = 'tac-box-title';
+  title.textContent = translate(titleKey, {  });
+  box.appendChild(title);
+  settings.appendChild(box);
+  return box;
+}
+
+
+function tacBoxHint(box, html) {
+  const hint = document.createElement('span');
+  hint.className = 'tac-box-hint';
+  hint.innerHTML = html;
+  box.appendChild(hint);
+  return hint;
+}
+
+
+function buildMirrorManageBox(settings, token, board) {
+  const hasAqua = board.items.some((it) => it.kind === 'aquaMirror');
+  const hasMirror = board.items.some((it) => it.kind === 'mirrorImage');
+  const box = tacManageBox(settings, "ui.tacManageMirror.title");
+  const line = document.createElement('div');
+  line.className = 'tac-box-line';
+  box.appendChild(line);
+  line.innerHTML +=
+    `<label class="tac-manage-glow"><input type="checkbox" data-mq="link"`
+    + translate("ui.tacManageMirror.link", { value: token.showMirrorLink !== false ? ' checked' : '' })
+    + `<label class="tac-manage-glow"><input type="checkbox" data-mq="show"`
+    + translate("ui.tacManageMirror.show", { value: token.showMirror ? ' checked' : '', disabled: hasAqua ? '' : ' disabled' })
+    + `<button type="button" class="tac-manage-toggle${token.fixedMirror ? ' on' : ''}" data-mq="fix"${token.showMirror ? '' : ' disabled'}>`
+    + translate("ui.tacManageMirror.fix", {  }) + `</button>`
+    + `<button type="button" class="tac-manage-swap"${token.showMirror && hasMirror ? '' : ' disabled'}>`
+    + translate("ui.tacManageMirror.swap", {  }) + `</button>`;
+
+  line.querySelector('input[data-mq="link"]').addEventListener('change', (e) => {
+    token.showMirrorLink = e.target.checked;
+    renderTacArrows();
+    tacSave();
+  });
+  line.querySelector('input[data-mq="show"]').addEventListener('change', (e) => {
+    token.showMirror = e.target.checked;
+    if (!token.showMirror) { token.fixedMirror = false; delete token.mirrorAxis; }
+    tacSyncMirror(null);
+    renderTacBoard();
+    renderTacArrows();
+    tacSave();
+    renderTacManage();
+  });
+  line.querySelector('button[data-mq="fix"]').addEventListener('click', () => {
+    if (!token.showMirror) return;
+    token.fixedMirror = !token.fixedMirror;
+    delete token.mirrorAxis;
+    tacSyncMirror(null);
+    renderTacBoard();
+    renderTacArrows();
+    tacSave();
+    renderTacManage();
+  });
+  line.querySelector('button.tac-manage-swap').addEventListener('click', () => {
+    const parts = tacMirrorParts();
+    if (!parts || !parts.mi) return;
+    const bx = token.x, by = token.y;
+    token.x = parts.mi.x; token.y = parts.mi.y;
+    parts.mi.x = bx; parts.mi.y = by;
+    tacSyncMirror('bq');
+    renderTacBoard();
+    renderTacArrows();
+    tacSave();
+  });
+}
+
+
+function buildAbyssManageBox(settings, spearfishing) {
+  const box = tacManageBox(settings, "ui.tacManageBox.abyss");
+  box.innerHTML +=
+    `<label class="tac-manage-abyss"><input type="checkbox"`
+    + translate("application.renderTacManageFourth", { value: spearfishing.abyss && spearfishing.abyss.on ? ' checked' : '' });
+  tacBoxHint(box,
+    translate("application.renderTacManageFifth", {  })
+    + translate("application.renderTacManageSixth", { tacAbyssMaxM: TAC_ABYSS_MAX_M }));
+  box.querySelector('input').addEventListener('change', (e) => {
+    if (e.target.checked) spearfishing.abyss = { on: true, recording: false, trail: [], done: null };
+    else delete spearfishing.abyss;
+    renderTacArrows();
+  });
+}
+
+
 export function renderTacManage() {
   const board = tacBoard();
   board.order ||= [];
@@ -2188,17 +2280,15 @@ export function renderTacManage() {
     
     
     if (role === 'explorer') {
-      const trRow = document.createElement('div');
-      trRow.className = 'tac-manage-row';
-      trRow.innerHTML =
+      const box = tacManageBox(settings, "ui.tacManageBox.treasure");
+      box.innerHTML +=
         `<label class="tac-manage-glow"><input type="checkbox"`
         + translate("application.renderTacManageTreasure", { value: token.showTreasureRange ? ' checked' : '' });
-      trRow.querySelector('input').addEventListener('change', (e) => {
+      box.querySelector('input').addEventListener('change', (e) => {
         token.showTreasureRange = e.target.checked;
         renderTacTreasure();
         tacSave();
       });
-      settings.appendChild(trRow);
     }
     
     
@@ -2217,95 +2307,34 @@ export function renderTacManage() {
 
 
     if (role === 'bloodyQueen') {
-      const hasAqua = board.items.some((it) => it.kind === 'aquaMirror');
-      const hasMirror = board.items.some((it) => it.kind === 'mirrorImage');
-
-      const mqRow = document.createElement('div');
-      mqRow.className = 'tac-manage-row';
-      mqRow.innerHTML =
-        `<span class="tac-manage-mirror-title">`
-        + translate("ui.tacManageMirror.title", {  }) + `</span>`
-        + `<label class="tac-manage-glow"><input type="checkbox" data-mq="link"`
-        + translate("ui.tacManageMirror.link", { value: token.showMirrorLink !== false ? ' checked' : '' })
-        + `<label class="tac-manage-glow"><input type="checkbox" data-mq="show"`
-        + translate("ui.tacManageMirror.show", { value: token.showMirror ? ' checked' : '', disabled: hasAqua ? '' : ' disabled' })
-        + `<label class="tac-manage-glow"><input type="checkbox" data-mq="fix"`
-        + translate("ui.tacManageMirror.fix", { value: token.fixedMirror ? ' checked' : '', disabled: token.showMirror ? '' : ' disabled' })
-        + `<button type="button" class="tac-manage-swap"${token.showMirror && hasMirror ? '' : ' disabled'}>`
-        + translate("ui.tacManageMirror.swap", {  }) + `</button>`;
-
-      mqRow.querySelector('input[data-mq="link"]').addEventListener('change', (e) => {
-        token.showMirrorLink = e.target.checked;
-        renderTacArrows();
-        tacSave();
-      });
-      mqRow.querySelector('input[data-mq="show"]').addEventListener('change', (e) => {
-        token.showMirror = e.target.checked;
-        if (!token.showMirror) { token.fixedMirror = false; delete token.mirrorAxis; }
-        tacSyncMirror(null);
-        renderTacBoard();
-        renderTacArrows();
-        tacSave();
-        renderTacManage();
-      });
-      mqRow.querySelector('input[data-mq="fix"]').addEventListener('change', (e) => {
-        token.fixedMirror = e.target.checked;
-        delete token.mirrorAxis;
-        tacSyncMirror(null);
-        renderTacBoard();
-        renderTacArrows();
-        tacSave();
-        renderTacManage();
-      });
-      mqRow.querySelector('button').addEventListener('click', () => {
-        const parts = tacMirrorParts();
-        if (!parts || !parts.mi) return;
-        const bx = token.x, by = token.y;
-        token.x = parts.mi.x; token.y = parts.mi.y;
-        parts.mi.x = bx; parts.mi.y = by;
-        tacSyncMirror('bq');
-        renderTacBoard();
-        renderTacArrows();
-        tacSave();
-      });
-      settings.appendChild(mqRow);
+      buildMirrorManageBox(settings, token, board);
     }
     
     
     if (role === 'Naiad') {
       const spearfishing = board.items.find((it) => it.kind === 'spearfishing');
-      if (spearfishing) {
-        const abRow = document.createElement('div');
-        abRow.className = 'tac-manage-row';
-        abRow.innerHTML =
-          `<label class="tac-manage-abyss"><input type="checkbox"`
-          + translate("application.renderTacManageFourth", { value: spearfishing.abyss && spearfishing.abyss.on ? ' checked' : '' })
-          + translate("application.renderTacManageFifth", {  })
-          + translate("application.renderTacManageSixth", { tacAbyssMaxM: TAC_ABYSS_MAX_M });
-        abRow.querySelector('input').addEventListener('change', (e) => {
-          if (e.target.checked) spearfishing.abyss = { on: true, recording: false, trail: [], done: null };
-          else delete spearfishing.abyss;
-          renderTacArrows();
-        });
-        settings.appendChild(abRow);
-      }
+      if (spearfishing) buildAbyssManageBox(settings, spearfishing);
     }
 const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     if (fixedSpawnCfg) {
+      const fsTitleKey = role === 'professor' ? "ui.tacManageBox.scale"
+        : role === 'photographer' ? "ui.tacManageBox.camera"
+        : role === 'madEyes' ? "ui.tacManageBox.console" : null;
+      const fsBox = fsTitleKey ? tacManageBox(settings, fsTitleKey) : settings;
       const fsRangeItem = (Array.isArray(fixedSpawnCfg.item)
         ? fixedSpawnCfg.item : [fixedSpawnCfg.item])
         .find((it) => it && it.rangeM && it.rangeScreenM);
       const fsRow = document.createElement('div');
-      fsRow.className = 'tac-manage-row';
+      fsRow.className = fsTitleKey ? 'tac-box-line' : 'tac-manage-row';
       fsRow.innerHTML =
         `<label class="tac-manage-glow"><input type="checkbox"`
         + translate("application.renderTacManageSeventh", { value: token.showFixedSpawns ? ' checked' : '', label: fixedSpawnCfg.label });
       fsRow.querySelector('input').addEventListener('change', (e) => {
         token.showFixedSpawns = e.target.checked;
         renderTacFixedSpawns();
-        tacSave(); 
+        tacSave();
       });
-      settings.appendChild(fsRow);
+      fsBox.appendChild(fsRow);
       
       
       if (fsRangeItem && MAPS_DATA[S.currentMapId].widthM) {
@@ -2313,7 +2342,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
         const [devW, devH] = fsRangeItem.rangeScreenM[dev];
         const radioName = `tac-fsdev-${S.currentMapId}-${role}`;
         const rangeRow = document.createElement('div');
-        rangeRow.className = 'tac-manage-row';
+        rangeRow.className = fsTitleKey ? 'tac-box-line' : 'tac-manage-row';
         rangeRow.innerHTML =
           `<label class="tac-manage-glow"><input type="checkbox"`
           + translate("application.renderTacManageEighth", { value: token.showFixedSpawnRange ? ' checked' : '', rangeM: fsRangeItem.rangeM, devW: devW, devH: devH })
@@ -2335,7 +2364,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
         };
         pcRadio.addEventListener('change', () => { if (pcRadio.checked) onDevChange('pc'); });
         iosRadio.addEventListener('change', () => { if (iosRadio.checked) onDevChange('ios'); });
-        settings.appendChild(rangeRow);
+        fsBox.appendChild(rangeRow);
       }
     }
     
@@ -2436,6 +2465,15 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
         === TAC_MANAGE_DEFAULT.iconSize
       && itemRangeIsDefault();
   };
+
+  
+  if (it.kind === 'aquaMirror' || it.kind === 'mirrorImage') {
+    const bqToken = board.tokens.bloodyQueen;
+    if (bqToken) buildMirrorManageBox(settings, bqToken, board);
+  }
+  if (it.kind === 'spearfishing') {
+    buildAbyssManageBox(settings, it);
+  }
 
   
   if (rgCfg) {

@@ -22,7 +22,7 @@ async function enableTreasure(page) {
   return position;
 }
 
-const treasureToggle = page => page.locator('.tac-manage-row')
+const treasureToggle = page => page.locator('.tac-manage-box')
   .filter({ hasText: '推算可能刷密码书页' }).locator('input');
 const rings = page => page.locator('.tac-treasure-ring').evaluateAll(elements =>
   elements.map(el => [el.style.left, el.style.top, el.style.width, el.classList.contains('excluded')]));
