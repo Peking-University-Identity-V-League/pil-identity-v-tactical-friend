@@ -19,6 +19,7 @@ export const tacBoard = () => {
     { tokens: {}, arrows: [], items: [], measures: [], texts: [] });
   b.measures ||= [];
   b.texts ||= [];
+  b.order ||= [];
   return b;
 };
 
@@ -102,13 +103,13 @@ export function restoreRegionSel(mapId) {
     Math.max(0, MAPS_DATA[mapId].dungeons.length - 1),
     Math.max(0, savedDungeons[mapId] | 0),
   );
-  const ch = MAPS_DATA[mapId].chairs;
+  const ch = MAPS_DATA[mapId].rocketChairs;
   const sc = savedChairs[mapId] || {};
   S.tacChairIndex = ch && ch.sets.length
     ? Math.min(Math.max(0, sc.set | 0), ch.sets.length - 1) : 0;
   S.tacChairBasementIndex = ch && ch.basements.length
     ? Math.min(Math.max(0, sc.basement | 0), ch.basements.length - 1) : 0;
-  const bx = MAPS_DATA[mapId].boxes;
+  const bx = MAPS_DATA[mapId].chests;
   S.tacBoxBasementIndex = bx && bx.basements.length
     ? Math.min(Math.max(0, (savedBoxes[mapId] || {}).basement | 0), bx.basements.length - 1) : 0;
   const r = savedRegions[mapId];

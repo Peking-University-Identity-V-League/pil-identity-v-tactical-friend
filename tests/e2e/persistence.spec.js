@@ -1,4 +1,4 @@
-import { test, expect, read, waitForSave, tool, tab, point, clickPoint, drag, reloadMap, switchMap } from './helpers.js';
+import { test, expect, read, waitForSave, tool, tab, pickRole, point, clickPoint, drag, reloadMap, switchMap } from './helpers.js';
 
 test('drawing and deleting an arrow survive reload', async ({ page }) => {
   await tool(page, 'draw');
@@ -20,7 +20,7 @@ test('drawing and deleting an arrow survive reload', async ({ page }) => {
 
 test('dragging a role saves its final position', async ({ page }) => {
   await tool(page, 'roles');
-  await page.locator('.tac-role[data-role="doctor"]').click();
+  await pickRole(page, 'doctor');
   await clickPoint(page, 0.2, 0.2);
   await waitForSave(page);
   await tool(page, 'select');
@@ -37,7 +37,7 @@ for (const kind of ['item', 'text']) {
   test(`dragging ${kind} past the debounce saves its final position`, async ({ page }) => {
     if (kind === 'item') {
       await tool(page, 'roles');
-      await page.locator('.tac-role[data-role="doctor"]').click();
+      await pickRole(page, 'doctor');
       await clickPoint(page, 0.15, 0.15);
       await page.locator('.tac-item[data-kind="syringe"]').click();
     } else {
@@ -92,7 +92,7 @@ test('region and board changes share one save without cancelling either', async 
   await clickPoint(page, zone.x, zone.y, '#mapCanvas');
   await tab(page, 'tactic');
   await tool(page, 'roles');
-  await page.locator('.tac-role[data-role="doctor"]').click();
+  await pickRole(page, 'doctor');
   await clickPoint(page, 0.2, 0.2);
   await page.clock.runFor(500);
   const state = await read(page);
