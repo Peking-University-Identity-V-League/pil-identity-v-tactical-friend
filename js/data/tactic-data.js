@@ -18,6 +18,7 @@ export const TAC_MOVEMENT_SURVIVOR = {
   },
   fixed: {
     'toyMerchant:0': { name: translate("movement.survivor.toyMerchant0"), speed: 5.74, role: 'toyMerchant', form: 0 },
+    'lanternist:0': { name: translate("movement.survivor.lanternist0"), speed: 4.18, role: 'lanternist', form: 0 },
     'prodigy:1': { name: translate("movement.survivor.prodigy1"), speed: 3.8, role: 'prodigy', form: 1 },
   },
   stateNames: { run: translate("movement.survivor.run"), walk: translate("movement.survivor.walk"), crouch: translate("movement.survivor.crouch"), crawl: translate("movement.survivor.crawl"),
@@ -47,7 +48,6 @@ export const TAC_MOVEMENT_BUFFS = {
     { key: 'rocketDash', role: translate("characters.weepingClown.name"), name: translate("movement.buff.trait.weepingClown.rocketDash.name"), mult: 1.5 },
     { key: 'firefightingTraining', role: translate("characters.fireInvestigator.name"), name: translate("movement.buff.trait.fireInvestigator.firefightingTraining.name"), mult: 1.5, duration: 2 },
     { key: 'smokeScreen', role: translate("characters.escapologist.name"), name: translate("movement.buff.trait.escapologist.smokeScreen.name"), mult: 1.35, duration: 1 },
-    { key: 'positionProjection', role: translate("characters.lanternist.name"), name: translate("movement.buff.trait.lanternist.positionProjection.name"), mult: 1.1 },
     { key: 'stratus', role: translate("characters.meteorologist.name"), name: translate("movement.buff.trait.meteorologist.stratus.name"), levels: [1.33, 1.77] },
     { key: 'concealedSpin', role: translate("characters.antiquarian.name"), name: translate("movement.buff.trait.antiquarian.concealedSpin.name"), mult: 1.05 },
     { key: 'tuning', role: translate("characters.composer.name"), name: translate("movement.buff.trait.composer.tuning.name"), mult: 1.5 },
@@ -888,6 +888,14 @@ export const TAC_ITEM_TYPES = {
     ] },
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/bd/re4lu3k5iknzh748yg85tcdvla2b0t2.png',
   },
+  wither: {
+    name: translate("items.wither.name"),
+    ranges: { modes: [
+      { key: 'show', label: translate("items.wither.name"), size_m: 10 },
+      { key: 'off' },
+    ] },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/4/48/9edy2j55gu74hyrt4jqx4cxkunwyray.png',
+  },
   obsession: {
     name: translate("items.obsession.name"),
     ranges: { modes: [
@@ -1632,7 +1640,7 @@ export const TAC_ROLES = {
     items: ['nailBoard'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b4/a9kc3enyzxn84eu29l6lxszhvs3lhaf.png/90px-%E7%A0%B4%E8%BD%AE%E5%A4%B4%E5%83%8F.png',
   },
-  Naiad: {
+  naiad: {
     name: translate("characters.naiad.name"),
     camp: 'hunter',
     speed: 4.64,
@@ -1747,6 +1755,16 @@ export const TAC_ROLES = {
     items: ['bestialAwakening', 'heightenedSenses'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/5f/d9d4dwfp18lwnmcmymoy3iylx2pai6j.png/90px-%E2%80%9C%E5%BF%83%E5%85%BD%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
+  customize: {
+    name: translate("characters.customize.name"),
+    camp: 'other',
+    ranges: { modes: [
+      { key: 'show', label: translate("characters.customize.range.label.show"), size_m: { min: 0, max: null } },
+      { key: 'off' },
+    ] },
+    color: '#fbbf24',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/f/f6/o8ixpxb56avrj5e2tzdyps58h8rfa7i.png',
+  },
   trait: {
     name: translate("characters.trait.name"),
     camp: 'other',
@@ -1763,7 +1781,7 @@ export const TAC_ROLES = {
   talentHunter: {
     name: translate("characters.talentHunter.name"),
     camp: 'other',
-    items: ['tinnitus', 'addiction', 'nostalgic', 'skittish', 'deerHunt', 'streetSweeper', 'obsession', 'famine'],
+    items: ['tinnitus', 'addiction', 'nostalgic', 'skittish', 'deerHunt', 'streetSweeper', 'wither', 'obsession', 'famine'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/a/ad/8ea9e6vugcfryv3zygj9bspjgqhj76j.png',
   },
 };

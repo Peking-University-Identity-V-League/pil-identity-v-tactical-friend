@@ -32,6 +32,14 @@ try { tacPersisted = JSON.parse(localStorage.getItem(TAC_LS_KEY) || 'null'); } c
 
 if (tacPersisted && tacPersisted.boards) Object.assign(tacBoards, tacPersisted.boards);
 
+// 旧存档迁移：渔女角色键 Naiad -> naiad
+for (const board of Object.values(tacBoards)) {
+  if (!board || !board.tokens || !board.tokens.Naiad) continue;
+  board.tokens.naiad = board.tokens.Naiad;
+  delete board.tokens.Naiad;
+  (board.items || []).forEach((it) => { if (it.role === 'Naiad') it.role = 'naiad'; });
+}
+
 export const restoredMeasureIds = measureIdCounters(tacBoards);
 restoreMeasureReferences(tacBoards);
 

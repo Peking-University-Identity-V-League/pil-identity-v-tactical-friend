@@ -3442,6 +3442,12 @@ div.tac-fixed-spawn .cam-dir.up {
   background: rgba(255, 255, 255, 0.03);
   font-size: 12px;
 }
+
+.tac-manage-box > *:not(:first-child) {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 6px;
+  width: 100%;
+}
 .tac-box-title {
   font-weight: 700;
   font-size: 12px;
@@ -3623,6 +3629,7 @@ div.tac-fixed-spawn .cam-dir.up {
 .tac-range-opts {
   flex: 1 1 auto;
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
 }
 .tac-range-opt {
@@ -3635,12 +3642,20 @@ div.tac-fixed-spawn .cam-dir.up {
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
+  white-space: nowrap;
 }
 .tac-range-opt.active {
   border-color: var(--accent);
   color: var(--accent);
   background: rgba(251, 191, 36, 0.12);
   box-shadow: 0 0 8px rgba(251, 191, 36, 0.25);
+}
+
+.tac-range-sub.active {
+  border-color: #34d399;
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.12);
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.25);
 }
 .tac-color {
   width: 22px;
@@ -3803,9 +3818,34 @@ div.tac-fixed-spawn .cam-dir.up {
   aspect-ratio: 1;
   border-radius: 50%;
   border: 2px dashed var(--rc, #e2e8f0);
+  pointer-events: none;
+}
+.tac-role-circle.filled {
   background: rgba(226, 232, 240, 0.1);
   box-shadow: 0 0 14px rgba(226, 232, 240, 0.28), inset 0 0 18px rgba(226, 232, 240, 0.28);
+}
+.tac-item-circle.tac-range-extra {
   pointer-events: none;
+  border-style: dashed;
+}
+.tac-range-descs {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+.tac-range-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.tac-range-fill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  cursor: pointer;
 }
 .tac-item-circle:active { cursor: grabbing; }
 .tac-item-circle.glow {

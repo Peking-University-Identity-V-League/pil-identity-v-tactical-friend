@@ -33,32 +33,176 @@ export function tacRangeDefaultKey(cfg, hideByDefault) {
 
 export function tacRangeModeOf(cfg, inst, hideByDefault) {
   if (!cfg) return null;
-  const key = (inst && inst.rangeMode)
-    || (inst && inst.hideRange ? 'off' : null)
+  const e = tacRangeEntries(cfg, inst, hideByDefault);
+  if (e.length) return e[0].mode;
+  const key = (inst && (inst.rangeMode || (inst.hideRange ? 'off' : null)))
     || tacRangeDefaultKey(cfg, hideByDefault);
   return cfg.modes.find((m) => m.key === key)
     || cfg.modes.find((m) => m.key === 'off') || cfg.modes[0];
 }
 
 
+const TAC_RANGE_DEFAULT_FILL = 'rgba(226, 232, 240, 0.1)';
+const TAC_TALENTS_BY_CAMP = {
+  survivor: ['fearRadius', 'webersLaw', 'sneak'],
+  hunter: ['tinnitus', 'fearRadius', 'addiction', 'nostalgic', 'skittish',
+    'deerHunt', 'streetSweeper', 'wither', 'obsession', 'famine'],
+};
 
-export function tacRangeMetersOf(cfg, inst, hideByDefault) {
-  const mode = tacRangeModeOf(cfg, inst, hideByDefault);
-  if (!mode || !mode.size_m) return null;
+
+function tacRangeFmt(m) {
+  return String(Math.round(m * 100) / 100);
+}
+
+
+function tacModeMeters(mode, sel) {
   const s = mode.size_m;
-  const instM = inst ? (inst.rangeMeters ?? inst.meters) : undefined;
+  sel = sel || {};
   let base;
   if (typeof s === 'number') base = s;
-  else if (Array.isArray(s.options)) base = instM ?? s.options[0];
-  else if (s.options != null) base = instM ?? s.options;
-  else base = instM ?? s.max;
+  else if (Array.isArray(s.options)) {
+    const i = Number.isInteger(sel.opt) && sel.opt >= 0 && sel.opt < s.options.length
+      ? sel.opt : 0;
+    base = s.options[i];
+  } else if (s.options != null) base = sel.m != null ? sel.m : s.options;
+  else {
+    const dynMax = s.max != null ? s.max
+      : (MAPS_DATA[S.currentMapId] && MAPS_DATA[S.currentMapId].widthM) || 100;
+    base = sel.m != null ? sel.m : dynMax;
+  }
+  if (base == null) return null;
+  if (!(base > 0)) return null; // 半径 0 等价于隐藏范围
   if (mode.fearMods) {
     const pick = (opts, v) => (opts.find((o) => o[0] === v) || opts[0])[2];
-    return base
-      * pick(mode.fearMods.hunter, inst && inst.fearHunter)
-      * pick(mode.fearMods.survivor, inst && inst.fearSurv);
+    base *= pick(mode.fearMods.hunter, sel.fearH)
+      * pick(mode.fearMods.survivor, sel.fearS);
   }
   return base;
+}
+
+
+function tacRangeEntries(cfg, inst, hideByDefault) {
+  if (!cfg || !Array.isArray(cfg.modes)) return [];
+  const rb = inst && inst.rangeBox;
+  const legacyKey = (inst && (inst.rangeMode || (inst.hideRange ? 'off' : null)))
+    || tacRangeDefaultKey(cfg, hideByDefault);
+  const out = [];
+  for (const mode of cfg.modes) {
+    if (!mode.size_m) continue;
+    const s = mode.size_m;
+    if (rb) {
+      const st = (rb.modes && rb.modes[mode.key]) || null;
+      if (!st) continue;
+      if (Array.isArray(s.options)) {
+        const subs = st.subs === undefined ? [0] : st.subs;
+        for (const i of subs) {
+          if (i < 0 || i >= s.options.length) continue;
+          const meters = tacModeMeters(mode, { ...st, opt: i });
+          if (meters == null) continue;
+          out.push({ mode, sel: { ...st, opt: i }, meters });
+        }
+        continue;
+      }
+      const meters = tacModeMeters(mode, st);
+      if (meters == null) continue;
+      out.push({ mode, sel: st, meters });
+    } else {
+      if (mode.key !== legacyKey) continue;
+      const instM = inst ? (inst.rangeMeters ?? inst.meters) : undefined;
+      const sel = {};
+      if (Array.isArray(s.options)) {
+        sel.opt = instM !== undefined ? s.options.indexOf(instM) : undefined;
+      } else if (typeof s === 'object' && s !== null) {
+        sel.m = instM;
+      }
+      sel.fearH = inst && inst.fearHunter;
+      sel.fearS = inst && inst.fearSurv;
+      const meters = tacModeMeters(mode, sel);
+      if (meters == null) continue;
+      out.push({ mode, sel, meters });
+    }
+  }
+  return out;
+}
+
+
+function tacRbEnsure(cfg, inst, hideByDefault, defFill) {
+  if (inst.rangeBox) return inst.rangeBox;
+  const entries = tacRangeEntries(cfg, inst, hideByDefault);
+  const rb = inst.rangeBox = { modes: {}, talents: {}, fill: !!defFill, activeGroup: null };
+  for (const e of entries) {
+    const st = { ...e.sel };
+    if (Array.isArray(e.mode.size_m.options)) {
+      st.subs = [Number.isInteger(e.sel.opt) && e.sel.opt >= 0 ? e.sel.opt : 0];
+      delete st.opt;
+    }
+    rb.modes[e.mode.key] = st;
+  }
+  rb.activeGroup = entries.length ? entries[0].mode.key : null;
+  return rb;
+}
+
+
+function tacRbGroupActive(rb, key) {
+  if (!rb) return false;
+  if (rb.activeGroup !== undefined) return rb.activeGroup === key;
+  return !!(rb.modes && key in rb.modes);
+}
+
+
+function tacHostCamp(role) {
+  return (TAC_ROLES[role] || {}).camp === 'hunter' ? 'hunter' : 'survivor';
+}
+
+
+function tacTalentButtons(hostRole, camp) {
+  const list = TAC_TALENTS_BY_CAMP[camp] || TAC_TALENTS_BY_CAMP.survivor;
+  const out = [];
+  for (const kind of list) {
+    const def = TAC_ITEM_TYPES[kind];
+    if (!def || !def.ranges || !def.ranges.modes) continue;
+    const mode = def.ranges.modes[0];
+    if (!mode || !mode.size_m) continue;
+    if (kind === 'fearRadius') {
+      if (camp === 'hunter' && hostRole === 'Geisha') {
+        out.push({ tk: 'fearRadius:beauty', kind, label: translate("ui.tacRangeBox.fearRadiusBeauty"), base: mode.size_m, mult: 0.8, variant: true });
+        out.push({ tk: 'fearRadius:prajna', kind, label: translate("ui.tacRangeBox.fearRadiusPrajna"), base: mode.size_m, mult: 1.1, variant: true });
+        continue;
+      }
+      let mult = 1;
+      if (camp !== 'hunter') {
+        if (hostRole === 'prisoner') mult = 0.8;
+        else if (hostRole === 'archer') mult = 0.76;
+      }
+      out.push({ tk: 'fearRadius', kind, label: def.name, base: mode.size_m, mult });
+      continue;
+    }
+    out.push({ tk: kind, kind, label: def.name, mode });
+  }
+  return out;
+}
+
+
+function tacTalentRanges(inst, hostRole) {
+  const rb = inst && inst.rangeBox;
+  if (!rb || !rb.talents) return [];
+  const camp = tacHostCamp(hostRole);
+  const out = [];
+  for (const b of tacTalentButtons(hostRole, camp)) {
+    const sel = rb.talents[b.tk];
+    if (!sel) continue;
+    const meters = b.base != null ? b.base * b.mult : tacModeMeters(b.mode, sel);
+    if (meters == null) continue;
+    out.push({ ...b, meters, sel });
+  }
+  return out;
+}
+
+
+
+export function tacRangeMetersOf(cfg, inst, hideByDefault) {
+  const e = tacRangeEntries(cfg, inst, hideByDefault);
+  return e.length ? e[0].meters : null;
 }
 
 
@@ -449,13 +593,17 @@ export function renderTacFixedSpawns() {
         if (item.flag_orientation) {
           const iconUrl = TAC_FIXED_SPAWN_ICONS[item.icon] || item.icon;
           el = document.createElement('div');
-          const deg = Math.atan2(pt.d[1], pt.d[0]) * 180 / Math.PI;
-          const dirs = ['right', 'down', 'left', 'up'];
-          const dir = dirs[((Math.round(deg / 90) % 4) + 4) % 4];
-          el.innerHTML =
-            `<svg class="cam-dir ${dir}" viewBox="0 0 16 16" aria-hidden="true">`
-            + '<path d="M5 2 L12 8 L5 14" fill="none" stroke="#7dd3fc"'
-            + ' stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+          const dirSvg = token.showSpawnDir
+            ? (() => {
+              const deg = Math.atan2(pt.d[1], pt.d[0]) * 180 / Math.PI;
+              const dirs = ['right', 'down', 'left', 'up'];
+              const dir = dirs[((Math.round(deg / 90) % 4) + 4) % 4];
+              return `<svg class="cam-dir ${dir}" viewBox="0 0 16 16" aria-hidden="true">`
+                + '<path d="M5 2 L12 8 L5 14" fill="none" stroke="#7dd3fc"'
+                + ' stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+            })()
+            : '';
+          el.innerHTML = dirSvg
             + (iconUrl
               ? `<img class="cam-icon" src="${iconUrl}" alt="${cfg.label}" draggable="false">`
               : '<div class="cam-dot"></div>');
@@ -1347,6 +1495,25 @@ function tacSyncMirrorEl(kind) {
 }
 
 
+function tacOnItemRemoved(removed) {
+  if (!removed) return;
+  if (removed.kind === 'mirrorImage') {
+    const bq = tacBoard().tokens.bloodyQueen;
+    if (bq && bq.showMirror) {
+      bq.showMirror = false;
+      bq.fixedMirror = false;
+      delete bq.mirrorAxis;
+      tacSave();
+    }
+  }
+  if (removed.kind === 'aquaMirror') {
+    for (let i = tacBoard().items.length - 1; i >= 0; i -= 1) {
+      if (tacBoard().items[i].kind === 'mirrorImage') tacBoard().items.splice(i, 1);
+    }
+  }
+}
+
+
 export function tacShadeColor(hex, f) {
   const m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
   if (!m) return hex;
@@ -1494,7 +1661,7 @@ export function tacAbyssMeters(a, b) {
 
 export function tacAbyssRecord(p) {
   const it = tacAbyssItem();
-  const nt = tacBoard().tokens.Naiad;
+  const nt = tacBoard().tokens.naiad;
   if (!it || !nt || !it.abyss.recording) return;
   const ab = it.abyss;
   const last = ab.trail[ab.trail.length - 1];
@@ -1590,7 +1757,7 @@ export function renderTacArrows() {
   tacBoard().items.forEach((it) => {
     const ab = it.abyss;
     if (it.kind !== 'spearfishing' || !ab || !ab.on) return;
-    const nt = tacBoard().tokens.Naiad;
+    const nt = tacBoard().tokens.naiad;
     if (!nt) return;
     const g = document.createElementNS(TAC_SVG_NS, 'g');
     g.setAttribute('pointer-events', 'none');
@@ -1754,7 +1921,14 @@ export function renderTacBoard() {
     const o = (itemOcc[ok] = (itemOcc[ok] || 0) + 1) - 1;
     const z = zMap.get(`i:${it.role}:${it.kind}:${o}`);
 
-    const sizePct = tacItemSizePercent(it); 
+    const rbFill = it.rangeBox ? it.rangeBox.fill : !!def.fill;
+    const itRanges = [
+      ...tacRangeEntries(def.ranges, it, false)
+        .map((e) => ({ pct: tacItemMetersToPercent(e.meters) })),
+      ...tacTalentRanges(it, it.role)
+        .map((r) => ({ pct: tacItemMetersToPercent(r.meters) })),
+    ];
+    const sizePct = itRanges.length ? itRanges[0].pct : null;
     const el = document.createElement('div');
     el.className = (sizePct !== null ? 'tac-item-circle' : 'tac-item-pin')
       + (tacSelectedItem === idx && tacDisplay.selGlow ? ' selected' : '')
@@ -1767,24 +1941,26 @@ export function renderTacBoard() {
     if (z) el.style.zIndex = z;
     if (sizePct !== null) {
       el.style.width = `${sizePct}%`;
-      
-      if (def.fill) el.style.setProperty('--ic-fill', def.fill);
+
+      if (rbFill) el.style.setProperty('--ic-fill', def.fill || TAC_RANGE_DEFAULT_FILL);
       if (def.glow) el.style.setProperty('--ic-glow', def.glow);
-      
-      
-      
+
+
+
+
       el.insertAdjacentHTML('beforeend',
         '<svg class="tac-item-edge" viewBox="0 0 100 100" aria-hidden="true">'
         + '<circle cx="50" cy="50" r="45" fill="none" stroke="rgba(0,0,0,0)"'
         + ' stroke-width="10"/></svg>');
     }
-    
-    
+
+
+
     if (def.icon && !it.hideIcon) {
       el.insertAdjacentHTML('beforeend',
         `<img src="${def.icon}" alt="${def.name}" draggable="false">`);
       const img = el.querySelector('img');
-      
+
       const isz = it.iconSize ?? 3.4;
       const ipx = isz / 100 * tacMapWrap.clientWidth;
       img.style.width = `${ipx}px`;
@@ -1793,23 +1969,42 @@ export function renderTacBoard() {
       el.insertAdjacentHTML('beforeend', '<div class="tac-item-dot"></div>');
     }
     tacMapWrap.appendChild(el);
+    itRanges.slice(1).forEach((r) => {
+      if (r.pct === null) return;
+      const ex = document.createElement('div');
+      ex.className = 'tac-item-circle tac-range-extra';
+      ex.dataset.idx = idx;
+      ex.style.left = `${it.x * 100}%`;
+      ex.style.top = `${it.y * 100}%`;
+      ex.style.width = `${r.pct}%`;
+      ex.style.setProperty('--ic', def.color || '#e2e8f0');
+      if (rbFill) ex.style.setProperty('--ic-fill', def.fill || TAC_RANGE_DEFAULT_FILL);
+      if (z) ex.style.zIndex = z;
+      tacMapWrap.appendChild(ex);
+    });
   });
   for (const [role, t] of Object.entries(board.tokens)) {
     const def = TAC_ROLES[role] || {};
     const z = zMap.get(`r:${role}`);
 
-    const rgM = tacRoleRangeMeters(role, t);
-    const rgPct = rgM === null ? null : tacItemMetersToPercent(rgM);
-    if (rgPct !== null) {
+    const tFill = t.rangeBox ? t.rangeBox.fill : false;
+    const roleRanges = [
+      ...tacRangeEntries(def.ranges, t, true)
+        .map((e) => ({ pct: tacItemMetersToPercent(e.meters) })),
+      ...tacTalentRanges(t, role)
+        .map((r) => ({ pct: tacItemMetersToPercent(r.meters) })),
+    ];
+    roleRanges.forEach((r) => {
+      if (r.pct === null) return;
       const rg = document.createElement('div');
-      rg.className = 'tac-role-circle';
+      rg.className = 'tac-role-circle' + (tFill ? ' filled' : '');
       rg.dataset.role = role;
       rg.style.left = `${t.x * 100}%`;
       rg.style.top = `${t.y * 100}%`;
-      rg.style.width = `${rgPct}%`;
+      rg.style.width = `${r.pct}%`;
       if (z) rg.style.zIndex = z;
       tacMapWrap.appendChild(rg);
-    }
+    });
     const el = document.createElement('div');
     
     const showIcon = def.icon && !t.hideIcon;
@@ -1876,116 +2071,244 @@ export function renderTacBoard() {
 }
 
 
+function tacModeDescLabel(mode, sel, postfix) {
+  const s = mode.size_m;
+  if (Array.isArray(s.options)) {
+    const i = Number.isInteger(sel.opt) && sel.opt >= 0 ? sel.opt : 0;
+    return ((s.labels || [])[i] || mode.label) + postfix;
+  }
+  if (s.options != null) return ((s.labels || [])[0] || mode.label) + postfix;
+  return (mode.label || '') + postfix;
+}
+
+
 export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
   opts = opts || {};
-  const curMode = tacRangeModeOf(cfg, inst, hideByDefault);
-  
-  const modeRow = document.createElement('div');
-  modeRow.className = 'tac-manage-row';
-  const pairMode = curMode.key !== 'off' ? curMode
-    : (cfg.modes.find((x) => x.key !== 'off' && x.size_m)
-      || cfg.modes.find((x) => x.key !== 'off') || curMode);
-  modeRow.innerHTML = `<div class="tac-range-opts">`
-    + cfg.modes.map((m) => {
-      const text = m.key === 'off'
-        ? (opts.hidePrefix || '') + (pairMode.label || '') + (opts.hidePostfix || '')
-        : (opts.labelPrefix || '') + m.label + (opts.labelPostfix || '');
-      return `<button type="button" data-v="${m.key}" class="tac-range-opt`
-        + `${curMode.key === m.key ? ' active' : ''}">${text}</button>`;
-    }).join('')
+  const prefix = opts.labelPrefix || '';
+  const postfix = opts.labelPostfix || '';
+  const defFill = !!opts.defFill;
+  const hostRole = opts.hostRole;
+  const hostCamp = tacHostCamp(hostRole);
+  const showTalents = !!opts.showTalents;
+  cfg = cfg || { modes: [] };
+  const rb = inst.rangeBox;
+  const legacyEntries = tacRangeEntries(cfg, inst, hideByDefault);
+
+  const refresh = () => { renderTacBoard(); renderTacManage(); };
+
+  const box = tacManageBox(settings, "ui.tacRangeBox.title");
+
+
+  const isGrpActive = (key) => (rb ? tacRbGroupActive(rb, key)
+    : legacyEntries.some((e) => e.mode.key === key));
+
+  const modeLine = document.createElement('div');
+  modeLine.className = 'tac-box-line';
+  modeLine.innerHTML = `<div class="tac-range-opts">`
+    + cfg.modes.filter((m) => m.key !== 'off').map((m) =>
+      `<button type="button" data-mk="${m.key}" class="tac-range-opt`
+      + `${isGrpActive(m.key) ? ' active' : ''}">${prefix}${m.label}${postfix}</button>`).join('')
+    + (showTalents
+      ? `<button type="button" data-mk="__talents" class="tac-range-opt`
+      + `${isGrpActive('__talents') ? ' active' : ''}">${translate("ui.tacRangeBox.showTalents")}</button>`
+      : '')
+    + `<button type="button" data-mk="__hide" class="tac-range-opt">${translate("ui.tacRangeBox.hide")}</button>`
     + `</div>`;
-  modeRow.querySelectorAll('.tac-range-opt').forEach((b) => {
+  modeLine.querySelectorAll('.tac-range-opt').forEach((b) => {
     b.addEventListener('click', () => {
-      inst.rangeMode = b.dataset.v;
-      delete inst.hideRange; 
-      renderTacBoard(); 
+      const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+      const mk = b.dataset.mk;
+      if (mk === '__hide') {
+        rbx.modes = {};
+        rbx.talents = {};
+        rbx.activeGroup = null;
+      } else if (rbx.activeGroup !== mk) {
+
+        rbx.activeGroup = mk;
+        if (mk !== '__talents' && !rbx.modes[mk]) {
+          const mode = cfg.modes.find((m) => m.key === mk);
+          rbx.modes[mk] = mode && Array.isArray(mode.size_m.options) ? { subs: [0] } : {};
+        }
+      }
+      refresh();
     });
   });
-  settings.appendChild(modeRow);
-  if (!curMode.size_m) return; 
-  const card = curMode.card ? curMode.card + (opts.labelPostfix || '')
-    : (curMode.label ? curMode.label + (opts.labelPostfix || '') : translate("application.card"));
-  const s = curMode.size_m;
-  const meters = tacRangeMetersOf(cfg, inst, hideByDefault);
-  const cardRow = document.createElement('div');
-  cardRow.className = 'tac-manage-row';
-  if (typeof s === 'number' && !curMode.fearMods) {
-    
-    cardRow.innerHTML = translate("application.buildTacRangeRows", { card: card, state: s });
-  } else if (s.options != null && !Array.isArray(s.options)) {
+  box.appendChild(modeLine);
 
-    const singleCard = ((s.labels || [])[0] || curMode.label || '') + (opts.labelPostfix || '');
-    cardRow.innerHTML = `<label>${singleCard} ${s.options}m</label>`
-      + `<div class="tac-range-opts">`
-      + `<button type="button" data-v="${s.options}" class="tac-range-opt active">${singleCard}</button>`
+
+  function subBtn(active, attrs, label) {
+    return `<button type="button" ${attrs} class="tac-range-opt tac-range-sub`
+      + `${active ? ' active' : ''}">${label}</button>`;
+  }
+
+  const grp = rb
+    ? (rb.activeGroup !== undefined ? rb.activeGroup : null)
+    : (legacyEntries.length ? legacyEntries[0].mode.key : null);
+  if (showTalents && grp === '__talents') {
+    const tLine = document.createElement('div');
+    tLine.className = 'tac-box-line';
+    tLine.innerHTML = `<div class="tac-range-opts">`
+      + tacTalentButtons(hostRole, hostCamp).map((tb) =>
+        subBtn(!!(rb.talents && rb.talents[tb.tk]), `data-tk="${tb.tk}"`, tb.label)).join('')
       + `</div>`;
-  } else if (Array.isArray(s.options)) {
-    
-    const optIdx = s.options.indexOf(meters);
-    const optHead = opts.labelPostfix && optIdx >= 0 && (s.labels || [])[optIdx]
-      ? s.labels[optIdx] + opts.labelPostfix : card;
-    cardRow.innerHTML = `<label>${optHead} ${meters}m</label>`
-      + `<div class="tac-range-opts">`
-      + s.options.map((v, i) =>
-        `<button type="button" data-v="${v}" class="tac-range-opt`
-        + `${meters === v ? ' active' : ''}">${(s.labels || [])[i] ? s.labels[i] + (opts.labelPostfix || '') : `${v}m`}</button>`).join('')
-      + `</div>`;
-    cardRow.querySelectorAll('.tac-range-opt').forEach((b) => {
+    tLine.querySelectorAll('.tac-range-sub').forEach((b) => {
       b.addEventListener('click', () => {
-        inst.rangeMeters = parseFloat(b.dataset.v);
-        delete inst.meters;
-        renderTacBoard();
+        const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+        if (rbx.talents[b.dataset.tk]) delete rbx.talents[b.dataset.tk];
+        else rbx.talents[b.dataset.tk] = {};
+        refresh();
       });
     });
-  } else if (curMode.fearMods) {
-    
-    cardRow.innerHTML = translate("application.buildTacRangeRowsAlternate", { card: card, value: meters.toFixed(2), state: s });
-  } else {
-    
-    cardRow.innerHTML =
-      `<label>${card}</label>`
-      + `<div class="tac-range-mid">`
-      + `<span class="tac-range-end">${s.min}m</span>`
-      + `<input type="range" min="${s.min}" max="${s.max}" step="0.1" value="${meters}">`
-      + `<span class="tac-range-end">${s.max}m</span>`
-      + `</div>`
-      + `<span class="tac-range-val">${meters.toFixed(1)}m</span>`;
-    const sl = cardRow.querySelector('input');
-    sl.addEventListener('input', () => {
-      inst.rangeMeters = parseFloat(sl.value);
-      delete inst.meters;
-      cardRow.querySelector('.tac-range-val').textContent = `${inst.rangeMeters.toFixed(1)}m`;
-      if (opts.softUpdate) opts.softUpdate();
-      else renderTacBoard();
-    });
-  }
-  settings.appendChild(cardRow);
-  
-  if (curMode.fearMods) {
-    [['fearHunter', 'hunter'], ['fearSurv', 'survivor']].forEach(([field, gkey]) => {
-      const gopts = curMode.fearMods[gkey];
-      const defKey = gopts[0][0];
-      const grp = document.createElement('div');
-      grp.className = 'tac-manage-row';
-      grp.innerHTML = `<div class="tac-range-opts">`
-        + gopts.map(([v, label]) =>
-          `<button type="button" data-v="${v}" class="tac-range-opt`
-          + `${(inst[field] || defKey) === v ? ' active' : ''}">${label}</button>`).join('')
-        + `</div>`;
-      grp.querySelectorAll('.tac-range-opt').forEach((b) => {
-        b.addEventListener('click', () => {
-          inst[field] = b.dataset.v;
-          grp.querySelectorAll('.tac-range-opt').forEach((x) =>
-            x.classList.toggle('active', x === b));
-          const valEl = settings.querySelector('.tac-fear-val');
-          if (valEl) valEl.textContent = tacRangeMetersOf(cfg, inst, hideByDefault).toFixed(2);
-          if (opts.softUpdate) opts.softUpdate();
-          else renderTacBoard();
+    box.appendChild(tLine);
+  } else if (grp && grp !== '__talents') {
+    const mode = cfg.modes.find((m) => m.key === grp);
+    if (mode && mode.size_m) {
+      const s = mode.size_m;
+      const st = rb
+        ? ((rb.modes && rb.modes[mode.key]) || null)
+        : ((legacyEntries.find((e) => e.mode.key === mode.key) || {}).sel || null);
+      if (Array.isArray(s.options)) {
+
+        const subs = st && st.subs !== undefined ? st.subs : [0];
+        const optLine = document.createElement('div');
+        optLine.className = 'tac-box-line';
+        optLine.innerHTML = `<div class="tac-range-opts">`
+          + s.options.map((v, i) =>
+            subBtn(subs.includes(i), `data-v="${i}"`,
+              (s.labels || [])[i] ? s.labels[i] + postfix : `${v}m`)).join('')
+          + `</div>`;
+        optLine.querySelectorAll('.tac-range-sub').forEach((b) => {
+          b.addEventListener('click', () => {
+            const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+            const cur = rbx.modes[mode.key] || (rbx.modes[mode.key] = { subs: [0] });
+            const arr = Array.isArray(cur.subs) ? [...cur.subs] : [0];
+            const i = +b.dataset.v;
+            const at = arr.indexOf(i);
+            if (at >= 0) arr.splice(at, 1);
+            else arr.push(i);
+            arr.sort((a, b2) => a - b2);
+            cur.subs = arr;
+            refresh();
+          });
         });
-      });
-      settings.appendChild(grp);
-    });
+        box.appendChild(optLine);
+      } else if (mode.fearMods) {
+        [['fearH', 'hunter'], ['fearS', 'survivor']].forEach(([field, gkey]) => {
+          const gopts = mode.fearMods[gkey];
+          const defKey = gopts[0][0];
+          const grpEl = document.createElement('div');
+          grpEl.className = 'tac-box-line';
+          grpEl.innerHTML = `<div class="tac-range-opts">`
+            + gopts.map(([v, label]) =>
+              subBtn((st && (st[field] || defKey)) === v, `data-v="${v}"`, label)).join('')
+            + `</div>`;
+          grpEl.querySelectorAll('.tac-range-sub').forEach((b) => {
+            b.addEventListener('click', () => {
+              const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+              (rbx.modes[mode.key] ||= {})[field] = b.dataset.v;
+              refresh();
+            });
+          });
+          box.appendChild(grpEl);
+        });
+      } else if (typeof s === 'object' && s !== null && s.options == null) {
+
+        const dynMax = s.max != null ? s.max
+          : (MAPS_DATA[S.currentMapId] && MAPS_DATA[S.currentMapId].widthM) || 100;
+        const cur = st && st.m != null ? st.m : dynMax;
+        const slLine = document.createElement('div');
+        slLine.className = 'tac-box-line';
+        slLine.innerHTML = `<div class="tac-range-mid">`
+          + `<span class="tac-range-end">${s.min}m</span>`
+          + `<input type="range" min="${s.min}" max="${dynMax}" step="0.1" value="${cur}">`
+          + `<span class="tac-range-end">${tacRangeFmt(dynMax)}m</span>`
+          + `</div>`
+          + `<span class="tac-range-val">${tacRangeFmt(cur)}m</span>`;
+        const sl = slLine.querySelector('input');
+        if (sl) {
+          sl.addEventListener('input', () => {
+            const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+            (rbx.modes[mode.key] ||= {}).m = parseFloat(sl.value);
+            slLine.querySelector('.tac-range-val').textContent =
+              `${tacRangeFmt(rbx.modes[mode.key].m)}m`;
+            updateDescs();
+            if (opts.softUpdate) opts.softUpdate();
+          });
+          sl.addEventListener('change', () => { renderTacBoard(); renderTacManage(); });
+        }
+        box.appendChild(slLine);
+      } else {
+
+        const fixedLine = document.createElement('div');
+        fixedLine.className = 'tac-box-line';
+        fixedLine.innerHTML = `<div class="tac-range-opts">`
+          + subBtn(!!st, `data-fixed="1"`, `${prefix}${mode.label}${postfix}`)
+          + `</div>`;
+        fixedLine.querySelectorAll('.tac-range-sub').forEach((b) => {
+          b.addEventListener('click', () => {
+            const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+            if (rbx.modes[mode.key]) delete rbx.modes[mode.key];
+            else rbx.modes[mode.key] = {};
+            refresh();
+          });
+        });
+        box.appendChild(fixedLine);
+      }
+    }
   }
+
+
+  tacTalentRanges(inst, hostRole).forEach((tr) => {
+    if (!tr.mode) return;
+    const s = tr.mode.size_m;
+    if (!Array.isArray(s.options)) return;
+    const optLine = document.createElement('div');
+    optLine.className = 'tac-box-line';
+    const curOpt = Number.isInteger(tr.sel.opt) && tr.sel.opt >= 0 ? tr.sel.opt : 0;
+    optLine.innerHTML = `<div class="tac-range-opts">`
+      + s.options.map((v, i) =>
+        subBtn(curOpt === i, `data-tk="${tr.tk}" data-v="${i}"`,
+          (s.labels || [])[i] ? s.labels[i] + postfix : `${v}m`)).join('')
+      + `</div>`;
+    optLine.querySelectorAll('.tac-range-sub').forEach((b) => {
+      b.addEventListener('click', () => {
+        const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+        (rbx.talents[b.dataset.tk] ||= {}).opt = +b.dataset.v;
+        refresh();
+      });
+    });
+    box.appendChild(optLine);
+  });
+
+
+  const descs = document.createElement('div');
+  descs.className = 'tac-range-descs';
+  function updateDescs() {
+    const lines = [];
+    tacRangeEntries(cfg, inst, hideByDefault).forEach((e2) => {
+      lines.push(`${tacModeDescLabel(e2.mode, e2.sel, postfix)} ${tacRangeFmt(e2.meters)}m`);
+    });
+    tacTalentRanges(inst, hostRole).forEach((tr) => {
+      lines.push(`${tr.label}${tr.variant ? '' : postfix} ${tacRangeFmt(tr.meters)}m`);
+    });
+    descs.innerHTML = lines
+      .map((l) => `<div class="tac-range-desc">${l}</div>`).join('');
+  }
+  updateDescs();
+  box.appendChild(descs);
+
+
+  const fillLabel = document.createElement('label');
+  fillLabel.className = 'tac-range-fill';
+  fillLabel.innerHTML = `<input type="checkbox"`
+    + `${(rb ? rb.fill : defFill) ? ' checked' : ''}> ${translate("ui.tacRangeBox.fill")}`;
+  const fillInput = fillLabel.querySelector('input');
+  if (fillInput) fillInput.addEventListener('change', (ev) => {
+    const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+    rbx.fill = ev.target.checked;
+    refresh();
+  });
+  box.appendChild(fillLabel);
 }
 
 function tacManageDefaultEntries(board) {
@@ -2260,30 +2583,18 @@ export function renderTacManage() {
   if (tacManageSel.type === 'role') {
     const role = tacManageSel.role;
     const token = board.tokens[role];
-    const rgCfg = (TAC_ROLES[role] || {}).ranges; 
+    const rgCfg = (TAC_ROLES[role] || {}).ranges;
     const rangeShown = !!rgCfg && tacRoleRangeMode(role, token).key !== 'off';
     const isRoleDefault = () =>
       token.size === TAC_MANAGE_DEFAULT.roleSize && !rangeShown && !token.hideIcon;
 
-    
-    
-    if (rgCfg) {
-      
-      
-      const syncRoleCircleWidth = () => {
-        const el = tacMapWrap.querySelector(`.tac-role-circle[data-role="${role}"]`);
-        const m = tacRoleRangeMeters(role, token);
-        if (el && m !== null) el.style.width = `${tacItemMetersToPercent(m)}%`;
-      };
-      buildTacRangeRows(settings, rgCfg, token, true, { softUpdate: syncRoleCircleWidth, labelPrefix: translate("characters.default.range.label.showPrefix"), labelPostfix: translate("characters.default.range.label.showPostfix"), hidePrefix: translate("characters.default.range.label.hidePrefix"), hidePostfix: translate("characters.default.range.label.hidePostfix") });
-    }
-    
-    
+
     if (role === 'explorer') {
       const box = tacManageBox(settings, "ui.tacManageBox.treasure");
       box.innerHTML +=
         `<label class="tac-manage-glow"><input type="checkbox"`
         + translate("application.renderTacManageTreasure", { value: token.showTreasureRange ? ' checked' : '' });
+      tacBoxHint(box, translate("ui.tacManageBox.treasureHint", {  }));
       box.querySelector('input').addEventListener('change', (e) => {
         token.showTreasureRange = e.target.checked;
         renderTacTreasure();
@@ -2311,7 +2622,7 @@ export function renderTacManage() {
     }
     
     
-    if (role === 'Naiad') {
+    if (role === 'naiad') {
       const spearfishing = board.items.find((it) => it.kind === 'spearfishing');
       if (spearfishing) buildAbyssManageBox(settings, spearfishing);
     }
@@ -2326,11 +2637,24 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
         .find((it) => it && it.rangeM && it.rangeScreenM);
       const fsRow = document.createElement('div');
       fsRow.className = fsTitleKey ? 'tac-box-line' : 'tac-manage-row';
+      const hasOrient = (Array.isArray(fixedSpawnCfg.item)
+        ? fixedSpawnCfg.item : [fixedSpawnCfg.item])
+        .some((it) => it && it.flag_orientation);
       fsRow.innerHTML =
         `<label class="tac-manage-glow"><input type="checkbox"`
-        + translate("application.renderTacManageSeventh", { value: token.showFixedSpawns ? ' checked' : '', label: fixedSpawnCfg.label });
+        + translate("application.renderTacManageSeventh", { value: token.showFixedSpawns ? ' checked' : '', label: fixedSpawnCfg.label })
+        + (hasOrient
+          ? `<label class="tac-manage-glow"><input type="checkbox" data-fsdir`
+          + `${token.showSpawnDir ? ' checked' : ''}> ${translate("ui.tacManageBox.showDir")}</label>`
+          : '');
       fsRow.querySelector('input').addEventListener('change', (e) => {
         token.showFixedSpawns = e.target.checked;
+        renderTacFixedSpawns();
+        tacSave();
+      });
+      const dirCb = fsRow.querySelector('input[data-fsdir]');
+      if (dirCb) dirCb.addEventListener('change', (e) => {
+        token.showSpawnDir = e.target.checked;
         renderTacFixedSpawns();
         tacSave();
       });
@@ -2367,7 +2691,17 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
         fsBox.appendChild(rangeRow);
       }
     }
-    
+
+    const roleCamp = (TAC_ROLES[role] || {}).camp;
+    if (rgCfg || roleCamp === 'survivor' || roleCamp === 'hunter') {
+      const syncRoleCircleWidth = () => {
+        const el = tacMapWrap.querySelector(`.tac-role-circle[data-role="${role}"]`);
+        const m = tacRoleRangeMeters(role, token);
+        if (el && m !== null) el.style.width = `${tacItemMetersToPercent(m)}%`;
+      };
+      buildTacRangeRows(settings, rgCfg, token, true, { softUpdate: syncRoleCircleWidth, hostRole: role, showTalents: roleCamp === 'survivor' || roleCamp === 'hunter', labelPrefix: translate("characters.default.range.label.showPrefix"), labelPostfix: translate("characters.default.range.label.showPostfix") });
+    }
+
     const row = document.createElement('div');
     row.className = 'tac-manage-row';
     row.innerHTML =
@@ -2405,9 +2739,10 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
       if (!defCb.checked) return;
       token.size = TAC_MANAGE_DEFAULT.roleSize;
       token.hideIcon = false;
-      if (rgCfg) { 
+      if (rgCfg) {
         delete token.rangeMode;
         delete token.rangeMeters;
+        delete token.rangeBox;
       }
       renderTacBoard();
     });
@@ -2441,18 +2776,9 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     if (el) el.style.width = `${tacItemSizePercent(it)}%`;
   };
   
-  const defModeKey = rgCfg ? tacRangeDefaultKey(rgCfg, false) : null;
   const itemRangeIsDefault = () => {
     if (!rgCfg) return true;
-    const mode = tacRangeModeOf(rgCfg, it, false);
-    if (mode.key !== defModeKey) return false;
-    const s = mode.size_m;
-    const instM = it.rangeMeters ?? it.meters;
-    if (s && Array.isArray(s.options) && instM !== undefined && instM !== s.options[0]) return false;
-    if (s && s.options == null && typeof s === 'object'
-      && instM !== undefined && instM !== s.max) return false;
-    if (mode.fearMods && (it.fearHunter || it.fearSurv)) return false;
-    return true;
+    return !it.rangeBox;
   };
   const isDefault = !it.hideIcon
     && curIcon === TAC_MANAGE_DEFAULT.iconSize
@@ -2479,10 +2805,10 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
   if (rgCfg) {
     buildTacRangeRows(settings, rgCfg, it, false,
       { softUpdate: () => { syncCircleWidth(); refreshDefault(); },
+        hostRole: it.role,
+        defFill: !!itDef.fill,
         labelPrefix: translate("items.default.range.label.showPrefix"),
-        labelPostfix: translate("items.default.range.label.showPostfix"),
-        hidePrefix: translate("items.default.range.label.hidePrefix"),
-        hidePostfix: translate("items.default.range.label.hidePostfix") });
+        labelPostfix: translate("items.default.range.label.showPostfix") });
   }
 
   
@@ -2532,6 +2858,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     delete it.meters;
     delete it.fearHunter;
     delete it.fearSurv;
+    delete it.rangeBox;
     it.iconSize = TAC_MANAGE_DEFAULT.iconSize;
     it.hideIcon = false;
     renderTacBoard(); 
@@ -2540,11 +2867,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
   row.querySelector('.tac-manage-del').addEventListener('click', () => {
     const removed = board.items[idx];
     board.items.splice(idx, 1);
-    if (removed.kind === 'aquaMirror') {
-      for (let i = board.items.length - 1; i >= 0; i -= 1) {
-        if (board.items[i].kind === 'mirrorImage') board.items.splice(i, 1);
-      }
-    }
+    tacOnItemRemoved(removed);
     tacUndoStack.push({ type: 'delItem', item: { ...removed }, idx });
     if (tacSelectedItem === idx) tacSelectedItem = null;
     tacManageSel = null;
@@ -4678,6 +5001,7 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
       const idx = +itemEl.dataset.idx;
       const removed = tacBoard().items[idx];
       tacBoard().items.splice(idx, 1);
+      tacOnItemRemoved(removed);
       tacUndoStack.push({ type: 'delItem', item: { ...removed }, idx });
       if (tacSelectedItem === idx) tacSelectedItem = null;
       renderTacBoard();
@@ -4805,8 +5129,8 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
     tacDrag = { role: tacSelected };
     
     const abIt = tacAbyssItem();
-    if (abIt && tacSelected === 'Naiad') {
-      const t0 = tacBoard().tokens.Naiad;
+    if (abIt && tacSelected === 'naiad') {
+      const t0 = tacBoard().tokens.naiad;
       abIt.abyss.recording = true;
       abIt.abyss.trail = [{ x: t0.x, y: t0.y }];
     }
@@ -4825,7 +5149,7 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
     tacManageSel = { type: 'item', idx }; 
     
     const it0 = tacBoard().items[idx];
-    const abyssLocked = !!(it0 && it0.abyss && it0.abyss.on && tacBoard().tokens.Naiad);
+    const abyssLocked = !!(it0 && it0.abyss && it0.abyss.on && tacBoard().tokens.naiad);
     const bqTk0 = tacBoard().tokens.bloodyQueen;
     const mirrorLocked = !!(it0 && it0.kind === 'aquaMirror' && bqTk0
       && bqTk0.showMirror && bqTk0.fixedMirror);
@@ -4941,11 +5265,11 @@ tacMapWrap.addEventListener('pointermove', (e) => {
       el.style.top = `${t.y * 100}%`;
     }
     
-    const rg = tacMapWrap.querySelector(`.tac-role-circle[data-role="${tacDrag.role}"]`);
-    if (rg) {
-      rg.style.left = `${t.x * 100}%`;
-      rg.style.top = `${t.y * 100}%`;
-    }
+    tacMapWrap.querySelectorAll(`.tac-role-circle[data-role="${tacDrag.role}"]`)
+      .forEach((rg) => {
+        rg.style.left = `${t.x * 100}%`;
+        rg.style.top = `${t.y * 100}%`;
+      });
     if (t.showTreasureRange) renderTacTreasure();
     tacAbyssRecord(p); 
 
@@ -4955,6 +5279,7 @@ tacMapWrap.addEventListener('pointermove', (e) => {
         if (!hadMirror) renderTacBoard();
         else { tacSyncMirrorEl('mirrorImage'); renderTacArrows(); }
       }
+      if (tacBoard().items.some((it) => it.kind === 'aquaMirror')) renderTacArrows();
     }
 
     if (tacBoard().items.some((it) =>
@@ -4981,12 +5306,12 @@ tacMapWrap.addEventListener('pointermove', (e) => {
     const mdx = cl.x - it.x, mdy = cl.y - it.y; 
     it.x = cl.x;
     it.y = cl.y;
-    const el = tacMapWrap.querySelector(
-      `.tac-item-circle[data-idx="${tacDragItem.idx}"], .tac-item-pin[data-idx="${tacDragItem.idx}"]`);
-    if (el) {
-      el.style.left = `${it.x * 100}%`;
-      el.style.top = `${it.y * 100}%`;
-    }
+    tacMapWrap.querySelectorAll(
+      `.tac-item-circle[data-idx="${tacDragItem.idx}"], .tac-item-pin[data-idx="${tacDragItem.idx}"]`)
+      .forEach((el) => {
+        el.style.left = `${it.x * 100}%`;
+        el.style.top = `${it.y * 100}%`;
+      });
 
     if (it.kind === 'aquaMirror' || it.kind === 'mirrorImage') {
       const movedKind = it.kind === 'aquaMirror' ? 'aq' : 'mi';
@@ -5060,11 +5385,16 @@ tacMapWrap.addEventListener('pointermove', (e) => {
         
         t.x = clamp01(t.x + mdx);
         t.y = clamp01(t.y + mdy);
-        const tEl = tacMapWrap.querySelector(`.tac-token[data-role="${role}"]`);
-        if (tEl) {
-          tEl.style.left = `${t.x * 100}%`;
-          tEl.style.top = `${t.y * 100}%`;
-        }
+        tacMapWrap.querySelectorAll(`.tac-token[data-role="${role}"]`)
+          .forEach((tEl) => {
+            tEl.style.left = `${t.x * 100}%`;
+            tEl.style.top = `${t.y * 100}%`;
+          });
+        tacMapWrap.querySelectorAll(`.tac-role-circle[data-role="${role}"]`)
+          .forEach((rgEl) => {
+            rgEl.style.left = `${t.x * 100}%`;
+            rgEl.style.top = `${t.y * 100}%`;
+          });
       }
     }
     renderTacArrows(); 
@@ -5151,19 +5481,31 @@ tacMapWrap.addEventListener('wheel', (e) => {
 
     const mode = tacItemRangeMode(it);
     const s = mode && mode.size_m;
+    const cfg = (TAC_ITEM_TYPES[it.kind] || {}).ranges;
     if (s && Array.isArray(s.options)) {
-      const cur = it.rangeMeters ?? it.meters ?? s.options[0];
+      const curEntry = tacRangeEntries(cfg, it, false)[0];
+      const cur = curEntry ? curEntry.meters : s.options[0];
       const i = Math.max(0, s.options.indexOf(cur));
       const j = Math.min(s.options.length - 1,
         Math.max(0, i + (e.deltaY < 0 ? 1 : -1)));
-      it.rangeMeters = s.options[j];
-      delete it.meters;
+      if (it.rangeBox) {
+        (it.rangeBox.modes[mode.key] ||= {}).opt = j;
+      } else {
+        it.rangeMeters = s.options[j];
+        delete it.meters;
+      }
     } else if (s && typeof s === 'object' && !mode.fearMods) {
-      const cur = it.rangeMeters ?? it.meters ?? s.max;
-      it.rangeMeters = Math.round(Math.min(s.max,
+      const curEntry = tacRangeEntries(cfg, it, false)[0];
+      const cur = curEntry ? curEntry.meters : s.max;
+      const v = Math.round(Math.min(s.max,
         Math.max(s.min,
           cur + (e.deltaY < 0 ? 0.1 : -0.1))) * 100) / 100;
-      delete it.meters;
+      if (it.rangeBox) {
+        (it.rangeBox.modes[mode.key] ||= {}).m = v;
+      } else {
+        it.rangeMeters = v;
+        delete it.meters;
+      }
     }
     renderTacBoard();
     return;
@@ -5403,7 +5745,7 @@ window.addEventListener('keydown', (e) => {
     } else if (tacSelectedItem !== null && tacBoard().items[tacSelectedItem]) {
       const it = tacBoard().items[tacSelectedItem];
       
-      if (it.abyss && it.abyss.on && tacBoard().tokens.Naiad) {
+      if (it.abyss && it.abyss.on && tacBoard().tokens.naiad) {
         e.preventDefault();
         return;
       }
@@ -5454,6 +5796,7 @@ window.addEventListener('keydown', (e) => {
     } else if (tacSelectedItem !== null && board.items[tacSelectedItem]) {
       const removed = board.items[tacSelectedItem];
       board.items.splice(tacSelectedItem, 1);
+      tacOnItemRemoved(removed);
       tacUndoStack.push({ type: 'delItem', item: { ...removed }, idx: tacSelectedItem });
       tacSelectedItem = null;
       renderTacBoard();
