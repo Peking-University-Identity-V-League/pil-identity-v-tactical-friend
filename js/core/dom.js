@@ -319,7 +319,7 @@ export const tacChairText = $('tacChairText');
 
 export const tacShowChairBasementEl = $('tacShowChairBasement');
 
-export const tacChairBasementText = $('tacChairBasementText');
+export const tacBasementText = $('tacBasementText');
 
 export const tacSnapBoxEl = $('tacSnapBox');
 
@@ -330,5 +330,3 @@ export const tacBoxSizeEl = $('tacBoxSize');
 export const tacBoxSizeDefEl = $('tacBoxSizeDef');
 
 export const tacShowBoxBasementEl = $('tacShowBoxBasement');
-
-export const tacBoxBasementText = $('tacBoxBasementText');
