@@ -1098,5 +1098,18 @@
   "ui.tacBoxBasementPrev.title": "上一处地下室",
   "ui.tacBoxBasementNext.title": "下一处地下室",
   "ui.tacShowBoxBasement.label": "地下室",
-  "ui.tacShowBoxBasement.title": "显示所选地下室的箱子"
+  "ui.tacShowBoxBasement.title": "显示所选地下室的箱子",
+  "ui.dedSecZh.labelTwelfth": "🌐 更多网站",
+  "ui.dedMore.intro": "第五人格社区玩家用爱发电，涌现出了许多非常优秀的工具，虽与本站无隶属关系，亦值得推荐。如果它们帮到了您，前往原站关注鼓励，就是对创作者最温暖的回应。",
+  "ui.dedMore.name1": "遗产标记密码机推演",
+  "ui.dedMore.name2": "连机查询密码机推演",
+  "ui.dedMore.name3": "看禁选推测监管者",
+  "ui.dedMore.name4": "资源规划小工具",
+  "ui.dedMore.name5": "跛脚羊绕笼小程序",
+  "ui.dedMore.go": "点击前往",
+  "ui.dedMore.goTitle1": "前往 idvmap.funnytools.top",
+  "ui.dedMore.goTitle2": "前往 mimaji.ok.kimi.link",
+  "ui.dedMore.goTitle3": "前往 ban.guojam.xyz",
+  "ui.dedMore.goTitle4": "前往 idv.ethan0ne.com",
+  "ui.dedMore.goTitle5": "前往 cage-arena.app.workbuddy.host"
 }
