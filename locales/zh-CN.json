@@ -1,5 +1,6 @@
 {
   "ui.map3d.open": "切换三维",
+  "ui.map3d.loadingHint": "三维地图文件较大，首次加载较慢，请耐心等待。",
   "ui.map3d.error": "无法打开三维地图，请检查测距选点后重试。",
   "application.buildTacOtherList": "<button type=\"button\" class=\"tac-talent-add\" data-ok=\"{key}\">添加</button></div>",
   "application.buildTacRangeRows": "<label>{card} {state}m（固定）</label>",
