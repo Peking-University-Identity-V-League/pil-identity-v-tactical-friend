@@ -3506,7 +3506,12 @@ div.tac-fixed-spawn .cam-dir.up {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 8px;
+}
+.tac-manage-info .tac-manage-count {
+  flex: none;
+  white-space: nowrap;
 }
 .tac-manage-info .tac-manage-count {
   font-size: 12px;
@@ -3518,8 +3523,24 @@ div.tac-fixed-spawn .cam-dir.up {
   margin-left: auto;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
   gap: 8px;
   flex: none;
+}
+
+.tac-link-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+}
+.tac-link-opt {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  cursor: pointer;
 }
 .tac-manage-side .tac-manage-hint {
   font-size: 11px;

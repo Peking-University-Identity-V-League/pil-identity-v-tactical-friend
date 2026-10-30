@@ -16,7 +16,11 @@ export const tacBoards = {};
 
 export const tacBoard = () => {
   const b = (tacBoards[S.currentMapId] ||=
-    { tokens: {}, arrows: [], items: [], measures: [], texts: [] });
+    { tokens: [], tokenSeq: 0, itemSeq: 0, arrows: [], items: [], measures: [], texts: [] });
+  b.tokens ||= [];
+  b.tokenSeq ||= 0;
+  b.itemSeq ||= 0;
+  b.items ||= [];
   b.measures ||= [];
   b.texts ||= [];
   b.order ||= [];
@@ -32,12 +36,26 @@ try { tacPersisted = JSON.parse(localStorage.getItem(TAC_LS_KEY) || 'null'); } c
 
 if (tacPersisted && tacPersisted.boards) Object.assign(tacBoards, tacPersisted.boards);
 
-// 旧存档迁移：渔女角色键 Naiad -> naiad
+// 旧存档迁移：tokens 对象 -> 多实例数组；为角色/道具实例分配 tid/iid
 for (const board of Object.values(tacBoards)) {
-  if (!board || !board.tokens || !board.tokens.Naiad) continue;
-  board.tokens.naiad = board.tokens.Naiad;
-  delete board.tokens.Naiad;
-  (board.items || []).forEach((it) => { if (it.role === 'Naiad') it.role = 'naiad'; });
+  if (!board) continue;
+  if (board.tokens && !Array.isArray(board.tokens)) {
+    const arr = [];
+    for (const [role, t] of Object.entries(board.tokens)) {
+      arr.push({ tid: ++board.tokenSeq, role, ...t });
+    }
+    board.tokens = arr;
+  }
+  board.tokens ||= [];
+  board.items ||= [];
+  for (const t of board.tokens) { t.tid = t.tid || ++board.tokenSeq; }
+  for (const it of board.items) { it.iid = it.iid || ++board.itemSeq; }
+  board.tokenSeq = Math.max(board.tokenSeq || 0, ...board.tokens.map((t) => t.tid || 0));
+  board.itemSeq = Math.max(board.itemSeq || 0, ...board.items.map((it) => it.iid || 0));
+  // 渔女角色键 Naiad -> naiad
+  const naiadT = board.tokens.find((t) => t.role === 'Naiad');
+  if (naiadT) naiadT.role = 'naiad';
+  board.items.forEach((it) => { if (it.role === 'Naiad') it.role = 'naiad'; });
 }
 
 export const restoredMeasureIds = measureIdCounters(tacBoards);
