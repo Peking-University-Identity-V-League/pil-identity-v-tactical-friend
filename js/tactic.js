@@ -26,20 +26,15 @@ export function tacItemMetersToPercent(meters) {
 
 
 export function tacRangeDefaultKey(cfg, hideByDefault) {
-  if (hideByDefault) return 'off';
-  const m = cfg.modes.find((x) => x.size_m);
-  return (m || cfg.modes[0]).key;
+  // 新格式 ranges 无 key 语义：返回 null 表示「无默认显示」
+  return null;
 }
 
 
 export function tacRangeModeOf(cfg, inst, hideByDefault) {
   if (!cfg) return null;
   const e = tacRangeEntries(cfg, inst, hideByDefault);
-  if (e.length) return e[0].mode;
-  const key = (inst && (inst.rangeMode || (inst.hideRange ? 'off' : null)))
-    || tacRangeDefaultKey(cfg, hideByDefault);
-  return cfg.modes.find((m) => m.key === key)
-    || cfg.modes.find((m) => m.key === 'off') || cfg.modes[0];
+  return e.length ? e[0].opt : null;
 }
 
 
@@ -56,98 +51,99 @@ function tacRangeFmt(m) {
 }
 
 
-function tacModeMeters(mode, sel) {
-  const s = mode.size_m;
-  sel = sel || {};
+function tacOptionMeters(opt, rb, cfg) {
+  const s = opt && opt.size_m;
+  if (s == null) return null;
   let base;
-  if (typeof s === 'number') base = s;
-  else if (Array.isArray(s.options)) {
-    const i = Number.isInteger(sel.opt) && sel.opt >= 0 && sel.opt < s.options.length
-      ? sel.opt : 0;
-    base = s.options[i];
-  } else if (s.options != null) base = sel.m != null ? sel.m : s.options;
-  else {
+  if (typeof s === 'number') {
+    base = s;
+  } else if (Array.isArray(s)) {
+    // 档位模式：[9,12,15]，rb.gear 为当前挡位索引
+    const gi = rb && Number.isInteger(rb.gear) ? rb.gear : 0;
+    base = s[Math.min(Math.max(gi, 0), s.length - 1)];
+  } else if (typeof s === 'object') {
+    // 滑杆模式：{min,max}，max 为 null 时取地图宽
     const dynMax = s.max != null ? s.max
       : (MAPS_DATA[S.currentMapId] && MAPS_DATA[S.currentMapId].widthM) || 100;
-    base = sel.m != null ? sel.m : dynMax;
+    base = rb && rb.m != null ? rb.m : dynMax;
+  } else {
+    return null;
   }
-  if (base == null) return null;
   if (!(base > 0)) return null; // 半径 0 等价于隐藏范围
-  if (mode.fearMods) {
+  if (cfg && cfg.fearMods) {
     const pick = (opts, v) => (opts.find((o) => o[0] === v) || opts[0])[2];
-    base *= pick(mode.fearMods.hunter, sel.fearH)
-      * pick(mode.fearMods.survivor, sel.fearS);
+    base *= pick(cfg.fearMods.hunter, rb && rb.fearH)
+      * pick(cfg.fearMods.survivor, rb && rb.fearS);
   }
   return base;
 }
 
 
 function tacRangeEntries(cfg, inst, hideByDefault) {
-  if (!cfg || !Array.isArray(cfg.modes)) return [];
-  const rb = inst && inst.rangeBox;
-  const legacyKey = (inst && (inst.rangeMode || (inst.hideRange ? 'off' : null)))
-    || tacRangeDefaultKey(cfg, hideByDefault);
+  if (!cfg || !Array.isArray(cfg.options)) return [];
+  const rb = tacRbEnsure(cfg, inst, hideByDefault, false);
   const out = [];
-  for (const mode of cfg.modes) {
-    if (!mode.size_m) continue;
-    const s = mode.size_m;
-    if (rb) {
-      const st = (rb.modes && rb.modes[mode.key]) || null;
-      if (!st) continue;
-      if (Array.isArray(s.options)) {
-        const subs = st.subs === undefined ? [0] : st.subs;
-        for (const i of subs) {
-          if (i < 0 || i >= s.options.length) continue;
-          const meters = tacModeMeters(mode, { ...st, opt: i });
-          if (meters == null) continue;
-          out.push({ mode, sel: { ...st, opt: i }, meters });
-        }
-        continue;
-      }
-      const meters = tacModeMeters(mode, st);
-      if (meters == null) continue;
-      out.push({ mode, sel: st, meters });
-    } else {
-      if (mode.key !== legacyKey) continue;
-      const instM = inst ? (inst.rangeMeters ?? inst.meters) : undefined;
-      const sel = {};
-      if (Array.isArray(s.options)) {
-        sel.opt = instM !== undefined ? s.options.indexOf(instM) : undefined;
-      } else if (typeof s === 'object' && s !== null) {
-        sel.m = instM;
-      }
-      sel.fearH = inst && inst.fearHunter;
-      sel.fearS = inst && inst.fearSurv;
-      const meters = tacModeMeters(mode, sel);
-      if (meters == null) continue;
-      out.push({ mode, sel, meters });
-    }
+  const subs = Array.isArray(rb.subs) ? rb.subs : [];
+  for (const i of subs) {
+    if (i < 0 || i >= cfg.options.length) continue;
+    const opt = cfg.options[i];
+    const meters = tacOptionMeters(opt, rb, cfg);
+    if (meters == null) continue;
+    out.push({ opt, i, meters });
   }
   return out;
 }
 
 
 function tacRbEnsure(cfg, inst, hideByDefault, defFill) {
-  if (inst.rangeBox) return inst.rangeBox;
-  const entries = tacRangeEntries(cfg, inst, hideByDefault);
-  const rb = inst.rangeBox = { modes: {}, talents: {}, fill: !!defFill, activeGroup: null };
-  for (const e of entries) {
-    const st = { ...e.sel };
-    if (Array.isArray(e.mode.size_m.options)) {
-      st.subs = [Number.isInteger(e.sel.opt) && e.sel.opt >= 0 ? e.sel.opt : 0];
-      delete st.opt;
-    }
-    rb.modes[e.mode.key] = st;
+  if (inst.rangeBox && !inst.rangeBox.modes) {
+    // 新结构 rangeBox：{ tab, subs, talents, fill, m, fearH, fearS }
+    const rb = inst.rangeBox;
+    if (!Array.isArray(rb.subs)) rb.subs = [];
+    if (!rb.talents) rb.talents = {};
+    if (rb.tab === undefined) rb.tab = null;
+    if (rb.fill === undefined) rb.fill = !!defFill;
+    return rb;
   }
-  rb.activeGroup = entries.length ? entries[0].mode.key : null;
+  // 迁移旧 rangeBox（modes 结构）或 legacy 字段（rangeMode/hideRange/rangeMeters）
+  const n = (cfg.options || []).length;
+  let tab = null;
+  let subs = [];
+  let m;
+  let fearH;
+  let fearS;
+  const talents = {};
+  const old = inst.rangeBox;
+  if (old && old.modes) {
+    for (const k of Object.keys(old.modes)) {
+      const st = old.modes[k];
+      if (!st) continue;
+      if (st.m != null) m = st.m;
+      if (st.fearH) fearH = st.fearH;
+      if (st.fearS) fearS = st.fearS;
+    }
+    const hadSubs = Object.keys(old.modes).length > 0;
+    const hadTalents = !!(old.talents && Object.keys(old.talents).length);
+    tab = old.activeGroup === '__talents' || (hadTalents && !hadSubs) ? 'talents'
+      : (hadSubs || old.activeGroup ? 'range' : null);
+    for (const tk of Object.keys(old.talents || {})) talents[tk] = old.talents[tk];
+    if (old.fill !== undefined) defFill = old.fill;
+    if (tab === 'range') subs = n ? [0] : [];
+  } else {
+    const legacyKey = inst.rangeMode || (inst.hideRange ? 'off' : null);
+    if (n && (legacyKey ? legacyKey !== 'off' : !hideByDefault)) {
+      // 道具新创建默认显示第一个范围；角色默认隐藏
+      tab = 'range';
+      subs = [0];
+    }
+    if (inst.rangeMeters != null) m = inst.rangeMeters;
+  }
+  const rb = inst.rangeBox = { tab, subs, talents };
+  if (defFill) rb.fill = true;
+  if (m != null) rb.m = m;
+  if (fearH) rb.fearH = fearH;
+  if (fearS) rb.fearS = fearS;
   return rb;
-}
-
-
-function tacRbGroupActive(rb, key) {
-  if (!rb) return false;
-  if (rb.activeGroup !== undefined) return rb.activeGroup === key;
-  return !!(rb.modes && key in rb.modes);
 }
 
 
@@ -161,13 +157,13 @@ function tacTalentButtons(hostRole, camp) {
   const out = [];
   for (const kind of list) {
     const def = TAC_ITEM_TYPES[kind];
-    if (!def || !def.ranges || !def.ranges.modes) continue;
-    const mode = def.ranges.modes[0];
-    if (!mode || !mode.size_m) continue;
+    if (!def || !def.ranges || !Array.isArray(def.ranges.options)) continue;
+    const opt = def.ranges.options[0];
+    if (!opt || opt.size_m == null) continue;
     if (kind === 'fearRadius') {
       if (camp === 'hunter' && hostRole === 'Geisha') {
-        out.push({ tk: 'fearRadius:beauty', kind, label: translate("ui.tacRangeBox.fearRadiusBeauty"), base: mode.size_m, mult: 0.8, variant: true });
-        out.push({ tk: 'fearRadius:prajna', kind, label: translate("ui.tacRangeBox.fearRadiusPrajna"), base: mode.size_m, mult: 1.1, variant: true });
+        out.push({ tk: 'fearRadius:beauty', kind, label: translate("ui.tacRangeBox.fearRadiusBeauty"), base: opt.size_m, mult: 0.8, variant: true });
+        out.push({ tk: 'fearRadius:prajna', kind, label: translate("ui.tacRangeBox.fearRadiusPrajna"), base: opt.size_m, mult: 1.1, variant: true });
         continue;
       }
       let mult = 1;
@@ -175,10 +171,10 @@ function tacTalentButtons(hostRole, camp) {
         if (hostRole === 'prisoner') mult = 0.8;
         else if (hostRole === 'archer') mult = 0.76;
       }
-      out.push({ tk: 'fearRadius', kind, label: def.name, base: mode.size_m, mult });
+      out.push({ tk: 'fearRadius', kind, label: def.name, base: opt.size_m, mult });
       continue;
     }
-    out.push({ tk: kind, kind, label: def.name, mode });
+    out.push({ tk: kind, kind, label: def.name, opt });
   }
   return out;
 }
@@ -192,7 +188,9 @@ function tacTalentRanges(inst, hostRole) {
   for (const b of tacTalentButtons(hostRole, camp)) {
     const sel = rb.talents[b.tk];
     if (!sel) continue;
-    const meters = b.base != null ? b.base * b.mult : tacModeMeters(b.mode, sel);
+    const meters = b.base != null
+      ? b.base * b.mult
+      : tacOptionMeters(b.opt, sel, null);
     if (meters == null) continue;
     out.push({ ...b, meters, sel });
   }
@@ -206,10 +204,6 @@ export function tacRangeMetersOf(cfg, inst, hideByDefault) {
   return e.length ? e[0].meters : null;
 }
 
-
-export function tacItemRangeMode(it) {
-  return tacRangeModeOf((TAC_ITEM_TYPES[it.kind] || {}).ranges, it, false);
-}
 
 export function tacItemMeters(it) {
   return tacRangeMetersOf((TAC_ITEM_TYPES[it.kind] || {}).ranges, it, false);
@@ -2220,17 +2214,6 @@ export function renderTacBoard() {
 }
 
 
-function tacModeDescLabel(mode, sel, postfix) {
-  const s = mode.size_m;
-  if (Array.isArray(s.options)) {
-    const i = Number.isInteger(sel.opt) && sel.opt >= 0 ? sel.opt : 0;
-    return ((s.labels || [])[i] || mode.label) + postfix;
-  }
-  if (s.options != null) return ((s.labels || [])[0] || mode.label) + postfix;
-  return (mode.label || '') + postfix;
-}
-
-
 export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
   opts = opts || {};
   const prefix = opts.labelPrefix || '';
@@ -2238,46 +2221,41 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
   const defFill = !!opts.defFill;
   const hostRole = opts.hostRole;
   const hostCamp = tacHostCamp(hostRole);
-  const showTalents = !!opts.showTalents;
-  cfg = cfg || { modes: [] };
-  const rb = inst.rangeBox;
-  const legacyEntries = tacRangeEntries(cfg, inst, hideByDefault);
+  const groupKind = opts.groupKind
+    || (cfg && cfg.key === 'showItem' ? 'item'
+      : (cfg && cfg.key === 'showTrait' ? 'trait' : 'plain'));
+  cfg = cfg || { key: groupKind === 'item' ? 'showItem'
+    : groupKind === 'trait' ? 'showTrait' : 'show', options: [] };
+  inst = inst || {};
+  const rb = tacRbEnsure(cfg, inst, hideByDefault, defFill);
 
   const refresh = () => { renderTacBoard(); renderTacManage(); };
 
   const box = tacManageBox(settings, "ui.tacRangeBox.title");
 
-
-  const isGrpActive = (key) => (rb ? tacRbGroupActive(rb, key)
-    : legacyEntries.some((e) => e.mode.key === key));
-
   const modeLine = document.createElement('div');
+  const lv1Defs = [{ mk: 'range', label: cfg.key === 'showItem' ? translate("ui.tacRangeBox.showItem")
+    : cfg.key === 'showTrait' ? translate("ui.tacRangeBox.showTrait")
+    : translate("ui.tacRangeBox.showPlain") }];
+  if (groupKind === 'trait') {
+    lv1Defs.push({ mk: 'talents', label: translate("ui.tacRangeBox.showTalents") });
+  }
+  lv1Defs.push({ mk: 'hide', label: translate("ui.tacRangeBox.hide") });
   modeLine.className = 'tac-box-line';
-  modeLine.innerHTML = `<div class="tac-range-opts">`
-    + cfg.modes.filter((m) => m.key !== 'off').map((m) =>
-      `<button type="button" data-mk="${m.key}" class="tac-range-opt`
-      + `${isGrpActive(m.key) ? ' active' : ''}">${prefix}${m.label}${postfix}</button>`).join('')
-    + (showTalents
-      ? `<button type="button" data-mk="__talents" class="tac-range-opt`
-      + `${isGrpActive('__talents') ? ' active' : ''}">${translate("ui.tacRangeBox.showTalents")}</button>`
-      : '')
-    + `<button type="button" data-mk="__hide" class="tac-range-opt">${translate("ui.tacRangeBox.hide")}</button>`
-    + `</div>`;
+  modeLine.innerHTML = `<div class="tac-range-opts">` + lv1Defs.map((d) =>
+    `<button type="button" data-mk="${d.mk}" class="tac-range-opt`
+    + `${rb.tab === d.mk ? ' active' : ''}">${d.label}</button>`).join('') + `</div>`;
   modeLine.querySelectorAll('.tac-range-opt').forEach((b) => {
     b.addEventListener('click', () => {
       const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
       const mk = b.dataset.mk;
-      if (mk === '__hide') {
-        rbx.modes = {};
+      if (mk === 'hide') {
+        rbx.tab = null;
+        rbx.subs = [];
         rbx.talents = {};
-        rbx.activeGroup = null;
-      } else if (rbx.activeGroup !== mk) {
-
-        rbx.activeGroup = mk;
-        if (mk !== '__talents' && !rbx.modes[mk]) {
-          const mode = cfg.modes.find((m) => m.key === mk);
-          rbx.modes[mk] = mode && Array.isArray(mode.size_m.options) ? { subs: [0] } : {};
-        }
+      } else if (rbx.tab !== mk) {
+        // 一级按钮仅切换分组：显示对应二级按钮，但不点亮（点亮由用户亲手操作）
+        rbx.tab = mk;
       }
       refresh();
     });
@@ -2290,10 +2268,7 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
       + `${active ? ' active' : ''}">${label}</button>`;
   }
 
-  const grp = rb
-    ? (rb.activeGroup !== undefined ? rb.activeGroup : null)
-    : (legacyEntries.length ? legacyEntries[0].mode.key : null);
-  if (showTalents && grp === '__talents') {
+  if (rb.tab === 'talents') {
     const tLine = document.createElement('div');
     tLine.className = 'tac-box-line';
     tLine.innerHTML = `<div class="tac-range-opts">`
@@ -2309,127 +2284,133 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
       });
     });
     box.appendChild(tLine);
-  } else if (grp && grp !== '__talents') {
-    const mode = cfg.modes.find((m) => m.key === grp);
-    if (mode && mode.size_m) {
-      const s = mode.size_m;
-      const st = rb
-        ? ((rb.modes && rb.modes[mode.key]) || null)
-        : ((legacyEntries.find((e) => e.mode.key === mode.key) || {}).sel || null);
-      if (Array.isArray(s.options)) {
-
-        const subs = st && st.subs !== undefined ? st.subs : [0];
-        const optLine = document.createElement('div');
-        optLine.className = 'tac-box-line';
-        optLine.innerHTML = `<div class="tac-range-opts">`
-          + s.options.map((v, i) =>
-            subBtn(subs.includes(i), `data-v="${i}"`,
-              (s.labels || [])[i] ? s.labels[i] + postfix : `${v}m`)).join('')
-          + `</div>`;
-        optLine.querySelectorAll('.tac-range-sub').forEach((b) => {
-          b.addEventListener('click', () => {
-            const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
-            const cur = rbx.modes[mode.key] || (rbx.modes[mode.key] = { subs: [0] });
-            const arr = Array.isArray(cur.subs) ? [...cur.subs] : [0];
-            const i = +b.dataset.v;
-            const at = arr.indexOf(i);
-            if (at >= 0) arr.splice(at, 1);
-            else arr.push(i);
-            arr.sort((a, b2) => a - b2);
-            cur.subs = arr;
-            refresh();
-          });
+  } else if (rb.tab === 'range') {
+    // 二级按钮统一：点已选中的取消，否则单选点亮；点亮后才出现对应控制
+    const lightSub = (rbx, i) => { rbx.subs = rbx.subs.includes(i) ? [] : [i]; };
+    // 数字项：多个同排平铺
+    const numIdx = [];
+    cfg.options.forEach((opt, i) => {
+      if (typeof opt.size_m === 'number') numIdx.push(i);
+    });
+    if (numIdx.length) {
+      const optLine = document.createElement('div');
+      optLine.className = 'tac-box-line';
+      optLine.innerHTML = `<div class="tac-range-opts">`
+        + numIdx.map((i) => {
+          const opt = cfg.options[i];
+          return subBtn(rb.subs.includes(i), `data-v="${i}"`,
+            opt.labels ? opt.labels + postfix : `${opt.size_m}m`);
+        }).join('')
+        + `</div>`;
+      optLine.querySelectorAll('.tac-range-sub').forEach((b) => {
+        b.addEventListener('click', () => {
+          const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+          lightSub(rbx, +b.dataset.v);
+          refresh();
         });
-        box.appendChild(optLine);
-      } else if (mode.fearMods) {
-        [['fearH', 'hunter'], ['fearS', 'survivor']].forEach(([field, gkey]) => {
-          const gopts = mode.fearMods[gkey];
-          const defKey = gopts[0][0];
-          const grpEl = document.createElement('div');
-          grpEl.className = 'tac-box-line';
-          grpEl.innerHTML = `<div class="tac-range-opts">`
-            + gopts.map(([v, label]) =>
-              subBtn((st && (st[field] || defKey)) === v, `data-v="${v}"`, label)).join('')
-            + `</div>`;
-          grpEl.querySelectorAll('.tac-range-sub').forEach((b) => {
-            b.addEventListener('click', () => {
-              const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
-              (rbx.modes[mode.key] ||= {})[field] = b.dataset.v;
-              refresh();
-            });
-          });
-          box.appendChild(grpEl);
+      });
+      box.appendChild(optLine);
+    }
+    // 档位数组项（如牢笼 [9,12,15]）：二级按钮 + 点亮后出现互斥三挡组
+    cfg.options.forEach((opt, i) => {
+      if (!Array.isArray(opt.size_m)) return;
+      const subLine = document.createElement('div');
+      subLine.className = 'tac-box-line';
+      subLine.innerHTML = `<div class="tac-range-opts">`
+        + subBtn(rb.subs.includes(i), `data-v="${i}"`,
+          opt.labels ? opt.labels + postfix : '')
+        + `</div>`;
+      subLine.querySelectorAll('.tac-range-sub').forEach((b) => {
+        b.addEventListener('click', () => {
+          const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+          lightSub(rbx, +b.dataset.v);
+          refresh();
         });
-      } else if (typeof s === 'object' && s !== null && s.options == null) {
-
-        const dynMax = s.max != null ? s.max
-          : (MAPS_DATA[S.currentMapId] && MAPS_DATA[S.currentMapId].widthM) || 100;
-        const cur = st && st.m != null ? st.m : dynMax;
-        const slLine = document.createElement('div');
-        slLine.className = 'tac-box-line';
-        slLine.innerHTML = `<div class="tac-range-mid">`
-          + `<span class="tac-range-end">${s.min}m</span>`
-          + `<input type="range" min="${s.min}" max="${dynMax}" step="0.1" value="${cur}">`
-          + `<span class="tac-range-end">${tacRangeFmt(dynMax)}m</span>`
-          + `</div>`
-          + `<span class="tac-range-val">${tacRangeFmt(cur)}m</span>`;
-        const sl = slLine.querySelector('input');
-        if (sl) {
-          sl.addEventListener('input', () => {
-            const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
-            (rbx.modes[mode.key] ||= {}).m = parseFloat(sl.value);
-            slLine.querySelector('.tac-range-val').textContent =
-              `${tacRangeFmt(rbx.modes[mode.key].m)}m`;
-            updateDescs();
-            if (opts.softUpdate) opts.softUpdate();
-          });
-          sl.addEventListener('change', () => { renderTacBoard(); renderTacManage(); });
-        }
-        box.appendChild(slLine);
-      } else {
-
-        const singleLabel = !Array.isArray(s.options) && s.options != null
-          && (s.labels || []).length > 0 ? s.labels[0] + postfix : null;
-        const fixedLine = document.createElement('div');
-        fixedLine.className = 'tac-box-line';
-        fixedLine.innerHTML = `<div class="tac-range-opts">`
-          + subBtn(!!st, `data-fixed="1"`, singleLabel || `${prefix}${mode.label}${postfix}`)
-          + `</div>`;
-        fixedLine.querySelectorAll('.tac-range-sub').forEach((b) => {
-          b.addEventListener('click', () => {
-            const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
-            if (rbx.modes[mode.key]) delete rbx.modes[mode.key];
-            else rbx.modes[mode.key] = {};
-            refresh();
-          });
+      });
+      box.appendChild(subLine);
+      if (!rb.subs.includes(i)) return;
+      const vals = opt.size_m;
+      const cur = Number.isInteger(rb.gear) ? rb.gear : 0;
+      const gLine = document.createElement('div');
+      gLine.className = 'tac-box-line';
+      gLine.innerHTML = `<div class="tac-range-opts">`
+        + vals.map((v, gi) =>
+          subBtn(cur === gi, `data-g="${gi}"`, `${v}m`)).join('')
+        + `</div>`;
+      gLine.querySelectorAll('.tac-range-sub').forEach((b) => {
+        b.addEventListener('click', () => {
+          const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+          rbx.gear = +b.dataset.g;
+          refresh();
         });
-        box.appendChild(fixedLine);
+      });
+      box.appendChild(gLine);
+    });
+    // 滑杆项（{min,max}）：二级按钮 + 点亮后出现范围调节
+    cfg.options.forEach((opt, i) => {
+      if (!opt.size_m || typeof opt.size_m !== 'object' || Array.isArray(opt.size_m)) return;
+      const subLine = document.createElement('div');
+      subLine.className = 'tac-box-line';
+      subLine.innerHTML = `<div class="tac-range-opts">`
+        + subBtn(rb.subs.includes(i), `data-v="${i}"`,
+          opt.labels ? opt.labels + postfix : '')
+        + `</div>`;
+      subLine.querySelectorAll('.tac-range-sub').forEach((b) => {
+        b.addEventListener('click', () => {
+          const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+          lightSub(rbx, +b.dataset.v);
+          refresh();
+        });
+      });
+      box.appendChild(subLine);
+      if (!rb.subs.includes(i)) return;
+      const sm = opt.size_m;
+      const sMin = sm.min != null ? sm.min : 0;
+      const dynMax = sm.max != null ? sm.max
+        : (MAPS_DATA[S.currentMapId] && MAPS_DATA[S.currentMapId].widthM) || 100;
+      const cur = rb.m != null ? rb.m : dynMax;
+      const slLine = document.createElement('div');
+      slLine.className = 'tac-box-line';
+      slLine.innerHTML = `<div class="tac-range-mid">`
+        + `<span class="tac-range-end">${sMin}m</span>`
+        + `<input type="range" min="${sMin}" max="${dynMax}" step="0.1" value="${cur}">`
+        + `<span class="tac-range-end">${tacRangeFmt(dynMax)}m</span>`
+        + `</div>`
+        + `<span class="tac-range-val">${tacRangeFmt(cur)}m</span>`;
+      const sl = slLine.querySelector('input');
+      if (sl) {
+        sl.addEventListener('input', () => {
+          const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+          rbx.m = parseFloat(sl.value);
+          slLine.querySelector('.tac-range-val').textContent = `${tacRangeFmt(rbx.m)}m`;
+          updateDescs();
+          if (opts.softUpdate) opts.softUpdate();
+        });
+        sl.addEventListener('change', () => { renderTacBoard(); renderTacManage(); });
       }
+      box.appendChild(slLine);
+    });
+    if (cfg.fearMods) {
+      [['fearH', 'hunter'], ['fearS', 'survivor']].forEach(([field, gkey]) => {
+        const gopts = cfg.fearMods[gkey];
+        const defKey = gopts[0][0];
+        const grpEl = document.createElement('div');
+        grpEl.className = 'tac-box-line';
+        grpEl.innerHTML = `<div class="tac-range-opts">`
+          + gopts.map(([v, label]) =>
+            subBtn((rb[field] || defKey) === v, `data-f="${field}" data-v="${v}"`, label)).join('')
+          + `</div>`;
+        grpEl.querySelectorAll('.tac-range-sub').forEach((b) => {
+          b.addEventListener('click', () => {
+            const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+            rbx[b.dataset.f] = b.dataset.v;
+            refresh();
+          });
+        });
+        box.appendChild(grpEl);
+      });
     }
   }
-
-
-  tacTalentRanges(inst, hostRole).forEach((tr) => {
-    if (!tr.mode) return;
-    const s = tr.mode.size_m;
-    if (!Array.isArray(s.options)) return;
-    const optLine = document.createElement('div');
-    optLine.className = 'tac-box-line';
-    const curOpt = Number.isInteger(tr.sel.opt) && tr.sel.opt >= 0 ? tr.sel.opt : 0;
-    optLine.innerHTML = `<div class="tac-range-opts">`
-      + s.options.map((v, i) =>
-        subBtn(curOpt === i, `data-tk="${tr.tk}" data-v="${i}"`,
-          (s.labels || [])[i] ? s.labels[i] + postfix : `${v}m`)).join('')
-      + `</div>`;
-    optLine.querySelectorAll('.tac-range-sub').forEach((b) => {
-      b.addEventListener('click', () => {
-        const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
-        (rbx.talents[b.dataset.tk] ||= {}).opt = +b.dataset.v;
-        refresh();
-      });
-    });
-    box.appendChild(optLine);
-  });
 
 
   const descs = document.createElement('div');
@@ -2440,33 +2421,19 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
       const row = document.createElement('div');
       row.className = 'tac-range-desc';
       const txt = document.createElement('span');
-      txt.textContent = `${tacModeDescLabel(e2.mode, e2.sel, postfix)} ${tacRangeFmt(e2.meters)}m`;
+      txt.textContent = `${(e2.opt.labels || '') + postfix} ${tacRangeFmt(e2.meters)}m`;
       row.appendChild(txt);
-      const s = e2.mode.size_m;
-      const deletable = Array.isArray(s.options)
-        ? Number.isInteger(e2.sel && e2.sel.opt)
-        : true;
-      if (deletable) {
-        const del = document.createElement('button');
-        del.type = 'button';
-        del.className = 'tac-range-del';
-        del.textContent = '×';
-        del.title = translate("ui.tacRangeBox.delDesc");
-        del.addEventListener('click', () => {
-          const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
-          if (Array.isArray(s.options)) {
-            const cur = rbx.modes[e2.mode.key];
-            if (cur && Array.isArray(cur.subs)) {
-              const i = e2.sel.opt;
-              cur.subs = cur.subs.filter((v) => v !== i);
-            }
-          } else {
-            delete rbx.modes[e2.mode.key];
-          }
-          refresh();
-        });
-        row.appendChild(del);
-      }
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'tac-range-del';
+      del.textContent = '×';
+      del.title = translate("ui.tacRangeBox.delDesc");
+      del.addEventListener('click', () => {
+        const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+        rbx.subs = rbx.subs.filter((v) => v !== e2.i);
+        refresh();
+      });
+      row.appendChild(del);
       descs.appendChild(row);
     });
     tacTalentRanges(inst, hostRole).forEach((tr) => {
@@ -2524,7 +2491,7 @@ function tacManageDefaultEntries(board) {
       : a.type === 'role' ? -1 : 1));
   const occCount = new Map();
   entries.forEach((e) => {
-    const k = `${e.type}|${e.role}`;
+    const k = tacEntryName(e);
     occCount.set(k, (occCount.get(k) || 0) + 1);
     e.occ = occCount.get(k);
   });
@@ -2532,14 +2499,19 @@ function tacManageDefaultEntries(board) {
   return entries;
 }
 
-// 重复造物（同名同类多个实例）在按钮名后加序号
-function tacDispName(e) {
+// 造物在管理列表中的名称（角色/道具统一按显示名）
+function tacEntryName(e) {
   const def = e.type === 'role'
     ? (TAC_ROLES[e.role] || {})
-    : (TAC_ITEM_TYPES[tacBoard().items[e.idx].kind] || {});
-  const base = def.name || e.role;
+    : (TAC_ITEM_TYPES[(tacBoard().items[e.idx] || {}).kind] || {});
+  return def.name || e.role;
+}
+
+// 重复造物（同名多个实例，角色与道具同名合并计数）在按钮名后加序号
+function tacDispName(e) {
+  const base = tacEntryName(e);
   const dup = tacManageDefaultEntries(tacBoard())
-    .filter((o) => o.type === e.type && o.role === e.role).length > 1;
+    .filter((o) => tacEntryName(o) === base).length > 1;
   return dup ? `${base} ${e.occ}` : base;
 }
 
@@ -2924,7 +2896,7 @@ export function renderTacManage() {
     if (!token) return;
     const role = token.role;
     const rgCfg = (TAC_ROLES[role] || {}).ranges;
-    const rangeShown = !!rgCfg && tacRoleRangeMode(role, token).key !== 'off';
+    const rangeShown = !!rgCfg && tacRangeEntries(rgCfg, token, true).length > 0;
     const isRoleDefault = () =>
       token.size === TAC_MANAGE_DEFAULT.roleSize && !rangeShown && !token.hideIcon;
 
@@ -3035,7 +3007,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
         const m = tacRoleRangeMeters(role, token);
         if (el && m !== null) el.style.width = `${tacItemMetersToPercent(m)}%`;
       };
-      buildTacRangeRows(settings, rgCfg, token, true, { softUpdate: syncRoleCircleWidth, hostRole: role, showTalents: roleCamp === 'survivor' || roleCamp === 'hunter', labelPrefix: translate("characters.default.range.label.showPrefix"), labelPostfix: translate("characters.default.range.label.showPostfix") });
+      buildTacRangeRows(settings, rgCfg, token, true, { softUpdate: syncRoleCircleWidth, hostRole: role, groupKind: (roleCamp === 'survivor' || roleCamp === 'hunter') ? 'trait' : 'plain', labelPrefix: translate("characters.default.range.label.showPrefix"), labelPostfix: translate("characters.default.range.label.showPostfix") });
     }
 
     const row = document.createElement('div');
@@ -3103,7 +3075,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
   const idx = tacManageSel.idx;
   const it = board.items[idx];
   const itDef = TAC_ITEM_TYPES[it.kind] || {};
-  const rgCfg = (itDef.ranges && itDef.ranges.modes) ? itDef.ranges : null;
+  const rgCfg = (itDef.ranges && Array.isArray(itDef.ranges.options)) ? itDef.ranges : null;
   const curIcon = it.iconSize ?? TAC_MANAGE_DEFAULT.iconSize;
   
   const syncCircleWidth = () => {
@@ -3150,6 +3122,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     buildTacRangeRows(settings, rgCfg, it, false,
       { softUpdate: () => { syncCircleWidth(); refreshDefault(); },
         hostRole: it.role,
+        groupKind: 'item',
         defFill: !!itDef.fill,
         labelPrefix: translate("items.default.range.label.showPrefix"),
         labelPostfix: translate("items.default.range.label.showPostfix") });
@@ -5456,6 +5429,7 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
   
   if (tokenEl) {
     const tid = +tokenEl.dataset.tid;
+    if (tacTool !== 'select') setTacTool('select');
     tacSelected = tid;
     tacSelectedItem = null;
     tacPlaceRole = null;
@@ -5477,6 +5451,7 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
   }
   if (itemEl) {
     const idx = +itemEl.dataset.idx;
+    if (tacTool !== 'select') setTacTool('select');
     tacSelectedItem = idx;
     tacSelected = null;
     tacPlaceRole = null;
@@ -5809,32 +5784,40 @@ tacMapWrap.addEventListener('wheel', (e) => {
     if (!it) return;
 
 
-    const mode = tacItemRangeMode(it);
-    const s = mode && mode.size_m;
     const cfg = (TAC_ITEM_TYPES[it.kind] || {}).ranges;
-    if (s && Array.isArray(s.options)) {
-      const curEntry = tacRangeEntries(cfg, it, false)[0];
-      const cur = curEntry ? curEntry.meters : s.options[0];
-      const i = Math.max(0, s.options.indexOf(cur));
-      const j = Math.min(s.options.length - 1,
-        Math.max(0, i + (e.deltaY < 0 ? 1 : -1)));
-      if (it.rangeBox) {
-        (it.rangeBox.modes[mode.key] ||= {}).opt = j;
+    if (cfg && Array.isArray(cfg.options)) {
+      const rb = tacRbEnsure(cfg, it, false, false);
+      const numIdx = cfg.options
+        .map((opt, k) => (typeof opt.size_m === 'number' ? k : -1))
+        .filter((k) => k >= 0);
+      const arrIdx0 = cfg.options.findIndex((opt) => Array.isArray(opt.size_m));
+      if (arrIdx0 >= 0) {
+        // 档位数组：滚轮切换挡位
+        const vals0 = cfg.options[arrIdx0].size_m;
+        const cur0 = Number.isInteger(rb.gear) ? rb.gear : 0;
+        rb.gear = Math.min(vals0.length - 1,
+          Math.max(0, cur0 + (e.deltaY < 0 ? 1 : -1)));
+      } else if (numIdx.length >= 2) {
+        // 多档数字范围：以当前显示档为基准滚轮换档
+        const entries = tacRangeEntries(cfg, it, false);
+        const cur = entries.length ? entries[0].meters : cfg.options[numIdx[0]].size_m;
+        let i = numIdx.findIndex((k) => cfg.options[k].size_m === cur);
+        if (i < 0) i = 0;
+        const j2 = Math.min(numIdx.length - 1,
+          Math.max(0, i + (e.deltaY < 0 ? 1 : -1)));
+        rb.subs = [numIdx[j2]];
       } else {
-        it.rangeMeters = s.options[j];
-        delete it.meters;
-      }
-    } else if (s && typeof s === 'object' && !mode.fearMods) {
-      const curEntry = tacRangeEntries(cfg, it, false)[0];
-      const cur = curEntry ? curEntry.meters : s.max;
-      const v = Math.round(Math.min(s.max,
-        Math.max(s.min,
-          cur + (e.deltaY < 0 ? 0.1 : -0.1))) * 100) / 100;
-      if (it.rangeBox) {
-        (it.rangeBox.modes[mode.key] ||= {}).m = v;
-      } else {
-        it.rangeMeters = v;
-        delete it.meters;
+        const sliderIdx = cfg.options.findIndex((opt) => opt.size_m && typeof opt.size_m === 'object');
+        if (sliderIdx >= 0) {
+          const sm = cfg.options[sliderIdx].size_m;
+          const dynMax = sm.max != null ? sm.max
+            : (MAPS_DATA[S.currentMapId] && MAPS_DATA[S.currentMapId].widthM) || 100;
+          const entries = tacRangeEntries(cfg, it, false);
+          const cur = entries.length ? entries[0].meters : dynMax;
+          rb.m = Math.round(Math.min(dynMax,
+            Math.max(sm.min != null ? sm.min : 0,
+              cur + (e.deltaY < 0 ? 0.1 : -0.1))) * 100) / 100;
+        }
       }
     }
     renderTacBoard();
