@@ -16,9 +16,9 @@ export const MAPS_DATA = [
     const mapSize = [750, 644];
     const zonesInfo = [27, 30, 226.1, 197, 3, 3];
     const zoneNames = [
-      translate("maps.armsFactory.zoneNames.zero"), translate("maps.armsFactory.zoneNames.one"), translate("maps.armsFactory.zoneNames.two"),
-      translate("maps.armsFactory.zoneNames.three"), translate("maps.armsFactory.zoneNames.four"), translate("maps.armsFactory.zoneNames.five"),
-      translate("maps.armsFactory.zoneNames.six"), translate("maps.armsFactory.zoneNames.seven"), translate("maps.armsFactory.zoneNames.eight")
+      translate("maps.armsFactory.zoneNames.zoneNames0"), translate("maps.armsFactory.zoneNames.zoneNames1"), translate("maps.armsFactory.zoneNames.zoneNames2"),
+      translate("maps.armsFactory.zoneNames.zoneNames3"), translate("maps.armsFactory.zoneNames.zoneNames4"), translate("maps.armsFactory.zoneNames.zoneNames5"),
+      translate("maps.armsFactory.zoneNames.zoneNames6"), translate("maps.armsFactory.zoneNames.zoneNames7"), translate("maps.armsFactory.zoneNames.zoneNames8")
     ];
     const ciphers = [
       { id: 'M_4', name: translate("maps.armsFactory.cipher.m4.name"), location: [284, 529], feature: translate("maps.armsFactory.cipher.m4.feature"), locked: true },
@@ -75,11 +75,11 @@ export const MAPS_DATA = [
     const law_urls = ['https://www.bilibili.com/video/BV1oauC6kEy9', 'https://v.douyin.com/b_OabxYks7k/'];
     const fixedHint = translate("maps.armsFactory.fixedHint");
     const hints = [
-      translate("maps.armsFactory.hint.zero"),
-      translate("maps.armsFactory.hint.one"),
-      translate("maps.armsFactory.hint.zero"),
-      translate("maps.armsFactory.hint.three"),
-      translate("maps.armsFactory.hint.zero")
+      translate("maps.armsFactory.hint.hint0"),
+      translate("maps.armsFactory.hint.hint1"),
+      translate("maps.armsFactory.hint.hint0"),
+      translate("maps.armsFactory.hint.hint3"),
+      translate("maps.armsFactory.hint.hint0")
     ];
 
 
@@ -222,9 +222,9 @@ export const MAPS_DATA = [
     const mapSize = [644, 604];
     const zonesInfo = [65.5, 19.5, 188, 174.5, 3, 3];
     const zoneNames = [
-      translate("maps.sacredHeartHospital.zoneNames.zero"), translate("maps.sacredHeartHospital.zoneNames.one"), translate("maps.sacredHeartHospital.zoneNames.two"),
-      translate("maps.sacredHeartHospital.zoneNames.three"), translate("maps.sacredHeartHospital.zoneNames.four"), translate("maps.sacredHeartHospital.zoneNames.five"),
-      translate("maps.sacredHeartHospital.zoneNames.six"), translate("maps.sacredHeartHospital.zoneNames.seven"), translate("maps.sacredHeartHospital.zoneNames.eight")
+      translate("maps.sacredHeartHospital.zoneNames.zoneNames0"), translate("maps.sacredHeartHospital.zoneNames.zoneNames1"), translate("maps.sacredHeartHospital.zoneNames.zoneNames2"),
+      translate("maps.sacredHeartHospital.zoneNames.zoneNames3"), translate("maps.sacredHeartHospital.zoneNames.zoneNames4"), translate("maps.sacredHeartHospital.zoneNames.zoneNames5"),
+      translate("maps.sacredHeartHospital.zoneNames.zoneNames6"), translate("maps.sacredHeartHospital.zoneNames.zoneNames7"), translate("maps.sacredHeartHospital.zoneNames.zoneNames8")
     ];
     const ciphers = [
       { id: 'A_1', name: translate("maps.sacredHeartHospital.cipher.a1.name"), location: [356, 297], feature: translate("maps.sacredHeartHospital.cipher.a1.feature") },
@@ -278,10 +278,10 @@ export const MAPS_DATA = [
     const fixedHint = translate("maps.sacredHeartHospital.fixedHint");
     const hints = [
       '',
-      translate("maps.sacredHeartHospital.hint.one"),
-      translate("maps.sacredHeartHospital.hint.two"),
-      translate("maps.sacredHeartHospital.hint.three"),
-      translate("maps.sacredHeartHospital.hint.four")
+      translate("maps.sacredHeartHospital.hint.hint1"),
+      translate("maps.sacredHeartHospital.hint.hint2"),
+      translate("maps.sacredHeartHospital.hint.hint3"),
+      translate("maps.sacredHeartHospital.hint.hint4")
     ];
 
     const fixedSpawns = {
@@ -428,22 +428,22 @@ export const MAPS_DATA = [
     const mapSize = [596, 599];
     const zonesInfo = [72.5, 104.3, 163.7, 141.7, 3, 3];
     const zoneNames = [
-      translate("maps.theRedChurch.zoneNames.zero"), translate("maps.theRedChurch.zoneNames.one"), translate("maps.theRedChurch.zoneNames.two"),
-      translate("maps.theRedChurch.zoneNames.three"), translate("maps.theRedChurch.zoneNames.four"), translate("maps.theRedChurch.zoneNames.five"),
-      translate("maps.theRedChurch.zoneNames.six"), translate("maps.theRedChurch.zoneNames.seven"), translate("maps.theRedChurch.zoneNames.eight")
+      translate("maps.theRedChurch.zoneNames.zoneNames0"), translate("maps.theRedChurch.zoneNames.zoneNames1"), translate("maps.theRedChurch.zoneNames.zoneNames2"),
+      translate("maps.theRedChurch.zoneNames.zoneNames3"), translate("maps.theRedChurch.zoneNames.zoneNames4"), translate("maps.theRedChurch.zoneNames.zoneNames5"),
+      translate("maps.theRedChurch.zoneNames.zoneNames6"), translate("maps.theRedChurch.zoneNames.zoneNames7"), translate("maps.theRedChurch.zoneNames.zoneNames8")
     ];
     const ciphers = [
-      { id: 'E_4', name: translate("maps.theRedChurch.cipher.e4.name"), location: [527, 435], feature: translate("maps.theRedChurch.cipher.e4.feature"), zoneLabel: translate("maps.theRedChurch.e4.zoneLabel"), locked: true },
-      { id: 'E_1', name: translate("maps.theRedChurch.cipher.e1.name"), location: [444, 160], feature: translate("maps.theRedChurch.cipher.e1.feature"), zoneLabel: translate("maps.theRedChurch.e1.zoneLabel") },
-      { id: 'E_2', name: translate("maps.theRedChurch.cipher.e2.name"), location: [511, 242], feature: translate("maps.theRedChurch.cipher.e2.feature"), zoneLabel: translate("maps.theRedChurch.e2.zoneLabel") },
-      { id: 'E_3', name: translate("maps.theRedChurch.cipher.e3.name"), location: [401, 272], feature: translate("maps.theRedChurch.cipher.e3.feature"), zoneLabel: translate("maps.theRedChurch.e2.zoneLabel") },
-      { id: 'M_1', name: translate("maps.theRedChurch.cipher.m1.name"), location: [287, 143], feature: translate("maps.theRedChurch.cipher.m1.feature"), zoneLabel: translate("maps.theRedChurch.m1.zoneLabel") },
-      { id: 'M_2', name: translate("maps.theRedChurch.cipher.m2.name"), location: [296, 313], feature: translate("maps.theRedChurch.cipher.m2.feature"), zoneLabel: translate("maps.theRedChurch.m2.zoneLabel") },
-      { id: 'M_3', name: translate("maps.theRedChurch.cipher.m3.name"), location: [342, 499], feature: translate("maps.theRedChurch.cipher.m3.feature"), zoneLabel: translate("maps.theRedChurch.m3.zoneLabel") },
-      { id: 'W_1', name: translate("maps.theRedChurch.cipher.w1.name"), location: [121, 177], feature: translate("maps.theRedChurch.cipher.w1.feature"), zoneLabel: translate("maps.theRedChurch.w1.zoneLabel") },
-      { id: 'W_2', name: translate("maps.theRedChurch.cipher.w2.name"), location: [168, 240], feature: translate("maps.theRedChurch.cipher.w2.feature"), zoneLabel: translate("maps.theRedChurch.w2.zoneLabel") },
-      { id: 'W_3', name: translate("maps.theRedChurch.cipher.w3.name"), location: [131, 356], feature: translate("maps.theRedChurch.cipher.w3.feature"), zoneLabel: translate("maps.theRedChurch.w2.zoneLabel") },
-      { id: 'W_4', name: translate("maps.theRedChurch.cipher.w4.name"), location: [128, 475], feature: translate("maps.theRedChurch.cipher.w4.feature"), zoneLabel: translate("maps.theRedChurch.w4.zoneLabel") },
+      { id: 'E_4', name: translate("maps.theRedChurch.cipher.e4.name"), location: [527, 435], feature: translate("maps.theRedChurch.cipher.e4.feature"), locked: true },
+      { id: 'E_1', name: translate("maps.theRedChurch.cipher.e1.name"), location: [444, 160], feature: translate("maps.theRedChurch.cipher.e1.feature") },
+      { id: 'E_2', name: translate("maps.theRedChurch.cipher.e2.name"), location: [511, 242], feature: translate("maps.theRedChurch.cipher.e2.feature") },
+      { id: 'E_3', name: translate("maps.theRedChurch.cipher.e3.name"), location: [401, 272], feature: translate("maps.theRedChurch.cipher.e3.feature") },
+      { id: 'M_1', name: translate("maps.theRedChurch.cipher.m1.name"), location: [287, 143], feature: translate("maps.theRedChurch.cipher.m1.feature") },
+      { id: 'M_2', name: translate("maps.theRedChurch.cipher.m2.name"), location: [296, 313], feature: translate("maps.theRedChurch.cipher.m2.feature") },
+      { id: 'M_3', name: translate("maps.theRedChurch.cipher.m3.name"), location: [342, 499], feature: translate("maps.theRedChurch.cipher.m3.feature") },
+      { id: 'W_1', name: translate("maps.theRedChurch.cipher.w1.name"), location: [121, 177], feature: translate("maps.theRedChurch.cipher.w1.feature") },
+      { id: 'W_2', name: translate("maps.theRedChurch.cipher.w2.name"), location: [168, 240], feature: translate("maps.theRedChurch.cipher.w2.feature") },
+      { id: 'W_3', name: translate("maps.theRedChurch.cipher.w3.name"), location: [131, 356], feature: translate("maps.theRedChurch.cipher.w3.feature") },
+      { id: 'W_4', name: translate("maps.theRedChurch.cipher.w4.name"), location: [128, 475], feature: translate("maps.theRedChurch.cipher.w4.feature") },
     ];
 
     const cipherCombinations = [
@@ -485,11 +485,11 @@ export const MAPS_DATA = [
     const law_urls = ['https://www.bilibili.com/video/BV169Y66PEiS', 'https://v.douyin.com/t7aa5IHJh9M'];
     const fixedHint = translate("maps.theRedChurch.fixedHint");
     const hints = [
-      translate("maps.theRedChurch.hint.zero"),
-      translate("maps.theRedChurch.hint.one"),
-      translate("maps.theRedChurch.hint.two"),
+      translate("maps.theRedChurch.hint.hint0"),
+      translate("maps.theRedChurch.hint.hint1"),
+      translate("maps.theRedChurch.hint.hint2"),
       '',
-      translate("maps.theRedChurch.hint.four")
+      translate("maps.theRedChurch.hint.hint4")
     ];
 
     const fixedSpawns = {
@@ -635,10 +635,10 @@ export const MAPS_DATA = [
     const mapSize = [1280, 1208];
     const zonesInfo = [154, 202, 244, 281, 4, 3];
     const zoneNames = [
-      translate("maps.lakesideVillage.zoneNames.zero"), translate("maps.lakesideVillage.zoneNames.one"), translate("maps.lakesideVillage.zoneNames.two"),
-      translate("maps.lakesideVillage.zoneNames.three"), translate("maps.lakesideVillage.zoneNames.four"), translate("maps.lakesideVillage.zoneNames.five"),
-      translate("maps.lakesideVillage.zoneNames.six"), translate("maps.lakesideVillage.zoneNames.seven"), translate("maps.lakesideVillage.zoneNames.eight"),
-      translate("maps.lakesideVillage.zoneNames.nine"), translate("maps.lakesideVillage.zoneNames.ten"), translate("maps.lakesideVillage.zoneNames.eleven")
+      translate("maps.lakesideVillage.zoneNames.zoneNames0"), translate("maps.lakesideVillage.zoneNames.zoneNames1"), translate("maps.lakesideVillage.zoneNames.zoneNames2"),
+      translate("maps.lakesideVillage.zoneNames.zoneNames3"), translate("maps.lakesideVillage.zoneNames.zoneNames4"), translate("maps.lakesideVillage.zoneNames.zoneNames5"),
+      translate("maps.lakesideVillage.zoneNames.zoneNames6"), translate("maps.lakesideVillage.zoneNames.zoneNames7"), translate("maps.lakesideVillage.zoneNames.zoneNames8"),
+      translate("maps.lakesideVillage.zoneNames.zoneNames9"), translate("maps.lakesideVillage.zoneNames.zoneNames10"), translate("maps.lakesideVillage.zoneNames.eleven")
     ];
     const ciphers = [
       { id: 'E_1', name: translate("maps.lakesideVillage.cipher.e1.name"), location: [1132, 680], feature: translate("maps.lakesideVillage.cipher.e1.feature"), locked: true },
@@ -855,10 +855,10 @@ export const MAPS_DATA = [
     const mapSize = [1492, 1028];
     const zonesInfo = [14, 89.8, 364.6, 281.2, 4, 3];
     const zoneNames = [
-      translate("maps.moonlitRiverPark.zoneNames.zero"), translate("maps.moonlitRiverPark.zoneNames.one"), translate("maps.moonlitRiverPark.zoneNames.two"),
-      translate("maps.moonlitRiverPark.zoneNames.three"), translate("maps.moonlitRiverPark.zoneNames.four"), translate("maps.moonlitRiverPark.zoneNames.five"),
-      translate("maps.moonlitRiverPark.zoneNames.six"), translate("maps.moonlitRiverPark.zoneNames.seven"), translate("maps.moonlitRiverPark.zoneNames.eight"),
-      translate("maps.moonlitRiverPark.zoneNames.nine"), translate("maps.moonlitRiverPark.zoneNames.ten"), translate("maps.moonlitRiverPark.zoneNames.eleven")
+      translate("maps.moonlitRiverPark.zoneNames.zoneNames0"), translate("maps.moonlitRiverPark.zoneNames.zoneNames1"), translate("maps.moonlitRiverPark.zoneNames.zoneNames2"),
+      translate("maps.moonlitRiverPark.zoneNames.zoneNames3"), translate("maps.moonlitRiverPark.zoneNames.zoneNames4"), translate("maps.moonlitRiverPark.zoneNames.zoneNames5"),
+      translate("maps.moonlitRiverPark.zoneNames.zoneNames6"), translate("maps.moonlitRiverPark.zoneNames.zoneNames7"), translate("maps.moonlitRiverPark.zoneNames.zoneNames8"),
+      translate("maps.moonlitRiverPark.zoneNames.zoneNames9"), translate("maps.moonlitRiverPark.zoneNames.zoneNames10"), translate("maps.moonlitRiverPark.zoneNames.eleven")
     ];
     const ciphers = [
       { id: 'M_1', name: translate("maps.moonlitRiverPark.cipher.m1.name"), location: [711, 261], feature: translate("maps.moonlitRiverPark.cipher.m1.feature"), locked: true },
@@ -1068,9 +1068,9 @@ export const MAPS_DATA = [
     const mapSize = [750, 635];
     const zonesInfo = [38.5, 28.5, 222.3, 194.7, 3, 3];
     const zoneNames = [
-      translate("maps.leosMemory.zoneNames.zero"), translate("maps.leosMemory.zoneNames.one"), translate("maps.leosMemory.zoneNames.two"),
-      translate("maps.leosMemory.zoneNames.three"), translate("maps.leosMemory.zoneNames.four"), translate("maps.leosMemory.zoneNames.five"),
-      translate("maps.leosMemory.zoneNames.six"), translate("maps.leosMemory.zoneNames.seven"), translate("maps.leosMemory.zoneNames.eight")
+      translate("maps.leosMemory.zoneNames.zoneNames0"), translate("maps.leosMemory.zoneNames.zoneNames1"), translate("maps.leosMemory.zoneNames.zoneNames2"),
+      translate("maps.leosMemory.zoneNames.zoneNames3"), translate("maps.leosMemory.zoneNames.zoneNames4"), translate("maps.leosMemory.zoneNames.zoneNames5"),
+      translate("maps.leosMemory.zoneNames.zoneNames6"), translate("maps.leosMemory.zoneNames.zoneNames7"), translate("maps.leosMemory.zoneNames.zoneNames8")
     ];
     const ciphers = [
       { id: 'E_1', name: translate("maps.leosMemory.cipher.e1.name"), location: [508, 113], feature: translate("maps.leosMemory.cipher.e1.feature") },
@@ -1286,10 +1286,10 @@ export const MAPS_DATA = [
     const mapSize = [750, 874];
     const zonesInfo = [89.4, 30.2, 206.1, 196.3, 3, 3];
     const zoneNames = [
-      translate("maps.eversleepingTown.zoneNames.zero"), translate("maps.eversleepingTown.zoneNames.one"), translate("maps.eversleepingTown.zoneNames.two"),
-      translate("maps.eversleepingTown.zoneNames.three"), translate("maps.eversleepingTown.zoneNames.four"), translate("maps.eversleepingTown.zoneNames.five"),
-      translate("maps.eversleepingTown.zoneNames.six"), translate("maps.eversleepingTown.zoneNames.seven"), translate("maps.eversleepingTown.zoneNames.eight"),
-      translate("maps.eversleepingTown.zoneNames.nine")
+      translate("maps.eversleepingTown.zoneNames.zoneNames0"), translate("maps.eversleepingTown.zoneNames.zoneNames1"), translate("maps.eversleepingTown.zoneNames.zoneNames2"),
+      translate("maps.eversleepingTown.zoneNames.zoneNames3"), translate("maps.eversleepingTown.zoneNames.zoneNames4"), translate("maps.eversleepingTown.zoneNames.zoneNames5"),
+      translate("maps.eversleepingTown.zoneNames.zoneNames6"), translate("maps.eversleepingTown.zoneNames.zoneNames7"), translate("maps.eversleepingTown.zoneNames.zoneNames8"),
+      translate("maps.eversleepingTown.zoneNames.zoneNames9")
     ];
     const ciphers = [
       { id: 'W_1', name: translate("maps.eversleepingTown.cipher.w1.name"), location: [101, 462], feature: translate("maps.eversleepingTown.cipher.w1.feature"), locked: true },
@@ -1493,9 +1493,9 @@ export const MAPS_DATA = [
     const mapSize = [1345, 1152];
     const zonesInfo = [83, 39, 406.5, 355.1, 3, 3];
     const zoneNames = [
-      translate("maps.chinaTown.zoneNames.zero"), translate("maps.chinaTown.zoneNames.one"), translate("maps.chinaTown.zoneNames.two"),
-      translate("maps.chinaTown.zoneNames.three"), translate("maps.chinaTown.zoneNames.four"), translate("maps.chinaTown.zoneNames.five"),
-      translate("maps.chinaTown.zoneNames.six"), translate("maps.chinaTown.zoneNames.seven"), translate("maps.chinaTown.zoneNames.eight")
+      translate("maps.chinaTown.zoneNames.zoneNames0"), translate("maps.chinaTown.zoneNames.zoneNames1"), translate("maps.chinaTown.zoneNames.zoneNames2"),
+      translate("maps.chinaTown.zoneNames.zoneNames3"), translate("maps.chinaTown.zoneNames.zoneNames4"), translate("maps.chinaTown.zoneNames.zoneNames5"),
+      translate("maps.chinaTown.zoneNames.zoneNames6"), translate("maps.chinaTown.zoneNames.zoneNames7"), translate("maps.chinaTown.zoneNames.zoneNames8")
     ];
     const ciphers = [
       { id: 'E_2', name: translate("maps.chinaTown.cipher.e2.name"), location: [1094, 563], feature: translate("maps.chinaTown.cipher.e2.feature"), locked: true },
@@ -1551,11 +1551,11 @@ export const MAPS_DATA = [
     const law_urls = ['https://www.bilibili.com/video/BV1QGpF6CEos', ''];
     const fixedHint = translate("maps.chinaTown.fixedHint");
     const hints = [
-      translate("maps.chinaTown.hint.zero"),
-      translate("maps.chinaTown.hint.one"),
+      translate("maps.chinaTown.hint.hint0"),
+      translate("maps.chinaTown.hint.hint1"),
       '',
-      translate("maps.chinaTown.hint.three"),
-      translate("maps.chinaTown.hint.four"),
+      translate("maps.chinaTown.hint.hint3"),
+      translate("maps.chinaTown.hint.hint4"),
       ''
     ];
 
@@ -1714,9 +1714,9 @@ export const MAPS_DATA = [
     const mapSize = [1247, 1265];
     const zonesInfo = [41.5, 40.5, 393.2, 381.5, 3, 3];
     const zoneNames = [
-      translate("maps.darkwoods.zoneNames.zero"), translate("maps.darkwoods.zoneNames.one"), translate("maps.darkwoods.zoneNames.two"),
-      translate("maps.darkwoods.zoneNames.three"), translate("maps.darkwoods.zoneNames.four"), translate("maps.darkwoods.zoneNames.five"),
-      translate("maps.darkwoods.zoneNames.six"), translate("maps.darkwoods.zoneNames.seven"), translate("maps.darkwoods.zoneNames.eight")
+      translate("maps.darkwoods.zoneNames.zoneNames0"), translate("maps.darkwoods.zoneNames.zoneNames1"), translate("maps.darkwoods.zoneNames.zoneNames2"),
+      translate("maps.darkwoods.zoneNames.zoneNames3"), translate("maps.darkwoods.zoneNames.zoneNames4"), translate("maps.darkwoods.zoneNames.zoneNames5"),
+      translate("maps.darkwoods.zoneNames.zoneNames6"), translate("maps.darkwoods.zoneNames.zoneNames7"), translate("maps.darkwoods.zoneNames.zoneNames8")
     ];
     const ciphers = [
       { id: 'W_1', name: translate("maps.darkwoods.cipher.w1.name"), location: [379, 265], feature: translate("maps.darkwoods.cipher.w1.feature") },
