@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "node scripts/dev-server.js",
-    "test": "node --test tests/unit/measurements.test.js tests/unit/treasure.test.js tests/unit/deduction-data.test.js tests/server/dev-server.test.js",
+    "test": "node --test tests/unit/map-handoff.test.js tests/unit/measurements.test.js tests/unit/treasure.test.js tests/unit/deduction-data.test.js tests/server/dev-server.test.js",
     "test:e2e": "playwright test",
     "verify": "npm test && npm run test:e2e"
   },

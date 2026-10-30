@@ -12,6 +12,15 @@ async function startApplication() {
   await initializeI18n();
   await import('./main.js');
 
+  const requestedMap = new URLSearchParams(window.location.search).get('map');
+  if (/^[0-8]$/.test(requestedMap || '')) {
+    const { enterMap } = await import('./region.js');
+    enterMap(Number(requestedMap));
+    const clean = new URL(window.location.href);
+    clean.searchParams.delete('map');
+    history.replaceState(history.state, '', clean);
+  }
+
   const langBtn = document.getElementById('footerLangBtn');
   const langMenu = document.getElementById('footerLangMenu');
   if (!langBtn || !langMenu) return;
