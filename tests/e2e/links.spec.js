@@ -30,6 +30,15 @@ test('same role can be placed multiple times with numbered manage buttons', asyn
   expect(names.filter((n) => /^医生 \d$/.test(n.trim()))).toHaveLength(2);
 });
 
+test('manage numbering counts by display name across roles and items', async ({ page }) => {
+  await placeRole(page, 'disciple', 0.2, 0.2);
+  await placeItem(page, 'disciple', 'guide', 0.3, 0.3);
+  await placeItem(page, 'disciple', 'cat', 0.4, 0.4);
+  await placeItem(page, 'disciple', 'guide', 0.5, 0.5);
+  const names = (await page.locator('.tac-manage-btn-name').allTextContents()).map((n) => n.trim());
+  expect(names).toEqual(['使徒', '指引 1', '爱猫', '指引 2']);
+});
+
 test('same item ignores former maxCount limit (lasso x2)', async ({ page }) => {
   await placeItem(page, 'cowboy', 'lasso', 0.2, 0.5);
   await placeItem(page, 'cowboy', 'lasso', 0.4, 0.5);

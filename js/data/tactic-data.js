@@ -21,96 +21,98 @@ export const TAC_MOVEMENT_SURVIVOR = {
     'lanternist:0': { name: translate("movement.survivor.lanternist0"), speed: 4.18, role: 'lanternist', form: 0 },
     'prodigy:1': { name: translate("movement.survivor.prodigy1"), speed: 3.8, role: 'prodigy', form: 1 },
   },
-  stateNames: { run: translate("movement.survivor.run"), walk: translate("movement.survivor.walk"), crouch: translate("movement.survivor.crouch"), crawl: translate("movement.survivor.crawl"),
-    role: translate("ui.common.roles"), fixed: translate("movement.survivor.fixed"), custom: translate("application.name"), hunter: translate("characters.camps.hunter") },
+  stateNames: {
+    run: translate("movement.survivor.run"), walk: translate("movement.survivor.walk"), crouch: translate("movement.survivor.crouch"), crawl: translate("movement.survivor.crawl"),
+    role: translate("ui.common.roles"), fixed: translate("movement.survivor.fixed"), custom: translate("application.name"), hunter: translate("characters.camps.hunter")
+  },
 };
 
 
 export const TAC_MOVEMENT_BUFFS = {
   trait: {
-  survivor: [
-    { key: 'sensitivity', role: translate("characters.doctor.name"), name: translate("movement.buff.trait.doctor.sensitivity.name"), mult: 1.45, duration: 2 },
-    { key: 'takeNotes', role: translate("characters.lawyer.name"), name: translate("movement.buff.trait.lawyer.takeNotes.name"), mult: 1.035 },
-    { key: 'illusion', role: translate("characters.magician.name"), name: translate("movement.buff.trait.magician.illusion.name"), mult: 1.5, duration: 0.87 },
-    { key: 'tinyLilliputian', role: translate("characters.explorer.name"), name: translate("movement.buff.trait.explorer.tinyLilliputian.name"), mult: 0.9 },
-    { key: 'energyReserves', role: translate("characters.explorer.name"), name: translate("movement.buff.trait.explorer.energyReserves.name"), mult: 1.35, duration: 4 },
-    { key: 'tapTapWalk', role: translate("characters.theMindsEye.name"), name: translate("movement.buff.trait.theMindsEye.tapTapWalk.name"), mult: 1.25, states: ['walk'] },
-    { key: 'tapTap', role: translate("characters.theMindsEye.name"), name: translate("movement.buff.trait.theMindsEye.tapTap.name"), mult: 1.3, duration: 2, states: ['run'] },
-    { key: 'armyBond', role: translate("characters.coordinator.name"), name: translate("movement.buff.trait.coordinator.armyBond.name"), mult: 1.05 },
-    { key: 'dashFootball', role: translate("characters.forward.name"), name: translate("movement.buff.trait.forward.dashFootball.name"), mult: 3 },
-    { key: 'ridingFullRage', role: translate("characters.wildling.name"), name: translate("movement.buff.trait.wildling.ridingFullRage.name"), mult: 1.33 },
-    { key: 'duphrin', role: translate("characters.barmaid.name"), name: translate("movement.buff.trait.duphrin.name"), mult: 1.5, duration: 2 },
-    { key: 'undergroundSneak', role: translate("characters.graveKeeper.name"), name: translate("movement.buff.trait.graveKeeper.undergroundSneak.name"), mult: 1.1 },
-    { key: 'aestheticResonance', role: translate("characters.painter.name"), name: translate("movement.buff.trait.painter.aestheticResonance.name"), levels: [1.02, 1.04] },
-    { key: 'altruism', role: translate("characters.batter.name"), name: translate("movement.buff.trait.batter.altruism.name"), mult: 1.5, duration: 10 },
-    { key: 'landing', role: translate("characters.toyMerchant.name"), name: translate("movement.buff.trait.toyMerchant.landing.name"), mult: 1.3, duration: 2 },
-    { key: 'resonance', role: translate("characters.novelist.name"), name: translate("movement.buff.trait.novelist.resonance.name"), mult: 1.5, duration: 2.5 },
-    { key: 'rocketDash', role: translate("characters.weepingClown.name"), name: translate("movement.buff.trait.weepingClown.rocketDash.name"), mult: 1.5 },
-    { key: 'firefightingTraining', role: translate("characters.fireInvestigator.name"), name: translate("movement.buff.trait.fireInvestigator.firefightingTraining.name"), mult: 1.5, duration: 2 },
-    { key: 'smokeScreen', role: translate("characters.escapologist.name"), name: translate("movement.buff.trait.escapologist.smokeScreen.name"), mult: 1.35, duration: 1 },
-    { key: 'stratus', role: translate("characters.meteorologist.name"), name: translate("movement.buff.trait.meteorologist.stratus.name"), levels: [1.33, 1.77] },
-    { key: 'concealedSpin', role: translate("characters.antiquarian.name"), name: translate("movement.buff.trait.antiquarian.concealedSpin.name"), mult: 1.05 },
-    { key: 'tuning', role: translate("characters.composer.name"), name: translate("movement.buff.trait.composer.tuning.name"), mult: 1.5 },
-    { key: 'motivate', role: translate("characters.cheerleader.name"), name: translate("movement.buff.trait.cheerleader.motivate.name"), mult: 1.7, duration: 4 },
-    { key: 'flexibleJoints', role: translate("characters.puppeteer.name"), name: translate("movement.buff.trait.puppeteer.flexibleJoints.name"), mult: 1.08, duration: 9 },
-  ],
-  hunter: [
-    { key: 'windWings', role: translate("characters.smileyFace.name"), name: translate("movement.buff.trait.windWings.name"), mult: 1.2, roles: ['smileyFace'], forms: [1, 2, 3] },
-    { key: 'fog', role: translate("characters.theRipper.name"), name: translate("movement.buff.trait.theRipper.fog.name"), mult: 1.2 },
-    { key: 'entangled', role: translate("characters.soulWeaver.name"), name: translate("movement.buff.trait.soulWeaver.entangled.name"), levels: [1.5, 1.9, 2.35] },
-    { key: 'followerOutOfRadius', role: translate("characters.dreamWitch.name"), name: translate("movement.buff.trait.dreamWitch.followerOutOfRadius.name"), mult: 1.3, postMult: true, forms: [1] },
-    { key: 'slipstream', role: translate("characters.naiad.name"), name: translate("movement.buff.trait.naiad.slipstream.name"), mult: 1.3 },
-    { key: 'windwalk', role: translate("characters.nightWatch.name"), name: translate("movement.buff.trait.nightWatch.windwalk.name"), mult: 1.12 },
-    { key: 'heightenedSenses', role: translate("characters.herztier.name"), name: translate("movement.buff.trait.heightenedSenses.name"), mult: 1.08, duration: 10 },
-  ],
-},
-  talent: {
-  kneeJerkReflex: { name: translate("movement.buff.talent.kneeJerkReflex.name"), mult: 1.5, duration: 3, camp: 'survivor' },
-  webersLaw: { name: translate("movement.buff.talent.webersLaw.name"), levels: [1.1, 1.15, 1.2], duration: 3.5, camp: 'survivor' },
-  borrowedTime: {
-    name: translate("movement.buff.talent.borrowedTime.name"), mult: 1.5, duration: 5, camp: 'survivor',
-    extra: { name: translate("movement.buff.talent.extra.name"), mult: 1.05, camp: 'survivor'},
+    survivor: [
+      { key: 'sensitivity', role: translate("characters.doctor.name"), name: translate("movement.buff.trait.doctor.sensitivity.name"), mult: 1.45, duration: 2 },
+      { key: 'takeNotes', role: translate("characters.lawyer.name"), name: translate("movement.buff.trait.lawyer.takeNotes.name"), mult: 1.035 },
+      { key: 'illusion', role: translate("characters.magician.name"), name: translate("movement.buff.trait.magician.illusion.name"), mult: 1.5, duration: 0.87 },
+      { key: 'tinyLilliputian', role: translate("characters.explorer.name"), name: translate("movement.buff.trait.explorer.tinyLilliputian.name"), mult: 0.9 },
+      { key: 'energyReserves', role: translate("characters.explorer.name"), name: translate("movement.buff.trait.explorer.energyReserves.name"), mult: 1.35, duration: 4 },
+      { key: 'tapTapWalk', role: translate("characters.theMindsEye.name"), name: translate("movement.buff.trait.theMindsEye.tapTapWalk.name"), mult: 1.25, states: ['walk'] },
+      { key: 'tapTap', role: translate("characters.theMindsEye.name"), name: translate("movement.buff.trait.theMindsEye.tapTap.name"), mult: 1.3, duration: 2, states: ['run'] },
+      { key: 'armyBond', role: translate("characters.coordinator.name"), name: translate("movement.buff.trait.coordinator.armyBond.name"), mult: 1.05 },
+      { key: 'dashFootball', role: translate("characters.forward.name"), name: translate("movement.buff.trait.forward.dashFootball.name"), mult: 3 },
+      { key: 'ridingFullRage', role: translate("characters.wildling.name"), name: translate("movement.buff.trait.wildling.ridingFullRage.name"), mult: 1.33 },
+      { key: 'duphrin', role: translate("characters.barmaid.name"), name: translate("movement.buff.trait.duphrin.name"), mult: 1.5, duration: 2 },
+      { key: 'undergroundSneak', role: translate("characters.graveKeeper.name"), name: translate("movement.buff.trait.graveKeeper.undergroundSneak.name"), mult: 1.1 },
+      { key: 'aestheticResonance', role: translate("characters.painter.name"), name: translate("movement.buff.trait.painter.aestheticResonance.name"), levels: [1.02, 1.04] },
+      { key: 'altruism', role: translate("characters.batter.name"), name: translate("movement.buff.trait.batter.altruism.name"), mult: 1.5, duration: 10 },
+      { key: 'landing', role: translate("characters.toyMerchant.name"), name: translate("movement.buff.trait.toyMerchant.landing.name"), mult: 1.3, duration: 2 },
+      { key: 'resonance', role: translate("characters.novelist.name"), name: translate("movement.buff.trait.novelist.resonance.name"), mult: 1.5, duration: 2.5 },
+      { key: 'rocketDash', role: translate("characters.weepingClown.name"), name: translate("movement.buff.trait.weepingClown.rocketDash.name"), mult: 1.5 },
+      { key: 'firefightingTraining', role: translate("characters.fireInvestigator.name"), name: translate("movement.buff.trait.fireInvestigator.firefightingTraining.name"), mult: 1.5, duration: 2 },
+      { key: 'smokeScreen', role: translate("characters.escapologist.name"), name: translate("movement.buff.trait.escapologist.smokeScreen.name"), mult: 1.35, duration: 1 },
+      { key: 'stratus', role: translate("characters.meteorologist.name"), name: translate("movement.buff.trait.meteorologist.stratus.name"), levels: [1.33, 1.77] },
+      { key: 'concealedSpin', role: translate("characters.antiquarian.name"), name: translate("movement.buff.trait.antiquarian.concealedSpin.name"), mult: 1.05 },
+      { key: 'tuning', role: translate("characters.composer.name"), name: translate("movement.buff.trait.composer.tuning.name"), mult: 1.5 },
+      { key: 'motivate', role: translate("characters.cheerleader.name"), name: translate("movement.buff.trait.cheerleader.motivate.name"), mult: 1.7, duration: 4 },
+      { key: 'flexibleJoints', role: translate("characters.puppeteer.name"), name: translate("movement.buff.trait.puppeteer.flexibleJoints.name"), mult: 1.08, duration: 9 },
+    ],
+    hunter: [
+      { key: 'windWings', role: translate("characters.smileyFace.name"), name: translate("movement.buff.trait.windWings.name"), mult: 1.2, roles: ['smileyFace'], forms: [1, 2, 3] },
+      { key: 'fog', role: translate("characters.theRipper.name"), name: translate("movement.buff.trait.theRipper.fog.name"), mult: 1.2 },
+      { key: 'entangled', role: translate("characters.soulWeaver.name"), name: translate("movement.buff.trait.soulWeaver.entangled.name"), levels: [1.5, 1.9, 2.35] },
+      { key: 'followerOutOfRadius', role: translate("characters.dreamWitch.name"), name: translate("movement.buff.trait.dreamWitch.followerOutOfRadius.name"), mult: 1.3, postMult: true, forms: [1] },
+      { key: 'slipstream', role: translate("characters.naiad.name"), name: translate("movement.buff.trait.naiad.slipstream.name"), mult: 1.3 },
+      { key: 'windwalk', role: translate("characters.nightWatch.name"), name: translate("movement.buff.trait.nightWatch.windwalk.name"), mult: 1.12 },
+      { key: 'heightenedSenses', role: translate("characters.herztier.name"), name: translate("movement.buff.trait.heightenedSenses.name"), mult: 1.08, duration: 10 },
+    ],
   },
-  escape: { name: translate("movement.buff.talent.escape.name"), levels: [1.03, 1.04, 1.05], camp: 'survivor' },
-  wellEarned: { name: translate("movement.buff.talent.wellEarned.name"), mult: 1.25, duration: 4, camp: 'survivor' },
-  mutualSupport: { name: translate("movement.buff.talent.mutualSupport.name"), levels: [1.04, 1.08], camp: 'survivor' },
-  symbioticEffect: { name: translate("movement.buff.talent.symbioticEffect.name"), levels: [1.06, 1.1], camp: 'survivor' },
-  sticker: { name: translate("movement.buff.talent.sticker.name"), levels: [1.3, 1.6, 1.9], camp: 'survivor', states: ['crawl'] },
-  touchEffect: { name: translate("movement.buff.talent.touchEffect.name"), levels: [1.16, 1.28, 1.4], duration: 1.5, camp: 'survivor' },
-  companionEffect: { name: translate("movement.buff.talent.companionEffect.name"), mult: 1.28, duration: 2, camp: 'survivor' },
-  birdcageEffect: { name: translate("movement.buff.talent.birdcageEffect.name"), mult: 1.1, camp: 'survivor' },
-  saviorComplex: { name: translate("movement.buff.talent.saviorComplex.name"), levels: [1.05, 1.1, 1.15], duration: 3, camp: 'survivor' },
-  herdMentality: { name: translate("movement.buff.talent.herdMentality.name"), levels: [1.04, 1.06, 1.08], camp: 'survivor' },
-  empathy: { name: translate("movement.buff.talent.empathy.name"), mult: 1.14, duration: 12, camp: 'survivor' },
-  huntersInstinct: { name: translate("movement.buff.talent.huntersInstinct.name"), levels: [1.01, 1.015, 1.02], camp: 'hunter' },
-  hospitable: { name: translate("movement.buff.talent.hospitable.name"), levels: [1.04, 1.06, 1.08], camp: 'hunter' },
-  wantedOrder: { name: translate("movement.buff.talent.wantedOrder.name"), levels: [0.98, 0.99, 1], camp: 'hunter' },
-  nostalgic: { name: translate("movement.buff.talent.nostalgic.name"), mult: 1.1, duration: 14, camp: 'hunter' },
-  mock: { name: translate("movement.buff.talent.mock.name"), levels: [1.03, 1.04, 1.05], camp: 'hunter' },
-  carnival: { name: translate("movement.buff.talent.carnival.name"), levels: [1.03, 1.04, 1.05], duration: 120, camp: 'hunter' },
-  hunt: { name: translate("movement.buff.talent.hunt.name"), mult: 1.1, camp: 'hunter' },
-  controlFreak: { name: translate("movement.buff.talent.controlFreak.name"), mult: 1.1, duration: 3, camp: 'hunter' },
-  lingeringMight: { name: translate("movement.buff.talent.lingeringMight.name"), mult: 1.1, duration: 50, camp: 'hunter' },
-  obsession: { name: translate("movement.buff.talent.obsession.name"), mult: 1.05, duration: 15, camp: 'hunter' },
-},
+  talent: {
+    kneeJerkReflex: { name: translate("movement.buff.talent.kneeJerkReflex.name"), mult: 1.5, duration: 3, camp: 'survivor' },
+    webersLaw: { name: translate("movement.buff.talent.webersLaw.name"), levels: [1.1, 1.15, 1.2], duration: 3.5, camp: 'survivor' },
+    borrowedTime: {
+      name: translate("movement.buff.talent.borrowedTime.name"), mult: 1.5, duration: 5, camp: 'survivor',
+      extra: { name: translate("movement.buff.talent.extra.name"), mult: 1.05, camp: 'survivor' },
+    },
+    escape: { name: translate("movement.buff.talent.escape.name"), levels: [1.03, 1.04, 1.05], camp: 'survivor' },
+    wellEarned: { name: translate("movement.buff.talent.wellEarned.name"), mult: 1.25, duration: 4, camp: 'survivor' },
+    mutualSupport: { name: translate("movement.buff.talent.mutualSupport.name"), levels: [1.04, 1.08], camp: 'survivor' },
+    symbioticEffect: { name: translate("movement.buff.talent.symbioticEffect.name"), levels: [1.06, 1.1], camp: 'survivor' },
+    sticker: { name: translate("movement.buff.talent.sticker.name"), levels: [1.3, 1.6, 1.9], camp: 'survivor', states: ['crawl'] },
+    touchEffect: { name: translate("movement.buff.talent.touchEffect.name"), levels: [1.16, 1.28, 1.4], duration: 1.5, camp: 'survivor' },
+    companionEffect: { name: translate("movement.buff.talent.companionEffect.name"), mult: 1.28, duration: 2, camp: 'survivor' },
+    birdcageEffect: { name: translate("movement.buff.talent.birdcageEffect.name"), mult: 1.1, camp: 'survivor' },
+    saviorComplex: { name: translate("movement.buff.talent.saviorComplex.name"), levels: [1.05, 1.1, 1.15], duration: 3, camp: 'survivor' },
+    herdMentality: { name: translate("movement.buff.talent.herdMentality.name"), levels: [1.04, 1.06, 1.08], camp: 'survivor' },
+    empathy: { name: translate("movement.buff.talent.empathy.name"), mult: 1.14, duration: 12, camp: 'survivor' },
+    huntersInstinct: { name: translate("movement.buff.talent.huntersInstinct.name"), levels: [1.01, 1.015, 1.02], camp: 'hunter' },
+    hospitable: { name: translate("movement.buff.talent.hospitable.name"), levels: [1.04, 1.06, 1.08], camp: 'hunter' },
+    wantedOrder: { name: translate("movement.buff.talent.wantedOrder.name"), levels: [0.98, 0.99, 1], camp: 'hunter' },
+    nostalgic: { name: translate("movement.buff.talent.nostalgic.name"), mult: 1.1, duration: 14, camp: 'hunter' },
+    mock: { name: translate("movement.buff.talent.mock.name"), levels: [1.03, 1.04, 1.05], camp: 'hunter' },
+    carnival: { name: translate("movement.buff.talent.carnival.name"), levels: [1.03, 1.04, 1.05], duration: 120, camp: 'hunter' },
+    hunt: { name: translate("movement.buff.talent.hunt.name"), mult: 1.1, camp: 'hunter' },
+    controlFreak: { name: translate("movement.buff.talent.controlFreak.name"), mult: 1.1, duration: 3, camp: 'hunter' },
+    lingeringMight: { name: translate("movement.buff.talent.lingeringMight.name"), mult: 1.1, duration: 50, camp: 'hunter' },
+    obsession: { name: translate("movement.buff.talent.obsession.name"), mult: 1.05, duration: 15, camp: 'hunter' },
+  },
   other: {
-  survivor: [
-    { key: 'fastMusicbox', name: translate("movement.buff.other.fastMusicbox.name"), levels: [1.15, 1.25, 1.35] },
-    { key: 'swarmAround', name: translate("movement.buff.other.swarmAround.name"), mult: 1.1 },
-    { key: 'urgentLetter', name: translate("movement.buff.other.urgentLetter.name"), mult: 1.1, duration: 15 },
-    { key: 'farewellLetter', name: translate("movement.buff.other.farewellLetter.name"), mult: 1.4, duration: 3 },
-    { key: 'cheerful', name: translate("movement.buff.other.cheerful.name"), mult: 1.5, duration: 1.3 },
-    { key: 'entangled', name: translate("movement.buff.other.entangled.nameAlternate"), levels: [0.92, 0.5] },
-    { key: 'corruptingBreath', name: translate("movement.buff.other.corruptingBreath.name"), mult: 0.7, duration: 3 },
-    { key: 'demonNotes', name: translate("movement.buff.other.demonNotes.name"), levels: [0.96, 0.92, 0.88] },
-    { key: 'peeper', name: translate("movement.buff.other.peeper.name"), mult: 0.94 },
-  ],
-  hunter: [
-    { key: 'slowMusicbox', name: translate("movement.buff.other.slowMusicbox.name"), levels: [0.88, 0.79, 0.7] },
-    { key: 'stickyBomb', name: translate("movement.buff.other.stickyBomb.name"), mult: 0.7, duration: 5 },
-    { key: 'pounce', name: translate("movement.buff.other.pounce.name"), mult: 0.65, duration: 2.5 },
-  ],
-},
+    survivor: [
+      { key: 'fastMusicbox', name: translate("movement.buff.other.fastMusicbox.name"), levels: [1.15, 1.25, 1.35] },
+      { key: 'swarmAround', name: translate("movement.buff.other.swarmAround.name"), mult: 1.1 },
+      { key: 'urgentLetter', name: translate("movement.buff.other.urgentLetter.name"), mult: 1.1, duration: 15 },
+      { key: 'farewellLetter', name: translate("movement.buff.other.farewellLetter.name"), mult: 1.4, duration: 3 },
+      { key: 'cheerful', name: translate("movement.buff.other.cheerful.name"), mult: 1.5, duration: 1.3 },
+      { key: 'entangled', name: translate("movement.buff.other.entangled.nameAlternate"), levels: [0.92, 0.5] },
+      { key: 'corruptingBreath', name: translate("movement.buff.other.corruptingBreath.name"), mult: 0.7, duration: 3 },
+      { key: 'demonNotes', name: translate("movement.buff.other.demonNotes.name"), levels: [0.96, 0.92, 0.88] },
+      { key: 'peeper', name: translate("movement.buff.other.peeper.name"), mult: 0.94 },
+    ],
+    hunter: [
+      { key: 'slowMusicbox', name: translate("movement.buff.other.slowMusicbox.name"), levels: [0.88, 0.79, 0.7] },
+      { key: 'stickyBomb', name: translate("movement.buff.other.stickyBomb.name"), mult: 0.7, duration: 5 },
+      { key: 'pounce', name: translate("movement.buff.other.pounce.name"), mult: 0.65, duration: 2.5 },
+    ],
+  },
 };
 
 
@@ -129,10 +131,12 @@ export const TAC_ITEM_TYPES = {
   },
   flashlight: {
     name: translate("items.flashlight.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.flashlight.name"), size_m: 8 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 8, labels: translate("items.flashlight.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/e/e3/an2z7q5vnl5bcm6q7f6e9c3jboe6bl9.png/120px-%E6%89%8B%E7%94%B5%E7%AD%92.png',
   },
   toolkit: {
@@ -197,10 +201,12 @@ export const TAC_ITEM_TYPES = {
   fastMusicbox: {
     name: translate("items.fastMusicbox.name"),
     render: 'circle',
-    ranges: { modes: [
-      { key: 'show', label: translate("items.fastMusicbox.name"), size_m: { min: 6.3, max: 9 } },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: { min: 6.3, max: 9 }, labels: translate("items.fastMusicbox.name") },
+      ],
+    },
     color: '#f472b6',
     fill: 'rgba(244, 114, 182, 0.22)',
     glow: 'rgba(244, 114, 182, 0.45)',
@@ -209,10 +215,12 @@ export const TAC_ITEM_TYPES = {
   slowMusicbox: {
     name: translate("items.slowMusicbox.name"),
     render: 'circle',
-    ranges: { modes: [
-      { key: 'show', label: translate("items.slowMusicbox.name"), size_m: { min: 6.3, max: 9 } },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: { min: 6.3, max: 9 }, labels: translate("items.slowMusicbox.name") },
+      ],
+    },
     color: '#60a5fa',
     fill: 'rgba(96, 165, 250, 0.22)',
     glow: 'rgba(96, 165, 250, 0.45)',
@@ -229,10 +237,12 @@ export const TAC_ITEM_TYPES = {
   meteoriteMagnetN: {
     name: translate("items.meteoriteMagnetN.name"),
     render: 'circle',
-    ranges: { modes: [
-      { key: 'show', label: translate("items.meteoriteMagnetN.name"), size_m: 4.5 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 4.5, labels: translate("items.meteoriteMagnetN.name") },
+      ],
+    },
     color: '#ef4444',
     fill: 'rgba(239, 68, 68, 0.22)',
     glow: 'rgba(239, 68, 68, 0.45)',
@@ -241,10 +251,12 @@ export const TAC_ITEM_TYPES = {
   meteoriteMagnetS: {
     name: translate("items.meteoriteMagnetS.name"),
     render: 'circle',
-    ranges: { modes: [
-      { key: 'show', label: translate("items.meteoriteMagnetS.name"), size_m: 4.5 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 4.5, labels: translate("items.meteoriteMagnetS.name") },
+      ],
+    },
     color: '#1d4ed8',
     fill: 'rgba(29, 78, 216, 0.22)',
     glow: 'rgba(29, 78, 216, 0.45)',
@@ -265,11 +277,10 @@ export const TAC_ITEM_TYPES = {
   poseidonWatch: {
     name: translate("items.poseidonWatch.name"),
     ranges: {
-      modes: [
-         { key: 'poseidonWatch', label: translate("items.poseidonWatch.range.label.poseidonWatch"),
-          size_m: { options: [27, 8.4],
-            labels: [translate("items.poseidonWatch.range.card.hypnotizeOne"), translate("items.poseidonWatch.range.card.hypnotizeTwo")] } },
-        { key: 'off' },
+      key: 'showItem',
+      options: [
+        { size_m: 27, labels: translate("items.poseidonWatch.range.card.hypnotizeOne") },
+        { size_m: 8.4, labels: translate("items.poseidonWatch.range.card.hypnotizeTwo") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b7/kfypkpcjk8dtc4pq1lrzall2wzviihu.png/120px-%E6%B5%B7%E7%A5%9E%E6%80%80%E8%A1%A8.png',
@@ -289,9 +300,9 @@ export const TAC_ITEM_TYPES = {
   postDog: {
     name: translate("items.postDog.name"),
     ranges: {
-      modes: [
-        { key: 'show', label: translate("items.postDog.range.card.postDogPounce"), size_m: 1.27 },
-        { key: 'off' },
+      key: 'showItem',
+      options: [
+        { size_m: 1.27, labels: translate("items.postDog.range.card.postDogPounce") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/e/ed/fohz3k2zrkhum55m6ypco170bdqdypu.png/120px-%E9%80%81%E4%BF%A1%E7%8A%AC.png',
@@ -311,10 +322,12 @@ export const TAC_ITEM_TYPES = {
   swarm: {
     name: translate("items.swarm.name"),
     render: 'circle',
-    ranges: { modes: [
-      { key: 'show', label: translate("items.swarm.name"), size_m: 1.2 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 1.2, labels: translate("items.swarm.name") },
+      ],
+    },
     color: '#d4a373',
     fill: 'rgba(212, 163, 115, 0.22)',
     glow: 'rgba(212, 163, 115, 0.45)',
@@ -324,10 +337,12 @@ export const TAC_ITEM_TYPES = {
   drawingBoard: {
     name: translate("items.drawingBoard.name"),
     render: 'circle',
-    ranges: { modes: [
-      { key: 'show', label: translate("items.drawingBoard.name"), size_m: 12 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 12, labels: translate("items.drawingBoard.name") },
+      ],
+    },
     color: '#60a5fa',
     fill: 'rgba(96, 165, 250, 0.22)',
     glow: 'rgba(96, 165, 250, 0.45)',
@@ -335,18 +350,22 @@ export const TAC_ITEM_TYPES = {
   },
   cricketBat: {
     name: translate("items.cricketBat.name"),
-    ranges: { modes: [
-      { key: 'cricketBatKnockBack', label: translate("items.cricketBat.range.label.cricketBatKnockBack"), size_m: { min: 3.73, max: 7.45 } },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: { min: 3.73, max: 7.45 }, labels: translate("items.cricketBat.range.card.cricketBatKnockBack") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/7/7e/19s98s5y8v0pz05ifj94fvyubyjssvd.png/120px-%E5%87%BB%E7%90%83%E6%89%8B%E9%81%93%E5%85%B7.png',
   },
   catapult: {
     name: translate("items.catapult.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.catapult.name"), size_m: 21.9 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 21.9, labels: translate("items.catapult.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/be/q00bu5gdar393rxoi65gjmhpfcko4cl.png/90px-%E7%8E%A9%E5%85%B7%E5%95%86%E9%81%93%E5%85%B71.png',
   },
   whistle: {
@@ -363,11 +382,13 @@ export const TAC_ITEM_TYPES = {
   },
   memoryFragment: {
     name: translate("items.memoryFragment.name"),
-    ranges: { modes: [
-      { key: 'memoryFragmentImpact', label: translate("items.memoryFragment.range.label.memoryFragmentImpact"), 
-        size_m: { options: [6.1, 10.3], labels: [translate("items.memoryFragment.range.card.impact"), translate("items.memoryFragment.range.card.impactAddLaunchMax")] } },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 6.1, labels: translate("items.memoryFragment.range.card.impact") },
+        { size_m: 10.3, labels: translate("items.memoryFragment.range.card.impactAddLaunchMax") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/f9/asmvxiz04rw0af5of7ic2lzyorwjsz0.png/120px-%E5%9B%9E%E5%BF%86%E7%A2%8E%E7%89%87.png',
   },
   rocket: {
@@ -405,10 +426,12 @@ export const TAC_ITEM_TYPES = {
   airbag: {
     name: translate("items.airbag.name"),
     render: 'circle',
-    ranges: { modes: [
-      { key: 'show', label: translate("items.airbag.name"), size_m: 4.2 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 4.2, labels: translate("items.airbag.name") },
+      ],
+    },
     color: '#f8fafc',
     fill: 'rgba(248, 250, 252, 0.22)',
     glow: 'rgba(248, 250, 252, 0.45)',
@@ -425,10 +448,12 @@ export const TAC_ITEM_TYPES = {
   stormGlass: {
     name: translate("items.stormGlass.name"),
     render: 'circle',
-    ranges: { modes: [
-      { key: 'rainfall', label: translate("items.stormGlass.range.label.rainfall"), size_m: 4 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 4, labels: translate("items.stormGlass.range.card.rainfall") },
+      ],
+    },
     color: '#f8fafc',
     fill: 'rgba(248, 250, 252, 0.22)',
     glow: 'rgba(248, 250, 252, 0.45)',
@@ -444,10 +469,12 @@ export const TAC_ITEM_TYPES = {
   },
   thurible: {
     name: translate("items.thurible.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.thurible.name"), size_m: 16.9 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 16.9, labels: translate("items.thurible.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/c/c2/2w71hgyr6ozvswrc8fvzz14gaxh27ng.png/90px-%E8%BF%B7%E7%83%9F%E7%82%89.png',
   },
   projectionLanternLivingImage: {
@@ -465,10 +492,12 @@ export const TAC_ITEM_TYPES = {
   propUmbrella: {
     name: translate("items.propUmbrella.name"),
     render: 'circle',
-    ranges: { modes: [
-      { key: 'anxiousRoutine', label: translate("items.propUmbrella.range.label.anxiousRoutine"), size_m: 12.7 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 12.7, labels: translate("items.propUmbrella.range.card.anxiousRoutine") },
+      ],
+    },
     color: '#18181b',
     fill: 'rgba(24, 24, 27, 0.22)',
     glow: 'rgba(24, 24, 27, 0.45)',
@@ -507,10 +536,12 @@ export const TAC_ITEM_TYPES = {
   },
   chainHook: {
     name: translate("items.chainHook.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.chainHook.range.label.shockwave"), size_m: 4.2 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 4.2, labels: translate("items.chainHook.range.card.shockwave") },
+      ],
+    },
     maxCount: 1,
     linkToRole: 'gameKeeper',
     linkMaxM: 16.9,
@@ -520,10 +551,12 @@ export const TAC_ITEM_TYPES = {
   },
   trap: {
     name: translate("items.trap.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.trap.range.label.destroyedByRocketChair"), size_m: 20 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 20, labels: translate("items.trap.range.card.destroyedByRocketChair") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/d/dd/40u7gtj5cvffk3e4dy5edl1ntd56kdh.png/90px-%E9%B9%BF%E5%A4%B40%E9%98%B6%E6%8A%80%E8%83%BD2.png',
   },
   cocoon: {
@@ -545,13 +578,15 @@ export const TAC_ITEM_TYPES = {
   umbrella: {
     name: translate("items.umbrella.name"),
     render: 'circle',
-    ranges: { modes: [
-      { key: 'show', label: translate("items.umbrella.name"), size_m: 9.3 },
-      { key: 'off' },
-    ] },
-    maxCount: 1,           
-    linkToRole: 'wuchang', 
-    linkMaxM: 84.4,        
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 9.3, labels: translate("items.umbrella.name") },
+      ],
+    },
+    maxCount: 1,
+    linkToRole: 'wuchang',
+    linkMaxM: 84.4,
     linkColor: '#f8fafc',
     linkWidth: 2,
     color: '#22c55e',
@@ -573,10 +608,12 @@ export const TAC_ITEM_TYPES = {
   },
   tentacle: {
     name: translate("items.tentacle.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.tentacle.range.label.tentacleHit"), size_m: 4.25 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 4.25, labels: translate("items.tentacle.range.card.tentacleHit") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/99/9q4qco9e4a4eb87ml89bf6lrnc7wmzc.png/90px-%E9%BB%84%E8%A1%A3%E4%B9%8B%E4%B8%BB0%E9%98%B6%E6%8A%80%E8%83%BD2.png',
   },
   follower: {
@@ -589,19 +626,23 @@ export const TAC_ITEM_TYPES = {
   },
   hiddenDream: {
     name: translate("items.hiddenDream.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.hiddenDream.name"), size_m: 20 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 20, labels: translate("items.hiddenDream.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/3/33/265axozop5uoe1opp2e6gj8noxlby8e.png',
   },
   peacefulPine: {
     name: translate("items.peacefulPine.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.peacefulPine.name"), size_m: 20.5 },
-      { key: 'off' },
-    ] },
-    maxCount: 6, 
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 20.5, labels: translate("items.peacefulPine.name") },
+      ],
+    },
+    maxCount: 6,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/29/00c30uaryazol4s5ec4iuk19kr773o2.png/90px-%E7%88%B1%E5%93%AD%E9%AC%BC2%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   resentfulSoul: {
@@ -617,11 +658,11 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.aquaMirror.name"),
     linkToRole: 'bloodyQueen',
     ranges: {
-      modes: [
-         { key: 'aquaMirror', label: translate("items.aquaMirror.range.label.aquaMirror"),
-          size_m: { options: [8.4, 4.2, 21.1],
-            labels: [translate("items.aquaMirror.range.card.showSurvivor"), translate("items.aquaMirror.range.card.mirrorRotationTierOne"), translate("items.aquaMirror.range.card.mirrorImageSurvivorTierTwo")] } },
-        { key: 'off' },
+      key: 'showItem',
+      options: [
+        { size_m: 8.4, labels: translate("items.aquaMirror.range.card.showSurvivor") },
+        { size_m: 4.2, labels: translate("items.aquaMirror.range.card.mirrorRotationTierOne") },
+        { size_m: 21.1, labels: translate("items.aquaMirror.range.card.mirrorImageSurvivorTierTwo") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/03/tmqwk7lb2do1swhtp7sklgx75t0ig6f.png/90px-%E7%BA%A2%E5%A4%AB%E4%BA%BA0%E9%98%B6%E6%8A%80%E8%83%BD.png',
@@ -633,11 +674,15 @@ export const TAC_ITEM_TYPES = {
   },
   cat: {
     name: translate("items.cat.name"),
-    ranges: { modes: [
-      { key: 'shadowStep', label: translate("items.cat.range.label.shadowStep"), 
-        size_m: { options: [3.38, 6.33, 10.5, 33.8], labels: [translate("items.cat.range.card.alertRadius"), translate("items.cat.range.card.paralysisArea"), translate("items.cat.range.card.locateSurvivor"), translate("items.cat.range.card.seenBySurvivor")] } },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 3.38, labels: translate("items.cat.range.card.alertRadius") },
+        { size_m: 6.33, labels: translate("items.cat.range.card.paralysisArea") },
+        { size_m: 10.5, labels: translate("items.cat.range.card.locateSurvivor") },
+        { size_m: 33.8, labels: translate("items.cat.range.card.seenBySurvivor") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/a/a4/h2c1hndne3n1j3cq9f7itl25r646agu.png',
   },
   guide: {
@@ -667,18 +712,22 @@ export const TAC_ITEM_TYPES = {
   },
   sculptureOfNobility: {
     name: translate("items.sculptureOfNobility.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.sculptureOfNobility.range.label.chargeTowardSurvivor"), size_m: 36 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 36, labels: translate("items.sculptureOfNobility.range.card.chargeTowardSurvivor") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/1d/eh2irolwokjiwzpyqh6paj92l9mnpan.png/90px-%E9%9B%95%E5%88%BB%E5%AE%B62%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   hieroglyphicGraveyard: {
     name: translate("items.hieroglyphicGraveyard.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.hieroglyphicGraveyard.name"), size_m: 26 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 26, labels: translate("items.hieroglyphicGraveyard.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/d/d1/dqvmem9kl2u7mpz88bgrlwhgti6cac8.png',
   },
   nailBoard: {
@@ -687,10 +736,12 @@ export const TAC_ITEM_TYPES = {
   },
   spearfishing: {
     name: translate("items.spearfishing.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.spearfishing.name"), size_m: 4 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 4, labels: translate("items.spearfishing.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/be/3b3skletdo6z31k2wti92rsxisja1tg.png/90px-%E6%B8%94%E5%A5%B30%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   waxBlock: {
@@ -704,10 +755,12 @@ export const TAC_ITEM_TYPES = {
   electromagneticFieldN: {
     name: translate("items.electromagneticFieldN.name"),
     render: 'circle',
-    ranges: { modes: [
-      { key: 'show', label: translate("items.electromagneticFieldN.name"), size_m: 4.5 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 4.5, labels: translate("items.electromagneticFieldN.name") },
+      ],
+    },
     color: '#ef4444',
     fill: 'rgba(239, 68, 68, 0.22)',
     glow: 'rgba(239, 68, 68, 0.45)',
@@ -716,10 +769,12 @@ export const TAC_ITEM_TYPES = {
   electromagneticFieldS: {
     name: translate("items.electromagneticFieldS.name"),
     render: 'circle',
-    ranges: { modes: [
-      { key: 'show', label: translate("items.electromagneticFieldS.name"), size_m: 4.5 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 4.5, labels: translate("items.electromagneticFieldS.name") },
+      ],
+    },
     color: '#1d4ed8',
     fill: 'rgba(29, 78, 216, 0.22)',
     glow: 'rgba(29, 78, 216, 0.45)',
@@ -743,18 +798,22 @@ export const TAC_ITEM_TYPES = {
   },
   corruptedOstracon: {
     name: translate("items.corruptedOstracon.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.corruptedOstracon.name"), size_m: 9 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 9, labels: translate("items.corruptedOstracon.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/35/6tyw4qniiw51aohhjwxjv4wq8yj28ud.png/90px-%E6%97%B6%E7%A9%BA%E4%B9%8B%E5%BD%B10%E9%98%B6%E6%8A%80%E8%83%BD4.png',
   },
   ancientVisage: {
     name: translate("items.ancientVisage.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.ancientVisage.name"), size_m: 9 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 9, labels: translate("items.ancientVisage.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/d/da/c2qmk7cs5shwl528wzkkmma6i2v8ael.png',
   },
   cloneHullabaloo: {
@@ -763,19 +822,23 @@ export const TAC_ITEM_TYPES = {
   },
   contactPoint: {
     name: translate("items.contactPoint.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.contactPoint.name"), size_m: 3 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 3, labels: translate("items.contactPoint.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/c/c6/t5t9qmg4vouffmvsxnzq6mizonmjzvr.png',
   },
   cueBall: {
     name: translate("items.cueBall.name"),
     render: 'circle',
-    ranges: { modes: [
-      { key: 'show', label: translate("items.cueBall.name"), size_m: 4 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 4, labels: translate("items.cueBall.name") },
+      ],
+    },
     color: '#18181b',
     fill: 'rgba(24, 24, 27, 0.22)',
     glow: 'rgba(24, 24, 27, 0.45)',
@@ -783,34 +846,42 @@ export const TAC_ITEM_TYPES = {
   },
   cage: {
     name: translate("items.cage.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.cage.name"), size_m: { options: [9, 12, 15] } },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: [9, 12, 15], labels: translate("items.cage.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/67/kqp54mjbpln0aytlr986ko5j4y7cy4t.png/90px-%E2%80%9C%E8%B7%9B%E8%84%9A%E7%BE%8A%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD1.png',
   },
   bestialAwakening: {
     name: translate("items.bestialAwakening.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.bestialAwakening.name"), size_m: 48 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 48, labels: translate("items.bestialAwakening.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/8/89/agxycu6xg1opqj3xo7tpix753cvfkzz.png',
   },
   heightenedSenses: {
     name: translate("items.heightenedSenses.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.heightenedSenses.name"), size_m: 25 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 25, labels: translate("items.heightenedSenses.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/91/hu0fnv6ev967sdypg7bgso8f6ch8jzr.png/90px-%E2%80%9C%E5%BF%83%E5%85%BD%E2%80%9D1%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   peeper: {
     name: translate("items.peeper.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.peeper.name"), size_m: 13 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 13, labels: translate("items.peeper.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/ba/4sgjzcxl8526632orcqqgwkt5pv9s4f.png',
   },
   warp: {
@@ -823,102 +894,126 @@ export const TAC_ITEM_TYPES = {
   },
   fearRadius: {
     name: translate("items.fearRadius.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.fearRadius.name"), size_m: 32.07,
-        fearMods: {
-          hunter: [['hunter', translate("characters.camps.hunter"), 1], ['beauty', translate("items.fearRadius.range.fearMods.one"), 0.8], ['prajna', translate("items.fearRadius.range.fearMods.oneAlternate"), 1.1]],
-          survivor: [['survivor', translate("characters.camps.survivor"), 1], ['prisoner', translate("items.fearRadius.range.fearMods.oneThird"), 0.8], ['archer', translate("items.fearRadius.range.fearMods.oneFourth"), 0.76]],
-        } },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      fearMods: {
+        hunter: [['hunter', translate("characters.camps.hunter"), 1], ['beauty', translate("items.fearRadius.range.fearMods.one"), 0.8], ['prajna', translate("items.fearRadius.range.fearMods.oneAlternate"), 1.1]],
+        survivor: [['survivor', translate("characters.camps.survivor"), 1], ['prisoner', translate("items.fearRadius.range.fearMods.oneThird"), 0.8], ['archer', translate("items.fearRadius.range.fearMods.oneFourth"), 0.76]],
+      },
+      options: [
+        { size_m: 32.07, labels: translate("items.fearRadius.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/2/24/dv1pstoj7a8ftqf9l3jazt1cpe4sxwo.png',
   },
   webersLaw: {
     name: translate("items.webersLaw.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.webersLaw.name"), size_m: 18 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 18, labels: translate("items.webersLaw.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/2/28/4opnhwv5mnc78m81u6ulz3t2b50yhxj.png',
   },
   sneak: {
     name: translate("items.sneak.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.sneak.name"), size_m: 22 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 22, labels: translate("items.sneak.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/1/13/o8d12vi02km7ozis0f2io312tsynodg.png',
   },
   tinnitus: {
     name: translate("items.tinnitus.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.tinnitus.name"), size_m: 36 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 36, labels: translate("items.tinnitus.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/f/f5/2546goc080xvxx8kde4sk2h1vry3k4n.png',
   },
   addiction: {
     name: translate("items.addiction.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.addiction.name"), size_m: 20 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 20, labels: translate("items.addiction.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/e/eb/flp1movyr3427678u7a854cde31icqk.png',
   },
   nostalgic: {
     name: translate("items.nostalgic.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.nostalgic.name"), size_m: 32 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 32, labels: translate("items.nostalgic.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/e/ef/80q87s7z71ecm5yhz07bd9lo3hs1g8c.png',
   },
   skittish: {
     name: translate("items.skittish.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.skittish.name"), size_m: 12 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 12, labels: translate("items.skittish.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/0/0c/dmvkzw1a11nxskx0hhoq6bnfslsvw9c.png',
   },
   deerHunt: {
     name: translate("items.deerHunt.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.deerHunt.name"), size_m: 18 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 18, labels: translate("items.deerHunt.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/b7/d9ojgfgmihbwmaw6vkmbg96it0s2eb3.png',
   },
   streetSweeper: {
     name: translate("items.streetSweeper.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.streetSweeper.name"), size_m: { options: [30, 45, 60] } },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: [30, 45, 60], labels: translate("items.streetSweeper.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/bd/re4lu3k5iknzh748yg85tcdvla2b0t2.png',
   },
   wither: {
     name: translate("items.wither.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.wither.name"), size_m: 10 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 10, labels: translate("items.wither.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/4/48/9edy2j55gu74hyrt4jqx4cxkunwyray.png',
   },
   obsession: {
     name: translate("items.obsession.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.obsession.name"), size_m: 16 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 16, labels: translate("items.obsession.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/6/6b/ra1r6rk9depicpmew855rzug25sy8ut.png',
   },
   famine: {
     name: translate("items.famine.name"),
-    ranges: { modes: [
-      { key: 'show', label: translate("items.famine.name"), size_m: 16 },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 16, labels: translate("items.famine.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/4/45/73txs9wv78r9rrh0ghil23wf6tx4c3s.png',
   },
 };
@@ -929,10 +1024,9 @@ export const TAC_ROLES = {
     name: translate("characters.luckyGuy.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'luckyGuy', label: translate("characters.luckyGuy.range.label.luckyGuy"),
-          size_m: { options: 25.3, labels: [translate("characters.luckyGuy.range.card.detectChestNearby")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 25.3, labels: translate("characters.luckyGuy.range.card.detectChestNearby") },
       ],
     },
     items: ['luckyParcel'],
@@ -954,10 +1048,9 @@ export const TAC_ROLES = {
     name: translate("characters.thief.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'cunning', label: translate("characters.thief.range.label.cunning"),
-          size_m: { options: 8, labels: [translate("characters.thief.range.card.flashlightShining")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 8, labels: translate("characters.thief.range.card.flashlightShining") },
       ],
     },
     items: ['flashlight'],
@@ -967,10 +1060,9 @@ export const TAC_ROLES = {
     name: translate("characters.gardener.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'confidence', label: translate("characters.gardener.range.label.confidence"),
-          size_m: { options: 15, labels: [translate("characters.gardener.range.card.locateRocketChairNearby")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 15, labels: translate("characters.gardener.range.card.locateRocketChairNearby") },
       ],
     },
     items: ['toolkit'],
@@ -986,11 +1078,10 @@ export const TAC_ROLES = {
     name: translate("characters.explorer.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'fantasy', label: translate("characters.explorer.range.label.fantasy"),
-          size_m: { options: [60, 70],
-            labels: [translate("characters.explorer.range.card.senseHunter"), translate("characters.explorer.range.card.passwordPage")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 60, labels: translate("characters.explorer.range.card.senseHunter") },
+        { size_m: 70, labels: translate("characters.explorer.range.card.passwordPage") },
       ],
     },
     items: ['gulliversTravels'],
@@ -1006,10 +1097,9 @@ export const TAC_ROLES = {
     name: translate("characters.coordinator.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'preciseAim', label: translate("characters.coordinator.range.label.preciseAim"),
-          size_m: { options: 10, labels: [translate("characters.coordinator.range.card.flareGunCanUse")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 10, labels: translate("characters.coordinator.range.card.flareGunCanUse") },
       ],
     },
     items: ['flareGun'],
@@ -1031,11 +1121,11 @@ export const TAC_ROLES = {
     name: translate("characters.theMindsEye.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'echo', label: translate("characters.theMindsEye.range.label.echo"),
-          size_m: { options: [25.3, 6.8, 25.3],
-            labels: [translate("characters.theMindsEye.range.card.tapTapLocatePosition"), translate("characters.theMindsEye.range.card.strikeInteractionSpeedReduceOne"), translate("characters.theMindsEye.range.card.strikeInteractionSpeedReduceTwo")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 25.3, labels: translate("characters.theMindsEye.range.card.tapTapLocatePosition") },
+        { size_m: 6.8, labels: translate("characters.theMindsEye.range.card.strikeInteractionSpeedReduceOne") },
+        { size_m: 25.3, labels: translate("characters.theMindsEye.range.card.strikeInteractionSpeedReduceTwo") },
       ],
     },
     items: ['cane'],
@@ -1044,7 +1134,7 @@ export const TAC_ROLES = {
   priestess: {
     name: translate("characters.priestess.name"),
     camp: 'survivor',
-    items: ['straightPassage','ultralongPassage'],
+    items: ['straightPassage', 'ultralongPassage'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/56/clgsyw7wsb933tstoge2j3f305agt86.png/90px-%E7%A5%AD%E5%8F%B8%E5%A4%B4%E5%83%8F.png',
   },
   perfumer: {
@@ -1057,10 +1147,9 @@ export const TAC_ROLES = {
     name: translate("characters.cowboy.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'lassoSkill', label: translate("characters.cowboy.range.label.lassoSkill"),
-          size_m: { options: 15.2, labels: [translate("characters.cowboy.range.card.lassoHitMax")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 15.2, labels: translate("characters.cowboy.range.card.lassoHitMax") },
       ],
     },
     items: ['lasso'],
@@ -1070,10 +1159,9 @@ export const TAC_ROLES = {
     name: translate("characters.femaleDancer.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'duet', label: translate("characters.femaleDancer.range.label.duet"),
-          size_m: { options: 8.44, labels: [translate("characters.femaleDancer.range.card.slide")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 8.44, labels: translate("characters.femaleDancer.range.card.slide") },
       ],
     },
     items: ['fastMusicbox', 'slowMusicbox'],
@@ -1097,11 +1185,10 @@ export const TAC_ROLES = {
     name: translate("characters.prospector.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'magnet', label: translate("characters.prospector.range.label.magnet"),
-          size_m: { options: [14.5, 18],
-            labels: [translate("characters.prospector.range.card.magnetThrowMax"), translate("characters.prospector.range.card.stunReduce")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 14.5, labels: translate("characters.prospector.range.card.magnetThrowMax") },
+        { size_m: 18, labels: translate("characters.prospector.range.card.stunReduce") },
       ],
     },
     items: ['meteoriteMagnetN', 'meteoriteMagnetS'],
@@ -1111,13 +1198,11 @@ export const TAC_ROLES = {
     name: translate("characters.enchantress.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'apeCurse', label: translate("characters.enchantress.range.label.apeCurse"),
-          size_m: { options: 5.1, labels: [translate("characters.enchantress.range.card.paralyze")] } },
-        { key: 'guard', label: translate("characters.enchantress.range.label.guard"),
-          size_m: { options: [16.9, 12.7],
-            labels: [translate("characters.enchantress.range.card.guardStack"), translate("characters.enchantress.range.card.guardStackReduce")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 5.1, labels: translate("characters.enchantress.range.card.apeCurseParalyze") },
+        { size_m: 16.9, labels: translate("characters.enchantress.range.card.guardStack") },
+        { size_m: 12.7, labels: translate("characters.enchantress.range.card.guardStackReduce") },
       ],
     },
     items: ['cursedEmblem'],
@@ -1127,11 +1212,10 @@ export const TAC_ROLES = {
     name: translate("characters.wildling.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'wildlingPartner', label: translate("characters.wildling.range.label.wildlingPartner"),
-          size_m: { options: [15, 17],
-            labels: [translate("characters.wildling.range.card.bumpMax"), translate("characters.wildling.range.card.bumpAddKnockBackMax")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 15, labels: translate("characters.wildling.range.card.bumpMax") },
+        { size_m: 17, labels: translate("characters.wildling.range.card.bumpAddKnockBackMax") },
       ],
     },
     items: ['wildlingPartner'],
@@ -1141,11 +1225,11 @@ export const TAC_ROLES = {
     name: translate("characters.acrobat.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'riskyAcrobatics', label: translate("characters.acrobat.range.label.riskyAcrobatics"),
-          size_m: { options: [4, 7.5, 12],
-            labels: [translate("characters.acrobat.range.card.leapDefault"), translate("characters.acrobat.range.card.leapMax"), translate("characters.acrobat.range.card.leapAddSomersault")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 4, labels: translate("characters.acrobat.range.card.leapDefault") },
+        { size_m: 7.5, labels: translate("characters.acrobat.range.card.leapMax") },
+        { size_m: 12, labels: translate("characters.acrobat.range.card.leapAddSomersault") },
       ],
     },
     items: ['bomb'],
@@ -1155,11 +1239,11 @@ export const TAC_ROLES = {
     name: translate("characters.firstOfficer.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-         { key: 'poseidonWatch', label: translate("characters.firstOfficer.range.label.poseidonWatch"),
-          size_m: { options: [27, 8.4, 5.1],
-            labels: [translate("characters.firstOfficer.range.card.hypnotizeOne"), translate("characters.firstOfficer.range.card.hypnotizeTwo"), translate("characters.firstOfficer.range.card.hypnotizeThree")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 27, labels: translate("characters.firstOfficer.range.card.hypnotizeOne") },
+        { size_m: 8.4, labels: translate("characters.firstOfficer.range.card.hypnotizeTwo") },
+        { size_m: 5.1, labels: translate("characters.firstOfficer.range.card.hypnotizeThree") },
       ],
     },
     items: ['poseidonWatch'],
@@ -1175,10 +1259,9 @@ export const TAC_ROLES = {
     name: translate("characters.postman.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'postDog', label: translate("characters.postman.range.label.postDog"),
-          size_m: { options: 16.9, labels: [translate("characters.postman.range.card.postDogDashMax")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 16.9, labels: translate("characters.postman.range.card.postDogDashMax") },
       ],
     },
     items: ['letter', 'postDog'],
@@ -1188,10 +1271,9 @@ export const TAC_ROLES = {
     name: translate("characters.graveKeeper.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'digToEscape', label: translate("characters.graveKeeper.range.label.digToEscape"),
-          size_m: { options: 9.7, labels: [translate("characters.graveKeeper.range.card.tremor")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 9.7, labels: translate("characters.graveKeeper.range.card.tremor") },
       ],
     },
     items: ['shovel'],
@@ -1201,10 +1283,9 @@ export const TAC_ROLES = {
     name: translate("characters.prisoner.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'conductor', label: translate("characters.prisoner.range.label.conductor"),
-          size_m: { options: 5.9, labels: [translate("characters.prisoner.range.card.severeElectricCurrentStun")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 5.9, labels: translate("characters.prisoner.range.card.severeElectricCurrentStun") },
       ],
     },
     items: ['insulatingGloves', 'severeElectricCurrent'],
@@ -1228,12 +1309,11 @@ export const TAC_ROLES = {
     name: translate("characters.batter.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'cricketBat', label: translate("characters.batter.range.label.cricketBat"),
-          size_m: { options: [10.1, 17.55],
-            labels: [translate("characters.batter.range.card.cricketBatCanHit"), translate("characters.batter.range.card.cricketBatHitAddKnockBackMax")] } },
-        { key: 'altruism', label: translate("characters.batter.range.label.altruism"), size_m: 15.2 },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 10.1, labels: translate("characters.batter.range.card.cricketBatCanHit") },
+        { size_m: 17.55, labels: translate("characters.batter.range.card.cricketBatHitAddKnockBackMax") },
+        { size_m: 15.2, labels: translate("characters.batter.range.card.altruism") },
       ],
     },
     items: ['cricketBat'],
@@ -1250,10 +1330,10 @@ export const TAC_ROLES = {
     name: translate("characters.psychologist.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'subjectiveAnchor', label: translate("characters.psychologist.range.label.subjectiveAnchor"), size_m: 13 },
-        { key: 'bonded', label: translate("characters.psychologist.range.label.bonded"), size_m: 13 },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 13, labels: translate("characters.psychologist.range.card.subjectiveAnchor") },
+        { size_m: 13, labels: translate("characters.psychologist.range.card.bonded") },
       ],
     },
     items: ['whistle'],
@@ -1263,9 +1343,9 @@ export const TAC_ROLES = {
     name: translate("characters.patient.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'bonded', label: translate("characters.patient.range.label.bonded"), size_m: 13 },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 13, labels: translate("characters.patient.range.card.bonded") },
       ],
     },
     items: ['grapplingHook'],
@@ -1275,11 +1355,10 @@ export const TAC_ROLES = {
     name: translate("characters.novelist.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'metaphor', label: translate("characters.novelist.range.label.metaphor"),
-          size_m: { options: [13.5, 9.8],
-            labels: [translate("characters.novelist.range.card.metaphorDefault"), translate("characters.novelist.range.card.metaphorReduce")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 13.5, labels: translate("characters.novelist.range.card.metaphorDefault") },
+        { size_m: 9.8, labels: translate("characters.novelist.range.card.metaphorReduce") },
       ],
     },
     items: ['sketchBook'],
@@ -1295,11 +1374,10 @@ export const TAC_ROLES = {
     name: translate("characters.weepingClown.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'explosion', label: translate("characters.weepingClown.range.label.explosion"),
-          size_m: { options: [6, 3],
-            labels: [translate("characters.weepingClown.range.card.rocketExplode"), translate("characters.weepingClown.range.card.stunHunter")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 6, labels: translate("characters.weepingClown.range.card.rocketExplode") },
+        { size_m: 3, labels: translate("characters.weepingClown.range.card.stunHunter") },
       ],
     },
     items: ['rocket'],
@@ -1315,11 +1393,12 @@ export const TAC_ROLES = {
     name: translate("characters.antiquarian.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'concealed', label: translate("characters.antiquarian.range.label.concealed"),
-          size_m: { options: [4.9, 3.5, 4.7, 12.7],
-            labels: [translate("characters.antiquarian.range.card.flip"), translate("characters.antiquarian.range.card.sweepSwing"), translate("characters.antiquarian.range.card.stab"), translate("characters.antiquarian.range.card.obscure")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 4.9, labels: translate("characters.antiquarian.range.card.flip") },
+        { size_m: 3.5, labels: translate("characters.antiquarian.range.card.sweepSwing") },
+        { size_m: 4.7, labels: translate("characters.antiquarian.range.card.stab") },
+        { size_m: 12.7, labels: translate("characters.antiquarian.range.card.obscure") },
       ],
     },
     items: ['mechanicalFlute'],
@@ -1335,10 +1414,9 @@ export const TAC_ROLES = {
     name: translate("characters.journalist.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'exclusive', label: translate("characters.journalist.range.label.exclusive"),
-          size_m: { options: 15, labels: [translate("characters.journalist.range.card.phantomPlacement")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 15, labels: translate("characters.journalist.range.card.phantomPlacement") },
       ],
     },
     items: ['cameraJournalist'],
@@ -1348,11 +1426,10 @@ export const TAC_ROLES = {
     name: translate("characters.aeroplanist.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'jetpack', label: translate("characters.aeroplanist.range.label.jetpack"),
-          size_m: { options: 18.5, labels: [translate("characters.aeroplanist.range.card.jetpackPropelThreeMax")] } },
-        { key: 'essentialTremor', label: translate("characters.aeroplanist.range.label.essentialTremor"), size_m: 12.7 },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 18.5, labels: translate("characters.aeroplanist.range.card.jetpackPropelThreeMax") },
+        { size_m: 12.7, labels: translate("characters.aeroplanist.range.card.essentialTremor") },
       ],
     },
     items: ['jetpack'],
@@ -1362,9 +1439,9 @@ export const TAC_ROLES = {
     name: translate("characters.cheerleader.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'encourage', label: translate("characters.cheerleader.range.label.encourage"), size_m: 20 },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 20, labels: translate("characters.cheerleader.range.card.encourage") },
       ],
     },
     items: ['pompoms'],
@@ -1380,11 +1457,11 @@ export const TAC_ROLES = {
     name: translate("characters.fireInvestigator.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'inflatableAirbag', label: translate("characters.fireInvestigator.range.label.inflatableAirbag"),
-          size_m: { options: [4.2, 12.64, 9.6],
-            labels: [translate("characters.fireInvestigator.range.card.deployDefault"), translate("characters.fireInvestigator.range.card.deployMax"), translate("characters.fireInvestigator.range.card.repulsion")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 4.2, labels: translate("characters.fireInvestigator.range.card.deployDefault") },
+        { size_m: 12.64, labels: translate("characters.fireInvestigator.range.card.deployMax") },
+        { size_m: 9.6, labels: translate("characters.fireInvestigator.range.card.repulsion") },
       ],
     },
     items: ['airbag'],
@@ -1395,9 +1472,9 @@ export const TAC_ROLES = {
     name: translate("characters.faroLady.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'cloak', label: translate("characters.faroLady.range.label.cloak"), size_m: 18 },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 18, labels: translate("characters.faroLady.range.card.cloak") },
       ],
     },
     items: ['aromatherapyCane'],
@@ -1407,10 +1484,10 @@ export const TAC_ROLES = {
     name: translate("characters.knight.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'tacticalForesight', label: translate("characters.knight.range.label.tacticalForesight"), size_m: 13 },
-        { key: 'chivalrousSympathy', label: translate("characters.knight.range.label.chivalrousSympathy"), size_m: 7 },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 13, labels: translate("characters.knight.range.card.tacticalForesight") },
+        { size_m: 7, labels: translate("characters.knight.range.card.chivalrousSympathy") },
       ],
     },
     items: ['helmet'],
@@ -1420,9 +1497,9 @@ export const TAC_ROLES = {
     name: translate("characters.meteorologist.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'warmRain', label: translate("characters.meteorologist.range.label.warmRain"), size_m: 32 },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 32, labels: translate("characters.meteorologist.range.card.warmRain") },
       ],
     },
     items: ['stormGlass'],
@@ -1432,12 +1509,11 @@ export const TAC_ROLES = {
     name: translate("characters.archer.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'keelBow', label: translate("characters.archer.range.label.keelBow"),
-          size_m: { options: [18, 12],
-            labels: [translate("characters.archer.range.card.keelBowHitMax"), translate("characters.archer.range.card.keelBowCanHitCore")] } },
-        { key: 'crossbow', label: translate("characters.archer.range.label.crossbow"), size_m: 4.5 },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 18, labels: translate("characters.archer.range.card.keelBowHitMax") },
+        { size_m: 12, labels: translate("characters.archer.range.card.keelBowCanHitCore") },
+        { size_m: 4.5, labels: translate("characters.archer.range.card.crossbow") },
       ],
     },
     items: ['keelBow', 'crossBow'],
@@ -1459,11 +1535,10 @@ export const TAC_ROLES = {
     name: translate("characters.matador.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'muletaMastery', label: translate("characters.matador.range.label.muletaMastery"),
-          size_m: { options: [6, 2.25],
-            labels: [translate("characters.matador.range.card.muletaDash"), translate("characters.matador.range.card.muletaSweep")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 6, labels: translate("characters.matador.range.card.muletaDash") },
+        { size_m: 2.25, labels: translate("characters.matador.range.card.muletaSweep") },
       ],
     },
     items: ['muleta'],
@@ -1473,9 +1548,9 @@ export const TAC_ROLES = {
     name: translate("characters.mimeArtist.name"),
     camp: 'survivor',
     ranges: {
-      modes: [
-        { key: 'emotionAccumulation', label: translate("characters.mimeArtist.range.label.emotionAccumulation"), size_m: 20.3 },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 20.3, labels: translate("characters.mimeArtist.range.card.emotionAccumulation") },
       ],
     },
     items: ['propUmbrella'],
@@ -1494,13 +1569,12 @@ export const TAC_ROLES = {
     camp: 'hunter',
     speed: 4.73,
     ranges: {
-      modes: [
-        { key: 'puppetControl', label: translate("characters.hellEmber.range.label.puppetControl"),
-          size_m: { options: 55, labels: [translate("characters.hellEmber.range.card.puppetCastMax")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 55, labels: translate("characters.hellEmber.range.card.puppetCastMax") },
       ],
     },
-    items: ['phantom','puppet1','puppet2'],
+    items: ['phantom', 'puppet1', 'puppet2'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/4/43/9ji6s1uz7c0dnn0r70zxv4a3cx67xm2.png/90px-%E5%8E%82%E9%95%BF%E5%A4%B4%E5%83%8F.png',
   },
   smileyFace: {
@@ -1549,10 +1623,9 @@ export const TAC_ROLES = {
     camp: 'hunter',
     speed: 4.64,
     ranges: {
-      modes: [
-        { key: 'cameraWorld', label: translate("characters.photographer.range.label.cameraWorld"),
-          size_m: { options: 33, labels: [translate("characters.photographer.range.card.locateCamera")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 33, labels: translate("characters.photographer.range.card.locateCamera") },
       ],
     },
     items: ['camera', 'timeJump'],
@@ -1577,13 +1650,11 @@ export const TAC_ROLES = {
     camp: 'hunter',
     speed: { [translate("characters.dreamWitch.speed.originalBody")]: 6.08, [translate("items.follower.name")]: 4.56 },
     ranges: {
-      modes: [
-        { key: 'hiddenDream', label: translate("characters.dreamWitch.range.label.hiddenDream"),
-          size_m: { options: 20, labels: [translate("characters.dreamWitch.range.card.survivorNotification")] } },
-        { key: 'follower', label: translate("characters.dreamWitch.range.label.follower"),
-          size_m: { options: [42.2, 59.1],
-            labels: [translate("characters.dreamWitch.range.card.controlTierZeroOne"), translate("characters.dreamWitch.range.card.controlTierTwo")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 20, labels: translate("characters.dreamWitch.range.card.hiddenDreamsurvivorNotification") },
+        { size_m: 42.2, labels: translate("characters.dreamWitch.range.card.followerControlTierZeroOne") },
+        { size_m: 59.1, labels: translate("characters.dreamWitch.range.card.followerControlTierTwo") },
       ],
     },
     items: ['follower', 'witchMark', 'hiddenDream'],
@@ -1607,10 +1678,9 @@ export const TAC_ROLES = {
     camp: 'hunter',
     speed: 4.64,
     ranges: {
-      modes: [
-        { key: 'aquaMirror', label: translate("characters.bloodyQueen.range.label.aquaMirror"),
-          size_m: { options: 25.3, labels: [translate("characters.bloodyQueen.range.card.aquaMirrorPlacement")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 25.3, labels: translate("characters.bloodyQueen.range.card.aquaMirrorPlacement") },
       ],
     },
     items: ['aquaMirror'],
@@ -1621,10 +1691,9 @@ export const TAC_ROLES = {
     camp: 'hunter',
     speed: 4.64,
     ranges: {
-      modes: [
-        { key: 'bomb', label: translate("characters.guard26.range.label.bomb"),
-          size_m: { options: 35.5, labels: [translate("characters.guard26.range.card.bombThrowMax")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 35.5, labels: translate("characters.guard26.range.card.bombThrowMax") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/bf/jycs4x41s0qky58o3pfprwwz9fpvr54.png/90px-26%E5%8F%B7%E5%AE%88%E5%8D%AB%E5%A4%B4%E5%83%8F.png',
@@ -1634,10 +1703,9 @@ export const TAC_ROLES = {
     camp: 'hunter',
     speed: 4.73,
     ranges: {
-      modes: [
-        { key: 'guide', label: translate("characters.disciple.range.label.guide"),
-          size_m: { options: 35.5, labels: [translate("characters.disciple.range.card.guidePlacement")] } },
-        { key: 'off' },
+      key: 'showTrait',
+      options: [
+        { size_m: 35.5, labels: translate("characters.disciple.range.card.guidePlacement") },
       ],
     },
     items: ['cat', 'guide'],
@@ -1726,11 +1794,11 @@ export const TAC_ROLES = {
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b8/bkshz3pnyhz1mhmq3xrr3bgr2mctkc0.png/90px-%E2%80%9C%E6%84%9A%E4%BA%BA%E9%87%91%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   theShadow: {
-    
+
     ranges: {
-      modes: [
-        { key: 'ancientVisage', label: translate("characters.theShadow.range.label.ancientVisage"), size_m: 15 },
-        { key: 'off' },
+      key: 'showItem',
+      options: [
+        { size_m: 15, labels: translate("characters.theShadow.range.card.ancientVisage") },
       ],
     },
     name: translate("characters.theShadow.name"),
@@ -1788,10 +1856,12 @@ export const TAC_ROLES = {
   customize: {
     name: translate("characters.customize.name"),
     camp: 'other',
-    ranges: { modes: [
-      { key: 'show', label: translate("characters.customize.range.label.show"), size_m: { min: 0, max: null } },
-      { key: 'off' },
-    ] },
+    ranges: {
+      key: 'show',
+      options: [
+        { size_m: { min: 0, max: null }, labels: translate("characters.customize.range.card.show") },
+      ],
+    },
     color: '#fbbf24',
     icon: 'https://patchwiki.biligame.com/images/dwrg/f/f6/o8ixpxb56avrj5e2tzdyps58h8rfa7i.png',
   },
@@ -1816,7 +1886,7 @@ export const TAC_ROLES = {
   },
 };
 
- 
+
 export const TAC_MEASURE_DEFAULT = {
   single: { color: '#eab308', width: 3 },
   chain: { color: '#f97316', width: 3 },
@@ -1845,7 +1915,7 @@ export const TAC_DISPLAY_DEFAULT = { cipherSize: 6, dungeonSize: 6, doorSize: 6,
 
 export const TAC_ZOOM_MIN = 1, TAC_ZOOM_MAX = 5;
 
- 
+
 
 
 export const TAC_ZOOM_LOCK_ICONS = {

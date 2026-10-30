@@ -32,11 +32,16 @@ test('range desc lines have hover delete × that removes range and un-highlights
   await placeRole(page, 'bloodyQueen', 0.3, 0.3);
   await tool(page, 'select');
   await clickPoint(page, 0.3, 0.3);
-  await lv1(page, '显示水镜范围').click();
-  await expect(lv1(page, '显示水镜范围')).toHaveClass(/active/);
-  // 二级按钮文本为 labels[0]（水镜可放置范围），选中变绿；不出现与一级按钮重复的子按钮
+  await lv1(page, '显示特质范围').click();
+  await expect(lv1(page, '显示特质范围')).toHaveClass(/active/);
+  // 一级按钮只展示二级按钮，不点亮；不出现与旧一级按钮重复的子按钮
   await expect(lv2(page, '显示水镜范围')).toHaveCount(0);
   await expect(lv2(page, '水镜可放置范围')).toHaveCount(1);
+  await expect(lv2(page, '水镜可放置范围')).not.toHaveClass(/active/);
+  await expect(rangeBox(page).locator('.tac-range-desc')).toHaveCount(0);
+  await expect(page.locator('.tac-role-circle')).toHaveCount(0);
+  // 亲手点击二级按钮才点亮并显示描述
+  await lv2(page, '水镜可放置范围').click();
   await expect(lv2(page, '水镜可放置范围')).toHaveClass(/active/);
   const descs = rangeBox(page).locator('.tac-range-desc');
   await expect(descs).toHaveCount(1);

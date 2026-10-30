@@ -38,13 +38,12 @@ const { TAC_ROLES } = await import('../../js/data/tactic-data.js');
 
 test('single-card range shape (coordinator) resolves meters', () => {
   const cfg = TAC_ROLES.coordinator.ranges;
+  assert.equal(cfg.key, 'showTrait');
   assert.equal(tacRangeMetersOf(cfg, {}, false), 10);
   assert.equal(tacRangeMetersOf(cfg, { rangeMeters: 10 }, false), 10);
-  const mode = cfg.modes[0];
-  assert.equal(typeof mode.size_m.options, 'number');
-  assert.equal(mode.size_m.labels.length, 1);
-  assert.equal(mode.label, translate('characters.coordinator.range.label.preciseAim'));
-  assert.equal(mode.size_m.labels[0], translate('characters.coordinator.range.card.flareGunCanUse'));
+  const opt = cfg.options[0];
+  assert.equal(typeof opt.size_m, 'number');
+  assert.equal(opt.labels, translate('characters.coordinator.range.card.flareGunCanUse'));
 });
 
 
@@ -64,24 +63,21 @@ test('buildTacRangeRows renders range manage box (dreamWitch)', async () => {
   };
   try {
     const settings = { appendChild() {} };
-    const opts = { labelPrefix: '显示', labelPostfix: '范围', hostRole: 'dreamWitch' };
+    const opts = { labelPrefix: '显示', labelPostfix: '范围', hostRole: 'dreamWitch', groupKind: 'trait' };
     const allText = (r) => `${r.innerHTML || ''}${r.textContent || ''}`;
 
+    // 猎人一级按钮统一为：显示特质范围 / 显示天赋范围 / 隐藏范围
     rows.length = 0;
-    buildTacRangeRows(settings, cfg, { rangeMode: 'hiddenDream' }, false, opts);
+    buildTacRangeRows(settings, cfg, { rangeBox: { tab: 'range', subs: [0, 1, 2], talents: {}, fill: false } }, false, opts);
     assert.ok(rows.some((r) => r.className === 'tac-manage-box'),
       'range manage box rendered');
-    assert.ok(rows.some((r) => allText(r).includes('20m')),
-      'hiddenDream description line rendered');
-
-    rows.length = 0;
-    buildTacRangeRows(settings, cfg, { rangeMode: 'follower', rangeMeters: 42.2 }, false, opts);
-    const optRow = rows.find((r) =>
-      (r.innerHTML.match(/tac-range-opt/g) || []).length >= 2
-      && r.innerHTML.includes('data-v="0"'));
-    assert.ok(optRow, 'follower option buttons rendered');
-    assert.ok(rows.some((r) => allText(r).includes('42.2m')),
-      'follower description line rendered');
+    assert.ok(rows.some((r) => allText(r).includes(translate('ui.tacRangeBox.showTrait'))),
+      'unified level-1 buttons rendered');
+    ['20m', '42.2m', '59.1m'].forEach((m) => assert.ok(
+      rows.some((r) => allText(r).includes(m)), `${m} description line rendered`));
+    assert.ok(rows.some((r) =>
+      (r.innerHTML.match(/tac-range-opt tac-range-sub/g) || []).length >= 3),
+      'all three card subs rendered');
     assert.ok(!rows.some((r) => allText(r).includes('（固定）')),
       'no fixed suffix anywhere');
   } finally {
