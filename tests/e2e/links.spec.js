@@ -39,7 +39,7 @@ test('manage numbering counts by display name across roles and items', async ({ 
   expect(names).toEqual(['使徒', '指引 1', '爱猫', '指引 2']);
 });
 
-test('same item ignores former maxCount limit (lasso x2)', async ({ page }) => {
+test('same item can be placed multiple times (lasso x2)', async ({ page }) => {
   await placeItem(page, 'cowboy', 'lasso', 0.2, 0.5);
   await placeItem(page, 'cowboy', 'lasso', 0.4, 0.5);
   const board = await state(page);

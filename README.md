@@ -881,7 +881,6 @@ MAPS_DATA
 | `ranges.modes` | 范围显示模式 |
 | `render` | 渲染方式，如 `circle`、`link` |
 | `color`、`fill`、`glow` | 范围颜色、填充和发光 |
-| `maxCount` | 场上最多放置数量 |
 | `linkToRole` | 自动连接的角色 |
 | `linkMaxM` | 最大连线距离 |
 | `linkColor`、`linkWidth` | 连线样式 |

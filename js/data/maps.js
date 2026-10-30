@@ -433,17 +433,17 @@ export const MAPS_DATA = [
       translate("maps.theRedChurch.zoneNames.six"), translate("maps.theRedChurch.zoneNames.seven"), translate("maps.theRedChurch.zoneNames.eight")
     ];
     const ciphers = [
-      { id: 'E_4', name: translate("maps.theRedChurch.cipher.e4.name"), location: [527, 435], feature: translate("maps.theRedChurch.cipher.e4.feature"), zoneLabel: translate("maps.theRedChurch.e4.zoneLabel"), locked: true },
-      { id: 'E_1', name: translate("maps.theRedChurch.cipher.e1.name"), location: [444, 160], feature: translate("maps.theRedChurch.cipher.e1.feature"), zoneLabel: translate("maps.theRedChurch.e1.zoneLabel") },
-      { id: 'E_2', name: translate("maps.theRedChurch.cipher.e2.name"), location: [511, 242], feature: translate("maps.theRedChurch.cipher.e2.feature"), zoneLabel: translate("maps.theRedChurch.e2.zoneLabel") },
-      { id: 'E_3', name: translate("maps.theRedChurch.cipher.e3.name"), location: [401, 272], feature: translate("maps.theRedChurch.cipher.e3.feature"), zoneLabel: translate("maps.theRedChurch.e2.zoneLabel") },
-      { id: 'M_1', name: translate("maps.theRedChurch.cipher.m1.name"), location: [287, 143], feature: translate("maps.theRedChurch.cipher.m1.feature"), zoneLabel: translate("maps.theRedChurch.m1.zoneLabel") },
-      { id: 'M_2', name: translate("maps.theRedChurch.cipher.m2.name"), location: [296, 313], feature: translate("maps.theRedChurch.cipher.m2.feature"), zoneLabel: translate("maps.theRedChurch.m2.zoneLabel") },
-      { id: 'M_3', name: translate("maps.theRedChurch.cipher.m3.name"), location: [342, 499], feature: translate("maps.theRedChurch.cipher.m3.feature"), zoneLabel: translate("maps.theRedChurch.m3.zoneLabel") },
-      { id: 'W_1', name: translate("maps.theRedChurch.cipher.w1.name"), location: [121, 177], feature: translate("maps.theRedChurch.cipher.w1.feature"), zoneLabel: translate("maps.theRedChurch.w1.zoneLabel") },
-      { id: 'W_2', name: translate("maps.theRedChurch.cipher.w2.name"), location: [168, 240], feature: translate("maps.theRedChurch.cipher.w2.feature"), zoneLabel: translate("maps.theRedChurch.w2.zoneLabel") },
-      { id: 'W_3', name: translate("maps.theRedChurch.cipher.w3.name"), location: [131, 356], feature: translate("maps.theRedChurch.cipher.w3.feature"), zoneLabel: translate("maps.theRedChurch.w2.zoneLabel") },
-      { id: 'W_4', name: translate("maps.theRedChurch.cipher.w4.name"), location: [128, 475], feature: translate("maps.theRedChurch.cipher.w4.feature"), zoneLabel: translate("maps.theRedChurch.w4.zoneLabel") },
+      { id: 'E_4', name: translate("maps.theRedChurch.cipher.e4.name"), location: [527, 435], feature: translate("maps.theRedChurch.cipher.e4.feature"), locked: true },
+      { id: 'E_1', name: translate("maps.theRedChurch.cipher.e1.name"), location: [444, 160], feature: translate("maps.theRedChurch.cipher.e1.feature") },
+      { id: 'E_2', name: translate("maps.theRedChurch.cipher.e2.name"), location: [511, 242], feature: translate("maps.theRedChurch.cipher.e2.feature") },
+      { id: 'E_3', name: translate("maps.theRedChurch.cipher.e3.name"), location: [401, 272], feature: translate("maps.theRedChurch.cipher.e3.feature") },
+      { id: 'M_1', name: translate("maps.theRedChurch.cipher.m1.name"), location: [287, 143], feature: translate("maps.theRedChurch.cipher.m1.feature") },
+      { id: 'M_2', name: translate("maps.theRedChurch.cipher.m2.name"), location: [296, 313], feature: translate("maps.theRedChurch.cipher.m2.feature") },
+      { id: 'M_3', name: translate("maps.theRedChurch.cipher.m3.name"), location: [342, 499], feature: translate("maps.theRedChurch.cipher.m3.feature") },
+      { id: 'W_1', name: translate("maps.theRedChurch.cipher.w1.name"), location: [121, 177], feature: translate("maps.theRedChurch.cipher.w1.feature") },
+      { id: 'W_2', name: translate("maps.theRedChurch.cipher.w2.name"), location: [168, 240], feature: translate("maps.theRedChurch.cipher.w2.feature") },
+      { id: 'W_3', name: translate("maps.theRedChurch.cipher.w3.name"), location: [131, 356], feature: translate("maps.theRedChurch.cipher.w3.feature") },
+      { id: 'W_4', name: translate("maps.theRedChurch.cipher.w4.name"), location: [128, 475], feature: translate("maps.theRedChurch.cipher.w4.feature") },
     ];
 
     const cipherCombinations = [
@@ -485,9 +485,9 @@ export const MAPS_DATA = [
     const law_urls = ['https://www.bilibili.com/video/BV169Y66PEiS', 'https://v.douyin.com/t7aa5IHJh9M'];
     const fixedHint = translate("maps.theRedChurch.fixedHint");
     const hints = [
-      translate("maps.theRedChurch.hint.zero"),
+      translate("maps.theRedChurch.hint.hint0"),
       translate("maps.theRedChurch.hint.one"),
-      translate("maps.theRedChurch.hint.two"),
+      translate("maps.theRedChurch.hint.hint2"),
       '',
       translate("maps.theRedChurch.hint.four")
     ];
@@ -855,8 +855,8 @@ export const MAPS_DATA = [
     const mapSize = [1492, 1028];
     const zonesInfo = [14, 89.8, 364.6, 281.2, 4, 3];
     const zoneNames = [
-      translate("maps.moonlitRiverPark.zoneNames.zero"), translate("maps.moonlitRiverPark.zoneNames.one"), translate("maps.moonlitRiverPark.zoneNames.two"),
-      translate("maps.moonlitRiverPark.zoneNames.three"), translate("maps.moonlitRiverPark.zoneNames.four"), translate("maps.moonlitRiverPark.zoneNames.five"),
+      translate("maps.moonlitRiverPark.zoneNames.zoneNames0"), translate("maps.moonlitRiverPark.zoneNames.one"), translate("maps.moonlitRiverPark.zoneNames.zoneNames2"),
+      translate("maps.moonlitRiverPark.zoneNames.zoneNames3"), translate("maps.moonlitRiverPark.zoneNames.four"), translate("maps.moonlitRiverPark.zoneNames.five"),
       translate("maps.moonlitRiverPark.zoneNames.six"), translate("maps.moonlitRiverPark.zoneNames.seven"), translate("maps.moonlitRiverPark.zoneNames.eight"),
       translate("maps.moonlitRiverPark.zoneNames.nine"), translate("maps.moonlitRiverPark.zoneNames.ten"), translate("maps.moonlitRiverPark.zoneNames.eleven")
     ];
