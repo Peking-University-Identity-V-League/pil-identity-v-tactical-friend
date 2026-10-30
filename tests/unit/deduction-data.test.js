@@ -65,12 +65,13 @@ test('buildTacRangeRows renders range manage box (dreamWitch)', async () => {
   try {
     const settings = { appendChild() {} };
     const opts = { labelPrefix: '显示', labelPostfix: '范围', hostRole: 'dreamWitch' };
+    const allText = (r) => `${r.innerHTML || ''}${r.textContent || ''}`;
 
     rows.length = 0;
     buildTacRangeRows(settings, cfg, { rangeMode: 'hiddenDream' }, false, opts);
     assert.ok(rows.some((r) => r.className === 'tac-manage-box'),
       'range manage box rendered');
-    assert.ok(rows.some((r) => r.innerHTML.includes('20m')),
+    assert.ok(rows.some((r) => allText(r).includes('20m')),
       'hiddenDream description line rendered');
 
     rows.length = 0;
@@ -79,9 +80,9 @@ test('buildTacRangeRows renders range manage box (dreamWitch)', async () => {
       (r.innerHTML.match(/tac-range-opt/g) || []).length >= 2
       && r.innerHTML.includes('data-v="0"'));
     assert.ok(optRow, 'follower option buttons rendered');
-    assert.ok(rows.some((r) => r.innerHTML.includes('42.2m')),
+    assert.ok(rows.some((r) => allText(r).includes('42.2m')),
       'follower description line rendered');
-    assert.ok(!rows.some((r) => r.innerHTML.includes('（固定）')),
+    assert.ok(!rows.some((r) => allText(r).includes('（固定）')),
       'no fixed suffix anywhere');
   } finally {
     globalThis.document.createElement = keepCreate;
