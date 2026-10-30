@@ -43,7 +43,7 @@ test('single-card range shape (coordinator) resolves meters', () => {
   assert.equal(tacRangeMetersOf(cfg, { rangeMeters: 10 }, false), 10);
   const opt = cfg.options[0];
   assert.equal(typeof opt.size_m, 'number');
-  assert.equal(opt.labels, translate('characters.coordinator.range.card.flareGunCanUse'));
+  assert.equal(opt.label, translate('characters.coordinator.range.label.flareGunCanUse'));
 });
 
 

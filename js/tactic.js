@@ -2299,7 +2299,7 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
         + numIdx.map((i) => {
           const opt = cfg.options[i];
           return subBtn(rb.subs.includes(i), `data-v="${i}"`,
-            opt.labels ? opt.labels + postfix : `${opt.size_m}m`);
+            opt.label ? opt.label + postfix : `${opt.size_m}m`);
         }).join('')
         + `</div>`;
       optLine.querySelectorAll('.tac-range-sub').forEach((b) => {
@@ -2318,7 +2318,7 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
       subLine.className = 'tac-box-line';
       subLine.innerHTML = `<div class="tac-range-opts">`
         + subBtn(rb.subs.includes(i), `data-v="${i}"`,
-          opt.labels ? opt.labels + postfix : '')
+          opt.label ? opt.label + postfix : '')
         + `</div>`;
       subLine.querySelectorAll('.tac-range-sub').forEach((b) => {
         b.addEventListener('click', () => {
@@ -2353,7 +2353,7 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
       subLine.className = 'tac-box-line';
       subLine.innerHTML = `<div class="tac-range-opts">`
         + subBtn(rb.subs.includes(i), `data-v="${i}"`,
-          opt.labels ? opt.labels + postfix : '')
+          opt.label ? opt.label + postfix : '')
         + `</div>`;
       subLine.querySelectorAll('.tac-range-sub').forEach((b) => {
         b.addEventListener('click', () => {
@@ -2421,7 +2421,7 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
       const row = document.createElement('div');
       row.className = 'tac-range-desc';
       const txt = document.createElement('span');
-      txt.textContent = `${(e2.opt.labels || '') + postfix} ${tacRangeFmt(e2.meters)}m`;
+      txt.textContent = `${(e2.opt.label || '') + postfix} ${tacRangeFmt(e2.meters)}m`;
       row.appendChild(txt);
       const del = document.createElement('button');
       del.type = 'button';

@@ -134,7 +134,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 8, labels: translate("items.flashlight.name") },
+        { size_m: 8, label: translate("items.flashlight.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/e/e3/an2z7q5vnl5bcm6q7f6e9c3jboe6bl9.png/120px-%E6%89%8B%E7%94%B5%E7%AD%92.png',
@@ -204,7 +204,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: { min: 6.3, max: 9 }, labels: translate("items.fastMusicbox.name") },
+        { size_m: { min: 6.3, max: 9 }, label: translate("items.fastMusicbox.name") },
       ],
     },
     color: '#f472b6',
@@ -218,7 +218,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: { min: 6.3, max: 9 }, labels: translate("items.slowMusicbox.name") },
+        { size_m: { min: 6.3, max: 9 }, label: translate("items.slowMusicbox.name") },
       ],
     },
     color: '#60a5fa',
@@ -240,7 +240,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 4.5, labels: translate("items.meteoriteMagnetN.name") },
+        { size_m: 4.5, label: translate("items.meteoriteMagnetN.name") },
       ],
     },
     color: '#ef4444',
@@ -254,7 +254,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 4.5, labels: translate("items.meteoriteMagnetS.name") },
+        { size_m: 4.5, label: translate("items.meteoriteMagnetS.name") },
       ],
     },
     color: '#1d4ed8',
@@ -279,8 +279,8 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 27, labels: translate("items.poseidonWatch.range.card.hypnotizeOne") },
-        { size_m: 8.4, labels: translate("items.poseidonWatch.range.card.hypnotizeTwo") },
+        { size_m: 27, label: translate("items.poseidonWatch.range.label.hypnotizeOne") },
+        { size_m: 8.4, label: translate("items.poseidonWatch.range.label.hypnotizeTwo") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b7/kfypkpcjk8dtc4pq1lrzall2wzviihu.png/120px-%E6%B5%B7%E7%A5%9E%E6%80%80%E8%A1%A8.png',
@@ -302,7 +302,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 1.27, labels: translate("items.postDog.range.card.postDogPounce") },
+        { size_m: 1.27, label: translate("items.postDog.range.label.postDogPounce") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/e/ed/fohz3k2zrkhum55m6ypco170bdqdypu.png/120px-%E9%80%81%E4%BF%A1%E7%8A%AC.png',
@@ -325,7 +325,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 1.2, labels: translate("items.swarm.name") },
+        { size_m: 1.2, label: translate("items.swarm.name") },
       ],
     },
     color: '#d4a373',
@@ -340,7 +340,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 12, labels: translate("items.drawingBoard.name") },
+        { size_m: 12, label: translate("items.drawingBoard.name") },
       ],
     },
     color: '#60a5fa',
@@ -353,7 +353,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: { min: 3.73, max: 7.45 }, labels: translate("items.cricketBat.range.card.cricketBatKnockBack") },
+        { size_m: { min: 3.73, max: 7.45 }, label: translate("items.cricketBat.range.label.cricketBatKnockBack") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/7/7e/19s98s5y8v0pz05ifj94fvyubyjssvd.png/120px-%E5%87%BB%E7%90%83%E6%89%8B%E9%81%93%E5%85%B7.png',
@@ -363,7 +363,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 21.9, labels: translate("items.catapult.name") },
+        { size_m: 21.9, label: translate("items.catapult.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/be/q00bu5gdar393rxoi65gjmhpfcko4cl.png/90px-%E7%8E%A9%E5%85%B7%E5%95%86%E9%81%93%E5%85%B71.png',
@@ -385,8 +385,8 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 6.1, labels: translate("items.memoryFragment.range.card.impact") },
-        { size_m: 10.3, labels: translate("items.memoryFragment.range.card.impactAddLaunchMax") },
+        { size_m: 6.1, label: translate("items.memoryFragment.range.label.impact") },
+        { size_m: 10.3, label: translate("items.memoryFragment.range.label.impactAddLaunchMax") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/f9/asmvxiz04rw0af5of7ic2lzyorwjsz0.png/120px-%E5%9B%9E%E5%BF%86%E7%A2%8E%E7%89%87.png',
@@ -429,7 +429,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 4.2, labels: translate("items.airbag.name") },
+        { size_m: 4.2, label: translate("items.airbag.name") },
       ],
     },
     color: '#f8fafc',
@@ -451,7 +451,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 4, labels: translate("items.stormGlass.range.card.rainfall") },
+        { size_m: 4, label: translate("items.stormGlass.range.label.rainfall") },
       ],
     },
     color: '#f8fafc',
@@ -472,7 +472,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 16.9, labels: translate("items.thurible.name") },
+        { size_m: 16.9, label: translate("items.thurible.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/c/c2/2w71hgyr6ozvswrc8fvzz14gaxh27ng.png/90px-%E8%BF%B7%E7%83%9F%E7%82%89.png',
@@ -495,7 +495,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 12.7, labels: translate("items.propUmbrella.range.card.anxiousRoutine") },
+        { size_m: 12.7, label: translate("items.propUmbrella.range.label.anxiousRoutine") },
       ],
     },
     color: '#18181b',
@@ -539,7 +539,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 4.2, labels: translate("items.chainHook.range.card.shockwave") },
+        { size_m: 4.2, label: translate("items.chainHook.range.label.shockwave") },
       ],
     },
     maxCount: 1,
@@ -554,7 +554,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 20, labels: translate("items.trap.range.card.destroyedByRocketChair") },
+        { size_m: 20, label: translate("items.trap.range.label.destroyedByRocketChair") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/d/dd/40u7gtj5cvffk3e4dy5edl1ntd56kdh.png/90px-%E9%B9%BF%E5%A4%B40%E9%98%B6%E6%8A%80%E8%83%BD2.png',
@@ -581,7 +581,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 9.3, labels: translate("items.umbrella.name") },
+        { size_m: 9.3, label: translate("items.umbrella.name") },
       ],
     },
     maxCount: 1,
@@ -611,7 +611,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 4.25, labels: translate("items.tentacle.range.card.tentacleHit") },
+        { size_m: 4.25, label: translate("items.tentacle.range.label.tentacleHit") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/99/9q4qco9e4a4eb87ml89bf6lrnc7wmzc.png/90px-%E9%BB%84%E8%A1%A3%E4%B9%8B%E4%B8%BB0%E9%98%B6%E6%8A%80%E8%83%BD2.png',
@@ -629,7 +629,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 20, labels: translate("items.hiddenDream.name") },
+        { size_m: 20, label: translate("items.hiddenDream.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/3/33/265axozop5uoe1opp2e6gj8noxlby8e.png',
@@ -639,7 +639,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 20.5, labels: translate("items.peacefulPine.name") },
+        { size_m: 20.5, label: translate("items.peacefulPine.name") },
       ],
     },
     maxCount: 6,
@@ -660,9 +660,9 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 8.4, labels: translate("items.aquaMirror.range.card.showSurvivor") },
-        { size_m: 4.2, labels: translate("items.aquaMirror.range.card.mirrorRotationTierOne") },
-        { size_m: 21.1, labels: translate("items.aquaMirror.range.card.mirrorImageSurvivorTierTwo") },
+        { size_m: 8.4, label: translate("items.aquaMirror.range.label.showSurvivor") },
+        { size_m: 4.2, label: translate("items.aquaMirror.range.label.mirrorRotationTierOne") },
+        { size_m: 21.1, label: translate("items.aquaMirror.range.label.mirrorImageSurvivorTierTwo") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/03/tmqwk7lb2do1swhtp7sklgx75t0ig6f.png/90px-%E7%BA%A2%E5%A4%AB%E4%BA%BA0%E9%98%B6%E6%8A%80%E8%83%BD.png',
@@ -677,10 +677,10 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 3.38, labels: translate("items.cat.range.card.alertRadius") },
-        { size_m: 6.33, labels: translate("items.cat.range.card.paralysisArea") },
-        { size_m: 10.5, labels: translate("items.cat.range.card.locateSurvivor") },
-        { size_m: 33.8, labels: translate("items.cat.range.card.seenBySurvivor") },
+        { size_m: 3.38, label: translate("items.cat.range.label.alertRadius") },
+        { size_m: 6.33, label: translate("items.cat.range.label.paralysisArea") },
+        { size_m: 10.5, label: translate("items.cat.range.label.locateSurvivor") },
+        { size_m: 33.8, label: translate("items.cat.range.label.seenBySurvivor") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/a/a4/h2c1hndne3n1j3cq9f7itl25r646agu.png',
@@ -715,7 +715,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 36, labels: translate("items.sculptureOfNobility.range.card.chargeTowardSurvivor") },
+        { size_m: 36, label: translate("items.sculptureOfNobility.range.label.chargeTowardSurvivor") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/1d/eh2irolwokjiwzpyqh6paj92l9mnpan.png/90px-%E9%9B%95%E5%88%BB%E5%AE%B62%E9%98%B6%E6%8A%80%E8%83%BD.png',
@@ -725,7 +725,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 26, labels: translate("items.hieroglyphicGraveyard.name") },
+        { size_m: 26, label: translate("items.hieroglyphicGraveyard.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/d/d1/dqvmem9kl2u7mpz88bgrlwhgti6cac8.png',
@@ -739,7 +739,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 4, labels: translate("items.spearfishing.name") },
+        { size_m: 4, label: translate("items.spearfishing.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/be/3b3skletdo6z31k2wti92rsxisja1tg.png/90px-%E6%B8%94%E5%A5%B30%E9%98%B6%E6%8A%80%E8%83%BD.png',
@@ -758,7 +758,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 4.5, labels: translate("items.electromagneticFieldN.name") },
+        { size_m: 4.5, label: translate("items.electromagneticFieldN.name") },
       ],
     },
     color: '#ef4444',
@@ -772,7 +772,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 4.5, labels: translate("items.electromagneticFieldS.name") },
+        { size_m: 4.5, label: translate("items.electromagneticFieldS.name") },
       ],
     },
     color: '#1d4ed8',
@@ -801,7 +801,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 9, labels: translate("items.corruptedOstracon.name") },
+        { size_m: 9, label: translate("items.corruptedOstracon.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/35/6tyw4qniiw51aohhjwxjv4wq8yj28ud.png/90px-%E6%97%B6%E7%A9%BA%E4%B9%8B%E5%BD%B10%E9%98%B6%E6%8A%80%E8%83%BD4.png',
@@ -811,7 +811,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 9, labels: translate("items.ancientVisage.name") },
+        { size_m: 9, label: translate("items.ancientVisage.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/d/da/c2qmk7cs5shwl528wzkkmma6i2v8ael.png',
@@ -825,7 +825,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 3, labels: translate("items.contactPoint.name") },
+        { size_m: 3, label: translate("items.contactPoint.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/c/c6/t5t9qmg4vouffmvsxnzq6mizonmjzvr.png',
@@ -836,7 +836,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 4, labels: translate("items.cueBall.name") },
+        { size_m: 4, label: translate("items.cueBall.name") },
       ],
     },
     color: '#18181b',
@@ -849,7 +849,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: [9, 12, 15], labels: translate("items.cage.name") },
+        { size_m: [9, 12, 15], label: translate("items.cage.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/67/kqp54mjbpln0aytlr986ko5j4y7cy4t.png/90px-%E2%80%9C%E8%B7%9B%E8%84%9A%E7%BE%8A%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD1.png',
@@ -859,7 +859,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 48, labels: translate("items.bestialAwakening.name") },
+        { size_m: 48, label: translate("items.bestialAwakening.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/8/89/agxycu6xg1opqj3xo7tpix753cvfkzz.png',
@@ -869,7 +869,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 25, labels: translate("items.heightenedSenses.name") },
+        { size_m: 25, label: translate("items.heightenedSenses.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/91/hu0fnv6ev967sdypg7bgso8f6ch8jzr.png/90px-%E2%80%9C%E5%BF%83%E5%85%BD%E2%80%9D1%E9%98%B6%E6%8A%80%E8%83%BD.png',
@@ -879,7 +879,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 13, labels: translate("items.peeper.name") },
+        { size_m: 13, label: translate("items.peeper.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/ba/4sgjzcxl8526632orcqqgwkt5pv9s4f.png',
@@ -901,7 +901,7 @@ export const TAC_ITEM_TYPES = {
         survivor: [['survivor', translate("characters.camps.survivor"), 1], ['prisoner', translate("items.fearRadius.range.fearMods.oneThird"), 0.8], ['archer', translate("items.fearRadius.range.fearMods.oneFourth"), 0.76]],
       },
       options: [
-        { size_m: 32.07, labels: translate("items.fearRadius.name") },
+        { size_m: 32.07, label: translate("items.fearRadius.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/2/24/dv1pstoj7a8ftqf9l3jazt1cpe4sxwo.png',
@@ -911,7 +911,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 18, labels: translate("items.webersLaw.name") },
+        { size_m: 18, label: translate("items.webersLaw.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/2/28/4opnhwv5mnc78m81u6ulz3t2b50yhxj.png',
@@ -921,7 +921,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 22, labels: translate("items.sneak.name") },
+        { size_m: 22, label: translate("items.sneak.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/1/13/o8d12vi02km7ozis0f2io312tsynodg.png',
@@ -931,7 +931,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 36, labels: translate("items.tinnitus.name") },
+        { size_m: 36, label: translate("items.tinnitus.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/f/f5/2546goc080xvxx8kde4sk2h1vry3k4n.png',
@@ -941,7 +941,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 20, labels: translate("items.addiction.name") },
+        { size_m: 20, label: translate("items.addiction.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/e/eb/flp1movyr3427678u7a854cde31icqk.png',
@@ -951,7 +951,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 32, labels: translate("items.nostalgic.name") },
+        { size_m: 32, label: translate("items.nostalgic.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/e/ef/80q87s7z71ecm5yhz07bd9lo3hs1g8c.png',
@@ -961,7 +961,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 12, labels: translate("items.skittish.name") },
+        { size_m: 12, label: translate("items.skittish.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/0/0c/dmvkzw1a11nxskx0hhoq6bnfslsvw9c.png',
@@ -971,7 +971,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 18, labels: translate("items.deerHunt.name") },
+        { size_m: 18, label: translate("items.deerHunt.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/b7/d9ojgfgmihbwmaw6vkmbg96it0s2eb3.png',
@@ -981,7 +981,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: [30, 45, 60], labels: translate("items.streetSweeper.name") },
+        { size_m: [30, 45, 60], label: translate("items.streetSweeper.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/bd/re4lu3k5iknzh748yg85tcdvla2b0t2.png',
@@ -991,7 +991,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 10, labels: translate("items.wither.name") },
+        { size_m: 10, label: translate("items.wither.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/4/48/9edy2j55gu74hyrt4jqx4cxkunwyray.png',
@@ -1001,7 +1001,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 16, labels: translate("items.obsession.name") },
+        { size_m: 16, label: translate("items.obsession.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/6/6b/ra1r6rk9depicpmew855rzug25sy8ut.png',
@@ -1011,7 +1011,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 16, labels: translate("items.famine.name") },
+        { size_m: 16, label: translate("items.famine.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/4/45/73txs9wv78r9rrh0ghil23wf6tx4c3s.png',
@@ -1026,7 +1026,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 25.3, labels: translate("characters.luckyGuy.range.card.detectChestNearby") },
+        { size_m: 25.3, label: translate("characters.luckyGuy.range.label.detectChestNearby") },
       ],
     },
     items: ['luckyParcel'],
@@ -1050,7 +1050,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 8, labels: translate("characters.thief.range.card.flashlightShining") },
+        { size_m: 8, label: translate("characters.thief.range.label.flashlightShining") },
       ],
     },
     items: ['flashlight'],
@@ -1062,7 +1062,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 15, labels: translate("characters.gardener.range.card.locateRocketChairNearby") },
+        { size_m: 15, label: translate("characters.gardener.range.label.locateRocketChairNearby") },
       ],
     },
     items: ['toolkit'],
@@ -1080,8 +1080,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 60, labels: translate("characters.explorer.range.card.senseHunter") },
-        { size_m: 70, labels: translate("characters.explorer.range.card.passwordPage") },
+        { size_m: 60, label: translate("characters.explorer.range.label.senseHunter") },
+        { size_m: 70, label: translate("characters.explorer.range.label.passwordPage") },
       ],
     },
     items: ['gulliversTravels'],
@@ -1099,7 +1099,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 10, labels: translate("characters.coordinator.range.card.flareGunCanUse") },
+        { size_m: 10, label: translate("characters.coordinator.range.label.flareGunCanUse") },
       ],
     },
     items: ['flareGun'],
@@ -1123,9 +1123,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 25.3, labels: translate("characters.theMindsEye.range.card.tapTapLocatePosition") },
-        { size_m: 6.8, labels: translate("characters.theMindsEye.range.card.strikeInteractionSpeedReduceOne") },
-        { size_m: 25.3, labels: translate("characters.theMindsEye.range.card.strikeInteractionSpeedReduceTwo") },
+        { size_m: 25.3, label: translate("characters.theMindsEye.range.label.tapTapLocatePosition") },
+        { size_m: 6.8, label: translate("characters.theMindsEye.range.label.strikeInteractionSpeedReduceOne") },
+        { size_m: 25.3, label: translate("characters.theMindsEye.range.label.strikeInteractionSpeedReduceTwo") },
       ],
     },
     items: ['cane'],
@@ -1149,7 +1149,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 15.2, labels: translate("characters.cowboy.range.card.lassoHitMax") },
+        { size_m: 15.2, label: translate("characters.cowboy.range.label.lassoHitMax") },
       ],
     },
     items: ['lasso'],
@@ -1161,7 +1161,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 8.44, labels: translate("characters.femaleDancer.range.card.slide") },
+        { size_m: 8.44, label: translate("characters.femaleDancer.range.label.slide") },
       ],
     },
     items: ['fastMusicbox', 'slowMusicbox'],
@@ -1187,8 +1187,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 14.5, labels: translate("characters.prospector.range.card.magnetThrowMax") },
-        { size_m: 18, labels: translate("characters.prospector.range.card.stunReduce") },
+        { size_m: 14.5, label: translate("characters.prospector.range.label.magnetThrowMax") },
+        { size_m: 18, label: translate("characters.prospector.range.label.stunReduce") },
       ],
     },
     items: ['meteoriteMagnetN', 'meteoriteMagnetS'],
@@ -1200,9 +1200,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 5.1, labels: translate("characters.enchantress.range.card.apeCurseParalyze") },
-        { size_m: 16.9, labels: translate("characters.enchantress.range.card.guardStack") },
-        { size_m: 12.7, labels: translate("characters.enchantress.range.card.guardStackReduce") },
+        { size_m: 5.1, label: translate("characters.enchantress.range.label.apeCurseParalyze") },
+        { size_m: 16.9, label: translate("characters.enchantress.range.label.guardStack") },
+        { size_m: 12.7, label: translate("characters.enchantress.range.label.guardStackReduce") },
       ],
     },
     items: ['cursedEmblem'],
@@ -1214,8 +1214,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 15, labels: translate("characters.wildling.range.card.bumpMax") },
-        { size_m: 17, labels: translate("characters.wildling.range.card.bumpAddKnockBackMax") },
+        { size_m: 15, label: translate("characters.wildling.range.label.bumpMax") },
+        { size_m: 17, label: translate("characters.wildling.range.label.bumpAddKnockBackMax") },
       ],
     },
     items: ['wildlingPartner'],
@@ -1227,9 +1227,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 4, labels: translate("characters.acrobat.range.card.leapDefault") },
-        { size_m: 7.5, labels: translate("characters.acrobat.range.card.leapMax") },
-        { size_m: 12, labels: translate("characters.acrobat.range.card.leapAddSomersault") },
+        { size_m: 4, label: translate("characters.acrobat.range.label.leapDefault") },
+        { size_m: 7.5, label: translate("characters.acrobat.range.label.leapMax") },
+        { size_m: 12, label: translate("characters.acrobat.range.label.leapAddSomersault") },
       ],
     },
     items: ['bomb'],
@@ -1241,9 +1241,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 27, labels: translate("characters.firstOfficer.range.card.hypnotizeOne") },
-        { size_m: 8.4, labels: translate("characters.firstOfficer.range.card.hypnotizeTwo") },
-        { size_m: 5.1, labels: translate("characters.firstOfficer.range.card.hypnotizeThree") },
+        { size_m: 27, label: translate("characters.firstOfficer.range.label.hypnotizeOne") },
+        { size_m: 8.4, label: translate("characters.firstOfficer.range.label.hypnotizeTwo") },
+        { size_m: 5.1, label: translate("characters.firstOfficer.range.label.hypnotizeThree") },
       ],
     },
     items: ['poseidonWatch'],
@@ -1261,7 +1261,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 16.9, labels: translate("characters.postman.range.card.postDogDashMax") },
+        { size_m: 16.9, label: translate("characters.postman.range.label.postDogDashMax") },
       ],
     },
     items: ['letter', 'postDog'],
@@ -1273,7 +1273,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 9.7, labels: translate("characters.graveKeeper.range.card.tremor") },
+        { size_m: 9.7, label: translate("characters.graveKeeper.range.label.tremor") },
       ],
     },
     items: ['shovel'],
@@ -1285,7 +1285,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 5.9, labels: translate("characters.prisoner.range.card.severeElectricCurrentStun") },
+        { size_m: 5.9, label: translate("characters.prisoner.range.label.severeElectricCurrentStun") },
       ],
     },
     items: ['insulatingGloves', 'severeElectricCurrent'],
@@ -1311,9 +1311,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 10.1, labels: translate("characters.batter.range.card.cricketBatCanHit") },
-        { size_m: 17.55, labels: translate("characters.batter.range.card.cricketBatHitAddKnockBackMax") },
-        { size_m: 15.2, labels: translate("characters.batter.range.card.altruism") },
+        { size_m: 10.1, label: translate("characters.batter.range.label.cricketBatCanHit") },
+        { size_m: 17.55, label: translate("characters.batter.range.label.cricketBatHitAddKnockBackMax") },
+        { size_m: 15.2, label: translate("characters.batter.range.label.altruism") },
       ],
     },
     items: ['cricketBat'],
@@ -1332,8 +1332,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 13, labels: translate("characters.psychologist.range.card.subjectiveAnchor") },
-        { size_m: 13, labels: translate("characters.psychologist.range.card.bonded") },
+        { size_m: 13, label: translate("characters.psychologist.range.label.subjectiveAnchor") },
+        { size_m: 13, label: translate("characters.psychologist.range.label.bonded") },
       ],
     },
     items: ['whistle'],
@@ -1345,7 +1345,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 13, labels: translate("characters.patient.range.card.bonded") },
+        { size_m: 13, label: translate("characters.patient.range.label.bonded") },
       ],
     },
     items: ['grapplingHook'],
@@ -1357,8 +1357,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 13.5, labels: translate("characters.novelist.range.card.metaphorDefault") },
-        { size_m: 9.8, labels: translate("characters.novelist.range.card.metaphorReduce") },
+        { size_m: 13.5, label: translate("characters.novelist.range.label.metaphorDefault") },
+        { size_m: 9.8, label: translate("characters.novelist.range.label.metaphorReduce") },
       ],
     },
     items: ['sketchBook'],
@@ -1376,8 +1376,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 6, labels: translate("characters.weepingClown.range.card.rocketExplode") },
-        { size_m: 3, labels: translate("characters.weepingClown.range.card.stunHunter") },
+        { size_m: 6, label: translate("characters.weepingClown.range.label.rocketExplode") },
+        { size_m: 3, label: translate("characters.weepingClown.range.label.stunHunter") },
       ],
     },
     items: ['rocket'],
@@ -1395,10 +1395,10 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 4.9, labels: translate("characters.antiquarian.range.card.flip") },
-        { size_m: 3.5, labels: translate("characters.antiquarian.range.card.sweepSwing") },
-        { size_m: 4.7, labels: translate("characters.antiquarian.range.card.stab") },
-        { size_m: 12.7, labels: translate("characters.antiquarian.range.card.obscure") },
+        { size_m: 4.9, label: translate("characters.antiquarian.range.label.flip") },
+        { size_m: 3.5, label: translate("characters.antiquarian.range.label.sweepSwing") },
+        { size_m: 4.7, label: translate("characters.antiquarian.range.label.stab") },
+        { size_m: 12.7, label: translate("characters.antiquarian.range.label.obscure") },
       ],
     },
     items: ['mechanicalFlute'],
@@ -1416,7 +1416,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 15, labels: translate("characters.journalist.range.card.phantomPlacement") },
+        { size_m: 15, label: translate("characters.journalist.range.label.phantomPlacement") },
       ],
     },
     items: ['cameraJournalist'],
@@ -1428,8 +1428,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 18.5, labels: translate("characters.aeroplanist.range.card.jetpackPropelThreeMax") },
-        { size_m: 12.7, labels: translate("characters.aeroplanist.range.card.essentialTremor") },
+        { size_m: 18.5, label: translate("characters.aeroplanist.range.label.jetpackPropelThreeMax") },
+        { size_m: 12.7, label: translate("characters.aeroplanist.range.label.essentialTremor") },
       ],
     },
     items: ['jetpack'],
@@ -1441,7 +1441,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 20, labels: translate("characters.cheerleader.range.card.encourage") },
+        { size_m: 20, label: translate("characters.cheerleader.range.label.encourage") },
       ],
     },
     items: ['pompoms'],
@@ -1459,9 +1459,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 4.2, labels: translate("characters.fireInvestigator.range.card.deployDefault") },
-        { size_m: 12.64, labels: translate("characters.fireInvestigator.range.card.deployMax") },
-        { size_m: 9.6, labels: translate("characters.fireInvestigator.range.card.repulsion") },
+        { size_m: 4.2, label: translate("characters.fireInvestigator.range.label.deployDefault") },
+        { size_m: 12.64, label: translate("characters.fireInvestigator.range.label.deployMax") },
+        { size_m: 9.6, label: translate("characters.fireInvestigator.range.label.repulsion") },
       ],
     },
     items: ['airbag'],
@@ -1474,7 +1474,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 18, labels: translate("characters.faroLady.range.card.cloak") },
+        { size_m: 18, label: translate("characters.faroLady.range.label.cloak") },
       ],
     },
     items: ['aromatherapyCane'],
@@ -1486,8 +1486,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 13, labels: translate("characters.knight.range.card.tacticalForesight") },
-        { size_m: 7, labels: translate("characters.knight.range.card.chivalrousSympathy") },
+        { size_m: 13, label: translate("characters.knight.range.label.tacticalForesight") },
+        { size_m: 7, label: translate("characters.knight.range.label.chivalrousSympathy") },
       ],
     },
     items: ['helmet'],
@@ -1499,7 +1499,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 32, labels: translate("characters.meteorologist.range.card.warmRain") },
+        { size_m: 32, label: translate("characters.meteorologist.range.label.warmRain") },
       ],
     },
     items: ['stormGlass'],
@@ -1511,9 +1511,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 18, labels: translate("characters.archer.range.card.keelBowHitMax") },
-        { size_m: 12, labels: translate("characters.archer.range.card.keelBowCanHitCore") },
-        { size_m: 4.5, labels: translate("characters.archer.range.card.crossbow") },
+        { size_m: 18, label: translate("characters.archer.range.label.keelBowHitMax") },
+        { size_m: 12, label: translate("characters.archer.range.label.keelBowCanHitCore") },
+        { size_m: 4.5, label: translate("characters.archer.range.label.crossbow") },
       ],
     },
     items: ['keelBow', 'crossBow'],
@@ -1537,8 +1537,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 6, labels: translate("characters.matador.range.card.muletaDash") },
-        { size_m: 2.25, labels: translate("characters.matador.range.card.muletaSweep") },
+        { size_m: 6, label: translate("characters.matador.range.label.muletaDash") },
+        { size_m: 2.25, label: translate("characters.matador.range.label.muletaSweep") },
       ],
     },
     items: ['muleta'],
@@ -1550,7 +1550,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 20.3, labels: translate("characters.mimeArtist.range.card.emotionAccumulation") },
+        { size_m: 20.3, label: translate("characters.mimeArtist.range.label.emotionAccumulation") },
       ],
     },
     items: ['propUmbrella'],
@@ -1571,7 +1571,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 55, labels: translate("characters.hellEmber.range.card.puppetCastMax") },
+        { size_m: 55, label: translate("characters.hellEmber.range.label.puppetCastMax") },
       ],
     },
     items: ['phantom', 'puppet1', 'puppet2'],
@@ -1625,7 +1625,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 33, labels: translate("characters.photographer.range.card.locateCamera") },
+        { size_m: 33, label: translate("characters.photographer.range.label.locateCamera") },
       ],
     },
     items: ['camera', 'timeJump'],
@@ -1652,9 +1652,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 20, labels: translate("characters.dreamWitch.range.card.hiddenDreamsurvivorNotification") },
-        { size_m: 42.2, labels: translate("characters.dreamWitch.range.card.followerControlTierZeroOne") },
-        { size_m: 59.1, labels: translate("characters.dreamWitch.range.card.followerControlTierTwo") },
+        { size_m: 20, label: translate("characters.dreamWitch.range.label.hiddenDreamsurvivorNotification") },
+        { size_m: 42.2, label: translate("characters.dreamWitch.range.label.followerControlTierZeroOne") },
+        { size_m: 59.1, label: translate("characters.dreamWitch.range.label.followerControlTierTwo") },
       ],
     },
     items: ['follower', 'witchMark', 'hiddenDream'],
@@ -1680,7 +1680,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 25.3, labels: translate("characters.bloodyQueen.range.card.aquaMirrorPlacement") },
+        { size_m: 25.3, label: translate("characters.bloodyQueen.range.label.aquaMirrorPlacement") },
       ],
     },
     items: ['aquaMirror'],
@@ -1693,7 +1693,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 35.5, labels: translate("characters.guard26.range.card.bombThrowMax") },
+        { size_m: 35.5, label: translate("characters.guard26.range.label.bombThrowMax") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/bf/jycs4x41s0qky58o3pfprwwz9fpvr54.png/90px-26%E5%8F%B7%E5%AE%88%E5%8D%AB%E5%A4%B4%E5%83%8F.png',
@@ -1705,7 +1705,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 35.5, labels: translate("characters.disciple.range.card.guidePlacement") },
+        { size_m: 35.5, label: translate("characters.disciple.range.label.guidePlacement") },
       ],
     },
     items: ['cat', 'guide'],
@@ -1798,7 +1798,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 15, labels: translate("characters.theShadow.range.card.ancientVisage") },
+        { size_m: 15, label: translate("characters.theShadow.range.label.ancientVisage") },
       ],
     },
     name: translate("characters.theShadow.name"),
@@ -1859,7 +1859,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'show',
       options: [
-        { size_m: { min: 0, max: null }, labels: translate("characters.customize.range.card.show") },
+        { size_m: { min: 0, max: null }, label: translate("characters.customize.range.label.show") },
       ],
     },
     color: '#fbbf24',
