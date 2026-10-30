@@ -28,7 +28,7 @@ test('dragging a role saves its final position', async ({ page }) => {
   await drag(page, await point(page, 0.2, 0.2), await point(page, 0.5, 0.5));
   await waitForSave(page);
   await reloadMap(page);
-  const token = (await read(page)).board.tokens.doctor;
+  const token = (await read(page)).board.tokens.find((t) => t.role === 'doctor');
   expect(token.x).toBeCloseTo(0.5);
   expect(token.y).toBeCloseTo(0.5);
 });
@@ -97,7 +97,7 @@ test('region and board changes share one save without cancelling either', async 
   await page.clock.runFor(500);
   const state = await read(page);
   expect(state.stored.regions[0].surv[0]).toBe(1);
-  expect(state.stored.boards[0].tokens.doctor.x).toBeCloseTo(0.2);
+  expect(state.stored.boards[0].tokens.find((t) => t.role === 'doctor').x).toBeCloseTo(0.2);
 });
 
 test('deduction marks survive reload before reopening the deduction tab', async ({ page }) => {

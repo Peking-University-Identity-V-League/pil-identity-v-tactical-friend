@@ -297,6 +297,25 @@ export let tacPlaceItem = null;
      
 export let tacSelected = null;
 
+
+// —— 多实例角色：tokens 为数组，tacSelected 存 tid ——
+export function tacTokenByTid(tid) {
+  return tacBoard().tokens.find((t) => t.tid === tid) || null;
+}
+
+export function tacTokenByRole(role) {
+  return tacBoard().tokens.find((t) => t.role === role) || null;
+}
+
+export function tacItemByIid(iid) {
+  return tacBoard().items.find((it) => it.iid === iid) || null;
+}
+
+export function tacSelRole() {
+  const t = tacSelected != null ? tacTokenByTid(tacSelected) : null;
+  return t ? t.role : null;
+}
+
       
 export let tacSelectedItem = null;
 
@@ -557,9 +576,8 @@ export function renderTacFixedSpawns() {
   tacMapWrap.querySelectorAll('.tac-fixed-spawn, .tac-fixed-spawn-range').forEach((el) => el.remove());
   const map = MAPS_DATA[S.currentMapId];
   const [imgW, imgH] = map.mapSize;
-  const tokens = tacBoard().tokens;
   for (const [role, cfg] of Object.entries(map.fixedSpawns || {})) {
-    const token = tokens[role];
+    const token = tacTokenByRole(role);
     if (!token) continue;
     const items = (Array.isArray(cfg.item) ? cfg.item : [cfg.item]).filter(Boolean);
 
@@ -634,7 +652,7 @@ export function renderTacFixedSpawns() {
 export function renderTacTreasure() {
   if (!tacMapWrap) return;
   tacMapWrap.querySelectorAll('.tac-treasure-ring').forEach((el) => el.remove());
-  const rings = getTreasureRings(MAPS_DATA[S.currentMapId], tacBoard().tokens.explorer,
+  const rings = getTreasureRings(MAPS_DATA[S.currentMapId], tacTokenByRole('explorer'),
     S.currentCipherIndex, TAC_TREASURE_RULE);
   rings.forEach((ring) => {
     const el = document.createElement('div');
@@ -1333,16 +1351,93 @@ export function tacMeasureText(m) {
 }
 
 
-export function tacLinkPartner(idx) {
-  const items = tacBoard().items;
-  const it = items[idx];
-  const def = it && TAC_ITEM_TYPES[it.kind];
-  if (!def || def.render !== 'link') return null;
-  const list = items.map((o, i) => ({ o, i })).filter(({ o }) => o.kind === it.kind);
-  const pos = list.findIndex(({ i }) => i === idx);
-  if (pos < 0) return null;
-  const partnerPos = pos % 2 === 0 ? pos + 1 : pos - 1;
-  return partnerPos < list.length ? list[partnerPos].o : null;
+// ———— 连线系统 ————
+// 同种两两相连（移行/音符/雕像）：linkIid 双向引用（仅这类道具有 linkMaxM）
+export function tacSameLinkable(def) {
+  return !!def && def.render === 'link' && !!def.linkMaxM;
+}
+
+// 异造物相连（镇魂伞→宿伞之魂等）：道具 linkTid 指向角色实例
+export function tacLinkPartner(it) {
+  if (!it || it.linkIid == null) return null;
+  return tacItemByIid(it.linkIid);
+}
+
+export function tacLinkTokenOf(it) {
+  if (!it || it.linkTid == null) return null;
+  return tacTokenByTid(it.linkTid);
+}
+
+function tacTokenLinkedItems(t) {
+  return tacBoard().items.filter((it) => it.linkTid === t.tid);
+}
+
+function tacSetSameLink(a, b) {
+  a.linkIid = b.iid;
+  b.linkIid = a.iid;
+}
+
+function tacClearSameLink(it) {
+  const p = tacLinkPartner(it);
+  if (p) delete p.linkIid;
+  delete it.linkIid;
+}
+
+// 创建道具后自动连线：只连最早创建的一个未连线且勾选自动连线的同类造物（两两相连）
+export function tacAutoLinkItem(item) {
+  const def = TAC_ITEM_TYPES[item.kind];
+  if (!def) return;
+  if (tacSameLinkable(def)) {
+    const mate = tacBoard().items.find((o) => o !== item && o.kind === item.kind
+      && o.linkIid == null && o.linkAuto !== false);
+    if (mate) tacSetSameLink(item, mate);
+  } else if (def.linkToRole) {
+    const mate = tacBoard().tokens.find((t) => t.role === def.linkToRole
+      && t.linkAuto !== false && !tacTokenLinkedItems(t).length);
+    if (mate) item.linkTid = mate.tid;
+  }
+}
+
+// 创建角色后自动连线：最早创建的未连线且勾选自动连线的对应道具
+export function tacAutoLinkToken(token) {
+  const item = tacBoard().items.find((it) => {
+    const def = TAC_ITEM_TYPES[it.kind];
+    return def && def.linkToRole === token.role
+      && it.linkTid == null && it.linkAuto !== false;
+  });
+  if (item) item.linkTid = token.tid;
+}
+
+// 解除道具连线并按规则补连（删除道具 / 取消自动连线时）
+export function tacBreakItemLink(item, relink = true) {
+  const def = TAC_ITEM_TYPES[item.kind];
+  if (!def) return;
+  if (tacSameLinkable(def)) {
+    const p = tacLinkPartner(item);
+    tacClearSameLink(item);
+    if (relink && p) {
+      const mate = tacBoard().items.find((o) => o !== p && o.kind === p.kind
+        && o.linkIid == null && o.linkAuto !== false);
+      if (mate) tacSetSameLink(p, mate);
+    }
+  } else if (def.linkToRole) {
+    const tk = tacLinkTokenOf(item);
+    delete item.linkTid;
+    if (relink && tk) tacAutoLinkToken(tk);
+  }
+}
+
+// 角色删除 / 取消自动连线时：其相连道具改连其它未连线且勾选自动连线的同类角色
+export function tacBreakTokenLinks(token, relink = true) {
+  for (const it of [...tacTokenLinkedItems(token)]) {
+    delete it.linkTid;
+    if (!relink) continue;
+    const def = TAC_ITEM_TYPES[it.kind];
+    const mate = def && tacBoard().tokens.find((t) => t !== token
+      && t.role === def.linkToRole && t.linkAuto !== false
+      && !tacTokenLinkedItems(t).length);
+    if (mate) it.linkTid = mate.tid;
+  }
 }
 
 
@@ -1351,8 +1446,8 @@ export function tacClampLinkPos(idx, x, y) {
   const it = tacBoard().items[idx];
   const def = it && TAC_ITEM_TYPES[it.kind];
   const widthM = MAPS_DATA[S.currentMapId].widthM;
-  if (!def || def.render !== 'link' || !def.linkMaxM || !widthM) return { x, y };
-  const partner = tacLinkPartner(idx);
+  if (!def || !def.linkMaxM || !widthM) return { x, y };
+  const partner = tacLinkPartner(it);
   if (!partner) return { x, y };
   const [dw, dh] = MAPS_DATA[S.currentMapId].mapSize;
   const ux = (x - partner.x) * dw, uy = (y - partner.y) * dh;
@@ -1371,7 +1466,7 @@ export function tacClampRoleLinkPos(idx, x, y) {
   const def = it && TAC_ITEM_TYPES[it.kind];
   const widthM = MAPS_DATA[S.currentMapId].widthM;
   if (!def || !def.linkToRole || !def.linkMaxM || !widthM) return { x, y };
-  const tk = tacBoard().tokens[def.linkToRole];
+  const tk = tacLinkTokenOf(it);
   if (!tk) return { x, y };
   const [dw, dh] = MAPS_DATA[S.currentMapId].mapSize;
   const ux = (x - tk.x) * dw, uy = (y - tk.y) * dh;
@@ -1384,14 +1479,14 @@ export function tacClampRoleLinkPos(idx, x, y) {
 
 
 
-export function tacClampTokenToLinkedItems(role, x, y) {
+export function tacClampTokenToLinkedItems(t, x, y) {
   const widthM = MAPS_DATA[S.currentMapId].widthM;
-  if (!widthM) return { x, y };
+  if (!widthM || !t) return { x, y };
   const [dw, dh] = MAPS_DATA[S.currentMapId].mapSize;
   let cx = x, cy = y;
-  for (const it of tacBoard().items) {
+  for (const it of tacTokenLinkedItems(t)) {
     const def = TAC_ITEM_TYPES[it.kind];
-    if (!def || def.linkToRole !== role || !def.linkMaxM) continue;
+    if (!def || !def.linkMaxM) continue;
     const ux = (cx - it.x) * dw, uy = (cy - it.y) * dh;
     const units = Math.hypot(ux, uy);
     const maxUnits = def.linkMaxM / widthM * dw;
@@ -1412,7 +1507,7 @@ export function tacMeasureSegColor(m) {
 
 export function tacMirrorParts() {
   const board = tacBoard();
-  const bq = board.tokens.bloodyQueen;
+  const bq = board.tokens.find((t) => t.role === 'bloodyQueen') || null;
   if (!bq) return null;
   const aq = board.items.find((it) => it.kind === 'aquaMirror');
   const miIdx = board.items.findIndex((it) => it.kind === 'mirrorImage');
@@ -1439,6 +1534,7 @@ export function tacSyncMirror(moved = null) {
   const H = tacMapWrap.clientHeight || 1;
   if (!mi) {
     mi = {
+      iid: ++board.itemSeq,
       role: 'bloodyQueen', kind: 'mirrorImage',
       x: clamp01(2 * aq.x - bq.x), y: clamp01(2 * aq.y - bq.y),
     };
@@ -1497,8 +1593,9 @@ function tacSyncMirrorEl(kind) {
 
 function tacOnItemRemoved(removed) {
   if (!removed) return;
+  tacBreakItemLink(removed, true);
   if (removed.kind === 'mirrorImage') {
-    const bq = tacBoard().tokens.bloodyQueen;
+    const bq = tacTokenByRole('bloodyQueen');
     if (bq && bq.showMirror) {
       bq.showMirror = false;
       bq.fixedMirror = false;
@@ -1507,6 +1604,17 @@ function tacOnItemRemoved(removed) {
     }
   }
   if (removed.kind === 'aquaMirror') {
+    for (let i = tacBoard().items.length - 1; i >= 0; i -= 1) {
+      if (tacBoard().items[i].kind === 'mirrorImage') tacBoard().items.splice(i, 1);
+    }
+  }
+}
+
+
+export function tacOnTokenRemoved(removed) {
+  if (!removed) return;
+  tacBreakTokenLinks(removed, true);
+  if (removed.role === 'bloodyQueen') {
     for (let i = tacBoard().items.length - 1; i >= 0; i -= 1) {
       if (tacBoard().items[i].kind === 'mirrorImage') tacBoard().items.splice(i, 1);
     }
@@ -1661,7 +1769,7 @@ export function tacAbyssMeters(a, b) {
 
 export function tacAbyssRecord(p) {
   const it = tacAbyssItem();
-  const nt = tacBoard().tokens.naiad;
+  const nt = tacTokenByRole('naiad');
   if (!it || !nt || !it.abyss.recording) return;
   const ab = it.abyss;
   const last = ab.trail[ab.trail.length - 1];
@@ -1699,10 +1807,28 @@ export function renderTacArrows() {
   tacArrowSvg.innerHTML = '';
   
   
+  // 同种连线（移行/音符/雕像）：按显式配对渲染；祭司通道等无 linkMaxM 的按创建顺序两两成对
+  const seenPair = new Set();
+  tacBoard().items.forEach((it) => {
+    const def = TAC_ITEM_TYPES[it.kind];
+    if (!def || !tacSameLinkable(def)) return;
+    if (it.linkIid == null || seenPair.has(it.iid) || it.linkShow === false) return;
+    const partner = tacLinkPartner(it);
+    seenPair.add(it.iid);
+    if (!partner || seenPair.has(partner.iid) || partner.linkShow === false) return;
+    seenPair.add(partner.iid);
+    const line = document.createElementNS(TAC_SVG_NS, 'line');
+    line.setAttribute('x1', it.x * W); line.setAttribute('y1', it.y * H);
+    line.setAttribute('x2', partner.x * W); line.setAttribute('y2', partner.y * H);
+    line.setAttribute('stroke', def.linkColor || def.color);
+    line.setAttribute('stroke-width', def.linkWidth || 5);
+    line.setAttribute('stroke-linecap', 'round');
+    tacArrowSvg.appendChild(line);
+  });
   const linkGroups = {};
   tacBoard().items.forEach((it) => {
     const def = TAC_ITEM_TYPES[it.kind];
-    if (def && def.render === 'link') (linkGroups[it.kind] ||= []).push(it);
+    if (def && def.render === 'link' && !def.linkMaxM) (linkGroups[it.kind] ||= []).push(it);
   });
   for (const [kind, list] of Object.entries(linkGroups)) {
     const def = TAC_ITEM_TYPES[kind];
@@ -1722,9 +1848,9 @@ export function renderTacArrows() {
   
   tacBoard().items.forEach((it) => {
     const def = TAC_ITEM_TYPES[it.kind];
-    if (!def || !def.linkToRole) return;
-    const tk = tacBoard().tokens[def.linkToRole];
-    if (!tk || tk.hideLink) return;
+    if (!def || !def.linkToRole || it.linkTid == null || it.linkShow === false) return;
+    const tk = tacTokenByTid(it.linkTid);
+    if (!tk || tk.linkShow === false) return;
     const line = document.createElementNS(TAC_SVG_NS, 'line');
     line.setAttribute('x1', tk.x * W); line.setAttribute('y1', tk.y * H);
     line.setAttribute('x2', it.x * W); line.setAttribute('y2', it.y * H);
@@ -1736,7 +1862,7 @@ export function renderTacArrows() {
 
 
   {
-    const bqTk = tacBoard().tokens.bloodyQueen;
+    const bqTk = tacTokenByRole('bloodyQueen');
     const parts = tacMirrorParts();
     if (bqTk && parts && parts.aq && bqTk.showMirrorLink !== false) {
       const drawLine = (a, b) => {
@@ -1757,7 +1883,7 @@ export function renderTacArrows() {
   tacBoard().items.forEach((it) => {
     const ab = it.abyss;
     if (it.kind !== 'spearfishing' || !ab || !ab.on) return;
-    const nt = tacBoard().tokens.naiad;
+    const nt = tacTokenByRole('naiad');
     if (!nt) return;
     const g = document.createElementNS(TAC_SVG_NS, 'g');
     g.setAttribute('pointer-events', 'none');
@@ -1983,7 +2109,8 @@ export function renderTacBoard() {
       tacMapWrap.appendChild(ex);
     });
   });
-  for (const [role, t] of Object.entries(board.tokens)) {
+  for (const t of board.tokens) {
+    const role = t.role;
     const def = TAC_ROLES[role] || {};
     const z = zMap.get(`r:${role}`);
 
@@ -1999,6 +2126,7 @@ export function renderTacBoard() {
       const rg = document.createElement('div');
       rg.className = 'tac-role-circle' + (tFill ? ' filled' : '');
       rg.dataset.role = role;
+      rg.dataset.tid = t.tid;
       rg.style.left = `${t.x * 100}%`;
       rg.style.top = `${t.y * 100}%`;
       rg.style.width = `${r.pct}%`;
@@ -2009,9 +2137,10 @@ export function renderTacBoard() {
     
     const showIcon = def.icon && !t.hideIcon;
     el.className = 'tac-token' + (showIcon ? ' has-img' : '')
-      + (tacSelected === role && tacDisplay.selGlow ? ' selected' : '')
+      + (tacSelected === t.tid && tacDisplay.selGlow ? ' selected' : '')
       + (t.glow ? ' glow' : '');
     el.dataset.role = role;
+    el.dataset.tid = t.tid;
     el.style.left = `${t.x * 100}%`;
     el.style.top = `${t.y * 100}%`;
     el.style.width = `${t.size}%`;
@@ -2312,25 +2441,40 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
 }
 
 function tacManageDefaultEntries(board) {
-  const roleOrder = Object.keys(TAC_ROLES).filter((r) =>
-    board.tokens[r] || board.items.some((it) => it.role === r));
   const campOrder = { survivor: 0, hunter: 1, other: 2 };
-  roleOrder.sort((a, b) =>
-    (campOrder[(TAC_ROLES[a] || {}).camp] ?? 0)
-    - (campOrder[(TAC_ROLES[b] || {}).camp] ?? 0));
-  const occ = {};
+  const campOf = (role) => campOrder[(TAC_ROLES[role] || {}).camp] ?? 0;
+  const roleIdx = {};
+  Object.keys(TAC_ROLES).forEach((r, i) => { roleIdx[r] = i; });
   const entries = [];
-  roleOrder.forEach((role) => {
-    if (board.tokens[role]) entries.push({ type: 'role', role, key: `r:${role}` });
-    board.items.forEach((it, idx) => {
-      if (it.role !== role) return;
-      const k = `${role}|${it.kind}`;
-      const o = (occ[k] = (occ[k] || 0) + 1) - 1;
-      entries.push({ type: 'item', idx, key: `i:${role}:${it.kind}:${o}` });
-    });
+  board.tokens.forEach((t) =>
+    entries.push({ type: 'role', tid: t.tid, role: t.role, key: `r:${t.tid}` }));
+  board.items.forEach((it, idx) =>
+    entries.push({ type: 'item', idx, role: it.role, key: `i:${it.iid}` }));
+  entries.sort((a, b) =>
+    campOf(a.role) - campOf(b.role)
+    || (roleIdx[a.role] ?? 999) - (roleIdx[b.role] ?? 999)
+    || (a.type === 'role' && b.type === 'role' ? a.tid - b.tid
+      : a.type === 'item' && b.type === 'item' ? a.idx - b.idx
+      : a.type === 'role' ? -1 : 1));
+  const occCount = new Map();
+  entries.forEach((e) => {
+    const k = `${e.type}|${e.role}`;
+    occCount.set(k, (occCount.get(k) || 0) + 1);
+    e.occ = occCount.get(k);
   });
   entries.forEach((e, i) => { e.defIdx = i; });
   return entries;
+}
+
+// 重复造物（同名同类多个实例）在按钮名后加序号
+function tacDispName(e) {
+  const def = e.type === 'role'
+    ? (TAC_ROLES[e.role] || {})
+    : (TAC_ITEM_TYPES[tacBoard().items[e.idx].kind] || {});
+  const base = def.name || e.role;
+  const dup = tacManageDefaultEntries(tacBoard())
+    .filter((o) => o.type === e.type && o.role === e.role).length > 1;
+  return dup ? `${base} ${e.occ}` : base;
 }
 
 function tacSortedEntries(board) {
@@ -2485,6 +2629,42 @@ function buildMirrorManageBox(settings, token, board) {
 }
 
 
+// 连线管理（同造物两两相连 / 异造物相连 共用）
+// host: 道具实例或角色实例；info: { cross, roleName, itemName, maxM }
+function buildLinkManageBox(settings, host, info) {
+  const box = tacManageBox(settings, "ui.tacLinkBox.title");
+  box.innerHTML +=
+    `<div class="tac-link-opts">`
+    + `<label class="tac-link-opt"><input type="checkbox" data-lk="auto"`
+    + `${host.linkAuto !== false ? ' checked' : ''}> ${translate("ui.tacLinkBox.auto")}</label>`
+    + `<label class="tac-link-opt"><input type="checkbox" data-lk="show"`
+    + `${host.linkShow !== false ? ' checked' : ''}> ${translate("ui.tacLinkBox.show")}</label>`
+    + `</div>`;
+  const hintKey = info.cross ? "ui.tacLinkBox.crossHint" : "ui.tacLinkBox.sameHint";
+  tacBoxHint(box, translate(hintKey, {
+    name: info.itemName, item: info.itemName,
+    role: info.roleName, maxM: info.maxM,
+  }));
+  const isTok = !host.kind;
+  box.querySelectorAll('input').forEach((cb) => {
+    cb.addEventListener('change', () => {
+      if (cb.dataset.lk === 'show') {
+        host.linkShow = cb.checked;
+      } else {
+        host.linkAuto = cb.checked;
+        if (cb.checked) {
+          if (isTok) tacAutoLinkToken(host);
+          else tacAutoLinkItem(host);
+        } else if (isTok) tacBreakTokenLinks(host, true);
+        else tacBreakItemLink(host, true);
+      }
+      renderTacBoard();
+      tacSave();
+    });
+  });
+}
+
+
 function buildAbyssManageBox(settings, spearfishing) {
   const box = tacManageBox(settings, "ui.tacManageBox.abyss");
   box.innerHTML +=
@@ -2538,7 +2718,7 @@ export function renderTacManage() {
   info.appendChild(side);
   tacManageList.appendChild(info);
   const isSelEntry = (e) => tacManageSel && e.type === tacManageSel.type
-    && (e.type === 'role' ? e.role === tacManageSel.role : e.idx === tacManageSel.idx);
+    && (e.type === 'role' ? e.tid === tacManageSel.tid : e.idx === tacManageSel.idx);
   if (tacManageSel && !entries.some(isSelEntry)) tacManageSel = null;
 
   
@@ -2551,17 +2731,18 @@ export function renderTacManage() {
       : (TAC_ITEM_TYPES[board.items[e.idx].kind] || {});
     const btn = document.createElement('button');
     btn.className = 'tac-manage-btn' + (isSelEntry(e) ? ' active' : '');
-    btn.title = def.name || e.role;
+    const dispName = tacDispName(e);
+    btn.title = dispName;
     btn.dataset.key = e.key;
     btn.innerHTML =
       `${def.icon ? `<img src="${def.icon}" alt="${def.name}" draggable="false">` : ''}`
-      + `<span class="tac-manage-btn-name">${def.name || e.role}</span>`;
+      + `<span class="tac-manage-btn-name">${dispName}</span>`;
     attachManageDrag(btn, e.key);
     btn.addEventListener('click', () => {
       if (Date.now() - suppressManageClick < 300) return;
-      tacManageSel = isRole ? { type: 'role', role: e.role } : { type: 'item', idx: e.idx };
+      tacManageSel = isRole ? { type: 'role', tid: e.tid } : { type: 'item', idx: e.idx };
       
-      if (isRole) { tacSelected = e.role; tacSelectedItem = null; }
+      if (isRole) { tacSelected = e.tid; tacSelectedItem = null; }
       else { tacSelectedItem = e.idx; tacSelected = null; }
       renderTacBoard();
     });
@@ -2581,8 +2762,9 @@ export function renderTacManage() {
 
   
   if (tacManageSel.type === 'role') {
-    const role = tacManageSel.role;
-    const token = board.tokens[role];
+    const token = board.tokens.find((t) => t.tid === tacManageSel.tid) || null;
+    if (!token) return;
+    const role = token.role;
     const rgCfg = (TAC_ROLES[role] || {}).ranges;
     const rangeShown = !!rgCfg && tacRoleRangeMode(role, token).key !== 'off';
     const isRoleDefault = () =>
@@ -2603,20 +2785,6 @@ export function renderTacManage() {
     }
     
     
-    if (Object.values(TAC_ITEM_TYPES).some((d) => d.linkToRole === role)) {
-      const lkRow = document.createElement('div');
-      lkRow.className = 'tac-manage-row';
-      lkRow.innerHTML =
-        `<label class="tac-manage-hide"><input type="checkbox"`
-        + translate("application.renderTacManageThird", { value: token.hideLink ? ' checked' : '' });
-      lkRow.querySelector('input').addEventListener('change', (e) => {
-        token.hideLink = e.target.checked;
-        renderTacArrows();
-      });
-      settings.appendChild(lkRow);
-    }
-
-
     if (role === 'bloodyQueen') {
       buildMirrorManageBox(settings, token, board);
     }
@@ -2692,6 +2860,16 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
       }
     }
 
+    const lkDef = Object.values(TAC_ITEM_TYPES).find((d) => d.linkToRole === role);
+    if (lkDef) {
+      buildLinkManageBox(settings, token, {
+        cross: true,
+        roleName: (TAC_ROLES[role] || {}).name,
+        itemName: lkDef.name,
+        maxM: lkDef.linkMaxM,
+      });
+    }
+
     const roleCamp = (TAC_ROLES[role] || {}).camp;
     if (rgCfg || roleCamp === 'survivor' || roleCamp === 'hunter') {
       const syncRoleCircleWidth = () => {
@@ -2748,15 +2926,14 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     });
     
     row.querySelector('.tac-manage-del').addEventListener('click', () => {
-      const snapshot = { ...board.tokens[role] };
-      delete board.tokens[role];
-      if (role === 'bloodyQueen') {
-        for (let i = board.items.length - 1; i >= 0; i -= 1) {
-          if (board.items[i].kind === 'mirrorImage') board.items.splice(i, 1);
-        }
-      }
-      tacUndoStack.push({ type: 'remove', role, token: snapshot });
-      if (tacSelected === role) tacSelected = null;
+      const ti = board.tokens.findIndex((t) => t.tid === token.tid);
+      if (ti < 0) return;
+      const snapshot = { ...board.tokens[ti] };
+      const removed = board.tokens[ti];
+      board.tokens.splice(ti, 1);
+      tacOnTokenRemoved(removed);
+      tacUndoStack.push({ type: 'remove', token: snapshot });
+      if (tacSelected === token.tid) tacSelected = null;
       tacManageSel = null;
       renderTacBoard();
     });
@@ -2794,7 +2971,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
 
   
   if (it.kind === 'aquaMirror' || it.kind === 'mirrorImage') {
-    const bqToken = board.tokens.bloodyQueen;
+    const bqToken = tacTokenByRole('bloodyQueen');
     if (bqToken) buildMirrorManageBox(settings, bqToken, board);
   }
   if (it.kind === 'spearfishing') {
@@ -2802,6 +2979,15 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
   }
 
   
+  if (itDef.linkToRole || tacSameLinkable(itDef)) {
+    buildLinkManageBox(settings, it, {
+      cross: !!itDef.linkToRole,
+      roleName: itDef.linkToRole ? (TAC_ROLES[itDef.linkToRole] || {}).name : null,
+      itemName: itDef.name,
+      maxM: itDef.linkMaxM,
+    });
+  }
+
   if (rgCfg) {
     buildTacRangeRows(settings, rgCfg, it, false,
       { softUpdate: () => { syncCircleWidth(); refreshDefault(); },
@@ -2878,18 +3064,21 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
 export function updateTacPanel() {
   const board = tacBoard();
   renderTacManage();
+  const selTok = tacSelected != null
+    ? board.tokens.find((t) => t.tid === tacSelected) : null;
+  const selRole = selTok ? selTok.role : null;
   [tacRolesEl, tacRolesHunterEl, tacRolesOtherEl].forEach((box) =>
     box.querySelectorAll('.tac-role').forEach((btn) => {
       const role = btn.dataset.role;
-      btn.classList.toggle('placed', !!board.tokens[role]);
+      btn.classList.toggle('placed', board.tokens.some((t) => t.role === role));
       btn.classList.toggle('armed', tacPlaceRole === role);
-      btn.classList.toggle('selected', tacSelected === role);
+      btn.classList.toggle('selected', selRole === role);
     }));
   tacticView.classList.toggle('tac-placing', !!(tacPlaceRole || tacPlaceItem));
 
   
   const selItem = tacSelectedItem !== null ? board.items[tacSelectedItem] : null;
-  const activeRole = tacPlaceRole || tacSelected
+  const activeRole = tacPlaceRole || selRole
     || (tacPlaceItem && tacPlaceItem.role)
     || (selItem && selItem.role);
   const activeDef = activeRole ? TAC_ROLES[activeRole] : null;
@@ -4324,7 +4513,7 @@ tacticView.querySelectorAll('.tac-camp-header').forEach((btn) => {
     camp.classList.toggle('collapsed');
     if (camp.classList.contains('collapsed')) {
       const inCamp = (r) => r && (TAC_ROLES[r] || {}).camp === btn.dataset.camp;
-      if (inCamp(tacSelected) || inCamp(tacPlaceRole)) {
+      if (inCamp(tacSelRole()) || inCamp(tacPlaceRole)) {
         tacSelected = null;
         tacPlaceRole = null;
       }
@@ -4340,15 +4529,10 @@ tacticView.querySelectorAll('.tac-camp-header').forEach((btn) => {
 
 
 export function onTacRoleClick(role) {
-  if (tacBoard().tokens[role]) {
-    tacSelected = tacSelected === role ? null : role;
-    tacPlaceRole = null;
-  } else {
-    
-    if (tacTool !== 'roles') setTacTool('roles');
-    tacPlaceRole = role;
-    tacSelected = null;
-  }
+  
+  if (tacTool !== 'roles') setTacTool('roles');
+  tacPlaceRole = tacPlaceRole === role ? null : role;
+  tacSelected = null;
   tacSelectedItem = null;
   renderTacBoard();
 }
@@ -4413,18 +4597,6 @@ export function onTacItemClick(role, kind) {
   if (tacPlaceItem && tacPlaceItem.kind === kind) {
     tacPlaceItem = null;
   } else {
-    const def = TAC_ROLES[role];
-    
-    const perKind = Array.isArray(def.maxItems);
-    const limit = perKind
-      ? def.maxItems[def.items.indexOf(kind)] : def.maxItems;
-    const count = tacBoard().items.filter((i) =>
-      i.role === role && (!perKind || i.kind === kind)).length;
-    if (limit && count >= limit) {
-      const itemName = (TAC_ITEM_TYPES[kind] || {}).name || translate("application.itemName");
-      showToast(translate("application.onTacItemClick", { name: itemName, limit: limit }));
-      return;
-    }
     if (tacTool !== 'roles') setTacTool('roles');
     tacPlaceItem = { role, kind };
     tacPlaceRole = null;
@@ -4577,7 +4749,7 @@ export function tacLoadImg(src) {
 
 export async function tacExportImage() {
   const map = MAPS_DATA[S.currentMapId];
-  const treasureRings = getTreasureRings(map, tacBoard().tokens.explorer,
+  const treasureRings = getTreasureRings(map, tacTokenByRole('explorer'),
     S.currentCipherIndex, TAC_TREASURE_RULE);
   const [W0, H0] = map.mapSize;
   const wrapW = tacMapWrap.clientWidth || 1;
@@ -4720,9 +4892,8 @@ export async function tacExportImage() {
   }
 
   // 固定点位（教授鳞片 / 摄影师摄像机 / 疯眼控制台及范围 / 小丑零件 / 冒险家书页）
-  const boardTokens = tacBoard().tokens;
   for (const [role, cfg] of Object.entries(map.fixedSpawns || {})) {
-    const token = boardTokens[role];
+    const token = tacTokenByRole(role);
     if (!token) continue;
     const fsItems = (Array.isArray(cfg.item) ? cfg.item : [cfg.item]).filter(Boolean);
     fsItems.forEach((item) => {
@@ -4842,7 +5013,8 @@ export async function tacExportImage() {
     }
   }
   
-  for (const [role, t] of Object.entries(board.tokens)) {
+  for (const t of board.tokens) {
+    const role = t.role;
     const def = TAC_ROLES[role] || {};
     const x = PX(t.x), y = PY(t.y);
     const d = t.size / 100 * W * K;
@@ -4991,11 +5163,15 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
   
   if (tacTool === 'delete') {
     if (tokenEl) {
-      const role = tokenEl.dataset.role;
-      const snapshot = { ...tacBoard().tokens[role] };
-      delete tacBoard().tokens[role];
-      tacUndoStack.push({ type: 'remove', role, token: snapshot });
-      if (tacSelected === role) tacSelected = null;
+      const tid = +tokenEl.dataset.tid;
+      const ti = tacBoard().tokens.findIndex((t) => t.tid === tid);
+      if (ti < 0) return;
+      const removed = tacBoard().tokens[ti];
+      const snapshot = { ...removed };
+      tacBoard().tokens.splice(ti, 1);
+      tacOnTokenRemoved(removed);
+      tacUndoStack.push({ type: 'remove', token: snapshot });
+      if (tacSelected === tid) tacSelected = null;
       renderTacBoard();
     } else if (itemEl) {
       const idx = +itemEl.dataset.idx;
@@ -5121,18 +5297,19 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
 
   
   if (tokenEl) {
-    tacSelected = tokenEl.dataset.role;
+    const tid = +tokenEl.dataset.tid;
+    tacSelected = tid;
     tacSelectedItem = null;
     tacPlaceRole = null;
     tacPlaceItem = null;
-    tacManageSel = { type: 'role', role: tacSelected }; 
-    tacDrag = { role: tacSelected };
+    tacManageSel = { type: 'role', tid }; 
+    tacDrag = { tid };
     
     const abIt = tacAbyssItem();
-    if (abIt && tacSelected === 'naiad') {
-      const t0 = tacBoard().tokens.naiad;
+    const naiadT0 = tacTokenByRole('naiad');
+    if (abIt && naiadT0 && tid === naiadT0.tid) {
       abIt.abyss.recording = true;
-      abIt.abyss.trail = [{ x: t0.x, y: t0.y }];
+      abIt.abyss.trail = [{ x: naiadT0.x, y: naiadT0.y }];
     }
     tacMapWrap.setPointerCapture(e.pointerId);
     tacMapWrap.querySelectorAll('.tac-token').forEach((el) =>
@@ -5149,8 +5326,8 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
     tacManageSel = { type: 'item', idx }; 
     
     const it0 = tacBoard().items[idx];
-    const abyssLocked = !!(it0 && it0.abyss && it0.abyss.on && tacBoard().tokens.naiad);
-    const bqTk0 = tacBoard().tokens.bloodyQueen;
+    const abyssLocked = !!(it0 && it0.abyss && it0.abyss.on && tacTokenByRole('naiad'));
+    const bqTk0 = tacTokenByRole('bloodyQueen');
     const mirrorLocked = !!(it0 && it0.kind === 'aquaMirror' && bqTk0
       && bqTk0.showMirror && bqTk0.fixedMirror);
     tacDragItem = (abyssLocked || mirrorLocked)
@@ -5162,19 +5339,13 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
     return;
   }
   if (tacPlaceItem) {
-    const def = TAC_ITEM_TYPES[tacPlaceItem.kind];
-    
-    if (def && def.maxCount
-        && tacBoard().items.filter((o) => o.kind === tacPlaceItem.kind).length
-          >= def.maxCount) {
-      showToast(translate("application.message", { name: def.name, count: def.maxCount }));
-      return;
-    }
     const item = {
+      iid: ++tacBoard().itemSeq,
       role: tacPlaceItem.role, kind: tacPlaceItem.kind,
       x: p.x, y: p.y,
     };
     tacBoard().items.push(item);
+    tacAutoLinkItem(item);
     
     let cl = tacClampLinkPos(tacBoard().items.length - 1, p.x, p.y);
     
@@ -5189,14 +5360,17 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
     return;
   }
   if (tacPlaceRole) {
-    
-    
-    const rp = tacClampTokenToLinkedItems(tacPlaceRole, p.x, p.y);
-    tacBoard().tokens[tacPlaceRole] =
-      { x: rp.x, y: rp.y, size: TAC_MANAGE_DEFAULT.roleSize };
-    tacUndoStack.push({ type: 'place', role: tacPlaceRole });
-    tacSelected = tacPlaceRole;
-    tacManageSel = { type: 'role', role: tacPlaceRole };
+    const token = {
+      tid: ++tacBoard().tokenSeq, role: tacPlaceRole,
+      x: p.x, y: p.y, size: TAC_MANAGE_DEFAULT.roleSize,
+    };
+    tacBoard().tokens.push(token);
+    tacAutoLinkToken(token);
+    const rp = tacClampTokenToLinkedItems(token, p.x, p.y);
+    token.x = rp.x; token.y = rp.y;
+    tacUndoStack.push({ type: 'place', tid: token.tid });
+    tacSelected = token.tid;
+    tacManageSel = { type: 'role', tid: token.tid };
     tacPlaceRole = null;
     renderTacBoard();
     return;
@@ -5253,19 +5427,19 @@ tacMapWrap.addEventListener('pointermove', (e) => {
     tacDrawing.y2 = sp.y;
     renderTacArrows();
   } else if (tacDrag) {
-    const t = tacBoard().tokens[tacDrag.role];
+    const t = tacTokenByTid(tacDrag.tid);
     if (!t) { tacDrag = null; return; }
     
-    const cl = tacClampTokenToLinkedItems(tacDrag.role, p.x, p.y);
+    const cl = tacClampTokenToLinkedItems(t, p.x, p.y);
     t.x = cl.x;
     t.y = cl.y;
-    const el = tacMapWrap.querySelector(`.tac-token[data-role="${tacDrag.role}"]`);
+    const el = tacMapWrap.querySelector(`.tac-token[data-tid="${tacDrag.tid}"]`);
     if (el) {
       el.style.left = `${t.x * 100}%`;
       el.style.top = `${t.y * 100}%`;
     }
     
-    tacMapWrap.querySelectorAll(`.tac-role-circle[data-role="${tacDrag.role}"]`)
+    tacMapWrap.querySelectorAll(`.tac-role-circle[data-tid="${tacDrag.tid}"]`)
       .forEach((rg) => {
         rg.style.left = `${t.x * 100}%`;
         rg.style.top = `${t.y * 100}%`;
@@ -5273,7 +5447,7 @@ tacMapWrap.addEventListener('pointermove', (e) => {
     if (t.showTreasureRange) renderTacTreasure();
     tacAbyssRecord(p); 
 
-    if (tacDrag.role === 'bloodyQueen') {
+    if (t.role === 'bloodyQueen') {
       const hadMirror = tacBoard().items.some((it) => it.kind === 'mirrorImage');
       if (tacSyncMirror('bq')) {
         if (!hadMirror) renderTacBoard();
@@ -5282,8 +5456,7 @@ tacMapWrap.addEventListener('pointermove', (e) => {
       if (tacBoard().items.some((it) => it.kind === 'aquaMirror')) renderTacArrows();
     }
 
-    if (tacBoard().items.some((it) =>
-      (TAC_ITEM_TYPES[it.kind] || {}).linkToRole === tacDrag.role)) {
+    if (tacBoard().items.some((it) => it.linkTid === t.tid)) {
       renderTacArrows();
     }
   } else if (tacDragText) {
@@ -5323,8 +5496,8 @@ tacMapWrap.addEventListener('pointermove', (e) => {
             tacSyncMirrorEl('mirrorImage');
           } else {
             tacSyncMirrorEl('aquaMirror');
-            const tkEl = tacMapWrap.querySelector('.tac-token[data-role="bloodyQueen"]');
-            const bqTk = tacBoard().tokens.bloodyQueen;
+            const bqTk = tacTokenByRole('bloodyQueen');
+            const tkEl = bqTk && tacMapWrap.querySelector(`.tac-token[data-tid="${bqTk.tid}"]`);
             if (tkEl && bqTk) {
               tkEl.style.left = `${bqTk.x * 100}%`;
               tkEl.style.top = `${bqTk.y * 100}%`;
@@ -5377,20 +5550,20 @@ tacMapWrap.addEventListener('pointermove', (e) => {
         }
       });
       
-      for (const [role, t] of Object.entries(board.tokens)) {
-        if ((TAC_ROLES[role] || {}).camp !== 'hunter') continue;
-        if (!tacDragItem.pushingRoles.has(role)
+      for (const t of board.tokens) {
+        if ((TAC_ROLES[t.role] || {}).camp !== 'hunter') continue;
+        if (!tacDragItem.pushingRoles.has(t.tid)
             && !tryPush(t.x, t.y, 0)) continue;
-        tacDragItem.pushingRoles.add(role);
+        tacDragItem.pushingRoles.add(t.tid);
         
         t.x = clamp01(t.x + mdx);
         t.y = clamp01(t.y + mdy);
-        tacMapWrap.querySelectorAll(`.tac-token[data-role="${role}"]`)
+        tacMapWrap.querySelectorAll(`.tac-token[data-tid="${t.tid}"]`)
           .forEach((tEl) => {
             tEl.style.left = `${t.x * 100}%`;
             tEl.style.top = `${t.y * 100}%`;
           });
-        tacMapWrap.querySelectorAll(`.tac-role-circle[data-role="${role}"]`)
+        tacMapWrap.querySelectorAll(`.tac-role-circle[data-tid="${t.tid}"]`)
           .forEach((rgEl) => {
             rgEl.style.left = `${t.x * 100}%`;
             rgEl.style.top = `${t.y * 100}%`;
@@ -5463,10 +5636,9 @@ tacMapWrap.addEventListener('wheel', (e) => {
   const tokenEl = e.target.closest('.tac-token');
   const itemEl = e.target.closest('.tac-item-circle, .tac-item-pin');
 
-  if (tokenEl && tacSelected === tokenEl.dataset.role) {
+  if (tokenEl && tacSelected === +tokenEl.dataset.tid) {
     e.preventDefault();
-    const role = tokenEl.dataset.role;
-    const t = tacBoard().tokens[role];
+    const t = tacTokenByTid(+tokenEl.dataset.tid);
     if (!t) return;
     t.size = Math.min(12, Math.max(3, t.size + (e.deltaY < 0 ? 0.5 : -0.5)));
     renderTacBoard();
@@ -5638,10 +5810,11 @@ export function tacUndo() {
   if (act.type === 'addArrow') board.arrows.pop();
   else if (act.type === 'delArrow') board.arrows.splice(act.idx, 0, act.arrow);
   else if (act.type === 'place') {
-    delete board.tokens[act.role];
-    if (tacSelected === act.role) tacSelected = null;
+    const ti = board.tokens.findIndex((t) => t.tid === act.tid);
+    if (ti >= 0) board.tokens.splice(ti, 1);
+    if (tacSelected === act.tid) tacSelected = null;
   } else if (act.type === 'remove') {
-    board.tokens[act.role] = { ...act.token };
+    board.tokens.push({ ...act.token });
   } else if (act.type === 'addItem') {
     board.items.pop();
     tacSelectedItem = null;
@@ -5676,12 +5849,12 @@ export function tacUndo() {
 
 export function tacClear() {
   const board = tacBoard();
-  if (!Object.keys(board.tokens).length && !board.arrows.length && !board.items.length && !board.measures.length && !board.texts.length)
+  if (!board.tokens.length && !board.arrows.length && !board.items.length && !board.measures.length && !board.texts.length)
     return;
   tacUndoStack.push({ type: 'clear', tokens: board.tokens,
     arrows: board.arrows, items: board.items, measures: board.measures,
     texts: board.texts });
-  board.tokens = {};
+  board.tokens = [];
   board.arrows = [];
   board.items = [];
   board.measures = [];
@@ -5733,11 +5906,11 @@ window.addEventListener('keydown', (e) => {
     const dx = nudge[0] / rect.width;   
     const dy = nudge[1] / rect.height;
     const clamp01 = (v) => Math.min(1, Math.max(0, v));
-    if (tacSelected && tacBoard().tokens[tacSelected]) {
-      const t = tacBoard().tokens[tacSelected];
+    if (tacSelected != null && tacTokenByTid(tacSelected)) {
+      const t = tacTokenByTid(tacSelected);
       
       const cl = tacClampTokenToLinkedItems(
-        tacSelected, clamp01(t.x + dx), clamp01(t.y + dy));
+        t, clamp01(t.x + dx), clamp01(t.y + dy));
       t.x = cl.x;
       t.y = cl.y;
       renderTacBoard();
@@ -5745,7 +5918,7 @@ window.addEventListener('keydown', (e) => {
     } else if (tacSelectedItem !== null && tacBoard().items[tacSelectedItem]) {
       const it = tacBoard().items[tacSelectedItem];
       
-      if (it.abyss && it.abyss.on && tacBoard().tokens.naiad) {
+      if (it.abyss && it.abyss.on && tacTokenByRole('naiad')) {
         e.preventDefault();
         return;
       }
@@ -5787,10 +5960,12 @@ window.addEventListener('keydown', (e) => {
     renderTacBoard();
   } else if (e.key === 'Delete' || e.key === 'Backspace') {
     const board = tacBoard();
-    if (tacSelected && board.tokens[tacSelected]) {
-      tacUndoStack.push({ type: 'remove', role: tacSelected,
-        token: { ...board.tokens[tacSelected] } });
-      delete board.tokens[tacSelected];
+    if (tacSelected != null && tacTokenByTid(tacSelected)) {
+      const ti = board.tokens.findIndex((t) => t.tid === tacSelected);
+      const removed = board.tokens[ti];
+      board.tokens.splice(ti, 1);
+      tacOnTokenRemoved(removed);
+      tacUndoStack.push({ type: 'remove', token: { ...removed } });
       tacSelected = null;
       renderTacBoard();
     } else if (tacSelectedItem !== null && board.items[tacSelectedItem]) {
