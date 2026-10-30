@@ -1,4 +1,6 @@
 {
+  "ui.map3d.open": "切换三维",
+  "ui.map3d.error": "无法打开三维地图，请检查测距选点后重试。",
   "application.buildTacOtherList": "<button type=\"button\" class=\"tac-talent-add\" data-ok=\"{key}\">添加</button></div>",
   "application.buildTacRangeRows": "<label>{card} {state}m（固定）</label>",
   "application.buildTacRangeRowsAlternate": "<label>{card} <b class=\"tac-fear-val\">{value}</b>m（基础 {state}m）</label>",

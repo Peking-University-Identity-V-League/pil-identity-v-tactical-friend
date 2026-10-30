@@ -3946,3 +3946,12 @@ div.tac-fixed-spawn .cam-dir.up {
     justify-content: center;
   }
 }
+
+/* The map switch remains available in each 2D module and on narrow screens. */
+.map-3d-button { white-space: nowrap; padding: 8px 12px; background: #3e3b69; }
+.map-view-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+.map-view-actions .reset-btn { flex: 0 0 auto; }
+@media (max-width: 480px) {
+  .map-3d-button { padding: 8px 10px; font-size: 11px; }
+  .map-view-actions { flex-direction: column; align-items: stretch; }
+}

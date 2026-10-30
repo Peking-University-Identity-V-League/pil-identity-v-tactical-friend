@@ -12,7 +12,7 @@
 
 ### Task 1: Coordinate evidence
 
-Create the private viewer's `web/board-calibration.json` and calibration evidence. Export existing 2D landmarks without changing application data; associate independent 3D landmarks and validate held-out points on all nine maps. Reject untrustworthy fits. Store coordinate uncertainty and source-image identity alongside each transform.
+Create the private viewer's `web/board-calibration.json` and calibration evidence. Export existing 2D landmarks without changing application data; associate independent 3D landmarks and validate held-out points on all nine maps. Reject fits that fail independent landmark validation. Store coordinate uncertainty and source-image identity alongside each transform.
 
 ### Task 2: 2D handoff
 
