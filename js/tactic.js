@@ -1376,24 +1376,33 @@ function tacSetSameLink(a, b) {
   b.linkShow = show;
 }
 
-// 异造物相连：写入 linkTid 并同步显示连线共享；水镜相连时重置镜像状态
+// 解除水镜/渔猎的专属状态（镜像造物、模拟水渊），供相连与解除相连共用
+function tacClearMirrorState(aq) {
+  if (!aq || aq.kind !== 'aquaMirror') return;
+  aq.showMirror = false;
+  aq.fixedMirror = false;
+  delete aq.mirrorAxis;
+  const b = tacBoard();
+  for (let i = b.items.length - 1; i >= 0; i -= 1) {
+    if (b.items[i].kind === 'mirrorImage'
+      && (b.items[i].aqIid == null || b.items[i].aqIid === aq.iid)) {
+      b.items.splice(i, 1);
+    }
+  }
+}
+
+function tacClearAbyss(sp) {
+  if (sp && sp.kind === 'spearfishing') delete sp.abyss;
+}
+
+// 异造物相连：写入 linkTid 并同步显示连线共享；水镜相连时重置镜像状态，渔猎相连时关闭模拟水渊
 function tacSetCrossLink(item, token) {
   item.linkTid = token.tid;
   const show = item.linkShow !== false || token.linkShow !== false;
   item.linkShow = show;
   token.linkShow = show;
-  if (item.kind === 'aquaMirror') {
-    item.showMirror = false;
-    item.fixedMirror = false;
-    delete item.mirrorAxis;
-    const b = tacBoard();
-    for (let i = b.items.length - 1; i >= 0; i -= 1) {
-      if (b.items[i].kind === 'mirrorImage'
-        && (b.items[i].aqIid == null || b.items[i].aqIid === item.iid)) {
-        b.items.splice(i, 1);
-      }
-    }
-  }
+  if (item.kind === 'aquaMirror') tacClearMirrorState(item);
+  if (item.kind === 'spearfishing') tacClearAbyss(item);
 }
 
 function tacClearSameLink(it) {
@@ -1442,6 +1451,8 @@ export function tacBreakItemLink(item, relink = true) {
   } else if (def.linkToRole) {
     const tk = tacLinkTokenOf(item);
     delete item.linkTid;
+    tacClearMirrorState(item);
+    tacClearAbyss(item);
     if (relink && tk) tacAutoLinkToken(tk);
   }
 }
@@ -1450,6 +1461,8 @@ export function tacBreakItemLink(item, relink = true) {
 export function tacBreakTokenLinks(token, relink = true) {
   for (const it of [...tacTokenLinkedItems(token)]) {
     delete it.linkTid;
+    tacClearMirrorState(it);
+    tacClearAbyss(it);
     if (!relink) continue;
     const def = TAC_ITEM_TYPES[it.kind];
     const mate = def && tacBoard().tokens.find((t) => t !== token
@@ -1796,8 +1809,9 @@ export function tacAbyssMeters(a, b) {
 
 export function tacAbyssRecord(p) {
   const it = tacAbyssItem();
-  const nt = tacTokenByRole('naiad');
-  if (!it || !nt || !it.abyss.recording) return;
+  if (!it || !it.abyss.recording) return;
+  const nt = it.linkTid != null ? tacTokenByTid(it.linkTid) : null;
+  if (!nt) return;
   const ab = it.abyss;
   const last = ab.trail[ab.trail.length - 1];
   if (last && Math.hypot((nt.x - last.x) * p.W, (nt.y - last.y) * p.H) < 5) return;
@@ -1897,7 +1911,7 @@ export function renderTacArrows() {
   tacBoard().items.forEach((it) => {
     const ab = it.abyss;
     if (it.kind !== 'spearfishing' || !ab || !ab.on) return;
-    const nt = tacTokenByRole('naiad');
+    const nt = it.linkTid != null ? tacTokenByTid(it.linkTid) : null;
     if (!nt) return;
     const g = document.createElementNS(TAC_SVG_NS, 'g');
     g.setAttribute('pointer-events', 'none');
@@ -2795,18 +2809,56 @@ function buildLinkManageBox(settings, host, info) {
 }
 
 
-function buildAbyssManageBox(settings, spearfishing) {
+// 水渊管理（渔女 / 渔猎 共享；与连线管理同一套相连语义，
+// 允许连线各自持有，模拟水渊状态存于渔猎造物、由相连双方共享）
+function buildAbyssManageBox(settings, host) {
+  const board = tacBoard();
+  const isTok = host.kind == null;
+  let sp = null;
+  let nt = null;
+  if (isTok) {
+    nt = host;
+    sp = board.items.find((it) => it.kind === 'spearfishing' && it.linkTid === nt.tid) || null;
+  } else {
+    sp = host;
+    nt = sp.linkTid != null ? tacTokenByTid(sp.linkTid) : null;
+  }
+  const linked = !!(sp && nt);
   const box = tacManageBox(settings, "ui.tacManageBox.abyss");
   box.innerHTML +=
-    `<label class="tac-manage-abyss"><input type="checkbox"`
-    + translate("application.renderTacManageFourth", { value: spearfishing.abyss && spearfishing.abyss.on ? ' checked' : '' });
-  tacBoxHint(box,
-    translate("application.renderTacManageFifth", {  })
-    + translate("application.renderTacManageSixth", { tacAbyssMaxM: TAC_ABYSS_MAX_M }));
-  box.querySelector('input').addEventListener('change', (e) => {
-    if (e.target.checked) spearfishing.abyss = { on: true, recording: false, trail: [], done: null };
-    else delete spearfishing.abyss;
+    `<div class="tac-link-opts">`
+    + `<label class="tac-link-opt"><input type="checkbox" data-ab="allow"`
+    + `${host.linkAuto !== false ? ' checked' : ''}> ${translate("ui.tacLinkBox.auto")}</label>`
+    + `<label class="tac-link-opt"><input type="checkbox" data-ab="abyss"`
+    + `${sp && sp.abyss && sp.abyss.on ? ' checked' : ''}${linked ? '' : ' disabled'}>`
+    + ` ${translate("ui.tacManageBox.abyssSim")}</label>`
+    + `</div>`;
+  const partnerName = linked ? tacInstDispName(isTok ? sp : nt) : null;
+  const status = document.createElement('span');
+  status.className = 'tac-box-hint tac-link-status';
+  status.textContent = translate(partnerName
+    ? "ui.tacLinkBox.statusLinked" : "ui.tacLinkBox.statusNone", { name: partnerName });
+  box.appendChild(status);
+  tacBoxHint(box, translate("ui.tacManageBox.abyssHint", { maxM: TAC_ABYSS_MAX_M }));
+  tacBoxHint(box, translate("ui.tacManageBox.abyssFixHint", {  }));
+  box.querySelector('input[data-ab="allow"]').addEventListener('change', (e) => {
+    host.linkAuto = e.target.checked;
+    if (e.target.checked) {
+      if (isTok) tacAutoLinkToken(host);
+      else tacAutoLinkItem(host);
+    } else if (isTok) tacBreakTokenLinks(host, true);
+    else tacBreakItemLink(host, true);
+    renderTacBoard();
     renderTacArrows();
+    tacSave();
+    renderTacManage();
+  });
+  box.querySelector('input[data-ab="abyss"]').addEventListener('change', (e) => {
+    if (!linked || !sp) return;
+    if (e.target.checked) sp.abyss = { on: true, recording: false, trail: [], done: null };
+    else delete sp.abyss;
+    renderTacArrows();
+    tacSave();
   });
 }
 
@@ -2921,14 +2973,14 @@ export function renderTacManage() {
     
     
     if (role === 'naiad') {
-      const spearfishing = board.items.find((it) => it.kind === 'spearfishing');
-      if (spearfishing) buildAbyssManageBox(settings, spearfishing);
+      buildAbyssManageBox(settings, token);
     }
 const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     if (fixedSpawnCfg) {
       const fsTitleKey = role === 'professor' ? "ui.tacManageBox.scale"
         : role === 'photographer' ? "ui.tacManageBox.camera"
-        : role === 'madEyes' ? "ui.tacManageBox.console" : null;
+        : role === 'madEyes' ? "ui.tacManageBox.console"
+        : role === 'smileyFace' ? "ui.tacManageBox.parts" : null;
       const fsBox = fsTitleKey ? tacManageBox(settings, fsTitleKey) : settings;
       const fsRangeItem = (Array.isArray(fixedSpawnCfg.item)
         ? fixedSpawnCfg.item : [fixedSpawnCfg.item])
@@ -2991,7 +3043,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     }
 
     const lkDef = Object.values(TAC_ITEM_TYPES).find((d) => d.linkToRole === role);
-    if (lkDef && role !== 'bloodyQueen') {
+    if (lkDef && role !== 'bloodyQueen' && role !== 'naiad') {
       buildLinkManageBox(settings, token, {
         cross: true,
         roleName: (TAC_ROLES[role] || {}).name,
@@ -3109,6 +3161,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
 
   
   if (it.kind !== 'aquaMirror' && it.kind !== 'mirrorImage'
+    && it.kind !== 'spearfishing'
     && (itDef.linkToRole || tacSameLinkable(itDef))) {
     buildLinkManageBox(settings, it, {
       cross: !!itDef.linkToRole,
@@ -5438,7 +5491,7 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
     tacDrag = { tid };
     
     const abIt = tacAbyssItem();
-    const naiadT0 = tacTokenByRole('naiad');
+    const naiadT0 = abIt && abIt.linkTid != null ? tacTokenByTid(abIt.linkTid) : null;
     if (abIt && naiadT0 && tid === naiadT0.tid) {
       abIt.abyss.recording = true;
       abIt.abyss.trail = [{ x: naiadT0.x, y: naiadT0.y }];
@@ -5459,7 +5512,8 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
     tacManageSel = { type: 'item', idx }; 
     
     const it0 = tacBoard().items[idx];
-    const abyssLocked = !!(it0 && it0.abyss && it0.abyss.on && tacTokenByRole('naiad'));
+    const abyssLocked = !!(it0 && it0.abyss && it0.abyss.on
+      && it0.linkTid != null && tacTokenByTid(it0.linkTid));
     const mirrorLocked = !!(it0 && it0.kind === 'aquaMirror'
       && it0.showMirror && it0.fixedMirror);
     tacDragItem = (abyssLocked || mirrorLocked)
@@ -6059,7 +6113,7 @@ window.addEventListener('keydown', (e) => {
     } else if (tacSelectedItem !== null && tacBoard().items[tacSelectedItem]) {
       const it = tacBoard().items[tacSelectedItem];
       
-      if (it.abyss && it.abyss.on && tacTokenByRole('naiad')) {
+      if (it.abyss && it.abyss.on && it.linkTid != null && tacTokenByTid(it.linkTid)) {
         e.preventDefault();
         return;
       }

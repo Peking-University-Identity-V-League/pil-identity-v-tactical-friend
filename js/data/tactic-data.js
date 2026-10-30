@@ -765,8 +765,18 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.theBreakingWheel.wheelOfImpalement.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/4/44/hmcue30b2ndwbm8lli24m1702cysknf.png/90px-%E7%A0%B4%E8%BD%AE1%E9%98%B6%E6%8A%80%E8%83%BD2.png',
   },
+  pessimistic: {
+    name: translate("items.theBreakingWheel.pessimistic.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/62/4fs560q1f5qr8to83c79x87xevnbq7f.png/90px-%E7%A0%B4%E8%BD%AE1%E9%98%B6%E6%8A%80%E8%83%BD1.png',
+  },
+  ridicule: {
+    name: translate("items.theBreakingWheel.ridicule.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/7/76/noq00uguf6o8hl3c62zzyxxuwe57o1x.png/90px-%E7%A0%B4%E8%BD%AE2%E9%98%B6%E6%8A%80%E8%83%BD1.png',
+  },
   spearfishing: {
     name: translate("items.naiad.spearfishing.name"),
+    linkToRole: 'naiad',
+    linkMaxM: 57.5,
     ranges: {
       key: 'showItem',
       options: [
@@ -775,13 +785,39 @@ export const TAC_ITEM_TYPES = {
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/be/3b3skletdo6z31k2wti92rsxisja1tg.png/90px-%E6%B8%94%E5%A5%B30%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
+  surgingTides: {
+    name: translate("items.naiad.surgingTides.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/fb/iwkktsakmdsap200428ptehd25s8j2j.png/90px-%E6%B8%94%E5%A5%B31%E9%98%B6%E6%8A%80%E8%83%BD.png',
+  },
   waxBlock: {
     name: translate("items.waxArtist.waxBlock.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 4.2, label: translate("items.waxArtist.waxBlock.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/36/oeapyqg4ukhau28gj91mcah6b5h9x4t.png/90px-%E8%9C%A1%E5%83%8F%E5%B8%881%E9%98%B6%E6%8A%80%E8%83%BD.png',
+  },
+  moltenWax: {
+    name: translate("items.waxArtist.moltenWax.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/f2/110amobr867n8qauyf4ru3vfqp1t4u6.png/90px-%E8%9C%A1%E5%83%8F%E5%B8%882%E9%98%B6%E6%8A%80%E8%83%BD.png',
+  },
+  waxSculpting: {
+    name: translate("items.waxArtist.waxSculpting.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/9/94/tsqoz0zmefmrnlfwk4jlfrpxxwjmxtp.png',
   },
   raven: {
     name: translate("items.nightmare.raven.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/9b/rhdo7djouajt19j04d2ht83o1x7smip.png/90px-%E2%80%9C%E5%99%A9%E6%A2%A6%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD1.png',
+  },
+  spy: {
+    name: translate("items.nightmare.spy.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/20/n2yhpt9958248kawaffxbtv5fyhu40u.png/90px-%E2%80%9C%E5%99%A9%E6%A2%A6%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD2.png',
+  },
+  badOmen: {
+    name: translate("items.nightmare.badOmen.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/00/psijwfoopecl4dwpc63ky7ujtegc0oy.png/90px-%E2%80%9C%E5%99%A9%E6%A2%A6%E2%80%9D1%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   electromagneticFieldN: {
     name: translate("items.hermit.electromagneticFieldN.name"),
@@ -1789,14 +1825,14 @@ export const TAC_ROLES = {
         { size_m: 10.1, label: translate("characters.theBreakingWheel.range.label.ridicule") },
       ],
     },
-    items: ['wheelForm', 'nailBoard', 'wheelOfImpalement'],
+    items: ['wheelForm', 'nailBoard', 'wheelOfImpalement', 'pessimistic', 'ridicule'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b4/a9kc3enyzxn84eu29l6lxszhvs3lhaf.png/90px-%E7%A0%B4%E8%BD%AE%E5%A4%B4%E5%83%8F.png',
   },
   naiad: {
     name: translate("characters.naiad.name"),
     camp: 'hunter',
     speed: 4.64,
-    items: ['spearfishing'],
+    items: ['spearfishing', 'surgingTides'],
     maxItems: 1,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/d/dc/dah1qypfv56191rerxkkvdytfvki1jh.png/90px-%E6%B8%94%E5%A5%B3%E5%A4%B4%E5%83%8F.png',
   },
@@ -1804,14 +1840,26 @@ export const TAC_ROLES = {
     name: translate("characters.waxArtist.name"),
     camp: 'hunter',
     speed: 4.73,
-    items: ['waxBlock'],
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: 4.2, label: translate("characters.waxArtist.range.label.waxenCoatSplash") },
+      ],
+    },
+    items: ['waxBlock', 'moltenWax', 'waxSculpting'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/04/taokr9xvuhc9tlo57yedyyi08tdh90f.png/90px-%E8%9C%A1%E5%83%8F%E5%B8%88%E5%A4%B4%E5%83%8F.png',
   },
   nightmare: {
     name: translate("characters.nightmare.name"),
     camp: 'hunter',
     speed: 4.64,
-    items: ['raven'],
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: 6.33, label: translate("characters.nightmare.range.label.dive") },
+      ],
+    },
+    items: ['raven', 'spy', 'badOmen'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/8/8f/ea16nemw9m7j8rvj3sg1nm89jh44e7u.png/90px-%E2%80%9C%E5%99%A9%E6%A2%A6%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   clerk: {
