@@ -615,6 +615,15 @@ export const TAC_ITEM_TYPES = {
   },
   aquaMirror: {
     name: translate("items.aquaMirror.name"),
+    linkToRole: 'bloodyQueen',
+    ranges: {
+      modes: [
+         { key: 'aquaMirror', label: translate("items.aquaMirror.range.label.aquaMirror"),
+          size_m: { options: [8.4, 4.2, 21.1],
+            labels: [translate("items.aquaMirror.range.card.showSurvivor"), translate("items.aquaMirror.range.card.mirrorRotationTierOne"), translate("items.aquaMirror.range.card.mirrorImageSurvivorTierTwo")] } },
+        { key: 'off' },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/03/tmqwk7lb2do1swhtp7sklgx75t0ig6f.png/90px-%E7%BA%A2%E5%A4%AB%E4%BA%BA0%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   mirrorImage: {
@@ -1566,6 +1575,7 @@ export const TAC_ROLES = {
   dreamWitch: {
     name: translate("characters.dreamWitch.name"),
     camp: 'hunter',
+    speed: { [translate("characters.dreamWitch.speed.originalBody")]: 6.08, [translate("items.follower.name")]: 4.56 },
     ranges: {
       modes: [
         { key: 'hiddenDream', label: translate("characters.dreamWitch.range.label.hiddenDream"),
@@ -1576,7 +1586,6 @@ export const TAC_ROLES = {
         { key: 'off' },
       ],
     },
-    speed: { [translate("characters.dreamWitch.speed.originalBody")]: 6.08, [translate("items.follower.name")]: 4.56 },
     items: ['follower', 'witchMark', 'hiddenDream'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/6c/igl4l2j95ftovgiv85sdeidapbse4gu.png/90px-%E6%A2%A6%E4%B9%8B%E5%A5%B3%E5%B7%AB%E5%A4%B4%E5%83%8F.png',
   },
@@ -1597,6 +1606,13 @@ export const TAC_ROLES = {
     name: translate("characters.bloodyQueen.name"),
     camp: 'hunter',
     speed: 4.64,
+    ranges: {
+      modes: [
+        { key: 'aquaMirror', label: translate("characters.bloodyQueen.range.label.aquaMirror"),
+          size_m: { options: 25.3, labels: [translate("characters.bloodyQueen.range.card.aquaMirrorPlacement")] } },
+        { key: 'off' },
+      ],
+    },
     items: ['aquaMirror'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/93/5sfpytt0vm3cjq75sr912v6eaxzqh7z.png/90px-%E7%BA%A2%E5%A4%AB%E4%BA%BA%E5%A4%B4%E5%83%8F.png',
   },
@@ -1604,12 +1620,26 @@ export const TAC_ROLES = {
     name: translate("characters.guard26.name"),
     camp: 'hunter',
     speed: 4.64,
+    ranges: {
+      modes: [
+        { key: 'bomb', label: translate("characters.guard26.range.label.bomb"),
+          size_m: { options: 35.5, labels: [translate("characters.guard26.range.card.bombThrowMax")] } },
+        { key: 'off' },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/bf/jycs4x41s0qky58o3pfprwwz9fpvr54.png/90px-26%E5%8F%B7%E5%AE%88%E5%8D%AB%E5%A4%B4%E5%83%8F.png',
   },
   disciple: {
     name: translate("characters.disciple.name"),
     camp: 'hunter',
     speed: 4.73,
+    ranges: {
+      modes: [
+        { key: 'guide', label: translate("characters.disciple.range.label.guide"),
+          size_m: { options: 35.5, labels: [translate("characters.disciple.range.card.guidePlacement")] } },
+        { key: 'off' },
+      ],
+    },
     items: ['cat', 'guide'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/fa/hbvpsmvnox9azfb2kj93nsmbv2a350r.png/90px-%E2%80%9C%E4%BD%BF%E5%BE%92%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },

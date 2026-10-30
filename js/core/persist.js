@@ -56,6 +56,22 @@ for (const board of Object.values(tacBoards)) {
   const naiadT = board.tokens.find((t) => t.role === 'Naiad');
   if (naiadT) naiadT.role = 'naiad';
   board.items.forEach((it) => { if (it.role === 'Naiad') it.role = 'naiad'; });
+  // 镜像状态从红夫人实例迁移到水镜造物（镜像管理状态共享改造）
+  {
+    const bqT = board.tokens.find((t) => t.role === 'bloodyQueen'
+      && (t.showMirror || t.showMirrorLink === false || t.fixedMirror || t.mirrorAxis));
+    const aqIt = board.items.find((it) => it.kind === 'aquaMirror');
+    if (bqT && aqIt) {
+      if (bqT.showMirror) aqIt.showMirror = true;
+      if (bqT.showMirrorLink === false) aqIt.linkShow = false;
+      if (bqT.fixedMirror) aqIt.fixedMirror = true;
+      if (bqT.mirrorAxis) aqIt.mirrorAxis = bqT.mirrorAxis;
+      delete bqT.showMirror; delete bqT.showMirrorLink;
+      delete bqT.fixedMirror; delete bqT.mirrorAxis;
+    }
+    const anyBq = board.tokens.find((t) => t.role === 'bloodyQueen');
+    if (aqIt && anyBq && aqIt.linkTid == null) aqIt.linkTid = anyBq.tid;
+  }
 }
 
 export const restoredMeasureIds = measureIdCounters(tacBoards);

@@ -65,8 +65,10 @@ test('same-kind link manage box: toggles checked, show-link hides the line', asy
   await clickPoint(page, 0.2, 0.3);
   const box = linkBox(page);
   await expect(box).toBeVisible();
-  const hint = await box.locator('.tac-box-hint').first().textContent().catch(() => '');
+  const hint = await box.locator('.tac-box-hint:not(.tac-link-status)').first().textContent().catch(() => '');
   expect(hint).toContain('60');
+  // 状态行在说明文字之前
+  await expect(box.locator('.tac-link-status')).toContainText(/当前已与 移行 ?2 连线/);
   const [autoCb, showCb] = await box.locator('input[type="checkbox"]').all();
   await expect(autoCb).toBeChecked();
   await expect(showCb).toBeChecked();
@@ -76,17 +78,19 @@ test('same-kind link manage box: toggles checked, show-link hides the line', asy
 });
 
 test('cross-kind link: umbrella links earliest wuchang, relinks on wuchang delete', async ({ page }) => {
+  // 先创建镇魂伞，再创建宿伞之魂：创建角色时自动连线
+  await placeItem(page, 'wuchang', 'umbrella', 0.5, 0.5);
   await placeRole(page, 'wuchang', 0.2, 0.2);
   await placeRole(page, 'wuchang', 0.8, 0.2);
-  await placeItem(page, 'wuchang', 'umbrella', 0.5, 0.5);
   let board = await state(page);
   const [w1, w2] = board.tokens.filter((t) => t.role === 'wuchang');
   const umbrella = board.items.find((it) => it.kind === 'umbrella');
   expect(umbrella.linkTid).toBe(w1.tid);
-  // 角色侧也有连线管理框
+  // 角色侧也有连线管理框，且状态行为「当前已与 镇魂伞 连线」
   await tool(page, 'select');
-  await clickPoint(page, 0.8, 0.2);
+  await clickPoint(page, 0.2, 0.2);
   await expect(linkBox(page)).toBeVisible();
+  await expect(linkBox(page).locator('.tac-link-status')).toContainText('当前已与 镇魂伞 连线');
   await expect(linkBox(page)).toContainText('84.4');
   // 删除 1 号宿伞之魂，镇魂伞自动连 2 号
   await tool(page, 'delete');
@@ -113,6 +117,57 @@ test('cross-kind link: unchecking auto-link breaks pair and relinks partner', as
   const [n1, n2] = board.items.filter((it) => it.kind === 'umbrella');
   expect(n1.linkTid == null).toBe(true);
   expect(n2.linkTid).toBe(w1.tid);
+});
+
+test('unlimited link: portal / ultralong passage pair with 无限制 hint and visible line', async ({ page }) => {
+  await placeItem(page, 'priestess', 'straightPassage', 0.2, 0.3);
+  await placeItem(page, 'priestess', 'straightPassage', 0.4, 0.3);
+  await placeItem(page, 'priestess', 'ultralongPassage', 0.2, 0.6);
+  await placeItem(page, 'priestess', 'ultralongPassage', 0.4, 0.6);
+  let board = await state(page);
+  const [p1, p2] = board.items.filter((it) => it.kind === 'straightPassage');
+  expect(p1.linkIid).toBe(p2.iid);
+  const [u1, u2] = board.items.filter((it) => it.kind === 'ultralongPassage');
+  expect(u1.linkIid).toBe(u2.iid);
+  // 两对连线都渲染
+  await expect(page.locator('#tacArrowSvg line')).toHaveCount(2);
+  // 门之匙连线管理：无距离限制文案
+  await tool(page, 'select');
+  await clickPoint(page, 0.2, 0.3);
+  const box = linkBox(page);
+  await expect(box).toBeVisible();
+  await expect(box.locator('.tac-link-status')).toContainText(/当前已与 门之匙 ?2 连线/);
+  await expect(box).toContainText('两者最大距离无限制');
+});
+
+test('link-moment show sync: any checked -> both checked; both unchecked -> stays unchecked', async ({ page }) => {
+  await placeRole(page, 'trait', 0.1, 0.1);
+  await placeItem(page, 'trait', 'warp', 0.2, 0.3);
+  // 移行1 未连线时取消显示连线
+  await tool(page, 'select');
+  await clickPoint(page, 0.2, 0.3);
+  await linkBox(page).locator('input[data-lk="show"]').uncheck();
+  // 创建移行2 自动相连：一端打勾（默认）→ 相连瞬间两端都勾
+  await placeItem(page, 'trait', 'warp', 0.4, 0.3);
+  let board = await state(page);
+  const [w1, w2] = board.items.filter((it) => it.kind === 'warp');
+  expect(w1.linkShow).toBe(true);
+  expect(w2.linkShow).toBe(true);
+  await expect(page.locator('#tacArrowSvg line')).toHaveCount(1);
+  // 两端都取消后再重连：保持未勾、线隐藏
+  await tool(page, 'select');
+  await clickPoint(page, 0.2, 0.3);
+  await linkBox(page).locator('input[data-lk="show"]').uncheck();
+  board = await state(page);
+  expect(board.items.filter((it) => it.kind === 'warp')[1].linkShow).toBe(false);
+  const allowCb = linkBox(page).locator('input[data-lk="auto"]');
+  await allowCb.uncheck();
+  await allowCb.check();
+  board = await state(page);
+  const [n1, n2] = board.items.filter((it) => it.kind === 'warp');
+  expect(n1.linkShow).toBe(false);
+  expect(n2.linkShow).toBe(false);
+  await expect(page.locator('#tacArrowSvg line')).toHaveCount(0);
 });
 
 test('link manage box sits right before the range manage box', async ({ page }) => {

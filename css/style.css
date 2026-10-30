@@ -3860,6 +3860,38 @@ div.tac-fixed-spawn .cam-dir.up {
   color: var(--text-secondary);
   line-height: 1.5;
 }
+.tac-range-desc {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.tac-range-desc > span {
+  flex: 1;
+  min-width: 0;
+}
+.tac-range-del {
+  flex: none;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1;
+  padding: 0 3px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.tac-range-desc:hover .tac-range-del {
+  opacity: 0.9;
+}
+.tac-range-del:hover {
+  color: #f87171;
+  opacity: 1;
+}
+.tac-link-status {
+  display: block;
+  color: #7dd3fc;
+}
 .tac-range-fill {
   display: flex;
   align-items: center;
