@@ -149,11 +149,11 @@ export function restoreRegionSel(mapId) {
   const sc = savedChairs[mapId] || {};
   S.tacChairIndex = ch && ch.sets.length
     ? Math.min(Math.max(0, sc.set | 0), ch.sets.length - 1) : 0;
-  S.tacChairBasementIndex = ch && ch.basements.length
-    ? Math.min(Math.max(0, sc.basement | 0), ch.basements.length - 1) : 0;
-  const bx = MAPS_DATA[mapId].chests;
-  S.tacBoxBasementIndex = bx && bx.basements.length
-    ? Math.min(Math.max(0, (savedBoxes[mapId] || {}).basement | 0), bx.basements.length - 1) : 0;
+
+  const bCount = Object.keys(MAPS_DATA[mapId].basements || {}).length;
+  S.tacChairBasementIndex = bCount
+    ? Math.min(Math.max(0, sc.basement | 0), bCount - 1) : 0;
+  S.tacBoxBasementIndex = S.tacChairBasementIndex;
   const r = savedRegions[mapId];
   if (!r) return;
   const zones = mapsZonesRelative[mapId];

@@ -54,20 +54,23 @@ export const MAPS_DATA = [
         [[330, 119], [128, 220], [416, 222]],
         [[330, 119], [117, 138], [291, 318]],
       ],
-      basements: [
-        [[517, -33, 468], [565, -33, 487], [548, -33, 492], [526, -33, 499]],
-        [[277, -33, 217], [315, -33, 221], [322, -33, 249], [286, -33, 253]],
-      ],
     };
 
     const chests = {
       fixed: [[129, 140], [570, 186], [202, 303], [382, 357]],
-      sets: [],
-      basements: [
-        [[343, -33, 229]],
-        [[547, -33, 458]],
-      ],
     };
+
+    const basements = {
+      basement_1: {
+        rocketChairs: [[517, -33, 468], [565, -33, 487], [548, -33, 492], [526, -33, 499]],
+        chest: [[547, -33, 458]],
+      },
+      basement_2: {
+        rocketChairs: [[277, -33, 217], [315, -33, 221], [322, -33, 249], [286, -33, 253]],
+        chest: [[343, -33, 229]],
+      },
+    };
+
 
     const escapeDoors = [[682, 240], [45, 320], [682, 260], [45, 300]];
 
@@ -191,7 +194,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
       law_urls, fixedHint, hints,
       deduction: (() => {
@@ -257,19 +260,23 @@ export const MAPS_DATA = [
         [[487, 398], [425, 503]],
         [[545, 396], [487, 398]],
       ],
-      basements: [
-        [[505, -31, 142], [475, -31, 157], [475, -31, 170], [476, -31, 184]],
-        [[296, -28, 282], [303, -28, 291], [312, -28, 298], [280, -28, 323]],
-      ],
     };
+
     const chests = {
       fixed: [[239, 58], [292, 108], [373, 1, 195], [150, 345], [391, 348], [366, 476], [564, 495]],
-      sets: [],
-      basements: [
-        [[267, -28, 279]],
-        [[514, -31, 179]],
-      ],
     };
+
+    const basements = {
+      basement_1: {
+        rocketChairs: [[296, -28, 282], [303, -28, 291], [312, -28, 298], [280, -28, 323]],
+        chest: [[267, -28, 279]],
+      },
+      basement_2: {
+        rocketChairs: [[505, -31, 142], [475, -31, 157], [475, -31, 170], [476, -31, 184]],
+        chest: [[514, -31, 179]],
+      },
+    };
+
 
     const escapeDoors = [[326, 530], [615, 88], [311, 530], [615, 104]];
 
@@ -390,7 +397,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
       law_urls, fixedHint, hints,
       deduction: (() => {
@@ -464,20 +471,23 @@ export const MAPS_DATA = [
         [[253, 171], [431, 174], [354, 181], [155, 276], [445, 306], [382, 375], [210, 500]],
         [[348, 75], [253, 171], [507, 184], [451, 226], [155, 276], [382, 375], [135, 411], [356, 440]],
       ],
-      basements: [
-        [[310, -25, 306], [310, -25, 315], [310, -25, 323], [310, -25, 331]],
-        [[288, -28, 175], [296, -28, 175], [304, -28, 175], [312, -28, 175]],
-      ],
     };
 
     const chests = {
       fixed: [[153, 142], [145, 261], [442, 370], [132, 381], [138, 470], [525, 477], [330, 497]],
-      sets: [],
-      basements: [
-        [[294, -25, 289]],
-        [[331, -28, 161]],
-      ],
     };
+
+    const basements = {
+      basement_1: {
+        rocketChairs: [[310, -25, 306], [310, -25, 315], [310, -25, 323], [310, -25, 331]],
+        chest: [[294, -25, 289]],
+      },
+      basement_2: {
+        rocketChairs: [[288, -28, 175], [296, -28, 175], [304, -28, 175], [312, -28, 175]],
+        chest: [[331, -28, 161]],
+      },
+    };
+
 
     const escapeDoors = [[297, 543], [474, 90], [283, 543], [488, 90]];
 
@@ -595,7 +605,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
       law_urls, fixedHint, hints,
       deduction: (() => {
@@ -673,20 +683,23 @@ export const MAPS_DATA = [
         [[171, 276], [859, 626], [770, 1023], [728, 585], [564, 874], [465, 379], [237, 497]], // 1/8 局
         [[171, 276], [859, 626], [315, 203], [664, 449], [465, 379], [696, -1, 988]], // 1/8 局
       ],
-      basements: [
-        [[1080, -41, 683], [1038, -41, 691], [1079, -41, 701], [1041, -41, 724]], // 4/8 局
-        [[622, -47, 283], [579, -47, 308], [621, -47, 316], [579, -47, 324]], // 4/8 局
-      ],
     };
 
     const chests = {
       fixed: [[157, 516], [346, 555], [230, 668], [854, 703], [195, 839], [818, 996], [324, 1065]],
-      sets: [],
-      basements: [
-        [[1056, -40, 760]],
-        [[601, -47, 250]],
-      ],
     };
+
+    const basements = {
+      basement_1: {
+        rocketChairs: [[622, -47, 283], [579, -47, 308], [621, -47, 316], [579, -47, 324]],
+        chest: [[601, -47, 250]],
+      },
+      basement_2: {
+        rocketChairs: [[1080, -41, 683], [1038, -41, 691], [1079, -41, 701], [1041, -41, 724]],
+        chest: [[1056, -40, 760]],
+      },
+    };
+
 
     const escapeDoors = [[878, 1066], [200, 134], [834, 1066], [238, 134]];
 
@@ -809,7 +822,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
       law_urls, fixedHint, hints,
       deduction: (() => {
@@ -893,19 +906,23 @@ export const MAPS_DATA = [
         [[531, 516], [1177, 583], [667, 1, 771]], // 1/9 局
         [[531, 516], [993, 517], [430, 851]], // 1/9 局
       ],
-      basements: [
-        [[961, -53, 775], [917, -53, 790], [997, -53, 809], [940, -53, 823]],
-        [[473, -60, 210], [437, -60, 223], [473, -60, 257], [433, -60, 280]],
-      ],
     };
+
     const chests = {
       fixed: [[834, 184], [63, 223], [1280, 319], [855, 458], [1402, 781], [734, 789], [249, 802]],
-      sets: [],
-      basements: [
-        [[941, -53, 784]],
-        [[475, -59, 236]],
-      ],
     };
+
+    const basements = {
+      basement_1: {
+        rocketChairs: [[473, -60, 210], [437, -60, 223], [473, -60, 257], [433, -60, 280]],
+        chest: [[475, -59, 236]],
+      },
+      basement_2: {
+        rocketChairs: [[961, -53, 775], [917, -53, 790], [997, -53, 809], [940, -53, 823]],
+        chest: [[941, -53, 784]],
+      },
+    };
+
 
     const escapeDoors = [[1312, 88], [130, 946], [1340, 88], [101, 946]];
 
@@ -1027,7 +1044,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
       law_urls, fixedHint, hints,
       deduction: (() => {
@@ -1106,20 +1123,23 @@ export const MAPS_DATA = [
         [[91, 102], [382, 115], [612, 197], [145, 201], [643, 322], [657, 488]], // 1/11 局
         [[91, 102], [382, 115], [555, 127], [612, 197], [108, 284], [589, 492]], // 1/11 局
       ],
-      basements: [
-        [[351, -32, 470], [309, -32, 472], [357, -32, 494], [346, -32, 496]],
-        [[343, -32, 158], [386, -32, 159], [359, -32, 193], [386, -32, 193]],
-      ],
     };
 
     const chests = {
       fixed: [[274, 115], [538, 166], [622, 234], [175, 337], [381, 402], [592, 423], [183, 556]],
-      sets: [],
-      basements: [
-        [[373, -32, 482]],
-        [[407, -32, 173]],
-      ],
     };
+
+    const basements = {
+      basement_1: {
+        rocketChairs: [[343, -32, 158], [386, -32, 159], [359, -32, 193], [386, -32, 193]],
+        chest: [[407, -32, 173]],
+      },
+      basement_2: {
+        rocketChairs: [[351, -32, 470], [309, -32, 472], [357, -32, 494], [346, -32, 496]],
+        chest: [[373, -32, 482]],
+      },
+    };
+
 
     const escapeDoors = [[64, 230], [612, 58], [64, 211], [630, 58]];
 
@@ -1239,7 +1259,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
       law_urls, fixedHint, hints,
       deduction: (() => {
@@ -1323,20 +1343,23 @@ export const MAPS_DATA = [
         [[279, 118], [613, 219]], // 4/5 局
         [[549, 313]], // 1/5 局
       ],
-      basements: [
-        [[538, -39, 74], [571, -39, 74], [568, -39, 115], [587, -39, 116]],
-        [[707, -40, 614], [686, -40, 639], [724, -40, 645], [686, -40, 659]],
-      ],
     };
 
     const chests = {
       fixed: [[231, 139], [576, 217], [302, 358], [180, 371], [428, 704]],
-      sets: [],
-      basements: [
-        [[512, -39, 95]],
-        [[704, -39, 587]],
-      ],
     };
+
+    const basements = {
+      basement_1: {
+        rocketChairs: [[538, -39, 74], [571, -39, 74], [568, -39, 115], [587, -39, 116]],
+        chest: [[512, -39, 95]],
+      },
+      basement_2: {
+        rocketChairs: [[707, -40, 614], [686, -40, 639], [724, -40, 645], [686, -40, 659]],
+        chest: [[704, -39, 587]],
+      },
+    };
+
 
     const escapeDoors = [[387, 20], [225, 616], [404, 20], [209, 616]];
 
@@ -1455,7 +1478,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
       law_urls, fixedHint, hints,
       deduction: (() => {
@@ -1530,20 +1553,23 @@ export const MAPS_DATA = [
         [[468, 197], [449, 511], [1185, 797]], // 5/15 局
         [[230, 178], [489, 341], [1185, 797]], // 3/15 局
       ],
-      basements: [
-        [[217, -67, 663], [138, -67, 667], [217, -67, 691], [142, -67, 742]],
-        [[878, -67, 868], [911, -67, 874], [961, -67, 945], [886, -67, 957]],
-      ],
     };
 
     const chests = {
       fixed: [[959, 1, 324], [225, 1, 527], [505, 1, 918], [950, 1, 1038]],
-      sets: [],
-      basements: [
-        [[173, -67, 776]],
-        [[969, -67, 892]],
-      ],
     };
+
+    const basements = {
+      basement_1: {
+        rocketChairs: [[878, -67, 868], [911, -67, 874], [961, -67, 945], [886, -67, 957]],
+        chest: [[969, -67, 892]],
+      },
+      basement_2: {
+        rocketChairs: [[217, -67, 663], [138, -67, 667], [217, -67, 691], [142, -67, 742]],
+        chest: [[173, -67, 776]],
+      },
+    };
+
 
     const escapeDoors = [[705, 1134], [780, 18], [667, 1134], [818, 18]];
 
@@ -1664,7 +1690,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
       law_urls, fixedHint, hints,
       deduction: (() => {
@@ -1750,20 +1776,23 @@ export const MAPS_DATA = [
       fixed: [[1078, 140], [505, 235], [857, 254], [232, 310], [1059, 449], [582, 452], [885, 569], [140, 681], [1062, 715], [629, 735], [385, 825], [695, 1002], [217, 3, 1022], [1050, 1062], [484, 1132]],
       sets: [
       ],
-      basements: [
-        [[428, -66, 930], [357, -66, 943], [428, -66, 964], [359, -66, 988]],
-        [[887, -68, 453], [945, -68, 467], [907, -68, 526], [952, -68, 526]],
-      ],
     };
 
     const chests = {
       fixed: [[305, 125], [1023, 223], [503, 574], [966, 882], [418, 57, 983]],
-      sets: [],
-      basements: [
-        [[393, -66, 1042]],
-        [[1007, -68, 490]],
-      ],
     };
+
+    const basements = {
+      basement_1: {
+        rocketChairs: [[887, -68, 453], [945, -68, 467], [907, -68, 526], [952, -68, 526]],
+        chest: [[1007, -68, 490]],
+      },
+      basement_2: {
+        rocketChairs: [[428, -66, 930], [357, -66, 943], [428, -66, 964], [359, -66, 988]],
+        chest: [[393, -66, 1042]],
+      },
+    };
+
 
     const escapeDoors = [[1214, 772], [50, 224], [1214, 816], [50, 180]];
 
@@ -1885,7 +1914,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
       law_urls, fixedHint, hints,
       deduction: (() => {

@@ -943,7 +943,33 @@ export const TAC_ITEM_TYPES = {
   },
   yithian: {
     name: translate("items.theShadow.yithian.name"),
-    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/bd/9fsij05z733x1stahpjarmbgur876op.png/90px-%E6%97%B6%E7%A9%BA%E4%B9%8B%E5%BD%B10%E9%98%B6%E6%8A%80%E8%83%BD2.png',
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 15, label: translate("items.theShadow.yithian.name") },
+      ],
+    },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/0c/29lp6giai6vozd29i82ucquh4px9p1k.png/90px-%E6%97%B6%E7%A9%BA%E4%B9%8B%E5%BD%B10%E9%98%B6%E6%8A%80%E8%83%BD1.png',
+  },
+  ancientVisage: {
+    name: translate("items.theShadow.ancientVisage.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 15, label: translate("items.theShadow.ancientVisage.name") },
+      ],
+    },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/d/da/c2qmk7cs5shwl528wzkkmma6i2v8ael.png',
+  },
+  psychicIntrusion: {
+    name: translate("items.theShadow.psychicIntrusion.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 5.1, label: translate("items.theShadow.psychicIntrusion.name") },
+      ],
+    },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/6a/hyd5re6tdcr9a48goe48d8ptblq337y.png/90px-%E6%97%B6%E7%A9%BA%E4%B9%8B%E5%BD%B10%E9%98%B6%E6%8A%80%E8%83%BD3.png',
   },
   corruptedOstracon: {
     name: translate("items.theShadow.corruptedOstracon.name"),
@@ -955,19 +981,31 @@ export const TAC_ITEM_TYPES = {
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/35/6tyw4qniiw51aohhjwxjv4wq8yj28ud.png/90px-%E6%97%B6%E7%A9%BA%E4%B9%8B%E5%BD%B10%E9%98%B6%E6%8A%80%E8%83%BD4.png',
   },
-  ancientVisage: {
-    name: translate("items.theShadow.ancientVisage.name"),
+  cage: {
+    name: translate("items.goatman.cage.name"),
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 9, label: translate("items.theShadow.ancientVisage.name") },
+        { size_m: [9, 12, 15], label: translate("items.goatman.cage.name") },
       ],
     },
-    icon: 'https://patchwiki.biligame.com/images/dwrg/d/da/c2qmk7cs5shwl528wzkkmma6i2v8ael.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/67/kqp54mjbpln0aytlr986ko5j4y7cy4t.png/90px-%E2%80%9C%E8%B7%9B%E8%84%9A%E7%BE%8A%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD1.png',
+  },
+  backstep: {
+    name: translate("items.goatman.backstep.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/4/47/3owyamuxpjlzvu8fxpnzknlexyg39my.png/90px-%E2%80%9C%E8%B7%9B%E8%84%9A%E7%BE%8A%E2%80%9D1%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   cloneHullabaloo: {
     name: translate("items.hullabaloo.cloneHullabaloo.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/18/hj1mypuwdo5p41epy37ia9ln3cylr7q.png/90px-%E2%80%9C%E5%96%A7%E5%9A%A3%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD2.png',
+  },
+  encore: {
+    name: translate("items.hullabaloo.encore.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/7/7f/gassmti0jphonoe70lt2mgzdmb3fn1s.png/90px-%E2%80%9C%E5%96%A7%E5%9A%A3%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD1.png',
+  },
+  trapeze: {
+    name: translate("items.hullabaloo.trapeze.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/f6/p6lgt5n20aaf5j18p7j7tmp60h6m4sq.png/90px-%E2%80%9C%E5%96%A7%E5%9A%A3%E2%80%9D1%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   contactPoint: {
     name: translate("items.cueist.contactPoint.name"),
@@ -993,15 +1031,17 @@ export const TAC_ITEM_TYPES = {
     glow: 'rgba(24, 24, 27, 0.45)',
     icon: 'https://patchwiki.biligame.com/images/dwrg/6/67/t7auxaxdhzzis13n6qnl24dciluiddd.png',
   },
-  cage: {
-    name: translate("items.goatman.cage.name"),
-    ranges: {
-      key: 'showItem',
-      options: [
-        { size_m: [9, 12, 15], label: translate("items.goatman.cage.name") },
-      ],
-    },
-    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/67/kqp54mjbpln0aytlr986ko5j4y7cy4t.png/90px-%E2%80%9C%E8%B7%9B%E8%84%9A%E7%BE%8A%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD1.png',
+  swarmOfInsects: {
+    name: translate("items.queenBee.swarmOfInsects.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/c/ca/swgm0hdknhwtbus7acri5aviubn3ocy.png',
+  },
+  stinger: {
+    name: translate("items.queenBee.stinger.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/ba/0e8a53xtahxfg1adgym48s2g5e0ca28.png/90px-%E2%80%9C%E5%A5%B3%E7%8E%8B%E8%9C%82%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD2.png',
+  },
+  beam: {
+    name: translate("items.dentist.beam.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/bb/5jqs5qdr0f7icwl49sua4asl776g4et.png/90px-%E2%80%9C%E7%89%99%E5%8C%BB%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD4.png',
   },
   bestialAwakening: {
     name: translate("items.herztier.bestialAwakening.name"),
@@ -1997,35 +2037,48 @@ export const TAC_ROLES = {
     name: translate("characters.foolsGold.name"),
     camp: 'hunter',
     speed: 4.64,
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: 40, label: translate("characters.foolsGold.range.label.pickaxeThrowMax") },
+        { size_m: 60, label: translate("characters.foolsGold.range.label.pickaxeReturn") },
+        { size_m: 60, label: translate("characters.foolsGold.range.label.magneticRockPlacemnt") },
+      ],
+    },
     items: ['pickaxe', 'magneticRock'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b8/bkshz3pnyhz1mhmq3xrr3bgr2mctkc0.png/90px-%E2%80%9C%E6%84%9A%E4%BA%BA%E9%87%91%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   theShadow: {
-
-    ranges: {
-      key: 'showItem',
-      options: [
-        { size_m: 15, label: translate("characters.theShadow.range.label.ancientVisage") },
-      ],
-    },
     name: translate("characters.theShadow.name"),
     camp: 'hunter',
     speed: { [translate("characters.theShadow.speed.ivy")]: 4.64, [translate("items.theShadow.yithian.name")]: 7.59 },
-    items: ['yithian', 'corruptedOstracon', 'ancientVisage'],
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: 15, label: translate("characters.theShadow.range.label.corruption") },
+      ],
+    },
+    items: ['yithian', 'ancientVisage', 'psychicIntrusion', 'corruptedOstracon'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b7/sm52k5nm0azevp1522d8fdx7p59d4nl.png/90px-%E6%97%B6%E7%A9%BA%E4%B9%8B%E5%BD%B1%E5%A4%B4%E5%83%8F.png',
   },
   goatman: {
     name: translate("characters.goatman.name"),
     camp: 'hunter',
     speed: 4.64,
-    items: ['cage'],
+    items: ['cage', 'backstep'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/6c/1lx58h74jh6atpnkp3ve0z23d5xrwyy.png/90px-%E2%80%9C%E8%B7%9B%E8%84%9A%E7%BE%8A%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   hullabaloo: {
     name: translate("characters.hullabaloo.name"),
     camp: 'hunter',
     speed: 5.10,
-    items: ['cloneHullabaloo'],
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: 3.54, label: translate("characters.hullabaloo.range.label.bombsArea") },
+      ],
+    },
+    items: ['cloneHullabaloo', 'encore', 'trapeze'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/4/4a/h01g2xvfrfnb48m8u3a1xghciyfd9cy.png/90px-%E2%80%9C%E5%96%A7%E5%9A%A3%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   peddler: {
@@ -2045,12 +2098,14 @@ export const TAC_ROLES = {
     name: translate("characters.queenBee.name"),
     camp: 'hunter',
     speed: 4.64,
+    items: ['swarmOfInsects', 'stinger'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/c/c6/0kb43nn36sho3vxrlvy2byk5xt9wldt.png/90px-%E2%80%9C%E5%A5%B3%E7%8E%8B%E8%9C%82%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   dentist: {
     name: translate("characters.dentist.name"),
     camp: 'hunter',
     speed: 4.73,
+    items: ['beam'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/55/qqgw8tk7p16rrgpfodmon5y9ljj2dq8.png/90px-%E2%80%9C%E7%89%99%E5%8C%BB%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   herztier: {

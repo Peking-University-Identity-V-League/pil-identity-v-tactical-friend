@@ -438,9 +438,7 @@ export function syncTacImage() {
   const basementEntry = $('tacBasementEntry');
   if (basementEntry) {
     const map = MAPS_DATA[S.currentMapId];
-    const hasBasement = Boolean(
-      (map.rocketChairs && map.rocketChairs.basements && map.rocketChairs.basements.length)
-      || (map.chests && map.chests.basements && map.chests.basements.length));
+    const hasBasement = tacBasementList().length > 0;
     basementEntry.style.display = hasBasement ? '' : 'none';
   }
   syncTacDungeonText();
@@ -675,6 +673,10 @@ export function switchTacDungeon(step) {
 }
 
 
+function tacBasementList() {
+  return Object.values((MAPS_DATA[S.currentMapId] || {}).basements || {});
+}
+
 export function renderTacChairs() {
   if (!tacMapWrap) return;
   tacMapWrap.querySelectorAll('.tac-chair').forEach((el) => el.remove());
@@ -705,10 +707,11 @@ export function renderTacChairs() {
         translate("application.renderTacChairs", { index: setIdx + 1, count: ch.sets.length })));
     }
   }
-  if (tacDisplay.chairsBasement && ch.basements.length) {
-    const bIdx = S.tacChairBasementIndex % ch.basements.length;
-    ch.basements[bIdx].forEach((pt) => draw(pt,
-      translate("application.renderTacChairsBasement", { index: bIdx + 1, count: ch.basements.length })));
+  const bs = tacBasementList();
+  if (tacDisplay.chairsBasement && bs.length) {
+    const bIdx = S.tacChairBasementIndex % bs.length;
+    bs[bIdx].rocketChairs.forEach((pt) => draw(pt,
+      translate("application.renderTacChairsBasement", { index: bIdx + 1, count: bs.length })));
   }
 }
 
@@ -729,31 +732,17 @@ export function switchTacChair(step) {
 }
 
 export function syncTacBasementText() {
-  const ch = MAPS_DATA[S.currentMapId].rocketChairs;
-  const bx = MAPS_DATA[S.currentMapId].chests;
-  const count = Math.max(
-    ch && ch.basements ? ch.basements.length : 0,
-    bx && bx.basements ? bx.basements.length : 0,
-  );
+  const count = tacBasementList().length;
   if (!count) { tacBasementText.textContent = '--'; return; }
   tacBasementText.textContent = translate("application.syncTacBasementText",
     { index: S.tacChairBasementIndex + 1, count });
 }
 
 export function switchTacBasement(step) {
-  const ch = MAPS_DATA[S.currentMapId].rocketChairs;
-  const bx = MAPS_DATA[S.currentMapId].chests;
-  const count = Math.max(
-    ch && ch.basements ? ch.basements.length : 0,
-    bx && bx.basements ? bx.basements.length : 0,
-  );
+  const count = tacBasementList().length;
   if (!count) return;
   S.tacChairBasementIndex = (S.tacChairBasementIndex + step + count) % count;
-  S.tacBoxBasementIndex = (S.tacBoxBasementIndex + step + count) % count;
-  const maxChair = ch && ch.basements.length ? ch.basements.length : count;
-  const maxBox = bx && bx.basements.length ? bx.basements.length : count;
-  S.tacChairBasementIndex %= maxChair;
-  S.tacBoxBasementIndex %= maxBox;
+  S.tacBoxBasementIndex = S.tacChairBasementIndex;
   syncTacBasementText();
   renderTacChairs();
   renderTacBoxes();
@@ -785,10 +774,11 @@ export function renderTacBoxes() {
   if (tacDisplay.boxes) {
     bx.fixed.forEach((pt) => draw(pt, translate("application.renderTacBoxesFixed")));
   }
-  if (tacDisplay.boxesBasement && bx.basements.length) {
-    const bIdx = S.tacBoxBasementIndex % bx.basements.length;
-    bx.basements[bIdx].forEach((pt) => draw(pt,
-      translate("application.renderTacBoxesBasement", { index: bIdx + 1, count: bx.basements.length })));
+  const bs = tacBasementList();
+  if (tacDisplay.boxesBasement && bs.length) {
+    const bIdx = S.tacChairBasementIndex % bs.length;
+    bs[bIdx].chest.forEach((pt) => draw(pt,
+      translate("application.renderTacBoxesBasement", { index: bIdx + 1, count: bs.length })));
   }
 }
 
@@ -831,8 +821,9 @@ export function tacSnapTarget(p, excl) {
       ch.fixed.forEach(pushChair);
       if (ch.sets.length) ch.sets[S.tacChairIndex % ch.sets.length].forEach(pushChair);
     }
-    if (tacDisplay.chairsBasement && ch.basements.length) {
-      ch.basements[S.tacChairBasementIndex % ch.basements.length].forEach(pushChair);
+    const bs = tacBasementList();
+    if (tacDisplay.chairsBasement && bs.length) {
+      bs[S.tacChairBasementIndex % bs.length].rocketChairs.forEach(pushChair);
     }
   }
   if (tacDisplay.snap.box && map.chests) {
@@ -844,8 +835,9 @@ export function tacSnapTarget(p, excl) {
     if (tacDisplay.boxes) {
       bx.fixed.forEach(pushBox);
     }
-    if (tacDisplay.boxesBasement && bx.basements.length) {
-      bx.basements[S.tacBoxBasementIndex % bx.basements.length].forEach(pushBox);
+    const bs = tacBasementList();
+    if (tacDisplay.boxesBasement && bs.length) {
+      bs[S.tacChairBasementIndex % bs.length].chest.forEach(pushBox);
     }
   }
   if (tacDisplay.snap.point) {
@@ -5056,8 +5048,9 @@ export async function tacExportImage() {
       ch.fixed.forEach(drawChair);
       if (ch.sets.length) ch.sets[S.tacChairIndex % ch.sets.length].forEach(drawChair);
     }
-    if (tacDisplay.chairsBasement && ch.basements.length) {
-      ch.basements[S.tacChairBasementIndex % ch.basements.length].forEach(drawChair);
+    const bs = tacBasementList();
+    if (tacDisplay.chairsBasement && bs.length) {
+      bs[S.tacChairBasementIndex % bs.length].rocketChairs.forEach(drawChair);
     }
   }
 
@@ -5070,8 +5063,9 @@ export async function tacExportImage() {
       ctx.drawImage(boxIcon, PX(px / W0) - size / 2, PY(pz / H0) - size / 2, size, size);
     };
     if (tacDisplay.boxes) bx.fixed.forEach(drawBox);
-    if (tacDisplay.boxesBasement && bx.basements.length) {
-      bx.basements[S.tacBoxBasementIndex % bx.basements.length].forEach(drawBox);
+    const bs = tacBasementList();
+    if (tacDisplay.boxesBasement && bs.length) {
+      bs[S.tacChairBasementIndex % bs.length].chest.forEach(drawBox);
     }
   }
 
