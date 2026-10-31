@@ -5,7 +5,7 @@ host.className = 'pil-handoff';
 host.dataset.state = 'loading';
 const back = document.createElement('a');
 back.className = 'pil-handoff-back';
-back.href = '/tactical-friend/';
+back.href = location.pathname.startsWith('/zhanshuyanlian/3d/') ? '/zhanshuyanlian/' : '/tactical-friend/';
 back.textContent = '← 返回二维战术板';
 const status = document.createElement('p');
 status.setAttribute('role', 'status');

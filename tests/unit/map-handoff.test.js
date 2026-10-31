@@ -22,9 +22,11 @@ test('all nine 2D maps open the corresponding 3D scene', () => {
   assert.equal(new Set(MAP_SCENES).size, 9);
   for (let mapId = 0; mapId < 9; mapId++) {
     assert.equal(map3dURL({ mapId }), `/tactical-friend/3d/${MAP_SCENES[mapId]}.html`);
+    assert.equal(map3dURL({ mapId, entryPath: '/zhanshuyanlian/' }), `/zhanshuyanlian/3d/${MAP_SCENES[mapId]}.html`);
   }
   assert.throws(() => map3dURL({ mapId: 9 }));
   assert.throws(() => map3dURL({ mapId: '0' }));
+  assert.throws(() => map3dURL({ mapId: 0, entryPath: '//example.invalid/' }));
 });
 test('the fragment contains only image identity and endpoints, with no board state or query parameters', () => {
   const input = { mapId: 0, image: 'https://example.org/map.png', size: [750, 644], start: [.1, .2], end: [.8, .9], tokens: { secret: 'ignored' } };

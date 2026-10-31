@@ -35,9 +35,11 @@ const server = createServer((request, response) => {
     response.end('Bad request');
     return;
   }
-  if (requestPath === '/tactical-friend/3d') requestPath += '/';
-  if (requestPath.startsWith('/tactical-friend/3d/')) requestPath = '/maps-3d/' + requestPath.slice('/tactical-friend/3d/'.length);
-  else if (requestPath.startsWith('/tactical-friend/')) requestPath = requestPath.slice('/tactical-friend'.length);
+  for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
+    if (requestPath === prefix + '/3d') requestPath += '/';
+    if (requestPath.startsWith(prefix + '/3d/')) requestPath = '/maps-3d/' + requestPath.slice((prefix + '/3d/').length);
+    else if (requestPath.startsWith(prefix + '/')) requestPath = requestPath.slice(prefix.length);
+  }
   const relativePath = requestPath === '/' ? 'index.html' : requestPath.replace(/^\/+/, '').replace(/\/$/, '/index.html');
   const absolutePath = resolve(projectRoot, relativePath);
   const isInsideProject = absolutePath === projectRoot || absolutePath.startsWith(`${projectRoot}${sep}`);

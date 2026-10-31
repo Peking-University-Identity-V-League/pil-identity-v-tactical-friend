@@ -78,8 +78,10 @@ export async function deploy() {
         if (actual.release !== expected.release || actual.component !== expected.component) throw new Error();
       }
       const maps = JSON.parse(await readFile('dist/3d/__release.json', 'utf8'));
-      const actualMaps = await remoteMetadata(host, '/tactical-friend/3d/__release.json');
-      if (actualMaps.source_commit !== metadata.source_commit || actualMaps.asset_version !== maps.asset_version) throw new Error();
+      for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
+        const actualMaps = await remoteMetadata(host, prefix + '/3d/__release.json');
+        if (actualMaps.source_commit !== metadata.source_commit || actualMaps.asset_version !== maps.asset_version) throw new Error();
+      }
     } catch { throw new Error('Upload completed, but CST HTTPS release verification failed.'); }
     const message = 'CST static release activated and verified over HTTPS: ' + expected.component + '; ' + expected.release;
     console.log(message);

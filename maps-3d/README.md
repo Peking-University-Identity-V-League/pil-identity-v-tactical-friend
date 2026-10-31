@@ -1,8 +1,8 @@
 # 官网三维地图运行文件
 
-线上入口：[pkuidv.com/tactical-friend/3d/](https://pkuidv.com/tactical-friend/3d/)。二维入口是 [pkuidv.com/tactical-friend/](https://pkuidv.com/tactical-friend/)。
+线上入口：[pkuidv.com/tactical-friend/3d/](https://pkuidv.com/tactical-friend/3d/) 与 [pkuidv.com/zhanshuyanlian/3d/](https://pkuidv.com/zhanshuyanlian/3d/)。各自的二维入口切换三维、返回二维时保留相同路径前缀，浏览器显示具体地图文件名，不显示版本哈希。
 
-本目录接管原 `/maps-3d/` 已公开部署的 18 个运行文件，包括十个地图页面、地图列表、前端脚本、样式、坐标校准和版本信息。迁移基准为 `d881d1fb0bf3aad2bc8a076707d9ed57c59623d7`，页面保持该生产版本的原始字节；迁移不引入其他开发分支的功能变更。
+本目录接管原 `/maps-3d/` 已公开部署的 18 个运行文件，包括十个地图页面、地图列表、前端脚本、样式、坐标校准和版本信息。迁移基准为 `d881d1fb0bf3aad2bc8a076707d9ed57c59623d7`，地图页面和资源保持该生产版本内容，入口脚本按当前发布路径维护；迁移不引入其他开发分支的功能变更。
 
 二维应用及本目录由本仓库的 `main` 分支统一检查、打包和发布。发布构建不读取私有仓库，也不需要私有仓库凭据。地图版本由全部运行文件的 SHA-256 清单计算；版本文件保留长期缓存，固定入口重新验证并保留查询参数及坐标片段。
 

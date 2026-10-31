@@ -6204,7 +6204,8 @@ for (const button of document.querySelectorAll('[data-map-3d]')) {
       const endpoints = measurementEndpoints(tacBoard().measures, {
         selectedIndex: tacSelMeasure?.idx, pending: tacMeasurePending, activeChain: tacChainRoute,
       });
-      const target = map3dURL({ mapId: S.currentMapId, image: map.mapImage, size: map.mapSize, ...endpoints });
+      const entryPath = location.pathname.startsWith('/zhanshuyanlian/') ? '/zhanshuyanlian/' : '/tactical-friend/';
+      const target = map3dURL({ mapId: S.currentMapId, image: map.mapImage, size: map.mapSize, entryPath, ...endpoints });
       tacSave();
       flushSave();
       window.location.assign(target);
