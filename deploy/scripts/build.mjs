@@ -1,9 +1,11 @@
 import { execFileSync } from 'node:child_process';
-import { access, readFile, writeFile } from 'node:fs/promises';
+import { access, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { prepareAssets } from './prepare-assets.mjs';
 import { prepareMaps } from './maps3d.mjs';
+import { snapshotAssets } from './asset-snapshot.mjs';
+import { compressFile, digest, filesIn, policy, policyVersion, writeManifest } from './asset-policy.mjs';
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -28,15 +30,29 @@ export async function build(sourceArgument) {
   if (!revision) {
     try { revision = git(['-C', projectRoot, 'rev-parse', 'HEAD']); } catch { revision = 'local'; }
   }
-  const result = await prepareAssets(source, commit, revision);
+  const result = await prepareAssets(source, commit, revision, { version: false });
+  const output = join(projectRoot, 'dist');
+  const snapshot = await snapshotAssets(source, output, commit, source === resolve(projectRoot, '..'));
+  const metadata = { source_commit: commit, config_revision: revision, ...snapshot };
   // Explicit fixture checkouts exercise the 2D packager independently.
   if (source === resolve(projectRoot, '..')) {
-    const maps = await prepareMaps(source, join(projectRoot, 'dist'), commit);
-    const metadataPath = join(projectRoot, 'dist/__release.json');
-    const metadata = JSON.parse(await readFile(metadataPath, 'utf8'));
-    await writeFile(metadataPath, JSON.stringify({ ...metadata, maps3d_version: maps.asset_version }) + '\n');
-    result.files += 55;
+    const maps = await prepareMaps(source, output, commit, snapshot.asset_urls);
+    metadata.maps3d_version = maps.asset_version;
+    for (const [name, hash] of Object.entries(maps.files)) {
+      metadata.asset_files['3d/' + name] = hash;
+      metadata.asset_urls['3d/' + name] = maps.asset_urls[name];
+    }
   }
+  metadata.asset_files = Object.fromEntries(Object.entries(metadata.asset_files).sort(([a],[b]) => a < b ? -1 : 1));
+  metadata.asset_urls = Object.fromEntries(Object.entries(metadata.asset_urls).sort(([a],[b]) => a < b ? -1 : 1));
+  metadata.asset_version = digest(JSON.stringify({ policy: policyVersion, files: metadata.asset_files }));
+  await writeFile(join(output, '__release.json'), JSON.stringify(metadata) + '\n');
+  // Map payloads have already been compressed by the same policy helper.
+  for (const name of await filesIn(output)) {
+    if (!name.startsWith('3d/releases/') && policy.compression.extensions.some(ext => name.endsWith(ext))) await compressFile(join(output, name));
+  }
+  await writeManifest(output, metadata);
+  result.files = (await filesIn(output)).length;
   return result;
 }
 

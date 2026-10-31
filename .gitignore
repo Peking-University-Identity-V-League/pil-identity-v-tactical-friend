@@ -5,3 +5,5 @@ playwright-report/
 /workspace/
 /deploy/dist/
 /deploy/.deployment-state.json
+__pycache__/
+*.pyc

@@ -37,6 +37,8 @@ jobs:
         run: |
           npm test
           npm --prefix deploy test
+          npm --prefix deploy run test:receiver
+          npm --prefix deploy run policy:check
 
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
@@ -48,6 +50,11 @@ jobs:
         env:
           DEPLOY_CONFIG_REVISION: ${{ github.sha }}
         run: npm --prefix deploy run build
+
+      - name: Verify hashes, compression and packaged browser dependencies
+        run: |
+          npm --prefix deploy run verify:package
+          npx playwright test --config=playwright.packaged.config.js
 
       - name: Save static release
         if: github.event_name != 'pull_request'

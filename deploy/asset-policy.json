@@ -1,0 +1,29 @@
+{
+  "schema": 2,
+  "prefixes": [
+    "/tactical-friend",
+    "/zhanshuyanlian"
+  ],
+  "canonicalPrefix": "/tactical-friend",
+  "immutableDirectory": "_assets",
+  "cache": {
+    "entry": "no-cache",
+    "immutable": "public, max-age=31536000, immutable",
+    "immutableSeconds": 31536000,
+    "metadata": "no-store"
+  },
+  "compression": {
+    "extensions": [
+      ".html",
+      ".js",
+      ".css",
+      ".json",
+      ".svg",
+      ".txt"
+    ],
+    "gzipLevel": 6,
+    "brotliQuality": 5
+  },
+  "externalImages": "preserve",
+  "retention": "Immutable files survive release pruning; never overwrite an existing content URL."
+}
