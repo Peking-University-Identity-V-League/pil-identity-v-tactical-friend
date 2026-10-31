@@ -1042,6 +1042,22 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.hullabaloo.trapeze.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/f6/p6lgt5n20aaf5j18p7j7tmp60h6m4sq.png/90px-%E2%80%9C%E5%96%A7%E5%9A%A3%E2%80%9D1%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
+  pettyGains: {
+    name: translate("items.peddler.pettyGains.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/a/a9/mgootw27unl35xvi4jso14axs3jx1v5.png/90px-%E6%9D%82%E8%B4%A7%E5%95%860%E9%98%B6%E6%8A%80%E8%83%BD1.png',
+  },
+  natureAffinity: {
+    name: translate("items.peddler.natureAffinity.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/6/64/43k335kw1cucaud0e4z0658r2xz1z92.png',
+  },
+  mineralAffinity: {
+    name: translate("items.peddler.mineralAffinity.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/8/80/j3b9gnljks6rjwtk07y4hgnszkutrjk.png',
+  },
+  metalAffinity: {
+    name: translate("items.peddler.metalAffinity.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/9c/nbypkpg2d92byri5fnio6ml08ex2rbv.png/90px-%E6%9D%82%E8%B4%A7%E5%95%860%E9%98%B6%E6%8A%80%E8%83%BD4.png',
+  },
   contactPoint: {
     name: translate("items.cueist.contactPoint.name"),
     render: 'hittingPoint',
@@ -1065,6 +1081,10 @@ export const TAC_ITEM_TYPES = {
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/6/67/t7auxaxdhzzis13n6qnl24dciluiddd.png',
   },
+  maxwellsDemon: {
+    name: translate("items.cueist.maxwellsDemon.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/35/bprllgeghme433xfno3i6jfticbloev.png/90px-%E2%80%9C%E5%8F%B0%E7%90%83%E6%89%8B%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD2.png',
+  },
   swarmOfInsects: {
     name: translate("items.queenBee.swarmOfInsects.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/c/ca/swgm0hdknhwtbus7acri5aviubn3ocy.png',
@@ -1077,6 +1097,14 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.dentist.beam.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/bb/5jqs5qdr0f7icwl49sua4asl776g4et.png/90px-%E2%80%9C%E7%89%99%E5%8C%BB%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD4.png',
   },
+  dentalMirror: {
+    name: translate("items.dentist.dentalMirror.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/f9/sgo0dsl9833h5iomk0gj6qed3o23r05.png/90px-%E2%80%9C%E7%89%99%E5%8C%BB%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD2.png',
+  },
+  darkMire: {
+    name: translate("items.dentist.darkMire.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/6d/1wvqw7z6hy0t21hsn6i24cllk1d08qx.png/90px-%E2%80%9C%E7%89%99%E5%8C%BB%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD3.png',
+  },
   bestialAwakening: {
     name: translate("items.herztier.bestialAwakening.name"),
     ranges: {
@@ -1086,6 +1114,16 @@ export const TAC_ITEM_TYPES = {
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/8/89/agxycu6xg1opqj3xo7tpix753cvfkzz.png',
+  },
+  lunge: {
+    name: translate("items.herztier.bestialAwakening.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: [7, 14], label: translate("items.herztier.lunge.name") },
+      ],
+    },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/7/7a/6lidakub58e7p0261c698oa1a1hkdjm.png/90px-%E2%80%9C%E5%BF%83%E5%85%BD%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   heightenedSenses: {
     name: translate("items.herztier.heightenedSenses.name"),
@@ -2160,19 +2198,34 @@ export const TAC_ROLES = {
     name: translate("characters.peddler.name"),
     camp: 'hunter',
     speed: 4.64,
+    items: ['pettyGains', 'natureAffinity', 'mineralAffinity', 'metalAffinity'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/a/af/c1idozmlwq4h20eylgrl3zzuueatha9.png/90px-%E6%9D%82%E8%B4%A7%E5%95%86%E5%A4%B4%E5%83%8F.png',
   },
   cueist: {
     name: translate("characters.cueist.name"),
     camp: 'hunter',
     speed: 4.64,
-    items: ['contactPoint', 'cueBall'],
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: 15.2, label: translate("characters.cueist.range.label.contactPointFirstPlacement") },
+        { size_m: 8, label: translate("characters.cueist.range.label.maxwellsDemon") },
+        { size_m: { min: 8, max: 11 }, label: translate("characters.cueist.range.label.cueBallCapturePlacement") },
+      ],
+    },
+    items: ['contactPoint', 'cueBall', 'maxwellsDemon'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/e/e5/7st2e3ycktftdvdl68mdlub4aun3g6a.png/90px-%E2%80%9C%E5%8F%B0%E7%90%83%E6%89%8B%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   queenBee: {
     name: translate("characters.queenBee.name"),
     camp: 'hunter',
     speed: 4.64,
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: 28, label: translate("characters.queenBee.range.label.swarmOfInsectsControl") },
+      ],
+    },
     items: ['swarmOfInsects', 'stinger'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/c/c6/0kb43nn36sho3vxrlvy2byk5xt9wldt.png/90px-%E2%80%9C%E5%A5%B3%E7%8E%8B%E8%9C%82%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
@@ -2180,14 +2233,32 @@ export const TAC_ROLES = {
     name: translate("characters.dentist.name"),
     camp: 'hunter',
     speed: 4.73,
-    items: ['beam'],
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: { min: 4.56, max: 6.56 }, label: translate("characters.dentist.range.label.dentalMirrorLensAngle1") },
+        { size_m: { min: 9.4, max: 11.4 }, label: translate("characters.dentist.range.label.dentalMirrorLensAngle2") },
+        { size_m: { min: 16.9, max: 18.9 }, label: translate("characters.dentist.range.label.dentalMirrorLensAngle3") },
+        { size_m: { min: 12.7, max: 35 }, label: translate("characters.dentist.range.label.beamPlacement") },
+        { size_m: 32, label: translate("characters.dentist.range.label.ultravioletFade") },
+      ],
+    },
+    items: ['beam', 'dentalMirror', 'darkMire'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/55/qqgw8tk7p16rrgpfodmon5y9ljj2dq8.png/90px-%E2%80%9C%E7%89%99%E5%8C%BB%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   herztier: {
     name: translate("characters.herztier.name"),
     camp: 'hunter',
     speed: 4.64,
-    items: ['bestialAwakening', 'heightenedSenses'],
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: 48, label: translate("characters.herztier.range.label.bestialAwakening") },
+        { size_m: [7, 14], label: translate("characters.herztier.range.label.lunge") },
+        { size_m: 25, label: translate("characters.herztier.range.label.heightenedSenses") },
+      ],
+    },
+    items: ['bestialAwakening', 'lunge', 'heightenedSenses'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/5f/d9d4dwfp18lwnmcmymoy3iylx2pai6j.png/90px-%E2%80%9C%E5%BF%83%E5%85%BD%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   customize: {
