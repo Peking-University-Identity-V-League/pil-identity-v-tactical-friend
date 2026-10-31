@@ -60,3 +60,5 @@ npm --prefix deploy run policy:check
 - `previous` 保留上一发布目录，用于回滚。旧 `/maps-3d/` 仍返回 404，不提供兼容跳转。
 
 发布工作流仅在 `production` Environment 内读取 `CST_HOST` 和战术专用 `CST_DEPLOY_TOKEN`；不把凭据写入代码、产物或日志。统计保持原有隐私过滤，不上传战术标注、坐标、路线、完整状态或账户数据。资源升级不会清除 localStorage 中保存的战术。
+
+三维地图列表及十张地图通过构建时注入的 `telemetry/maps.js` 记录页面访问，两个入口均覆盖。统计仅接受固定地图路径，去掉查询参数、片段、身份和附加数据；不记录坐标交接或编辑内容。该脚本随其他资源独立哈希和预压缩，生成的三维 CSP 只增加 Umami 的脚本与连接来源。二维赞助链接统一使用 `sponsor_afdian_open`，只附带应用及入口类别。DNT、开发域名和直接打开的内部版本资源不发送新增三维统计。

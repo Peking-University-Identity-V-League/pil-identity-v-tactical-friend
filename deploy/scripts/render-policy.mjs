@@ -7,7 +7,7 @@ const security = `    add_header X-Content-Type-Options nosniff always;
     add_header Referrer-Policy strict-origin-when-cross-origin always;
     add_header X-Frame-Options DENY always;
     add_header Strict-Transport-Security "max-age=31536000" always;`;
-const mapsCSP = `    add_header Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline' data:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'" always;`;
+const mapsCSP = `    add_header Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline' data: https://umami.pkuidv.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' data: blob: https://umami.pkuidv.com; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'" always;`;
 function location(match, target, cache, maps = false) {
   return `location ${match} {
     alias ${target};

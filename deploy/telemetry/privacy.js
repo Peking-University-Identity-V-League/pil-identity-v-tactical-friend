@@ -2,7 +2,7 @@
   const website = 'd8c95849-978e-48d7-ba4d-7a783397609b';
   const events = new Set(['tf_map_open', 'tf_mode_change', 'tf_tool_select', 'tf_role_pick',
     'tf_item_pick', 'tf_edit_start', 'tf_edit_summary', 'tf_export_request',
-    'tf_undo_request', 'tf_clear_request']);
+    'tf_undo_request', 'tf_clear_request', 'sponsor_afdian_open']);
   const categories = {
     entry: ['tactical-friend', 'zhanshuyanlian'],
     mode: ['tactic', 'region', 'deduce'],
@@ -31,6 +31,10 @@
     if (!events.has(payload.name)) return false;
     result.name = payload.name;
     result.data = { application: 'tactical-friend' };
+    if (payload.name === 'sponsor_afdian_open') {
+      result.data.entry = window.location.pathname.startsWith('/zhanshuyanlian/') ? 'zhanshuyanlian' : 'tactical-friend';
+      return result;
+    }
     const data = payload.data || {};
     for (const [key, values] of Object.entries(categories)) {
       if (values.includes(data[key])) result.data[key] = data[key];

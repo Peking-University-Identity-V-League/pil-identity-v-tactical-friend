@@ -69,3 +69,10 @@ test('identity requests, unknown events and non-production hosts are rejected', 
   assert.equal(hook('event', { website: 'another-website' }), false);
   assert.equal(hook('event', payload).tag, 'tactical-friend');
 });
+
+test('the sponsor event is allowlisted without inheriting arbitrary data', async () => {
+  const payload = (await privacyHook())('event', { website: 'd8c95849-978e-48d7-ba4d-7a783397609b',
+    name: 'sponsor_afdian_open', data: { secret: 'PRIVATE', map_id: 5, entry: 'PRIVATE' } });
+  assert.equal(payload.name, 'sponsor_afdian_open');
+  assert.deepEqual(JSON.parse(JSON.stringify(payload.data)), { application: 'tactical-friend', entry: 'tactical-friend' });
+});
