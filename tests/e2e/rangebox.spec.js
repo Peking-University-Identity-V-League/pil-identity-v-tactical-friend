@@ -271,3 +271,43 @@ test('range box: Geisha fearRadius talent gets beauty/prajna variant row', async
   await expect(lv2(page, '警戒半径')).toHaveClass(/active/);
   await expect(rangeBox(page).locator('.tac-range-desc')).toHaveCount(2);
 });
+
+test('range box: second-level buttons share one line; gear/slider rows appear below when lit', async ({ page }) => {
+  // 心兽：数字 + 档位数组 + 数字 混合，二级按钮全部同一行
+  await placeRole(page, 'herztier', 0.4, 0.4);
+  await lv1(page, '显示特质范围').click();
+  const subsOneline = await page.evaluate(() => {
+    const subs = [...document.querySelectorAll('#tacManageList .tac-range-sub[data-v]')];
+    return subs.length === 3 && subs.every((s) => s.parentElement === subs[0].parentElement);
+  });
+  expect(subsOneline).toBe(true);
+  // 未点亮时无挡位组
+  await expect(rangeBox(page).locator('.tac-range-sub[data-g]')).toHaveCount(0);
+  // 点亮「追袭范围」：下方出现 7m / 14m 互斥挡位，且挡位行与二级按钮行不同行
+  await lv2(page, '追袭范围').click();
+  await expect(rangeBox(page).locator('.tac-range-sub[data-g]')).toHaveText(['7m', '14m']);
+  const gearOnOwnLine = await page.evaluate(() => {
+    const sub = document.querySelector('#tacManageList .tac-range-sub[data-v]');
+    const gear = document.querySelector('#tacManageList .tac-range-sub[data-g]');
+    return sub && gear && sub.parentElement !== gear.parentElement;
+  });
+  expect(gearOnOwnLine).toBe(true);
+
+  // 牙医：4 个滑杆 + 1 个数字，二级按钮同一行；点亮滑杆项后滑杆出现在下方
+  await placeRole(page, 'dentist', 0.6, 0.6);
+  await lv1(page, '显示特质范围').click();
+  const dentistOneline = await page.evaluate(() => {
+    const subs = [...document.querySelectorAll('#tacManageList .tac-range-sub[data-v]')];
+    return subs.length === 5 && subs.every((s) => s.parentElement === subs[0].parentElement);
+  });
+  expect(dentistOneline).toBe(true);
+  await expect(rangeBox(page).locator('input[type="range"]')).toHaveCount(0);
+  await lv2(page, '5档位口腔镜范围').click();
+  await expect(rangeBox(page).locator('input[type="range"]')).toHaveCount(1);
+  const sliderOnOwnLine = await page.evaluate(() => {
+    const sub = document.querySelectorAll('#tacManageList .tac-range-sub[data-v]')[0];
+    const slider = document.querySelector('#tacManageList input[type="range"]');
+    return sub && slider && !sub.parentElement.contains(slider);
+  });
+  expect(sliderOnOwnLine).toBe(true);
+});

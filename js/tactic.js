@@ -2507,108 +2507,71 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
         ? rbx.subs.filter((v) => v !== i)
         : [...rbx.subs, i];
     };
-    // 数字项：多个同排平铺
-    const numIdx = [];
-    cfg.options.forEach((opt, i) => {
-      if (typeof opt.size_m === 'number') numIdx.push(i);
+    // 全部二级按钮优先同一行（空间不足才换行）；点亮的选项在下方显示对应控制
+    const subLine = document.createElement('div');
+    subLine.className = 'tac-box-line';
+    subLine.innerHTML = `<div class="tac-range-opts">`
+      + cfg.options.map((opt, i) =>
+        subBtn(rb.subs.includes(i), `data-v="${i}"`,
+          opt.label ? opt.label + postfix : `${opt.size_m}m`)).join('')
+      + `</div>`;
+    subLine.querySelectorAll('.tac-range-sub').forEach((b) => {
+      b.addEventListener('click', () => {
+        const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+        lightSub(rbx, +b.dataset.v);
+        refresh();
+      });
     });
-    if (numIdx.length) {
-      const optLine = document.createElement('div');
-      optLine.className = 'tac-box-line';
-      optLine.innerHTML = `<div class="tac-range-opts">`
-        + numIdx.map((i) => {
-          const opt = cfg.options[i];
-          return subBtn(rb.subs.includes(i), `data-v="${i}"`,
-            opt.label ? opt.label + postfix : `${opt.size_m}m`);
-        }).join('')
-        + `</div>`;
-      optLine.querySelectorAll('.tac-range-sub').forEach((b) => {
-        b.addEventListener('click', () => {
-          const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
-          lightSub(rbx, +b.dataset.v);
-          refresh();
-        });
-      });
-      box.appendChild(optLine);
-    }
-    // 档位数组项（如牢笼 [9,12,15]）：二级按钮 + 点亮后出现互斥三挡组
+    box.appendChild(subLine);
+    // 点亮的选项：档位数组项出现互斥挡位组，滑杆项出现范围调节
     cfg.options.forEach((opt, i) => {
-      if (!Array.isArray(opt.size_m)) return;
-      const subLine = document.createElement('div');
-      subLine.className = 'tac-box-line';
-      subLine.innerHTML = `<div class="tac-range-opts">`
-        + subBtn(rb.subs.includes(i), `data-v="${i}"`,
-          opt.label ? opt.label + postfix : '')
-        + `</div>`;
-      subLine.querySelectorAll('.tac-range-sub').forEach((b) => {
-        b.addEventListener('click', () => {
-          const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
-          lightSub(rbx, +b.dataset.v);
-          refresh();
-        });
-      });
-      box.appendChild(subLine);
       if (!rb.subs.includes(i)) return;
-      const vals = opt.size_m;
-      const cur = Number.isInteger(rb.gear) ? rb.gear : 0;
-      const gLine = document.createElement('div');
-      gLine.className = 'tac-box-line';
-      gLine.innerHTML = `<div class="tac-range-opts">`
-        + vals.map((v, gi) =>
-          subBtn(cur === gi, `data-g="${gi}"`, `${v}m`)).join('')
-        + `</div>`;
-      gLine.querySelectorAll('.tac-range-sub').forEach((b) => {
-        b.addEventListener('click', () => {
-          const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
-          rbx.gear = +b.dataset.g;
-          refresh();
+      if (Array.isArray(opt.size_m)) {
+        // 档位数组项（如牢笼 [9,12,15]）
+        const vals = opt.size_m;
+        const cur = Number.isInteger(rb.gear) ? rb.gear : 0;
+        const gLine = document.createElement('div');
+        gLine.className = 'tac-box-line';
+        gLine.innerHTML = `<div class="tac-range-opts">`
+          + vals.map((v, gi) =>
+            subBtn(cur === gi, `data-g="${gi}"`, `${v}m`)).join('')
+          + `</div>`;
+        gLine.querySelectorAll('.tac-range-sub').forEach((b) => {
+          b.addEventListener('click', () => {
+            const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+            rbx.gear = +b.dataset.g;
+            refresh();
+          });
         });
-      });
-      box.appendChild(gLine);
-    });
-    // 滑杆项（{min,max}）：二级按钮 + 点亮后出现范围调节
-    cfg.options.forEach((opt, i) => {
-      if (!opt.size_m || typeof opt.size_m !== 'object' || Array.isArray(opt.size_m)) return;
-      const subLine = document.createElement('div');
-      subLine.className = 'tac-box-line';
-      subLine.innerHTML = `<div class="tac-range-opts">`
-        + subBtn(rb.subs.includes(i), `data-v="${i}"`,
-          opt.label ? opt.label + postfix : '')
-        + `</div>`;
-      subLine.querySelectorAll('.tac-range-sub').forEach((b) => {
-        b.addEventListener('click', () => {
-          const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
-          lightSub(rbx, +b.dataset.v);
-          refresh();
-        });
-      });
-      box.appendChild(subLine);
-      if (!rb.subs.includes(i)) return;
-      const sm = opt.size_m;
-      const sMin = sm.min != null ? sm.min : 0;
-      const dynMax = sm.max != null ? sm.max
-        : (MAPS_DATA[S.currentMapId] && MAPS_DATA[S.currentMapId].widthM) || 100;
-      const cur = rb.m != null ? rb.m : dynMax;
-      const slLine = document.createElement('div');
-      slLine.className = 'tac-box-line';
-      slLine.innerHTML = `<div class="tac-range-mid">`
-        + `<span class="tac-range-end">${sMin}m</span>`
-        + `<input type="range" min="${sMin}" max="${dynMax}" step="0.1" value="${cur}">`
-        + `<span class="tac-range-end">${tacRangeFmt(dynMax)}m</span>`
-        + `</div>`
-        + `<span class="tac-range-val">${tacRangeFmt(cur)}m</span>`;
-      const sl = slLine.querySelector('input');
-      if (sl) {
-        sl.addEventListener('input', () => {
-          const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
-          rbx.m = parseFloat(sl.value);
-          slLine.querySelector('.tac-range-val').textContent = `${tacRangeFmt(rbx.m)}m`;
-          updateDescs();
-          if (opts.softUpdate) opts.softUpdate();
-        });
-        sl.addEventListener('change', () => { renderTacBoard(); renderTacManage(); });
+        box.appendChild(gLine);
+      } else if (opt.size_m && typeof opt.size_m === 'object') {
+        // 滑杆项（{min,max}）
+        const sm = opt.size_m;
+        const sMin = sm.min != null ? sm.min : 0;
+        const dynMax = sm.max != null ? sm.max
+          : (MAPS_DATA[S.currentMapId] && MAPS_DATA[S.currentMapId].widthM) || 100;
+        const cur = rb.m != null ? rb.m : dynMax;
+        const slLine = document.createElement('div');
+        slLine.className = 'tac-box-line';
+        slLine.innerHTML = `<div class="tac-range-mid">`
+          + `<span class="tac-range-end">${sMin}m</span>`
+          + `<input type="range" min="${sMin}" max="${dynMax}" step="0.1" value="${cur}">`
+          + `<span class="tac-range-end">${tacRangeFmt(dynMax)}m</span>`
+          + `</div>`
+          + `<span class="tac-range-val">${tacRangeFmt(cur)}m</span>`;
+        const sl = slLine.querySelector('input');
+        if (sl) {
+          sl.addEventListener('input', () => {
+            const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+            rbx.m = parseFloat(sl.value);
+            slLine.querySelector('.tac-range-val').textContent = `${tacRangeFmt(rbx.m)}m`;
+            updateDescs();
+            if (opts.softUpdate) opts.softUpdate();
+          });
+          sl.addEventListener('change', () => { renderTacBoard(); renderTacManage(); });
+        }
+        box.appendChild(slLine);
       }
-      box.appendChild(slLine);
     });
     if (cfg.fearMods) {
       [['fearH', 'hunter'], ['fearS', 'survivor']].forEach(([field, gkey]) => {
