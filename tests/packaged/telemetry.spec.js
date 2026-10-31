@@ -31,6 +31,7 @@ for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
       await route.fulfill({ contentType:'application/json', headers:{'Access-Control-Allow-Origin':'https://pkuidv.com','Access-Control-Allow-Headers':'content-type'},body:'{}' });
     });
     await page.addInitScript(() => document.addEventListener('click', e => { if(e.target.closest?.('a[href^="https://afdian.com/"]'))e.preventDefault(); },true));
+    try {
     await page.goto('https://pkuidv.com' + prefix + '/3d/?token=PRIVATE#PRIVATE_COORDINATES');
     await expect.poll(() => sent.length).toBe(1);
     expect(sent[0].payload.url).toBe(prefix + '/3d/');
@@ -42,5 +43,10 @@ for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
     await page.locator('.footer-sponsor').click();
     await expect.poll(() => sent.some(x => x.payload.name === 'sponsor_afdian_open')).toBe(true);
     expect(sent.find(x => x.payload.name === 'sponsor_afdian_open').payload.data).toEqual({ application: 'tactical-friend', entry: prefix.slice(1) });
+    } finally {
+      // The app may still be importing telemetry dependencies after the click.
+      // Finish intercepted requests before Playwright disposes their responses.
+      await page.unrouteAll({ behavior: 'wait' });
+    }
   });
 }
