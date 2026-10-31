@@ -1,0 +1,16 @@
+#pil-loading { position: fixed; inset: 0; z-index: 2147483647; display: grid; place-items: center; overflow: auto; padding: 20px; background: #111b25; color: #edf4f7; font: 15px/1.65 system-ui, sans-serif; box-sizing: border-box; }
+#pil-loading[hidden] { display: none; }
+#pil-loading * { box-sizing: border-box; }
+#pil-loading .pil-loading-card { width: 100%; max-width: 490px; padding: 26px; border: 1px solid #34495c; border-radius: 16px; background: #182633; box-shadow: 0 16px 60px #0005; }
+#pil-loading h1 { margin: 0 0 16px; color: #f3f7f8; font-size: 23px; line-height: 1.4; }
+#pil-loading p { margin: 10px 0; }
+#pil-loading-step { color: #8de0df; font-weight: 650; }
+#pil-loading-progress { display: block; width: 100%; height: 16px; margin: 15px 0; accent-color: #69cfcc; }
+#pil-loading-metrics { font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+#pil-loading-detail { color: #b5c8d4; font-size: 13px; }
+#pil-loading-error { color: #ffc3b6; overflow-wrap: anywhere; }
+#pil-loading .pil-loading-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin-top: 22px; }
+#pil-loading button { min-height: 44px; padding: 8px 17px; color: #10202a; background: #8de0df; border: 0; border-radius: 8px; font: inherit; cursor: pointer; }
+#pil-loading a { min-height: 44px; display: inline-flex; align-items: center; color: #f3c378; text-decoration: underline; }
+#pil-loading :focus-visible { outline: 3px solid #f3c378; outline-offset: 3px; }
+@media (max-width: 480px) { #pil-loading { padding: 14px; } #pil-loading .pil-loading-card { padding: 20px; } #pil-loading h1 { font-size: 21px; } }

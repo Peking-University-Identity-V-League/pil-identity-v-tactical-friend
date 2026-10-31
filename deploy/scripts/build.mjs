@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process';
-import { access, writeFile } from 'node:fs/promises';
+import { access, realpath, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { prepareAssets } from './prepare-assets.mjs';
@@ -22,7 +22,7 @@ export async function build(sourceArgument) {
   await access(source);
   // Package the checkout that triggered this workflow. Do not fetch another
   // branch, install application dependencies, or execute application scripts.
-  if (resolve(git(['-C', source, 'rev-parse', '--show-toplevel'])) !== source) {
+  if (await realpath(git(['-C', source, 'rev-parse', '--show-toplevel'])) !== await realpath(source)) {
     throw new Error('Application source must be its own Git checkout');
   }
   const commit = git(['-C', source, 'rev-parse', 'HEAD']);
@@ -38,9 +38,9 @@ export async function build(sourceArgument) {
   if (source === resolve(projectRoot, '..')) {
     const maps = await prepareMaps(source, output, commit, snapshot.asset_urls);
     metadata.maps3d_version = maps.asset_version;
-    for (const [name, hash] of Object.entries(maps.files)) {
+    for (const [name, hash] of Object.entries(maps.full_files || maps.files)) {
       metadata.asset_files['3d/' + name] = hash;
-      metadata.asset_urls['3d/' + name] = maps.asset_urls[name];
+      metadata.asset_urls['3d/' + name] = (maps.full_asset_urls || maps.asset_urls)[name];
     }
   }
   metadata.asset_files = Object.fromEntries(Object.entries(metadata.asset_files).sort(([a],[b]) => a < b ? -1 : 1));
