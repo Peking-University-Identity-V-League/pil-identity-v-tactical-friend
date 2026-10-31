@@ -967,6 +967,38 @@ body:not(.has-tabs) .header-nav { display: none; }
 .footer .footer-brand-link { color: inherit; text-decoration: none; transition: color 0.2s; }
 .footer .footer-brand-link:hover { color: var(--text); text-decoration: underline; }
 
+/* Sponsor link: quiet until hovered, then the tool's gold accent. */
+.footer .footer-sponsor-line { margin: 2px 0; }
+.footer-sponsor {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+.footer-sponsor svg { flex: none; }
+.footer-sponsor-platform {
+  padding: 0 6px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 12px;
+}
+.footer-sponsor:hover {
+  color: var(--accent-light);
+}
+.footer-sponsor:hover .footer-sponsor-platform {
+  border-color: rgba(251, 191, 36, 0.4);
+}
+.footer-sponsor:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 .footer-contact {
   position: absolute;
   right: var(--nav-left);
