@@ -146,7 +146,7 @@ test('unlimited link: portal / ultralong passage pair with 无限制 hint and vi
   const box = linkBox(page);
   await expect(box).toBeVisible();
   await expect(box.locator('.tac-link-status')).toContainText(/当前已与 门之匙 ?2 连线/);
-  await expect(box).toContainText('两者最大距离无限制');
+  await expect(box).toContainText('两者距离无限制');
 });
 
 test('link-moment show sync: any checked -> both checked; both unchecked -> stays unchecked', async ({ page }) => {

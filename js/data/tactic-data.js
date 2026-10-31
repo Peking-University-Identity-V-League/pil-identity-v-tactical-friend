@@ -1044,6 +1044,9 @@ export const TAC_ITEM_TYPES = {
   },
   contactPoint: {
     name: translate("items.cueist.contactPoint.name"),
+    render: 'hittingPoint',
+    linkColor: '#f8fafc',
+    linkWidth: 2,
     ranges: {
       key: 'showItem',
       options: [

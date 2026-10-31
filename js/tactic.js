@@ -1372,6 +1372,136 @@ function tacTokenLinkedItems(t) {
   return tacBoard().items.filter((it) => it.linkTid === t.tid);
 }
 
+
+// 击球点链式连线：board.hpEdges = [{ a: iid, b: iid, close }]
+// 链式生长：新点连最近一个「允许连线且未封闭」的点；第 3 个开放点可用提前闭合，
+// 第 4 个开放点自动与最早的开放点闭合；封闭边无距离限制
+const TAC_HP_KIND = 'contactPoint';
+const TAC_HP_MIN_M = 4;
+const TAC_HP_MAX_M = 35;
+
+function tacHpItems() {
+  return tacBoard().items.filter((it) => it.kind === TAC_HP_KIND);
+}
+
+function tacHpEdges() {
+  const b = tacBoard();
+  b.hpEdges ||= [];
+  return b.hpEdges;
+}
+
+// 与某击球点相连的对端：普通边 / 封闭边分开返回
+function tacHpPeers(it) {
+  const reg = [];
+  const close = [];
+  for (const e of tacHpEdges()) {
+    const other = e.a === it.iid ? e.b : (e.b === it.iid ? e.a : null);
+    if (other == null) continue;
+    const o = tacItemByIid(other);
+    if (!o) continue;
+    (e.close ? close : reg).push(o);
+  }
+  return { reg, close };
+}
+
+// 通过连线边得到的相连组件（共享按钮 / 一起删除的范围）
+function tacHpComponent(it) {
+  const seen = new Set([it.iid]);
+  const queue = [it.iid];
+  while (queue.length) {
+    const cur = queue.pop();
+    for (const e of tacHpEdges()) {
+      const other = e.a === cur ? e.b : (e.b === cur ? e.a : null);
+      if (other != null && !seen.has(other)) { seen.add(other); queue.push(other); }
+    }
+  }
+  return tacHpItems().filter((o) => seen.has(o.iid));
+}
+
+// 开放点按加入链的顺序（hpSeq）排序：重新勾选允许连线后加入顺序优先于创建顺序
+function tacHpOpenItems() {
+  return tacHpItems().filter((o) => o.linkAuto !== false && !o.hpClosed)
+    .sort((x, y) => (x.hpSeq || 0) - (y.hpSeq || 0) || x.iid - y.iid);
+}
+
+function tacHpComponentOpen(comp) {
+  return comp.filter((o) => o.linkAuto !== false && !o.hpClosed)
+    .sort((x, y) => (x.hpSeq || 0) - (y.hpSeq || 0) || x.iid - y.iid);
+}
+
+// 闭合本组件：最新开放点与最早开放点连成封闭边，组件全部转为封闭态
+function tacHpCloseShape(item) {
+  const opens = tacHpComponentOpen(tacHpComponent(item));
+  if (opens.length < 3) return false;
+  const newest = opens[opens.length - 1];
+  const earliest = opens[0];
+  tacHpEdges().push({ a: newest.iid, b: earliest.iid, close: true });
+  opens.forEach((o) => { o.hpClosed = true; });
+  return true;
+}
+
+// 击球点位置钳制：普通相连边距离限制 4-35m，封闭边无限制
+function tacHpClampPos(item, x, y) {
+  const map = MAPS_DATA[S.currentMapId];
+  const widthM = map && map.widthM;
+  const size = map && map.mapSize;
+  if (!widthM || !size) return { x, y };
+  const [dw, dh] = size;
+  const minU = TAC_HP_MIN_M / widthM * dw;
+  const maxU = TAC_HP_MAX_M / widthM * dw;
+  let px = x;
+  let py = y;
+  for (const e of tacHpEdges()) {
+    if (e.close) continue;
+    if (e.a !== item.iid && e.b !== item.iid) continue;
+    const o = tacItemByIid(e.a === item.iid ? e.b : e.a);
+    if (!o) continue;
+    const ux = (px - o.x) * dw;
+    const uy = (py - o.y) * dh;
+    const units = Math.hypot(ux, uy);
+    if (units < 1e-9) {
+      // 与对端重合：向右侧推出最小距离
+      px = o.x + minU / dw;
+      continue;
+    }
+    if (units < minU || units > maxU) {
+      const k = Math.min(Math.max(units, minU), maxU) / units;
+      px = o.x + (px - o.x) * k;
+      py = o.y + (py - o.y) * k;
+    }
+  }
+  return { x: px, y: py };
+}
+
+// 击球点加入链（创建 / 勾选允许连线）：连最近加入的开放点；开放数达 4 自动闭合
+function tacHpJoin(item) {
+  const b = tacBoard();
+  item.hpSeq = (b.hpSeq = (b.hpSeq || 0) + 1);
+  const mates = tacHpOpenItems().filter((o) => o !== item);
+  if (mates.length) {
+    const latest = mates[mates.length - 1];
+    tacHpEdges().push({ a: item.iid, b: latest.iid, close: false });
+    // 相连瞬间显示连线打勾（两端共享）
+    item.linkShow = true;
+    latest.linkShow = true;
+    // 保证与相连点距离不少于 4m 不超过 35m
+    const cl = tacHpClampPos(item, item.x, item.y);
+    item.x = cl.x;
+    item.y = cl.y;
+  }
+  const opens = tacHpComponentOpen(tacHpComponent(item));
+  if (opens.length >= 4) tacHpCloseShape(item);
+}
+
+// 取消允许连线：组件内全部取消允许连线、解除连线、恢复未封闭态
+function tacHpDissolve(item) {
+  const comp = tacHpComponent(item);
+  const ids = new Set(comp.map((o) => o.iid));
+  const b = tacBoard();
+  b.hpEdges = tacHpEdges().filter((e) => !(ids.has(e.a) && ids.has(e.b)));
+  comp.forEach((o) => { o.linkAuto = false; o.hpClosed = false; delete o.hpSeq; });
+}
+
 function tacSetSameLink(a, b) {
   a.linkIid = b.iid;
   b.linkIid = a.iid;
@@ -1428,6 +1558,8 @@ export function tacAutoLinkItem(item) {
     const mate = tacBoard().tokens.find((t) => t.role === def.linkToRole
       && t.linkAuto !== false && !tacTokenLinkedItems(t).length);
     if (mate) tacSetCrossLink(item, mate);
+  } else if (item.kind === TAC_HP_KIND) {
+    tacHpJoin(item);
   }
 }
 
@@ -1634,6 +1766,20 @@ function tacSyncMirrorEl(kind) {
 function tacOnItemRemoved(removed) {
   if (!removed) return;
   tacBreakItemLink(removed, true);
+  if (removed.kind === TAC_HP_KIND) {
+    const b = tacBoard();
+    if (removed.hpClosed) {
+      const comp = tacHpComponent(removed);
+      const ids = new Set(comp.map((o) => o.iid));
+      ids.add(removed.iid);
+      b.hpEdges = (b.hpEdges || []).filter((e) => !(ids.has(e.a) && ids.has(e.b)));
+      for (let i = b.items.length - 1; i >= 0; i -= 1) {
+        if (b.items[i] !== removed && ids.has(b.items[i].iid)) b.items.splice(i, 1);
+      }
+    } else {
+      b.hpEdges = (b.hpEdges || []).filter((e) => e.a !== removed.iid && e.b !== removed.iid);
+    }
+  }
   if (removed.kind === 'mirrorImage') {
     const aq = (removed.aqIid != null && tacItemByIid(removed.aqIid))
       || tacBoard().items.find((it) => it.kind === 'aquaMirror');
@@ -1870,6 +2016,22 @@ export function renderTacArrows() {
     line.setAttribute('stroke', def.linkColor || def.color);
     line.setAttribute('stroke-width', def.linkWidth || 5);
     line.setAttribute('stroke-linecap', 'round');
+    tacArrowSvg.appendChild(line);
+  });
+
+
+  // 击球点链式连线：普通边实线，封闭边虚线；显示连线由组件共享
+  tacHpEdges().forEach((e) => {
+    const a = tacItemByIid(e.a);
+    const b = tacItemByIid(e.b);
+    if (!a || !b || a.linkShow === false || b.linkShow === false) return;
+    const line = document.createElementNS(TAC_SVG_NS, 'line');
+    line.setAttribute('x1', a.x * W); line.setAttribute('y1', a.y * H);
+    line.setAttribute('x2', b.x * W); line.setAttribute('y2', b.y * H);
+    line.setAttribute('stroke', '#f8fafc');
+    line.setAttribute('stroke-width', 2);
+    line.setAttribute('stroke-linecap', 'round');
+    if (e.close) line.setAttribute('stroke-dasharray', '8 6');
     tacArrowSvg.appendChild(line);
   });
 
@@ -2787,6 +2949,74 @@ function buildMirrorManageBox(settings, host) {
 }
 
 
+// 击球点连线管理：允许连线 / 显示连线 / 提前闭合，三者由相连组件共享
+function buildHittingPointBox(settings, host) {
+  const comp = tacHpComponent(host);
+  const opens = tacHpComponentOpen(comp);
+  const canClose = !host.hpClosed && opens.length === 3;
+  const box = tacManageBox(settings, 'ui.tacManageBox.hittingPoint');
+  const allowOn = host.linkAuto !== false;
+  box.innerHTML +=
+    `<div class="tac-link-opts">`
+    + `<label class="tac-link-opt"><input type="checkbox" data-hp="allow"`
+    + `${allowOn ? ' checked' : ''}> ${translate("ui.tacLinkBox.auto")}</label>`
+    + `<label class="tac-link-opt"><input type="checkbox" data-hp="show"`
+    + `${host.linkShow !== false ? ' checked' : ''}${allowOn ? '' : ' disabled'}>`
+    + ` ${translate("ui.tacLinkBox.show")}</label>`
+    + `<label class="tac-link-opt"><input type="checkbox" data-hp="close"`
+    + `${canClose ? '' : ' disabled'}> ${translate("ui.tacLinkBox.hpClose")}</label>`
+    + `</div>`;
+  const { reg, close } = tacHpPeers(host);
+  const status = document.createElement('span');
+  status.className = 'tac-box-hint tac-link-status';
+  let sKey = 'ui.tacLinkBox.statusNone';
+  let sVars = {};
+  if (close.length && reg.length) {
+    sKey = 'ui.tacLinkBox.hpStatusClosed';
+    sVars = { a: tacInstDispName(reg[0]), b: tacInstDispName(close[0]) };
+  } else if (reg.length >= 2) {
+    sKey = 'ui.tacLinkBox.hpStatusTwo';
+    sVars = { a: tacInstDispName(reg[0]), b: tacInstDispName(reg[1]) };
+  } else if (reg.length === 1) {
+    sKey = 'ui.tacLinkBox.statusLinked';
+    sVars = { name: tacInstDispName(reg[0]) };
+  }
+  status.textContent = translate(sKey, sVars);
+  box.appendChild(status);
+  const hKey = reg.length >= 2 ? 'ui.tacLinkBox.hpHintMulti' : 'ui.tacLinkBox.hpHintPair';
+  tacBoxHint(box, translate(hKey, {
+    name: (TAC_ITEM_TYPES[TAC_HP_KIND] || {}).name,
+    minM: TAC_HP_MIN_M,
+    maxM: TAC_HP_MAX_M,
+  }));
+  box.querySelector('input[data-hp="allow"]').addEventListener('change', (e) => {
+    if (e.target.checked) {
+      host.linkAuto = true;
+      tacHpJoin(host);
+    } else {
+      tacHpDissolve(host);
+    }
+    renderTacBoard();
+    renderTacArrows();
+    tacSave();
+    renderTacManage();
+  });
+  box.querySelector('input[data-hp="show"]').addEventListener('change', (e) => {
+    tacHpComponent(host).forEach((o) => { o.linkShow = e.target.checked; });
+    renderTacArrows();
+    tacSave();
+  });
+  box.querySelector('input[data-hp="close"]').addEventListener('change', (e) => {
+    if (!e.target.checked) return;
+    tacHpCloseShape(host);
+    renderTacBoard();
+    renderTacArrows();
+    tacSave();
+    renderTacManage();
+  });
+}
+
+
 // 连线管理（同造物两两相连 / 异造物相连 共用）
 // host: 道具实例或角色实例；info: { cross, roleName, itemName, maxM }
 function buildLinkManageBox(settings, host, info) {
@@ -3201,6 +3431,9 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
   }
   if (it.kind === 'spearfishing') {
     buildAbyssManageBox(settings, it);
+  }
+  if (it.kind === TAC_HP_KIND) {
+    buildHittingPointBox(settings, it);
   }
 
   
@@ -5582,6 +5815,7 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
     let cl = tacClampLinkPos(tacBoard().items.length - 1, p.x, p.y);
     
     cl = tacClampRoleLinkPos(tacBoard().items.length - 1, cl.x, cl.y);
+    cl = tacHpClampPos(item, cl.x, cl.y);
     item.x = cl.x; item.y = cl.y;
     tacUndoStack.push({ type: 'addItem' });
     tacSelectedItem = tacBoard().items.length - 1;
@@ -5708,6 +5942,7 @@ tacMapWrap.addEventListener('pointermove', (e) => {
     
     let cl = tacClampLinkPos(tacDragItem.idx, p.x, p.y);
     cl = tacClampRoleLinkPos(tacDragItem.idx, cl.x, cl.y);
+    cl = tacHpClampPos(it, cl.x, cl.y);
     const mdx = cl.x - it.x, mdy = cl.y - it.y; 
     it.x = cl.x;
     it.y = cl.y;
@@ -6173,6 +6408,7 @@ window.addEventListener('keydown', (e) => {
       let cl = tacClampLinkPos(
         tacSelectedItem, clamp01(it.x + dx), clamp01(it.y + dy));
       cl = tacClampRoleLinkPos(tacSelectedItem, cl.x, cl.y);
+      cl = tacHpClampPos(it, cl.x, cl.y);
       it.x = cl.x;
       it.y = cl.y;
       renderTacBoard();
