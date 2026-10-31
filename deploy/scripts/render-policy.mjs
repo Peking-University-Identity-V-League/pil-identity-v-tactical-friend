@@ -45,7 +45,7 @@ export function renderCloudflare() {
   const immutable = policy.prefixes.flatMap(p => [p + '/' + policy.immutableDirectory + '/', p + '/3d/releases/']).map(p => `starts_with(http.request.uri.path, "${p}")`).join(' or ');
   return [
     { ref: 'pil_tactical_mutable_revalidate', description: 'PIL policy: entry pages and unversioned files always revalidate', expression: `(http.host eq "pkuidv.com" and (${owned}) and not (${immutable}))`, action: 'set_cache_settings', action_parameters: { cache: false, browser_ttl: { mode: 'respect_origin' } }, enabled: true },
-    { ref: 'pil_tactical_immutable_assets', description: 'PIL policy: content snapshots and 3D releases are immutable', expression: `(http.host eq "pkuidv.com" and http.request.method in {"GET" "HEAD"} and (${immutable}))`, action: 'set_cache_settings', action_parameters: { cache: true, browser_ttl: { mode: 'respect_origin' }, edge_ttl: { mode: 'respect_origin' }, respect_strong_etags: true }, enabled: true },
+    { ref: 'pil_tactical_immutable_assets', description: 'PIL policy: content snapshots and 3D releases are immutable', expression: `(http.host eq "pkuidv.com" and http.request.method in {"GET" "HEAD"} and (${immutable}))`, action: 'set_cache_settings', action_parameters: { cache: true, browser_ttl: { mode: 'respect_origin' }, edge_ttl: { mode: 'respect_origin' }, respect_strong_etags: false }, enabled: true },
   ];
 }
 export async function renderPolicy(check = false) {
