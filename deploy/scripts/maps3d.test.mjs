@@ -4,9 +4,8 @@ import { mkdtemp, mkdir, readFile, rm, symlink, writeFile } from 'node:fs/promis
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { brotliDecompressSync, gunzipSync } from 'node:zlib';
-import vm from 'node:vm';
 import test from 'node:test';
-import { prepareMaps, redirectPage, runtimeFiles } from './maps3d.mjs';
+import { prepareMaps, runtimeFiles } from './maps3d.mjs';
 
 test('3D packaging preserves bytes and compression, versions changed content, and rejects extra or linked files', async () => {
   const temp = await mkdtemp(join(tmpdir(), 'pil-3d-'));
@@ -15,6 +14,8 @@ test('3D packaging preserves bytes and compression, versions changed content, an
     await mkdir(maps, { recursive: true });
     for (const name of runtimeFiles) await writeFile(join(maps, name), name === '__release.json' ? JSON.stringify({ source_commit: 'a'.repeat(40) }) : 'fixture ' + name);
     const first = await prepareMaps(source, output, 'b'.repeat(40));
+    assert.equal(first.entry_mode, 'stable');
+    await assert.rejects(readFile(join(output, '3d/index.html')), { code: 'ENOENT' }, 'do not package client redirects to version URLs');
     const second = await prepareMaps(source, output, 'c'.repeat(40));
     assert.equal(first.asset_version, second.asset_version, 'unrelated commits retain the asset version');
     for (const name of runtimeFiles) {
@@ -34,12 +35,4 @@ test('3D packaging preserves bytes and compression, versions changed content, an
     await symlink(join(maps, 'index.html'), join(maps, 'camera-controls.js'));
     await assert.rejects(prepareMaps(source, output, 'd'.repeat(40)), /Invalid 3D asset/);
   } finally { await rm(temp, { recursive: true, force: true }); }
-});
-
-test('stable map navigation retains both query and endpoint fragment', () => {
-  const target = '/tactical-friend/3d/releases/' + 'a'.repeat(64) + '/h55_demo.html';
-  let actual;
-  vm.runInNewContext(redirectPage(target).match(/<script>(.*?)<\/script>/s)[1], { location: { search: '?view=3d', hash: '#pil2d=coordinates', replace: value => { actual = value; } } });
-  assert.equal(actual, target + '?view=3d#pil2d=coordinates');
-  assert.throws(() => redirectPage('https://example.invalid/'), /Invalid/);
 });

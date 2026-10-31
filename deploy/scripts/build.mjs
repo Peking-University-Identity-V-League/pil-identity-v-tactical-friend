@@ -35,7 +35,7 @@ export async function build(sourceArgument) {
     const metadataPath = join(projectRoot, 'dist/__release.json');
     const metadata = JSON.parse(await readFile(metadataPath, 'utf8'));
     await writeFile(metadataPath, JSON.stringify({ ...metadata, maps3d_version: maps.asset_version }) + '\n');
-    result.files += 66;
+    result.files += 55;
   }
   return result;
 }

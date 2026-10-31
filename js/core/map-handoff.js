@@ -21,9 +21,10 @@ export function measurementEndpoints(measures = [], { selectedIndex, pending, ac
   return { start: [first.x1, first.y1], end: [last.x2, last.y2] };
 }
 
-export function map3dURL({ mapId, image, size, start, end }) {
+export function map3dURL({ mapId, image, size, start, end, entryPath = '/tactical-friend/' }) {
   if (!Number.isInteger(mapId) || !MAP_SCENES[mapId]) throw new TypeError('Unknown map');
-  const url = `/tactical-friend/3d/${MAP_SCENES[mapId]}.html`;
+  if (!['/tactical-friend/', '/zhanshuyanlian/'].includes(entryPath)) throw new TypeError('Unknown entry path');
+  const url = `${entryPath}3d/${MAP_SCENES[mapId]}.html`;
   if (start === undefined && end === undefined) return url;
   if (!point(start) || end !== undefined && !point(end)
       || typeof image !== 'string' || image.length > 1500

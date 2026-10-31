@@ -15,3 +15,18 @@ test('the public 3D path opens the map list and a complete self-contained scene'
   await expect(page.locator('.pil-handoff-back')).toHaveAttribute('href', /\/tactical-friend\/\?map=0$/);
   expect(errors).toEqual([]);
 });
+
+for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
+  test(`2D/3D navigation preserves ${prefix} in both directions`, async ({ page }) => {
+    test.setTimeout(120000);
+    await page.route('https://**/*', route => route.fulfill({ status: 200, contentType: 'image/svg+xml', body: '<svg xmlns="http://www.w3.org/2000/svg" width="750" height="644"/>' }));
+    await page.goto(prefix + '/');
+    await page.locator('.home-card').first().click();
+    await page.locator('[data-map-3d]:visible').first().click();
+    await expect(page).toHaveURL(new RegExp(prefix + '/3d/ordnance_factory1\\.html$'));
+    await page.waitForFunction(() => window.measureAPI?.stats().ready && window.tacticsAPI?.stats().ready);
+    await expect(page.locator('.pil-handoff-back')).toHaveAttribute('href', new RegExp(prefix + '/\\?map=0$'));
+    await page.locator('.pil-handoff-back').click();
+    await expect(page).toHaveURL(new RegExp(prefix + '/\\?map=0$'));
+  });
+}

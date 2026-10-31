@@ -31,6 +31,13 @@ async function verify() {
   if (!mapsResponse.ok) throw new Error('3D release metadata is unavailable');
   const maps = await mapsResponse.json();
   if (maps.source_commit !== commit || maps.asset_version !== expectedMaps.asset_version) throw new Error('Unexpected 3D release');
+  for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
+    const entry = await fetch('https://pkuidv.com' + prefix + '/3d/', { redirect: 'error', signal: AbortSignal.timeout(15000) });
+    const html = await entry.text();
+    if (!entry.ok || !html.includes('class="grid"') || html.includes('location.replace(')) throw new Error('3D entry must serve the map list at its stable URL');
+    const aliasMetadata = await (await fetch('https://pkuidv.com' + prefix + '/3d/__release.json?check=' + Date.now(), { signal: AbortSignal.timeout(15000) })).json();
+    if (aliasMetadata.source_commit !== commit || aliasMetadata.asset_version !== maps.asset_version) throw new Error('Unexpected 3D alias release');
+  }
   for (const name of Object.keys(maps.files)) {
     const response = await fetch('https://pkuidv.com/tactical-friend/3d/releases/' + maps.asset_version + '/' + name, { method: 'HEAD', signal: AbortSignal.timeout(15000) });
     if (!response.ok || !response.headers.get('cache-control')?.includes('immutable')) throw new Error('3D immutable asset unavailable: ' + name);
