@@ -2,6 +2,7 @@ import { execFileSync } from 'node:child_process';
 import { copyFile, lstat, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { dirname, extname, join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { versionClientAssets } from './client-assets.mjs';
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const allowedExtensions = new Map([
@@ -26,6 +27,7 @@ export async function prepareAssets(sourceRoot, commit, configRevision = 'local'
   await mkdir(output, { recursive: true });
   let bytes = 0;
   let files = 0;
+  const clientAssets = [];
 
   async function copyAsset(relativePath) {
     const sourcePath = join(source, relativePath);
@@ -37,6 +39,7 @@ export async function prepareAssets(sourceRoot, commit, configRevision = 'local'
     const target = join(output, relativePath);
     await mkdir(dirname(target), { recursive: true });
     await copyFile(sourcePath, target);
+    clientAssets.push(relativePath.split(sep).join('/'));
   }
 
   async function copyDirectory(relativePath, extension) {
@@ -65,12 +68,14 @@ export async function prepareAssets(sourceRoot, commit, configRevision = 'local'
     '<script defer src="https://umami.pkuidv.com/script.js" data-website-id="d8c95849-978e-48d7-ba4d-7a783397609b" data-domains="pkuidv.com" data-tag="tactical-friend" data-exclude-search="true" data-exclude-hash="true" data-do-not-track="true" data-before-send="pkuidvTelemetryBeforeSend"></script>',
     '<script type="module" src="telemetry/client.js"></script>',
   ].join('\n');
-  await writeFile(htmlPath, html.replace(/<\/head\s*>/i, scripts + '\n</head>'));
   await mkdir(join(output, 'telemetry'), { recursive: true });
   for (const name of ['privacy.js', 'client.js', 'summary.js']) {
     await copyFile(join(projectRoot, 'telemetry', name), join(output, 'telemetry', name));
     files += 1;
+    clientAssets.push('telemetry/' + name);
   }
+  html = html.replace(/<\/head\s*>/i, scripts + '\n</head>');
+  await writeFile(htmlPath, versionClientAssets(html, clientAssets, commit));
   await writeFile(join(output, '__release.json'), JSON.stringify({
     source_commit: commit,
     config_revision: configRevision,

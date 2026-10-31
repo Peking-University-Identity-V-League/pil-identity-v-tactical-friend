@@ -20,6 +20,7 @@ async function verify() {
     } else if (path.endsWith('/')) {
       const html = await response.text();
       if (!html.includes('umami.pkuidv.com/script.js') || !html.includes('homeMapGrid')) throw new Error('Unexpected entry page at ' + path);
+      if (!html.includes('name="pil-client-revision" content="' + commit + '"') || !html.includes('js/bootstrap.js?v=' + commit)) throw new Error('Client assets do not match the published revision at ' + path);
     } else {
       const expected = path.endsWith('.js') ? 'javascript' : path.endsWith('.css') ? 'text/css' : path.endsWith('.json') ? 'application/json' : path.endsWith('.webp') ? 'image/webp' : 'image/svg+xml';
       if (!(response.headers.get('content-type') || '').includes(expected)) throw new Error('Unexpected static asset type at ' + path);
