@@ -31,15 +31,16 @@ test('range box: level-1 shows subs without lighting; subs toggle manually (expl
   await lv2(page, '监管者感知范围').click();
   await expect(lv2(page, '监管者感知范围')).toHaveClass(/active/);
   await expect(rangeBox(page).locator('.tac-range-desc')).toHaveCount(1);
-  // 档位单选：点另一个则切换，原档位熄灭
+  // 多选：点另一个则两个同时点亮，两个范围同时显示
   await lv2(page, '密码书页最远刷新范围').click();
   await expect(lv2(page, '密码书页最远刷新范围')).toHaveClass(/active/);
-  await expect(lv2(page, '监管者感知范围')).not.toHaveClass(/active/);
-  await expect(rangeBox(page).locator('.tac-range-desc')).toHaveCount(1);
-  // 再点已选中的二级按钮：取消
+  await expect(lv2(page, '监管者感知范围')).toHaveClass(/active/);
+  await expect(rangeBox(page).locator('.tac-range-desc')).toHaveCount(2);
+  // 再点已选中的二级按钮：只取消该档，另一档仍亮
   await lv2(page, '密码书页最远刷新范围').click();
   await expect(lv2(page, '密码书页最远刷新范围')).not.toHaveClass(/active/);
-  await expect(rangeBox(page).locator('.tac-range-desc')).toHaveCount(0);
+  await expect(lv2(page, '监管者感知范围')).toHaveClass(/active/);
+  await expect(rangeBox(page).locator('.tac-range-desc')).toHaveCount(1);
   // 切天赋一级：特质二级行隐藏
   await lv1(page, '显示天赋范围').click();
   await expect(lv2(page, '监管者感知范围')).toHaveCount(0);
@@ -121,7 +122,7 @@ test('range box: customize has icon, no talents, slider radius 0 hides circle', 
   await expect(slider).toHaveCount(0);
 });
 
-test('range box: hunter trait subs light manually as radio (dreamWitch)', async ({ page }) => {
+test('range box: hunter trait subs toggle independently, multiple can light (dreamWitch)', async ({ page }) => {
   await placeRole(page, 'dreamWitch', 0.4, 0.4);
   await expect(rangeBox(page).locator('.tac-range-opt:not(.tac-range-sub)')).toHaveText(['显示特质范围', '显示天赋范围', '隐藏范围']);
   await lv1(page, '显示特质范围').click();
@@ -134,21 +135,22 @@ test('range box: hunter trait subs light manually as radio (dreamWitch)', async 
   await lv2(page, '梦隐求生者提示范围').click();
   await expect(lv2(page, '梦隐求生者提示范围')).toHaveClass(/active/);
   await expect(rangeBox(page).locator('.tac-range-desc')).toHaveCount(1);
-  // 档位单选：切换到 0阶1阶信徒控制，原档熄灭
+  // 多选：点另一档则两个同时点亮
   await lv2(page, '0阶1阶信徒控制范围').click();
   await expect(lv2(page, '0阶1阶信徒控制范围')).toHaveClass(/active/);
-  await expect(lv2(page, '梦隐求生者提示范围')).not.toHaveClass(/active/);
-  await expect(rangeBox(page).locator('.tac-range-desc')).toHaveCount(1);
-  // 反复点同一一级按钮：无变化（当前档仍亮）
+  await expect(lv2(page, '梦隐求生者提示范围')).toHaveClass(/active/);
+  await expect(rangeBox(page).locator('.tac-range-desc')).toHaveCount(2);
+  // 反复点同一一级按钮：无变化（两个二级仍亮）
   await lv1(page, '显示特质范围').click();
   await expect(lv2(page, '0阶1阶信徒控制范围')).toHaveClass(/active/);
-  // 再点已选中的二级按钮：取消
+  // 再点已选中的二级按钮：只取消该档，另一档仍亮
   await lv2(page, '0阶1阶信徒控制范围').click();
   await expect(lv2(page, '0阶1阶信徒控制范围')).not.toHaveClass(/active/);
-  await expect(rangeBox(page).locator('.tac-range-desc')).toHaveCount(0);
+  await expect(lv2(page, '梦隐求生者提示范围')).toHaveClass(/active/);
+  await expect(rangeBox(page).locator('.tac-range-desc')).toHaveCount(1);
 });
 
-test('range box: new item shows first range; subs switch as radio (poseidonWatch)', async ({ page }) => {
+test('range box: new item shows first range; subs toggle as multi-select (poseidonWatch)', async ({ page }) => {
   await tool(page, 'roles');
   await pickRole(page, 'firstOfficer');
   await clickPoint(page, 0.2, 0.4);
@@ -162,10 +164,10 @@ test('range box: new item shows first range; subs switch as radio (poseidonWatch
   await expect(lv2(page, '第一次催眠范围')).toHaveClass(/active/);
   await expect(lv2(page, '第二次催眠范围')).not.toHaveClass(/active/);
   await expect(rangeBox(page).locator('.tac-range-desc')).toHaveCount(1);
-  // 档位单选：点击第二档切换，第一档熄灭
+  // 多选：点击第二档后两个同时点亮
   await lv2(page, '第二次催眠范围').click();
   await expect(lv2(page, '第二次催眠范围')).toHaveClass(/active/);
-  await expect(lv2(page, '第一次催眠范围')).not.toHaveClass(/active/);
+  await expect(lv2(page, '第一次催眠范围')).toHaveClass(/active/);
   // 隐藏范围后清空
   await lv1(page, '隐藏范围').click();
   await expect(lv1(page, '显示道具范围')).not.toHaveClass(/active/);
@@ -228,4 +230,44 @@ test('range box: buttons wrap between each other, not inside', async ({ page }) 
       : null;
   });
   expect(wrapCss).toEqual({ wrap: 'wrap', ws: 'nowrap' });
+});
+
+test('range box: Geisha fearRadius talent gets beauty/prajna variant row', async ({ page }) => {
+  await placeRole(page, 'Geisha', 0.4, 0.4);
+  await lv1(page, '显示天赋范围').click();
+  // 二级按钮列表：红蝶天赋十个
+  for (const t of ['耳鸣', '警戒半径', '成瘾症', '念旧癖', '惊弓之鸟', '狩鹿', '清道夫', '枯萎', '执念', '饥荒']) {
+    await expect(lv2(page, t)).toHaveCount(1);
+  }
+  // 默认无三级行
+  await expect(rangeBox(page).locator('.tac-range-desc')).toHaveCount(0);
+  // 点警戒半径：出现形态三级（美人相/般若相），默认美人相 32.07×0.8
+  await lv2(page, '警戒半径').click();
+  const beauty = rangeBox(page).locator('.tac-range-sub', { hasText: '美人相' });
+  const prajna = rangeBox(page).locator('.tac-range-sub', { hasText: '般若相' });
+  await expect(beauty).toHaveCount(1);
+  await expect(prajna).toHaveCount(1);
+  await expect(beauty).toHaveClass(/active/);
+  await expect(prajna).not.toHaveClass(/active/);
+  await expect(rangeBox(page).locator('.tac-range-desc'))
+    .toContainText(['警戒半径·美人相']);
+  // 切般若相：互斥，米数变为 32.07×1.1
+  await prajna.click();
+  await expect(prajna).toHaveClass(/active/);
+  await expect(beauty).not.toHaveClass(/active/);
+  await expect(rangeBox(page).locator('.tac-range-desc'))
+    .toContainText(['警戒半径·般若相']);
+  // 点清道夫：只显示清道夫的三挡 30/45/60，不再显示警戒半径形态行
+  await lv2(page, '清道夫').click();
+  await expect(beauty).toHaveCount(0);
+  for (const m of ['30m', '45m', '60m']) {
+    await expect(rangeBox(page).locator('.tac-range-sub', { hasText: m })).toHaveCount(1);
+  }
+  await expect(rangeBox(page).locator('.tac-range-desc')).toContainText(['清道夫范围 30m']);
+  // 三挡互斥：切 60m
+  await rangeBox(page).locator('.tac-range-sub', { hasText: '60m' }).click();
+  await expect(rangeBox(page).locator('.tac-range-desc')).toContainText(['清道夫范围 60m']);
+  // 两个天赋可同时点亮：警戒半径仍亮
+  await expect(lv2(page, '警戒半径')).toHaveClass(/active/);
+  await expect(rangeBox(page).locator('.tac-range-desc')).toHaveCount(2);
 });

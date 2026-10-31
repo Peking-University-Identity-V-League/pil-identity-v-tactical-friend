@@ -4061,4 +4061,5 @@ div.tac-fixed-spawn .cam-dir.up {
 @media (max-width: 480px) {
   .map-3d-button { padding: 8px 10px; font-size: 11px; }
   .map-view-actions { flex-direction: column; align-items: stretch; }
+  .tactic-view .map-view-actions { flex-direction: row; align-items: center; flex-wrap: nowrap; }
 }
