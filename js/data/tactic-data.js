@@ -199,13 +199,13 @@ export const TAC_ITEM_TYPES = {
   },
   fastMusicbox: {
     name: translate("items.femaleDancer.fastMusicbox.name"),
-    render: 'circle',
     ranges: {
       key: 'showItem',
       options: [
         { size_m: { min: 6.3, max: 9 }, label: translate("items.femaleDancer.fastMusicbox.name") },
       ],
     },
+    render: 'circle',
     color: '#f472b6',
     fill: 'rgba(244, 114, 182, 0.22)',
     glow: 'rgba(244, 114, 182, 0.45)',
@@ -213,13 +213,13 @@ export const TAC_ITEM_TYPES = {
   },
   slowMusicbox: {
     name: translate("items.femaleDancer.slowMusicbox.name"),
-    render: 'circle',
     ranges: {
       key: 'showItem',
       options: [
         { size_m: { min: 6.3, max: 9 }, label: translate("items.femaleDancer.slowMusicbox.name") },
       ],
     },
+    render: 'circle',
     color: '#60a5fa',
     fill: 'rgba(96, 165, 250, 0.22)',
     glow: 'rgba(96, 165, 250, 0.45)',
@@ -235,13 +235,13 @@ export const TAC_ITEM_TYPES = {
   },
   meteoriteMagnetN: {
     name: translate("items.prospector.meteoriteMagnetN.name"),
-    render: 'circle',
     ranges: {
       key: 'showItem',
       options: [
         { size_m: 4.5, label: translate("items.prospector.meteoriteMagnetN.name") },
       ],
     },
+    render: 'circle',
     color: '#ef4444',
     fill: 'rgba(239, 68, 68, 0.22)',
     glow: 'rgba(239, 68, 68, 0.45)',
@@ -249,13 +249,13 @@ export const TAC_ITEM_TYPES = {
   },
   meteoriteMagnetS: {
     name: translate("items.prospector.meteoriteMagnetS.name"),
-    render: 'circle',
     ranges: {
       key: 'showItem',
       options: [
         { size_m: 4.5, label: translate("items.prospector.meteoriteMagnetS.name") },
       ],
     },
+    render: 'circle',
     color: '#1d4ed8',
     fill: 'rgba(29, 78, 216, 0.22)',
     glow: 'rgba(29, 78, 216, 0.45)',
@@ -278,8 +278,8 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 27, label: translate("items.firstOfficer.poseidonWatch.range.label.hypnotizeOne") },
-        { size_m: 8.4, label: translate("items.firstOfficer.poseidonWatch.range.label.hypnotizeTwo") },
+        { size_m: 27, label: translate("items.firstOfficer.poseidonWatch.range.label.hypnotize1") },
+        { size_m: 8.4, label: translate("items.firstOfficer.poseidonWatch.range.label.hypnotize2") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b7/kfypkpcjk8dtc4pq1lrzall2wzviihu.png/120px-%E6%B5%B7%E7%A5%9E%E6%80%80%E8%A1%A8.png',
@@ -320,13 +320,13 @@ export const TAC_ITEM_TYPES = {
   },
   swarm: {
     name: translate("items.entomologist.swarm.name"),
-    render: 'circle',
     ranges: {
       key: 'showItem',
       options: [
         { size_m: 1.2, label: translate("items.entomologist.swarm.name") },
       ],
     },
+    render: 'circle',
     color: '#d4a373',
     fill: 'rgba(212, 163, 115, 0.22)',
     glow: 'rgba(212, 163, 115, 0.45)',
@@ -335,13 +335,13 @@ export const TAC_ITEM_TYPES = {
   },
   drawingBoard: {
     name: translate("items.painter.drawingBoard.name"),
-    render: 'circle',
     ranges: {
       key: 'showItem',
       options: [
         { size_m: 12, label: translate("items.painter.drawingBoard.name") },
       ],
     },
+    render: 'circle',
     color: '#60a5fa',
     fill: 'rgba(96, 165, 250, 0.22)',
     glow: 'rgba(96, 165, 250, 0.45)',
@@ -424,13 +424,13 @@ export const TAC_ITEM_TYPES = {
   },
   airbag: {
     name: translate("items.fireInvestigator.airbag.name"),
-    render: 'circle',
     ranges: {
       key: 'showItem',
       options: [
         { size_m: 4.2, label: translate("items.fireInvestigator.airbag.name") },
       ],
     },
+    render: 'circle',
     color: '#f8fafc',
     fill: 'rgba(248, 250, 252, 0.22)',
     glow: 'rgba(248, 250, 252, 0.45)',
@@ -446,13 +446,13 @@ export const TAC_ITEM_TYPES = {
   },
   stormGlass: {
     name: translate("items.meteorologist.stormGlass.name"),
-    render: 'circle',
     ranges: {
       key: 'showItem',
       options: [
         { size_m: 4, label: translate("items.meteorologist.stormGlass.range.label.rainfall") },
       ],
     },
+    render: 'circle',
     color: '#f8fafc',
     fill: 'rgba(248, 250, 252, 0.22)',
     glow: 'rgba(248, 250, 252, 0.45)',
@@ -476,6 +476,16 @@ export const TAC_ITEM_TYPES = {
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/c/c2/2w71hgyr6ozvswrc8fvzz14gaxh27ng.png/90px-%E8%BF%B7%E7%83%9F%E7%82%89.png',
   },
+  escapeAct: {
+    name: translate("items.escapologist.escapeAct.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 47, label: translate("items.escapologist.escapeAct.name") },
+      ],
+    },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/8/8f/o478syozi1jsesr9q81kpo7kkgs4z32.png',
+  },
   projectionLanternLivingImage: {
     name: translate("items.lanternist.projectionLanternLivingImage.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/68/jrtuitxf11kf9gliflsgogw269fn0xk.png/120px-%E5%B9%BB%E7%81%AF%E4%BB%AA_%E4%BA%BA%E7%89%A9%E6%8A%95%E5%BD%B1.png',
@@ -490,16 +500,12 @@ export const TAC_ITEM_TYPES = {
   },
   propUmbrella: {
     name: translate("items.mimeArtist.propUmbrella.name"),
-    render: 'circle',
     ranges: {
       key: 'showItem',
       options: [
         { size_m: 12.7, label: translate("items.mimeArtist.propUmbrella.range.label.anxiousRoutine") },
       ],
     },
-    color: '#18181b',
-    fill: 'rgba(24, 24, 27, 0.22)',
-    glow: 'rgba(24, 24, 27, 0.45)',
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/4/49/os2khk79tu1tnvnxohhtq7vvt6xa3xe.png/90px-%E9%BB%98%E5%89%A7%E8%89%BA%E4%BA%BA%E9%81%93%E5%85%B7.png',
   },
   hamster: {
@@ -533,12 +539,17 @@ export const TAC_ITEM_TYPES = {
     icon: 'https://i0.hdslb.com/bfs/new_dyn/dcdc3fe7c8923f49eb1ea04fcaa8ec6696830223.png@1192w.avif',
     iconSize: 1.7,
   },
+  rocketDash: {
+    name: translate("items.smileyFace.rocketDash.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/7/70/srcqhct6nl21fi6xojxtwh5sbsm7nlp.png/90px-%E5%B0%8F%E4%B8%911%E9%98%B6%E6%8A%80%E8%83%BD.png',
+  },
   chainHook: {
     name: translate("items.gameKeeper.chainHook.name"),
     ranges: {
       key: 'showItem',
       options: [
         { size_m: 4.2, label: translate("items.gameKeeper.chainHook.range.label.shockwave") },
+        { size_m: 1, label: translate("items.gameKeeper.chainHook.range.label.autoCorrection") },
       ],
     },
     linkToRole: 'gameKeeper',
@@ -557,6 +568,18 @@ export const TAC_ITEM_TYPES = {
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/d/dd/40u7gtj5cvffk3e4dy5edl1ntd56kdh.png/90px-%E9%B9%BF%E5%A4%B40%E9%98%B6%E6%8A%80%E8%83%BD2.png',
   },
+  fogZone: {
+    name: translate("items.theRipper.fogZone.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/0/07/my05slaw1f4g7wd8nnrfgzlgrnmpmmc.png',
+  },
+  freezingFog: {
+    name: translate("items.theRipper.freezingFog.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/0d/j1ptbqfsu0jo9nqj9t0u6os5unrk7ig.png/90px-%E2%80%9C%E6%9D%B0%E5%85%8B%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD.png',
+  },
+  hiddenInMist: {
+    name: translate("items.theRipper.hiddenInMist.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/a/a0/6ibvokim6m6tf9zpob6sfg092lmmdhl.png/90px-%E2%80%9C%E6%9D%B0%E5%85%8B%E2%80%9D1%E9%98%B6%E6%8A%80%E8%83%BD.png',
+  },
   cocoon: {
     name: translate("items.soulWeaver.cocoon.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/2/29/irffbeqngfqxra20eq3i4dxs5eckavf.png',
@@ -570,12 +593,19 @@ export const TAC_ITEM_TYPES = {
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/be/1shbnt82gkl17pdaoz3i1ke5r53yzva.png/90px-%E8%9C%98%E8%9B%9B1%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   swallowtailButterfly: {
-    name: translate("items.Geisha.swallowtailButterfly.name"),
+    name: translate("items.geisha.swallowtailButterfly.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/3/39/2zzetskt6albjea26dh8cbhoyywljni.png',
+  },
+  dashHit: {
+    name: translate("items.geisha.dashHit.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/8/86/3el6d4a7epwxyhr983jr67gy4by00u9.png/90px-%E7%BA%A2%E8%9D%B60%E9%98%B6%E6%8A%80%E8%83%BD2.png',
+  },
+  soulDeparture: {
+    name: translate("items.geisha.soulDeparture.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/39/ejolhn1ff31fto5v4rfikf5338w40rb.png/90px-%E7%BA%A2%E8%9D%B61%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   umbrella: {
     name: translate("items.wuchang.umbrella.name"),
-    render: 'circle',
     ranges: {
       key: 'showItem',
       options: [
@@ -586,10 +616,15 @@ export const TAC_ITEM_TYPES = {
     linkMaxM: 84.4,
     linkColor: '#f8fafc',
     linkWidth: 2,
+    render: 'circle',
     color: '#22c55e',
     fill: 'rgba(34, 197, 94, 0.22)',
     glow: 'rgba(34, 197, 94, 0.45)',
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/3f/98f3qxkbtphouvvzglqleqnf00t5mlv.png/90px-%E5%AE%BF%E4%BC%9E%E4%B9%8B%E9%AD%820%E9%98%B6%E6%8A%80%E8%83%BD1.png',
+  },
+  siphonSoulWaveringSoul: {
+    name: translate("items.wuchang.siphonSoulWaveringSoul.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/1c/1pf2jr28fbupkpyftvphiaeg6uuknln.png/90px-%E5%AE%BF%E4%BC%9E%E4%B9%8B%E9%AD%821%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   camera: {
     name: translate("items.photographer.camera.name"),
@@ -651,7 +686,6 @@ export const TAC_ITEM_TYPES = {
   },
   aquaMirror: {
     name: translate("items.bloodyQueen.aquaMirror.name"),
-    linkToRole: 'bloodyQueen',
     ranges: {
       key: 'showItem',
       options: [
@@ -660,6 +694,7 @@ export const TAC_ITEM_TYPES = {
         { size_m: 21.1, label: translate("items.bloodyQueen.aquaMirror.range.label.mirrorImageSurvivorTier2") },
       ],
     },
+    linkToRole: 'bloodyQueen',
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/03/tmqwk7lb2do1swhtp7sklgx75t0ig6f.png/90px-%E7%BA%A2%E5%A4%AB%E4%BA%BA0%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   mirrorImage: {
@@ -694,9 +729,9 @@ export const TAC_ITEM_TYPES = {
   musicNote: {
     name: translate("items.violinist.musicNote.name"),
     render: 'link',
+    linkMaxM: 23,
     linkColor: '#f8fafc',
     linkWidth: 2,
-    linkMaxM: 23,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/38/dvl0ktwk8452koko8ldzj9prewp7ku5.png/90px-%E5%B0%8F%E6%8F%90%E7%90%B4%E5%AE%B60%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   infiniteMovement: {
@@ -716,9 +751,9 @@ export const TAC_ITEM_TYPES = {
   sculpture: {
     name: translate("items.sculptor.sculpture.name"),
     render: 'link',
+    linkMaxM: 11,
     linkColor: '#f8fafc',
     linkWidth: 2,
-    linkMaxM: 11,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/12/7q7e3iajnfcsbu9f80i95d6acpbr41p.png/90px-%E9%9B%95%E5%88%BB%E5%AE%B60%E9%98%B6%E6%8A%80%E8%83%BD1.png',
   },
   sculptureOfNobility: {
@@ -787,14 +822,14 @@ export const TAC_ITEM_TYPES = {
   },
   spearfishing: {
     name: translate("items.naiad.spearfishing.name"),
-    linkToRole: 'naiad',
-    linkMaxM: 57.5,
     ranges: {
       key: 'showItem',
       options: [
         { size_m: 4, label: translate("items.naiad.spearfishing.name") },
       ],
     },
+    linkToRole: 'naiad',
+    linkMaxM: 57.5,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/be/3b3skletdo6z31k2wti92rsxisja1tg.png/90px-%E6%B8%94%E5%A5%B30%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   surgingTides: {
@@ -849,13 +884,13 @@ export const TAC_ITEM_TYPES = {
   },
   electromagneticFieldN: {
     name: translate("items.hermit.electromagneticFieldN.name"),
-    render: 'circle',
     ranges: {
       key: 'showItem',
       options: [
         { size_m: 2.3, label: translate("items.hermit.electromagneticFieldN.name") },
       ],
     },
+    render: 'circle',
     color: '#ef4444',
     fill: 'rgba(239, 68, 68, 0.22)',
     glow: 'rgba(239, 68, 68, 0.45)',
@@ -863,13 +898,13 @@ export const TAC_ITEM_TYPES = {
   },
   electromagneticFieldS: {
     name: translate("items.hermit.electromagneticFieldS.name"),
-    render: 'circle',
     ranges: {
       key: 'showItem',
       options: [
         { size_m: 2.3, label: translate("items.hermit.electromagneticFieldS.name") },
       ],
     },
+    render: 'circle',
     color: '#1d4ed8',
     fill: 'rgba(29, 78, 216, 0.22)',
     glow: 'rgba(29, 78, 216, 0.45)',
@@ -1019,16 +1054,12 @@ export const TAC_ITEM_TYPES = {
   },
   cueBall: {
     name: translate("items.cueist.cueBall.name"),
-    render: 'circle',
     ranges: {
       key: 'showItem',
       options: [
         { size_m: 4, label: translate("items.cueist.cueBall.name") },
       ],
     },
-    color: '#18181b',
-    fill: 'rgba(24, 24, 27, 0.22)',
-    glow: 'rgba(24, 24, 27, 0.45)',
     icon: 'https://patchwiki.biligame.com/images/dwrg/6/67/t7auxaxdhzzis13n6qnl24dciluiddd.png',
   },
   swarmOfInsects: {
@@ -1063,6 +1094,26 @@ export const TAC_ITEM_TYPES = {
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/91/hu0fnv6ev967sdypg7bgso8f6ch8jzr.png/90px-%E2%80%9C%E5%BF%83%E5%85%BD%E2%80%9D1%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
+  listen: {
+    name: translate("items.trait.listen.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/0/07/0obrswd76b8u690r6ramdcrectlbpiy.png',
+  },
+  abnormal: {
+    name: translate("items.trait.abnormal.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/d/d2/piv0htrn7il01b3egjeperc9d4s7td3.png',
+  },
+  excitement: {
+    name: translate("items.trait.excitement.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/d/d9/9vlw3opxe521jiwh27lfuld8q92ctxa.png',
+  },
+  patroller: {
+    name: translate("items.trait.patroller.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/a/aa/rb5j6n9m9gumvpy0jhhnrrhmt5riifi.png',
+  },
+  teleport: {
+    name: translate("items.trait.teleport.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/0/04/6rs6gkhobw3hqwjpylsryrl3eq5jdtv.png',
+  },
   peeper: {
     name: translate("items.trait.peeper.name"),
     ranges: {
@@ -1073,12 +1124,16 @@ export const TAC_ITEM_TYPES = {
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/ba/4sgjzcxl8526632orcqqgwkt5pv9s4f.png',
   },
+  blink: {
+    name: translate("items.trait.blink.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/5/5e/8ivnan4wru8d5lrbacu4oz1vsixnpjc.png',
+  },
   warp: {
     name: translate("items.trait.warp.name"),
     render: 'link',
+    linkMaxM: 60,
     linkColor: '#f8fafc',
     linkWidth: 2,
-    linkMaxM: 60,
     icon: 'https://patchwiki.biligame.com/images/dwrg/f/f5/lqbsf4hruktmy7b6m454ya5efebmmg7.png',
   },
   fearRadius: {
@@ -1430,9 +1485,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 27, label: translate("characters.firstOfficer.range.label.hypnotizeOne") },
-        { size_m: 8.4, label: translate("characters.firstOfficer.range.label.hypnotizeTwo") },
-        { size_m: 5.1, label: translate("characters.firstOfficer.range.label.hypnotizeThree") },
+        { size_m: 27, label: translate("characters.firstOfficer.range.label.hypnotize1") },
+        { size_m: 8.4, label: translate("characters.firstOfficer.range.label.hypnotize2") },
+        { size_m: 5.1, label: translate("characters.firstOfficer.range.label.hypnotize3") },
       ],
     },
     items: ['poseidonWatch'],
@@ -1711,7 +1766,7 @@ export const TAC_ROLES = {
   escapologist: {
     name: translate("characters.escapologist.name"),
     camp: 'survivor',
-    items: ['thurible'],
+    items: ['thurible', 'escapeAct'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/fe/b5912707v68vwuk88fyr8d2lqs66to0.png/90px-%E2%80%9C%E9%80%83%E8%84%B1%E5%A4%A7%E5%B8%88%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   lanternist: {
@@ -1770,7 +1825,15 @@ export const TAC_ROLES = {
     name: translate("characters.smileyFace.name"),
     camp: 'hunter',
     speed: { [translate("characters.smileyFace.name")]: 4.56, [translate("characters.smileyFace.speed.rocketDashTier0")]: 7.07, [translate("characters.smileyFace.speed.rocketDashTier1")]: 7.39, [translate("characters.smileyFace.speed.rocketDashTier2")]: 9.12 },
-    items: ['windWings', 'drill', 'propeller'],
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: 19.5, label: translate("characters.smileyFace.range.label.rocketDashMaxTier1") },
+        { size_m: 26, label: translate("characters.smileyFace.range.label.rocketDashMaxTier2") },
+        { size_m: 24, label: translate("characters.smileyFace.range.label.partSeen") },
+      ],
+    },
+    items: ['windWings', 'drill', 'propeller', 'rocketDash'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/55/ob4f8gqvpcfw0sarr5ule5mpmzxby7l.png/90px-%E5%B0%8F%E4%B8%91%E5%A4%B4%E5%83%8F.png',
   },
   gameKeeper: {
@@ -1784,6 +1847,7 @@ export const TAC_ROLES = {
     name: translate("characters.theRipper.name"),
     camp: 'hunter',
     speed: 4.73,
+    items: ['fogZone', 'freezingFog', 'hiddenInMist'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/97/ivu0gnyhfvshbheysxmqaeqcq6j5pi3.png/90px-%E2%80%9C%E6%9D%B0%E5%85%8B%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   soulWeaver: {
@@ -1797,14 +1861,14 @@ export const TAC_ROLES = {
     name: translate("characters.geisha.name"),
     camp: 'hunter',
     speed: { [translate("characters.geisha.speed.beautyForm")]: 4.73, [translate("characters.geisha.speed.prajnaForm")]: 4.56 },
-    items: ['swallowtailButterfly'],
+    items: ['swallowtailButterfly', 'dashHit', 'soulDeparture'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/bd/qcstapls4hnm6fckekl6l6890h19vst.png/90px-%E7%BA%A2%E8%9D%B6%E5%A4%B4%E5%83%8F.png',
   },
   wuchang: {
     name: translate("characters.wuchang.name"),
     camp: 'hunter',
     speed: { [translate("characters.wuchang.speed.xieBian")]: 4.73, [translate("characters.wuchang.speed.fanWuJiu")]: 4.56 },
-    items: ['umbrella'],
+    items: ['umbrella', 'siphonSoulWaveringSoul'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/2a/gd5yd3hfaohhj2pozgqf2cfivpadbn6.png/90px-%E5%AE%BF%E4%BC%9E%E4%B9%8B%E9%AD%82%E5%A4%B4%E5%83%8F.png',
   },
   photographer: {
@@ -1831,6 +1895,14 @@ export const TAC_ROLES = {
     name: translate("characters.theFeaster.name"),
     camp: 'hunter',
     speed: 4.64,
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: 42.2, label: translate("characters.theFeaster.range.label.tentaclePlacement") },
+        { size_m: 21.1, label: translate("characters.theFeaster.range.label.tentacleControlHit") },
+        { size_m: 21.1, label: translate("characters.theFeaster.range.label.nightmareGaze") },
+      ],
+    },
     items: ['tentacle'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/30/3yr81lwbegfcgotyiis8yknwc2224is.png/90px-%E9%BB%84%E8%A1%A3%E4%B9%8B%E4%B8%BB%E5%A4%B4%E5%83%8F.png',
   },
@@ -2130,7 +2202,7 @@ export const TAC_ROLES = {
   trait: {
     name: translate("characters.trait.name"),
     camp: 'other',
-    items: ['peeper', 'warp'],
+    items: ['listen', 'abnormal', 'excitement', 'patroller', 'teleport', 'peeper', 'blink', 'warp'],
     maxItems: [3, 2],
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/bd/4aby06f4kbl87b14cihk5o3y1k61e8l.png',
   },
