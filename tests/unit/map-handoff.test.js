@@ -21,7 +21,7 @@ test('a polyline still being drawn transfers both endpoints, including a new cha
 test('all nine 2D maps open the corresponding 3D scene', () => {
   assert.equal(new Set(MAP_SCENES).size, 9);
   for (let mapId = 0; mapId < 9; mapId++) {
-    assert.equal(map3dURL({ mapId }), `/maps-3d/${MAP_SCENES[mapId]}.html`);
+    assert.equal(map3dURL({ mapId }), `/tactical-friend/3d/${MAP_SCENES[mapId]}.html`);
   }
   assert.throws(() => map3dURL({ mapId: 9 }));
   assert.throws(() => map3dURL({ mapId: '0' }));

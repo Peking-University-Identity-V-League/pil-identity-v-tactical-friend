@@ -2,7 +2,9 @@
 
 PIL (Peking University Identity V League) Identity V Tactical Friend
 
-官网入口：[战术演练](https://pkuidv.com/tactical-friend/) · [备用入口](https://pkuidv.com/zhanshuyanlian/)
+官网入口：[二维战术演练](https://pkuidv.com/tactical-friend/) · [三维地图](https://pkuidv.com/tactical-friend/3d/) · [二维备用入口](https://pkuidv.com/zhanshuyanlian/)
+
+本公有库统一维护和发布二维应用与已公开的三维运行文件。三维说明见 [maps-3d/README.md](maps-3d/README.md)；资源解析、重建及内部研究工具留在私有工具库。
 
 官网发布工作流与本地构建说明见 [deploy/README.md](deploy/README.md)。
 
@@ -1360,4 +1362,4 @@ window.addEventListener('keydown'
 
 地图工具栏中的“切换三维”打开同一张三维地图，并同步当前选中测距线的起终点；未选中时取最近一条。折线取首尾，未完成的新起点只同步 A。跳转前保存二维战术板，三维页面可返回原地图。
 
-三维端按自己的场景与参数重新计算；重叠楼层需要确认，无法对应通行面时给出提示。只同步测距端点。发布前应先完成 `/maps-3d/` 运行资源和对应安全配置，再启用二维按钮；本地单独运行二维项目不包含三维资源。
+三维端按自己的场景与参数重新计算；重叠楼层需要确认，无法对应通行面时给出提示。只同步测距端点。二维与 `/tactical-friend/3d/` 三维运行资源由本仓库统一发布，本地 `npm run dev` 也可打开这两个路径。旧 `/maps-3d/` 路径已退役，不提供兼容跳转。

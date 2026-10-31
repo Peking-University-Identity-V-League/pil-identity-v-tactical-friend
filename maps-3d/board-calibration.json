@@ -1,0 +1,248 @@
+{
+  "v": 1,
+  "maps": [
+    {
+      "scene": "ordnance_factory1",
+      "mapId": 0,
+      "name": "Arms Factory",
+      "image": "https://patchwiki.biligame.com/images/dwrg/thumb/4/44/bk8sfefxhz54qr2uxqq6grugfshrczs.png/750px-%E5%86%9B%E5%B7%A5%E5%8E%82_%E4%BF%AF%E8%A7%86%E5%9B%BE_%E5%85%A8.png",
+      "size": [
+        750,
+        644
+      ],
+      "normalizedToWorld": [
+        -0.14095130677566828,
+        -1967.2821629272382,
+        1691.8801370984213,
+        3.6676132194130604,
+        -2398.869334545493,
+        2473.957506719018
+      ],
+      "worldToPixel": [
+        0.0008264348338313186,
+        0.38064168134748944,
+        -0.3812366780020509,
+        -2.727211348238128e-05,
+        945.1458505596731,
+        913.1771268842034
+      ],
+      "maxHeldoutErrorPixels": 0.544818524859533
+    },
+    {
+      "scene": "h55_hospital2",
+      "mapId": 1,
+      "name": "Sacred Heart Hospital",
+      "image": "https://patchwiki.biligame.com/images/dwrg/6/64/1znuvz3676hq8xyjdd26vxz99l3n3ds.png",
+      "size": [
+        644,
+        604
+      ],
+      "normalizedToWorld": [
+        4.416143362352656,
+        -1794.9628953865229,
+        1676.997763245942,
+        0.9519836039829637,
+        -855.2479420935857,
+        897.6669461024895
+      ],
+      "worldToPixel": [
+        0.00020366986267494574,
+        0.3601669421795496,
+        -0.35878128858257574,
+        0.0008861179554926486,
+        322.240291871556,
+        307.2365973102056
+      ],
+      "maxHeldoutErrorPixels": 1.6159518252307585
+    },
+    {
+      "scene": "h55_demo",
+      "mapId": 2,
+      "name": "The Red Church",
+      "image": "https://patchwiki.biligame.com/images/dwrg/2/21/tqsaom4k0h9tijgczzutlq6tyatxtty.png",
+      "size": [
+        596,
+        599
+      ],
+      "normalizedToWorld": [
+        -1814.8867185992876,
+        -2.190964266253171,
+        -1.0517923731161005,
+        -1829.7808085862694,
+        904.6864791335174,
+        932.1053809738149
+      ],
+      "worldToPixel": [
+        -0.3283953799846867,
+        0.00039519717140445765,
+        0.0001887678318701594,
+        -0.32736184184168604,
+        296.9189085702189,
+        304.7782047685731
+      ],
+      "maxHeldoutErrorPixels": 0.5110444222277742
+    },
+    {
+      "scene": "h55_fishingvillage",
+      "mapId": 3,
+      "name": "Lakeside Village",
+      "image": "https://patchwiki.biligame.com/images/dwrg/0/0e/h7t6n6gum5qpc0h8mhhk5fissh04xbq.png",
+      "size": [
+        1280,
+        1208
+      ],
+      "normalizedToWorld": [
+        -2360.982811071354,
+        -43.13658827428783,
+        -1.3789941254679021,
+        -2228.5538705147596,
+        1118.3581779472775,
+        1141.7264115285063
+      ],
+      "worldToPixel": [
+        -0.5421532360522238,
+        0.009903795759722594,
+        0.00033547590547889245,
+        -0.5420616810116153,
+        605.9384835378686,
+        607.8101469078962
+      ],
+      "maxHeldoutErrorPixels": 2.191765146252523
+    },
+    {
+      "scene": "h55_playground",
+      "mapId": 4,
+      "name": "Moonlit River Park",
+      "image": "https://patchwiki.biligame.com/images/dwrg/1/10/3qp1mkiy5mhg421bfbytquibtwyh5j8.png",
+      "size": [
+        1492,
+        1028
+      ],
+      "normalizedToWorld": [
+        -2179.1764125790287,
+        -1.0619453820584124,
+        -4.172592496923546,
+        -1511.4591813472261,
+        1093.0815509798467,
+        768.5286091087804
+      ],
+      "worldToPixel": [
+        -0.68466325102402,
+        0.0003314416383841389,
+        0.0018901077709526403,
+        -0.6801383693700502,
+        746.940166431964,
+        522.3435022733344
+      ],
+      "maxHeldoutErrorPixels": 0.7558563916614636
+    },
+    {
+      "scene": "ordnance_factory2",
+      "mapId": 5,
+      "name": "Leo's Memory",
+      "image": "https://patchwiki.biligame.com/images/dwrg/thumb/5/53/t9v9ezb7qvnlatez60eex59ab1f7w8p.png/750px-%E9%87%8C%E5%A5%A5%E7%9A%84%E5%9B%9E%E5%BF%86_%E4%BF%AF%E8%A7%86%E5%9B%BE_%E5%85%A8.png",
+      "size": [
+        750,
+        635
+      ],
+      "normalizedToWorld": [
+        2.730825885337628,
+        -1992.6263727336334,
+        1692.5067989041481,
+        -0.10327532173135544,
+        -2405.6426228454047,
+        2468.9952756522503
+      ],
+      "worldToPixel": [
+        -2.296685668526089e-05,
+        0.37518316234404336,
+        -0.37638770267282007,
+        0.000514175615404696,
+        929.2442096634418,
+        901.2871095434679
+      ],
+      "maxHeldoutErrorPixels": 0.6595999863154562
+    },
+    {
+      "scene": "h55_sleepingtown3",
+      "mapId": 6,
+      "name": "Eversleeping Town",
+      "image": "https://patchwiki.biligame.com/images/dwrg/thumb/2/2f/cdwrcy0q4j8t8wqmo6gv50xbe0mptak.png/750px-%E6%B0%B8%E7%9C%A0%E9%95%87_%E4%BF%AF%E8%A7%86%E5%9B%BE_%E5%85%A8.png",
+      "size": [
+        750,
+        874
+      ],
+      "normalizedToWorld": [
+        -1617.6715170773136,
+        4.844967497441832,
+        -5.4136328555612385,
+        -1892.4848742876775,
+        137.03921805256147,
+        684.2234650844931
+      ],
+      "worldToPixel": [
+        -0.463625381587779,
+        -0.0013831708377718933,
+        0.0013262444696581423,
+        -0.461822719904102,
+        62.62741217553103,
+        316.1794903175713
+      ],
+      "maxHeldoutErrorPixels": 2.312279846299306
+    },
+    {
+      "scene": "h55_chinatown",
+      "mapId": 7,
+      "name": "China Town",
+      "image": "https://patchwiki.biligame.com/images/dwrg/c/cb/4g9knengpuuk8uyssm4zvpf1evw3d80.png",
+      "size": [
+        1345,
+        1152
+      ],
+      "normalizedToWorld": [
+        -1698.7212509197038,
+        0.33279850404085265,
+        2.416768161221838,
+        -1465.5421058174047,
+        852.7672820310049,
+        735.5597277941945
+      ],
+      "worldToPixel": [
+        -0.7917723015476485,
+        -0.000153997462409236,
+        -0.0013056807318752696,
+        -0.7860575056856771,
+        676.1579197419458,
+        578.3235689101987
+      ],
+      "maxHeldoutErrorPixels": 0.6406405389700806
+    },
+    {
+      "scene": "h55_deadforest_sp",
+      "mapId": 8,
+      "name": "Darkwoods",
+      "image": "https://patchwiki.biligame.com/images/dwrg/f/f7/40wez8dwwtlpyuljfmydkle6lpp0gdv.png",
+      "size": [
+        1247,
+        1265
+      ],
+      "normalizedToWorld": [
+        -1585.4773610988984,
+        -0.7142838800413968,
+        -3.7923613175011406,
+        -1606.4624994792282,
+        802.074603825804,
+        814.047878821861
+      ],
+      "worldToPixel": [
+        -0.7865147474320004,
+        0.0003547571843274431,
+        0.0018567181647702483,
+        -0.7874453003275845,
+        629.3320469660729,
+        640.7336346918397
+      ],
+      "maxHeldoutErrorPixels": 1.9297722398485704
+    }
+  ]
+}

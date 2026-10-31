@@ -1,5 +1,6 @@
 import { execFileSync } from 'node:child_process';
 import { setTimeout } from 'node:timers/promises';
+import { readFile } from 'node:fs/promises';
 
 const git = (...args) => execFileSync('git', args, { encoding: 'utf8' }).trim();
 const commit = process.env.GITHUB_SHA || git('rev-parse', 'HEAD');
@@ -24,6 +25,15 @@ async function verify() {
       if (!(response.headers.get('content-type') || '').includes(expected)) throw new Error('Unexpected static asset type at ' + path);
       await response.body?.cancel();
     }
+  }
+  const expectedMaps = JSON.parse(await readFile(new URL('../dist/3d/__release.json', import.meta.url), 'utf8'));
+  const mapsResponse = await fetch('https://pkuidv.com/tactical-friend/3d/__release.json?check=' + Date.now(), { signal: AbortSignal.timeout(15000) });
+  if (!mapsResponse.ok) throw new Error('3D release metadata is unavailable');
+  const maps = await mapsResponse.json();
+  if (maps.source_commit !== commit || maps.asset_version !== expectedMaps.asset_version) throw new Error('Unexpected 3D release');
+  for (const name of Object.keys(maps.files)) {
+    const response = await fetch('https://pkuidv.com/tactical-friend/3d/releases/' + maps.asset_version + '/' + name, { method: 'HEAD', signal: AbortSignal.timeout(15000) });
+    if (!response.ok || !response.headers.get('cache-control')?.includes('immutable')) throw new Error('3D immutable asset unavailable: ' + name);
   }
 }
 

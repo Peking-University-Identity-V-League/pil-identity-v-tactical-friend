@@ -18,7 +18,7 @@ jobs:
   validate:
     name: Test and package
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -63,7 +63,7 @@ jobs:
     needs: validate
     if: github.repository == 'Peking-University-Identity-V-League/pil-identity-v-tactical-friend' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     environment:
       name: production
       url: https://pkuidv.com/tactical-friend/
