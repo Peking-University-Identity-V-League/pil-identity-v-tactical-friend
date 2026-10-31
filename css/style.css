@@ -2723,6 +2723,28 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 }
 .tac-token:active { cursor: grabbing; }
 
+.tac-token.as-dot {
+  width: 16px !important;
+  background: none;
+  border: none;
+  box-shadow: none;
+  text-shadow: none;
+}
+.tac-token.as-dot::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--rc, #fff);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.65);
+}
+.tac-token.as-dot.glow::after {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4), 0 0 10px var(--rc);
+}
+.tac-token.as-dot.selected::after {
+  box-shadow: 0 0 0 2px #fff, 0 0 12px var(--rc);
+}
+
 .tac-token.glow {
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35),
     0 0 14px var(--rc), 0 0 30px var(--rc);

@@ -887,9 +887,51 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.hermit.meditation.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/c/c0/tmgrj8i99jc5wzl6n2tnu7w0cqxx094.png',
   },
+  tempest: {
+    name: translate("items.nightWatch.tempest.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 15.9, label: translate("items.nightWatch.tempest.name") },
+      ],
+    },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/62/l82kzmd8c621e7mm3wvu4qutqh0a6er.png/90px-%E5%AE%88%E5%A4%9C%E4%BA%BA0%E9%98%B6%E6%8A%80%E8%83%BD1.png',
+  },
+  windwalk: {
+    name: translate("items.nightWatch.windwalk.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/2/2d/fixoiw0rb7utlepv5lhga4ktvlqfoak.png',
+  },
+  tempestCyclone: {
+    name: translate("items.nightWatch.tempestCyclone.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 11.8, label: translate("items.nightWatch.tempestCyclone.name") },
+      ],
+    },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/8/86/4o4xemckgxf3le7dxrnnmm0m7k6cdqr.png/90px-%E5%AE%88%E5%A4%9C%E4%BA%BA1%E9%98%B6%E6%8A%80%E8%83%BD1.png',
+  },
+  windwalkCharge: {
+    name: translate("items.nightWatch.windwalkCharge.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 15.2, label: translate("items.nightWatch.windwalkCharge.name") },
+      ],
+    },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/94/rhchhzimk1la3tkmcjc5g62lgtzvmyj.png/90px-%E5%AE%88%E5%A4%9C%E4%BA%BA1%E9%98%B6%E6%8A%80%E8%83%BD2.png',
+  },
+  windControl: {
+    name: translate("items.nightWatch.windControl.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/be/crtbkqxhyeqvzccz4q9o6u321r9l1lq.png/90px-%E5%AE%88%E5%A4%9C%E4%BA%BA1%E9%98%B6%E6%8A%80%E8%83%BD3.png',
+  },
   remnant: {
     name: translate("items.operaSinger.remnant.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/2c/i63l26e9f0di64h97egr3qngfbf5u1r.png/90px-%E6%AD%8C%E5%89%A7%E6%BC%94%E5%91%980%E9%98%B6%E6%8A%80%E8%83%BD2.png',
+  },
+  shadowstrike: {
+    name: translate("items.operaSinger.shadowstrike.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b8/m3kemxopxjddcbko8ojmggxgtru6tz9.png/90px-%E6%AD%8C%E5%89%A7%E6%BC%94%E5%91%981%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   pickaxe: {
     name: translate("items.foolsGold.pickaxe.name"),
@@ -1926,13 +1968,29 @@ export const TAC_ROLES = {
     name: translate("characters.nightWatch.name"),
     camp: 'hunter',
     speed: 4.64,
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: 15.9, label: translate("characters.nightWatch.range.label.tempest") },
+        { size_m: 11.8, label: translate("characters.nightWatch.range.label.tempestCyclone") },
+        { size_m: 15.2, label: translate("characters.nightWatch.range.label.windwalkCharge") },
+      ],
+    },
+    items: ['tempest', 'windwalk', 'tempestCyclone', 'windwalkCharge', 'windControl'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/c/c3/d99smic5vrfjsir2pwo8endmiaoipp5.png/90px-%E5%AE%88%E5%A4%9C%E4%BA%BA%E5%A4%B4%E5%83%8F.png',
   },
   operaSinger: {
     name: translate("characters.operaSinger.name"),
     camp: 'hunter',
     speed: 4.56,
-    items: ['remnant'],
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: 4.64, label: translate("characters.operaSinger.range.label.shadowLeapTier0Tier1") },
+        { size_m: 5.568, label: translate("characters.operaSinger.range.label.shadowLeapTier2") },
+      ],
+    },
+    items: ['remnant', 'shadowstrike'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/be/k47ppq37pc3g92kjsu3iakot58em2pk.png/90px-%E6%AD%8C%E5%89%A7%E6%BC%94%E5%91%98%E5%A4%B4%E5%83%8F.png',
   },
   foolsGold: {
