@@ -4,13 +4,15 @@ import { readFile } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { prepareAssets } from '../../deploy/scripts/prepare-assets.mjs';
+import { snapshotAssets } from '../../deploy/scripts/asset-snapshot.mjs';
 
 test('the packaged application versions every module and locale under both entry paths', async ({ page }) => {
   test.setTimeout(120000);
   const root = fileURLToPath(new URL('../../', import.meta.url));
   const revision = 'c'.repeat(40);
-  await prepareAssets(root, revision, revision);
+  await prepareAssets(root, revision, revision, { version: false });
   const dist = resolve(root, 'deploy/dist');
+  const snapshot = await snapshotAssets(root, dist, revision, false);
   const requests = [], errors = [];
   const server = createServer(async (req, res) => {
     const url = new URL(req.url, 'http://fixture');
@@ -39,8 +41,8 @@ test('the packaged application versions every module and locale under both entry
       await expect(page).toHaveURL(base + prefix + '/3d/ordnance_factory1.html');
       const own = requests.filter(path => path.startsWith(prefix + '/') && /\.(?:js|css|json)(?:\?|$)/.test(path));
       expect(own.length).toBeGreaterThan(10);
-      expect(own.every(path => new URL(path, base).searchParams.get('v') === revision)).toBe(true);
-      expect(own).toContain(prefix + '/locales/zh-CN.json?v=' + revision);
+      expect(own.every(path => /\/_assets\/[a-f0-9]{64}\//.test(path))).toBe(true);
+      expect(own).toContain(prefix + '/' + snapshot.asset_urls['locales/zh-CN.json']);
     }
     expect(errors).toEqual([]);
   } finally { server.closeAllConnections(); await new Promise(resolve => server.close(resolve)); }

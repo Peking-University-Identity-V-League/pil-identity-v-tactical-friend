@@ -1,0 +1,32 @@
+[
+  {
+    "ref": "pil_tactical_mutable_revalidate",
+    "description": "PIL policy: entry pages and unversioned files always revalidate",
+    "expression": "(http.host eq \"pkuidv.com\" and (starts_with(http.request.uri.path, \"/tactical-friend/\") or starts_with(http.request.uri.path, \"/zhanshuyanlian/\")) and not (starts_with(http.request.uri.path, \"/tactical-friend/_assets/\") or starts_with(http.request.uri.path, \"/tactical-friend/3d/releases/\") or starts_with(http.request.uri.path, \"/zhanshuyanlian/_assets/\") or starts_with(http.request.uri.path, \"/zhanshuyanlian/3d/releases/\")))",
+    "action": "set_cache_settings",
+    "action_parameters": {
+      "cache": false,
+      "browser_ttl": {
+        "mode": "respect_origin"
+      }
+    },
+    "enabled": true
+  },
+  {
+    "ref": "pil_tactical_immutable_assets",
+    "description": "PIL policy: content snapshots and 3D releases are immutable",
+    "expression": "(http.host eq \"pkuidv.com\" and http.request.method in {\"GET\" \"HEAD\"} and (starts_with(http.request.uri.path, \"/tactical-friend/_assets/\") or starts_with(http.request.uri.path, \"/tactical-friend/3d/releases/\") or starts_with(http.request.uri.path, \"/zhanshuyanlian/_assets/\") or starts_with(http.request.uri.path, \"/zhanshuyanlian/3d/releases/\")))",
+    "action": "set_cache_settings",
+    "action_parameters": {
+      "cache": true,
+      "browser_ttl": {
+        "mode": "respect_origin"
+      },
+      "edge_ttl": {
+        "mode": "respect_origin"
+      },
+      "respect_strong_etags": true
+    },
+    "enabled": true
+  }
+]

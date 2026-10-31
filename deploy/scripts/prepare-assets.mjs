@@ -11,7 +11,7 @@ const allowedExtensions = new Map([
   ['locales', '.json'],
 ]);
 
-export async function prepareAssets(sourceRoot, commit, configRevision = 'local') {
+export async function prepareAssets(sourceRoot, commit, configRevision = 'local', { version = true } = {}) {
   if (!/^[a-f0-9]{40}$/.test(commit)) throw new Error('Expected a full source commit SHA');
   if (!/^(local|[a-f0-9]{40})$/.test(configRevision)) throw new Error('Invalid config revision');
   const source = resolve(sourceRoot);
@@ -75,7 +75,7 @@ export async function prepareAssets(sourceRoot, commit, configRevision = 'local'
     clientAssets.push('telemetry/' + name);
   }
   html = html.replace(/<\/head\s*>/i, scripts + '\n</head>');
-  await writeFile(htmlPath, versionClientAssets(html, clientAssets, commit));
+  await writeFile(htmlPath, version ? versionClientAssets(html, clientAssets, commit) : html);
   await writeFile(join(output, '__release.json'), JSON.stringify({
     source_commit: commit,
     config_revision: configRevision,

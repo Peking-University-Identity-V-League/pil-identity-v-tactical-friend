@@ -1,38 +1,62 @@
-# 官网发布
+# 官网发布与资源管理
 
-本目录包含战术工具的静态打包、匿名统计与发布校验代码。
+`main` 的 GitHub Actions 将二维与三维作为同一个发布包部署，两个入口共用一个原子 `current` 指针：
 
-正式入口：
+- https://pkuidv.com/tactical-friend/
+- https://pkuidv.com/zhanshuyanlian/
+- 对应的 `/3d/具体地图.html` 保持固定地址，往返保留入口前缀。
 
-- [战术演练](https://pkuidv.com/tactical-friend/)
-- [三维地图](https://pkuidv.com/tactical-friend/3d/)
-- [战术演练备用入口](https://pkuidv.com/zhanshuyanlian/)
-- [备用入口三维地图](https://pkuidv.com/zhanshuyanlian/3d/)
+## 唯一配置入口
 
-`main` 更新后，GitHub Actions 运行应用与部署测试，将二维与三维构建为一个静态包，原子发布后核对所有入口的版本。PR 只运行检查，不部署。也可在 Actions 手动执行。工作流仅使用本公有库的检出，不读取私有仓库。
+`deploy/asset-policy.json` 管理资源目录、缓存规则、压缩参数和入口前缀。`deploy/scripts/asset-policy.mjs` 是构建、清单、压缩和验证共用的实现。服务器配置与 Cloudflare 规则由此生成，禁止直接修改 `deploy/generated/`。
 
-## 本地检查
+| 文件类型 | 版本与缓存 |
+| --- | --- |
+| 页面 HTML、固定资源地址 | 浏览器 `no-cache` 重新验证，CDN 绕过缓存，刷新即可获取最新入口 |
+| 二维 JS/CSS、语言包、统计辅助脚本、三维辅助 JS/CSS/校准数据 | `_assets/<单文件指纹>/...`，浏览器与 CDN 一年 immutable |
+| 三维地图 HTML | 每张地图独立哈希存储于 `_assets/<指纹>/3d/地图.html`；固定地址直接读取同一份持久文件，内容不变时保留 ETag/修改时间 |
+| `__release.json`、`3d/__release.json`、`asset-manifest.json` | `no-store`，用于确认当前发布及每个文件的哈希/压缩/缓存类别 |
+| 站外图片 | 按现有外链访问，不镜像、不改写；缓存由图片站点决定 |
 
-在仓库根目录运行：
+版本按文件内容和构建策略计算，不含 Git 提交号、构建时间或文件修改时间。资源与策略不变时，重复构建及仅改变 Git 提交号不会改变资源 URL。每个文件独立计算指纹（策略版本与该文件 SHA-256），不把整组依赖或提交号放进资源 URL。Import map 的 scopes 将每个模块的相对导入映射到各自文件 URL，因此修改被依赖模块也不需要改写所有导入方。页面同时给语言包和三维校准数据提供精确资源映射。只改一张地图只改变该地图文件的 URL；共享脚本实际变化时，使用它的入口引用会相应更新。Git 提交号单独保留在发布元数据中用于追溯。
+
+所有本站文本文件在构建阶段生成 `.gz` 和 `.br`，统一参数、相同修改时间，并验证解压后的 SHA-256。图片及三维内嵌压缩数据不会被有损重新编码。三维页面仍含较大的内嵌模型；本流程不会拆分或修改模型数据。
+
+## 日常开发与发布
+
+使用 Node.js 24，在仓库根目录执行：
 
 ```sh
-npm --prefix deploy test
-npm --prefix deploy run build
+npm ci --ignore-scripts
+npx playwright install chromium
+npm run verify:release
 npm --prefix deploy run preview
 ```
 
-预览地址为 `http://localhost:8787/`，构建结果位于 `deploy/dist/`。打包仅包含二维运行文件、统计脚本和 `maps-3d/` 精确清单内的 18 个三维运行文件。三维带路径导航的本地预览使用根目录 `npm run dev`。
+`verify:release` 一次运行应用测试、打包测试、接收器测试、策略漂移检查、浏览器回归、完整构建、全部文件压缩/哈希验证和构建产物浏览器测试。构建目录为 `deploy/dist/`，预览从 `http://localhost:8787/tactical-friend/` 或 `/zhanshuyanlian/` 打开。
 
-三维文件写入 `3d/releases/<64位内容哈希>/`，附带可解压回原始内容的 Brotli/gzip 文件。接收器创建内部运行目录链接，由同一个原子 `current` 指针选择二维与三维内容。浏览器使用 `/tactical-friend/3d/具体地图.html` 或 `/zhanshuyanlian/3d/具体地图.html`，切换及返回均保留原入口，不跳转到版本目录；查询参数与片段保留在原地址。版本信息位于 `3d/__release.json`。只有带版本号的资源使用一年 immutable 缓存，固定 HTML 地址由浏览器重新验证，CDN 可短期缓存。
+日常资源更新只需修改源码并合并到 `main`。工作流自动构建、验证、发布，并检查两个公共入口的所有文件缓存策略与 gzip/Brotli 实际交付。PR 运行同样的构建检查，不发布。工作流仅检出公有仓库，不读取私有工具库。
 
-服务器接收器需支持战术组件 700 MiB 压缩包、1 GiB 解压总量、三维单文件 80 MiB，并校验三维清单、内容哈希与不可覆盖的版本文件。首页组件原有小包限制不变。部署失败时不切换当前目录；`previous` 指针保留上一版用于回滚。旧 `/maps-3d/` 入口和旧版本路径已退役，返回 404，不提供兼容跳转。
+更新缓存或压缩策略时：
 
-## 发布配置
+```sh
+npm --prefix deploy run policy:generate
+npm --prefix deploy run policy:check
+```
 
-发布任务使用 `production` Environment，其部署分支应限定为 `main`。该环境需配置 `CST_HOST` 和战术工具专用的 `CST_DEPLOY_TOKEN` 两项 Secrets；凭据只注入发布步骤，不写入源码、构建产物或日志。
+`generated/tactical.nginx.conf` 必须整体安装为服务器的战术组件路由；不要与旧的二维或三维 location 重复加载。它会返回 `X-PIL-Asset-Policy`，线上校验以此检查服务器是否使用当前策略。
 
-`main` 的分支规则应要求 CODEOWNERS 审查发布代码变更。仅添加 CODEOWNERS 文件不会自动启用强制审查，需要仓库管理员配置分支规则。
+`generated/cloudflare-cache-rules.json` 只管理 `pil_tactical_mutable_revalidate` 和 `pil_tactical_immutable_assets` 两个规则。更新时保留首页、抽签等其他组件规则，移除被替代的 `pil_stable_3d_html_one_minute` 规则，并将这两个战术规则放在其他通用规则之后。策略基础设施的变更需要管理员安装生成配置并验证；普通页面发布令牌没有服务器或 CDN 管理权限。策略未同步时线上验收会失败，不会把它报告成完整成功。
 
-统计脚本保留现有事件及隐私过滤规则，不上报标注文字、精确坐标、路线或完整战术内容。本地预览不向正式统计发送事件。
+## 服务器接收与回滚
 
-二维 HTML 在构建时为入口脚本、样式和整个 ES module 依赖图加入发布提交号。Import map 使静态、动态导入及统计代码共享同一版本的模块；语言包也使用相同版本参数。这样普通窗口中缓存的旧模块不会在新发布后继续生成旧三维路径。此过程不清除 localStorage 中保存的战术数据。
+`deploy/server/receive.py` 是现有组件接收器的可审查源码。它保留首页的独立限制，只扩展战术资源验证。更新接收器前运行 `npm --prefix deploy run test:receiver`，备份现有文件，测试后重启接收服务。现有部署服务、认证令牌及其路径无需变更。
+
+接收器校验完整资源清单、快照版本、文件哈希及压缩文件哈希；拒绝路径穿越、链接、未声明资源和同一 immutable URL 内容冲突。压缩/解压大小预算保持为战术组件 700 MiB/1 GiB、三维单文件 80 MiB。缺项或校验失败不切换 `current`。
+
+- 历史三维快照仍保留于组件 `assets/<version>/`，用于保留已有 immutable URL。
+- 新资源逐文件保留于组件 `assets/client/<单文件指纹>/`；固定地图地址链接到这里，因此重新发布不会因文件修改时间变化让未改的地图重新下载。
+- 快照通过硬链接保留，常规发布目录清理不会删除浏览器仍可能引用的旧版本。
+- `previous` 保留上一发布目录，用于回滚。旧 `/maps-3d/` 仍返回 404，不提供兼容跳转。
+
+发布工作流仅在 `production` Environment 内读取 `CST_HOST` 和战术专用 `CST_DEPLOY_TOKEN`；不把凭据写入代码、产物或日志。统计保持原有隐私过滤，不上传战术标注、坐标、路线、完整状态或账户数据。资源升级不会清除 localStorage 中保存的战术。

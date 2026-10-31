@@ -25,7 +25,8 @@ async function ready() {
 
 async function start() {
   const scene = JSON.parse(document.querySelector('#map-info').textContent).mapId;
-  const response = await fetch(new URL('./board-calibration.json', import.meta.url));
+  const assets = JSON.parse(document.getElementById('pil-assets')?.textContent || '{}');
+  const response = await fetch(assets['3d/board-calibration.json'] || new URL('./board-calibration.json', import.meta.url));
   if (!response.ok) throw Error('无法载入地图坐标，请重新载入。');
   const profile = (await response.json()).maps.find(p => p.scene === scene);
   if (profile) back.href += '?map=' + profile.mapId;

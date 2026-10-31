@@ -54,9 +54,11 @@ export function translateDocument(root = document) {
 
 export async function initializeI18n() {
   activeLocale = resolveLocale(readPreferredLocale());
-  const localeURL = new URL(`./locales/${activeLocale}.json`, window.location.href);
+  const assets = JSON.parse(document.getElementById('pil-assets')?.textContent || '{}');
+  const assetURL = assets[`locales/${activeLocale}.json`];
+  const localeURL = new URL(assetURL || `./locales/${activeLocale}.json`, window.location.href);
   const revision = document.querySelector('meta[name="pil-client-revision"]')?.content;
-  if (/^[a-f0-9]{40}$/.test(revision || '')) localeURL.searchParams.set('v', revision);
+  if (!assetURL && /^[a-f0-9]{40}$/.test(revision || '')) localeURL.searchParams.set('v', revision);
   const response = await fetch(localeURL);
   if (!response.ok) throw new Error(`Unable to load locale: ${activeLocale}`);
   activeMessages = await response.json();

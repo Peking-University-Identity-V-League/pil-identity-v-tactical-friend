@@ -10,7 +10,10 @@
     "dev": "node scripts/dev-server.js",
     "test": "node --test tests/unit/map-handoff.test.js tests/unit/measurements.test.js tests/unit/treasure.test.js tests/unit/deduction-data.test.js tests/server/dev-server.test.js",
     "test:e2e": "playwright test",
-    "verify": "npm test && npm run test:e2e"
+    "verify": "npm test && npm run test:e2e",
+    "build": "npm --prefix deploy run build",
+    "test:packaged": "playwright test --config=playwright.packaged.config.js",
+    "verify:release": "npm test && npm --prefix deploy test && npm --prefix deploy run test:receiver && npm --prefix deploy run policy:check && npm run test:e2e && npm run build && npm --prefix deploy run verify:package && npm run test:packaged"
   },
   "devDependencies": {
     "@playwright/test": "1.64.1"
