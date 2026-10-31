@@ -1,0 +1,45 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { mkdtemp, mkdir, readFile, rm, symlink, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { brotliDecompressSync, gunzipSync } from 'node:zlib';
+import vm from 'node:vm';
+import test from 'node:test';
+import { prepareMaps, redirectPage, runtimeFiles } from './maps3d.mjs';
+
+test('3D packaging preserves bytes and compression, versions changed content, and rejects extra or linked files', async () => {
+  const temp = await mkdtemp(join(tmpdir(), 'pil-3d-'));
+  const source = join(temp, 'source'), output = join(temp, 'output'), maps = join(source, 'maps-3d');
+  try {
+    await mkdir(maps, { recursive: true });
+    for (const name of runtimeFiles) await writeFile(join(maps, name), name === '__release.json' ? JSON.stringify({ source_commit: 'a'.repeat(40) }) : 'fixture ' + name);
+    const first = await prepareMaps(source, output, 'b'.repeat(40));
+    const second = await prepareMaps(source, output, 'c'.repeat(40));
+    assert.equal(first.asset_version, second.asset_version, 'unrelated commits retain the asset version');
+    for (const name of runtimeFiles) {
+      const data = await readFile(join(maps, name));
+      const base = join(output, '3d/releases', first.asset_version, name);
+      assert.deepEqual(await readFile(base), data);
+      assert.deepEqual(gunzipSync(await readFile(base + '.gz')), data);
+      assert.deepEqual(brotliDecompressSync(await readFile(base + '.br')), data);
+      assert.equal(createHash('sha256').update(data).digest('hex'), first.files[name]);
+    }
+    await writeFile(join(maps, 'index.html'), 'changed');
+    assert.notEqual((await prepareMaps(source, output, 'd'.repeat(40))).asset_version, first.asset_version);
+    await writeFile(join(maps, 'private.py'), 'private fixture');
+    await assert.rejects(prepareMaps(source, output, 'd'.repeat(40)), /Unexpected/);
+    await rm(join(maps, 'private.py'));
+    await rm(join(maps, 'camera-controls.js'));
+    await symlink(join(maps, 'index.html'), join(maps, 'camera-controls.js'));
+    await assert.rejects(prepareMaps(source, output, 'd'.repeat(40)), /Invalid 3D asset/);
+  } finally { await rm(temp, { recursive: true, force: true }); }
+});
+
+test('stable map navigation retains both query and endpoint fragment', () => {
+  const target = '/tactical-friend/3d/releases/' + 'a'.repeat(64) + '/h55_demo.html';
+  let actual;
+  vm.runInNewContext(redirectPage(target).match(/<script>(.*?)<\/script>/s)[1], { location: { search: '?view=3d', hash: '#pil2d=coordinates', replace: value => { actual = value; } } });
+  assert.equal(actual, target + '?view=3d#pil2d=coordinates');
+  assert.throws(() => redirectPage('https://example.invalid/'), /Invalid/);
+});

@@ -2,7 +2,9 @@
 
 PIL (Peking University Identity V League) Identity V Tactical Friend
 
-官网入口：[战术演练](https://pkuidv.com/tactical-friend/) · [备用入口](https://pkuidv.com/zhanshuyanlian/)
+官网入口：[二维战术演练](https://pkuidv.com/tactical-friend/) · [三维地图](https://pkuidv.com/tactical-friend/3d/) · [二维备用入口](https://pkuidv.com/zhanshuyanlian/)
+
+本公有库统一维护和发布二维应用与已公开的三维运行文件。三维说明见 [maps-3d/README.md](maps-3d/README.md)；资源解析、重建及内部研究工具留在私有工具库。
 
 官网发布工作流与本地构建说明见 [deploy/README.md](deploy/README.md)。
 

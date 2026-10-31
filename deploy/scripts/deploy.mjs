@@ -1,5 +1,6 @@
 import { spawnSync } from 'node:child_process';
-import { appendFile, mkdtemp, readFile, rm } from 'node:fs/promises';
+import { appendFile, mkdtemp, readFile, rm, stat } from 'node:fs/promises';
+import { createReadStream } from 'node:fs';
 import { get, request as httpsRequest } from 'node:https';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
@@ -47,14 +48,14 @@ export async function deploy() {
   const temporary = await mkdtemp(join(tmpdir(), 'pil-cst-deploy-'));
   try {
     const archivePath = join(temporary, 'release.tar.gz');
-    const tar = spawnSync('tar', ['-czf', archivePath, '-C', 'dist', '.'], { timeout: 30000, env: environment, encoding: 'utf8' });
+    const tar = spawnSync('tar', ['-czf', archivePath, '-C', 'dist', '.'], { timeout: 180000, env: environment, encoding: 'utf8' });
     if (tar.error || tar.status !== 0) throw new Error('Static release packaging failed.');
-    const archive = await readFile(archivePath);
-    if (archive.length > 24 * 1024 * 1024) throw new Error('Static release is too large.');
+    const archiveSize = (await stat(archivePath)).size;
+    if (archiveSize > 700 * 1024 * 1024) throw new Error('Static release is too large.');
     let receipt;
     try {
       receipt = await new Promise((resolve, reject) => {
-        const request = httpsRequest({ hostname: host, servername: 'pkuidv.com', path: '/_deploy/' + expected.component, method: 'POST', signal: AbortSignal.timeout(180000), headers: { Host: 'pkuidv.com', Authorization: 'Bearer ' + token, 'Content-Type': 'application/gzip', 'Content-Length': archive.length } }, response => {
+        const request = httpsRequest({ hostname: host, servername: 'pkuidv.com', path: '/_deploy/' + expected.component, method: 'POST', signal: AbortSignal.timeout(600000), headers: { Host: 'pkuidv.com', Authorization: 'Bearer ' + token, 'Content-Type': 'application/gzip', 'Content-Length': archiveSize } }, response => {
           let size = 0;
           const chunks = [];
           response.on('data', chunk => { size += chunk.length; if (size > 65536) request.destroy(); else chunks.push(chunk); });
@@ -62,7 +63,10 @@ export async function deploy() {
           response.on('end', () => { try { const result = JSON.parse(Buffer.concat(chunks).toString('utf8')); if (response.statusCode !== 200 || result.ok !== true) reject(new Error()); else resolve(result); } catch { reject(new Error()); } });
         });
         request.on('error', reject);
-        request.end(archive);
+        const upload = createReadStream(archivePath);
+        upload.on('error', error => request.destroy(error));
+        request.on('close', () => upload.destroy());
+        upload.pipe(request);
       });
     } catch { throw new Error('CST HTTPS upload failed. Raw credential-bearing request diagnostics are suppressed.'); }
     if (receipt?.ok !== true || receipt.component !== expected.component || receipt.release !== expected.release) {
@@ -73,6 +77,9 @@ export async function deploy() {
         const actual = describeRelease(await remoteMetadata(host, path));
         if (actual.release !== expected.release || actual.component !== expected.component) throw new Error();
       }
+      const maps = JSON.parse(await readFile('dist/3d/__release.json', 'utf8'));
+      const actualMaps = await remoteMetadata(host, '/tactical-friend/3d/__release.json');
+      if (actualMaps.source_commit !== metadata.source_commit || actualMaps.asset_version !== maps.asset_version) throw new Error();
     } catch { throw new Error('Upload completed, but CST HTTPS release verification failed.'); }
     const message = 'CST static release activated and verified over HTTPS: ' + expected.component + '; ' + expected.release;
     console.log(message);

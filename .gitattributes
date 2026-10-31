@@ -1,0 +1,3 @@
+# Self-contained generated maps contain large embedded models and textures.
+maps-3d/h55_*.html -diff
+maps-3d/ordnance_*.html -diff

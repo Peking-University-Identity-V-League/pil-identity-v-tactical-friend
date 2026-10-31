@@ -1,0 +1,8 @@
+.pil-handoff { margin: 0 0 14px; padding-bottom: 12px; border-bottom: 1px solid #415166; }
+.pil-handoff-back { display: inline-block; color: #dfb473; font-weight: 600; padding: 5px 0; }
+.pil-handoff p { font-size: 12px; line-height: 1.6; margin: 6px 0; }
+.pil-handoff p:empty { display: none; }
+.pil-handoff[data-state="invalid"] p,
+.pil-handoff[data-state="partial"] p { color: #ffd0aa; }
+.pil-handoff label { font-size: 12px; }
+.pil-handoff select { margin: 5px 0 9px; }
