@@ -69,7 +69,7 @@ export async function prepareAssets(sourceRoot, commit, configRevision = 'local'
     '<script type="module" src="telemetry/client.js"></script>',
   ].join('\n');
   await mkdir(join(output, 'telemetry'), { recursive: true });
-  for (const name of ['privacy.js', 'client.js', 'summary.js']) {
+  for (const name of ['privacy.js', 'client.js', 'summary.js', 'maps.js']) {
     await copyFile(join(projectRoot, 'telemetry', name), join(output, 'telemetry', name));
     files += 1;
     clientAssets.push('telemetry/' + name);

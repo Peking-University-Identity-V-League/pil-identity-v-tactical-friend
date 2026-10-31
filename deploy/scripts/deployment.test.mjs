@@ -26,7 +26,7 @@ test('packaging excludes deployment credentials and rejects symlinks', async () 
     assert.equal((html.match(/https:\/\/umami\.pkuidv\.com\/script\.js/g) || []).length, 1);
     assert.ok(html.indexOf('telemetry/privacy.js') < html.indexOf('umami.pkuidv.com/script.js'));
     assert.ok(html.includes('data-do-not-track="true"'));
-    assert.deepEqual((await readdir(new URL('telemetry/', output))).sort(), ['client.js', 'privacy.js', 'summary.js']);
+    assert.deepEqual((await readdir(new URL('telemetry/', output))).sort(), ['client.js', 'maps.js', 'privacy.js', 'summary.js']);
     assert.equal(JSON.parse(await readFile(new URL('__release.json', output))).source_commit, commit);
     await symlink(join(source, '.env'), join(source, 'js/leak.js'));
     await assert.rejects(prepareAssets(source, commit), /Symlink/);

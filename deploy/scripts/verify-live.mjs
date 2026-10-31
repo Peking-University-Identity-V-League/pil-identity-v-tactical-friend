@@ -38,6 +38,7 @@ async function verify() {
     for (const name of Object.keys(maps.files).filter(n => n.endsWith('.html'))) {
       const response = await request(prefix + '/3d/' + name, { method: 'HEAD' });
       assert.equal(response.headers.get('cache-control'), policy.cache.entry);
+      assert.ok(response.headers.get('content-security-policy')?.includes('https://umami.pkuidv.com'), '3D telemetry is blocked by CSP: ' + name);
       // Cloudflare can omit ETag on transformed HTML. Browsers then revalidate
       // using Last-Modified; both must avoid transferring an unchanged map.
       const etag = response.headers.get('etag');
@@ -49,7 +50,7 @@ async function verify() {
       });
       assert.equal(conditional.status, 304, 'Unchanged map must revalidate: ' + name);
     }
-    for (const suffix of ['js/bootstrap.js', 'js/core/map-handoff.js', 'css/style.css', 'locales/zh-CN.json', '3d/pil-handoff.js', '3d/board-calibration.json']) {
+    for (const suffix of ['js/bootstrap.js', 'js/core/map-handoff.js', 'css/style.css', 'locales/zh-CN.json', '3d/pil-handoff.js', '3d/board-calibration.json', 'telemetry/maps.js', 'telemetry/privacy.js']) {
       const name = expected.asset_urls[suffix];
       for (const encoding of ['gzip', 'br']) {
         const response = await request(prefix + '/' + name, { headers: { 'Accept-Encoding': encoding } });

@@ -50,6 +50,7 @@ export async function verifyPackage(output) {
       assert.equal(manifest.files[path].sha256, hash);
       if (!name.endsWith('.html')) continue;
       const html = await readFile(join(output, path), 'utf8');
+      assert.ok(html.includes('/tactical-friend/' + metadata.asset_urls['telemetry/maps.js']), 'Missing 3D pageview tracker: ' + name);
       assert.ok(!/\.\/(camera-controls\.js|roaming-controller\.js|pil-handoff\.(js|css))/.test(html), 'Unversioned 3D dependency: ' + name);
       const mapText = html.match(/<script type="importmap">(.*?)<\/script>/s)?.[1];
       if (mapText) {

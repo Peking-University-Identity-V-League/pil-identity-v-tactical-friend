@@ -44,6 +44,7 @@ test('changing one map only changes that map URL; unchanged maps and helpers ret
   try {
     await mkdir(maps, { recursive: true });
     const urls = {};
+    urls['telemetry/maps.js'] = (await emitAsset(output, 'telemetry/maps.js', Buffer.from('/* analytics fixture */'))).url;
     for (const name of runtimeFiles) {
       const data = Buffer.from(name === '__release.json' ? JSON.stringify({ source_commit: 'a'.repeat(40) }) : 'fixture ' + name);
       await writeFile(join(maps, name), data);

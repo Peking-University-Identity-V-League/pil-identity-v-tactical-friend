@@ -17,8 +17,10 @@ export async function prepareMaps(source, output, commit, assetURLs) {
   async function runtimeBytes(name) {
     const data = await readFile(join(root, name));
     if (!assetURLs || !name.endsWith('.html')) return data;
+    const tracker = assetURLs['telemetry/maps.js'];
+    if (!/^_assets\/[a-f0-9]{64}\/telemetry\/maps\.js$/.test(tracker || '')) throw Error('Missing versioned 3D telemetry');
     // Stable page addresses stay readable; every auxiliary dependency lives in
-    // the same immutable snapshot as the 2D module graph. Absolute asset URLs
+    // the content-addressed asset registry. Absolute asset URLs
     // also work when inspecting a historical version-directory page.
     const own = Object.fromEntries(Object.entries(assetURLs).filter(([path]) => path.startsWith('3d/')));
     const base = policy.canonicalPrefix + '/';
@@ -31,6 +33,9 @@ export async function prepareMaps(source, output, commit, assetURLs) {
       });
       html = html.replace('<script type="importmap">', '<script type="application/json" id="pil-assets">' + JSON.stringify(Object.fromEntries(Object.entries(own).map(([key, value]) => [key, base + value]))) + '</script>\n<script type="importmap">');
     }
+    const telemetry = '<script async src="' + base + tracker + '"></script>';
+    const charset = /<meta\b[^>]*charset[^>]*>/i;
+    html = charset.test(html) ? html.replace(charset, value => value + '\n' + telemetry) : telemetry + '\n' + html;
     return Buffer.from(html);
   }
   for (const name of runtimeFiles) {
