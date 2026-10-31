@@ -1793,9 +1793,10 @@ export function chainTotalNode(segs, W, H, sel) {
 }
 
 
-export function tacAbyssItem() {
+export function tacAbyssItem(tid = null) {
   return tacBoard().items.find((it) =>
-    it.kind === 'spearfishing' && it.abyss && it.abyss.on) || null;
+    it.kind === 'spearfishing' && it.abyss && it.abyss.on
+    && (tid == null || it.linkTid === tid)) || null;
 }
 
 
@@ -1807,11 +1808,10 @@ export function tacAbyssMeters(a, b) {
 }
 
 
-export function tacAbyssRecord(p) {
-  const it = tacAbyssItem();
+export function tacAbyssRecord(p, t) {
+  const it = t ? tacAbyssItem(t.tid) : null;
   if (!it || !it.abyss.recording) return;
-  const nt = it.linkTid != null ? tacTokenByTid(it.linkTid) : null;
-  if (!nt) return;
+  const nt = t;
   const ab = it.abyss;
   const last = ab.trail[ab.trail.length - 1];
   if (last && Math.hypot((nt.x - last.x) * p.W, (nt.y - last.y) * p.H) < 5) return;
@@ -1831,8 +1831,9 @@ export function tacAbyssRecord(p) {
 
 
 export function tacAbyssFinalize() {
-  const it = tacAbyssItem();
-  if (!it || !it.abyss.recording) return;
+  const it = tacBoard().items.find((o) => o.kind === 'spearfishing'
+    && o.abyss && o.abyss.on && o.abyss.recording);
+  if (!it) return;
   const ab = it.abyss;
   ab.recording = false;
   if (ab.trail.length >= 2) ab.done = ab.trail.slice();
@@ -2164,7 +2165,7 @@ export function renderTacBoard() {
     const el = document.createElement('div');
     
     const showIcon = def.icon && !t.hideIcon;
-    el.className = 'tac-token' + (showIcon ? ' has-img' : '')
+    el.className = 'tac-token' + (showIcon ? ' has-img' : ' as-dot')
       + (tacSelected === t.tid && tacDisplay.selGlow ? ' selected' : '')
       + (t.glow ? ' glow' : '');
     el.dataset.role = role;
@@ -2179,7 +2180,6 @@ export function renderTacBoard() {
       el.innerHTML = `<img src="${def.icon}" alt="${def.name}" draggable="false">`;
       el.title = def.name;
     } else {
-      el.textContent = (def.name || role).charAt(0);
       el.title = def.name || role;
     }
     tacMapWrap.appendChild(el);
@@ -5490,9 +5490,9 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
     tacManageSel = { type: 'role', tid }; 
     tacDrag = { tid };
     
-    const abIt = tacAbyssItem();
-    const naiadT0 = abIt && abIt.linkTid != null ? tacTokenByTid(abIt.linkTid) : null;
-    if (abIt && naiadT0 && tid === naiadT0.tid) {
+    const naiadT0 = tacTokenByTid(tid);
+    const abIt = naiadT0 ? tacAbyssItem(tid) : null;
+    if (abIt && naiadT0) {
       abIt.abyss.recording = true;
       abIt.abyss.trail = [{ x: naiadT0.x, y: naiadT0.y }];
     }
@@ -5631,7 +5631,7 @@ tacMapWrap.addEventListener('pointermove', (e) => {
         rg.style.top = `${t.y * 100}%`;
       });
     if (t.showTreasureRange) renderTacTreasure();
-    tacAbyssRecord(p); 
+    tacAbyssRecord(p, t); 
 
     if (t.role === 'bloodyQueen') {
       const hadMirror = tacBoard().items.some((it) => it.kind === 'mirrorImage');

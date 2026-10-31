@@ -767,10 +767,22 @@ export const TAC_ITEM_TYPES = {
   },
   pessimistic: {
     name: translate("items.theBreakingWheel.pessimistic.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 11.8, label: translate("items.theBreakingWheel.pessimistic.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/62/4fs560q1f5qr8to83c79x87xevnbq7f.png/90px-%E7%A0%B4%E8%BD%AE1%E9%98%B6%E6%8A%80%E8%83%BD1.png',
   },
   ridicule: {
     name: translate("items.theBreakingWheel.ridicule.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 10.1, label: translate("items.theBreakingWheel.ridicule.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/7/76/noq00uguf6o8hl3c62zzyxxuwe57o1x.png/90px-%E7%A0%B4%E8%BD%AE2%E9%98%B6%E6%8A%80%E8%83%BD1.png',
   },
   spearfishing: {
@@ -819,13 +831,29 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.nightmare.badOmen.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/00/psijwfoopecl4dwpc63ky7ujtegc0oy.png/90px-%E2%80%9C%E5%99%A9%E6%A2%A6%E2%80%9D1%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
+  record: {
+    name: translate("items.clerk.record.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/5/51/1sax8lcomca9fuftk4h64u41s4ls0hm.png',
+  },
+  inspect: {
+    name: translate("items.clerk.inspect.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/4/4f/4t3fhxkwbql5ag0c29soi6bwoy18i84.png/90px-%E2%80%9C%E8%AE%B0%E5%BD%95%E5%91%98%E2%80%9D0%E9%98%B6%E6%8A%80%E8%83%BD2.png',
+  },
+  replay: {
+    name: translate("items.clerk.replay.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/c/c4/qwpvuh2q31nzpjkr1ynf6w335gao18s.png',
+  },
+  invalid: {
+    name: translate("items.clerk.invalid.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/c/c1/k5gp583qiih9dmckkn56eccoprevg0f.png',
+  },
   electromagneticFieldN: {
     name: translate("items.hermit.electromagneticFieldN.name"),
     render: 'circle',
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 4.5, label: translate("items.hermit.electromagneticFieldN.name") },
+        { size_m: 2.3, label: translate("items.hermit.electromagneticFieldN.name") },
       ],
     },
     color: '#ef4444',
@@ -839,7 +867,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 4.5, label: translate("items.hermit.electromagneticFieldS.name") },
+        { size_m: 2.3, label: translate("items.hermit.electromagneticFieldS.name") },
       ],
     },
     color: '#1d4ed8',
@@ -847,9 +875,63 @@ export const TAC_ITEM_TYPES = {
     glow: 'rgba(29, 78, 216, 0.45)',
     icon: 'https://patchwiki.biligame.com/images/dwrg/6/69/sktrgc7dzmstt8bsbokywfq0jmzshg2.png',
   },
+  secondDawn: {
+    name: translate("items.hermit.secondDawn.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/e/ef/0clrghg6k59p4fiumfe6dyp5kamq87v.png',
+  },
+  reversePolarity: {
+    name: translate("items.hermit.reversePolarity.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/a/ad/cz51fbfkk2gckg04bpa8qxky2fm7lol.png/90px-%E9%9A%90%E5%A3%AB0%E9%98%B6%E6%8A%80%E8%83%BD2.png',
+  },
+  meditation: {
+    name: translate("items.hermit.meditation.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/c/c0/tmgrj8i99jc5wzl6n2tnu7w0cqxx094.png',
+  },
+  tempest: {
+    name: translate("items.nightWatch.tempest.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 15.9, label: translate("items.nightWatch.tempest.name") },
+      ],
+    },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/62/l82kzmd8c621e7mm3wvu4qutqh0a6er.png/90px-%E5%AE%88%E5%A4%9C%E4%BA%BA0%E9%98%B6%E6%8A%80%E8%83%BD1.png',
+  },
+  windwalk: {
+    name: translate("items.nightWatch.windwalk.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/2/2d/fixoiw0rb7utlepv5lhga4ktvlqfoak.png',
+  },
+  tempestCyclone: {
+    name: translate("items.nightWatch.tempestCyclone.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 11.8, label: translate("items.nightWatch.tempestCyclone.name") },
+      ],
+    },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/8/86/4o4xemckgxf3le7dxrnnmm0m7k6cdqr.png/90px-%E5%AE%88%E5%A4%9C%E4%BA%BA1%E9%98%B6%E6%8A%80%E8%83%BD1.png',
+  },
+  windwalkCharge: {
+    name: translate("items.nightWatch.windwalkCharge.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 15.2, label: translate("items.nightWatch.windwalkCharge.name") },
+      ],
+    },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/94/rhchhzimk1la3tkmcjc5g62lgtzvmyj.png/90px-%E5%AE%88%E5%A4%9C%E4%BA%BA1%E9%98%B6%E6%8A%80%E8%83%BD2.png',
+  },
+  windControl: {
+    name: translate("items.nightWatch.windControl.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/be/crtbkqxhyeqvzccz4q9o6u321r9l1lq.png/90px-%E5%AE%88%E5%A4%9C%E4%BA%BA1%E9%98%B6%E6%8A%80%E8%83%BD3.png',
+  },
   remnant: {
     name: translate("items.operaSinger.remnant.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/2c/i63l26e9f0di64h97egr3qngfbf5u1r.png/90px-%E6%AD%8C%E5%89%A7%E6%BC%94%E5%91%980%E9%98%B6%E6%8A%80%E8%83%BD2.png',
+  },
+  shadowstrike: {
+    name: translate("items.operaSinger.shadowstrike.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b8/m3kemxopxjddcbko8ojmggxgtru6tz9.png/90px-%E6%AD%8C%E5%89%A7%E6%BC%94%E5%91%981%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   pickaxe: {
     name: translate("items.foolsGold.pickaxe.name"),
@@ -1866,26 +1948,49 @@ export const TAC_ROLES = {
     name: translate("characters.clerk.name"),
     camp: 'hunter',
     speed: 4.73,
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: 20, label: translate("characters.clerk.range.label.replayMax") },
+      ],
+    },
+    items: ['record', 'inspect', 'replay', 'invalid'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/a/ac/3wfd3yosh529sx4uxfxu0hq9qrzocnl.png/90px-%E2%80%9C%E8%AE%B0%E5%BD%95%E5%91%98%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   hermit: {
     name: translate("characters.hermit.name"),
     camp: 'hunter',
     speed: 4.64,
-    items: ['electromagneticFieldN', 'electromagneticFieldS'],
+    items: ['electromagneticFieldN', 'electromagneticFieldS', 'secondDawn', 'reversePolarity', 'meditation'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/4/4f/5ed5nvceb7pj3ohyyz493eupwfbowte.png/90px-%E9%9A%90%E5%A3%AB%E5%A4%B4%E5%83%8F.png',
   },
   nightWatch: {
     name: translate("characters.nightWatch.name"),
     camp: 'hunter',
     speed: 4.64,
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: 15.9, label: translate("characters.nightWatch.range.label.tempest") },
+        { size_m: 11.8, label: translate("characters.nightWatch.range.label.tempestCyclone") },
+        { size_m: 15.2, label: translate("characters.nightWatch.range.label.windwalkCharge") },
+      ],
+    },
+    items: ['tempest', 'windwalk', 'tempestCyclone', 'windwalkCharge', 'windControl'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/c/c3/d99smic5vrfjsir2pwo8endmiaoipp5.png/90px-%E5%AE%88%E5%A4%9C%E4%BA%BA%E5%A4%B4%E5%83%8F.png',
   },
   operaSinger: {
     name: translate("characters.operaSinger.name"),
     camp: 'hunter',
     speed: 4.56,
-    items: ['remnant'],
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: 4.64, label: translate("characters.operaSinger.range.label.shadowLeapTier0Tier1") },
+        { size_m: 5.568, label: translate("characters.operaSinger.range.label.shadowLeapTier2") },
+      ],
+    },
+    items: ['remnant', 'shadowstrike'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/be/k47ppq37pc3g92kjsu3iakot58em2pk.png/90px-%E6%AD%8C%E5%89%A7%E6%BC%94%E5%91%98%E5%A4%B4%E5%83%8F.png',
   },
   foolsGold: {
