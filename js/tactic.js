@@ -162,8 +162,13 @@ function tacTalentButtons(hostRole, camp) {
     if (!opt || opt.size_m == null) continue;
     if (kind === 'fearRadius') {
       if (camp === 'hunter' && hostRole === 'Geisha') {
-        out.push({ tk: 'fearRadius:beauty', kind, label: translate("ui.tacRangeBox.fearRadiusBeauty"), base: opt.size_m, mult: 0.8, variant: true });
-        out.push({ tk: 'fearRadius:prajna', kind, label: translate("ui.tacRangeBox.fearRadiusPrajna"), base: opt.size_m, mult: 1.1, variant: true });
+        out.push({
+          tk: 'fearRadius', kind, label: def.name, base: opt.size_m,
+          variants: [
+            { key: 'beauty', label: translate("ui.tacRangeBox.beautyForm"), mult: 0.8 },
+            { key: 'prajna', label: translate("ui.tacRangeBox.prajnaForm"), mult: 1.1 },
+          ],
+        });
         continue;
       }
       let mult = 1;
@@ -188,11 +193,19 @@ function tacTalentRanges(inst, hostRole) {
   for (const b of tacTalentButtons(hostRole, camp)) {
     const sel = rb.talents[b.tk];
     if (!sel) continue;
-    const meters = b.base != null
-      ? b.base * b.mult
-      : tacOptionMeters(b.opt, sel, null);
+    let meters;
+    let sub = null;
+    if (b.variants) {
+      const v = b.variants.find((x) => x.key === sel.variant) || b.variants[0];
+      sub = v.label;
+      meters = b.base * v.mult;
+    } else if (b.base != null) {
+      meters = b.base * b.mult;
+    } else {
+      meters = tacOptionMeters(b.opt, sel, null);
+    }
     if (meters == null) continue;
-    out.push({ ...b, meters, sel });
+    out.push({ ...b, meters, sel, sub });
   }
   return out;
 }
@@ -2286,13 +2299,52 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
         const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
         if (rbx.talents[b.dataset.tk]) delete rbx.talents[b.dataset.tk];
         else rbx.talents[b.dataset.tk] = {};
+        rbx.talentCur = b.dataset.tk;
         refresh();
       });
     });
-    box.appendChild(tLine);
+      box.appendChild(tLine);
+    // 三级按钮：只显示最近点亮的那个天赋的形态/档位
+    tacTalentButtons(hostRole, hostCamp).forEach((tb) => {
+      const sel = rb.talents[tb.tk];
+      if (!sel || tb.tk !== rb.talentCur) return;
+      const gLine = document.createElement('div');
+      gLine.className = 'tac-box-line';
+      if (tb.variants) {
+        const cur = sel.variant || tb.variants[0].key;
+        gLine.innerHTML = `<div class="tac-range-opts">`
+          + tb.variants.map((v) =>
+            subBtn(cur === v.key, `data-tv="${v.key}" data-tk="${tb.tk}"`, v.label)).join('')
+          + `</div>`;
+      } else if (tb.opt && Array.isArray(tb.opt.size_m)) {
+        const vals = tb.opt.size_m;
+        const cur = Number.isInteger(sel.gear) ? sel.gear : 0;
+        gLine.innerHTML = `<div class="tac-range-opts">`
+          + vals.map((v, gi) =>
+            subBtn(cur === gi, `data-tg="${gi}" data-tk="${tb.tk}"`, `${v}m`)).join('')
+          + `</div>`;
+      } else {
+        return;
+      }
+      gLine.querySelectorAll('.tac-range-sub').forEach((b2) => {
+        b2.addEventListener('click', () => {
+          const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
+          const sel2 = rbx.talents[tb.tk];
+          if (!sel2) return;
+          if (b2.dataset.tv) sel2.variant = b2.dataset.tv;
+          else sel2.gear = +b2.dataset.tg;
+          refresh();
+        });
+      });
+      box.appendChild(gLine);
+    });
   } else if (rb.tab === 'range') {
-    // 二级按钮统一：点已选中的取消，否则单选点亮；点亮后才出现对应控制
-    const lightSub = (rbx, i) => { rbx.subs = rbx.subs.includes(i) ? [] : [i]; };
+    // 二级按钮统一：点已选中的取消，未选中的追加点亮（多个范围可同时显示）
+    const lightSub = (rbx, i) => {
+      rbx.subs = rbx.subs.includes(i)
+        ? rbx.subs.filter((v) => v !== i)
+        : [...rbx.subs, i];
+    };
     // 数字项：多个同排平铺
     const numIdx = [];
     cfg.options.forEach((opt, i) => {
@@ -2446,7 +2498,7 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
       const row = document.createElement('div');
       row.className = 'tac-range-desc';
       const txt = document.createElement('span');
-      txt.textContent = `${tr.label}${tr.variant ? '' : postfix} ${tacRangeFmt(tr.meters)}m`;
+      txt.textContent = `${tr.label}${tr.sub ? '·' + tr.sub : postfix} ${tacRangeFmt(tr.meters)}m`;
       row.appendChild(txt);
       const del = document.createElement('button');
       del.type = 'button';
@@ -5846,14 +5898,19 @@ tacMapWrap.addEventListener('wheel', (e) => {
         rb.gear = Math.min(vals0.length - 1,
           Math.max(0, cur0 + (e.deltaY < 0 ? 1 : -1)));
       } else if (numIdx.length >= 2) {
-        // 多档数字范围：以当前显示档为基准滚轮换档
-        const entries = tacRangeEntries(cfg, it, false);
-        const cur = entries.length ? entries[0].meters : cfg.options[numIdx[0]].size_m;
-        let i = numIdx.findIndex((k) => cfg.options[k].size_m === cur);
-        if (i < 0) i = 0;
-        const j2 = Math.min(numIdx.length - 1,
-          Math.max(0, i + (e.deltaY < 0 ? 1 : -1)));
-        rb.subs = [numIdx[j2]];
+        // 多档数字范围：滚轮换档；只替换参与换档的数字项，保留其它已点亮的范围
+        const dir = e.deltaY < 0 ? 1 : -1;
+        const lit = numIdx.filter((k) => rb.subs.includes(k));
+        if (lit.length) {
+          const i = numIdx.indexOf(lit[0]);
+          const j2 = Math.min(numIdx.length - 1, Math.max(0, i + dir));
+          if (j2 !== i) {
+            rb.subs = rb.subs.filter((k) => k !== lit[0]);
+            rb.subs.push(numIdx[j2]);
+          }
+        } else {
+          rb.subs = [...rb.subs, numIdx[0]];
+        }
       } else {
         const sliderIdx = cfg.options.findIndex((opt) => opt.size_m && typeof opt.size_m === 'object');
         if (sliderIdx >= 0) {
