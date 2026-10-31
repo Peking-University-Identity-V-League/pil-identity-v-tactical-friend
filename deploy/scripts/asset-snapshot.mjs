@@ -1,7 +1,8 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { lstat, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { digest, filesIn, policy, policyVersion } from './asset-policy.mjs';
 import { versionClientAssets } from './client-assets.mjs';
+import { legacyHelpers, loadingHelpers, maxMapBytes } from './maps3d-inventory.mjs';
 
 export async function emitAsset(output, name, bytes) {
   const hash = digest(bytes);
@@ -19,8 +20,13 @@ export async function snapshotAssets(source, output, commit, includeMaps) {
     if (/^(js|css|locales|telemetry)\//.test(name)) sources.set(name, join(output, name));
   }
   if (includeMaps) {
-    for (const name of ['board-calibration.json', 'camera-controls.js', 'handoff-protocol.js', 'pil-handoff.css', 'pil-handoff.js', 'roaming-controller.js']) {
-      sources.set('3d/' + name, join(source, 'maps-3d', name));
+    const root = join(source, 'maps-3d'), folder = await lstat(root), names = await readdir(root);
+    if (!folder.isDirectory() || folder.isSymbolicLink()) throw Error('Invalid 3D runtime directory');
+    const loading = names.some(name => loadingHelpers.includes(name) || name.includes('.runtime-'));
+    for (const name of [...legacyHelpers, ...(loading ? loadingHelpers : [])]) {
+      const path = join(root, name), info = await lstat(path);
+      if (!info.isFile() || info.isSymbolicLink() || info.size > maxMapBytes) throw Error('Invalid 3D asset: ' + name);
+      sources.set('3d/' + name, path);
     }
   }
   const hashes = {}, urls = {};

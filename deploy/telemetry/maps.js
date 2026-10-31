@@ -23,6 +23,7 @@
   if (!enabled()) return;
   const tracker = document.createElement('script');
   tracker.async = true;
+  tracker.setAttribute('data-pil-optional', 'telemetry');
   tracker.src = 'https://umami.pkuidv.com/script.js';
   for (const [key, value] of Object.entries({
     'data-website-id': website, 'data-domains': 'pkuidv.com', 'data-tag': 'tactical-3d',

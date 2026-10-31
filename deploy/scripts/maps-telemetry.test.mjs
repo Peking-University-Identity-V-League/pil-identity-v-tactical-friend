@@ -21,6 +21,7 @@ test('both map indexes and all ten scenes load a non-blocking tracker with a min
       const path = '/' + prefix + '/3d/' + (scene ? scene + '.html' : '');
       const { tracker, hook } = client(path);
       assert.equal(tracker.async, true);
+      assert.equal(tracker['data-pil-optional'], 'telemetry');
       assert.equal(tracker['data-before-send'], 'pilMapsBeforeSend');
       const result = hook('event', { website, title: 'PRIVATE', id: 'PRIVATE', url: path + '?token=PRIVATE#PRIVATE',
         referrer: 'https://example.com/PRIVATE?token=PRIVATE', language: 'zh-CN', screen: '1440x900', data: { coordinates: 'PRIVATE' } });

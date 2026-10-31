@@ -3,6 +3,7 @@ import { execFileSync } from 'node:child_process';
 import { setTimeout } from 'node:timers/promises';
 import { readFile } from 'node:fs/promises';
 import { digest, policy } from './asset-policy.mjs';
+import { jsonScript, loadingHelpers, scenes } from './maps3d-inventory.mjs';
 
 const commit = process.env.GITHUB_SHA || execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 const expected = JSON.parse(await readFile(new URL('../dist/__release.json', import.meta.url)));
@@ -25,6 +26,8 @@ async function verify() {
     assert.equal(metadata.policy_version, expected.policy_version);
     const publicManifest = await (await request(prefix + '/asset-manifest.json')).json();
     assert.deepEqual(publicManifest, manifest);
+    const publicMaps = await (await request(prefix + '/3d/__release.json')).json();
+    assert.deepEqual(publicMaps, maps, '3D release inventory differs: ' + prefix);
     const entry = await request(prefix + '/');
     assert.equal(entry.headers.get('cache-control'), policy.cache.entry);
     const html = await entry.text();
@@ -50,7 +53,21 @@ async function verify() {
       });
       assert.equal(conditional.status, 304, 'Unchanged map must revalidate: ' + name);
     }
-    for (const suffix of ['js/bootstrap.js', 'js/core/map-handoff.js', 'css/style.css', 'locales/zh-CN.json', '3d/pil-handoff.js', '3d/board-calibration.json', 'telemetry/maps.js', 'telemetry/privacy.js']) {
+    if (maps.loading_progress === 1) {
+      // Check each small stable shell against the already verified package's
+      // complete runtime inventory, without downloading every large model.
+      for (const scene of scenes) {
+        const html = Buffer.from(await (await request(prefix + '/3d/' + scene + '.html')).arrayBuffer());
+        assert.equal(digest(html), maps.files[scene + '.html'], 'Published loading shell differs: ' + scene);
+        const config = jsonScript(html.toString('utf8'), 'pil-loading-config');
+        const runtime = maps.runtime_urls[scene];
+        assert.equal(config.entryName, scene + '.html');
+        assert.equal(config.runtime, policy.canonicalPrefix + '/' + runtime);
+        assert.equal(config.sha256, manifest.files[runtime].sha256);
+        assert.equal(config.bytes, manifest.files[runtime].bytes);
+      }
+    }
+    for (const suffix of ['js/bootstrap.js', 'js/core/map-handoff.js', 'css/style.css', 'locales/zh-CN.json', '3d/pil-handoff.js', '3d/board-calibration.json', 'telemetry/maps.js', 'telemetry/privacy.js', ...(maps.loading_progress === 1 ? loadingHelpers.map(name => '3d/' + name) : [])]) {
       const name = expected.asset_urls[suffix];
       for (const encoding of ['gzip', 'br']) {
         const response = await request(prefix + '/' + name, { headers: { 'Accept-Encoding': encoding } });
