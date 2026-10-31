@@ -38,6 +38,16 @@ async function verify() {
     for (const name of Object.keys(maps.files).filter(n => n.endsWith('.html'))) {
       const response = await request(prefix + '/3d/' + name, { method: 'HEAD' });
       assert.equal(response.headers.get('cache-control'), policy.cache.entry);
+      // Cloudflare can omit ETag on transformed HTML. Browsers then revalidate
+      // using Last-Modified; both must avoid transferring an unchanged map.
+      const etag = response.headers.get('etag');
+      const modified = response.headers.get('last-modified');
+      assert.ok(etag || modified, 'Missing map cache validator: ' + name);
+      const conditional = await fetch('https://pkuidv.com' + prefix + '/3d/' + name, {
+        method: 'HEAD', signal: AbortSignal.timeout(20000), redirect: 'error',
+        headers: etag ? { 'If-None-Match': etag } : { 'If-Modified-Since': modified },
+      });
+      assert.equal(conditional.status, 304, 'Unchanged map must revalidate: ' + name);
     }
     for (const suffix of ['js/bootstrap.js', 'js/core/map-handoff.js', 'css/style.css', 'locales/zh-CN.json', '3d/pil-handoff.js', '3d/board-calibration.json']) {
       const name = expected.asset_urls[suffix];
