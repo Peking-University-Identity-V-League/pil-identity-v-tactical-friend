@@ -1,5 +1,5 @@
 
-import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacItemSection, tacMStyleBody, tacMStyleToggle, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacShowChairBasementEl, tacBasementText, tacSnapBoxEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacticView } from './core/dom.js';
+import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacItemSection, tacMStyleBody, tacMStyleToggle, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacShowChairBasementEl, tacBasementText, tacSnapBoxEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacticView } from './core/dom.js';
 import { restoredMeasureIds, saveRegionSel, tacBoard, tacDisplay, tacMeasureStyle, tacPersisted, tacSave, flushSave } from './core/persist.js';
 import { measureBaseAt, simulateMovement } from './core/measurements.js';
 import { measurementEndpoints, map3dURL } from './core/map-handoff.js';
@@ -1757,9 +1757,11 @@ function tacSyncMirrorEl(kind) {
   const b = tacBoard();
   const i2 = b.items.findIndex((o) => o.kind === kind);
   const o2 = i2 >= 0 ? b.items[i2] : null;
-  const el2 = o2 && tacMapWrap.querySelector(
-    `.tac-item-circle[data-idx="${i2}"], .tac-item-pin[data-idx="${i2}"]`);
-  if (el2) { el2.style.left = `${o2.x * 100}%`; el2.style.top = `${o2.y * 100}%`; }
+  if (!o2) return;
+  // 该造物的所有范围圈/图标都要一起移动（镜像可同时显示三个范围）
+  tacMapWrap.querySelectorAll(
+    `.tac-item-circle[data-idx="${i2}"], .tac-item-pin[data-idx="${i2}"]`)
+    .forEach((el2) => { el2.style.left = `${o2.x * 100}%`; el2.style.top = `${o2.y * 100}%`; });
 }
 
 
@@ -5507,6 +5509,14 @@ export async function tacExportImage() {
 
   
   const fileName = translate("application.fileName", { name: map.mapName });
+  // 微信 / B 站 App 的 webview 会拦截 <a download> 下载，改为弹出图片供长按保存
+  const saveByLongPress = /MicroMessenger|bili/i.test(navigator.userAgent);
+  const openSaveOverlay = (dataUrl) => {
+    if (!tacSaveOverlay || !tacSaveImg) return false;
+    tacSaveImg.src = dataUrl;
+    tacSaveOverlay.hidden = false;
+    return true;
+  };
   const download = (blobUrl) => {
     const a = document.createElement('a');
     a.href = blobUrl;
@@ -5516,6 +5526,11 @@ export async function tacExportImage() {
     a.remove();
   };
   try {
+    if (saveByLongPress) {
+      if (!openSaveOverlay(cv.toDataURL('image/png'))) throw new Error('save overlay unavailable');
+      showToast(translate("ui.tacSaveOverlay.toast"));
+      return;
+    }
     if (cv.toBlob) {
       cv.toBlob(async (blob) => {
         if (!blob) { showToast(translate("application.tacExportImage")); return; }
@@ -5543,6 +5558,18 @@ export async function tacExportImage() {
 }
 
 tacExportBtn.addEventListener('click', tacExportImage);
+
+// 长按保存弹层：关闭按钮 / 点背景 / Esc
+if (tacSaveOverlay && tacSaveClose) {
+  const closeSaveOverlay = () => { tacSaveOverlay.hidden = true; };
+  tacSaveClose.addEventListener('click', closeSaveOverlay);
+  tacSaveOverlay.addEventListener('click', (event) => {
+    if (event.target === tacSaveOverlay) closeSaveOverlay();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !tacSaveOverlay.hidden) closeSaveOverlay();
+  });
+}
 
 
 export function tacPos(e) {

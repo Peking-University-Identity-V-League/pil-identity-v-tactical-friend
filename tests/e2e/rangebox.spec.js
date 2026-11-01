@@ -311,3 +311,22 @@ test('range box: second-level buttons share one line; gear/slider rows appear be
   });
   expect(sliderOnOwnLine).toBe(true);
 });
+
+test('talent tab: all secondary buttons stay on one line (Geisha x10)', async ({ page }) => {
+  await tool(page, 'roles');
+  await pickRole(page, 'Geisha');
+  const box = page.locator('#tacMapWrap');
+  const rect = await box.boundingBox();
+  await box.click({ position: { x: rect.width * 0.4, y: rect.height * 0.4 } });
+  await tool(page, 'select');
+  await box.click({ position: { x: rect.width * 0.4, y: rect.height * 0.4 } });
+  await lv1(page, '显示天赋范围').click();
+  const subs = rangeBox(page).locator('.tac-range-sub[data-tk]');
+  await expect(subs).toHaveCount(10);
+  const layout = await subs.evaluateAll((els) => {
+    const parents = new Set(els.map((el) => el.parentElement));
+    return { nparents: parents.size, rowH: els[0].parentElement.offsetHeight };
+  });
+  expect(layout.nparents).toBe(1);
+  expect(layout.rowH).toBeLessThan(40);
+});

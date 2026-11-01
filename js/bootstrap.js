@@ -66,6 +66,16 @@ async function startApplication() {
   });
 }
 
+// 软键盘遮挡：iOS 键盘不压缩布局窗口，靠 visualViewport 把焦点输入框滚回可视区
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', () => {
+    const ae = document.activeElement;
+    if (ae && /^(INPUT|TEXTAREA)$/.test(ae.tagName)) {
+      ae.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+  });
+}
+
 startApplication().catch((error) => {
   console.error('Application initialization failed.', error);
 });
