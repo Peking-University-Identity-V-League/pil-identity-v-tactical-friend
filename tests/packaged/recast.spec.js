@@ -30,6 +30,8 @@ for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
     const stats = await page.evaluate(() => window.measureAPI.stats());
     expect(stats.result.status).toBe('ok');
     expect(stats.result.solverVersion).toMatch(/^recast-/);
+    expect(stats.result.routeEngine?.fallback?.used).toBe(false);
+    expect(stats.result.routeEngine?.proposal).toBe('distance');
     expect(stats.result.path[0]).toEqual(start.point);
     expect(stats.result.path.at(-1)).toEqual(end.point);
     expect(stats.result.distance / 11.85).toBeLessThan(160);

@@ -15,7 +15,9 @@ createServer(async (req, res) => {
     const prefix = policy.prefixes.find(p => url.pathname.startsWith(p + '/'));
     if (!prefix && url.pathname !== '/') throw Error('Not found');
     let name = decodeURIComponent(prefix ? url.pathname.slice(prefix.length + 1) : '') || 'index.html';
-    const mapRequest = name.startsWith('3d/') || name.startsWith(policy.immutableDirectory + '/') && name.includes('/3d/');
+    // Match the generated Nginx /3d/ locations. The shared immutable asset
+    // location and the exact release-metadata location do not add map CSP.
+    const mapRequest = name.startsWith('3d/') && name !== '3d/__release.json';
     if (name.endsWith('/')) name += 'index.html';
     if (name.startsWith('3d/') && !name.startsWith('3d/releases/') && name !== '3d/__release.json') name = maps.asset_urls[name.slice(3)];
     const target = resolve(root, name);

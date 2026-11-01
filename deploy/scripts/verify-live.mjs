@@ -10,6 +10,9 @@ const commit = process.env.GITHUB_SHA || execFileSync('git', ['rev-parse', 'HEAD
 const expected = JSON.parse(await readFile(new URL('../dist/__release.json', import.meta.url)));
 const manifest = JSON.parse(await readFile(new URL('../dist/asset-manifest.json', import.meta.url)));
 const maps = JSON.parse(await readFile(new URL('../dist/3d/__release.json', import.meta.url)));
+const mapSource = JSON.parse(await readFile(new URL(maps.asset_urls?.['__release.json']
+  ? '../dist/' + maps.asset_urls['__release.json'] : '../../maps-3d/__release.json', import.meta.url)));
+const requiresWasm = mapSource.recast_routing === 1 || String(mapSource.routing_engine || '').startsWith('recast-');
 async function request(path, options = {}) {
   const response = await fetch('https://pkuidv.com' + path, { redirect: 'error', signal: AbortSignal.timeout(20000), ...options });
   assert.ok(response.ok, path + ': HTTP ' + response.status);
@@ -43,7 +46,7 @@ async function verify() {
       const response = await request(prefix + '/3d/' + name, { method: 'HEAD' });
       assert.equal(response.headers.get('cache-control'), policy.cache.entry);
       assert.ok(response.headers.get('content-security-policy')?.includes('https://umami.pkuidv.com'), '3D telemetry is blocked by CSP: ' + name);
-      requireMapWasmPolicy(response.headers.get('content-security-policy'));
+      if (requiresWasm) requireMapWasmPolicy(response.headers.get('content-security-policy'));
       // Cloudflare can omit ETag on transformed HTML. Browsers then revalidate
       // using Last-Modified; both must avoid transferring an unchanged map.
       const etag = response.headers.get('etag');
