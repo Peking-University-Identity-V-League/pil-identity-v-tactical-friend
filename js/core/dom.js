@@ -158,6 +158,12 @@ export const tacClearBtn = $('tacClearBtn');
 
 export const tacExportBtn = $('tacExportBtn');
 
+export const tacSaveOverlay = $('tacSaveOverlay');
+
+export const tacSaveImg = $('tacSaveImg');
+
+export const tacSaveClose = $('tacSaveClose');
+
 export const tacTextInput = $('tacTextInput');
 
 export const tacTextAddBtn = $('tacTextAddBtn');

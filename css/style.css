@@ -4070,6 +4070,49 @@ div.tac-fixed-spawn .cam-dir.up {
   --safe-r: env(safe-area-inset-right, 0px);
 }
 
+/* 长按保存弹层（微信 / B 站 App 内导出） */
+.tac-save-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 960;
+  background: rgba(5, 8, 18, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.tac-save-overlay[hidden] { display: none; }
+.tac-save-box {
+  max-width: min(92vw, 720px);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.tac-save-tip {
+  color: #e2e8f0;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+.tac-save-box img {
+  max-width: 100%;
+  max-height: 68vh;
+  border-radius: 10px;
+  background: #fff;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.tac-save-close {
+  padding: 8px 26px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  font-size: 13px;
+  cursor: pointer;
+}
+
 /* 横屏（手机）断点：压缩顶栏与间距，右侧卡片列变为可收起抽屉，页面可滚动 */
 .drawer-scrim { display: none; }
 .drawer-scrim:not([hidden]) {
@@ -4134,7 +4177,7 @@ div.tac-fixed-spawn .cam-dir.up {
     align-items: center;
     justify-content: center;
     position: fixed;
-    right: var(--safe-r);
+    right: calc(0px + var(--safe-r));
     top: 50%;
     translate: 0 -50%;
     z-index: 930;
@@ -4147,7 +4190,10 @@ div.tac-fixed-spawn .cam-dir.up {
     color: var(--accent);
     font-size: 14px;
     cursor: pointer;
+    transition: right 0.25s ease;
   }
+  /* 抽屉打开时把手移到抽屉左缘，避免压住面板中部内容被误点关闭 */
+  .drawer-toggle.open { right: calc(min(380px, 88vw) + var(--safe-r)); }
   .drawer-toggle .dt-close { display: none; }
   .drawer-toggle.open .dt-open { display: none; }
   .drawer-toggle.open .dt-close { display: block; }

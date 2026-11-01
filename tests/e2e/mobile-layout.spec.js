@@ -45,6 +45,9 @@ test.describe('landscape layout', () => {
     const openBox = await panel.boundingBox();
     expect(openBox.width).toBeLessThanOrEqual(380);
     expect(openBox.x).toBeLessThan(844);
+    // 打开时把手移到抽屉左缘，不压住面板内容（避免误点关闭）
+    const toggleBox = await toggle.boundingBox();
+    expect(toggleBox.x + toggleBox.width).toBeLessThanOrEqual(openBox.x + 1);
     // 点遮罩关闭
     await page.locator('#drawerScrim').click();
     await expect(panel).not.toHaveClass(/drawer-open/);
