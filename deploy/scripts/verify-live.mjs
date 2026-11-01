@@ -4,6 +4,7 @@ import { setTimeout } from 'node:timers/promises';
 import { readFile } from 'node:fs/promises';
 import { digest, policy } from './asset-policy.mjs';
 import { jsonScript, loadingHelpers, scenes } from './maps3d-inventory.mjs';
+import { requireMapWasmPolicy } from './deploy.mjs';
 
 const commit = process.env.GITHUB_SHA || execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 const expected = JSON.parse(await readFile(new URL('../dist/__release.json', import.meta.url)));
@@ -42,6 +43,7 @@ async function verify() {
       const response = await request(prefix + '/3d/' + name, { method: 'HEAD' });
       assert.equal(response.headers.get('cache-control'), policy.cache.entry);
       assert.ok(response.headers.get('content-security-policy')?.includes('https://umami.pkuidv.com'), '3D telemetry is blocked by CSP: ' + name);
+      requireMapWasmPolicy(response.headers.get('content-security-policy'));
       // Cloudflare can omit ETag on transformed HTML. Browsers then revalidate
       // using Last-Modified; both must avoid transferring an unchanged map.
       const etag = response.headers.get('etag');

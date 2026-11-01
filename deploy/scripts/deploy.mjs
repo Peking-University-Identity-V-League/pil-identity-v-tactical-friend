@@ -7,6 +7,26 @@ import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const sha = value => typeof value === 'string' && /^[a-f0-9]{40}$/.test(value);
+export function requireMapWasmPolicy(value) {
+  const script = String(value || '').split(';').map(s => s.trim().split(/\s+/)).find(p => p[0] === 'script-src') || [];
+  if (!script.includes("'wasm-unsafe-eval'") || script.includes("'unsafe-eval'")) {
+    throw new Error('Install the generated 3D Nginx CSP before publishing Recast maps. The current site must permit WASM without general JavaScript eval.');
+  }
+}
+function verifyMapWasmPolicy(host, prefix) {
+  return new Promise((resolve, reject) => {
+    const req = httpsRequest({ hostname: host, servername: 'pkuidv.com', method: 'HEAD', path: prefix + '/3d/h55_deadforest_sp.html', headers: { Host: 'pkuidv.com' }, signal: AbortSignal.timeout(15000) }, response => {
+      response.resume();
+      try {
+        if (response.statusCode !== 200) throw new Error('Cannot verify the current 3D CSP before publishing Recast maps.');
+        requireMapWasmPolicy(response.headers['content-security-policy']);
+        resolve();
+      } catch (error) { reject(error); }
+    });
+    req.on('error', () => reject(new Error('Cannot verify the current 3D CSP before publishing Recast maps.')));
+    req.end();
+  });
+}
 export function describeRelease(metadata, expectedCommit) {
   if (sha(metadata.source_commit) && sha(metadata.config_revision) && !metadata.homepage_commit) {
     if (expectedCommit && (!sha(expectedCommit) || metadata.source_commit !== expectedCommit || metadata.config_revision !== expectedCommit)) {
@@ -45,6 +65,10 @@ export async function deploy() {
   if (!/^[a-z0-9][a-z0-9.-]*$/i.test(host || '') || !/^[A-Za-z0-9_-]{40,128}$/.test(token || '')) {
     throw new Error('CST deployment credentials are missing or invalid.');
   }
+  const mapSource = JSON.parse(await readFile(new URL('../../maps-3d/__release.json', import.meta.url), 'utf8'));
+  // A static-release upload cannot change Nginx. Refuse activation while the
+  // existing map policy would block the new engine, preserving the live release.
+  if (mapSource.recast_routing === 1 || String(mapSource.routing_engine || '').startsWith('recast-')) await Promise.all(['/tactical-friend', '/zhanshuyanlian'].map(prefix => verifyMapWasmPolicy(host, prefix)));
   const temporary = await mkdtemp(join(tmpdir(), 'pil-cst-deploy-'));
   try {
     const archivePath = join(temporary, 'release.tar.gz');
