@@ -241,3 +241,52 @@ test('mirror pair semantics: second pair, uncheck allow breaks link without stea
   await clickPoint(page, 0.65, 0.2);
   await expect(mirrorBox(page).locator('.tac-link-status')).toContainText(/当前已与 水镜 ?2 连线/);
 });
+
+test('mirror drag: all of its range circles follow together', async ({ page }) => {
+  await placeRole(page, 'bloodyQueen', 0.3, 0.3);
+  await placeItem(page, 'bloodyQueen', 'aquaMirror', 0.5, 0.3);
+  await tool(page, 'select');
+  await clickPoint(page, 0.3, 0.3);
+  const box = mirrorBox(page);
+  await box.locator('input[data-mq="show"]').check();
+  let board = await state(page);
+  const miIdx = board.items.findIndex((it) => it.kind === 'mirrorImage');
+  expect(miIdx).toBeGreaterThanOrEqual(0);
+  const rangeBoxEl = page.locator('#tacManageList .tac-manage-box:has(.tac-range-opt)').first();
+  // 点亮镜像自带的三个道具范围（第一个默认点亮）
+  await clickPoint(page, board.items[miIdx].x, board.items[miIdx].y);
+  await rangeBoxEl.locator('.tac-range-opt:not(.tac-range-sub)', { hasText: '显示道具范围' }).click();
+  await expect(rangeBoxEl.locator('.tac-range-sub').nth(0)).toHaveClass(/active/);
+  for (let i = 1; i < 3; i++) {
+    await rangeBoxEl.locator('.tac-range-sub').nth(i).click();
+    await page.waitForTimeout(150);
+  }
+  await expect(rangeBoxEl.locator('.tac-range-sub.active')).toHaveCount(3);
+  const circles = page.locator(`.tac-item-circle[data-idx="${miIdx}"]`);
+  await expect(circles).toHaveCount(3);
+  const before = await circles.evaluateAll((els) =>
+    els.map((el) => { const r = el.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 }; }));
+  // 拖动镜像
+  const wrap = await page.locator('#tacMapWrap').boundingBox();
+  board = await state(page);
+  const mi = board.items[miIdx];
+  const from = { x: wrap.x + mi.x * wrap.width, y: wrap.y + mi.y * wrap.height };
+  const to = { x: from.x + 40, y: from.y + 25 };
+  await page.mouse.move(from.x, from.y);
+  await page.mouse.down();
+  await page.mouse.move(to.x, to.y, { steps: 5 });
+  await page.mouse.up();
+  board = await state(page);
+  const miAfter = board.items[miIdx];
+  expect(miAfter.x).not.toBeCloseTo(mi.x, 5);
+  // 所有范围圈都应位于镜像新位置（回归：旧实现只移动第一个圈）
+  const wrap2 = await page.locator('#tacMapWrap').boundingBox();
+  const expX = wrap2.x + miAfter.x * wrap2.width;
+  const expY = wrap2.y + miAfter.y * wrap2.height;
+  const actual = await circles.evaluateAll((els) =>
+    els.map((el) => { const r = el.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 }; }));
+  actual.forEach((c, i) => {
+    expect(Math.hypot(c.x - expX, c.y - expY)).toBeLessThan(2);
+    expect(Math.hypot(c.x - before[i].x, c.y - before[i].y)).toBeGreaterThan(10);
+  });
+});

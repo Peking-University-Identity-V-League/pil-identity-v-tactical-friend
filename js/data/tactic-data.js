@@ -686,6 +686,11 @@ export const TAC_ITEM_TYPES = {
   },
   aquaMirror: {
     name: translate("items.bloodyQueen.aquaMirror.name"),
+    linkToRole: 'bloodyQueen',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/03/tmqwk7lb2do1swhtp7sklgx75t0ig6f.png/90px-%E7%BA%A2%E5%A4%AB%E4%BA%BA0%E9%98%B6%E6%8A%80%E8%83%BD.png',
+  },
+  mirrorImage: {
+    name: translate("items.mirrorImage.name"),
     ranges: {
       key: 'showItem',
       options: [
@@ -694,11 +699,6 @@ export const TAC_ITEM_TYPES = {
         { size_m: 21.1, label: translate("items.bloodyQueen.aquaMirror.range.label.mirrorImageSurvivorTier2") },
       ],
     },
-    linkToRole: 'bloodyQueen',
-    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/03/tmqwk7lb2do1swhtp7sklgx75t0ig6f.png/90px-%E7%BA%A2%E5%A4%AB%E4%BA%BA0%E9%98%B6%E6%8A%80%E8%83%BD.png',
-  },
-  mirrorImage: {
-    name: translate("items.mirrorImage.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/b2/924f03wryik2gfgrenb3q75ngh466vi.png',
   },
   cat: {

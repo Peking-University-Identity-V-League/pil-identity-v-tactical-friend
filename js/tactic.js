@@ -1757,9 +1757,11 @@ function tacSyncMirrorEl(kind) {
   const b = tacBoard();
   const i2 = b.items.findIndex((o) => o.kind === kind);
   const o2 = i2 >= 0 ? b.items[i2] : null;
-  const el2 = o2 && tacMapWrap.querySelector(
-    `.tac-item-circle[data-idx="${i2}"], .tac-item-pin[data-idx="${i2}"]`);
-  if (el2) { el2.style.left = `${o2.x * 100}%`; el2.style.top = `${o2.y * 100}%`; }
+  if (!o2) return;
+  // 该造物的所有范围圈/图标都要一起移动（镜像可同时显示三个范围）
+  tacMapWrap.querySelectorAll(
+    `.tac-item-circle[data-idx="${i2}"], .tac-item-pin[data-idx="${i2}"]`)
+    .forEach((el2) => { el2.style.left = `${o2.x * 100}%`; el2.style.top = `${o2.y * 100}%`; });
 }
 
 
