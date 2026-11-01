@@ -19,7 +19,7 @@ test('3D policy permits embedded WASM without general JavaScript eval', () => {
 
 test('Recast publication refuses an old CSP before static activation', () => {
   assert.doesNotThrow(() => requireMapWasmPolicy(mapsContentSecurityPolicy));
-  for (const csp of [null, "default-src 'none'; script-src 'self' data:", "script-src 'self' 'unsafe-eval'", "script-src 'self' 'wasm-unsafe-eval' 'unsafe-eval'"]) {
+  for (const csp of [null, "default-src 'none'; script-src 'self' data:", "script-src 'self' 'unsafe-eval'", "script-src 'self' 'wasm-unsafe-eval' 'unsafe-eval'", mapsContentSecurityPolicy + ", script-src 'self'", [mapsContentSecurityPolicy, "script-src 'self'"]]) {
     assert.throws(() => requireMapWasmPolicy(csp), /Install the generated 3D Nginx CSP/);
   }
 });

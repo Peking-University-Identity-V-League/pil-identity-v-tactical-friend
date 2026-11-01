@@ -8,8 +8,11 @@ import { fileURLToPath } from 'node:url';
 
 const sha = value => typeof value === 'string' && /^[a-f0-9]{40}$/.test(value);
 export function requireMapWasmPolicy(value) {
-  const script = String(value || '').split(';').map(s => s.trim().split(/\s+/)).find(p => p[0] === 'script-src') || [];
-  if (!script.includes("'wasm-unsafe-eval'") || script.includes("'unsafe-eval'")) {
+  // Browsers intersect multiple CSP headers; Node joins them with commas.
+  // A second policy could still block WASM, so require a single policy.
+  const policy = String(value || '');
+  const script = policy.split(';').map(s => s.trim().split(/\s+/)).find(p => p[0] === 'script-src') || [];
+  if (policy.includes(',') || !script.includes("'wasm-unsafe-eval'") || script.includes("'unsafe-eval'")) {
     throw new Error('Install the generated 3D Nginx CSP before publishing Recast maps. The current site must permit WASM without general JavaScript eval.');
   }
 }
