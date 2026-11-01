@@ -1,3 +1,4 @@
+import {createRouteDummy} from 'route-dummy';
 // V16 module based on the V3.3 camera. Geometry remains in source coordinates.
 export function installKeyboardCamera({ THREE, camera, controls, canvas, scene, unitsPerMeter: u,
   isReady, invalidate, getNavigation, getCameraMeshes, getSceneBoxes, getBlockedPolygons, getStartPoint, getWorldCollision = () => null,
@@ -68,7 +69,7 @@ export function installKeyboardCamera({ THREE, camera, controls, canvas, scene, 
   const overviewSpeedControls=q('#camera-overview-speed-controls'),overviewSpeedInput=q('#camera-overview-speed');
   const overviewSpeedCustom=q('#camera-overview-speed-custom'),overviewSpeedOutput=q('#camera-overview-speed-value');
   let mode = 'overview', previousTime = performance.now(), savedOverview = null;
-  let actor = null, avatar = null, navigation = null, polygons = null, surfaceTriangles = null;
+  let actor = null, avatar = null, routeDummy = null, navigation = null, polygons = null, surfaceTriangles = null;
   const surfaceGrid=new Map(),surfaceCellSize=64;
   let yaw = 0, pitch = .22, followDistance = 5.5 * u, drag = null;
   let lastSceneSize = 0, movementBlocked = false, lockFailure = '', obstructionReason = '';
@@ -491,14 +492,7 @@ export function installKeyboardCamera({ THREE, camera, controls, canvas, scene, 
   }
   function makeAvatar() {
     if (avatar) return;
-    avatar = new THREE.Group(); avatar.name = 'local-camera-avatar';
-    const material = new THREE.MeshStandardMaterial({ color: 0x58d8d2, roughness: .7 });
-    const body = new THREE.Mesh(new THREE.CapsuleGeometry(.23 * u, .88 * u, 4, 8), material);
-    body.position.y = .9 * u; avatar.add(body);
-    const head = new THREE.Mesh(new THREE.SphereGeometry(.2 * u, 12, 8), material);
-    head.position.y = 1.65 * u; avatar.add(head);
-    const nose = new THREE.Mesh(new THREE.ConeGeometry(.065 * u, .13 * u, 3), new THREE.MeshBasicMaterial({ color: 0xffd18b }));
-    nose.rotation.x = -Math.PI / 2; nose.position.set(0, 1.45 * u, -.165 * u); avatar.add(nose); scene.add(avatar);
+    routeDummy=createRouteDummy(THREE,u);avatar=routeDummy.group;scene.add(avatar);
   }
   function followCamera() {
     if (!actor) return;
@@ -521,7 +515,7 @@ export function installKeyboardCamera({ THREE, camera, controls, canvas, scene, 
     // Fade out the stand-in when a wall brings the camera close to its body.
     const opacity = THREE.MathUtils.clamp((camera.position.distanceTo(anchor) / u - 1.8) / 1.2, 0, 1);
     avatar.visible = opacity > .01;
-    for (const child of avatar.children) { child.material.transparent = true; child.material.opacity = opacity; child.material.depthWrite = opacity > .98; child.material.depthTest = true; child.renderOrder = 0; }
+    avatar.traverse(child=>{if(!child.isMesh)return;child.material.transparent=true;child.material.opacity=opacity;child.material.depthWrite=opacity>.98;child.material.depthTest=true;child.renderOrder=0;});
     invalidate();
   }
   function releaseMouse() { if (locked()) document.exitPointerLock(); }
@@ -574,7 +568,7 @@ export function installKeyboardCamera({ THREE, camera, controls, canvas, scene, 
     yaw += dx * .0025; yaw = Math.atan2(Math.sin(yaw), Math.cos(yaw));
     pitch = THREE.MathUtils.clamp(pitch + dy * .0025, pitchMin, pitchMax); followCamera();
   }
-  function showRoutePose(point, heading) {
+  function showRoutePose(point, heading, frame={}) {
     if (!Array.isArray(point) || point.length !== 3 || !point.every(Number.isFinite)) return false;
     if (!Number.isFinite(heading)) heading = lastRouteHeading ?? yaw;
     ensureNavigation(); makeAvatar(); routePoseActive = true;
@@ -583,18 +577,20 @@ export function installKeyboardCamera({ THREE, camera, controls, canvas, scene, 
     if (lastRouteHeading === null) yaw = heading;
     else yaw += Math.atan2(Math.sin(heading - lastRouteHeading), Math.cos(heading - lastRouteHeading));
     lastRouteHeading = heading; avatar.position.fromArray(point); avatar.rotation.y = -heading;
+    routeDummy.pose(frame);
     movementBlocked = false; obstructionReason = '';
     if (mode === 'third') followCamera();
     else {
       avatar.visible = true;
       // Like the route line, keep the moving marker readable above map layers.
-      for (const child of avatar.children) { child.material.opacity = 1; child.material.transparent = true; child.material.depthTest = false; child.material.depthWrite = false; child.renderOrder = 60; }
+      avatar.traverse(child=>{if(!child.isMesh)return;child.material.opacity=1;child.material.transparent=true;child.material.depthTest=false;child.material.depthWrite=false;child.renderOrder=60;});
       invalidate();
     }
   }
   function releaseRoutePose() {
     if (!routePoseActive) return;
     routePoseActive = false; lastRouteHeading = null;
+    routeDummy?.pose();
     // A timed vault or drop can end its preview between storeys. Preserve the
     // current pose on takeover instead of snapping to an unrelated nearest floor.
     const point = actor.point.slice(), support = supportAt(point[0], point[2], point[1] + 2e-4, point[1] - .05 * u);
@@ -726,7 +722,7 @@ export function installKeyboardCamera({ THREE, camera, controls, canvas, scene, 
       return { enabled: enabledInput.checked, mode, pointerLocked: locked(), metersPerSecond: speed(),overviewMetersPerSecond, activeKeys: [...new Set([...keys, ...touchKeys])],
         position: camera.position.toArray(), target: controls.target.toArray(), direction: camera.getWorldDirection(new THREE.Vector3()).toArray(), actor: actor && { ...actor, point: actor.point.slice() },
         yaw, pitch, followDistanceMeters: followDistance / u, actualFollowDistanceMeters: mode === 'third' ? camera.position.distanceTo(anchor) / u : null,
-        avatarVisible: Boolean(avatar?.visible), avatarOpacity: avatar?.children[0]?.material.opacity ?? 0, movementBlocked, obstructionReason,
+        avatarVisible: Boolean(avatar?.visible), avatarOpacity: avatar?.children[0]?.material.opacity ?? 0, dummyPose:avatar?.userData.pose??null, movementBlocked, obstructionReason,
         falling,verticalSpeedMetersPerSecond:verticalSpeed/u,sliding,lastLanding };
     },
   };
