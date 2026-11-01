@@ -4113,17 +4113,7 @@ div.tac-fixed-spawn .cam-dir.up {
   cursor: pointer;
 }
 
-/* 横屏（手机）断点：压缩顶栏与间距，右侧卡片列变为可收起抽屉，页面可滚动 */
-.drawer-scrim { display: none; }
-.drawer-scrim:not([hidden]) {
-  position: fixed;
-  inset: 0;
-  z-index: 910;
-  background: rgba(5, 8, 18, 0.55);
-  display: block;
-}
-.drawer-toggle { display: none; }
-
+/* 横屏（手机）断点：压缩顶栏与间距，右侧卡片列收窄，页面可滚动 */
 @media (orientation: landscape) and (max-height: 500px) {
   .main-container {
     padding: 0 calc(10px + var(--safe-r)) 10px calc(10px + var(--safe-l));
@@ -4133,7 +4123,7 @@ div.tac-fixed-spawn .cam-dir.up {
   .header h1 { font-size: 18px; }
   .header .subtitle { display: none; }
   .content-grid {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
     gap: 8px;
   }
   .main-left { gap: 8px; }
@@ -4152,53 +4142,7 @@ div.tac-fixed-spawn .cam-dir.up {
   .reset-btn, .side-btn { padding: 6px 10px; font-size: 10px; }
   .map-viewer { padding: 6px; }
   .action-bar { margin-top: 6px; padding-top: 6px; }
-
-  /* 右侧卡片列：默认收起为抽屉，悬浮开关滑出 */
-  .ded-panel {
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100dvh;
-    width: min(380px, 88vw);
-    z-index: 920;
-    overflow-y: auto;
-    overflow-x: hidden;
-    gap: 8px;
-    padding: 10px calc(10px + var(--safe-r)) 24px 10px;
-    background: #0f172a;
-    border-left: 1px solid var(--border);
-    box-shadow: -10px 0 28px rgba(0, 0, 0, 0.5);
-    transform: translateX(105%);
-    transition: transform 0.25s ease;
-  }
-  .ded-panel.drawer-open { transform: translateX(0); }
-  .drawer-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    right: calc(0px + var(--safe-r));
-    top: 50%;
-    translate: 0 -50%;
-    z-index: 930;
-    width: 26px;
-    height: 76px;
-    border: 1px solid var(--border);
-    border-right: none;
-    border-radius: 10px 0 0 10px;
-    background: rgba(30, 41, 59, 0.92);
-    color: var(--accent);
-    font-size: 14px;
-    cursor: pointer;
-    transition: right 0.25s ease;
-  }
-  /* 抽屉打开时把手移到抽屉左缘，避免压住面板中部内容被误点关闭 */
-  .drawer-toggle.open { right: calc(min(380px, 88vw) + var(--safe-r)); }
-  .drawer-toggle .dt-close { display: none; }
-  .drawer-toggle.open .dt-open { display: none; }
-  .drawer-toggle.open .dt-close { display: block; }
-  body:has(#homeView.active) .drawer-toggle { display: none; }
-
+  .ded-panel { gap: 8px; padding-bottom: 12px; }
   .footer {
     padding-left: calc(10px + var(--safe-l));
     padding-right: calc(10px + var(--safe-r));
