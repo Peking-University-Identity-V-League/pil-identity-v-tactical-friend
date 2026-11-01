@@ -50,6 +50,8 @@ npm --prefix deploy run policy:check
 
 `generated/tactical.nginx.conf` 必须整体安装为服务器的战术组件路由；不要与旧的二维或三维 location 重复加载。它会返回 `X-PIL-Asset-Policy`，线上校验以此检查服务器是否使用当前策略。
 
+首次发布 Recast 三维求路前，管理员需先同步本 PR 的生成配置并检查、重载 Nginx。三维 CSP 新增 `'wasm-unsafe-eval'`，允许本地内嵌求路组件编译 WebAssembly，仍不允许 JavaScript `'unsafe-eval'`。普通静态发布不会安装 Nginx 配置；上传前会检查现网三维 CSP，旧策略会使发布提前停止并保留当前线上版本。此后日常地图更新仍走现有自动流程。
+
 `generated/cloudflare-cache-rules.json` 只管理 `pil_tactical_mutable_revalidate` 和 `pil_tactical_immutable_assets` 两个规则。更新时保留首页、抽签等其他组件规则，移除被替代的 `pil_stable_3d_html_one_minute` 规则，并将这两个战术规则放在其他通用规则之后。策略基础设施的变更需要管理员安装生成配置并验证；普通页面发布令牌没有服务器或 CDN 管理权限。策略未同步时线上验收会失败，不会把它报告成完整成功。
 
 ## 服务器接收与回滚
