@@ -25,6 +25,17 @@ export function tacItemMetersToPercent(meters) {
 }
 
 
+function tacCrossSvg(opt, meters, angle) {
+  const w = Math.max(0.5, (opt.crossWidth / (meters * 2)) * 100);
+  const y = (100 - w) / 2;
+  return '<svg class="tac-item-cross-svg" viewBox="0 0 100 100" aria-hidden="true">'
+    + `<g transform="rotate(${((angle || 0) % 360 + 360) % 360} 50 50)">`
+    + `<rect x="0" y="${y.toFixed(3)}" width="100" height="${w.toFixed(3)}"/>`
+    + `<rect x="${y.toFixed(3)}" y="0" width="${w.toFixed(3)}" height="100"/>`
+    + '</g></svg>';
+}
+
+
 export function tacRangeDefaultKey(cfg, hideByDefault) {
   // 新格式 ranges 无 key 语义：返回 null 表示「无默认显示」
   return null;
@@ -2248,9 +2259,9 @@ export function renderTacBoard() {
     const rbFill = it.rangeBox ? it.rangeBox.fill : !!def.fill;
     const itRanges = [
       ...tacRangeEntries(def.ranges, it, false)
-        .map((e) => ({ pct: tacItemMetersToPercent(e.meters) })),
+        .map((e) => ({ pct: tacItemMetersToPercent(e.meters), opt: e.opt, meters: e.meters })),
       ...tacTalentRanges(it, it.role)
-        .map((r) => ({ pct: tacItemMetersToPercent(r.meters) })),
+        .map((r) => ({ pct: tacItemMetersToPercent(r.meters), opt: null, meters: r.meters })),
     ];
     const sizePct = itRanges.length ? itRanges[0].pct : null;
     const el = document.createElement('div');
@@ -2269,13 +2280,16 @@ export function renderTacBoard() {
       if (rbFill) el.style.setProperty('--ic-fill', def.fill || TAC_RANGE_DEFAULT_FILL);
       if (def.glow) el.style.setProperty('--ic-glow', def.glow);
 
-
-
-
-      el.insertAdjacentHTML('beforeend',
-        '<svg class="tac-item-edge" viewBox="0 0 100 100" aria-hidden="true">'
-        + '<circle cx="50" cy="50" r="45" fill="none" stroke="rgba(0,0,0,0)"'
-        + ' stroke-width="10"/></svg>');
+      if (itRanges[0].opt && itRanges[0].opt.crossWidth != null) {
+        el.classList.add('tac-item-cross');
+        el.insertAdjacentHTML('beforeend',
+          tacCrossSvg(itRanges[0].opt, itRanges[0].meters, it.angle));
+      } else {
+        el.insertAdjacentHTML('beforeend',
+          '<svg class="tac-item-edge" viewBox="0 0 100 100" aria-hidden="true">'
+          + '<circle cx="50" cy="50" r="45" fill="none" stroke="rgba(0,0,0,0)"'
+          + ' stroke-width="10"/></svg>');
+      }
     }
 
 
@@ -2289,6 +2303,7 @@ export function renderTacBoard() {
       const ipx = isz / 100 * tacMapWrap.clientWidth;
       img.style.width = `${ipx}px`;
       img.style.height = `${ipx}px`;
+      if (it.angle) img.style.transform = `translate(-50%, -50%) rotate(${it.angle}deg)`;
     } else {
       el.insertAdjacentHTML('beforeend', '<div class="tac-item-dot"></div>');
     }
@@ -2303,6 +2318,10 @@ export function renderTacBoard() {
       ex.style.width = `${r.pct}%`;
       ex.style.setProperty('--ic', def.color || '#e2e8f0');
       if (rbFill) ex.style.setProperty('--ic-fill', def.fill || TAC_RANGE_DEFAULT_FILL);
+      if (r.opt && r.opt.crossWidth != null) {
+        ex.classList.add('tac-item-cross');
+        ex.insertAdjacentHTML('beforeend', tacCrossSvg(r.opt, r.meters, it.angle));
+      }
       if (z) ex.style.zIndex = z;
       tacMapWrap.appendChild(ex);
     });
@@ -2606,7 +2625,9 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
       const row = document.createElement('div');
       row.className = 'tac-range-desc';
       const txt = document.createElement('span');
-      txt.textContent = `${(e2.opt.label || '') + postfix} ${tacRangeFmt(e2.meters)}m`;
+      txt.textContent = e2.opt.crossWidth != null
+        ? `${(e2.opt.label || '') + postfix} ${translate("ui.tacRangeBox.radius")} ${tacRangeFmt(e2.meters)}m ${translate("ui.tacRangeBox.crossWidth")} ${tacRangeFmt(e2.opt.crossWidth)}m`
+        : `${(e2.opt.label || '') + postfix} ${tacRangeFmt(e2.meters)}m`;
       row.appendChild(txt);
       const del = document.createElement('button');
       del.type = 'button';
@@ -2794,6 +2815,38 @@ function tacBoxHint(box, html) {
   hint.innerHTML = html;
   box.appendChild(hint);
   return hint;
+}
+
+
+function buildAngleManageBox(settings, inst, idx) {
+  const box = tacManageBox(settings, "ui.tacAngleBox.title");
+  const line = document.createElement('div');
+  line.className = 'tac-box-line';
+  const cur = ((inst.angle || 0) % 360 + 360) % 360;
+  line.innerHTML = `<div class="tac-range-mid">`
+    + `<input type="range" min="0" max="360" step="5" value="${cur}">`
+    + `</div>`
+    + `<span class="tac-range-val">${cur}°</span>`;
+  const sl = line.querySelector('input');
+  // 软更新：拖动时只旋转已有 DOM，不整板重绘（避免卡顿）；松手再全量刷新
+  const softRotate = () => {
+    const a = ((inst.angle || 0) % 360 + 360) % 360;
+    tacMapWrap.querySelectorAll(`.tac-item-circle[data-idx="${idx}"]`).forEach((el) => {
+      const g = el.querySelector('.tac-item-cross-svg g');
+      if (g) g.setAttribute('transform', `rotate(${a} 50 50)`);
+      const img = el.querySelector('img');
+      if (img) img.style.transform = a
+        ? `translate(-50%, -50%) rotate(${a}deg)` : '';
+    });
+  };
+  sl.addEventListener('input', () => {
+    inst.angle = parseFloat(sl.value) % 360;
+    line.querySelector('.tac-range-val').textContent = `${inst.angle}°`;
+    softRotate();
+    tacSave();
+  });
+  sl.addEventListener('change', () => renderTacBoard());
+  box.appendChild(line);
 }
 
 
@@ -3400,6 +3453,9 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
   if (it.kind === TAC_HP_KIND) {
     buildHittingPointBox(settings, it);
   }
+  if (it.kind === 'timeBomb' || it.kind === 'remoteControlledBomb') {
+    buildAngleManageBox(settings, it, idx);
+  }
 
   
   if (it.kind !== 'aquaMirror' && it.kind !== 'mirrorImage'
@@ -3471,9 +3527,10 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     delete it.fearHunter;
     delete it.fearSurv;
     delete it.rangeBox;
+    delete it.angle;
     it.iconSize = TAC_MANAGE_DEFAULT.iconSize;
     it.hideIcon = false;
-    renderTacBoard(); 
+    renderTacBoard();
   });
   
   row.querySelector('.tac-manage-del').addEventListener('click', () => {
