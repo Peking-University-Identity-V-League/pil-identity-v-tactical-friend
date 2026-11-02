@@ -293,7 +293,7 @@ test('range box: second-level buttons share one line; gear/slider rows appear be
   });
   expect(gearOnOwnLine).toBe(true);
 
-  // 牙医：4 个滑杆 + 1 个数字，二级按钮同一行；点亮滑杆项后滑杆出现在下方
+  // 牙医：3 个圆环 + 1 个滑杆（光幕可放置范围）+ 1 个数字，二级按钮同一行；点亮滑杆项后滑杆出现在下方
   await placeRole(page, 'dentist', 0.6, 0.6);
   await lv1(page, '显示特质范围').click();
   const dentistOneline = await page.evaluate(() => {
@@ -302,7 +302,7 @@ test('range box: second-level buttons share one line; gear/slider rows appear be
   });
   expect(dentistOneline).toBe(true);
   await expect(rangeBox(page).locator('input[type="range"]')).toHaveCount(0);
-  await lv2(page, '5档位口腔镜范围').click();
+  await lv2(page, '光幕可放置范围').click();
   await expect(rangeBox(page).locator('input[type="range"]')).toHaveCount(1);
   const sliderOnOwnLine = await page.evaluate(() => {
     const sub = document.querySelectorAll('#tacManageList .tac-range-sub[data-v]')[0];

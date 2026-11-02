@@ -365,7 +365,19 @@ export const TAC_ITEM_TYPES = {
         { size_m: 21.9, label: translate("items.toyMerchant.catapult.name") },
       ],
     },
-    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/be/q00bu5gdar393rxoi65gjmhpfcko4cl.png/90px-%E7%8E%A9%E5%85%B7%E5%95%86%E9%81%93%E5%85%B71.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/b/be/q00bu5gdar393rxoi65gjmhpfcko4cl.png',
+  },
+  woodenWings: {
+    name: translate("items.toyMerchant.woodenWings.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/f7/2g09hg1uyno0gye6pe56omymco2i2rv.png/120px-%E7%8E%A9%E5%85%B7%E5%95%86%E9%81%93%E5%85%B72.png',
+  },
+  toyBox: {
+    name: translate("items.toyMerchant.toyBox.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/c/cb/nu9i8q271leu3ujsxgduisl28uka9h4.png/120px-%E7%8E%A9%E5%85%B7%E5%95%86%E9%81%93%E5%85%B73.png',
+  },
+  toyContainer: {
+    name: translate("items.toyMerchant.toyContainer.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/7/77/pqlxvzhik3rmg9v5fbnc7e46ec4yndh.png',
   },
   whistle: {
     name: translate("items.psychologist.whistle.name"),
@@ -1772,7 +1784,7 @@ export const TAC_ROLES = {
   toyMerchant: {
     name: translate("characters.toyMerchant.name"),
     camp: 'survivor',
-    items: ['catapult'],
+    items: ['catapult', 'woodenWings', 'toyBox', 'toyContainer'],
     maxItems: 2,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/9e/sjqzxjfh9dr8zjhdl3y9g5xoibszlck.png/90px-%E7%8E%A9%E5%85%B7%E5%95%86%E5%A4%B4%E5%83%8F.png',
   },
@@ -2403,9 +2415,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: { min: 4.56, max: 6.56 }, label: translate("characters.dentist.range.label.dentalMirrorLensAngle1") },
-        { size_m: { min: 9.4, max: 11.4 }, label: translate("characters.dentist.range.label.dentalMirrorLensAngle2") },
-        { size_m: { min: 16.9, max: 18.9 }, label: translate("characters.dentist.range.label.dentalMirrorLensAngle3") },
+        { size_m: 6.56, ringInner: 4.56, label: translate("characters.dentist.range.label.dentalMirrorLensAngle1") },
+        { size_m: 11.4, ringInner: 9.4, label: translate("characters.dentist.range.label.dentalMirrorLensAngle2") },
+        { size_m: 18.9, ringInner: 16.9, label: translate("characters.dentist.range.label.dentalMirrorLensAngle3") },
         { size_m: { min: 12.7, max: 35 }, label: translate("characters.dentist.range.label.beamPlacement") },
         { size_m: 32, label: translate("characters.dentist.range.label.ultravioletFade") },
       ],

@@ -36,6 +36,18 @@ function tacCrossSvg(opt, meters, angle) {
 }
 
 
+function tacRingSvg(opt) {
+  const ratio = Math.min(0.95, Math.max(0, opt.ringInner / opt.size_m));
+  const rIn = 45 * ratio;
+  const yIn = 50 - rIn;
+  return '<svg class="tac-role-ring-svg" viewBox="0 0 100 100" aria-hidden="true">'
+    + '<path fill-rule="evenodd" d="'
+    + 'M50 5 A45 45 0 1 1 49.99 5 Z '
+    + `M50 ${yIn.toFixed(3)} A${rIn.toFixed(3)} ${rIn.toFixed(3)} 0 1 1 49.99 ${yIn.toFixed(3)} Z"/>`
+    + '</svg>';
+}
+
+
 export function tacRangeDefaultKey(cfg, hideByDefault) {
   // 新格式 ranges 无 key 语义：返回 null 表示「无默认显示」
   return null;
@@ -2334,9 +2346,9 @@ export function renderTacBoard() {
     const tFill = t.rangeBox ? t.rangeBox.fill : false;
     const roleRanges = [
       ...tacRangeEntries(def.ranges, t, true)
-        .map((e) => ({ pct: tacItemMetersToPercent(e.meters) })),
+        .map((e) => ({ pct: tacItemMetersToPercent(e.meters), opt: e.opt })),
       ...tacTalentRanges(t, role)
-        .map((r) => ({ pct: tacItemMetersToPercent(r.meters) })),
+        .map((r) => ({ pct: tacItemMetersToPercent(r.meters), opt: null })),
     ];
     roleRanges.forEach((r) => {
       if (r.pct === null) return;
@@ -2347,6 +2359,11 @@ export function renderTacBoard() {
       rg.style.left = `${t.x * 100}%`;
       rg.style.top = `${t.y * 100}%`;
       rg.style.width = `${r.pct}%`;
+      if (r.opt && r.opt.ringInner != null) {
+        rg.classList.add('tac-role-ring');
+        if (tFill) rg.style.setProperty('--rc-fill', 'rgba(226, 232, 240, 0.1)');
+        rg.insertAdjacentHTML('beforeend', tacRingSvg(r.opt));
+      }
       if (z) rg.style.zIndex = z;
       tacMapWrap.appendChild(rg);
     });
@@ -2627,7 +2644,9 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
       const txt = document.createElement('span');
       txt.textContent = e2.opt.crossWidth != null
         ? `${(e2.opt.label || '') + postfix} ${translate("ui.tacRangeBox.radius")} ${tacRangeFmt(e2.meters)}m ${translate("ui.tacRangeBox.crossWidth")} ${tacRangeFmt(e2.opt.crossWidth)}m`
-        : `${(e2.opt.label || '') + postfix} ${tacRangeFmt(e2.meters)}m`;
+        : e2.opt.ringInner != null
+          ? `${(e2.opt.label || '') + postfix} ${translate("ui.tacRangeBox.innerRadius")} ${tacRangeFmt(e2.opt.ringInner)}m ${translate("ui.tacRangeBox.outerRadius")} ${tacRangeFmt(e2.meters)}m`
+          : `${(e2.opt.label || '') + postfix} ${tacRangeFmt(e2.meters)}m`;
       row.appendChild(txt);
       const del = document.createElement('button');
       del.type = 'button';

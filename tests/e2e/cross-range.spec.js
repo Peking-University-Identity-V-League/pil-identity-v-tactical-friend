@@ -53,6 +53,34 @@ test('timeBomb: fill toggles cross fill; selected highlight is circular', async 
   await expect(cross).toHaveCSS('border-radius', '50%');
 });
 
+test('dentist: mirror ranges render as annulus with inner/outer desc and fill', async ({ page }) => {
+  await tool(page, 'roles');
+  await pickRole(page, 'dentist');
+  await clickPoint(page, 0.5, 0.5);
+  await tool(page, 'select');
+  await clickPoint(page, 0.5, 0.5);
+  // 一级按钮显示二级：点亮 5档位口腔镜范围
+  await rangeBox(page).locator('.tac-range-opt:not(.tac-range-sub)', { hasText: '显示特质范围' }).click();
+  await rangeBox(page).locator('.tac-range-sub', { hasText: '5档位口腔镜范围' }).click();
+  // 圆环形：SVG 环形路径
+  const ring = page.locator('.tac-role-circle.tac-role-ring');
+  await expect(ring).toHaveCount(1);
+  await expect(ring.locator('.tac-role-ring-svg path')).toHaveCount(1);
+  await expect(ring.locator('.tac-role-ring-svg path')).toHaveAttribute('fill-rule', 'evenodd');
+  // 描述行：内半径/外半径
+  await expect(rangeBox(page).locator('.tac-range-desc')).toHaveText('5档位口腔镜范围 内半径 4.56m 外半径 6.56m×');
+  // 填充：默认无填充，勾选后圆环填充
+  const path = ring.locator('.tac-role-ring-svg path');
+  await expect(path).toHaveCSS('fill', /none/);
+  const fillCb = rangeBox(page).locator('.tac-range-fill input');
+  await fillCb.check();
+  await expect(path).toHaveCSS('fill', /226, 232, 240/);
+  await expect(ring).toHaveCount(1);
+  // 多选：再点亮 10档位，出现两个圆环
+  await rangeBox(page).locator('.tac-range-sub', { hasText: '10档位口腔镜范围' }).click();
+  await expect(page.locator('.tac-role-circle.tac-role-ring')).toHaveCount(2);
+});
+
 test('remoteControlledBomb: angle box rotates cross and icon', async ({ page }) => {
   await placeBomb(page, 'remoteControlledBomb');
   const angleBox = page.locator('#tacManageList .tac-manage-box', { hasText: '角度管理' });
