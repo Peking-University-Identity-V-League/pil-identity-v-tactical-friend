@@ -430,6 +430,7 @@ export function enterDeduce() {
   if (S.dedMap !== map) {
     S.dedMap = map;
     S.dedSelectedStep = null;
+    S.dedLayoutView = null;
     dedMapTitle.textContent = MAPS_DATA[S.currentMapId].mapName;
     dedMapTitleEn.textContent = MAPS_DATA[S.currentMapId].mapNameEn;
     loadDedMapImage();
@@ -485,6 +486,9 @@ export function renderDedTopBar(d) {
     + (d.contradiction ? ' bad' : locked ? ' gold' : '');
   if (d.contradiction) {
     dedConclusion.textContent = translate("deduction.renderDedTopBar");
+  } else if (S.dedLayoutView !== null) {
+    dedConclusion.className = 'ded-conclusion gold';
+    dedConclusion.textContent = translate("deduction.renderDedTopBarAlternate", { value: S.dedLayoutView + 1 });
   } else if (locked) {
     dedConclusion.textContent = translate("deduction.renderDedTopBarAlternate", { value: d.candidates[0] + 1 });
   } else {
@@ -533,7 +537,10 @@ export function renderDedMap(d) {
 
   
   S.dedMap.ciphers.forEach((pos, id) => {
-    const [kind, icon, stateText] = markKind(pos, d.state[id], d.marks[id]);
+    const eff = S.dedLayoutView !== null
+      ? (S.dedMap.configs[S.dedLayoutView].includes(id) ? 'yes' : 'no')
+      : d.state[id];
+    const [kind, icon, stateText] = markKind(pos, eff, d.marks[id]);
     const [x, y] = pos.location;
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -588,12 +595,24 @@ export function renderDedSteps(d) {
 
 export function renderDedLayouts(d) {
   dedLayouts.innerHTML = '';
+  const resetLi = document.createElement('li');
+  resetLi.className = 'ded-layout ded-layout-btn ded-layout-all'
+    + (S.dedLayoutView === null ? ' active' : '');
+  resetLi.textContent = translate("ui.dedSecZh.labelTenth");
+  resetLi.addEventListener('click', () => {
+    S.dedLayoutView = null;
+    S.dedSelectedStep = null;
+    renderDeduction();
+  });
+  dedLayouts.appendChild(resetLi);
   S.dedMap.configs.forEach((cfg, ci) => {
     const excluded = !!d.contradiction || !d.candidates.includes(ci);
     const unique = !d.contradiction
       && d.candidates.length === 1 && d.candidates[0] === ci;
     const li = document.createElement('li');
-    li.className = 'ded-layout' + (excluded ? ' excluded' : '');
+    li.className = 'ded-layout ded-layout-btn'
+      + (excluded ? ' excluded' : '')
+      + (S.dedLayoutView === ci ? ' active' : '');
     const names = cfg.map((p) => {
       const userMark = d.marks[p];
       const s = d.state[p];
@@ -610,6 +629,11 @@ export function renderDedLayouts(d) {
       + `<span class="ded-layout-names"
           style="grid-template-columns:repeat(${cfg.length}, minmax(0, 1fr))">
           ${names}</span>`;
+    li.addEventListener('click', () => {
+      S.dedLayoutView = S.dedLayoutView === ci ? null : ci;
+      S.dedSelectedStep = null;
+      renderDeduction();
+    });
     dedLayouts.appendChild(li);
   });
 }
@@ -618,6 +642,7 @@ export function renderDedLayouts(d) {
 export function resetDedMarks() {
   S.dedMarks = {};
   S.dedSelectedStep = null;
+  S.dedLayoutView = null;
   renderDeduction();
   saveRegionSel();
 }
