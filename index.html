@@ -84,13 +84,16 @@
 
     <div class="ded-panel tac-panel" id="tacPanel">
       
-      <div class="ded-card">
-        <h3 class="ded-sec-title">
-          <span class="ded-sec-zh" data-i18n="ui.dedSecZh.label"></span>
-          <span class="ded-sec-en">Tools</span>
-        </h3>
+      <details class="ded-card" open>
+        <summary>
+          <span class="ded-sec-title" style="margin-bottom:0">
+            <span class="ded-sec-zh" data-i18n="ui.dedSecZh.label"></span>
+            <span class="ded-sec-en">Tools</span>
+          </span>
+          <span class="arrow">▶</span>
+        </summary>
 
-        <div class="tac-tools">
+        <div class="tac-tools" style="margin-top:12px">
           <button class="tac-tool active" data-tool="select" data-i18n="ui.tacTool.label"></button>
           <button class="tac-tool" data-tool="roles" data-i18n="ui.tacTool.labelAlternate"></button>
           <button class="tac-tool" data-tool="draw" data-i18n="ui.tacTool.labelThird"></button>
@@ -100,16 +103,19 @@
           <button class="tac-tool" id="tacUndoBtn" disabled data-i18n="ui.tacUndoBtn.label"></button>
           <button class="tac-tool" id="tacExportBtn" data-i18n="ui.tacExportBtn.label"></button>
         </div>
-      </div>
+      </details>
 
       
-      <div class="ded-card" id="tacManageCard">
-        <h3 class="ded-sec-title">
-          <span class="ded-sec-zh" data-i18n="ui.dedSecZh.labelAlternate"></span>
-          <span class="ded-sec-en">Manage</span>
-        </h3>
-        <div class="tac-manage-list" id="tacManageList"></div>
-      </div>
+      <details class="ded-card" id="tacManageCard" open>
+        <summary>
+          <span class="ded-sec-title" style="margin-bottom:0">
+            <span class="ded-sec-zh" data-i18n="ui.dedSecZh.labelAlternate"></span>
+            <span class="ded-sec-en">Manage</span>
+          </span>
+          <span class="arrow">▶</span>
+        </summary>
+        <div class="tac-manage-list" id="tacManageList" style="margin-top:12px"></div>
+      </details>
 
       
       <details class="ded-card" id="tacDrawCard" style="display:none" open>
@@ -189,13 +195,15 @@
       </details>
 
       
-      <div class="ded-card" id="tacMeasureCard" style="display:none">
-        <h3 class="ded-sec-title">
-          <span class="ded-sec-zh" data-i18n="ui.dedSecZh.labelFifth"></span>
-          <span class="ded-sec-en">Measure</span>
-        </h3>
-
-        
+      <details class="ded-card" id="tacMeasureCard" style="display:none" open>
+        <summary>
+          <span class="ded-sec-title" style="margin-bottom:0">
+            <span class="ded-sec-zh" data-i18n="ui.dedSecZh.labelFifth"></span>
+            <span class="ded-sec-en">Measure</span>
+          </span>
+          <span class="arrow">▶</span>
+        </summary>
+        <div style="margin-top:12px">
         <div class="tac-sec-label" data-i18n="ui.tacSecLabel.labelAlternate"></div>
         <div class="side-toggle tac-mmodes" id="tacMeasureModes">
           <button class="side-btn active" data-mmode="single" data-i18n="ui.sideBtn.label"></button>
@@ -283,7 +291,8 @@
             <div class="tac-result" id="tacResult"></div>
           </div>
         </div>
-      </div>
+        </div>
+      </details>
 
       
       <div class="ded-card" id="tacDisplayCard" style="display:none">
@@ -291,7 +300,7 @@
           <span class="ded-sec-zh" data-i18n="ui.tacTool.labelFifth"></span>
           <span class="ded-sec-en">Settings</span>
         </h3>
-        <div class="tac-display-list">
+        <div class="tac-display-list" style="margin-top:12px">
 
           <div class="tac-display-group">
             <div class="tac-display-group-label" data-i18n="ui.tacDisplayGroupLabel.label"></div>
@@ -400,14 +409,19 @@
             </div>
           </div>
         </div>
-      </div>
+        </div>
+      </details>
 
       
-      <div class="ded-card" id="tacRolesCard" style="display:none">
-        <h3 class="ded-sec-title">
-          <span class="ded-sec-zh" data-i18n="ui.dedSecZh.labelSixth"></span>
-          <span class="ded-sec-en">Roles</span>
-        </h3>
+      <details class="ded-card" id="tacRolesCard" style="display:none" open>
+        <summary>
+          <span class="ded-sec-title" style="margin-bottom:0">
+            <span class="ded-sec-zh" data-i18n="ui.dedSecZh.labelSixth"></span>
+            <span class="ded-sec-en">Roles</span>
+          </span>
+          <span class="arrow">▶</span>
+        </summary>
+        <div style="margin-top:12px">
 
         
         <div class="tac-camp collapsed" id="tacCampSurvivor">
@@ -435,7 +449,8 @@
         <div class="tac-item-section" id="tacItemSection" style="display:none">
           <div class="tac-items" id="tacItems"></div>
         </div>
-      </div>
+        </div>
+      </details>
     </div>
   </div>
   </div>

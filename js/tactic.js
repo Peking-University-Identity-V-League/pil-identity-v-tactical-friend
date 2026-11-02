@@ -4881,6 +4881,11 @@ export function syncTacSubCards() {
   tacTextCard.style.display = tacTool === 'draw' ? '' : 'none';
   tacMeasureCard.style.display = tacTool === 'measure' ? '' : 'none';
   tacDisplayCard.style.display = tacTool === 'display' ? '' : 'none';
+  if (tacTool === 'select') tacManageCard.open = true;
+  if (tacTool === 'roles') tacRolesCard.open = true;
+  if (tacTool === 'draw') { tacDrawCard.open = true; tacTextCard.open = true; }
+  if (tacTool === 'measure') tacMeasureCard.open = true;
+  if (tacTool === 'display') tacDisplayCard.open = true;
 }
 
 export function setTacTool(tool) {
