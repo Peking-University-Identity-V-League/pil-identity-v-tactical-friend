@@ -47,9 +47,15 @@ for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
       expect(s.result.routeEngine.candidateBuilds.length).toBeLessThanOrEqual(2);
       if (fixture.origin) expect(s.result.routeEngine.build.candidateOrigin.kind).toBe(fixture.origin);
       if (fixture.entry) {
-        expect(s.result.routeEngine.proposal).toBe('entry-recovery');
-        expect(s.result.entrySeeding.anchors.length).toBeGreaterThan(0);
-        expect(s.result.entrySeeding.attempts.length).toBeLessThanOrEqual(4);
+        expect(s.result.routeEngine.proposal).toBe('distance');
+        const entry = s.result.routeEngine.entrySeeding;
+        expect(entry.anchors.length).toBeGreaterThan(0);
+        expect(entry.attempts.length).toBeLessThanOrEqual(4);
+        for (const anchor of entry.anchors) {
+          expect(anchor.distanceMeters).toBeLessThanOrEqual(3);
+          expect(anchor.globalAttempt).toBeLessThanOrEqual(4);
+          expect(anchor.connector.length).toBeGreaterThan(0);
+        }
       }
       let previous = fixture.start.point, sum = 0;
       for (const segment of s.result.segments) {
