@@ -15,6 +15,7 @@ export const S = {
   dedMap: null,             
   dedMarks: {},             
   dedSelectedStep: null,    
+  dedLayoutView: null,      
   tacDungeonIndex: 0,       
   tacChairIndex: 0,         
   tacChairBasementIndex: 0, 

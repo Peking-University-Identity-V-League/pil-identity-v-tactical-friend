@@ -2128,6 +2128,11 @@ body:not(.has-tabs) .header-nav { display: none; }
   transition: opacity 0.3s;
 }
 .ded-layout.excluded { opacity: 0.35; }
+.ded-layout-btn { cursor: pointer; padding: 4px 6px; margin: 0 -6px; border-radius: 8px; }
+.ded-layout-btn:hover { background: rgba(255, 255, 255, 0.08); }
+.ded-layout-btn.active { background: rgba(251, 191, 36, 0.14); outline: 1px solid rgba(251, 191, 36, 0.4); }
+.ded-layout-btn.active .ded-layout-badge { border-color: rgba(251, 191, 36, 0.5); }
+.ded-layout-all { font-weight: 700; color: rgba(255, 255, 255, 0.85); }
 .ded-layout-badge {
   flex-shrink: 0;
   width: 44px;
