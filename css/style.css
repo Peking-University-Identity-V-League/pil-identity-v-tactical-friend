@@ -3904,6 +3904,27 @@ div.tac-fixed-spawn .cam-dir.up {
   background: rgba(226, 232, 240, 0.1);
   box-shadow: 0 0 14px rgba(226, 232, 240, 0.28), inset 0 0 18px rgba(226, 232, 240, 0.28);
 }
+.tac-role-circle.tac-role-ring {
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+.tac-role-circle.tac-role-ring .tac-role-ring-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.tac-role-circle.tac-role-ring .tac-role-ring-svg path {
+  fill: var(--rc-fill, none);
+  stroke: var(--rc, #e2e8f0);
+  stroke-width: 2;
+  stroke-dasharray: 7 5;
+  vector-effect: non-scaling-stroke;
+}
 .tac-item-circle.tac-range-extra {
   pointer-events: none;
   border-style: dashed;
