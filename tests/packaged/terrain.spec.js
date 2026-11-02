@@ -33,8 +33,21 @@ for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
       expect(selected.map(r => r.status)).toEqual(['ok', 'ok']);
       await page.waitForFunction(() => !window.measureAPI.stats().busy && window.measureAPI.stats().result, null, { timeout: 30000 });
       const s = await page.evaluate(() => window.measureAPI.stats());
+      console.log('TERRAIN_ROUTING', JSON.stringify({
+        prefix, scene: fixture.scene, status: s.result.status,
+        firstFeasibleMilliseconds: s.result.routeEngine?.firstFeasibleMilliseconds,
+        elapsedMilliseconds: s.result.elapsedMilliseconds,
+        builds: s.result.routeEngine?.candidateBuilds?.map(build => ({
+          origin: build.candidateOrigin?.kind, milliseconds: build.buildMilliseconds,
+        })),
+        entryBudget: s.result.routeEngine?.entryBudget,
+      }));
       expect(s.solveOptions.maxMilliseconds).toBe(5000);
-      expect(s.result.status).toBe('ok');
+      expect(s.result.status, JSON.stringify({
+        scene: fixture.scene,
+        elapsedMilliseconds: s.result.elapsedMilliseconds,
+        routeEngine: s.result.routeEngine,
+      })).toBe('ok');
       expect(s.start.point).toEqual(fixture.start.point); expect(s.end.point).toEqual(fixture.end.point);
       expect(s.result.path[0]).toEqual(fixture.start.point); expect(s.result.path.at(-1)).toEqual(fixture.end.point);
       expect(s.result.distance / 11.85).toBeLessThanOrEqual(fixture.maximumMetres);
