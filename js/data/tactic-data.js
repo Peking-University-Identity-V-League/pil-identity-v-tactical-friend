@@ -209,7 +209,7 @@ export const TAC_ITEM_TYPES = {
     color: '#f472b6',
     fill: 'rgba(244, 114, 182, 0.22)',
     glow: 'rgba(244, 114, 182, 0.45)',
-    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/8/85/n0rp6b2j5psgbbffvcgxdgc981i34ts.png/90px-%E8%88%9E%E5%A5%B3%E9%81%93%E5%85%B7.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/25/qbcdefnhokf8gdup9tbcansc2n5co9d.png/60px-%E5%BF%AB%E8%8A%82%E5%A5%8F%E5%85%AB%E9%9F%B3%E7%9B%92.png',
   },
   slowMusicbox: {
     name: translate("items.femaleDancer.slowMusicbox.name"),
@@ -259,7 +259,7 @@ export const TAC_ITEM_TYPES = {
     color: '#1d4ed8',
     fill: 'rgba(29, 78, 216, 0.22)',
     glow: 'rgba(29, 78, 216, 0.45)',
-    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/c/c6/myjspwy5088svioy3ws8iw0dm05ofia.png/90px-%E5%8B%98%E6%8E%A2%E5%91%98%E9%81%93%E5%85%B7.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/a/ae/ao4vpwafua0tff4wj54s5oubms20kd4.png/60px-%E9%99%A8%E7%9F%B3%E7%A3%81%E9%93%81-%E8%B4%9F.png',
   },
   cursedEmblem: {
     name: translate("items.enchantress.cursedEmblem.name"),
@@ -268,6 +268,10 @@ export const TAC_ITEM_TYPES = {
   wildlingPartner: {
     name: translate("items.wildling.wildlingPartner.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/91/o66wfufxbe1jgx8614fw54qieeyml7x.png/120px-%E9%87%8E%E6%80%A7%E4%BC%99%E4%BC%B4.png',
+  },
+  wildlingPartnerRide: {
+    name: translate("items.wildling.wildlingPartnerRide.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/03/ltu0y1yoco9a5zag330v0qxaeswda47.png/120px-%E9%87%8E%E6%80%A7%E4%BC%99%E4%BC%B4_%E5%86%B2%E6%92%9E.png',
   },
   bomb: {
     name: translate("items.acrobat.bomb.name"),
@@ -383,6 +387,26 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.psychologist.whistle.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/fc/gnww27qe3kgz7suy0b9k11sc3050svg.png/120px-%E2%80%9C%E5%BF%83%E7%90%86%E5%AD%A6%E5%AE%B6%E2%80%9D%E9%81%93%E5%85%B7.png',
   },
+  subjectiveAnchor: {
+    name: translate("items.psychologist.subjectiveAnchor.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 13, label: translate("items.psychologist.subjectiveAnchor.name") },
+      ],
+    },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/4/43/h238k450f2p12y5p9nx3gm32g2b6517.png',
+  },
+  bonded: {
+    name: translate("items.psychologist.bonded.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 13, label: translate("items.psychologist.bonded.name") },
+      ],
+    },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/a/a8/0lxd5h8cualuva1rtritsq0ddb09vd4.png',
+  },
   grapplingHook: {
     name: translate("items.patient.grapplingHook.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/36/jpqijz4szik8gcx77lquf0ausw4zeeu.png/120px-%E7%97%85%E6%82%A3%E9%81%93%E5%85%B7.png',
@@ -402,13 +426,31 @@ export const TAC_ITEM_TYPES = {
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/f9/asmvxiz04rw0af5of7ic2lzyorwjsz0.png/120px-%E5%9B%9E%E5%BF%86%E7%A2%8E%E7%89%87.png',
   },
+  memorySync: {
+    name: translate("items.littleGirl.memorySync.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 3.4, label: translate("items.littleGirl.memorySync.name") },
+      ],
+    },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/0/08/6pxiq61eb6erbyoh6csh9m7pfs1f92n.png',
+  },
+  pity: {
+    name: translate("items.littleGirl.pity.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/4/40/950ck6k6n4gb9ap0kosl7cizpgrh4nv.png',
+  },
   rocket: {
     name: translate("items.weepingClown.rocket.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/d/d4/igscyutpd7sygzjkmxijnavjihx42ht.png',
   },
   scale: {
     name: translate("items.professor.scale.name"),
-    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b5/d4rcr4pkvrw70yv8mhcqij5f8bzkq92.png/90px-%E6%95%99%E6%8E%88%E9%81%93%E5%85%B7.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b5/d4rcr4pkvrw70yv8mhcqij5f8bzkq92.png/120px-%E6%95%99%E6%8E%88%E9%81%93%E5%85%B7.png',
+  },
+  injection: {
+    name: translate("items.professor.injection.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/c/c1/hkwx2gow0zq4gpw75b7xs827djcii64.png',
   },
   mechanicalFlute: {
     name: translate("items.antiquarian.mechanicalFlute.name"),
@@ -429,6 +471,10 @@ export const TAC_ITEM_TYPES = {
   pompoms: {
     name: translate("items.cheerleader.pompoms.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/a/ab/5s8o1cg0zk9ysp3mnm9tkeomz8uznjf.png/120px-%E6%8B%89%E6%8B%89%E9%98%9F%E5%91%98%E9%81%93%E5%85%B7.png',
+  },
+  inspire: {
+    name: translate("items.cheerleader.inspire.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/c/c9/gld2cd15tw271kbasa4e5uc5vdj6tyj.png',
   },
   louis: {
     name: translate("items.puppeteer.louis.name"),
@@ -452,9 +498,33 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.faroLady.aromatherapyCane.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/5d/5od6849sin7d6e7kegpexjfezdbubzo.png/120px-%E9%A6%99%E8%96%B0%E6%89%8B%E6%9D%96.png',
   },
+  dexterous: {
+    name: translate("items.faroLady.dexterous.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/9d/o3yf6rudi630ch204c3w8s305v8ulto.png/90px-%E2%80%9C%E6%B3%95%E7%BD%97%E5%A5%B3%E5%A3%AB%E2%80%9D%E9%81%93%E5%85%B72.png',
+  },
   helmet: {
     name: translate("items.knight.helmet.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/3f/2srn3jrzo5atz18iopcn7430wridv6n.png/120px-%E2%80%9C%E9%AA%91%E5%A3%AB%E2%80%9D%E9%81%93%E5%85%B7.png',
+  },
+  tacticalForesight: {
+    name: translate("items.knight.tacticalForesight.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 13, label: translate("items.knight.tacticalForesight.name") },
+      ],
+    },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/2/23/9hupztomw2e11j1njjwo6tv4etaqr8s.png',
+  },
+  chivalrousSympathy: {
+    name: translate("items.knight.chivalrousSympathy.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 7, label: translate("items.knight.chivalrousSympathy.name") },
+      ],
+    },
+    icon: 'https://patchwiki.biligame.com/images/dwrg/8/81/nsyxqmvxnzqffqwirb96tpzpdv4c91o.png',
   },
   stormGlass: {
     name: translate("items.meteorologist.stormGlass.name"),
@@ -510,6 +580,10 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.matador.muleta.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/7/7f/ox395f4ntj1h4t9i04uatoneu35zyz3.png/120px-%E6%96%97%E7%89%9B%E5%A3%AB%E9%81%93%E5%85%B71.png',
   },
+  gaoneraPass: {
+    name: translate("items.matador.gaoneraPass.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/65/og3kqcr5juzxd7kw7mqbodwfxe77map.png/90px-%E6%96%97%E7%89%9B%E5%A3%AB%E9%81%93%E5%85%B72.png',
+  },
   propUmbrella: {
     name: translate("items.mimeArtist.propUmbrella.name"),
     ranges: {
@@ -523,6 +597,10 @@ export const TAC_ITEM_TYPES = {
   hamster: {
     name: translate("items.prodigy.hamster.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/32/7dcfplvn8p83ewanw29b8bttsb8o0q4.png/120px-%E2%80%9C%E7%A5%9E%E7%AB%A5%E2%80%9D%E9%81%93%E5%85%B7.png',
+  },
+  kinestheticLearning: {
+    name: translate("items.prodigy.kinestheticLearning.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/d/d8/t2av3s13bww2tgafsfy6jm16znpfjqh.png',
   },
   phantom: {
     name: translate("items.hellEmber.phantom.name"),
@@ -1680,7 +1758,7 @@ export const TAC_ROLES = {
         { size_m: 17, label: translate("characters.wildling.range.label.bumpAddKnockBackMax") },
       ],
     },
-    items: ['wildlingPartner'],
+    items: ['wildlingPartner', 'wildlingPartnerRide'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b0/qix27d33osv7o1ti0g244pf7xzp8d0x.png/90px-%E9%87%8E%E4%BA%BA%E5%A4%B4%E5%83%8F.png',
   },
   acrobat: {
@@ -1798,7 +1876,7 @@ export const TAC_ROLES = {
         { size_m: 13, label: translate("characters.psychologist.range.label.bonded") },
       ],
     },
-    items: ['whistle'],
+    items: ['whistle', 'subjectiveAnchor', 'bonded'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/e/e4/bqml61178c80rz5gd4m6rjyejqfjuw2.png/90px-%E2%80%9C%E5%BF%83%E7%90%86%E5%AD%A6%E5%AE%B6%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   patient: {
@@ -1810,7 +1888,7 @@ export const TAC_ROLES = {
         { size_m: 13, label: translate("characters.patient.range.label.bonded") },
       ],
     },
-    items: ['grapplingHook'],
+    items: ['grapplingHook', 'bonded'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/63/3ihjylgclyicqv0c9xxhw3lg6ccrzts.png/90px-%E7%97%85%E6%82%A3%E5%A4%B4%E5%83%8F.png',
   },
   novelist: {
@@ -1829,7 +1907,13 @@ export const TAC_ROLES = {
   littleGirl: {
     name: translate("characters.littleGirl.name"),
     camp: 'survivor',
-    items: ['memoryFragment'],
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: 3.4, label: translate("characters.littleGirl.range.label.memorySync") },
+      ],
+    },
+    items: ['memoryFragment', 'memorySync', 'pity'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/0f/9fgs5q97em3fq64uahgmlkfl3fer2g8.png/90px-%E2%80%9C%E5%B0%8F%E5%A5%B3%E5%AD%A9%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   weepingClown: {
@@ -1848,7 +1932,7 @@ export const TAC_ROLES = {
   professor: {
     name: translate("characters.professor.name"),
     camp: 'survivor',
-    items: ['scale'],
+    items: ['scale', 'injection'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/1d/axm2gkg6h7t9244sf86k8li6mxa4e59.png/90px-%E6%95%99%E6%8E%88%E5%A4%B4%E5%83%8F.png',
   },
   antiquarian: {
@@ -1906,7 +1990,7 @@ export const TAC_ROLES = {
         { size_m: 20, label: translate("characters.cheerleader.range.label.encourage") },
       ],
     },
-    items: ['pompoms'],
+    items: ['pompoms', 'inspire'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/4/49/ksf2totnw4cumjj4rf0jxcoryl5ispq.png/90px-%E6%8B%89%E6%8B%89%E9%98%9F%E5%91%98%E5%A4%B4%E5%83%8F.png',
   },
   puppeteer: {
@@ -1939,7 +2023,7 @@ export const TAC_ROLES = {
         { size_m: 18, label: translate("characters.faroLady.range.label.cloak") },
       ],
     },
-    items: ['aromatherapyCane'],
+    items: ['aromatherapyCane', 'dexterous'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/f0/04o60ry6yqz28mfqd98eo2pwm5s2rpl.png/90px-%E2%80%9C%E6%B3%95%E7%BD%97%E5%A5%B3%E5%A3%AB%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   knight: {
@@ -1952,7 +2036,7 @@ export const TAC_ROLES = {
         { size_m: 7, label: translate("characters.knight.range.label.chivalrousSympathy") },
       ],
     },
-    items: ['helmet'],
+    items: ['helmet', 'tacticalForesight', 'chivalrousSympathy'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/97/10yk7nm7qb4focpftij0jl8d4y15itk.png/90px-%E2%80%9C%E9%AA%91%E5%A3%AB%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   meteorologist: {
@@ -2003,7 +2087,7 @@ export const TAC_ROLES = {
         { size_m: 2.25, label: translate("characters.matador.range.label.muletaSweep") },
       ],
     },
-    items: ['muleta'],
+    items: ['muleta', 'gaoneraPass'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/c/ce/sj6wwgwa3uqsi94yw71dsh3bbab1l54.png/90px-%E6%96%97%E7%89%9B%E5%A3%AB%E5%A4%B4%E5%83%8F.png',
   },
   mimeArtist: {
@@ -2022,7 +2106,7 @@ export const TAC_ROLES = {
   prodigy: {
     name: translate("characters.prodigy.name"),
     camp: 'survivor',
-    items: ['hamster'],
+    items: ['hamster', 'kinestheticLearning'],
     speed: { [translate("characters.prodigy.speed.exhibition")]: 3.92, [translate("characters.prodigy.speed.pushBall")]: 3.8 },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/08/ejzgnfep2tdh21cx73mskh1svrj4uur.png/90px-%E2%80%9C%E7%A5%9E%E7%AB%A5%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
