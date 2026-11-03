@@ -85,6 +85,9 @@ const savedDungeons = structuredClone(tacPersisted?.dungeon || {});
 const savedChairs = structuredClone(tacPersisted?.chairs || {});
 const savedBoxes = structuredClone(tacPersisted?.boxes || {});
 
+// 每张地图各自的旋转角（0-3，逆时针 90° 步进）
+export const savedRot = structuredClone(tacPersisted?.rot || {});
+
 export let tacSaveTimer = null;
 
 export function flushSave() {
@@ -104,6 +107,7 @@ export function flushSave() {
       dungeon: savedDungeons,
       chairs: savedChairs,
       boxes: savedBoxes,
+      rot: savedRot,
       selDisplay,
     };
     localStorage.setItem(TAC_LS_KEY, JSON.stringify(data));
@@ -195,5 +199,5 @@ export const tacDisplay = {
   delSegOnly: false, 
   showCoords: false, 
   selGlow: true, 
-  exportCrop: false, 
+  exportCrop: true, exportRot: true, 
 };
