@@ -1208,6 +1208,8 @@
   "ui.footerContactLabel.label": "联系我们：",
   "ui.footerSponsor.label": "赞助我们",
   "ui.footerSponsor.platform": "爱发电",
+  "ui.footerUpdates.open": "更新公告",
+  "ui.footerUpdates.title": "更新公告",
   "ui.footerSponsor.title": "赞助我们：前往 PIL 爱发电主页（新窗口打开）",
   "ui.h4.label": "🎯 监管者位置",
   "ui.hunterInfo.label": "监管者已选择 0 / 1 个区域",

@@ -1,4 +1,5 @@
 import { changeLocale, getActiveLocale, initializeI18n, SUPPORTED_LOCALE_LIST } from './core/i18n.js';
+import { initUpdatesUI } from './updates-ui.js';
 
 const LOCALE_DISPLAY_NAMES = {
   'zh-CN': '简体中文',
@@ -10,6 +11,7 @@ function localeDisplayName(locale) {
 
 async function startApplication() {
   await initializeI18n();
+  initUpdatesUI();
   await import('./main.js');
 
   const requestedMap = new URLSearchParams(window.location.search).get('map');
