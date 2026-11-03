@@ -2449,6 +2449,25 @@ details.ded-card[open] > summary .arrow { transform: rotate(90deg); }
   color: #04120c;
   box-shadow: 0 3px 13px rgba(52, 211, 153, 0.35);
 }
+
+/* 地图旋转层：所有地图内容挂到该层，整层随旋转角度转动；
+   需要保持正立的图标/文字在各渲染函数里写内联 transform 反向补偿 */
+.tac-rot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  container-type: inline-size;
+  z-index: 0;
+}
+
+.tac-zoom-rot.active {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  border-color: transparent;
+  color: #1a1204;
+  box-shadow: 0 3px 13px rgba(251, 191, 36, 0.35);
+}
 .tac-mode-draw .tac-map-wrap { cursor: crosshair; }
 .tac-mode-measure .tac-map-wrap { cursor: crosshair; }
 .tac-placing .tac-map-wrap { cursor: copy; }

@@ -1,6 +1,6 @@
 
-import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacItemSection, tacMStyleBody, tacMStyleToggle, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacShowChairBasementEl, tacBasementText, tacSnapBoxEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacticView } from './core/dom.js';
-import { restoredMeasureIds, saveRegionSel, tacBoard, tacDisplay, tacMeasureStyle, tacPersisted, tacSave, flushSave } from './core/persist.js';
+import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacItemSection, tacMStyleBody, tacMStyleToggle, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacRot, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacShowChairBasementEl, tacBasementText, tacSnapBoxEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacticView } from './core/dom.js';
+import { restoredMeasureIds, saveRegionSel, savedRot, tacBoard, tacDisplay, tacMeasureStyle, tacPersisted, tacSave, flushSave } from './core/persist.js';
 import { measureBaseAt, simulateMovement } from './core/measurements.js';
 import { measurementEndpoints, map3dURL } from './core/map-handoff.js';
 import { getTreasureRings } from './core/treasure.js';
@@ -315,6 +315,8 @@ export function syncTacDisplayUI() {
   tacSelGlowEl.checked = tacDisplay.selGlow;
   const cropEl = $('tacExportCrop');
   if (cropEl) cropEl.checked = tacDisplay.exportCrop;
+  const exportRotEl = $('tacExportRot');
+  if (exportRotEl) exportRotEl.checked = tacDisplay.exportRot;
 }
 
 export let tacTool = 'select';
@@ -458,7 +460,9 @@ export const tacUndoStack = [];
 export function syncTacImage() {
   const url = getImageUrl(S.currentMapId);
   const count = MAPS_DATA[S.currentMapId].cipherCombinations.length;
-  
+
+  // 先同步当前地图的旋转角，保证后续渲染使用正确的 tacRotK
+  tacApplyRotation();
   tacDispCipherText.textContent = translate("region.updateCipherText", { index: S.currentCipherIndex + 1, count: count });
   renderTacCiphers();
   renderTacZones();
@@ -482,6 +486,7 @@ export function syncTacImage() {
   tacImageState.loaded = url;
   const [mw, mh] = MAPS_DATA[S.currentMapId].mapSize;
   tacMapWrap.style.aspectRatio = `${mw} / ${mh}`;
+  tacApplyRotation();
   loadImageWithStatus({
     url,
     img: tacMapImage,
@@ -490,7 +495,7 @@ export function syncTacImage() {
     state: tacImageState,
     onReady: (w, h) => {
       tacMapWrap.style.aspectRatio = `${w} / ${h}`;
-      renderTacArrows();
+      tacApplyRotation();
     },
   });
 }
@@ -525,7 +530,8 @@ export function renderTacCiphers() {
     el.style.left = `${(c.location[0] / imgW) * 100}%`;
     el.style.top = `${(c.location[1] / imgH) * 100}%`;
     el.style.width = `${tacDisplay.cipherSize}%`;
-    tacMapWrap.appendChild(el);
+    el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
+    tacLayer().appendChild(el);
   });
 }
 
@@ -551,7 +557,7 @@ export function renderTacZones() {
     el.style.top = `${z.y * 100}%`;
     el.style.width = `${z.width * 100}%`;
     el.style.height = `${z.height * 100}%`;
-    tacMapWrap.appendChild(el);
+    tacLayer().appendChild(el);
   });
 }
 
@@ -579,7 +585,8 @@ export function renderTacLandmarks() {
     el.style.left = `${(pt[0] / imgW) * 100}%`;
     el.style.top = `${(pt[1] / imgH) * 100}%`;
     el.style.width = `${tacDisplay.dungeonSize}%`;
-    tacMapWrap.appendChild(el);
+    el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
+    tacLayer().appendChild(el);
   }
   if (tacDisplay.doors) {
     const lockMode = tacDisplay.doorLock && map.escapeDoors.length >= 4;
@@ -593,7 +600,8 @@ export function renderTacLandmarks() {
       el.style.left = `${(pt[0] / imgW) * 100}%`;
       el.style.top = `${(pt[1] / imgH) * 100}%`;
       el.style.width = `${tacDisplay.doorSize}%`;
-      tacMapWrap.appendChild(el);
+      el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
+      tacLayer().appendChild(el);
     });
   }
   renderTacFixedSpawns(); 
@@ -628,7 +636,7 @@ export function renderTacFixedSpawns() {
           rangeEl.style.borderRadius = `${radiusXPct}% / ${radiusYPct}%`;
           rangeEl.style.left = `${(p[0] / imgW) * 100}%`;
           rangeEl.style.top = `${(p[1] / imgH) * 100}%`;
-          tacMapWrap.appendChild(rangeEl);
+          tacLayer().appendChild(rangeEl);
         });
       });
     }
@@ -671,7 +679,15 @@ export function renderTacFixedSpawns() {
         el.className = 'tac-fixed-spawn';
         el.style.left = `${(p[0] / imgW) * 100}%`;
         el.style.top = `${(p[1] / imgH) * 100}%`;
-        tacMapWrap.appendChild(el);
+        const camIcon = el.querySelector('.cam-icon');
+        if (camIcon) {
+          camIcon.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
+        } else if (el.tagName === 'IMG') {
+          // 零件/鳞片图标原本无 transform（左上角锚点），绕锚点反向旋转
+          el.style.transformOrigin = '0 0';
+          el.style.transform = tacUpRot() ? `rotate(${tacUpRot()}deg)` : '';
+        }
+        tacLayer().appendChild(el);
       });
     });
   }
@@ -692,7 +708,7 @@ export function renderTacTreasure() {
     el.style.top = `${ring.y * 100}%`;
     el.style.width = `${ring.outerRadius * 200}%`;
     el.style.setProperty('--treasure-inner', `${ring.innerRadius / ring.outerRadius * 100}%`);
-    tacMapWrap.appendChild(el);
+    tacLayer().appendChild(el);
   });
 }
 
@@ -735,7 +751,8 @@ export function renderTacChairs() {
     el.style.left = `${(px / imgW) * 100}%`;
     el.style.top = `${(pz / imgH) * 100}%`;
     el.style.width = `${tacDisplay.chairSize}%`;
-    tacMapWrap.appendChild(el);
+    el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
+    tacLayer().appendChild(el);
   };
   if (tacDisplay.chairs) {
     ch.fixed.forEach((pt) => draw(pt, translate("application.renderTacChairsFixed")));
@@ -807,7 +824,8 @@ export function renderTacBoxes() {
     el.style.left = `${(px / imgW) * 100}%`;
     el.style.top = `${(pz / imgH) * 100}%`;
     el.style.width = `${tacDisplay.boxSize}%`;
-    tacMapWrap.appendChild(el);
+    el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
+    tacLayer().appendChild(el);
   };
   if (tacDisplay.boxes) {
     bx.fixed.forEach((pt) => draw(pt, translate("application.renderTacBoxesFixed")));
@@ -919,6 +937,85 @@ export const tacZoomState = { scale: 1, tx: 0, ty: 0, pan: false, locked: true }
 
 export let tacPanDrag = null;
 
+// ---- 地图旋转（逆时针 90° 步进，0-3，每张地图各自记忆并随存档持久化）----
+// 存储坐标始终是地图原始坐标（x 右 / y 下，0-1 分数）。
+// 显示时把内容挂到 #tacRot 层，整层 rotate(-90k)；
+// 指针坐标经 tacPos 逆变换回地图坐标。
+export let tacRotK = 0;
+
+export function tacSetRot(k) {
+  tacRotK = ((k % 4) + 4) % 4;
+  savedRot[S.currentMapId] = tacRotK;
+  tacSave();
+  tacApplyRotation();
+  // 正立补偿写在各元素的内联 transform 里，角度变化后需要重渲染
+  renderTacCiphers();
+  renderTacZones();
+  renderTacLandmarks();
+  renderTacChairs();
+  renderTacBoxes();
+  renderTacBoard();
+}
+
+// 正立补偿角（度）：地图内容随层逆时针转了 90k，图标/文字反向转回
+export function tacUpRot() {
+  return 90 * (tacRotK & 3);
+}
+
+// SVG 文字正立补偿：绕自身锚点反向旋转
+export function tacUprightSvgText(el, x, y) {
+  if (tacUpRot()) el.setAttribute('transform', `rotate(${tacUpRot()} ${x} ${y})`);
+  else el.removeAttribute('transform');
+}
+
+export function tacRotate() {
+  tacSetRot(tacRotK + 1);
+}
+
+// 地图坐标分数 -> 视觉（wrap）坐标分数
+export function tacRotPt(x, y) {
+  switch (tacRotK & 3) {
+    case 1: return [y, 1 - x];
+    case 2: return [1 - x, 1 - y];
+    case 3: return [1 - y, x];
+    default: return [x, y];
+  }
+}
+
+// 视觉（wrap）向量 -> 地图向量（键盘方向键等屏幕方向输入用）
+export function tacRotVec(dx, dy) {
+  switch (tacRotK & 3) {
+    case 1: return [-dy, dx];
+    case 2: return [-dx, -dy];
+    case 3: return [dy, -dx];
+    default: return [dx, dy];
+  }
+}
+
+export function tacLayer() {
+  return (typeof tacRot !== 'undefined' && tacRot) || tacMapWrap;
+}
+
+export function tacApplyRotation() {
+  if (!tacMapWrap) return;
+  // 每张地图各自的旋转角（persist.js 随存档读写）
+  tacRotK = (((savedRot[S.currentMapId] || 0) % 4) + 4) % 4;
+  const map = MAPS_DATA[S.currentMapId];
+  const [mw, mh] = map ? map.mapSize : [1, 1];
+  const k = tacRotK & 3;
+  const odd = k % 2 === 1;
+  tacMapWrap.style.aspectRatio = odd ? `${mh} / ${mw}` : `${mw} / ${mh}`;
+  if (tacRot) {
+    tacRot.style.aspectRatio = `${mw} / ${mh}`;
+    tacRot.style.width = odd ? `${(mw / mh) * 100}%` : '100%';
+    tacRot.style.transform = `translate(-50%, -50%) rotate(${-90 * k}deg)`;
+    tacRot.style.setProperty('--k', k);
+  }
+  const rb = $('tacRotateBtn');
+  if (rb) rb.classList.toggle('active', k !== 0);
+  renderTacArrows();
+}
+
 export function tacZoomEls() {
   return {
     lock: $('tacZoomLock'),
@@ -1016,9 +1113,16 @@ export function tacZoomInit() {
   out.addEventListener('click', () => tacZoomStep(-1));
   inn.addEventListener('click', () => tacZoomStep(1));
   pan.addEventListener('click', () => tacSetPanMode(!tacZoomState.pan));
+  const rot = $('tacRotateBtn');
+  if (rot) rot.addEventListener('click', () => tacRotate());
   const cropEl = $('tacExportCrop');
   if (cropEl) cropEl.addEventListener('change', () => {
     tacDisplay.exportCrop = cropEl.checked;
+    tacSave();
+  });
+  const exportRotEl = $('tacExportRot');
+  if (exportRotEl) exportRotEl.addEventListener('change', () => {
+    tacDisplay.exportRot = exportRotEl.checked;
     tacSave();
   });
 }
@@ -1061,8 +1165,9 @@ export function tacUpdateSnapRipple(p) {
   const active = (tacTool === 'draw' || tacTool === 'measure') && p
     ? tacSnapTarget(p, tacDragMeasureExcl()) : null;
   if (active) {
-    tacSnapRipple.style.left = `${active.x * 100}%`;
-    tacSnapRipple.style.top = `${active.y * 100}%`;
+    const [vu, vv] = tacRotPt(active.x, active.y);
+    tacSnapRipple.style.left = `${vu * 100}%`;
+    tacSnapRipple.style.top = `${vv * 100}%`;
     tacSnapRipple.classList.toggle('door', active.kind === 'door'); 
     if (active.kind === 'point') { 
       const c = tacHexRgba(active.color, 0.95);
@@ -1087,13 +1192,14 @@ export function tacUpdateCoordsTip(p, e) {
     return;
   }
   const [imgW, imgH] = MAPS_DATA[S.currentMapId].mapSize;
+  const [vu, vv] = tacRotPt(p.x, p.y);
   tacCoordsTip.textContent = `${Math.round(p.x * imgW)}, ${Math.round(p.y * imgH)}`;
-  tacCoordsTip.style.left = `${p.x * 100}%`;
-  tacCoordsTip.style.top = `${p.y * 100}%`;
-  
+  tacCoordsTip.style.left = `${vu * 100}%`;
+  tacCoordsTip.style.top = `${vv * 100}%`;
+
   tacCoordsTip.style.transform =
-    `translate(${p.x > 0.82 ? 'calc(-100% - 14px)' : '14px'}, `
-    + `${p.y > 0.85 ? 'calc(-100% - 14px)' : '14px'})`;
+    `translate(${vu > 0.82 ? 'calc(-100% - 14px)' : '14px'}, `
+    + `${vv > 0.85 ? 'calc(-100% - 14px)' : '14px'})`;
   tacCoordsTip.classList.add('show');
 }
 
@@ -1923,10 +2029,12 @@ export function measureNode(m, W, H, idx, chain, sel) {
   const nx = -dy / len, ny = dx / len;
   const s = ((W / 2 - mx) * nx + (H / 2 - my) * ny) >= 0 ? 1 : -1;
   const text = document.createElementNS(TAC_SVG_NS, 'text');
-  text.setAttribute('x', mx + nx * 14 * s);
-  text.setAttribute('y', my + ny * 14 * s);
+  const tx = mx + nx * 14 * s, ty = my + ny * 14 * s;
+  text.setAttribute('x', tx);
+  text.setAttribute('y', ty);
   text.setAttribute('class', 'tac-measure-label');
-  text.style.fill = segColor; 
+  text.style.fill = segColor;
+  tacUprightSvgText(text, tx, ty);
   text.textContent = tacMeasureText(m);
 
   g.append(hit, line, ...greenLines, text);
@@ -1961,8 +2069,10 @@ export function chainTotalNode(segs, W, H, sel) {
   });
   const widthM = MAPS_DATA[S.currentMapId].widthM;
   const text = document.createElementNS(TAC_SVG_NS, 'text');
-  text.setAttribute('x', px + nx * 14 * s);
-  text.setAttribute('y', py + ny * 14 * s);
+  const ctx = px + nx * 14 * s, cty = py + ny * 14 * s;
+  text.setAttribute('x', ctx);
+  text.setAttribute('y', cty);
+  tacUprightSvgText(text, ctx, cty);
   text.setAttribute('class', 'tac-measure-label tac-chain-label');
   text.style.fill = tacMeasureSegColor(segs[0]); 
   if (sel) text.setAttribute('style',
@@ -2023,8 +2133,8 @@ export function tacAbyssFinalize() {
 }
 
 export function renderTacArrows() {
-  const W = tacMapWrap.clientWidth;
-  const H = tacMapWrap.clientHeight;
+  const W = tacRot.clientWidth || tacMapWrap.clientWidth;
+  const H = tacRot.clientHeight || tacMapWrap.clientHeight;
   if (!W || !H) return;
   tacArrowSvg.setAttribute('viewBox', `0 0 ${W} ${H}`);
   tacArrowSvg.innerHTML = '';
@@ -2131,6 +2241,7 @@ export function renderTacArrows() {
       const label = document.createElementNS(TAC_SVG_NS, 'text');
       label.setAttribute('x', cx);
       label.setAttribute('y', cy);
+      tacUprightSvgText(label, cx, cy);
       label.setAttribute('text-anchor', 'middle');
       label.setAttribute('dominant-baseline', 'middle');
       label.setAttribute('fill', '#bae6fd');
@@ -2317,14 +2428,22 @@ export function renderTacBoard() {
       const img = el.querySelector('img');
 
       const isz = it.iconSize ?? 3.4;
-      const ipx = isz / 100 * tacMapWrap.clientWidth;
+      const ipx = isz / 100 * (tacRot.clientWidth || tacMapWrap.clientWidth);
       img.style.width = `${ipx}px`;
       img.style.height = `${ipx}px`;
-      if (it.angle) img.style.transform = `translate(-50%, -50%) rotate(${it.angle}deg)`;
+      // tac-item-circle 的 img 原本靠 CSS translate(-50%,-50%) 居中；
+      // tac-item-pin 的 img 靠 flex 居中，无 transform，不能加 translate
+      const up = tacUpRot();
+      if (up || it.angle) {
+        const base = (!it.angle && el.classList.contains('tac-item-pin')) ? '' : 'translate(-50%, -50%) ';
+        img.style.transform = `${base}rotate(${(it.angle || 0) + up}deg)`;
+      } else {
+        img.style.transform = '';
+      }
     } else {
       el.insertAdjacentHTML('beforeend', '<div class="tac-item-dot"></div>');
     }
-    tacMapWrap.appendChild(el);
+    tacLayer().appendChild(el);
     itRanges.slice(1).forEach((r) => {
       if (r.pct === null) return;
       const ex = document.createElement('div');
@@ -2340,7 +2459,7 @@ export function renderTacBoard() {
         ex.insertAdjacentHTML('beforeend', tacCrossSvg(r.opt, r.meters, it.angle));
       }
       if (z) ex.style.zIndex = z;
-      tacMapWrap.appendChild(ex);
+      tacLayer().appendChild(ex);
     });
   });
   for (const t of board.tokens) {
@@ -2370,7 +2489,7 @@ export function renderTacBoard() {
         rg.insertAdjacentHTML('beforeend', tacRingSvg(r.opt));
       }
       if (z) rg.style.zIndex = z;
-      tacMapWrap.appendChild(rg);
+      tacLayer().appendChild(rg);
     });
     const el = document.createElement('div');
     
@@ -2388,11 +2507,13 @@ export function renderTacBoard() {
     if (z) el.style.zIndex = z;
     if (showIcon) {
       el.innerHTML = `<img src="${def.icon}" alt="${def.name}" draggable="false">`;
+      const img = el.querySelector('img');
+      if (img && tacUpRot()) img.style.transform = `rotate(${tacUpRot()}deg)`;
       el.title = def.name;
     } else {
       el.title = def.name || role;
     }
-    tacMapWrap.appendChild(el);
+    tacLayer().appendChild(el);
   }
   
   const chainFirst = {}, chainLast = {};
@@ -2418,7 +2539,7 @@ export function renderTacBoard() {
       dot.style.background = dotColor; 
       dot.style.boxShadow = `0 0 6px ${dotColor}`;
       dot.title = translate("application.renderTacBoard");
-      tacMapWrap.appendChild(dot);
+      tacLayer().appendChild(dot);
     });
   });
   
@@ -2428,10 +2549,11 @@ export function renderTacBoard() {
     el.dataset.idx = idx;
     el.style.left = `${t.x * 100}%`;
     el.style.top = `${t.y * 100}%`;
+    el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
     el.style.color = t.color;
     setTacFontSize(el, Math.max(2.2, t.size * 0.18));
     el.textContent = t.text;
-    tacMapWrap.appendChild(el);
+    tacLayer().appendChild(el);
   });
   renderTacArrows();
   updateTacPanel();
@@ -3662,6 +3784,7 @@ export function tacLetterNode(x, y, txt) {
   const t = document.createElementNS(TAC_SVG_NS, 'text');
   t.setAttribute('x', x);
   t.setAttribute('y', y - 11);
+  tacUprightSvgText(t, x, y - 11);
   t.setAttribute('class', 'tac-mletter');
   t.textContent = txt;
   return t;
@@ -5284,18 +5407,39 @@ export async function tacExportImage() {
     tacBoard().tokens.find((t) => t.role === 'explorer' && t.showTreasureRange) || null,
     S.currentCipherIndex, TAC_TREASURE_RULE);
   const [W0, H0] = map.mapSize;
-  const wrapW = tacMapWrap.clientWidth || 1;
-  const wrapH = tacMapWrap.clientHeight || 1;
-  
+  // 以旋转层（地图原始宽高比）为地图空间参考
+  const wrapW = (tacRot && tacRot.clientWidth) || tacMapWrap.clientWidth || 1;
+  const wrapH = (tacRot && tacRot.clientHeight) || tacMapWrap.clientHeight || 1;
+
   const cropOn = tacDisplay.exportCrop && tacZoomState.scale > 1;
+  // 导出「旋转后的地图」开关：关闭时导出未旋转的原始地图（本身正立）
+  const rotK = tacDisplay.exportRot ? (tacRotK & 3) : 0;
 
-  const W = cropOn ? Math.round(wrapW) : W0;
-  const H = cropOn ? Math.round(wrapH) : H0;
-
-  const vx = cropOn ? -tacZoomState.tx / (tacZoomState.scale * wrapW) : 0;
-  const vy = cropOn ? -tacZoomState.ty / (tacZoomState.scale * wrapH) : 0;
-  const vw = cropOn ? 1 / tacZoomState.scale : 1;
-  const vh = cropOn ? 1 / tacZoomState.scale : 1;
+  let W, H, vx, vy, vw, vh;
+  if (cropOn && rotK === 0) {
+    // 未旋转：保持原有参考（导出尺寸 = 屏幕地图像素尺寸）
+    W = Math.round(wrapW);
+    H = Math.round(wrapH);
+    vx = -tacZoomState.tx / (tacZoomState.scale * wrapW);
+    vy = -tacZoomState.ty / (tacZoomState.scale * wrapH);
+    vw = 1 / tacZoomState.scale;
+    vh = 1 / tacZoomState.scale;
+  } else if (cropOn) {
+    // 旋转：wrap 可见矩形映射回地图空间（逆变换），导出尺寸按地图像素
+    const fu = -tacZoomState.tx / (tacZoomState.scale * wrapW);
+    const fv = -tacZoomState.ty / (tacZoomState.scale * wrapH);
+    const fw = 1 / tacZoomState.scale, fh = fw;
+    const mr = rotK === 1 ? { x: 1 - fv - fh, y: fu, w: fh, h: fw }
+      : rotK === 2 ? { x: 1 - fu - fw, y: 1 - fv - fh, w: fw, h: fh }
+      : { x: fv, y: 1 - fu - fw, w: fh, h: fw };
+    vx = mr.x; vy = mr.y; vw = mr.w; vh = mr.h;
+    W = Math.max(1, Math.round(mr.w * W0));
+    H = Math.max(1, Math.round(mr.h * H0));
+  } else {
+    W = W0;
+    H = H0;
+    vx = 0; vy = 0; vw = 1; vh = 1;
+  }
   const cv = document.createElement('canvas');
   cv.width = W;
   cv.height = H;
@@ -5305,6 +5449,18 @@ export async function tacExportImage() {
   
   const PX = (rx) => (rx - vx) * W / vw;
   const PY = (ry) => (ry - vy) * H / vh;
+  // 旋转导出时，图标/文字等正立叠加层绘制到旋转后的画布上；
+  // PXY 把地图分数映射到「当前目标画布」的像素（k=0 时即 PX/PY）。
+  let uctx = ctx;
+  const rotPtOut = (fx, fy) => {
+    switch (rotK) {
+      case 1: return [fy, 1 - fx];
+      case 2: return [1 - fx, 1 - fy];
+      case 3: return [1 - fy, fx];
+      default: return [fx, fy];
+    }
+  };
+  let PXY = (fx, fy) => [(fx - vx) * W / vw, (fy - vy) * H / vh];
 
   
   const chainFirst = {}, chainLast = {};
@@ -5321,6 +5477,10 @@ export async function tacExportImage() {
 
   
   const svgClone = tacArrowSvg.cloneNode(true);
+  if (!tacDisplay.exportRot) {
+    // 屏幕旋转态下给 SVG 文字加的正立补偿，不适用于未旋转导出
+    svgClone.querySelectorAll('text[transform]').forEach((t) => t.removeAttribute('transform'));
+  }
   svgClone.setAttribute('xmlns', TAC_SVG_NS);
   svgClone.setAttribute('width', W0);
   svgClone.setAttribute('height', H0);
@@ -5368,64 +5528,174 @@ export async function tacExportImage() {
     tacLoadImg(BOX_ICON_URL)]);
 
   
-  if (tacDisplay.ciphers && ciphIcon) {
-    const size = tacDisplay.cipherSize / 100 * W * K;
-    map.cipherCombinations[S.currentCipherIndex].forEach((cid) => {
-      const c = cipherOf(S.currentMapId, cid);
-      if (!c) return;
-      const x = PX(c.location[0] / W0), y = PY(c.location[1] / H0);
-      ctx.drawImage(ciphIcon, x - size / 2, y - size / 2, size, size);
+  // 正立叠加层：地标/造物/角色图标与图文文字。
+  // 旋转导出时在整图旋转完成后绘制到旋转后的画布上，保证图标与文字正立。
+  const paintUprightOverlays = async () => {
+    const [oW] = [uctx.canvas.width];
+    const wrapX = (rotK % 2 === 1) ? wrapH : wrapW;
+    if (tacDisplay.ciphers && ciphIcon) {
+      const size = tacDisplay.cipherSize / 100 * W * K;
+      map.cipherCombinations[S.currentCipherIndex].forEach((cid) => {
+        const c = cipherOf(S.currentMapId, cid);
+        if (!c) return;
+        const [x, y] = PXY(c.location[0] / W0, c.location[1] / H0);
+        uctx.drawImage(ciphIcon, x - size / 2, y - size / 2, size, size);
+      });
+    }
+    if (tacDisplay.dungeon && dungeonIcon && map.dungeons.length) {
+      const pt = map.dungeons[S.tacDungeonIndex % map.dungeons.length];
+      const size = tacDisplay.dungeonSize / 100 * W * K;
+      const [x, y] = PXY(pt[0] / W0, pt[1] / H0);
+      uctx.drawImage(dungeonIcon, x - size / 2, y - size / 2, size, size);
+    }
+    if (tacDisplay.doors && doorIcon) {
+      const size = tacDisplay.doorSize / 100 * W * K;
+      tacDoorPoints(map).forEach((pt) => {
+        const [x, y] = PXY(pt[0] / W0, pt[1] / H0);
+        uctx.drawImage(doorIcon, x - size / 2, y - size / 2, size, size);
+      });
+    }
+
+    // 狂欢之椅：固定椅 + 当前刷点组 + 当前地下室组
+    const xzOf = (pt) => (pt.length > 2 ? [pt[0], pt[2]] : pt);
+    if (chairIcon && map.rocketChairs) {
+      const ch = map.rocketChairs;
+      const size = tacDisplay.chairSize / 100 * W * K;
+      const drawChair = (pt) => {
+        const [px, pz] = xzOf(pt);
+        const [x, y] = PXY(px / W0, pz / H0);
+        uctx.drawImage(chairIcon, x - size / 2, y - size / 2, size, size);
+      };
+      if (tacDisplay.chairs) {
+        ch.fixed.forEach(drawChair);
+        if (ch.sets.length) ch.sets[S.tacChairIndex % ch.sets.length].forEach(drawChair);
+      }
+      const bs = tacBasementList();
+      if (tacDisplay.chairsBasement && bs.length) {
+        bs[S.tacChairBasementIndex % bs.length].rocketChairs.forEach(drawChair);
+      }
+    }
+
+    // 箱子：固定箱 + 当前地下室组
+    if (boxIcon && map.chests) {
+      const bx = map.chests;
+      const size = tacDisplay.boxSize / 100 * W * K;
+      const drawBox = (pt) => {
+        const [px, pz] = xzOf(pt);
+        const [x, y] = PXY(px / W0, pz / H0);
+        uctx.drawImage(boxIcon, x - size / 2, y - size / 2, size, size);
+      };
+      if (tacDisplay.boxes) bx.fixed.forEach(drawBox);
+      const bs2 = tacBasementList();
+      if (tacDisplay.boxesBasement && bs2.length) {
+        bs2[S.tacChairBasementIndex % bs2.length].chest.forEach(drawBox);
+      }
+    }
+
+    // 固定点位图标（教授鳞片 / 摄影师照相机 / 疯眼控制台 / 小丑零件 / 冒险家书页）
+    for (const [role, cfg] of Object.entries(map.fixedSpawns || {})) {
+      const token = tacTokenByRole(role);
+      if (!token || !token.showFixedSpawns) continue;
+      const fsItems = (Array.isArray(cfg.item) ? cfg.item : [cfg.item]).filter(Boolean);
+      for (const item of fsItems) {
+        for (const pt of item.points) {
+          const p = Array.isArray(pt) ? pt : pt.p;
+          const [x, y] = PXY(p[0] / W0, p[1] / H0);
+          if (item.flag_orientation) {
+            const fsIcon = TAC_FIXED_SPAWN_ICONS[item.icon] || item.icon;
+            if (fsIcon) {
+              const isz = 0.03 * W * K;
+              const camImg = await tacLoadImg(fsIcon);
+              if (camImg) { uctx.drawImage(camImg, x - isz / 2, y - isz / 2, isz, isz); continue; }
+            }
+            uctx.save();
+            uctx.fillStyle = '#f8fafc';
+            uctx.beginPath();
+            uctx.arc(x, y, Math.max(2, W * K / 150), 0, Math.PI * 2);
+            uctx.fill();
+            uctx.restore();
+          } else {
+            const spawnDef = TAC_ITEM_TYPES[item.icon] || {};
+            if (spawnDef.icon) {
+              const isz = (spawnDef.iconSize || 3.4) / 100 * W * K;
+              const iconImg = await tacLoadImg(spawnDef.icon);
+              if (iconImg) { uctx.drawImage(iconImg, x - isz / 2, y - isz / 2, isz, isz); continue; }
+            }
+            uctx.save();
+            uctx.fillStyle = '#f8fafc';
+            uctx.beginPath();
+            uctx.arc(x, y, Math.max(2, W * K / 150), 0, Math.PI * 2);
+            uctx.fill();
+            uctx.restore();
+          }
+        }
+      }
+    }
+
+    // 造物图标与 fallback 圆点（范围圆在地图画布上随图旋转绘制）
+    for (const it of board.items) {
+      const def = TAC_ITEM_TYPES[it.kind];
+      if (!def) continue;
+      const [x, y] = PXY(it.x, it.y);
+      const icon = itemIconCache[it.kind];
+      if (icon) {
+        const isz = (it.iconSize ?? 3.4) / 100 * W * K;
+        uctx.drawImage(icon, x - isz / 2, y - isz / 2, isz, isz);
+      } else if (!def.icon || it.hideIcon) {
+        uctx.fillStyle = def.color || '#e2e8f0';
+        uctx.beginPath();
+        uctx.arc(x, y, Math.max(3, W * K / 200), 0, Math.PI * 2);
+        uctx.fill();
+      }
+    }
+
+    // 角色图标（或首字 fallback），保持正立
+    for (const t of board.tokens) {
+      const def = TAC_ROLES[t.role] || {};
+      const [x, y] = PXY(t.x, t.y);
+      const d = t.size / 100 * W * K;
+      if (def.icon) {
+        const img = await tacLoadImg(def.icon);
+        if (img) { uctx.drawImage(img, x - d / 2, y - d / 2, d, d); continue; }
+      }
+      uctx.save();
+      uctx.fillStyle = def.color || '#fff';
+      uctx.beginPath();
+      uctx.arc(x, y, d / 2, 0, Math.PI * 2);
+      uctx.fill();
+      uctx.fillStyle = '#0f172a';
+      uctx.font = `800 ${d * 0.42}px 'Noto Sans SC', sans-serif`;
+      uctx.textAlign = 'center';
+      uctx.textBaseline = 'middle';
+      uctx.fillText((def.name || t.role).charAt(0), x, y);
+      uctx.restore();
+    }
+
+    // 图文文字（保持正立，多行沿输出纵向排开）
+    uctx.save();
+    uctx.textAlign = 'center';
+    uctx.textBaseline = 'middle';
+    uctx.lineJoin = 'round';
+    board.texts.forEach((t) => {
+      const px = Math.max(2.2, t.size * 0.18) / 100 * (oW / wrapX) * K;
+      uctx.font = `700 ${px}px 'Noto Sans SC', sans-serif`;
+      const lines = String(t.text).split('\n');
+      const lh = px * 1.35;
+      const [tx, ty0] = PXY(t.x, t.y);
+      lines.forEach((line, i) => {
+        const ty = ty0 + (i - (lines.length - 1) / 2) * lh;
+        uctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
+        uctx.lineWidth = Math.max(2, px / 6);
+        uctx.strokeText(line, tx, ty);
+        uctx.fillStyle = t.color;
+        uctx.fillText(line, tx, ty);
+      });
     });
-  }
-  
-  if (tacDisplay.dungeon && dungeonIcon && map.dungeons.length) {
-    const pt = map.dungeons[S.tacDungeonIndex % map.dungeons.length];
-    const size = tacDisplay.dungeonSize / 100 * W * K;
-    ctx.drawImage(dungeonIcon,
-      PX(pt[0] / W0) - size / 2, PY(pt[1] / H0) - size / 2, size, size);
-  }
-  
-  if (tacDisplay.doors && doorIcon) {
-    const size = tacDisplay.doorSize / 100 * W * K;
-    tacDoorPoints(map).forEach((pt) => ctx.drawImage(doorIcon,
-      PX(pt[0] / W0) - size / 2, PY(pt[1] / H0) - size / 2, size, size));
-  }
+    uctx.restore();
+  };
 
-  // 狂欢之椅：固定椅 + 当前刷点组 + 当前地下室组
-  const xzOf = (pt) => (pt.length > 2 ? [pt[0], pt[2]] : pt);
-  if (chairIcon && map.rocketChairs) {
-    const ch = map.rocketChairs;
-    const size = tacDisplay.chairSize / 100 * W * K;
-    const drawChair = (pt) => {
-      const [px, pz] = xzOf(pt);
-      ctx.drawImage(chairIcon, PX(px / W0) - size / 2, PY(pz / H0) - size / 2, size, size);
-    };
-    if (tacDisplay.chairs) {
-      ch.fixed.forEach(drawChair);
-      if (ch.sets.length) ch.sets[S.tacChairIndex % ch.sets.length].forEach(drawChair);
-    }
-    const bs = tacBasementList();
-    if (tacDisplay.chairsBasement && bs.length) {
-      bs[S.tacChairBasementIndex % bs.length].rocketChairs.forEach(drawChair);
-    }
-  }
-
-  // 箱子：固定箱 + 当前地下室组
-  if (boxIcon && map.chests) {
-    const bx = map.chests;
-    const size = tacDisplay.boxSize / 100 * W * K;
-    const drawBox = (pt) => {
-      const [px, pz] = xzOf(pt);
-      ctx.drawImage(boxIcon, PX(px / W0) - size / 2, PY(pz / H0) - size / 2, size, size);
-    };
-    if (tacDisplay.boxes) bx.fixed.forEach(drawBox);
-    const bs = tacBasementList();
-    if (tacDisplay.boxesBasement && bs.length) {
-      bs[S.tacChairBasementIndex % bs.length].chest.forEach(drawBox);
-    }
-  }
-
-  // 固定点位（教授鳞片 / 摄影师摄像机 / 疯眼控制台及范围 / 小丑零件 / 冒险家书页）
+  // 固定点位范围椭圆（教授鳞片 / 摄影师照相机 / 疯眼控制台及范围 / 小丑零件 / 冒险家书页）
+  // 图标在 paintUprightOverlays 中正立绘制
   for (const [role, cfg] of Object.entries(map.fixedSpawns || {})) {
     const token = tacTokenByRole(role);
     if (!token) continue;
@@ -5451,71 +5721,44 @@ export async function tacExportImage() {
       });
       ctx.restore();
     });
-    if (!token.showFixedSpawns) continue;
-    for (const item of fsItems) {
-      for (const pt of item.points) {
-        const p = Array.isArray(pt) ? pt : pt.p;
-        const x = PX(p[0] / W0), y = PY(p[1] / H0);
-        if (item.flag_orientation) {
-          // 朝向箭头 + 图标
-          const ang = Math.atan2(pt.d[1], pt.d[0]);
-          const arrowLen = 0.022 * W * K;
-          ctx.save();
-          ctx.strokeStyle = '#7dd3fc';
-          ctx.lineWidth = Math.max(1.5, W * K / 300);
-          ctx.lineCap = 'round';
-          ctx.beginPath();
-          ctx.moveTo(x, y);
-          ctx.lineTo(x + Math.cos(ang) * arrowLen, y + Math.sin(ang) * arrowLen);
-          ctx.stroke();
-          const head = arrowLen * 0.42;
-          ctx.beginPath();
-          ctx.moveTo(x + Math.cos(ang) * arrowLen, y + Math.sin(ang) * arrowLen);
-          ctx.lineTo(x + Math.cos(ang) * (arrowLen - head) + Math.cos(ang + Math.PI / 2) * head * 0.6,
-            y + Math.sin(ang) * (arrowLen - head) + Math.sin(ang + Math.PI / 2) * head * 0.6);
-          ctx.moveTo(x + Math.cos(ang) * arrowLen, y + Math.sin(ang) * arrowLen);
-          ctx.lineTo(x + Math.cos(ang) * (arrowLen - head) + Math.cos(ang - Math.PI / 2) * head * 0.6,
-            y + Math.sin(ang) * (arrowLen - head) + Math.sin(ang - Math.PI / 2) * head * 0.6);
-          ctx.stroke();
-          ctx.restore();
-          const fsIcon = TAC_FIXED_SPAWN_ICONS[item.icon] || item.icon;
-          if (fsIcon) {
-            const isz = 0.03 * W * K;
-            const camImg = await tacLoadImg(fsIcon);
-            if (camImg) { ctx.drawImage(camImg, x - isz / 2, y - isz / 2, isz, isz); continue; }
-          }
-          ctx.save();
-          ctx.fillStyle = '#f8fafc';
-          ctx.beginPath();
-          ctx.arc(x, y, Math.max(2, W * K / 150), 0, Math.PI * 2);
-          ctx.fill();
-          ctx.restore();
-        } else {
-          const spawnDef = TAC_ITEM_TYPES[item.icon] || {};
-        if (spawnDef.icon) {
-          const isz = (spawnDef.iconSize || 3.4) / 100 * W * K;
-          const iconImg = await tacLoadImg(spawnDef.icon);
-          if (iconImg) { ctx.drawImage(iconImg, x - isz / 2, y - isz / 2, isz, isz); continue; }
-        }
+    // 朝向箭头（随地图旋转绘制，指向与屏幕一致）
+    if (token.showFixedSpawns) fsItems.forEach((item) => {
+      if (!item.flag_orientation) return;
+      item.points.forEach((pt) => {
+        const x = PX(pt.p[0] / W0), y = PY(pt.p[1] / H0);
+        const ang = Math.atan2(pt.d[1], pt.d[0]);
+        const arrowLen = 0.022 * W * K;
         ctx.save();
-        ctx.fillStyle = '#f8fafc';
+        ctx.strokeStyle = '#7dd3fc';
+        ctx.lineWidth = Math.max(1.5, W * K / 300);
+        ctx.lineCap = 'round';
         ctx.beginPath();
-        ctx.arc(x, y, Math.max(2, W * K / 150), 0, Math.PI * 2);
-        ctx.fill();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + Math.cos(ang) * arrowLen, y + Math.sin(ang) * arrowLen);
+        ctx.stroke();
+        const head = arrowLen * 0.42;
+        ctx.beginPath();
+        ctx.moveTo(x + Math.cos(ang) * arrowLen, y + Math.sin(ang) * arrowLen);
+        ctx.lineTo(x + Math.cos(ang) * (arrowLen - head) + Math.cos(ang + Math.PI / 2) * head * 0.6,
+          y + Math.sin(ang) * (arrowLen - head) + Math.sin(ang + Math.PI / 2) * head * 0.6);
+        ctx.moveTo(x + Math.cos(ang) * arrowLen, y + Math.sin(ang) * arrowLen);
+        ctx.lineTo(x + Math.cos(ang) * (arrowLen - head) + Math.cos(ang - Math.PI / 2) * head * 0.6,
+          y + Math.sin(ang) * (arrowLen - head) + Math.sin(ang - Math.PI / 2) * head * 0.6);
+        ctx.stroke();
         ctx.restore();
-      }
-      }
-    }
+      });
+    });
   }
 
   const board = tacBoard();
-  
+
   const itemIconCache = {};
   await Promise.all(board.items.map(async (it) => {
     const def = TAC_ITEM_TYPES[it.kind];
     if (def && def.icon && !it.hideIcon && itemIconCache[it.kind] === undefined)
       itemIconCache[it.kind] = await tacLoadImg(def.icon);
   }));
+  // 造物范围圆（随地图画布旋转绘制，圆旋转后仍为正圆）
   for (const it of board.items) {
     const def = TAC_ITEM_TYPES[it.kind];
     if (!def) continue;
@@ -5535,59 +5778,10 @@ export async function tacExportImage() {
       ctx.stroke();
       ctx.restore();
     }
-    const icon = itemIconCache[it.kind];
-    if (icon) {
-      const isz = (it.iconSize ?? 3.4) / 100 * W * K;
-      ctx.drawImage(icon, x - isz / 2, y - isz / 2, isz, isz);
-    } else if (!def.icon || it.hideIcon) {
-      ctx.fillStyle = def.color || '#e2e8f0';
-      ctx.beginPath();
-      ctx.arc(x, y, Math.max(3, W * K / 200), 0, Math.PI * 2);
-      ctx.fill();
-    }
   }
-  
-  for (const t of board.tokens) {
-    const role = t.role;
-    const def = TAC_ROLES[role] || {};
-    const x = PX(t.x), y = PY(t.y);
-    const d = t.size / 100 * W * K;
-    if (def.icon) {
-      const img = await tacLoadImg(def.icon);
-      if (img) { ctx.drawImage(img, x - d / 2, y - d / 2, d, d); continue; }
-    }
-    ctx.save();
-    ctx.fillStyle = def.color || '#fff';
-    ctx.beginPath();
-    ctx.arc(x, y, d / 2, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = '#0f172a';
-    ctx.font = `800 ${d * 0.42}px 'Noto Sans SC', sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText((def.name || role).charAt(0), x, y);
-    ctx.restore();
-  }
-  
-  ctx.save();
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.lineJoin = 'round';
-  board.texts.forEach((t) => {
-    const px = Math.max(2.2, t.size * 0.18) / 100 * wrapW * sx * K;
-    ctx.font = `700 ${px}px 'Noto Sans SC', sans-serif`;
-    const lines = String(t.text).split('\n');
-    const lh = px * 1.35;
-    lines.forEach((line, i) => {
-      const ty = PY(t.y) + (i - (lines.length - 1) / 2) * lh;
-      ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
-      ctx.lineWidth = Math.max(2, px / 6);
-      ctx.strokeText(line, PX(t.x), ty);
-      ctx.fillStyle = t.color;
-      ctx.fillText(line, PX(t.x), ty);
-    });
-  });
-  ctx.restore();
+
+  // 图标与文字：k=0 直接绘制；旋转导出时在整图旋转完成后绘制（保持正立）
+  if (rotK === 0) await paintUprightOverlays();
 
   
   ctx.save();
@@ -5614,6 +5808,26 @@ export async function tacExportImage() {
   ctx.restore();
 
   
+  // 按当前旋转角度整图逆时针旋转；SVG 层文字已带正立补偿，
+  // 图标/图文等正立叠加层在旋转后补绘到输出画布上
+  let out = cv;
+  if (rotK) {
+    const rcv = document.createElement('canvas');
+    rcv.width = rotK % 2 === 1 ? cv.height : cv.width;
+    rcv.height = rotK % 2 === 1 ? cv.width : cv.height;
+    const rctx = rcv.getContext('2d');
+    rctx.translate(rcv.width / 2, rcv.height / 2);
+    rctx.rotate(-Math.PI / 2 * rotK);
+    rctx.drawImage(cv, -cv.width / 2, -cv.height / 2);
+    out = rcv;
+    uctx = out.getContext('2d');
+    PXY = (fx, fy) => {
+      const [u, v] = rotPtOut(fx, fy);
+      return [(u - vx) * out.width / vw, (v - vy) * out.height / vh];
+    };
+    await paintUprightOverlays();
+  }
+
   const fileName = translate("application.fileName", { name: map.mapName });
   // 微信 / B 站 App 的 webview 会拦截 <a download> 下载，改为弹出图片供长按保存
   const saveByLongPress = /MicroMessenger|bili/i.test(navigator.userAgent);
@@ -5633,12 +5847,12 @@ export async function tacExportImage() {
   };
   try {
     if (saveByLongPress) {
-      if (!openSaveOverlay(cv.toDataURL('image/png'))) throw new Error('save overlay unavailable');
+      if (!openSaveOverlay(out.toDataURL('image/png'))) throw new Error('save overlay unavailable');
       showToast(translate("ui.tacSaveOverlay.toast"));
       return;
     }
-    if (cv.toBlob) {
-      cv.toBlob(async (blob) => {
+    if (out.toBlob) {
+      out.toBlob(async (blob) => {
         if (!blob) { showToast(translate("application.tacExportImage")); return; }
         const file = new File([blob], fileName, { type: 'image/png' });
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -5655,7 +5869,7 @@ export async function tacExportImage() {
         showToast(translate("application.tacExportImageAlternate"));
       }, 'image/png');
     } else {
-      download(cv.toDataURL('image/png'));
+      download(out.toDataURL('image/png'));
       showToast(translate("application.tacExportImageAlternate"));
     }
   } catch (err) {
@@ -5681,12 +5895,16 @@ if (tacSaveOverlay && tacSaveClose) {
 export function tacPos(e) {
   const r = tacMapWrap.getBoundingClientRect();
   const clamp01 = (v) => Math.min(0.995, Math.max(0.005, v));
-  return {
-    x: clamp01((e.clientX - r.left) / r.width),
-    y: clamp01((e.clientY - r.top) / r.height),
-    W: r.width,
-    H: r.height,
-  };
+  const u = clamp01((e.clientX - r.left) / r.width);
+  const v = clamp01((e.clientY - r.top) / r.height);
+  // wrap（视觉）坐标 -> 地图坐标：旋转的逆变换
+  let x = u, y = v;
+  switch (tacRotK & 3) {
+    case 1: x = 1 - v; y = u; break;
+    case 2: x = 1 - u; y = 1 - v; break;
+    case 3: x = v; y = 1 - u; break;
+  }
+  return { x: clamp01(x), y: clamp01(y), W: r.width, H: r.height };
 }
 
 tacMapWrap.addEventListener('pointerdown', (e) => {
@@ -6486,14 +6704,15 @@ window.addEventListener('keydown', (e) => {
     }
     const rect = tacMapWrap.getBoundingClientRect();
     if (rect.width <= 0 || rect.height <= 0) return;
-    const dx = nudge[0] / rect.width;   
+    const dx = nudge[0] / rect.width;
     const dy = nudge[1] / rect.height;
+    const [ndx, ndy] = tacRotVec(dx, dy);
     const clamp01 = (v) => Math.min(1, Math.max(0, v));
     if (tacSelected != null && tacTokenByTid(tacSelected)) {
       const t = tacTokenByTid(tacSelected);
       
       const cl = tacClampTokenToLinkedItems(
-        t, clamp01(t.x + dx), clamp01(t.y + dy));
+        t, clamp01(t.x + ndx), clamp01(t.y + ndy));
       t.x = cl.x;
       t.y = cl.y;
       renderTacBoard();
@@ -6508,7 +6727,7 @@ window.addEventListener('keydown', (e) => {
       
       
       let cl = tacClampLinkPos(
-        tacSelectedItem, clamp01(it.x + dx), clamp01(it.y + dy));
+        tacSelectedItem, clamp01(it.x + ndx), clamp01(it.y + ndy));
       cl = tacClampRoleLinkPos(tacSelectedItem, cl.x, cl.y);
       cl = tacHpClampPos(it, cl.x, cl.y);
       it.x = cl.x;
@@ -6517,8 +6736,8 @@ window.addEventListener('keydown', (e) => {
       e.preventDefault();
     } else if (tacSelectedText !== null && tacBoard().texts[tacSelectedText]) {
       const t = tacBoard().texts[tacSelectedText];
-      t.x = clamp01(t.x + dx);
-      t.y = clamp01(t.y + dy);
+      t.x = clamp01(t.x + ndx);
+      t.y = clamp01(t.y + ndy);
       renderTacBoard();
       e.preventDefault();
     }

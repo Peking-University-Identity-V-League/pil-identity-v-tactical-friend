@@ -59,6 +59,8 @@
           <button class="tac-zoom-btn" id="tacZoomIn" type="button" title="" data-i18n="ui.tacZoomIn.label" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacZoomIn.title&quot;}"></button>
           <button class="tac-zoom-btn tac-zoom-pan" id="tacZoomPan" type="button"
             title="" disabled data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacZoomPan.title&quot;}">✋</button>
+          <button class="tac-zoom-btn tac-zoom-rot" id="tacRotateBtn" type="button"
+            title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacRotate.title&quot;}"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>
         </div>
         <div class="map-view-actions">
           <button type="button" class="reset-btn map-3d-button" data-map-3d data-i18n="ui.map3d.open" title="切换当前地图；同步选中或最近测距线的起终点">切换三维</button>
@@ -69,9 +71,10 @@
       <div class="map-viewer">
         <div class="map-container">
           <div class="ded-map-wrap tac-map-wrap" id="tacMapWrap">
-            <img id="tacMapImage" class="map-image" alt="" draggable="false"  data-i18n-attributes="{&quot;alt&quot;:&quot;ui.common.map&quot;}"/>
-            <svg class="tac-arrow-svg" id="tacArrowSvg" aria-hidden="true"></svg>
-            
+            <div class="tac-rot" id="tacRot">
+              <img id="tacMapImage" class="map-image" alt="" draggable="false"  data-i18n-attributes="{&quot;alt&quot;:&quot;ui.common.map&quot;}"/>
+              <svg class="tac-arrow-svg" id="tacArrowSvg" aria-hidden="true"></svg>
+            </div>
             <div class="tac-snap-ripple" id="tacSnapRipple" aria-hidden="true"></div>
             <div class="tac-coords-tip" id="tacCoordsTip" aria-hidden="true"></div>
           </div>
@@ -405,7 +408,8 @@
           <div class="tac-display-group">
             <div class="tac-display-group-label" data-i18n="ui.tacDisplayGroupLabel.labelThird"></div>
             <div class="tac-display-snap no-line">
-              <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacDisplayToggle.titleSixth&quot;}"><input type="checkbox" id="tacExportCrop"><span data-i18n="ui.tacDisplayToggle.labelSixth"></span></label>
+              <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacDisplayToggle.titleSixth&quot;}"><input type="checkbox" id="tacExportCrop" checked><span data-i18n="ui.tacDisplayToggle.labelSixth"></span></label>
+              <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacExportRot.title&quot;}"><input type="checkbox" id="tacExportRot" checked><span data-i18n="ui.tacExportRot.label"></span></label>
             </div>
           </div>
         </div>
