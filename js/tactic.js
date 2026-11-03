@@ -5452,14 +5452,6 @@ export async function tacExportImage() {
   // 旋转导出时，图标/文字等正立叠加层绘制到旋转后的画布上；
   // PXY 把地图分数映射到「当前目标画布」的像素（k=0 时即 PX/PY）。
   let uctx = ctx;
-  const rotPtOut = (fx, fy) => {
-    switch (rotK) {
-      case 1: return [fy, 1 - fx];
-      case 2: return [1 - fx, 1 - fy];
-      case 3: return [1 - fy, fx];
-      default: return [fx, fy];
-    }
-  };
   let PXY = (fx, fy) => [(fx - vx) * W / vw, (fy - vy) * H / vh];
 
   
@@ -5816,14 +5808,24 @@ export async function tacExportImage() {
     rcv.width = rotK % 2 === 1 ? cv.height : cv.width;
     rcv.height = rotK % 2 === 1 ? cv.width : cv.height;
     const rctx = rcv.getContext('2d');
+    rctx.save();
     rctx.translate(rcv.width / 2, rcv.height / 2);
     rctx.rotate(-Math.PI / 2 * rotK);
     rctx.drawImage(cv, -cv.width / 2, -cv.height / 2);
+    rctx.restore();
     out = rcv;
+    // uctx 与 rctx 是同一上下文：必须先恢复单位变换，正立层才能按输出坐标直绘
     uctx = out.getContext('2d');
+    uctx.setTransform(1, 0, 0, 1, 0, 0);
+    // 与像素拷贝共用同一几何：地图分数 → cv 像素 → 整图旋转到输出像素
     PXY = (fx, fy) => {
-      const [u, v] = rotPtOut(fx, fy);
-      return [(u - vx) * out.width / vw, (v - vy) * out.height / vh];
+      const cx = (fx - vx) * W / vw, cy = (fy - vy) * H / vh;
+      switch (rotK) {
+        case 1: return [cy, W - cx];
+        case 2: return [W - cx, H - cy];
+        case 3: return [H - cy, cx];
+        default: return [cx, cy];
+      }
     };
     await paintUprightOverlays();
   }
