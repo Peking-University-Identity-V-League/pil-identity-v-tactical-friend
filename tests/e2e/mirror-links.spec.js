@@ -242,6 +242,43 @@ test('mirror pair semantics: second pair, uncheck allow breaks link without stea
   await expect(mirrorBox(page).locator('.tac-link-status')).toContainText(/当前已与 水镜 ?2 连线/);
 });
 
+test('mirror: second pair can show its own mirror while first pair already has one', async ({ page }) => {
+  await placeRole(page, 'bloodyQueen', 0.15, 0.2);
+  await placeItem(page, 'bloodyQueen', 'aquaMirror', 0.25, 0.3);
+  await placeRole(page, 'bloodyQueen', 0.6, 0.2);
+  await placeItem(page, 'bloodyQueen', 'aquaMirror', 0.7, 0.3);
+  let board = await state(page);
+  const bqs = board.tokens.filter((t) => t.role === 'bloodyQueen');
+  const aqs = board.items.filter((it) => it.kind === 'aquaMirror');
+  expect(aqs[0].linkTid).toBe(bqs[0].tid);
+  expect(aqs[1].linkTid).toBe(bqs[1].tid);
+  // 第一对显示镜像
+  await tool(page, 'select');
+  await clickPoint(page, 0.15, 0.2);
+  await mirrorBox(page).locator('input[data-mq="show"]').check();
+  board = await state(page);
+  expect(board.items.filter((it) => it.kind === 'mirrorImage')).toHaveLength(1);
+  // 第二对显示镜像（回归：此前 tacSyncMirror 只认第一个水镜，镜像2无法生成）
+  await clickPoint(page, 0.6, 0.2);
+  await mirrorBox(page).locator('input[data-mq="show"]').check();
+  board = await state(page);
+  const mirrors = board.items.filter((it) => it.kind === 'mirrorImage');
+  expect(mirrors).toHaveLength(2);
+  const aqIids = aqs.map((aq) => aq.iid);
+  expect(new Set(mirrors.map((mi) => mi.aqIid))).toEqual(new Set(aqIids));
+  // 镜像2位于 水镜2 关于 红夫人2 的对称位置
+  const mi2 = mirrors.find((mi) => mi.aqIid === aqs[1].iid);
+  expect(mi2.x).toBeCloseTo(2 * aqs[1].x - bqs[1].x, 5);
+  expect(mi2.y).toBeCloseTo(2 * aqs[1].y - bqs[1].y, 5);
+  // 取消第二对的显示镜像：只销毁镜像2
+  await mirrorBox(page).locator('input[data-mq="show"]').uncheck();
+  board = await state(page);
+  const left = board.items.filter((it) => it.kind === 'mirrorImage');
+  expect(left).toHaveLength(1);
+  expect(left[0].aqIid).toBe(aqs[0].iid);
+  expect(board.items.filter((it) => it.kind === 'aquaMirror')[1].showMirror).toBe(false);
+});
+
 test('mirror drag: all of its range circles follow together', async ({ page }) => {
   await placeRole(page, 'bloodyQueen', 0.3, 0.3);
   await placeItem(page, 'bloodyQueen', 'aquaMirror', 0.5, 0.3);

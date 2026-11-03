@@ -681,7 +681,9 @@ export function renderTacFixedSpawns() {
 export function renderTacTreasure() {
   if (!tacMapWrap) return;
   tacMapWrap.querySelectorAll('.tac-treasure-ring').forEach((el) => el.remove());
-  const rings = getTreasureRings(MAPS_DATA[S.currentMapId], tacTokenByRole('explorer'),
+  // 书页管理不共享：只取当前开启书页管理的那个冒险家，以其位置推算
+  const token = tacBoard().tokens.find((t) => t.role === 'explorer' && t.showTreasureRange) || null;
+  const rings = getTreasureRings(MAPS_DATA[S.currentMapId], token,
     S.currentCipherIndex, TAC_TREASURE_RULE);
   rings.forEach((ring) => {
     const el = document.createElement('div');
@@ -1697,9 +1699,9 @@ export function tacMeasureSegColor(m) {
 }
 
 
-export function tacMirrorParts() {
+export function tacMirrorParts(aq = null) {
   const board = tacBoard();
-  const aq = board.items.find((it) => it.kind === 'aquaMirror') || null;
+  aq = aq || board.items.find((it) => it.kind === 'aquaMirror') || null;
   const bq = (aq && aq.linkTid != null
     ? board.tokens.find((t) => t.tid === aq.linkTid) : null) || null;
   if (!aq || !bq) return null;
@@ -1709,9 +1711,9 @@ export function tacMirrorParts() {
 }
 
 
-export function tacSyncMirror(moved = null) {
+export function tacSyncMirror(moved = null, targetAq = null) {
   const board = tacBoard();
-  const parts = tacMirrorParts();
+  const parts = tacMirrorParts(targetAq);
   if (!parts) return false;
   const { bq, aq } = parts;
   let { mi, miIdx } = parts;
@@ -1776,9 +1778,11 @@ export function tacSyncMirror(moved = null) {
 }
 
 
-function tacSyncMirrorEl(kind) {
+function tacSyncMirrorEl(kind, refItem = null) {
   const b = tacBoard();
-  const i2 = b.items.findIndex((o) => o.kind === kind);
+  let i2 = -1;
+  if (refItem) i2 = b.items.indexOf(refItem);
+  else i2 = b.items.findIndex((o) => o.kind === kind);
   const o2 = i2 >= 0 ? b.items[i2] : null;
   if (!o2) return;
   // 该造物的所有范围圈/图标都要一起移动（镜像可同时显示三个范围）
@@ -1833,7 +1837,8 @@ export function tacOnTokenRemoved(removed) {
         if (b.items[i].kind === 'mirrorImage') b.items.splice(i, 1);
       }
     }
-    tacSyncMirror(null);
+    b.items.filter((it) => it.kind === 'aquaMirror' && it.linkTid != null)
+      .forEach((aq) => tacSyncMirror(null, aq));
   }
 }
 
@@ -2883,6 +2888,18 @@ function tacInstDispName(inst) {
 
 
 // 镜像管理（红夫人 / 水镜 / 镜像 共享；与连线管理同一套相连语义，
+// 按宿主（红夫人/水镜/镜像）解析其所属配对的水镜
+function tacAqOfHost(host) {
+  const b = tacBoard();
+  if (host.kind === 'aquaMirror') return host;
+  if (host.kind === 'mirrorImage') {
+    return (host.aqIid != null && tacItemByIid(host.aqIid))
+      || b.items.find((it) => it.kind === 'aquaMirror') || null;
+  }
+  return b.items.find((it) => it.kind === 'aquaMirror' && it.linkTid === host.tid) || null;
+}
+
+
 // 状态存于水镜造物上，显示连线/显示镜像/固定水镜位置/交换镜像由相连双方共享）
 function buildMirrorManageBox(settings, host) {
   const board = tacBoard();
@@ -2894,16 +2911,15 @@ function buildMirrorManageBox(settings, host) {
     aq = host;
     bq = aq.linkTid != null ? tacTokenByTid(aq.linkTid) : null;
   } else if (host.kind === 'mirrorImage') {
-    aq = (host.aqIid != null && tacItemByIid(host.aqIid))
-      || board.items.find((it) => it.kind === 'aquaMirror') || null;
+    aq = tacAqOfHost(host);
     bq = aq && aq.linkTid != null ? tacTokenByTid(aq.linkTid) : null;
   } else {
     bq = host;
     aq = board.items.find((it) => it.kind === 'aquaMirror' && it.linkTid === bq.tid) || null;
   }
   const linked = !!(aq && bq);
-  const mi = aq ? board.items.find((it) => it.kind === 'mirrorImage'
-    && (it.aqIid == null || it.aqIid === aq.iid)) : null;
+  const mi = aq ? (board.items.find((it) => it.kind === 'mirrorImage' && it.aqIid === aq.iid)
+    || board.items.find((it) => it.kind === 'mirrorImage' && it.aqIid == null)) : null;
 
   const box = tacManageBox(settings, "ui.tacManageMirror.title");
   const line = document.createElement('div');
@@ -2947,7 +2963,7 @@ function buildMirrorManageBox(settings, host) {
       else tacAutoLinkItem(host);
     } else if (isTok) tacBreakTokenLinks(host, true);
     else tacBreakItemLink(host, true);
-    tacSyncMirror(null);
+    tacSyncMirror(null, tacAqOfHost(host));
     refreshAll();
   });
   line.querySelector('input[data-mq="link"]').addEventListener('change', (e) => {
@@ -2961,24 +2977,24 @@ function buildMirrorManageBox(settings, host) {
     if (!aq) return;
     aq.showMirror = e.target.checked;
     if (!aq.showMirror) { aq.fixedMirror = false; delete aq.mirrorAxis; }
-    tacSyncMirror(null);
+    tacSyncMirror(null, aq);
     refreshAll();
   });
   line.querySelector('button[data-mq="fix"]').addEventListener('click', () => {
     if (!aq || !aq.showMirror) return;
     aq.fixedMirror = !aq.fixedMirror;
     delete aq.mirrorAxis;
-    tacSyncMirror(null);
+    tacSyncMirror(null, aq);
     refreshAll();
   });
   line.querySelector('button.tac-manage-swap').addEventListener('click', () => {
     if (!linked) return;
-    const p2 = tacMirrorParts();
+    const p2 = tacMirrorParts(aq);
     if (!p2 || !p2.mi) return;
     const bx = p2.bq.x, by = p2.bq.y;
     p2.bq.x = p2.mi.x; p2.bq.y = p2.mi.y;
     p2.mi.x = bx; p2.mi.y = by;
-    tacSyncMirror('bq');
+    tacSyncMirror('bq', aq);
     renderTacBoard();
     renderTacArrows();
     tacSave();
@@ -3271,6 +3287,10 @@ export function renderTacManage() {
         + translate("application.renderTacManageTreasure", { value: token.showTreasureRange ? ' checked' : '' });
       tacBoxHint(box, translate("ui.tacManageBox.treasureHint", {  }));
       box.querySelector('input').addEventListener('change', (e) => {
+        // 最多同时开启一个：开启当前冒险家时立即关闭其它所有冒险家
+        if (e.target.checked) {
+          board.tokens.forEach((o) => { if (o.role === 'explorer' && o !== token) o.showTreasureRange = false; });
+        }
         token.showTreasureRange = e.target.checked;
         renderTacTreasure();
         tacSave();
@@ -3288,6 +3308,10 @@ export function renderTacManage() {
     }
 const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     if (fixedSpawnCfg) {
+      // 同角色多个造物共享固定点位设置（教授鳞片 / 摄影师照相机 / 疯眼控制台 / 小丑零件）
+      const roleTokens = board.tokens.filter((t) => t.role === role);
+      const anyFlag = (f) => roleTokens.some((t) => t[f]);
+      const setAll = (f, v) => roleTokens.forEach((t) => { t[f] = v; });
       const fsTitleKey = role === 'professor' ? "ui.tacManageBox.scale"
         : role === 'photographer' ? "ui.tacManageBox.camera"
         : role === 'madEyes' ? "ui.tacManageBox.console"
@@ -3303,45 +3327,45 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
         .some((it) => it && it.flag_orientation);
       fsRow.innerHTML =
         `<label class="tac-manage-glow"><input type="checkbox"`
-        + translate("application.renderTacManageSeventh", { value: token.showFixedSpawns ? ' checked' : '', label: fixedSpawnCfg.label })
+        + translate("application.renderTacManageSeventh", { value: anyFlag('showFixedSpawns') ? ' checked' : '', label: fixedSpawnCfg.label })
         + (hasOrient
           ? `<label class="tac-manage-glow"><input type="checkbox" data-fsdir`
-          + `${token.showSpawnDir ? ' checked' : ''}> ${translate("ui.tacManageBox.showDir")}</label>`
+          + `${anyFlag('showSpawnDir') ? ' checked' : ''}> ${translate("ui.tacManageBox.showDir")}</label>`
           : '');
       fsRow.querySelector('input').addEventListener('change', (e) => {
-        token.showFixedSpawns = e.target.checked;
+        setAll('showFixedSpawns', e.target.checked);
         renderTacFixedSpawns();
         tacSave();
       });
       const dirCb = fsRow.querySelector('input[data-fsdir]');
       if (dirCb) dirCb.addEventListener('change', (e) => {
-        token.showSpawnDir = e.target.checked;
+        setAll('showSpawnDir', e.target.checked);
         renderTacFixedSpawns();
         tacSave();
       });
       fsBox.appendChild(fsRow);
-      
-      
+
+
       if (fsRangeItem && MAPS_DATA[S.currentMapId].widthM) {
-        const dev = token.fixedSpawnDevice === 'ios' ? 'ios' : 'pc';
+        const dev = roleTokens.find((t) => t.fixedSpawnDevice)?.fixedSpawnDevice || 'pc';
         const [devW, devH] = fsRangeItem.rangeScreenM[dev];
         const radioName = `tac-fsdev-${S.currentMapId}-${role}`;
         const rangeRow = document.createElement('div');
         rangeRow.className = fsTitleKey ? 'tac-box-line' : 'tac-manage-row';
         rangeRow.innerHTML =
           `<label class="tac-manage-glow"><input type="checkbox"`
-          + translate("application.renderTacManageEighth", { value: token.showFixedSpawnRange ? ' checked' : '', rangeM: fsRangeItem.rangeM, devW: devW, devH: devH })
+          + translate("application.renderTacManageEighth", { value: anyFlag('showFixedSpawnRange') ? ' checked' : '', rangeM: fsRangeItem.rangeM, devW: devW, devH: devH })
           + `<label class="tac-manage-glow"><input type="radio" name="${radioName}"${dev === 'pc' ? ' checked' : ''}>PC</label>`
           + `<label class="tac-manage-glow"><input type="radio" name="${radioName}"${dev === 'ios' ? ' checked' : ''}>IOS</label>`;
         rangeRow.querySelector('input[type="checkbox"]').addEventListener('change', (e) => {
-          token.showFixedSpawnRange = e.target.checked;
+          setAll('showFixedSpawnRange', e.target.checked);
           renderTacFixedSpawns();
           tacSave();
         });
         const [pcRadio, iosRadio] = rangeRow.querySelectorAll('input[type="radio"]');
         const theory = rangeRow.querySelector('.tac-fsdev-theory');
         const onDevChange = (next) => {
-          token.fixedSpawnDevice = next;
+          setAll('fixedSpawnDevice', next);
           const [w, h] = fsRangeItem.rangeScreenM[next];
           theory.textContent = translate("application.onDevChange", { rangeM: fsRangeItem.rangeM, width: w, height: h });
           renderTacFixedSpawns();
@@ -5256,7 +5280,8 @@ export function tacLoadImg(src) {
 
 export async function tacExportImage() {
   const map = MAPS_DATA[S.currentMapId];
-  const treasureRings = getTreasureRings(map, tacTokenByRole('explorer'),
+  const treasureRings = getTreasureRings(map,
+    tacBoard().tokens.find((t) => t.role === 'explorer' && t.showTreasureRange) || null,
     S.currentCipherIndex, TAC_TREASURE_RULE);
   const [W0, H0] = map.mapSize;
   const wrapW = tacMapWrap.clientWidth || 1;
@@ -5892,7 +5917,7 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
     tacSelectedItem = tacBoard().items.length - 1;
     tacManageSel = { type: 'item', idx: tacSelectedItem };
     tacPlaceItem = null;
-    if (item.kind === 'aquaMirror') tacSyncMirror('aq');
+    if (item.kind === 'aquaMirror') tacSyncMirror('aq', item);
     renderTacBoard();
     return;
   }
@@ -5985,12 +6010,15 @@ tacMapWrap.addEventListener('pointermove', (e) => {
     tacAbyssRecord(p, t); 
 
     if (t.role === 'bloodyQueen') {
-      const hadMirror = tacBoard().items.some((it) => it.kind === 'mirrorImage');
-      if (tacSyncMirror('bq')) {
-        if (!hadMirror) renderTacBoard();
-        else { tacSyncMirrorEl('mirrorImage'); renderTacArrows(); }
+      const bqAq = tacBoard().items.find((it) => it.kind === 'aquaMirror' && it.linkTid === t.tid);
+      if (bqAq) {
+        const parts = tacMirrorParts(bqAq);
+        if (tacSyncMirror('bq', bqAq)) {
+          if (!parts.mi) renderTacBoard();
+          else { tacSyncMirrorEl('mirrorImage', parts.mi); renderTacArrows(); }
+        }
       }
-      if (tacBoard().items.some((it) => it.kind === 'aquaMirror')) renderTacArrows();
+      if (tacBoard().items.some((it) => it.linkTid === t.tid)) renderTacArrows();
     }
 
     if (tacBoard().items.some((it) => it.linkTid === t.tid)) {
@@ -6026,23 +6054,26 @@ tacMapWrap.addEventListener('pointermove', (e) => {
 
     if (it.kind === 'aquaMirror' || it.kind === 'mirrorImage') {
       const movedKind = it.kind === 'aquaMirror' ? 'aq' : 'mi';
-      const hadMirror = tacBoard().items.some((o) => o.kind === 'mirrorImage');
-      if (tacSyncMirror(movedKind)) {
-        if (!hadMirror) renderTacBoard();
-        else {
-          if (movedKind === 'aq') {
-            tacSyncMirrorEl('mirrorImage');
-          } else {
-            tacSyncMirrorEl('aquaMirror');
-            const parts2 = tacMirrorParts();
-            const bqTk = parts2 && parts2.bq;
-            const tkEl = bqTk && tacMapWrap.querySelector(`.tac-token[data-tid="${bqTk.tid}"]`);
-            if (tkEl && bqTk) {
-              tkEl.style.left = `${bqTk.x * 100}%`;
-              tkEl.style.top = `${bqTk.y * 100}%`;
+      const miAq = tacAqOfHost(it);
+      if (miAq) {
+        const parts = tacMirrorParts(miAq);
+        if (tacSyncMirror(movedKind, miAq)) {
+          if (!parts.mi) renderTacBoard();
+          else {
+            if (movedKind === 'aq') {
+              tacSyncMirrorEl('mirrorImage', parts.mi);
+            } else {
+              tacSyncMirrorEl('aquaMirror', miAq);
+              const parts2 = tacMirrorParts(miAq);
+              const bqTk = parts2 && parts2.bq;
+              const tkEl = bqTk && tacMapWrap.querySelector(`.tac-token[data-tid="${bqTk.tid}"]`);
+              if (tkEl && bqTk) {
+                tkEl.style.left = `${bqTk.x * 100}%`;
+                tkEl.style.top = `${bqTk.y * 100}%`;
+              }
             }
+            renderTacArrows();
           }
-          renderTacArrows();
         }
       }
     }
