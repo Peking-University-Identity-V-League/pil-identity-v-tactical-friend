@@ -16,6 +16,9 @@ window.umami.track();`;
 
 for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
   test(`packaged 3D pageviews and sponsor clicks respect the privacy boundary under ${prefix}`, async ({ page }) => {
+    // This covers two page navigations, telemetry requests and route teardown
+    // after the real-map suite; use the same CI budget as other packaged flows.
+    test.setTimeout(90000);
     const sent = [];
     // 路由处理器与页面跳转/测试拆除并发时，Playwright 会对已处置的请求抛出
     // "Route is already handled!"/"Fetch response has been disposed" 竞态错误；
