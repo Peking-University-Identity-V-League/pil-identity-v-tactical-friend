@@ -14,7 +14,10 @@ status.setAttribute('role', 'status');
 status.setAttribute('aria-live', 'polite');
 const rows = document.createElement('div');
 host.append(back, status, rows);
-document.querySelector('.panel')?.prepend(host);
+(document.querySelector('#workspace-handoff') || document.querySelector('.panel'))?.prepend(host);
+// Keep the navigation link in the workspace header; endpoint/floor feedback
+// remains beside the route controls when opening a plan from the 2D board.
+document.querySelector('.workspace-identity')?.append(back);
 
 async function ready() {
   const deadline = performance.now() + 60000;

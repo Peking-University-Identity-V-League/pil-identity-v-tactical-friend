@@ -552,18 +552,19 @@ export function installKeyboardCamera({ THREE, camera, controls, canvas, scene, 
     }
     mode = nextMode; if (mode === 'third') followCamera(); updateUI(); onModeChange(mode); return true;
   }
-  function startFromA() {
+  function startFromPoint(start,{fromA=false,heading=null}={}) {
     onManualMove();
-    const start = getStartPoint();
-    if (!start?.point) { status.textContent = t('请先在地图上标记 A 点，再从 A 点出发。'); return false; }
+    if (!start?.point) { status.textContent = t(fromA?'请先在地图上标记 A 点，再从 A 点出发。':'请先选择要查看的地图位置。'); return false; }
     ensureNavigation();if(!collisionReadyForSpawn())return false;
     const next = safeSpawn(start.point,{polygonId:start.polygonId,nearA:true});
-    if (!next) { status.textContent = t('A 点附近没有可安全站立并移动的位置，请重新选择出发位置。'); return false; }
+    if (!next) { status.textContent = t(fromA?'A 点附近没有可安全站立并移动的位置，请重新选择出发位置。':'所选位置附近无法安全站立，请点附近空地或播放路线查看。'); return false; }
     actor = next; falling=false;verticalSpeed=0;fallStart=null;lastLanding=null;movementBlocked = false; obstructionReason = '';
     if (mode !== 'third'&&!setMode('third'))return false;
-    spawnNotice=Math.hypot(...next.point.map((v,i)=>v-start.point[i]))>.1*u?'已从 A 点附近的可行走位置出发，测距点保持原位。':'';
+    if(Number.isFinite(heading))yaw=heading;
+    spawnNotice=Math.hypot(...next.point.map((v,i)=>v-start.point[i]))>.1*u?(fromA?'已从 A 点附近的可行走位置出发，测距点保持原位。':'已进入所选位置附近，计算结果保持不变。'):'';
     followCamera(); updateUI(); return true;
   }
+  function startFromA(){return startFromPoint(getStartPoint(),{fromA:true});}
   function look(dx, dy) {
     yaw += dx * .0025; yaw = Math.atan2(Math.sin(yaw), Math.cos(yaw));
     pitch = THREE.MathUtils.clamp(pitch + dy * .0025, pitchMin, pitchMax); followCamera();
@@ -714,7 +715,7 @@ export function installKeyboardCamera({ THREE, camera, controls, canvas, scene, 
     return Boolean(x || y || z);
   }
   return {
-    update, setMode, startFromA, showRoutePose, releaseRoutePose, clearKeys, speed,overviewSpeed,setOverviewSpeed, setSpeedMode, syncMovementProfile, setLanguage, isThirdPerson: () => mode === 'third',
+    update, setMode, startFromA, startFromPoint, showRoutePose, releaseRoutePose, clearKeys, speed,overviewSpeed,setOverviewSpeed, setSpeedMode, syncMovementProfile, setLanguage, isThirdPerson: () => mode === 'third',
     speedState() { return { mode: speedMode, value: selectedSpeed,overviewMetersPerSecond, presetId: speedMode === 'snap' ? profiles[nearestProfile(selectedSpeed)].id : null, profiles: profiles.map(p => ({ ...p })) }; },
     collisionState() { return { mode, actorPoint: actor?.point.slice() ?? null, body: { ...standingBody },
       routePoseActive, movementBlocked, obstructionReason,falling,sliding, cameraObstructed: mode === 'third' && cameraObstructed }; },
