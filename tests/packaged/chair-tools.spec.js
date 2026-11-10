@@ -4,6 +4,9 @@ async function openChairTools(page, prefix) {
   await page.goto(prefix + '/3d/h55_demo.html');
   await page.waitForFunction(() => window.chairToolsUI && window.measureAPI?.stats().ready
     && window.viewerAPI?.worldCollision().state === 'ready', null, { timeout: 90000 });
+  // The 2D handoff finishes asynchronously and establishes the initial view.
+  // Wait for it before switching views through the map controls.
+  await page.waitForFunction(() => document.querySelector('.pil-handoff')?.dataset.state === 'map-only');
 }
 
 for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
