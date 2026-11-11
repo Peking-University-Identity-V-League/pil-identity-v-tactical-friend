@@ -58,6 +58,8 @@ for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
     const release = await (await page.request.get(prefix + '/3d/__release.json')).json();
     const source = await (await page.request.get(prefix + '/' + release.asset_urls['__release.json'])).json();
     expect(source.chair_reachability).toBe(1);
+    expect(source.tide_reverse_query).toBe(1);
+    expect(source.tide_margin).toBe(1);
     expect(source.chair_destination).toBe(1);
     expect(source.chair_extrema).toBe(1);
     expect(source.chair_rank_by_time).toBe(1);
@@ -67,8 +69,8 @@ for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
   });
 }
 
-test('fixed chair 2 produces four tide bands under the packaged CSP and toggles only their legend', async ({ page }) => {
-  test.setTimeout(180000);
+test('fixed chair 2 shows the 21s margin and reverse target query under the packaged CSP', async ({ page }) => {
+  test.setTimeout(300000);
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await openChairTools(page, '/tactical-friend');
@@ -83,16 +85,36 @@ test('fixed chair 2 produces four tide bands under the packaged CSP and toggles 
     window.workspaceTools.collapse();
     window.__chairLegendResult = window.chairTools.stats().result;
   });
-  await expect(page.locator('[data-chair-range]')).toHaveCount(4);
+  await expect(page.locator('[data-chair-range]')).toHaveCount(5);
   await expect(page.locator('[data-planar-range-legend]')).toHaveText('');
   await page.locator('#planar-options-toggle').click();
   await page.locator('#planar-color-legend').click();
-  await expect(page.locator('[data-planar-legend-band]')).toHaveCount(4);
+  await expect(page.locator('[data-planar-legend-band]')).toHaveCount(5);
   await expect(page.locator('[data-planar-legend-band="tide-0"]')).toContainText('0–5 秒');
   await expect(page.locator('[data-planar-legend-band="tide-3"]')).toContainText('15–20 秒');
+  await expect(page.locator('[data-planar-legend-band="tide-margin"]')).toContainText('20–21 秒');
+  await expect(page.locator('[data-chair-risk-hatch]')).toHaveCount(1);
   await page.locator('#planar-color-legend').click();
   await expect(page.locator('[data-planar-range-legend]')).toHaveText('');
   expect(await page.evaluate(() => window.__chairLegendResult === window.chairTools.stats().result)).toBe(true);
-  await expect(page.locator('[data-chair-range]')).toHaveCount(4);
+  await expect(page.locator('[data-chair-range]')).toHaveCount(5);
+  const target = await page.evaluate(() => window.chairTools.stats().result.start);
+  await page.evaluate(() => window.workspaceTools.show('route', 'tide'));
+  await page.locator('[data-ui-control="tide-direction"] button[data-value="destination"]').click();
+  await expect(page.locator('#tide-pick')).toBeVisible();
+  await page.evaluate(point => window.chairTools.setTideTarget(point), target);
+  await page.locator('#tide-compute').click();
+  await page.waitForFunction(() => !window.chairTools.stats().busy, null, { timeout: 180000 });
+  const reverse = await page.evaluate(id => {
+    const result = window.chairTools.stats().result;
+    return { direction: result?.direction, nominal: result?.nominalSeconds, max: result?.maxSeconds, chair: result?.chairs.find(c => c.id === id) };
+  }, chairId);
+  expect(reverse.direction).toBe('destination');
+  expect(reverse.nominal).toBe(20);
+  expect(reverse.max).toBe(21);
+  expect(reverse.chair?.status).toBe('reachable');
+  expect(reverse.chair?.seconds).toBeLessThan(.001);
+  await page.locator(`#tide-results [data-chair-id="${chairId}"]`).click();
+  await expect(page.locator('#chair-route-preview')).toContainText('椅子到倒地点');
   expect(errors).toEqual([]);
 });
