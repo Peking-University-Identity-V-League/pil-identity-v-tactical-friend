@@ -46,7 +46,9 @@ for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
     await panel.locator('.planar-legend-reset').focus();
     await page.keyboard.press('Enter');
     expect((await panel.boundingBox()).width).toBeCloseTo(before.width, 0);
-    await page.locator('#planar-options-toggle').click();
+    if (!await page.locator('.planar-interactions').evaluate(n => n.open)) {
+      await page.locator('#planar-options-toggle').click();
+    }
     await guide.focus();
     await page.keyboard.press('Space');
     await expect(guide).toHaveAttribute('aria-pressed', 'false');
