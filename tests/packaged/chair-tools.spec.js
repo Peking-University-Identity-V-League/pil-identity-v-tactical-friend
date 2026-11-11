@@ -16,7 +16,7 @@ for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
     page.on('pageerror', error => errors.push(error.message));
     await openChairTools(page, prefix);
     await page.evaluate(() => {
-      window.workspaceTools.show('route', 'carry');
+      window.workspaceTools.show('route', 'extrema');
       window.tacticsAPI.planar.setMode('planar');
       window.workspaceTools.collapse();
     });
@@ -27,6 +27,26 @@ for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
     await expect(guide).toHaveAttribute('aria-pressed', 'false');
     await guide.click();
     expect(await page.evaluate(() => window.tacticsAPI.planar.getState().colorLegend)).toBe(true);
+    const panel = page.locator('.planar-legend');
+    await expect(panel).toBeVisible();
+    await expect(panel.locator('[data-planar-legend-marker]')).toHaveCount(4);
+    await expect(panel).toContainText('1 号是当前配置下最难挂椅的候选点');
+    await panel.getByRole('button', { name: '显示全部极值点', exact: true }).click();
+    expect(await page.locator('#extrema-display-limit').inputValue()).toBe('all');
+    expect(await page.locator('#extrema-prominence').inputValue()).toBe('0');
+    const before = await panel.boundingBox();
+    const mapView = await page.locator('#planar-map').getAttribute('viewBox');
+    await panel.locator('.planar-legend-move').focus();
+    await page.keyboard.press('ArrowRight');
+    expect((await panel.boundingBox()).x).toBeCloseTo(before.x + 5, 0);
+    await panel.locator('.planar-legend-resize').focus();
+    await page.keyboard.press('ArrowLeft');
+    expect((await panel.boundingBox()).width).toBeCloseTo(before.width - 5, 0);
+    expect(await page.locator('#planar-map').getAttribute('viewBox')).toBe(mapView);
+    await panel.locator('.planar-legend-reset').focus();
+    await page.keyboard.press('Enter');
+    expect((await panel.boundingBox()).width).toBeCloseTo(before.width, 0);
+    await page.locator('#planar-options-toggle').click();
     await guide.focus();
     await page.keyboard.press('Space');
     await expect(guide).toHaveAttribute('aria-pressed', 'false');
@@ -38,6 +58,8 @@ for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
     expect(source.chair_reachability).toBe(1);
     expect(source.chair_destination).toBe(1);
     expect(source.chair_extrema).toBe(1);
+    expect(source.chair_rank_by_time).toBe(1);
+    expect(source.movable_color_legend).toBe(1);
     expect(source.carry_drop_bands).toBe(1);
     expect(errors).toEqual([]);
   });
