@@ -14,6 +14,17 @@ for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
     test.setTimeout(120000);
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
+    await page.addInitScript(() => {
+      const Native = Worker;
+      window.Worker = class extends Native {
+        postMessage(message, ...args) {
+          if (window.__testChairBudget && message.queryType === 'chair-reachability' && message.options.mode === 'extrema') {
+            message = { ...message, options: { ...message.options, maxMilliseconds: window.__testChairBudget } };
+          }
+          return super.postMessage(message, ...args);
+        }
+      };
+    });
     await openChairTools(page, prefix);
     await page.evaluate(() => {
       window.workspaceTools.show('route', 'extrema');
@@ -63,8 +74,21 @@ for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
     expect(source.chair_destination).toBe(1);
     expect(source.chair_extrema).toBe(1);
     expect(source.chair_rank_by_time).toBe(1);
+    expect(source.complete_chair_graph).toBe(1);
     expect(source.movable_color_legend).toBe(1);
     expect(source.carry_drop_bands).toBe(1);
+    await page.evaluate(() => {
+      window.workspaceTools.show('route', 'extrema');
+      window.__testChairBudget = 1;
+      window.chairTools.compute('extrema');
+    });
+    await page.waitForFunction(() => !window.chairTools.stats().busy, null, { timeout: 60000 });
+    const incomplete = await page.evaluate(() => window.chairTools.stats().result);
+    expect(incomplete.diagnostics.stopReason).toBe('graph_incomplete');
+    expect(incomplete.complete).toBe(false);
+    expect(incomplete.points).toEqual([]);
+    await expect(page.locator('#extrema-controls')).toContainText('全图计算未完成，尚不能比较最近椅子');
+    await expect(page.locator('[data-extrema-id]')).toHaveCount(0);
     expect(errors).toEqual([]);
   });
 }
