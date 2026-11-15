@@ -1321,6 +1321,12 @@ export const TAC_ITEM_TYPES = {
   listen: {
     name: translate("items.trait.listen.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/0/07/0obrswd76b8u690r6ramdcrectlbpiy.png',
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 11, label: translate("items.trait.listen.name") },
+      ],
+    },
   },
   abnormal: {
     name: translate("items.trait.abnormal.name"),
