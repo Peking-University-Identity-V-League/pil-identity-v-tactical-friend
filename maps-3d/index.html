@@ -7,14 +7,17 @@
 .release-notes ul{margin:0;padding-left:1.25em;color:#b4c6d4;line-height:1.85}
 .release-notes li+li{margin-top:10px}
 .release-notes strong{color:#edf2f7}
-</style><h1>三维地图与战术测算（0.17.0-preview.12）</h1><p>地图工具按「路线、角色、场景、视图、演示、帮助」分类。先选地图，再选择 A/B 两点；详细说明在帮助中查看。板子初始不选中，点击后才显示编号；各场景面板及平面点位弹窗支持取消选中，保留刷点方案、板子状态、观察记录和已选路线。</p><p>全部10张地图、37个地窖候选及椅子／电机参考组合均保留。支持分层平面图、三维测距、角色与天赋计时、第三人称和 WASD 漫游、路线播放、战术步骤、方案导入导出和图片分享。53名求生者普通步行参数，膝跳反射（窗弹／板弹）、肌肉记忆和防御机制可选；较短距离与预计更快两种规划目标分别按完整三维行进长度和估算时间比较路线。</p><p>默认自动求路，搜索预算5秒，路线就绪后立即显示，也可选择一分钟搜索。整理地图与完整核验可能额外耗时。源导航及人物通行检查包含地图与当前物件阻挡；南桥等路线使用当前寻路修正。地图资源快照仍为2026-10-23；不承诺全局最短或实机距离误差。战术分享码只含方案，不携带本机路径。</p><p>「路线」支持搏命下椅范围与倒地点反查、双向牵气球挂椅和挂椅极值点，计入当前椅子组合及地下室。平面地图的「地图图例 → 颜色说明」可显示或隐藏范围分档。</p><section class="grid"><a href="h55_chinatown.html">唐人街</a><a href="h55_deadforest_sp.html">不归林</a><a href="h55_demo.html">红教堂</a><a href="h55_demo2.html">红教堂（夜）</a><a href="h55_fishingvillage.html">湖景村</a><a href="h55_hospital2.html">圣心医院</a><a href="h55_playground.html">月亮河公园</a><a href="h55_sleepingtown3.html">永眠镇</a><a href="ordnance_factory1.html">军工厂</a><a href="ordnance_factory2.html">里奥的回忆</a></section>
+</style><h1>三维地图与战术测算（0.17.0-preview.14）</h1><p>地图工具按「路线、角色、场景、视图、演示、帮助」分类。先选地图，再选择 A/B 两点；详细说明在帮助中查看。板子初始不选中，点击后才显示编号；各场景面板及平面点位弹窗支持取消选中，保留刷点方案、板子状态、观察记录和已选路线。</p><p>全部10张地图、37个地窖候选及椅子／电机参考组合均保留。支持分层平面图、三维测距、角色与天赋计时、第三人称和 WASD 漫游、路线播放、战术步骤、方案导入导出和图片分享。53名求生者普通步行参数，膝跳反射（窗弹／板弹）、肌肉记忆和防御机制可选；较短距离与预计更快两种规划目标分别按完整三维行进长度和估算时间比较路线。</p><p>默认自动求路，搜索预算5秒，路线就绪后立即显示，也可选择一分钟搜索。整理地图与完整核验可能额外耗时。源导航及人物通行检查包含地图与当前物件阻挡；南桥等路线使用当前寻路修正。地图资源快照仍为2026-10-23；不承诺全局最短或实机距离误差。战术分享码只含方案，不携带本机路径。</p><p>「路线」支持搏命下椅范围与倒地点反查、双向牵气球挂椅和挂椅极值点，计入当前椅子组合及地下室。平面地图的「地图图例 → 颜色说明」可显示或隐藏范围分档。</p><section class="grid"><a href="h55_chinatown.html">唐人街</a><a href="h55_deadforest_sp.html">不归林</a><a href="h55_demo.html">红教堂</a><a href="h55_demo2.html">红教堂（夜）</a><a href="h55_fishingvillage.html">湖景村</a><a href="h55_hospital2.html">圣心医院</a><a href="h55_playground.html">月亮河公园</a><a href="h55_sleepingtown3.html">永眠镇</a><a href="ordnance_factory1.html">军工厂</a><a href="ordnance_factory2.html">里奥的回忆</a></section>
 <section class="release-notes" aria-labelledby="release-notes-title">
   <h2 id="release-notes-title">更新公告</h2>
   <p class="release-meta">
-    <span class="release-version">v0.17.0-preview.12</span>
-    <span>更新时间：<time datetime="2026-11-12T15:54:00+08:00">2026-11-12 15:54</time>（北京时间）</span>
+    <span class="release-version">v0.17.0-preview.14</span>
+    <span>更新时间：<time datetime="2026-11-17T00:54:00+08:00">2026-11-17 00:54</time>（北京时间）</span>
   </p>
   <ul>
+    <li><strong>挂椅交互区：</strong>正向查椅子、反向挂人范围、点选路线与极值统一使用到椅子 ui 点的三维距离，默认 20 源单位（约 1.6878 米），并检查站立、遮挡和楼层。交互点采用固定资源参考姿态，仍待实机核验。</li>
+    <li><strong>搬运参数：</strong>可设置初始挣扎进度，选择前锋时计入强力挣扎；监管者常见移速与牵起耗时分别显示，双方天赋默认不携带。</li>
+    <li><strong>预计算进度：</strong>全量极值数据正在后台重算，当前网页继续实时计算；预计算加速将在接入后启用。</li>
     <li><strong>搏命范围：</strong>下椅后按 5／10／15／20 秒分段显示，并计入地下室；新增“选点查椅子”，可反查能赶到倒地点的椅子、用时与路线。20–21 秒用浅黄色斜纹表示额外 5% 估算余量，需实际额外加速才能达到，颜色说明同步标注。</li>
     <li><strong>双向挂椅：</strong>选起点查看可挂椅子及耗时，或选目标椅子查看可搬运范围；支持移速、双方天赋和层数，牵气球路线禁止翻窗。</li>
     <li><strong>挂椅极值点：</strong>支持椅子组合与地下室选择，按到最近椅子的挂椅耗时从大到小编号，1 号为当前配置下最难挂椅的候选点；已核查十张地图的边界与路线。修复全图通路未完成时错误选择最近椅子和生成排名的问题；未完成会明确提示重算，并减少重复通路核验。</li>
