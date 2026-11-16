@@ -289,6 +289,14 @@ export const tacDungeonSizeEl = $('tacDungeonSize');
 
 export const tacDungeonSizeDefEl = $('tacDungeonSizeDef');
 
+export const tacShowSpawnsEl = $('tacShowSpawns');
+
+export const tacSpawnSizeEl = $('tacSpawnSize');
+
+export const tacSpawnSizeDefEl = $('tacSpawnSizeDef');
+
+export const tacSpawnText = $('tacSpawnText');
+
 export const tacShowDoorsEl = $('tacShowDoors');
 
 export const tacDoorSizeEl = $('tacDoorSize');

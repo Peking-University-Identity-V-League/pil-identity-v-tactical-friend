@@ -3087,6 +3087,12 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 }
 
 .tac-display-list { display: flex; flex-direction: column; gap: 8px; }
+/* 显示设置行在空间不足时按控件粒度换行（如平板窄屏：默认钮落到下一行） */
+.tac-manage-row.tac-display-row {
+  flex-wrap: wrap;
+  row-gap: 4px;
+}
+
 .tac-display-row .tac-display-toggle,
 .tac-display-snap .tac-display-toggle {
   color: var(--text);
@@ -3210,7 +3216,8 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 .tac-dungeon,
 .tac-door,
 .tac-chair,
-.tac-box {
+.tac-box,
+.tac-spawn {
   position: absolute;
   z-index: 2;
   width: 6%;

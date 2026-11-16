@@ -313,6 +313,19 @@
                 <label class="tac-display-toggle"><input type="checkbox" id="tacShowZones"><span data-i18n="ui.common.show"></span></label>
               </div>
             </div>
+          <div class="tac-manage-entry" id="tacSpawnEntry">
+            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="game.spawnPoint"></span></div>
+            <div class="tac-manage-row tac-display-row">
+              <label class="tac-display-toggle"><input type="checkbox" id="tacShowSpawns"><span data-i18n="ui.common.show"></span></label>
+              <span class="tac-display-mid">
+                <span class="switch-btn" id="tacSpawnPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacSpawnPrev.title&quot;}">‹</span>
+                <span class="tac-display-text" id="tacSpawnText"></span>
+                <span class="switch-btn" id="tacSpawnNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacSpawnNext.title&quot;}">›</span>
+              </span>
+              <label class="tac-manage-slider"><span data-i18n="ui.tacManageSlider.label"></span><input type="range" id="tacSpawnSize" min="3" max="12" step="0.5" value="6"></label>
+              <label class="tac-manage-def"><input type="checkbox" id="tacSpawnSizeDef" checked><span data-i18n="ui.common.default"></span></label>
+            </div>
+          </div>
           <div class="tac-manage-entry">
             <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="game.escapeDoor"></span></div>
             <div class="tac-manage-row tac-display-row">

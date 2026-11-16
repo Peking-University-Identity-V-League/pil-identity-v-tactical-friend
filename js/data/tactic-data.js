@@ -2600,7 +2600,13 @@ export const BOX_ICON_URL = 'https://i0.hdslb.com/bfs/new_dyn/'
   + 'a651cfc24c47f2fa125f20c90f5dda6896830223.png@1192w.avif';
 
 
-export const TAC_DISPLAY_DEFAULT = { cipherSize: 6, dungeonSize: 6, doorSize: 6, chairSize: 6, boxSize: 1.5 };
+export const SPAWN_SURVIVOR_ICON_URL = 'https://patchwiki.biligame.com/images/dwrg/4/45/'
+  + 'omv2vmop0j63s9aprhjjkt4psykuy5p.png';
+
+export const SPAWN_HUNTER_ICON_URL = 'https://patchwiki.biligame.com/images/dwrg/7/7a/'
+  + 'f3sec5gnnhzh1xprcbxeaxa1uuzhkmo.png';
+
+export const TAC_DISPLAY_DEFAULT = { cipherSize: 6, dungeonSize: 6, doorSize: 6, chairSize: 6, boxSize: 1.5, spawnSize: 6 };
 
 export const TAC_ZOOM_MIN = 1, TAC_ZOOM_MAX = 5;
 
