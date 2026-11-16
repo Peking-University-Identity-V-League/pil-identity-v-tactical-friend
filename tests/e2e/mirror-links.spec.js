@@ -45,7 +45,7 @@ test('range desc lines have hover delete × that removes range and un-highlights
   await expect(lv2(page, '水镜可放置范围')).toHaveClass(/active/);
   const descs = rangeBox(page).locator('.tac-range-desc');
   await expect(descs).toHaveCount(1);
-  await expect(descs.first()).toContainText('水镜可放置范围 25.3m');
+  await expect(descs.first()).toContainText('水镜可放置范围 半径25.3m');
   // 悬浮删除 ×：描述消失、范围隐藏
   await descs.first().hover();
   await descs.first().locator('.tac-range-del').click();
