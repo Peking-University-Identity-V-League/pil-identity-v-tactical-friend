@@ -121,3 +121,17 @@ test('undo single-segment deletion restores route IDs, configs and shared refere
   expect((await read(page)).board.measures).toEqual(original);
   expect((await read(page)).shared).toBe(true);
 });
+
+test('trait buff form note derives from the role speed forms (siphon soul / follower)', async ({ page }) => {
+  await tool(page, 'measure');
+  await page.locator('#tacCampToggle .side-btn[data-camp="hunter"]').click();
+  await page.locator('#tacTraitAddBtn').click();
+  const list = page.locator('#tacTraitList');
+  // 摄魂 forms:[0] → 谢必安；信徒超出控制范围 forms:[1] → 信徒
+  await expect(list.locator('.tac-talent-row', { hasText: '摄魂' }))
+    .toContainText('65%');
+  await expect(list.locator('.tac-talent-row', { hasText: '摄魂' }))
+    .toContainText('仅谢必安形态生效');
+  await expect(list.locator('.tac-talent-row', { hasText: '信徒超出控制范围' }))
+    .toContainText('仅信徒形态生效');
+});

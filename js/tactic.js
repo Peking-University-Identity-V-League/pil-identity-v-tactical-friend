@@ -184,7 +184,7 @@ function tacTalentButtons(hostRole, camp) {
     const opt = def.ranges.options[0];
     if (!opt || opt.size_m == null) continue;
     if (kind === 'fearRadius') {
-      if (camp === 'hunter' && hostRole === 'Geisha') {
+      if (camp === 'hunter' && hostRole === 'geisha') {
         out.push({
           tk: 'fearRadius', kind, label: def.name, base: opt.size_m,
           variants: [
@@ -2831,7 +2831,7 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
         ? `${(e2.opt.label || '') + postfix} ${translate("ui.tacRangeBox.radius")} ${tacRangeFmt(e2.meters)}m ${translate("ui.tacRangeBox.crossWidth")} ${tacRangeFmt(e2.opt.crossWidth)}m`
         : e2.opt.ringInner != null
           ? `${(e2.opt.label || '') + postfix} ${translate("ui.tacRangeBox.innerRadius")} ${tacRangeFmt(e2.opt.ringInner)}m ${translate("ui.tacRangeBox.outerRadius")} ${tacRangeFmt(e2.meters)}m`
-          : `${(e2.opt.label || '') + postfix} ${tacRangeFmt(e2.meters)}m`;
+          : `${(e2.opt.label || '') + postfix} ${translate("ui.tacRangeBox.radius")}${tacRangeFmt(e2.meters)}m`;
       row.appendChild(txt);
       const del = document.createElement('button');
       del.type = 'button';
@@ -2850,7 +2850,7 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
       const row = document.createElement('div');
       row.className = 'tac-range-desc';
       const txt = document.createElement('span');
-      txt.textContent = `${tr.label}${tr.sub ? '·' + tr.sub : postfix} ${tacRangeFmt(tr.meters)}m`;
+      txt.textContent = `${tr.label}${tr.sub ? '·' + tr.sub : postfix} ${translate("ui.tacRangeBox.radius")}${tacRangeFmt(tr.meters)}m`;
       row.appendChild(txt);
       const del = document.createElement('button');
       del.type = 'button';
@@ -4549,8 +4549,14 @@ export function buildTacTraitList() {
     if (t.states) { 
       desc += translate("application.buildTacTraitList", { name: t.states.map((k) => (TAC_MOVEMENT_SURVIVOR.states[k] || {}).name || k).join('/') });
     }
-    if (t.forms) { 
-      desc += t.key === 'windWings' ? translate("application.buildTacTraitListAlternate") : translate("application.buildTacTraitListThird");
+    if (t.forms) {
+      // 按 forms 索引取该角色速度形态名：如摄魂 forms:[0]→谢必安、信徒超出 forms:[1]→信徒
+      const roleDef = Object.values(TAC_ROLES).find((r) => r.name === t.role);
+      const formNames = roleDef && typeof roleDef.speed === 'object'
+        ? t.forms.map((fi) => Object.keys(roleDef.speed)[fi]).filter(Boolean).join('/')
+        : '';
+      desc += t.key === 'windWings' ? translate("application.buildTacTraitListAlternate")
+        : translate("application.buildTacTraitListFifth", { name: formNames });
     }
     const lv = t.levels
       ? `<select data-tlv="${t.key}">`

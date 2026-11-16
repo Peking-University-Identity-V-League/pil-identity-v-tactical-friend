@@ -876,6 +876,12 @@ export const TAC_ITEM_TYPES = {
   },
   lethalCrash: {
     name: translate("items.evilReptilian.lethalCrash.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 3, label: translate("items.evilReptilian.lethalCrash.name") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/31/63r3zrv33m7hpbu7n1bshmyypuz0wro.png/90px-%E5%AD%BD%E8%9C%A51%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   aquaMirror: {
@@ -2277,6 +2283,12 @@ export const TAC_ROLES = {
     name: translate("characters.evilReptilian.name"),
     camp: 'hunter',
     speed: 4.64,
+    ranges: {
+      key: 'showTrait',
+      options: [
+        { size_m: 3, label: translate("characters.evilReptilian.range.label.lethalCrash") },
+      ],
+    },
     items: ['preyingLeap', 'crash', 'lethalCrash'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/8/8b/e7uzw52eywkaptcdagdm61cihnpot2p.png/90px-%E5%AD%BD%E8%9C%A5%E5%A4%B4%E5%83%8F.png',
   },
