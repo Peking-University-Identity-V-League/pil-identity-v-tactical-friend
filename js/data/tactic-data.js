@@ -41,7 +41,7 @@ export const TAC_MOVEMENT_BUFFS = {
       { key: 'armyBond', role: translate("characters.coordinator.name"), name: translate("movement.buff.trait.coordinator.armyBond.name"), mult: 1.05 },
       { key: 'dashFootball', role: translate("characters.forward.name"), name: translate("movement.buff.trait.forward.dashFootball.name"), mult: 3 },
       { key: 'ridingFullRage', role: translate("characters.wildling.name"), name: translate("movement.buff.trait.wildling.ridingFullRage.name"), mult: 1.33 },
-      { key: 'duphrin', role: translate("characters.barmaid.name"), name: translate("movement.buff.trait.duphrin.name"), mult: 1.5, duration: 2 },
+      { key: 'duphrin', role: translate("characters.barmaid.name"), name: translate("movement.buff.trait.barmaid.duphrin.name"), mult: 1.5, duration: 2 },
       { key: 'undergroundSneak', role: translate("characters.graveKeeper.name"), name: translate("movement.buff.trait.graveKeeper.undergroundSneak.name"), mult: 1.1 },
       { key: 'aestheticResonance', role: translate("characters.painter.name"), name: translate("movement.buff.trait.painter.aestheticResonance.name"), levels: [1.02, 1.04] },
       { key: 'altruism', role: translate("characters.batter.name"), name: translate("movement.buff.trait.batter.altruism.name"), mult: 1.5, duration: 10 },
@@ -57,13 +57,38 @@ export const TAC_MOVEMENT_BUFFS = {
       { key: 'flexibleJoints', role: translate("characters.puppeteer.name"), name: translate("movement.buff.trait.puppeteer.flexibleJoints.name"), mult: 1.08, duration: 9 },
     ],
     hunter: [
-      { key: 'windWings', role: translate("characters.smileyFace.name"), name: translate("movement.buff.trait.windWings.name"), mult: 1.2, roles: ['smileyFace'], forms: [1, 2, 3] },
-      { key: 'fog', role: translate("characters.theRipper.name"), name: translate("movement.buff.trait.theRipper.fog.name"), mult: 1.2 },
-      { key: 'entangled', role: translate("characters.soulWeaver.name"), name: translate("movement.buff.trait.soulWeaver.entangled.name"), levels: [1.5, 1.9, 2.35] },
+      { key: 'kindlingWrath', role: translate("characters.hellEmber.name"), name: translate("movement.buff.trait.hellEmber.kindlingWrath.name"), mult: 1.08, duration: 8 },
+      { key: 'puppetSwitchPosition', role: translate("characters.hellEmber.name"), name: translate("movement.buff.trait.hellEmber.puppetSwitchPosition.name"), mult: 1.5, duration: 1.5 },
+      { key: 'rockerDash', role: translate("characters.smileyFace.name"), name: translate("movement.buff.trait.smileyFace.rockerDash.name"), levels: [1.55, 1.62, 2] },
+      { key: 'windWings', role: translate("characters.smileyFace.name"), name: translate("movement.buff.trait.smileyFace.windWings.name"), mult: 1.2 },
+      { key: 'propeller', role: translate("characters.smileyFace.name"), name: translate("movement.buff.trait.smileyFace.propeller.name"), mult: 0.9, postMult: true },
+      { key: 'chainHookSwing', role: translate("characters.gameKeeper.name"), name: translate("movement.buff.trait.gameKeeper.chainHookSwing.name"), mult: 0.95, postMult: true },
+      { key: 'hiddenInMist', role: translate("characters.theRipper.name"), name: translate("movement.buff.trait.theRipper.hiddenInMist.name"), mult: 1.15 },
+      { key: 'fogZone', role: translate("characters.theRipper.name"), name: translate("movement.buff.trait.theRipper.fogZone.name"), mult: 1.2 },
+      { key: 'entangled', role: translate("characters.soulWeaver.name"), name: translate("movement.buff.trait.soulWeaver.entangled.name"), levels: [1.25, 1.46, 1.675] },
+      { key: 'dashHit', role: translate("characters.geisha.name"), name: translate("movement.buff.trait.geisha.dashHit.name"), mult: 3 },
+      { key: 'withoutUmbrella', role: translate("characters.wuchang.name"), name: translate("movement.buff.trait.wuchang.withoutUmbrella.name"), mult: 1.1 },
+      { key: 'siphonSoul', role: translate("characters.wuchang.name"), name: translate("movement.buff.trait.wuchang.siphonSoul.name"), mult: 1.65, forms: [0] },
+      { key: 'tentaclesCharged', role: translate("characters.theFeaster.name"), name: translate("movement.buff.trait.theFeaster.tentaclesCharged.name"), mult: 0.94, postMult: true },
       { key: 'followerOutOfRadius', role: translate("characters.dreamWitch.name"), name: translate("movement.buff.trait.dreamWitch.followerOutOfRadius.name"), mult: 1.3, postMult: true, forms: [1] },
+      { key: 'restfulRoad', role: translate("characters.axeBoy.name"), name: translate("movement.buff.trait.axeBoy.restfulRoad.name"), mult: 2 },
+      { key: 'dispelSouls', role: translate("characters.axeBoy.name"), name: translate("movement.buff.trait.axeBoy.dispelSouls.name"), mult: 1.4, duration: 2.6 },
+      { key: 'musicNoteCharged', role: translate("characters.violinist.name"), name: translate("movement.buff.trait.violinist.musicNoteCharged.name"), mult: 0.97, postMult: true },
+      { key: 'sculptureCharged', role: translate("characters.sculptor.name"), name: translate("movement.buff.trait.sculptor.sculptureCharged.name"), mult: 0.97, postMult: true },
+      { key: 'overload', role: translate("characters.undead.name"), name: translate("movement.buff.trait.undead.overload.name"), mult: 0.92, postMult: true },
       { key: 'slipstream', role: translate("characters.naiad.name"), name: translate("movement.buff.trait.naiad.slipstream.name"), mult: 1.3 },
-      { key: 'windwalk', role: translate("characters.nightWatch.name"), name: translate("movement.buff.trait.nightWatch.windwalk.name"), mult: 1.12 },
-      { key: 'heightenedSenses', role: translate("characters.herztier.name"), name: translate("movement.buff.trait.heightenedSenses.name"), mult: 1.08, duration: 10 },
+      { key: 'poaching', role: translate("characters.nightmare.name"), name: translate("movement.buff.trait.nightmare.poaching.name"), mult: 1.13 },
+      { key: 'justVerdict', role: translate("characters.clerk.name"), name: translate("movement.buff.trait.clerk.justVerdict.name"), mult: 1.06, duration: 15 },
+      { key: 'windwalk', role: translate("characters.nightWatch.name"), name: translate("movement.buff.trait.nightWatch.windwalk.name"), mult: 1.12, duration: 6 },
+      { key: 'stealth', role: translate("characters.operaSinger.name"), name: translate("movement.buff.trait.operaSinger.stealth.name"), mult: 1.08 },
+      { key: 'anotherShadowRealmBonus', role: translate("characters.operaSinger.name"), name: translate("movement.buff.trait.operaSinger.anotherShadowRealmBonus.name"), mult: 1.45 },
+      { key: 'attackMiss', role: translate("characters.hullabaloo.name"), name: translate("movement.buff.trait.hullabaloo.attackMiss.name"), mult: 0.3, postMult: true },
+      { key: 'pettyGains', role: translate("characters.peddler.name"), name: translate("movement.buff.trait.peddler.pettyGains.name"), mult: 1.08, duration: 10 },
+      { key: 'metalAffinity', role: translate("characters.peddler.name"), name: translate("movement.buff.trait.peddler.metalAffinity.name"), mult: 0.5, duration: 1, postMult: true },
+      { key: 'inertia', role: translate("characters.cueist.name"), name: translate("movement.buff.trait.cueist.inertia.name"), mult: 1.18, duration: 6 },
+      { key: 'assimilationEffect', role: translate("characters.queenBee.name"), name: translate("movement.buff.trait.queenBee.assimilationEffect.name"), mult: 1.12 },
+      { key: 'bacterialSymbiosis', role: translate("characters.dentist.name"), name: translate("movement.buff.trait.dentist.bacterialSymbiosis.name"), mult: 1.05 },
+      { key: 'heightenedSenses', role: translate("characters.herztier.name"), name: translate("movement.buff.trait.herztier.heightenedSenses.name"), mult: 1.08, duration: 10 },
     ],
   },
   talent: {
@@ -608,10 +633,22 @@ export const TAC_ITEM_TYPES = {
   },
   puppet1: {
     name: translate("items.hellEmber.puppet1.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 12, label: translate("items.hellEmber.puppet.range.label.showSurvivor") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/a/a6/cdnjdljtwds6ly62lzyytmb6v84omae.png/90px-%E5%8E%82%E9%95%BF1%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   puppet2: {
     name: translate("items.hellEmber.puppet2.name"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: 12, label: translate("items.hellEmber.puppet.range.label.showSurvivor") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/a/a6/cdnjdljtwds6ly62lzyytmb6v84omae.png/90px-%E5%8E%82%E9%95%BF1%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
   windWings: {
@@ -2132,7 +2169,7 @@ export const TAC_ROLES = {
   smileyFace: {
     name: translate("characters.smileyFace.name"),
     camp: 'hunter',
-    speed: { [translate("characters.smileyFace.name")]: 4.56, [translate("characters.smileyFace.speed.rocketDashTier0")]: 7.07, [translate("characters.smileyFace.speed.rocketDashTier1")]: 7.39, [translate("characters.smileyFace.speed.rocketDashTier2")]: 9.12 },
+    speed: 4.56,
     ranges: {
       key: 'showTrait',
       options: [
@@ -2165,7 +2202,7 @@ export const TAC_ROLES = {
     items: ['cocoon', 'webbing', 'spinning'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/97/dpvb1d7e4f03tqh9s0l0ulua91ouuab.png/90px-%E8%9C%98%E8%9B%9B%E5%A4%B4%E5%83%8F.png',
   },
-  Geisha: {
+  geisha: {
     name: translate("characters.geisha.name"),
     camp: 'hunter',
     speed: { [translate("characters.geisha.speed.beautyForm")]: 4.73, [translate("characters.geisha.speed.prajnaForm")]: 4.56 },
@@ -2175,7 +2212,7 @@ export const TAC_ROLES = {
   wuchang: {
     name: translate("characters.wuchang.name"),
     camp: 'hunter',
-    speed: { [translate("characters.wuchang.speed.xieBian")]: 4.73, [translate("characters.wuchang.speed.fanWuJiu")]: 4.56 },
+    speed: { [translate("characters.wuchang.speed.xieBiAn")]: 4.73, [translate("characters.wuchang.speed.fanWuJiu")]: 4.56 },
     items: ['umbrella', 'siphonSoulWaveringSoul'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/2a/gd5yd3hfaohhj2pozgqf2cfivpadbn6.png/90px-%E5%AE%BF%E4%BC%9E%E4%B9%8B%E9%AD%82%E5%A4%B4%E5%83%8F.png',
   },
@@ -2488,7 +2525,7 @@ export const TAC_ROLES = {
   queenBee: {
     name: translate("characters.queenBee.name"),
     camp: 'hunter',
-    speed: 4.64,
+    speed: { [translate("characters.queenBee.name")]: 4.64, [translate("characters.queenBee.speed.hiveCluster")]: 12 },
     ranges: {
       key: 'showTrait',
       options: [
