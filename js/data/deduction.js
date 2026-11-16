@@ -4,8 +4,8 @@ import { CN_NUM, cnNum } from '../core/utils.js';
 
 import { translate } from '../core/i18n.js';
 
-export const DED_EMPTY_HINT = translate("maps.dedEmptyHint")
-  + translate("maps.dedEmptyHintAlternate");
+export const DED_EMPTY_HINT = translate("deduction.dedEmptyHint")
+  + translate("deduction.dedEmptyHintAlternate");
 
 
 

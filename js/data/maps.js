@@ -289,6 +289,15 @@ export const MAPS_DATA = [
 
     const escapeDoors = [[326, 530], [615, 88], [311, 530], [615, 104]];
 
+    const spawns = [
+      { survivor: [[516, 92], [443, 179], [266, 220], [291, 343]], hunter: [537, 398] },
+      { survivor: [[443, 179], [361, 336], [347, 466], [192, 475]], hunter: [167, 179] },
+      { survivor: [[317, 49], [516, 92], [200, 113], [192, 475]], hunter: [370, 302] },
+      { survivor: [[250, 72], [362, 87], [420, 309], [395, 482]], hunter: [181, 305] },
+      { survivor: [[200, 113], [266, 220], [482, 298], [361, 336]], hunter: [433, 41] },
+      { survivor: [[516, 92], [487, 202], [229, 305], [361, 336]], hunter: [252, 46] },
+    ];
+
     const widthM = 151.5;
     const law_urls = ['https://www.bilibili.com/video/BV117tB6pE5R', 'https://v.douyin.com/WLJ-VhInJbE'];
     const fixedHint = translate("maps.sacredHeartHospital.fixedHint");
@@ -407,7 +416,7 @@ export const MAPS_DATA = [
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
-      fixedSpawns,
+      fixedSpawns, spawns,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { exactly, either, same, atLeast1, chain } = dedHelpers(ciphers);
@@ -499,6 +508,15 @@ export const MAPS_DATA = [
 
 
     const escapeDoors = [[297, 543], [474, 90], [283, 543], [488, 90]];
+
+    const spawns = [
+      { survivor: [[510, 195], [401, 236], [295, 355], [295, 520]], hunter: [501, 440] },
+      { survivor: [[370, 195], [485, 243], [211, 304], [207, 426]], hunter: [428, 447] },
+      { survivor: [[297, 177], [514, 189], [184, 236], [138, 436]], hunter: [401, 365] },
+      { survivor: [[212, 195], [150, 284], [388, 295], [447, 385]], hunter: [236, 478] },
+      { survivor: [[212, 195], [150, 277], [295, 355], [370, 483]], hunter: [114, 481] },
+      { survivor: [[253, 101], [439, 165], [519, 313], [112, 480]], hunter: [296, 319] },
+    ];
 
     const widthM = 153.5;
     const law_urls = ['https://www.bilibili.com/video/BV169Y66PEiS', 'https://v.douyin.com/t7aa5IHJh9M'];
@@ -616,6 +634,7 @@ export const MAPS_DATA = [
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
+      spawns,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { fixed, region, exactly, atLeast1, chain } = dedHelpers(ciphers);
@@ -711,6 +730,16 @@ export const MAPS_DATA = [
 
 
     const escapeDoors = [[878, 1066], [200, 134], [834, 1066], [238, 134]];
+
+    const spawns = [
+      { survivor: [[644, 347], [369, 462], [494, 658], [955, 738]], hunter: [1032, 378] },
+      { survivor: [[764, 295], [873, 485], [521, 630], [677, 787]], hunter: [1162, 717] },
+      { survivor: [[873, 485], [1101, 563], [494, 658], [297, 842]], hunter: [902, 885] },
+      { survivor: [[330, 310], [315, 527], [1127, 634], [816, 826]], hunter: [410, 853] },
+      { survivor: [[992, 704], [297, 842], [678, 858], [1018, 950]], hunter: [540, 485] },
+      { survivor: [[697, 506], [959, 735], [297, 842], [736, 894]], hunter: [289, 303] },
+      { survivor: [[330, 310], [783, 384], [636, 690], [678, 858]], hunter: [253, 730] },
+    ];
 
     const widthM = 199.1;
     const law_urls = ['https://www.bilibili.com/video/BV1HvbD6pE9k', 'https://v.douyin.com/JM1zFSML9hw'];
@@ -833,6 +862,7 @@ export const MAPS_DATA = [
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
+      spawns,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { fixed, region, exactly, either, same, chain } = dedHelpers(ciphers);
@@ -934,6 +964,16 @@ export const MAPS_DATA = [
 
 
     const escapeDoors = [[1312, 88], [130, 946], [1340, 88], [101, 946]];
+
+    const spawns = [
+      { survivor: [[1116, 296], [736, 308], [551, 627], [740, 759]], hunter: [1191, 764] },
+      { survivor: [[275, 281], [1247, 461], [669, 733], [925, 753]], hunter: [743, 219] },
+      { survivor: [[863, 362], [1291, 464], [364, 516], [493, 808]], hunter: [939, 744] },
+      { survivor: [[589, 317], [1375, 710], [483, 751], [1031, 749]], hunter: [1137, 269] },
+      { survivor: [[736, 308], [963, 463], [229, 517], [1260, 829]], hunter: [616, 723] },
+      { survivor: [[1070, 297], [589, 317], [276, 371], [1024, 754]], hunter: [549, 772] },
+      { survivor: [[589, 317], [1031, 749], [525, 759], [167, 841]], hunter: [125, 343] },
+    ];
 
     const widthM = 184.4;
     const law_urls = ['https://www.bilibili.com/video/BV1gN8t6BEJp', 'https://v.douyin.com/W5bCLGlPRYg'];
@@ -1055,6 +1095,7 @@ export const MAPS_DATA = [
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
+      spawns,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { fixed, region, exactly, either, chain } = dedHelpers(ciphers);
@@ -1151,6 +1192,17 @@ export const MAPS_DATA = [
 
 
     const escapeDoors = [[64, 230], [612, 58], [64, 211], [630, 58]];
+
+    const spawns = [
+      { survivor: [[131, 233], [345, 308], [178, 334], [423, 596]], hunter: [175, 578] },
+      { survivor: [[131, 233], [267, 254], [491, 367], [521, 483]], hunter: [265, 514] },
+      { survivor: [[295, 128], [267, 254], [371, 471], [574, 539]], hunter: [570, 255] },
+      { survivor: [[360, 150], [430, 310], [273, 379], [86, 446]], hunter: [64, 162] },
+      { survivor: [[192, 94], [178, 334], [577, 403], [318, 455]], hunter: [407, 216] },
+      { survivor: [[102, 86], [157, 196], [642, 323], [273, 379]], hunter: [430, 126] },
+      { survivor: [[267, 254], [577, 403], [86, 446], [574, 539]], hunter: [328, 530] },
+      { survivor: [[478, 143], [360, 150], [318, 455], [423, 596]], hunter: [574, 367] },
+    ];
 
     const widthM = 168.6;
     const law_urls = ['https://www.bilibili.com/video/BV1zFgW6oEfS', 'https://v.douyin.com/FxKkE1nBno4'];
@@ -1270,6 +1322,7 @@ export const MAPS_DATA = [
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
+      spawns,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { region, exactly, chain, implies, link } = dedHelpers(ciphers);
@@ -1371,6 +1424,16 @@ export const MAPS_DATA = [
 
 
     const escapeDoors = [[387, 20], [225, 616], [404, 20], [209, 616]];
+
+    const spawns = [
+      { survivor: [[394, 320], [611, 325], [618, 511], [366, 667]], hunter: [109, 417] },
+      { survivor: [[638, 180], [394, 320], [331, 493], [496, 701]], hunter: [100, 213] },
+      { survivor: [[164, 322], [560, 327], [412, 424], [366, 667]], hunter: [305, 40] },
+      { survivor: [[248, 243], [181, 404], [331, 482], [530, 556]], hunter: [653, 210] },
+      { survivor: [[291, 230], [443, 248], [250, 342], [367, 521]], hunter: [720, 363] },
+      { survivor: [[271, 181], [601, 315], [394, 320], [331, 493]], hunter: [614, 628] },
+      { survivor: [[248, 243], [394, 320], [730, 355], [662, 483]], hunter: [242, 596] },
+    ];
 
 
     const widthM = 137;
@@ -1489,6 +1552,7 @@ export const MAPS_DATA = [
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
+      spawns,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { fixed, region, either, atMost1 } = dedHelpers(ciphers);
@@ -1581,6 +1645,15 @@ export const MAPS_DATA = [
 
 
     const escapeDoors = [[705, 1134], [780, 18], [667, 1134], [818, 18]];
+
+    const spawns = [
+      { survivor: [[924, 123], [1003, 582], [416, 771], [739, 994]], hunter: [170, 177] },
+      { survivor: [[570, 218], [836, 396], [288, 449], [916, 856]], hunter: [437, 951] },
+      { survivor: [[181, 678], [1270, 693], [475, 1002], [1044, 1009]], hunter: [720, 483] },
+      { survivor: [[639, 207], [1129, 388], [505, 603], [191, 908]], hunter: [1110, 947] },
+      { survivor: [[190, 398], [332, 653], [700, 703], [1028, 994]], hunter: [1013, 102] },
+      { survivor: [[356, 169], [774, 235], [1259, 473], [1087, 871]], hunter: [399, 665] },
+    ];
 
     const widthM = 144.1;
     const law_urls = ['https://www.bilibili.com/video/BV1QGpF6CEos', ''];
@@ -1701,6 +1774,7 @@ export const MAPS_DATA = [
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
+      spawns,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { fixed, region, either, same, atLeast1, atMost1, chainRun, allAbsent }
@@ -1804,6 +1878,14 @@ export const MAPS_DATA = [
 
 
     const escapeDoors = [[1214, 772], [50, 224], [1214, 816], [50, 180]];
+
+    const spawns = [
+      { survivor: [[602, 266], [237, 401], [1018, 463], [352, 805]], hunter: [894, 974] },
+      { survivor: [[1011, 241], [863, 472], [641, 626], [472, 1075]], hunter: [306, 211] },
+      { survivor: [[473, 183], [457, 620], [793, 823], [1090, 883]], hunter: [1030, 196] },
+      { survivor: [[696, 272], [257, 355], [756, 580], [967, 913]], hunter: [295, 928] },
+      { survivor: [[458, 419], [312, 667], [765, 1015], [548, 1004]], hunter: [997, 545] },
+    ];
 
     const widthM = 133.8;
     const law_urls = [];
@@ -1925,6 +2007,7 @@ export const MAPS_DATA = [
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
+      spawns,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { region, either, atMost1, same, chain } = dedHelpers(ciphers);

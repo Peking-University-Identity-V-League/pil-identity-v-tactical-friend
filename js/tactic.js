@@ -999,6 +999,7 @@ export function tacSetRot(k) {
   renderTacCiphers();
   renderTacZones();
   renderTacLandmarks();
+  renderTacSpawns();
   renderTacChairs();
   renderTacBoxes();
   renderTacBoard();
