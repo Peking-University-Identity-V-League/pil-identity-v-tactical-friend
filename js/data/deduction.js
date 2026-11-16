@@ -54,45 +54,45 @@ export function dedHelpers(positions) {
     ({ ...defaults, ...o, name: o.name ?? defaults.name });
 
   const fixed = (o = {}) =>
-    build('fixed', withDefaults(o, { name: translate("maps.name") }));
+    build('fixed', withDefaults(o, { name: translate("deduction.rule.name") }));
 
   const region = (o = {}) =>
-    build('region', withDefaults(o, { name: translate("maps.region") }));
+    build('region', withDefaults(o, { name: translate("deduction.rule.region") }));
 
   const exactly = (o = {}) =>
     build('exactly', withDefaults(o,
-      { name: translate("maps.exactly", { n: CN_NUM[o.n] }) }));
+      { name: translate("deduction.rule.exactly", { n: CN_NUM[o.n] }) }));
 
   const either = (o = {}) =>
-    exactly({ n: 1, name: translate("maps.either"), ...o });
+    exactly({ n: 1, name: translate("deduction.rule.either"), ...o });
 
   const same = (o = {}) =>
-    build('same', withDefaults(o, { name: translate("maps.nameAlternate") }));
+    build('same', withDefaults(o, { name: translate("deduction.rule.nameAlternate") }));
 
   const atLeast1 = (o = {}) =>
-    build('atLeast', withDefaults(o, { name: translate("maps.nameThird"), n: 1 }));
+    build('atLeast', withDefaults(o, { name: translate("deduction.rule.nameThird"), n: 1 }));
 
   const atMost1 = (o = {}) =>
-    build('atMost', withDefaults(o, { name: translate("maps.atMost1"), n: 1 }));
+    build('atMost', withDefaults(o, { name: translate("deduction.rule.atMost1"), n: 1 }));
 
   const chain = (o = {}) =>
     build('chain', withDefaults(
       { list: (o.names ?? []).join(' - '), ...o },
-      { name: translate("maps.chain") }));
+      { name: translate("deduction.rule.chain") }));
 
   const chainRun = (o = {}) =>
     build('chainRun', withDefaults(
       { list: (o.names ?? []).join(' - '), ...o },
-      { name: translate("maps.chain") }));
+      { name: translate("deduction.rule.chain") }));
 
   const implies = (o = {}) =>
-    build('implies', withDefaults({ list: translate("maps.list"), ...o }, {}));
+    build('implies', withDefaults({ list: translate("deduction.rule.leosMemory.list"), ...o }, {}));
 
   const allAbsent = (o = {}) =>
     build('allAbsent', withDefaults({
       list: [...(o.pres ?? []), ...(o.targets ?? [])].join(sep),
       ...o,
-    }, { name: translate("maps.nameFourth") }));
+    }, { name: translate("deduction.rule.nameFourth") }));
 
   const link = (o = {}) =>
     build('link', withDefaults({ list: o.marker ?? null, ...o }, {}));
@@ -107,22 +107,22 @@ export function dedRuleBook(rules) {
   return rules.map((r) => {
     switch (r.kind) {
       case 'fixed':
-        return { title: r.name, text: translate("maps.text", { list: r.list }) };
+        return { title: r.name, text: translate("deduction.rule.text", { list: r.list }) };
       case 'region': {
         const text = r.min === r.max
-          ? translate("maps.textAlternate", { value: cnNum(r.min) })
-          : translate("maps.textThird", { value: cnNum(r.min), valueSecondary: cnNum(r.max) });
-        return { title: r.name, text: translate("maps.textFourth", { value: slash(r), text: text }) };
+          ? translate("deduction.rule.textAlternate", { value: cnNum(r.min) })
+          : translate("deduction.rule.textThird", { value: cnNum(r.min), valueSecondary: cnNum(r.max) });
+        return { title: r.name, text: translate("deduction.rule.textFourth", { value: slash(r), text: text }) };
       }
       case 'exactly':
         return { title: `${r.name} · ${slash(r)}`,
-          text: translate("maps.textFifth", { count: cnNum(r.positions.length), value: cnNum(r.n) }) };
+          text: translate("deduction.rule.textFifth", { count: cnNum(r.positions.length), value: cnNum(r.n) }) };
       case 'atLeast':
-        return { title: `${r.name} · ${slash(r)}`, text: translate("maps.textSixth") };
+        return { title: `${r.name} · ${slash(r)}`, text: translate("deduction.rule.textSixth") };
       case 'same':
-        return { title: `${r.name} · ${slash(r)}`, text: translate("maps.textSeventh") };
+        return { title: `${r.name} · ${slash(r)}`, text: translate("deduction.rule.textSeventh") };
       case 'atMost':
-        return { title: `${r.name} · ${slash(r)}`, text: translate("maps.textEighth") };
+        return { title: `${r.name} · ${slash(r)}`, text: translate("deduction.rule.textEighth") };
       case 'allAbsent':
         return { title: r.name, text: r.text || r.list };
       case 'chain':

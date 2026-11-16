@@ -1,14 +1,14 @@
 
-import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacItemSection, tacMStyleBody, tacMStyleToggle, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacRot, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacShowChairBasementEl, tacBasementText, tacSnapBoxEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacticView } from './core/dom.js';
+import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacItemSection, tacMStyleBody, tacMStyleToggle, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacRot, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacShowChairBasementEl, tacBasementText, tacShowSpawnsEl, tacSpawnSizeEl, tacSpawnSizeDefEl, tacSpawnText, tacSnapBoxEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacticView } from './core/dom.js';
 import { restoredMeasureIds, saveRegionSel, savedRot, tacBoard, tacDisplay, tacMeasureStyle, tacPersisted, tacSave, flushSave } from './core/persist.js';
 import { measureBaseAt, simulateMovement } from './core/measurements.js';
-import { measurementEndpoints, map3dURL } from './core/map-handoff.js';
+import { measurementEndpoints, resolveMap3dTarget, isExternalMap3dEntry } from './core/map-handoff.js';
 import { getTreasureRings } from './core/treasure.js';
 import { S } from './core/state.js';
 import { $, loadImageWithStatus, mountImageOverlays } from './core/utils.js';
 import { cipherOf, mapsZonesRelative } from './data/geo.js';
 import { MAPS_DATA, getImageUrl } from './data/maps.js';
-import { BOX_ICON_URL, CHAIR_ICON_URL, DUNGEON_ICON_URL, ESCAPE_DOOR_ICON_URL, TAC_ABYSS_MAX_M, TAC_DISPLAY_DEFAULT, TAC_FIXED_SPAWN_ICONS, TAC_ITEM_TYPES, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_MOVEMENT_SURVIVOR, TAC_MOVEMENT_BUFFS, TAC_ROLES, TAC_SVG_NS, TAC_TREASURE_RULE, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
+import { BOX_ICON_URL, CHAIR_ICON_URL, DUNGEON_ICON_URL, ESCAPE_DOOR_ICON_URL, SPAWN_HUNTER_ICON_URL, SPAWN_SURVIVOR_ICON_URL, TAC_ABYSS_MAX_M, TAC_DISPLAY_DEFAULT, TAC_FIXED_SPAWN_ICONS, TAC_ITEM_TYPES, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_MOVEMENT_SURVIVOR, TAC_MOVEMENT_BUFFS, TAC_ROLES, TAC_SVG_NS, TAC_TREASURE_RULE, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
 import { CIPHER_ICON_URL, cipherIcon } from './region.js';
 
 import { translate } from './core/i18n.js';
@@ -292,6 +292,9 @@ export function syncTacDisplayUI() {
   tacShowDungeonEl.checked = tacDisplay.dungeon;
   tacDungeonSizeEl.value = tacDisplay.dungeonSize;
   tacDungeonSizeDefEl.checked = tacDisplay.dungeonSize === TAC_DISPLAY_DEFAULT.dungeonSize;
+  tacShowSpawnsEl.checked = tacDisplay.spawns;
+  tacSpawnSizeEl.value = tacDisplay.spawnSize;
+  tacSpawnSizeDefEl.checked = tacDisplay.spawnSize === TAC_DISPLAY_DEFAULT.spawnSize;
   tacShowChairsEl.checked = tacDisplay.chairs;
   tacChairSizeEl.value = tacDisplay.chairSize;
   tacChairSizeDefEl.checked = tacDisplay.chairSize === TAC_DISPLAY_DEFAULT.chairSize;
@@ -482,6 +485,10 @@ export function syncTacImage() {
     basementEntry.style.display = hasBasement ? '' : 'none';
   }
   syncTacDungeonText();
+  renderTacSpawns();
+  syncTacSpawnText();
+  const spawnEntry = $('tacSpawnEntry');
+  if (spawnEntry) spawnEntry.style.display = (MAPS_DATA[S.currentMapId].spawns || []).length ? '' : 'none';
   if (url === tacImageState.loaded) return;
   tacImageState.loaded = url;
   const [mw, mh] = MAPS_DATA[S.currentMapId].mapSize;
@@ -566,6 +573,46 @@ export function tacDoorPoints(map) {
   const d = map.escapeDoors;
   if (tacDisplay.doorLock && d.length >= 4) return [d[2], d[3]];
   return d.slice(0, 2);
+}
+
+
+export function renderTacSpawns() {
+  if (!tacMapWrap) return;
+  tacMapWrap.querySelectorAll('.tac-spawn').forEach((el) => el.remove());
+  const map = MAPS_DATA[S.currentMapId];
+  const groups = map.spawns || [];
+  if (!tacDisplay.spawns || !groups.length) return;
+  const group = groups[S.tacSpawnIndex % groups.length];
+  const [imgW, imgH] = map.mapSize;
+  const place = (pt, iconUrl, alt) => {
+    const el = document.createElement('img');
+    el.className = 'tac-spawn';
+    el.src = iconUrl;
+    el.alt = alt;
+    el.title = alt;
+    el.draggable = false;
+    el.style.left = `${(pt[0] / imgW) * 100}%`;
+    el.style.top = `${(pt[1] / imgH) * 100}%`;
+    el.style.width = `${tacDisplay.spawnSize}%`;
+    el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
+    tacLayer().appendChild(el);
+  };
+  group.survivor.forEach((pt) => place(pt, SPAWN_SURVIVOR_ICON_URL, translate("game.spawnPoint")));
+  place(group.hunter, SPAWN_HUNTER_ICON_URL, translate("game.spawnPoint"));
+}
+
+export function syncTacSpawnText() {
+  const n = (MAPS_DATA[S.currentMapId].spawns || []).length;
+  tacSpawnText.textContent = translate("application.syncTacDungeonText", { index: S.tacSpawnIndex + 1, value: n });
+}
+
+export function switchTacSpawn(step) {
+  const n = (MAPS_DATA[S.currentMapId].spawns || []).length;
+  if (!n) return;
+  S.tacSpawnIndex = (S.tacSpawnIndex + step + n) % n;
+  syncTacSpawnText();
+  renderTacSpawns();
+  saveRegionSel();
 }
 
 
@@ -1222,6 +1269,8 @@ tacCipherSizeDefEl._default = TAC_DISPLAY_DEFAULT.cipherSize;
 
 tacDungeonSizeDefEl._default = TAC_DISPLAY_DEFAULT.dungeonSize;
 
+tacSpawnSizeDefEl._default = TAC_DISPLAY_DEFAULT.spawnSize;
+
 tacChairSizeDefEl._default = TAC_DISPLAY_DEFAULT.chairSize;
 
 tacBoxSizeDefEl._default = TAC_DISPLAY_DEFAULT.boxSize;
@@ -1242,6 +1291,10 @@ bindTacDisplayRow(tacShowCiphersEl, tacCipherSizeEl, tacCipherSizeDefEl,
 bindTacDisplayRow(tacShowDungeonEl, tacDungeonSizeEl, tacDungeonSizeDefEl,
   (v) => { tacDisplay.dungeon = v; renderTacLandmarks(); },
   (v) => { tacDisplay.dungeonSize = v; renderTacLandmarks(); });
+
+bindTacDisplayRow(tacShowSpawnsEl, tacSpawnSizeEl, tacSpawnSizeDefEl,
+  (v) => { tacDisplay.spawns = v; renderTacSpawns(); },
+  (v) => { tacDisplay.spawnSize = v; renderTacSpawns(); });
 
 bindTacDisplayRow(tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl,
   (v) => { tacDisplay.chairs = v; renderTacChairs(); },
@@ -1342,6 +1395,10 @@ $('tacDispCipherNext').addEventListener('click', () => switchTacCipher(1));
 $('tacDungeonPrev').addEventListener('click', () => switchTacDungeon(-1));
 
 $('tacDungeonNext').addEventListener('click', () => switchTacDungeon(1));
+
+$('tacSpawnPrev').addEventListener('click', () => switchTacSpawn(-1));
+
+$('tacSpawnNext').addEventListener('click', () => switchTacSpawn(1));
 
 $('tacChairPrev').addEventListener('click', () => switchTacChair(-1));
 
@@ -5514,10 +5571,11 @@ export async function tacExportImage() {
   });
   ctx.restore();
 
-  const [ciphIcon, dungeonIcon, doorIcon, chairIcon, boxIcon] = await Promise.all([
+  const [ciphIcon, dungeonIcon, doorIcon, chairIcon, boxIcon, spawnSurvIcon, spawnHuntIcon] = await Promise.all([
     tacLoadImg(CIPHER_ICON_URL), tacLoadImg(DUNGEON_ICON_URL),
     tacLoadImg(ESCAPE_DOOR_ICON_URL), tacLoadImg(CHAIR_ICON_URL),
-    tacLoadImg(BOX_ICON_URL)]);
+    tacLoadImg(BOX_ICON_URL), tacLoadImg(SPAWN_SURVIVOR_ICON_URL),
+    tacLoadImg(SPAWN_HUNTER_ICON_URL)]);
 
   
   // 正立叠加层：地标/造物/角色图标与图文文字。
@@ -5546,6 +5604,16 @@ export async function tacExportImage() {
         const [x, y] = PXY(pt[0] / W0, pt[1] / H0);
         uctx.drawImage(doorIcon, x - size / 2, y - size / 2, size, size);
       });
+    }
+    if (tacDisplay.spawns && spawnSurvIcon && spawnHuntIcon && (map.spawns || []).length) {
+      const group = map.spawns[S.tacSpawnIndex % map.spawns.length];
+      const size = tacDisplay.spawnSize / 100 * W * K;
+      const drawSpawn = (pt, icon) => {
+        const [x, y] = PXY(pt[0] / W0, pt[1] / H0);
+        uctx.drawImage(icon, x - size / 2, y - size / 2, size, size);
+      };
+      group.survivor.forEach((pt) => drawSpawn(pt, spawnSurvIcon));
+      drawSpawn(group.hunter, spawnHuntIcon);
     }
 
     // 狂欢之椅：固定椅 + 当前刷点组 + 当前地下室组
@@ -6814,17 +6882,22 @@ export function tacResetTransient() {
 
 
 for (const button of document.querySelectorAll('[data-map-3d]')) {
-  button.addEventListener('click', () => {
+  button.addEventListener('click', async () => {
     try {
       const map = MAPS_DATA[S.currentMapId];
       const endpoints = measurementEndpoints(tacBoard().measures, {
         selectedIndex: tacSelMeasure?.idx, pending: tacMeasurePending, activeChain: tacChainRoute,
       });
-      const entryPath = location.pathname.startsWith('/zhanshuyanlian/') ? '/zhanshuyanlian/' : '/tactical-friend/';
-      const target = map3dURL({ mapId: S.currentMapId, image: map.mapImage, size: map.mapSize, entryPath, ...endpoints });
+      const target = await resolveMap3dTarget({
+        mapId: S.currentMapId, image: map.mapImage, size: map.mapSize,
+        pathname: location.pathname, origin: location.origin, ...endpoints,
+      });
       tacSave();
       flushSave();
-      window.location.assign(target);
+      // Off-origin deployments (e.g. the bilibili toy) cannot host the 3D assets:
+      // open the official 3D page in a new window; closing it returns to the 2D board.
+      if (isExternalMap3dEntry(target)) window.open(target, '_blank', 'noopener');
+      else window.location.assign(target);
     } catch {
       showToast(translate('ui.map3d.error'));
     }

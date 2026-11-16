@@ -84,6 +84,7 @@ const savedDedMarks = structuredClone(tacPersisted?.dedMarks || {});
 const savedDungeons = structuredClone(tacPersisted?.dungeon || {});
 const savedChairs = structuredClone(tacPersisted?.chairs || {});
 const savedBoxes = structuredClone(tacPersisted?.boxes || {});
+const savedSpawns = structuredClone(tacPersisted?.spawns || {});
 
 // 每张地图各自的旋转角（0-3，逆时针 90° 步进）
 export const savedRot = structuredClone(tacPersisted?.rot || {});
@@ -107,6 +108,7 @@ export function flushSave() {
       dungeon: savedDungeons,
       chairs: savedChairs,
       boxes: savedBoxes,
+      spawns: savedSpawns,
       rot: savedRot,
       selDisplay,
     };
@@ -138,6 +140,7 @@ export function saveRegionSel() {
   savedDungeons[S.currentMapId] = S.tacDungeonIndex;
   savedChairs[S.currentMapId] = { set: S.tacChairIndex, basement: S.tacChairBasementIndex };
   savedBoxes[S.currentMapId] = { basement: S.tacBoxBasementIndex };
+  savedSpawns[S.currentMapId] = S.tacSpawnIndex;
   tacSave();
 }
 
@@ -149,6 +152,9 @@ export function restoreRegionSel(mapId) {
     Math.max(0, MAPS_DATA[mapId].dungeons.length - 1),
     Math.max(0, savedDungeons[mapId] | 0),
   );
+  const spawnCount = (MAPS_DATA[mapId].spawns || []).length;
+  S.tacSpawnIndex = spawnCount
+    ? Math.min(Math.max(0, savedSpawns[mapId] | 0), spawnCount - 1) : 0;
   const ch = MAPS_DATA[mapId].rocketChairs;
   const sc = savedChairs[mapId] || {};
   S.tacChairIndex = ch && ch.sets.length
@@ -188,6 +194,7 @@ export const tacDisplay = {
   zones: false,
   ciphers: true, cipherSize: TAC_DISPLAY_DEFAULT.cipherSize, 
   dungeon: false, dungeonSize: TAC_DISPLAY_DEFAULT.dungeonSize,
+  spawns: false, spawnSize: TAC_DISPLAY_DEFAULT.spawnSize,
   doors: true, doorSize: TAC_DISPLAY_DEFAULT.doorSize, 
   doorLock: false, 
   chairs: false, chairSize: TAC_DISPLAY_DEFAULT.chairSize,

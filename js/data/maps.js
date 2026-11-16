@@ -74,6 +74,15 @@ export const MAPS_DATA = [
 
     const escapeDoors = [[682, 240], [45, 320], [682, 260], [45, 300]];
 
+    const spawns = [
+      { survivor: [[143, 235], [292, 250], [366, 382], [498, 452]], hunter: [556, 212] },
+      { survivor: [[132, 344], [292, 250], [400, 200], [672, 182]], hunter: [430, 450] },
+      { survivor: [[156, 262], [316, 376], [403, 496], [440, 594]], hunter: [105, 556] },
+      { survivor: [[456, 132], [408, 272], [403, 496], [440, 594]], hunter: [150, 345] },
+      { survivor: [[456, 132], [542, 306], [403, 496], [630, 414]], hunter: [248, 272] },
+      { survivor: [[132, 344], [212, 238], [316, 376], [498, 452]], hunter: [450, 136] },
+    ];
+
     const widthM = 166.2;
     const law_urls = ['https://www.bilibili.com/video/BV1oauC6kEy9', 'https://v.douyin.com/b_OabxYks7k/'];
     const fixedHint = translate("maps.armsFactory.fixedHint");
@@ -195,15 +204,15 @@ export const MAPS_DATA = [
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
-      fixedSpawns,
+      fixedSpawns, spawns,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { fixed, region, exactly, either } = dedHelpers(ciphers);
         const rules = [
           fixed({ names: [translate("maps.armsFactory.cipher.m4.name")] }),
-          region({ name: translate("maps.armsFactory.rules"), min: 2, max: 3, names: [translate("maps.armsFactory.cipher.w1.name"), translate("maps.armsFactory.cipher.w2.name"), translate("maps.armsFactory.cipher.w3.name"), translate("maps.armsFactory.cipher.w4.name")] }),
-          region({ name: translate("maps.armsFactory.rulesAlternate"), min: 2, max: 3, names: [translate("maps.armsFactory.cipher.m1.name"), translate("maps.armsFactory.cipher.m2.name"), translate("maps.armsFactory.cipher.m3.name"), translate("maps.armsFactory.cipher.m4.name")] }),
-          region({ name: translate("maps.armsFactory.rulesThird"), min: 2, max: 2, names: [translate("maps.armsFactory.cipher.e1.name"), translate("maps.armsFactory.cipher.e2.name"), translate("maps.armsFactory.cipher.e3.name"), translate("maps.armsFactory.cipher.e4.name")] }),
+          region({ name: translate("deduction.rule.basic.left"), min: 2, max: 3, names: [translate("maps.armsFactory.cipher.w1.name"), translate("maps.armsFactory.cipher.w2.name"), translate("maps.armsFactory.cipher.w3.name"), translate("maps.armsFactory.cipher.w4.name")] }),
+          region({ name: translate("deduction.rule.basic.middle"), min: 2, max: 3, names: [translate("maps.armsFactory.cipher.m1.name"), translate("maps.armsFactory.cipher.m2.name"), translate("maps.armsFactory.cipher.m3.name"), translate("maps.armsFactory.cipher.m4.name")] }),
+          region({ name: translate("deduction.rule.basic.right"), min: 2, max: 2, names: [translate("maps.armsFactory.cipher.e1.name"), translate("maps.armsFactory.cipher.e2.name"), translate("maps.armsFactory.cipher.e3.name"), translate("maps.armsFactory.cipher.e4.name")] }),
           either({ names: [translate("maps.armsFactory.cipher.e1.name"), translate("maps.armsFactory.cipher.e2.name")] }),
           either({ names: [translate("maps.armsFactory.cipher.e3.name"), translate("maps.armsFactory.cipher.e4.name")] }),
           either({ names: [translate("maps.armsFactory.cipher.m2.name"), translate("maps.armsFactory.cipher.m1.name")] }),
@@ -413,11 +422,11 @@ export const MAPS_DATA = [
           exactly({ n: 2, names: [translate("maps.sacredHeartHospital.cipher.a2.name"), translate("maps.sacredHeartHospital.cipher.c3.name"), translate("maps.sacredHeartHospital.cipher.d1.name")] }),
           atLeast1({ names: [translate("maps.sacredHeartHospital.cipher.c1.name"), translate("maps.sacredHeartHospital.cipher.b1.name")] }),
           chain({
-            name: translate("maps.sacredHeartHospital.rules"), mode: 'no', cyclic: true,
+            name: translate("deduction.rule.sacredHeartHospital.rules"), mode: 'no', cyclic: true,
             names: [translate("maps.sacredHeartHospital.cipher.b1.name"), translate("maps.sacredHeartHospital.cipher.b2.name"), translate("maps.sacredHeartHospital.cipher.b3.name"), translate("maps.sacredHeartHospital.cipher.c1.name"), translate("maps.sacredHeartHospital.cipher.c2.name"),
             translate("maps.sacredHeartHospital.cipher.c3.name"), translate("maps.sacredHeartHospital.cipher.d1.name"), translate("maps.sacredHeartHospital.cipher.d2.name"), translate("maps.sacredHeartHospital.cipher.d3.name")],
-            text: translate("maps.sacredHeartHospital.rulesAlternate")
-              + translate("maps.sacredHeartHospital.rulesThird")
+            text: translate("deduction.rule.sacredHeartHospital.rulesAlternate")
+              + translate("deduction.rule.sacredHeartHospital.rulesThird")
           }),
         ];
         return makeDeduction({
@@ -612,15 +621,15 @@ export const MAPS_DATA = [
         const { fixed, region, exactly, atLeast1, chain } = dedHelpers(ciphers);
         const rules = [
           fixed({ names: [translate("maps.theRedChurch.cipher.e4.name")] }),
-          region({ name: translate("maps.theRedChurch.rules"), min: 2, max: 3, names: [translate("maps.theRedChurch.cipher.w1.name"), translate("maps.theRedChurch.cipher.w2.name"), translate("maps.theRedChurch.cipher.w3.name"), translate("maps.theRedChurch.cipher.w4.name")] }),
-          region({ name: translate("maps.armsFactory.rulesAlternate"), min: 2, max: 3, names: [translate("maps.theRedChurch.cipher.m1.name"), translate("maps.theRedChurch.cipher.m2.name"), translate("maps.theRedChurch.cipher.m3.name")] }),
-          region({ name: translate("maps.theRedChurch.rulesAlternate"), min: 2, max: 3, names: [translate("maps.theRedChurch.cipher.e1.name"), translate("maps.theRedChurch.cipher.e2.name"), translate("maps.theRedChurch.cipher.e3.name"), translate("maps.theRedChurch.cipher.e4.name")] }),
+          region({ name: translate("deduction.rule.theRedChurch.rules"), min: 2, max: 3, names: [translate("maps.theRedChurch.cipher.w1.name"), translate("maps.theRedChurch.cipher.w2.name"), translate("maps.theRedChurch.cipher.w3.name"), translate("maps.theRedChurch.cipher.w4.name")] }),
+          region({ name: translate("deduction.rule.basic.middle"), min: 2, max: 3, names: [translate("maps.theRedChurch.cipher.m1.name"), translate("maps.theRedChurch.cipher.m2.name"), translate("maps.theRedChurch.cipher.m3.name")] }),
+          region({ name: translate("deduction.rule.theRedChurch.rulesAlternate"), min: 2, max: 3, names: [translate("maps.theRedChurch.cipher.e1.name"), translate("maps.theRedChurch.cipher.e2.name"), translate("maps.theRedChurch.cipher.e3.name"), translate("maps.theRedChurch.cipher.e4.name")] }),
           atLeast1({ names: [translate("maps.theRedChurch.cipher.w1.name"), translate("maps.theRedChurch.cipher.w2.name")] }),
           atLeast1({ names: [translate("maps.theRedChurch.cipher.w3.name"), translate("maps.theRedChurch.cipher.w4.name")] }),
           chain({
-            name: translate("maps.chain"), mode: 'yes', cyclic: false,
+            name: translate("deduction.rule.chain"), mode: 'yes', cyclic: false,
             names: [translate("maps.theRedChurch.cipher.w3.name"), translate("maps.theRedChurch.cipher.w2.name"), translate("maps.theRedChurch.cipher.e3.name"), translate("maps.theRedChurch.cipher.e2.name")],
-            text: translate("maps.theRedChurch.rulesThird")
+            text: translate("deduction.rule.theRedChurch.rulesThird")
           }),
           exactly({ n: 2, names: [translate("maps.theRedChurch.cipher.m2.name"), translate("maps.theRedChurch.cipher.e3.name"), translate("maps.theRedChurch.cipher.m3.name")] }),
           exactly({ n: 2, names: [translate("maps.theRedChurch.cipher.m1.name"), translate("maps.theRedChurch.cipher.e1.name"), translate("maps.theRedChurch.cipher.m3.name")] }),
@@ -648,7 +657,7 @@ export const MAPS_DATA = [
       translate("maps.lakesideVillage.zoneNames.zoneNames0"), translate("maps.lakesideVillage.zoneNames.zoneNames1"), translate("maps.lakesideVillage.zoneNames.zoneNames2"),
       translate("maps.lakesideVillage.zoneNames.zoneNames3"), translate("maps.lakesideVillage.zoneNames.zoneNames4"), translate("maps.lakesideVillage.zoneNames.zoneNames5"),
       translate("maps.lakesideVillage.zoneNames.zoneNames6"), translate("maps.lakesideVillage.zoneNames.zoneNames7"), translate("maps.lakesideVillage.zoneNames.zoneNames8"),
-      translate("maps.lakesideVillage.zoneNames.zoneNames9"), translate("maps.lakesideVillage.zoneNames.zoneNames10"), translate("maps.lakesideVillage.zoneNames.eleven")
+      translate("maps.lakesideVillage.zoneNames.zoneNames9"), translate("maps.lakesideVillage.zoneNames.zoneNames10"), translate("maps.lakesideVillage.zoneNames.zoneNames11")
     ];
     const ciphers = [
       { id: 'E_1', name: translate("maps.lakesideVillage.cipher.e1.name"), location: [1132, 680], feature: translate("maps.lakesideVillage.cipher.e1.feature"), locked: true },
@@ -830,15 +839,15 @@ export const MAPS_DATA = [
         const rules = [
           fixed({ names: [translate("maps.lakesideVillage.cipher.e1.name")] }),
           region({
-            name: translate("maps.armsFactory.rules"), min: 2, max: 3,
+            name: translate("deduction.rule.basic.left"), min: 2, max: 3,
             names: [translate("maps.lakesideVillage.cipher.w1.name"), translate("maps.lakesideVillage.cipher.w2.name"), translate("maps.lakesideVillage.cipher.w3.name"), translate("maps.lakesideVillage.cipher.w4.name"), translate("maps.lakesideVillage.cipher.w5.name")]
           }),
-          region({ name: translate("maps.lakesideVillage.rules"), min: 2, max: 3, names: [translate("maps.lakesideVillage.cipher.m1.name"), translate("maps.lakesideVillage.cipher.m2.name"), translate("maps.lakesideVillage.cipher.m3.name")] }),
-          region({ name: translate("maps.armsFactory.rulesThird"), min: 2, max: 3, names: [translate("maps.lakesideVillage.cipher.e2.name"), translate("maps.lakesideVillage.cipher.e1.name"), translate("maps.lakesideVillage.cipher.e3.name")] }),
-          region({ name: translate("maps.lakesideVillage.rulesAlternate"), min: 2, max: 3, names: [translate("maps.lakesideVillage.cipher.w1.name"), translate("maps.lakesideVillage.cipher.w2.name"), translate("maps.lakesideVillage.cipher.m1.name"), translate("maps.lakesideVillage.cipher.e2.name")] }),
-          region({ name: translate("maps.lakesideVillage.rulesThird"), min: 2, max: 3, names: [translate("maps.lakesideVillage.cipher.w3.name"), translate("maps.lakesideVillage.cipher.m2.name"), translate("maps.lakesideVillage.cipher.e1.name")] }),
+          region({ name: translate("deduction.rule.basic.middleHorizontal"), min: 2, max: 3, names: [translate("maps.lakesideVillage.cipher.m1.name"), translate("maps.lakesideVillage.cipher.m2.name"), translate("maps.lakesideVillage.cipher.m3.name")] }),
+          region({ name: translate("deduction.rule.basic.right"), min: 2, max: 3, names: [translate("maps.lakesideVillage.cipher.e2.name"), translate("maps.lakesideVillage.cipher.e1.name"), translate("maps.lakesideVillage.cipher.e3.name")] }),
+          region({ name: translate("deduction.rule.basic.up"), min: 2, max: 3, names: [translate("maps.lakesideVillage.cipher.w1.name"), translate("maps.lakesideVillage.cipher.w2.name"), translate("maps.lakesideVillage.cipher.m1.name"), translate("maps.lakesideVillage.cipher.e2.name")] }),
+          region({ name: translate("deduction.rule.basic.middleVertical"), min: 2, max: 3, names: [translate("maps.lakesideVillage.cipher.w3.name"), translate("maps.lakesideVillage.cipher.m2.name"), translate("maps.lakesideVillage.cipher.e1.name")] }),
           region({
-            name: translate("maps.lakesideVillage.rulesFourth"), min: 2, max: 3,
+            name: translate("deduction.rule.basic.down"), min: 2, max: 3,
             names: [translate("maps.lakesideVillage.cipher.w4.name"), translate("maps.lakesideVillage.cipher.w5.name"), translate("maps.lakesideVillage.cipher.m3.name"), translate("maps.lakesideVillage.cipher.e3.name")]
           }),
           either({ names: [translate("maps.lakesideVillage.cipher.w1.name"), translate("maps.lakesideVillage.cipher.w2.name")] }),
@@ -847,10 +856,10 @@ export const MAPS_DATA = [
           exactly({ n: 2, names: [translate("maps.lakesideVillage.cipher.m1.name"), translate("maps.lakesideVillage.cipher.e2.name"), translate("maps.lakesideVillage.cipher.e3.name")] }),
           exactly({ n: 2, names: [translate("maps.lakesideVillage.cipher.e2.name"), translate("maps.lakesideVillage.cipher.m2.name"), translate("maps.lakesideVillage.cipher.w3.name")] }),
           chain({
-            name: translate("maps.lakesideVillage.rulesFifth"), mode: 'yes', cyclic: false,
+            name: translate("deduction.rule.lakesideVillage.left1"), mode: 'yes', cyclic: false,
             names: [translate("maps.lakesideVillage.cipher.w1.name"), translate("maps.lakesideVillage.cipher.w2.name"), translate("maps.lakesideVillage.cipher.w3.name"), translate("maps.lakesideVillage.cipher.w4.name"), translate("maps.lakesideVillage.cipher.w5.name")],
-            text: translate("maps.lakesideVillage.rulesSixth")
-              + translate("maps.lakesideVillage.rulesSeventh")
+            text: translate("deduction.rule.lakesideVillage.left3")
+              + translate("deduction.rule.lakesideVillage.left2")
           }),
         ];
         return makeDeduction({
@@ -871,7 +880,7 @@ export const MAPS_DATA = [
       translate("maps.moonlitRiverPark.zoneNames.zoneNames0"), translate("maps.moonlitRiverPark.zoneNames.zoneNames1"), translate("maps.moonlitRiverPark.zoneNames.zoneNames2"),
       translate("maps.moonlitRiverPark.zoneNames.zoneNames3"), translate("maps.moonlitRiverPark.zoneNames.zoneNames4"), translate("maps.moonlitRiverPark.zoneNames.zoneNames5"),
       translate("maps.moonlitRiverPark.zoneNames.zoneNames6"), translate("maps.moonlitRiverPark.zoneNames.zoneNames7"), translate("maps.moonlitRiverPark.zoneNames.zoneNames8"),
-      translate("maps.moonlitRiverPark.zoneNames.zoneNames9"), translate("maps.moonlitRiverPark.zoneNames.zoneNames10"), translate("maps.moonlitRiverPark.zoneNames.eleven")
+      translate("maps.moonlitRiverPark.zoneNames.zoneNames9"), translate("maps.moonlitRiverPark.zoneNames.zoneNames10"), translate("maps.moonlitRiverPark.zoneNames.zoneNames11")
     ];
     const ciphers = [
       { id: 'M_1', name: translate("maps.moonlitRiverPark.cipher.m1.name"), location: [711, 261], feature: translate("maps.moonlitRiverPark.cipher.m1.feature"), locked: true },
@@ -1052,18 +1061,18 @@ export const MAPS_DATA = [
         const rules = [
           fixed({ names: [translate("maps.moonlitRiverPark.cipher.m1.name"), translate("maps.moonlitRiverPark.cipher.e1.name")] }),
           region({
-            name: translate("maps.moonlitRiverPark.rules"), min: 3, max: 3,
+            name: translate("deduction.rule.moonlitRiverPark.left"), min: 3, max: 3,
             names: [translate("maps.moonlitRiverPark.cipher.w1.name"), translate("maps.moonlitRiverPark.cipher.w2.name"), translate("maps.moonlitRiverPark.cipher.w3.name"), translate("maps.moonlitRiverPark.cipher.w4.name"), translate("maps.moonlitRiverPark.cipher.w5.name")]
           }),
           region({
-            name: translate("maps.moonlitRiverPark.rulesAlternate"), min: 3, max: 3,
+            name: translate("deduction.rule.moonlitRiverPark.right"), min: 3, max: 3,
             names: [translate("maps.moonlitRiverPark.cipher.e2.name"), translate("maps.moonlitRiverPark.cipher.e3.name"), translate("maps.moonlitRiverPark.cipher.e4.name"), translate("maps.moonlitRiverPark.cipher.e1.name"), translate("maps.moonlitRiverPark.cipher.e5.name")]
           }),
           chain({
-            name: translate("maps.moonlitRiverPark.rulesThird"), mode: 'no', cyclic: true,
+            name: translate("deduction.rule.moonlitRiverPark.rule3"), mode: 'no', cyclic: true,
             names: [translate("maps.moonlitRiverPark.cipher.w1.name"), translate("maps.moonlitRiverPark.cipher.w2.name"), translate("maps.moonlitRiverPark.cipher.w3.name"), translate("maps.moonlitRiverPark.cipher.w4.name"), translate("maps.moonlitRiverPark.cipher.w5.name")],
-            text: translate("maps.moonlitRiverPark.rulesFourth")
-              + translate("maps.moonlitRiverPark.rulesFifth")
+            text: translate("deduction.rule.moonlitRiverPark.rule2")
+              + translate("deduction.rule.moonlitRiverPark.rule1")
           }),
           either({ names: [translate("maps.moonlitRiverPark.cipher.w4.name"), translate("maps.moonlitRiverPark.cipher.e3.name")] }),
           either({ names: [translate("maps.moonlitRiverPark.cipher.w3.name"), translate("maps.moonlitRiverPark.cipher.e4.name")] }),
@@ -1077,7 +1086,7 @@ export const MAPS_DATA = [
   })(),
   (() => {
     const mapId = 5;
-    const mapName = translate("maps.mapName");
+    const mapName = translate("maps.leosMemory.mapName");
     const mapNameEn = "Leo's Memory";
     const mapImage = 'https://patchwiki.biligame.com/images/dwrg/thumb/5/53/'
       + 't9v9ezb7qvnlatez60eex59ab1f7w8p.png/750px-%E9%87%8C%E5%A5%A5%E7%9A%84'
@@ -1267,26 +1276,26 @@ export const MAPS_DATA = [
         const EAST = [translate("maps.leosMemory.cipher.e1.name"), translate("maps.leosMemory.cipher.e2.name"), translate("maps.leosMemory.cipher.e3.name"), translate("maps.leosMemory.cipher.e4.name")];
         const WEST = [translate("maps.leosMemory.cipher.w1.name"), translate("maps.leosMemory.cipher.w2.name"), translate("maps.leosMemory.cipher.w3.name"), translate("maps.leosMemory.cipher.w4.name")];
         const rules = [
-          region({ name: translate("maps.theRedChurch.rules"), min: 2, max: 3, names: WEST }),
-          region({ name: translate("maps.armsFactory.rulesAlternate"), min: 2, max: 3, names: [translate("maps.leosMemory.cipher.m1.name"), translate("maps.leosMemory.cipher.m2.name"), translate("maps.leosMemory.cipher.m3.name"), translate("maps.leosMemory.cipher.m4.name")] }),
-          region({ name: translate("maps.theRedChurch.rulesAlternate"), min: 2, max: 3, names: EAST }),
+          region({ name: translate("deduction.rule.theRedChurch.rules"), min: 2, max: 3, names: WEST }),
+          region({ name: translate("deduction.rule.basic.middle"), min: 2, max: 3, names: [translate("maps.leosMemory.cipher.m1.name"), translate("maps.leosMemory.cipher.m2.name"), translate("maps.leosMemory.cipher.m3.name"), translate("maps.leosMemory.cipher.m4.name")] }),
+          region({ name: translate("deduction.rule.theRedChurch.rulesAlternate"), min: 2, max: 3, names: EAST }),
           implies({
-            name: translate("maps.nameAlternate"), pres: [translate("maps.leosMemory.cipher.w2.name"), translate("maps.leosMemory.cipher.w3.name")], cons: [translate("maps.leosMemory.cipher.m1.name")],
-            text: translate("maps.rules")
+            name: translate("deduction.rule.nameAlternate"), pres: [translate("maps.leosMemory.cipher.w2.name"), translate("maps.leosMemory.cipher.w3.name")], cons: [translate("maps.leosMemory.cipher.m1.name")],
+            text: translate("deduction.rule.rules")
           }),
           exactly({ n: 2, names: [translate("maps.leosMemory.cipher.w1.name"), translate("maps.leosMemory.cipher.m1.name"), translate("maps.leosMemory.cipher.m2.name")] }),
           exactly({ n: 2, names: [translate("maps.leosMemory.cipher.w4.name"), translate("maps.leosMemory.cipher.m1.name"), translate("maps.leosMemory.cipher.e1.name")] }),
           chain({
-            name: translate("maps.chain"), mode: 'yes', cyclic: false, names: [translate("maps.leosMemory.cipher.w2.name"), translate("maps.leosMemory.cipher.w3.name"), translate("maps.leosMemory.cipher.m2.name"), translate("maps.leosMemory.cipher.e3.name")],
-            text: translate("maps.rulesAlternate")
+            name: translate("deduction.rule.chain"), mode: 'yes', cyclic: false, names: [translate("maps.leosMemory.cipher.w2.name"), translate("maps.leosMemory.cipher.w3.name"), translate("maps.leosMemory.cipher.m2.name"), translate("maps.leosMemory.cipher.e3.name")],
+            text: translate("deduction.rule.rulesAlternate")
           }),
           link({
-            name: translate("maps.rulesThird"), region: EAST, marker: translate("maps.leosMemory.cipher.e1.name"), positive: true,
-            text: translate("maps.rulesFourth")
+            name: translate("deduction.rule.rulesThird"), region: EAST, marker: translate("maps.leosMemory.cipher.e1.name"), positive: true,
+            text: translate("deduction.rule.rulesFourth")
           }),
           link({
-            name: translate("maps.rulesFifth"), region: WEST, marker: translate("maps.leosMemory.cipher.e4.name"), positive: false,
-            text: translate("maps.rulesSixth")
+            name: translate("deduction.rule.rulesFifth"), region: WEST, marker: translate("maps.leosMemory.cipher.e4.name"), positive: false,
+            text: translate("deduction.rule.rulesSixth")
           }),
         ];
         return makeDeduction({
@@ -1485,13 +1494,13 @@ export const MAPS_DATA = [
         const { fixed, region, either, atMost1 } = dedHelpers(ciphers);
         const rules = [
           fixed({ names: [translate("maps.eversleepingTown.cipher.w1.name")] }),
-          region({ name: translate("maps.theRedChurch.rules"), min: 2, max: 2, names: [translate("maps.eversleepingTown.cipher.w1.name"), translate("maps.eversleepingTown.cipher.w2.name"), translate("maps.eversleepingTown.cipher.w3.name")] }),
+          region({ name: translate("deduction.rule.theRedChurch.rules"), min: 2, max: 2, names: [translate("maps.eversleepingTown.cipher.w1.name"), translate("maps.eversleepingTown.cipher.w2.name"), translate("maps.eversleepingTown.cipher.w3.name")] }),
           region({
-            name: translate("maps.armsFactory.rulesAlternate"), min: 2, max: 2,
+            name: translate("deduction.rule.basic.middle"), min: 2, max: 2,
             names: [translate("maps.eversleepingTown.cipher.m1.name"), translate("maps.eversleepingTown.cipher.m2.name"), translate("maps.eversleepingTown.cipher.m3.name"), translate("maps.eversleepingTown.cipher.m4.name")]
           }),
           region({
-            name: translate("maps.theRedChurch.rulesAlternate"), min: 3, max: 3,
+            name: translate("deduction.rule.theRedChurch.rulesAlternate"), min: 3, max: 3,
             names: [translate("maps.eversleepingTown.cipher.e1.name"), translate("maps.eversleepingTown.cipher.e2.name"), translate("maps.eversleepingTown.cipher.e3.name"), translate("maps.eversleepingTown.cipher.e4.name"), translate("maps.eversleepingTown.cipher.e5.name"), translate("maps.eversleepingTown.cipher.e6.name")]
           }),
           either({ names: [translate("maps.eversleepingTown.cipher.w2.name"), translate("maps.eversleepingTown.cipher.w3.name")] }),
@@ -1699,13 +1708,13 @@ export const MAPS_DATA = [
 
         const special = allAbsent({
           pres: [translate("maps.chinaTown.cipher.m1.name"), translate("maps.chinaTown.cipher.m2.name")], targets: [translate("maps.chinaTown.cipher.e1.name"), translate("maps.chinaTown.cipher.e3.name"), translate("maps.chinaTown.cipher.m5.name")],
-          text: translate("maps.chinaTown.special")
+          text: translate("deduction.rule.chinaTown.special")
         });
         const rules = [
           fixed({ names: [translate("maps.chinaTown.cipher.e2.name")] }),
-          region({ name: translate("maps.theRedChurch.rules"), min: 2, max: 3, names: [translate("maps.chinaTown.cipher.w1.name"), translate("maps.chinaTown.cipher.w2.name"), translate("maps.chinaTown.cipher.w3.name"), translate("maps.chinaTown.cipher.w4.name")] }),
-          region({ name: translate("maps.armsFactory.rulesAlternate"), min: 2, max: 3, names: [translate("maps.chinaTown.cipher.m1.name"), translate("maps.chinaTown.cipher.m2.name"), translate("maps.chinaTown.cipher.m3.name"), translate("maps.chinaTown.cipher.m4.name"), translate("maps.chinaTown.cipher.m5.name")] }),
-          region({ name: translate("maps.theRedChurch.rulesAlternate"), min: 2, max: 3, names: [translate("maps.chinaTown.cipher.e1.name"), translate("maps.chinaTown.cipher.e2.name"), translate("maps.chinaTown.cipher.e3.name")] }),
+          region({ name: translate("deduction.rule.theRedChurch.rules"), min: 2, max: 3, names: [translate("maps.chinaTown.cipher.w1.name"), translate("maps.chinaTown.cipher.w2.name"), translate("maps.chinaTown.cipher.w3.name"), translate("maps.chinaTown.cipher.w4.name")] }),
+          region({ name: translate("deduction.rule.basic.middle"), min: 2, max: 3, names: [translate("maps.chinaTown.cipher.m1.name"), translate("maps.chinaTown.cipher.m2.name"), translate("maps.chinaTown.cipher.m3.name"), translate("maps.chinaTown.cipher.m4.name"), translate("maps.chinaTown.cipher.m5.name")] }),
+          region({ name: translate("deduction.rule.theRedChurch.rulesAlternate"), min: 2, max: 3, names: [translate("maps.chinaTown.cipher.e1.name"), translate("maps.chinaTown.cipher.e2.name"), translate("maps.chinaTown.cipher.e3.name")] }),
           either({ names: [translate("maps.chinaTown.cipher.w1.name"), translate("maps.chinaTown.cipher.w2.name")] }),
           either({ names: [translate("maps.chinaTown.cipher.m4.name"), translate("maps.chinaTown.cipher.m3.name")] }),
           same({ names: [translate("maps.chinaTown.cipher.m2.name"), translate("maps.chinaTown.cipher.m4.name")] }),
@@ -1715,13 +1724,13 @@ export const MAPS_DATA = [
           atMost1({ names: [translate("maps.chinaTown.cipher.m1.name"), translate("maps.chinaTown.cipher.m2.name")] }),
           atMost1({ names: [translate("maps.chinaTown.cipher.w2.name"), translate("maps.chinaTown.cipher.w3.name")] }),
           chainRun({
-            name: translate("maps.chain"), names: [translate("maps.chinaTown.cipher.w1.name"), translate("maps.chinaTown.cipher.m1.name"), translate("maps.chinaTown.cipher.e1.name"), translate("maps.chinaTown.cipher.e3.name")],
-            text: translate("maps.chinaTown.rulesAlternate")
+            name: translate("deduction.rule.chain"), names: [translate("maps.chinaTown.cipher.w1.name"), translate("maps.chinaTown.cipher.m1.name"), translate("maps.chinaTown.cipher.e1.name"), translate("maps.chinaTown.cipher.e3.name")],
+            text: translate("deduction.rule.chinaTown.chain1")
           }),
           chainRun({
-            name: translate("maps.chain"),
+            name: translate("deduction.rule.chain"),
             names: [translate("maps.chinaTown.cipher.w4.name"), translate("maps.chinaTown.cipher.m4.name"), translate("maps.chinaTown.cipher.m5.name"), translate("maps.chinaTown.cipher.e3.name"), translate("maps.chinaTown.cipher.m2.name"), translate("maps.chinaTown.cipher.w3.name"), translate("maps.chinaTown.cipher.w4.name")],
-            text: translate("maps.chinaTown.rulesThird")
+            text: translate("deduction.rule.chinaTown.chain2")
           }),
           special,
         ];
@@ -1921,16 +1930,16 @@ export const MAPS_DATA = [
         const { region, either, atMost1, same, chain } = dedHelpers(ciphers);
         const rules = [
           region({
-            name: translate("maps.theRedChurch.rules"), min: 2, max: 2,
+            name: translate("deduction.rule.theRedChurch.rules"), min: 2, max: 2,
             names: [translate("maps.darkwoods.cipher.w2.name"), translate("maps.darkwoods.cipher.w1.name"), translate("maps.darkwoods.cipher.w4.name"), translate("maps.darkwoods.cipher.w3.name")]
           }),
           region({
-            name: translate("maps.armsFactory.rulesAlternate"), min: 2, max: 3,
+            name: translate("deduction.rule.basic.middle"), min: 2, max: 3,
             names: [translate("maps.darkwoods.cipher.m1.name"), translate("maps.darkwoods.cipher.m2.name"), translate("maps.darkwoods.cipher.m3.name"), translate("maps.darkwoods.cipher.m4.name"),
             translate("maps.darkwoods.cipher.m5.name"), translate("maps.darkwoods.cipher.m6.name")]
           }),
           region({
-            name: translate("maps.theRedChurch.rulesAlternate"), min: 2, max: 3,
+            name: translate("deduction.rule.theRedChurch.rulesAlternate"), min: 2, max: 3,
             names: [translate("maps.darkwoods.cipher.e1.name"), translate("maps.darkwoods.cipher.e2.name"), translate("maps.darkwoods.cipher.e3.name"), translate("maps.darkwoods.cipher.e4.name"), translate("maps.darkwoods.cipher.e5.name")]
           }),
           either({ names: [translate("maps.darkwoods.cipher.w2.name"), translate("maps.darkwoods.cipher.w1.name")] }),
@@ -1940,18 +1949,18 @@ export const MAPS_DATA = [
           either({ names: [translate("maps.darkwoods.cipher.e3.name"), translate("maps.darkwoods.cipher.m3.name")] }),
           either({ names: [translate("maps.darkwoods.cipher.e4.name"), translate("maps.darkwoods.cipher.e5.name")] }),
           region({
-            name: translate("maps.darkwoods.rules"), min: 1, max: 2,
+            name: translate("deduction.rule.middleField"), min: 1, max: 2,
             names: [translate("maps.darkwoods.cipher.m4.name"), translate("maps.darkwoods.cipher.m3.name"), translate("maps.darkwoods.cipher.m5.name"), translate("maps.darkwoods.cipher.m6.name")]
           }),
           atMost1({ names: [translate("maps.darkwoods.cipher.m4.name"), translate("maps.darkwoods.cipher.m3.name")] }),
           same({ names: [translate("maps.darkwoods.cipher.m3.name"), translate("maps.darkwoods.cipher.m5.name")] }),
           chain({
-            name: translate("maps.chain"), mode: 'yes', cyclic: false,
+            name: translate("deduction.rule.chain"), mode: 'yes', cyclic: false,
             names: [translate("maps.darkwoods.cipher.e5.name"), translate("maps.darkwoods.cipher.e4.name"), translate("maps.darkwoods.cipher.w4.name"), translate("maps.darkwoods.cipher.w3.name"), translate("maps.darkwoods.cipher.w2.name"),
             translate("maps.darkwoods.cipher.w1.name"), translate("maps.darkwoods.cipher.m1.name"), translate("maps.darkwoods.cipher.m2.name"), translate("maps.darkwoods.cipher.e2.name"), translate("maps.darkwoods.cipher.e1.name")],
-            text: translate("maps.darkwoods.rulesAlternate")
-              + translate("maps.darkwoods.rulesThird")
-              + translate("maps.lakesideVillage.rulesSeventh")
+            text: translate("deduction.rule.darkwoods.chain1")
+              + translate("deduction.rule.darkwoods.chain2")
+              + translate("deduction.rule.lakesideVillage.left2")
           }),
         ];
         return makeDeduction({
@@ -1965,7 +1974,7 @@ export const MAPS_DATA = [
 
 
 export const CIPHER_EXTRA = {
-  4: [{ id: 'E_0', location: [768, 550], name: translate("maps.darkwoods.cipher.e0.name"), feature: translate("maps.e0.feature") }],
+  4: [{ id: 'E_0', location: [768, 550], name: translate("maps.moonlitRiverPark.cipher.e0.name"), feature: translate("maps.moonlitRiverPark.cipher.e0.feature") }],
 };
 
 
