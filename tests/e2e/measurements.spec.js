@@ -135,3 +135,19 @@ test('trait buff form note derives from the role speed forms (siphon soul / foll
   await expect(list.locator('.tac-talent-row', { hasText: '信徒超出控制范围' }))
     .toContainText('仅信徒形态生效');
 });
+
+test('hide endpoints checkbox hides measure dots but keeps selected letters', async ({ page }) => {
+  await tool(page, 'measure');
+  await clickPoint(page, 0.15, 0.36);
+  await clickPoint(page, 0.4, 0.36);
+  const dots = page.locator('.tac-measure-dot');
+  await expect(dots).toHaveCount(2);
+  await expect(dots.first()).toBeVisible();
+  await page.locator('#tacHideEndpoints').check();
+  await expect(dots.first()).toHaveClass(/hidden-endpoint/);
+  // 选中该线时 ABCD 字母依然正常显示
+  await selectSegment(page, 0);
+  await expect(page.locator('.tac-mletter')).toHaveCount(2);
+  await page.locator('#tacHideEndpoints').uncheck();
+  await expect(dots.first()).not.toHaveClass(/hidden-endpoint/);
+});

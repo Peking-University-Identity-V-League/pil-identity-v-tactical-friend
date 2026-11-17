@@ -117,6 +117,47 @@ export const tacDrawCard = $('tacDrawCard');
 export const tacTextCard = $('tacTextCard');
 
 export const tacMeasureCard = $('tacMeasureCard');
+export const tacCarryCard = $('tacCarryCard');
+export const tacCarryShowChairsEl = $('tacCarryShowChairs');
+export const tacCarryChairPrevBtn = $('tacCarryChairPrev');
+export const tacCarryChairNextBtn = $('tacCarryChairNext');
+export const tacCarryChairText = $('tacCarryChairText');
+export const tacCarryChairSizeEl = $('tacCarryChairSize');
+export const tacCarryChairSizeDefEl = $('tacCarryChairSizeDef');
+export const tacCarryPickBtn = $('tacCarryPickBtn');
+export const tacCarryChairName = $('tacCarryChairName');
+export const tacCarrySurvivorEl = $('tacCarrySurvivor');
+export const tacCarryInitialEl = $('tacCarryInitial');
+export const tacCarryInitialVal = $('tacCarryInitialVal');
+export const tacCarrySurvTalentBtn = $('tacCarrySurvTalentBtn');
+export const tacCarryHunterEl = $('tacCarryHunter');
+export const tacCarryHunterFormEl = $('tacCarryHunterForm');
+export const tacCarryHunterSpeedEl = $('tacCarryHunterSpeed');
+export const tacCarryPickupModeEl = $('tacCarryPickupMode');
+export const tacCarryPickupEl = $('tacCarryPickup');
+export const tacCarryHuntTalentBtn = $('tacCarryHuntTalentBtn');
+export const tacCarrySpeedTalentBtn = $('tacCarrySpeedTalentBtn');
+export const tacCarryBuffBody = $('tacCarryBuffBody');
+export const tacCarryBuffToggleEl = $('tacCarryBuffToggle');
+export const tacCarrySurvModal = $('tacCarrySurvModal');
+export const tacCarrySurvList = $('tacCarrySurvList');
+export const tacCarrySurvClose = $('tacCarrySurvClose');
+export const tacCarryHuntModal = $('tacCarryHuntModal');
+export const tacCarryHuntList = $('tacCarryHuntList');
+export const tacCarryHuntClose = $('tacCarryHuntClose');
+export const tacCarrySpeedModal = $('tacCarrySpeedModal');
+export const tacCarrySpeedList = $('tacCarrySpeedList');
+export const tacCarrySpeedClose = $('tacCarrySpeedClose');
+export const tacCarryRunBtn = $('tacCarryRun');
+export const tacCarryClearBtn = $('tacCarryClear');
+export const tacCarryProgressBox = $('tacCarryProgressBox');
+export const tacCarryProgressBar = $('tacCarryProgressBar');
+export const tacCarrySummary = $('tacCarrySummary');
+export const tacCarryLegend = $('tacCarryLegend');
+export const tacCarryOpacityRowEl = $('tacCarryOpacityRow');
+export const tacCarryOpacityEl = $('tacCarryOpacity');
+export const tacCarryHideRingEl = $('tacCarryHideRing');
+export const tacCarryNote = $('tacCarryNote');
 
 export const tacDisplayCard = $('tacDisplayCard');
 
@@ -192,6 +233,7 @@ export const tacMeasureModesEl = $('tacMeasureModes');
 export const tacMeasureColorsEl = $('tacMeasureColors');
 
 export const tacMeasureWidthEl = $('tacMeasureWidth');
+export const tacHideEndpointsEl = $('tacHideEndpoints');
 
 export const tacMeasureWidthVal = $('tacMeasureWidthVal');
 

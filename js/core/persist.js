@@ -205,6 +205,7 @@ export const tacDisplay = {
   snap: { cipher: true, dungeon: true, door: true, chair: true, box: true, point: true },
   delSegOnly: false, 
   showCoords: false, 
-  selGlow: true, 
+  selGlow: true,
+  hideEndpoints: false, carryHideRing: false, 
   exportCrop: true, exportRot: true, 
 };

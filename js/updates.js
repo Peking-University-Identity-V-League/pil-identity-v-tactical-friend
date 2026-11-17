@@ -3,10 +3,12 @@
 export const UPDATE_NOTES = `
 ## 特别提示
 
-点击右下角前往官网：
-https://pkuidv.com/tactical-friend
-可以体验“切换三维”功能，十分震撼!
-(官网访问速度比b站toy慢，请耐心等待加载)
+点击右下角前往官网：https://pkuidv.com/tactical-friend
+可以体验“切换三维”功能，十分震撼！（官网访问速度比b站toy慢，请耐心等待加载）
+
+## 2026-11-18
+
+- 1、工具栏新增推算，新增选椅看范围功能
 
 ## 2026-11-17
 
