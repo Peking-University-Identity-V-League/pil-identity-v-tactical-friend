@@ -188,13 +188,13 @@ test('range box: cage three-gear radio switches only 9/12/15 (goatman)', async (
   await expect(lv2(page, '15m')).toHaveCount(1);
   const desc = rangeBox(page).locator('.tac-range-desc');
   await expect(desc).toHaveCount(1);
-  await expect(desc.first()).toContainText('牢笼范围 半径9m');
+  await expect(desc.first()).toContainText('牢笼范围 半径 9m');
   // 切到第二挡 12m
   await lv2(page, '12m').click();
-  await expect(desc.first()).toContainText('牢笼范围 半径12m');
+  await expect(desc.first()).toContainText('牢笼范围 半径 12m');
   // 切到第三挡 15m
   await lv2(page, '15m').click();
-  await expect(desc.first()).toContainText('牢笼范围 半径15m');
+  await expect(desc.first()).toContainText('牢笼范围 半径 15m');
   // 三挡互斥：挡位组内只亮一个（另二级「牢笼范围」按钮保持点亮）
   await expect(rangeBox(page).locator('.tac-range-sub[data-g].active')).toHaveCount(1);
   await expect(rangeBox(page).locator('.tac-range-sub.active')).toHaveCount(2);
@@ -263,10 +263,10 @@ test('range box: Geisha fearRadius talent gets beauty/prajna variant row', async
   for (const m of ['30m', '45m', '60m']) {
     await expect(rangeBox(page).locator('.tac-range-sub', { hasText: m })).toHaveCount(1);
   }
-  await expect(rangeBox(page).locator('.tac-range-desc')).toContainText(['清道夫范围 半径30m']);
+  await expect(rangeBox(page).locator('.tac-range-desc')).toContainText(['清道夫范围 半径 30m']);
   // 三挡互斥：切 60m
   await rangeBox(page).locator('.tac-range-sub', { hasText: '60m' }).click();
-  await expect(rangeBox(page).locator('.tac-range-desc')).toContainText(['清道夫范围 半径60m']);
+  await expect(rangeBox(page).locator('.tac-range-desc')).toContainText(['清道夫范围 半径 60m']);
   // 两个天赋可同时点亮：警戒半径仍亮
   await expect(lv2(page, '警戒半径')).toHaveClass(/active/);
   await expect(rangeBox(page).locator('.tac-range-desc')).toHaveCount(2);
