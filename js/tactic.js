@@ -2831,7 +2831,7 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
         ? `${(e2.opt.label || '') + postfix} ${translate("ui.tacRangeBox.radius")} ${tacRangeFmt(e2.meters)}m ${translate("ui.tacRangeBox.crossWidth")} ${tacRangeFmt(e2.opt.crossWidth)}m`
         : e2.opt.ringInner != null
           ? `${(e2.opt.label || '') + postfix} ${translate("ui.tacRangeBox.innerRadius")} ${tacRangeFmt(e2.opt.ringInner)}m ${translate("ui.tacRangeBox.outerRadius")} ${tacRangeFmt(e2.meters)}m`
-          : `${(e2.opt.label || '') + postfix} ${translate("ui.tacRangeBox.radius")}${tacRangeFmt(e2.meters)}m`;
+          : `${(e2.opt.label || '') + postfix} ${translate("ui.tacRangeBox.radius")} ${tacRangeFmt(e2.meters)}m`;
       row.appendChild(txt);
       const del = document.createElement('button');
       del.type = 'button';
@@ -2850,7 +2850,7 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
       const row = document.createElement('div');
       row.className = 'tac-range-desc';
       const txt = document.createElement('span');
-      txt.textContent = `${tr.label}${tr.sub ? '·' + tr.sub : postfix} ${translate("ui.tacRangeBox.radius")}${tacRangeFmt(tr.meters)}m`;
+      txt.textContent = `${tr.label}${tr.sub ? '·' + tr.sub : postfix} ${translate("ui.tacRangeBox.radius")} ${tacRangeFmt(tr.meters)}m`;
       row.appendChild(txt);
       const del = document.createElement('button');
       del.type = 'button';
