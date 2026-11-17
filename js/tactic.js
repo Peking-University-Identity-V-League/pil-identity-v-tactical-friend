@@ -1,8 +1,10 @@
 
-import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacItemSection, tacMStyleBody, tacMStyleToggle, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacRot, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacShowChairBasementEl, tacBasementText, tacShowSpawnsEl, tacSpawnSizeEl, tacSpawnSizeDefEl, tacSpawnText, tacSnapBoxEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacticView } from './core/dom.js';
+import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacHideEndpointsEl, tacItemSection, tacMStyleBody, tacMStyleToggle, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacRot, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacCarryBuffBody, tacCarryCard, tacCarryChairName, tacCarryChairNextBtn, tacCarryChairPrevBtn, tacCarryChairSizeDefEl, tacCarryChairSizeEl, tacCarryChairText, tacCarryClearBtn, tacCarryBuffToggleEl, tacCarryHuntClose, tacCarryHuntList, tacCarryHuntModal, tacCarryHuntTalentBtn, tacCarryHunterEl, tacCarryHunterFormEl, tacCarryHunterSpeedEl, tacCarryInitialEl, tacCarryInitialVal, tacCarryLegend, tacCarryNote, tacCarryOpacityEl, tacCarryOpacityRowEl, tacCarryHideRingEl, tacCarryPickBtn, tacCarryPickupEl, tacCarryPickupModeEl, tacCarryProgressBar, tacCarryProgressBox, tacCarryRunBtn, tacCarryShowChairsEl, tacCarrySpeedClose, tacCarrySpeedList, tacCarrySpeedModal, tacCarrySpeedTalentBtn, tacCarrySummary, tacCarrySurvClose, tacCarrySurvList, tacCarrySurvModal, tacCarrySurvTalentBtn, tacCarrySurvivorEl, tacShowChairBasementEl, tacBasementText, tacShowSpawnsEl, tacSpawnSizeEl, tacSpawnSizeDefEl, tacSpawnText, tacSnapBoxEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacticView } from './core/dom.js';
 import { restoredMeasureIds, saveRegionSel, savedRot, tacBoard, tacDisplay, tacMeasureStyle, tacPersisted, tacSave, flushSave } from './core/persist.js';
 import { measureBaseAt, simulateMovement } from './core/measurements.js';
 import { measurementEndpoints, resolveMap3dTarget, isExternalMap3dEntry } from './core/map-handoff.js';
+import { CARRY_BAND_COLORS, CARRY_BAND_OPACITY, CARRY_DEFAULTS, CARRY_TALENTS, createCarryProfile } from './core/carry-model.js';
+import { computeCarryField, loadNavGrid, navGridAvailable, snapToWalkable } from './core/nav-grid.js';
 import { getTreasureRings } from './core/treasure.js';
 import { S } from './core/state.js';
 import { $, loadImageWithStatus, mountImageOverlays } from './core/utils.js';
@@ -316,6 +318,8 @@ export function syncTacDisplayUI() {
   tacDelSegOnlyEl.checked = tacDisplay.delSegOnly;
   tacShowCoordsEl.checked = tacDisplay.showCoords;
   tacSelGlowEl.checked = tacDisplay.selGlow;
+  tacHideEndpointsEl.checked = !!tacDisplay.hideEndpoints;
+  tacCarryHideRingEl.checked = !!tacDisplay.carryHideRing;
   const cropEl = $('tacExportCrop');
   if (cropEl) cropEl.checked = tacDisplay.exportCrop;
   const exportRotEl = $('tacExportRot');
@@ -391,7 +395,7 @@ export let tacLcSeq = restoredMeasureIds.config;
 
 export const tacPending = { base: { name: translate("characters.camps.survivor"), speed: TAC_MOVEMENT_SURVIVOR.states.run.speed }, buffs: [] };
 
-export let tacBaseDetailOpen = false;
+export let tacBaseDetailOpen = true;
 
  
 export let tacBaseMergeOn = true;
@@ -400,7 +404,7 @@ export let tacBaseMergeOn = true;
 export let tacLastRoleVal = null;
 
  
-export let tacBuffDetailOpen = false;
+export let tacBuffDetailOpen = true;
 
  
 export let tacResultOpen = true;
@@ -463,6 +467,14 @@ export const tacUndoStack = [];
 export function syncTacImage() {
   const url = getImageUrl(S.currentMapId);
   const count = MAPS_DATA[S.currentMapId].cipherCombinations.length;
+
+  // 切图后挂人范围结果失效
+  if (tacCarryState.resultMapId !== null && tacCarryState.resultMapId !== S.currentMapId) {
+    tacCarryState.chair = null;
+    tacCarryClearResult();
+    if (tacCarryCard) syncTacCarryChairName();
+  }
+  if (tacCarryCard) syncTacCarryChairRow();
 
   // 先同步当前地图的旋转角，保证后续渲染使用正确的 tacRotK
   tacApplyRotation();
@@ -787,10 +799,17 @@ export function renderTacChairs() {
   const [imgW, imgH] = map.mapSize;
   // 椅子点格式：[x, z]（地面）或 [x, y, z]（地下室，y 为高度）
   const xz = (pt) => (pt.length > 2 ? [pt[0], pt[2]] : pt);
-  const draw = (pt, title) => {
+  const draw = (pt, title, kind, index) => {
     const [px, pz] = xz(pt);
     const el = document.createElement('img');
     el.className = 'tac-chair';
+    if (kind) {
+      el.dataset.chairKind = kind;
+      el.dataset.chairIndex = index;
+      if (tacCarryState.chair?.kind === kind && tacCarryState.chair?.index === index) {
+        el.classList.add('tac-carry-selected');
+      }
+    }
     el.src = CHAIR_ICON_URL;
     el.alt = translate("game.rocketChair");
     el.title = title;
@@ -800,13 +819,22 @@ export function renderTacChairs() {
     el.style.width = `${tacDisplay.chairSize}%`;
     el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
     tacLayer().appendChild(el);
+    // 选中椅子的正圆红框：img 是替换元素不支持伪元素，用独立 div 画正圆
+    if (el.classList.contains('tac-carry-selected') && !tacDisplay.carryHideRing) {
+      const ring = document.createElement('div');
+      ring.className = 'tac-chair tac-carry-ring';
+      ring.style.left = el.style.left;
+      ring.style.top = el.style.top;
+      ring.style.width = `${tacDisplay.chairSize * 1.5}%`;
+      tacLayer().appendChild(ring);
+    }
   };
   if (tacDisplay.chairs) {
-    ch.fixed.forEach((pt) => draw(pt, translate("application.renderTacChairsFixed")));
+    ch.fixed.forEach((pt, i) => draw(pt, translate("application.renderTacChairsFixed"), 'fixed', i));
     const setIdx = ch.sets.length ? S.tacChairIndex % ch.sets.length : -1;
     if (setIdx >= 0) {
-      ch.sets[setIdx].forEach((pt) => draw(pt,
-        translate("application.renderTacChairs", { index: setIdx + 1, count: ch.sets.length })));
+      ch.sets[setIdx].forEach((pt, i) => draw(pt,
+        translate("application.renderTacChairs", { index: setIdx + 1, count: ch.sets.length }), 'set', i));
     }
   }
   const bs = tacBasementList();
@@ -1321,6 +1349,432 @@ bindTacDisplayRow(tacShowDoorsEl, tacDoorSizeEl, tacDoorSizeDefEl,
   (v) => { tacDisplay.doors = v; renderTacLandmarks(); },
   (v) => { tacDisplay.doorSize = v; renderTacLandmarks(); });
 
+// ---- 选椅看范围（挂人范围二维近似，数据来自三维导航栅格） ----
+export const tacCarryState = {
+  armed: false,               // 选椅模式：点击地图椅子进行选择
+  chair: null,                // { kind:'fixed'|'set', index, x, z } 底图像素坐标
+  running: false,
+  cancel: null,
+  resultMapId: null,          // 结果所属地图；切图后失效
+  buffs: [],                  // 加成明细：[{ id, key, level }]
+  hiddenBands: new Set(),     // 图例中被用户关掉的色带
+  cache: null,                // 上次计算结果 { g, field }，用于切换色带时免重算重绘
+};
+let tacCarryBuffId = 0;
+let tacCarryCanvas = null;
+
+// 当前地图上显示的地面椅子（与显示设置共享刷点组与开关）
+function tacCarryGroundChairs() {
+  const ch = MAPS_DATA[S.currentMapId].rocketChairs;
+  if (!ch) return [];
+  const out = [];
+  const xz = (pt) => (pt.length > 2 ? [pt[0], pt[2]] : pt);
+  const ground = (pt) => (pt.length > 2 ? pt[1] > -5 : true);
+  ch.fixed.forEach((pt, i) => {
+    if (ground(pt)) out.push({ kind: 'fixed', index: i, x: xz(pt)[0], z: xz(pt)[1] });
+  });
+  const setIdx = ch.sets.length ? S.tacChairIndex % ch.sets.length : -1;
+  if (setIdx >= 0) {
+    ch.sets[setIdx].forEach((pt, i) => {
+      if (ground(pt)) out.push({ kind: 'set', index: i, x: xz(pt)[0], z: xz(pt)[1] });
+    });
+  }
+  return out;
+}
+
+export function syncTacCarryChairRow() {
+  if (!tacCarryCard) return;
+  tacCarryShowChairsEl.checked = tacDisplay.chairs;
+  tacCarryChairSizeEl.value = tacDisplay.chairSize;
+  tacCarryChairSizeDefEl.checked = tacDisplay.chairSize === TAC_DISPLAY_DEFAULT.chairSize;
+  const ch = MAPS_DATA[S.currentMapId].rocketChairs;
+  tacCarryChairText.textContent = (!ch || !ch.sets.length) ? '--'
+    : translate('application.syncTacChairText', { index: S.tacChairIndex + 1, count: ch.sets.length });
+}
+
+function syncTacCarryChairName() {
+  if (tacCarryState.armed) {
+    tacCarryChairName.textContent = translate('ui.tacCarry.picking');
+  } else if (tacCarryState.chair) {
+    tacCarryChairName.textContent = translate('ui.tacCarry.chairSelected', {
+      x: Math.round(tacCarryState.chair.x), y: Math.round(tacCarryState.chair.z),
+    });
+  } else {
+    tacCarryChairName.textContent = translate('ui.tacCarry.noChair');
+  }
+}
+
+function tacCarryDisarm() {
+  if (!tacCarryState.armed) return;
+  tacCarryState.armed = false;
+  tacCarryPickBtn.classList.remove('active');
+  tacSnapRipple?.classList.remove('show', 'chair');
+  syncTacCarryChairName();
+}
+
+function tacCarrySelect(kind, index) {
+  const found = tacCarryGroundChairs().find((c) => c.kind === kind && c.index === index);
+  if (!found) return;
+  tacCarryState.chair = found;
+  tacCarryDisarm();
+  syncTacCarryChairName();
+  renderTacChairs();
+}
+
+function tacCarryClearResult() {
+  tacCarryState.cancel?.();
+  tacCarryState.running = false;
+  tacCarryState.resultMapId = null;
+  tacCarryState.cache = null;
+  tacCarryState.hiddenBands.clear();
+  if (tacCarryCanvas) { tacCarryCanvas.remove(); tacCarryCanvas = null; }
+  tacCarryLegend.style.display = 'none';
+  tacCarryLegend.innerHTML = '';
+  tacCarryOpacityRowEl.style.display = 'none';
+  tacCarrySummary.textContent = '';
+  tacCarryNote.style.display = 'none';
+  tacCarryProgressBox.style.display = 'none';
+}
+
+function readTacCarryParams() {
+  // 数字框始终是当前基础移速的镜像（手改数字时下拉自动跳到「自定义」）
+  const baseSpeed = parseFloat(tacCarryHunterSpeedEl.value) || CARRY_DEFAULTS.baseSpeed;
+  const pickupSeconds = tacCarryPickupModeEl.value === 'custom'
+    ? (parseFloat(tacCarryPickupEl.value) || CARRY_DEFAULTS.pickupSeconds)
+    : CARRY_DEFAULTS.pickupSeconds;
+  return {
+    survivorId: tacCarrySurvivorEl.value,
+    initialProgress: parseFloat(tacCarryInitialEl.value) || 0,
+    baseSpeed,
+    pickupSeconds,
+    buffs: tacCarryState.buffs.map(({ key, level }) => ({ key, level })),
+  };
+}
+
+async function tacCarryRun() {
+  if (tacCarryState.running) return;
+  const sel = tacCarryState.chair;
+  if (!sel) { showToast(translate('ui.tacCarry.picking')); return; }
+  if (!navGridAvailable(S.currentMapId)) {
+    tacCarrySummary.textContent = translate('ui.tacCarry.noGrid');
+    return;
+  }
+  tacCarryClearResult();
+  tacCarryState.running = true;
+  tacCarryRunBtn.textContent = translate('ui.tacCarry.running');
+  tacCarryProgressBox.style.display = '';
+  tacCarryProgressBar.style.width = '0%';
+  try {
+    const g = await loadNavGrid(S.currentMapId);
+    if (!g) { tacCarrySummary.textContent = translate('ui.tacCarry.noGrid'); return; }
+    const start = snapToWalkable(g, sel.x, sel.z);
+    if (!start) { tacCarrySummary.textContent = translate('ui.tacCarry.unsupportedChair'); return; }
+    const profile = createCarryProfile(readTacCarryParams());
+    const run = computeCarryField(g, start, profile, {
+      onProgress: (p) => { tacCarryProgressBar.style.width = `${Math.round(p * 100)}%`; },
+    });
+    tacCarryState.cancel = run.cancel;
+    const field = await run.promise;
+    if (field.cancelled) return;
+    tacCarryState.hiddenBands.clear();
+    tacCarryState.cache = { g, field };
+    renderTacCarryOverlay(g, field);
+    tacCarryState.resultMapId = S.currentMapId;
+    tacCarrySummary.textContent = translate('ui.tacCarry.summary', {
+      seconds: profile.remainingSeconds.toFixed(1),
+      pickup: profile.pickupSeconds.toFixed(1),
+      cells: field.reached,
+    });
+    renderTacCarryLegend(field.bands);
+    tacCarryNote.style.display = '';
+  } finally {
+    tacCarryState.running = false;
+    tacCarryRunBtn.textContent = translate('ui.tacCarry.run');
+    tacCarryProgressBar.style.width = '100%';
+    setTimeout(() => { if (!tacCarryState.running) tacCarryProgressBox.style.display = 'none'; }, 400);
+  }
+}
+
+function renderTacCarryOverlay(g, field) {
+  const [W0, H0] = MAPS_DATA[S.currentMapId].mapSize;
+  const off = document.createElement('canvas');
+  off.width = g.gridW;
+  off.height = g.gridH;
+  const octx = off.getContext('2d');
+  const img = octx.createImageData(g.gridW, g.gridH);
+  const px = img.data;
+  // 被关掉的色带，其格子改用最邻近的外侧点亮色带颜色（3次<2次<1次<不可再放<风险区）
+  const resolveBand = (band) => {
+    let b = band;
+    while (b < CARRY_BAND_COLORS.length && tacCarryState.hiddenBands.has(b)) b++;
+    return b < CARRY_BAND_COLORS.length ? b : -1;
+  };
+  const factor = (parseFloat(tacCarryOpacityEl.value) || 65) / 100;
+  for (let i = 0; i < field.bandOf.length; i++) {
+    const band = resolveBand(field.bandOf[i]);
+    if (band < 0) continue;
+    const color = CARRY_BAND_COLORS[band];
+    const r = parseInt(color.slice(1, 3), 16);
+    const gg = parseInt(color.slice(3, 5), 16);
+    const b = parseInt(color.slice(5, 7), 16);
+    px[i * 4] = r;
+    px[i * 4 + 1] = gg;
+    px[i * 4 + 2] = b;
+    px[i * 4 + 3] = Math.round(CARRY_BAND_OPACITY[band] * factor * 255);
+  }
+  octx.putImageData(img, 0, 0);
+  const canvas = document.createElement('canvas');
+  canvas.width = W0;
+  canvas.height = H0;
+  canvas.className = 'tac-carry-canvas';
+  const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+  ctx.drawImage(off, 0, 0, W0, H0);
+  tacCarryCanvas?.remove();
+  tacCarryCanvas = canvas;
+  tacLayer().appendChild(canvas);
+}
+
+function renderTacCarryLegend(bands) {
+  tacCarryLegend.innerHTML = '';
+  bands.forEach((b) => {
+    if (b.empty) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'tac-carry-band';
+    btn.dataset.band = b.band;
+    if (tacCarryState.hiddenBands.has(b.band)) btn.classList.add('off');
+    btn.innerHTML = `<span class="tac-carry-swatch" style="background:${CARRY_BAND_COLORS[b.band]}"></span>`
+      + `<span>${translate(`ui.tacCarry.band${b.band}`)}</span>`;
+    btn.title = translate('ui.tacCarry.bandToggleHint');
+    btn.addEventListener('click', () => tacCarryToggleBand(b.band));
+    tacCarryLegend.appendChild(btn);
+  });
+  tacCarryLegend.style.display = '';
+  tacCarryOpacityRowEl.style.display = '';
+}
+
+function tacCarryToggleBand(band) {
+  if (tacCarryState.hiddenBands.has(band)) tacCarryState.hiddenBands.delete(band);
+  else tacCarryState.hiddenBands.add(band);
+  tacCarryLegend.querySelector(`[data-band="${band}"]`)?.classList
+    .toggle('off', tacCarryState.hiddenBands.has(band));
+  // 用缓存重绘，不重新计算
+  const cache = tacCarryState.cache;
+  if (cache && tacCarryState.resultMapId === S.currentMapId) renderTacCarryOverlay(cache.g, cache.field);
+}
+
+function tacCarryHunterBaseSpeed() {
+  const info = tacSpeedForms(tacCarryHunterEl.value);
+  if (!info) return CARRY_DEFAULTS.baseSpeed;
+  const fi = info.dual ? Math.min(info.forms.length - 1, +tacCarryHunterFormEl.value || 0) : 0;
+  return info.forms[fi].speed;
+}
+
+function buildTacCarryHunterOptions() {
+  let opts = '';
+  for (const [key, def] of Object.entries(TAC_ROLES)) {
+    if (def.camp !== 'hunter') continue;
+    const sp0 = (def.speed != null && typeof def.speed === 'object')
+      ? Object.values(def.speed)[0] : def.speed;
+    opts += sp0
+      ? translate("application.tacBuildRoleOptionsFourth", { key, value: '', name: def.name, sp0 })
+      : translate("application.tacBuildRoleOptionsFifth", { key, name: def.name });
+  }
+  tacCarryHunterEl.innerHTML = opts + translate("application.tacBuildRoleOptionsThird");
+  tacCarryHunterEl.value = 'hellEmber';
+}
+
+function syncTacCarryHunterForm() {
+  const key = tacCarryHunterEl.value;
+  const info = tacSpeedForms(key);
+  if (info && info.dual) {
+    if (tacCarryHunterFormEl.dataset.sig !== key) {
+      tacCarryHunterFormEl.innerHTML = info.forms.map((f, i) =>
+        translate("application.syncTacSpeedForm", { index: i, name: f.name, speed: f.speed })).join('');
+      tacCarryHunterFormEl.dataset.sig = key;
+    }
+    tacCarryHunterFormEl.style.display = '';
+  } else {
+    tacCarryHunterFormEl.style.display = 'none';
+    tacCarryHunterFormEl.dataset.sig = key;
+  }
+}
+
+function syncTacCarryHunterUI() {
+  // 数字框始终可改；下拉选中监管者时把基础移速写入数字框
+  syncTacCarryHunterForm();
+  if (tacCarryHunterEl.value !== 'custom') {
+    tacCarryHunterFormEl.value = '0';
+    tacCarryHunterSpeedEl.value = tacCarryHunterBaseSpeed();
+  }
+}
+
+function syncTacCarryPickupUI() {
+  if (tacCarryPickupModeEl.value === 'default') tacCarryPickupEl.value = CARRY_DEFAULTS.pickupSeconds;
+}
+
+// 天赋弹窗列表：group = survivor / hunterStruggle / hunterSpeed
+function buildTacCarryModalList(listEl, group) {
+  listEl.innerHTML = Object.entries(CARRY_TALENTS)
+    .filter(([, d]) => d.group === group)
+    .map(([key, d]) => {
+      const name = translate(`ui.tacCarry.talent.${key}`);
+      const lv = d.levels.length > 1
+        ? `<select data-clv="${key}">`
+          + d.levels.map((_, i) =>
+            translate('application.lv', { index: i + 1, count: i === d.levels.length - 1 ? ' selected' : '', value: i + 1 })).join('')
+          + '</select>'
+        : '';
+      return `<div class="tac-talent-row"><span class="tac-talent-name">${name}`
+        + `<small>${translate(`ui.tacCarry.desc.${key}`)}</small></span>${lv}`
+        + `<button type="button" class="tac-talent-add" data-ck="${key}">${translate('ui.tacCarry.add')}</button></div>`;
+    }).join('');
+}
+
+function bindTacCarryModal(btn, modal, listEl, close, group) {
+  btn.addEventListener('click', () => {
+    buildTacCarryModalList(listEl, group);
+    modal.style.display = 'flex';
+  });
+  close.addEventListener('click', () => { modal.style.display = 'none'; });
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.style.display = 'none';
+  });
+  listEl.addEventListener('click', (e) => {
+    const add = e.target.closest('.tac-talent-add');
+    if (!add) return;
+    const key = add.dataset.ck;
+    const def = CARRY_TALENTS[key];
+    if (!def) return;
+    const lvSel = listEl.querySelector(`select[data-clv="${key}"]`);
+    const level = lvSel ? +lvSel.value : 1;
+    tacCarryState.buffs.push({ id: ++tacCarryBuffId, key, level });
+    modal.style.display = 'none';
+    renderTacCarryBuffs();
+  });
+}
+
+// 加成明细表：巨钳一行拆成「挣扎 + 放下进度」两行显示，共享同一个条目
+// 结构对齐测算卡片：tac-detail-toggle 开关 + tac-detail-body + tac-detail-tbl
+let tacCarryBuffOpen = true;
+function renderTacCarryBuffs() {
+  tacCarryBuffToggleEl.textContent = translate('application.renderTacBuffDetail', { value: tacCarryBuffOpen ? '▾' : '▸' });
+  tacCarryBuffBody.style.display = tacCarryBuffOpen ? '' : 'none';
+  if (!tacCarryBuffOpen) return;
+  const pct = (v) => `${Math.round(v * 1000) / 10}%`;
+  const rows = [];
+  for (const b of tacCarryState.buffs) {
+    const def = CARRY_TALENTS[b.key];
+    const base = translate(`ui.tacCarry.talent.${b.key}`);
+    const name = def.levels.length > 1 ? `${base} ${b.level}层` : base;
+    const dur = def.duration ? ` · ${def.duration}s` : '';
+    if (b.key === 'ironGrip') {
+      rows.push({ id: b.id, name, value: pct(def.levels[b.level - 1]) + dur, type: translate('ui.tacCarry.type.struggle') });
+      rows.push({ id: b.id, name, value: pct(def.dropProgress[b.level - 1] / 100), type: translate('ui.tacCarry.type.drop') });
+    } else if (b.key === 'playful') {
+      rows.push({ id: b.id, name, value: pct(def.levels[b.level - 1]), type: translate('ui.tacCarry.type.pickup') });
+    } else if (def.group === 'survivor') {
+      rows.push({ id: b.id, name, value: pct(def.levels[b.level - 1]), type: translate('ui.tacCarry.type.struggle') });
+    } else {
+      rows.push({ id: b.id, name, value: pct(def.levels[b.level - 1]) + dur, type: translate('ui.tacCarry.type.speed') });
+    }
+  }
+  if (!rows.length) {
+    tacCarryBuffBody.innerHTML = `<div class="tac-detail-empty">${translate('application.renderTacBuffDetailSixth')}</div>`;
+    return;
+  }
+  tacCarryBuffBody.innerHTML = `<table class="tac-detail-tbl"><thead><tr>`
+    + `<th class="tac-cb-name">${translate('ui.tacCarry.buffColName')}</th>`
+    + `<th class="tac-cb-value">${translate('ui.tacCarry.buffColValue')}</th>`
+    + `<th>${translate('ui.tacCarry.buffColType')}</th>`
+    + `<th class="tac-col-del"></th></tr></thead><tbody>`
+    + rows.map((r) =>
+      `<tr><td>${r.name}</td><td>${r.value}</td><td>${r.type}</td>`
+      + `<td class="tac-col-del"><button type="button" class="tac-buff-del tac-carry-buff-del" data-cbid="${r.id}">×</button></td></tr>`).join('')
+    + '</tbody></table>';
+}
+
+function buildTacCarryCard() {
+  if (!tacCarryCard) return;
+  // 与显示设置共享的椅子行
+  tacCarryChairSizeDefEl._default = TAC_DISPLAY_DEFAULT.chairSize;
+  bindTacDisplayRow(tacCarryShowChairsEl, tacCarryChairSizeEl, tacCarryChairSizeDefEl,
+    (v) => { tacDisplay.chairs = v; renderTacChairs(); syncTacDisplayUI(); },
+    (v) => { tacDisplay.chairSize = v; renderTacChairs(); syncTacDisplayUI(); });
+  tacCarryChairPrevBtn.addEventListener('click', () => { switchTacChair(-1); syncTacCarryChairRow(); });
+  tacCarryChairNextBtn.addEventListener('click', () => { switchTacChair(1); syncTacCarryChairRow(); });
+
+  // 监管者基础移速（与速度设置的监管者选择一致）：数字框可直改，直改后下拉跳到自定义
+  buildTacCarryHunterOptions();
+  tacCarryHunterEl.addEventListener('change', syncTacCarryHunterUI);
+  tacCarryHunterFormEl.addEventListener('change', () => {
+    tacCarryHunterSpeedEl.value = tacCarryHunterBaseSpeed();
+  });
+  tacCarryHunterSpeedEl.addEventListener('input', () => {
+    const v = parseFloat(tacCarryHunterSpeedEl.value);
+    if (!(v > 0) || tacCarryHunterEl.value === 'custom') return;
+    const sp = tacCarryHunterBaseSpeed();
+    if (Math.abs(sp - v) > 1e-9) {
+      tacCarryHunterEl.value = 'custom';
+      syncTacCarryHunterForm();
+    }
+  });
+  syncTacCarryHunterUI();
+  tacCarryPickupModeEl.addEventListener('change', syncTacCarryPickupUI);
+  tacCarryPickupEl.addEventListener('input', () => { tacCarryPickupModeEl.value = 'custom'; });
+  syncTacCarryPickupUI();
+
+  // 三个天赋弹窗
+  bindTacCarryModal(tacCarrySurvTalentBtn, tacCarrySurvModal, tacCarrySurvList, tacCarrySurvClose, 'survivor');
+  bindTacCarryModal(tacCarryHuntTalentBtn, tacCarryHuntModal, tacCarryHuntList, tacCarryHuntClose, 'hunterStruggle');
+  bindTacCarryModal(tacCarrySpeedTalentBtn, tacCarrySpeedModal, tacCarrySpeedList, tacCarrySpeedClose, 'hunterSpeed');
+  tacCarryBuffToggleEl.addEventListener('click', () => {
+    tacCarryBuffOpen = !tacCarryBuffOpen;
+    renderTacCarryBuffs();
+  });
+  tacCarryBuffBody.addEventListener('click', (e) => {
+    const del = e.target.closest('.tac-carry-buff-del');
+    if (!del) return;
+    const id = +del.dataset.cbid;
+    tacCarryState.buffs = tacCarryState.buffs.filter((b) => b.id !== id);
+    renderTacCarryBuffs();
+  });
+  renderTacCarryBuffs();
+
+  tacCarryOpacityEl.addEventListener('input', () => {
+    const cache = tacCarryState.cache;
+    if (cache && tacCarryState.resultMapId === S.currentMapId) renderTacCarryOverlay(cache.g, cache.field);
+  });
+
+  tacCarryHideRingEl.addEventListener('change', () => {
+    tacDisplay.carryHideRing = tacCarryHideRingEl.checked;
+    renderTacChairs();
+    tacSave();
+  });
+
+  tacCarryPickBtn.addEventListener('click', () => {
+    tacCarryState.armed = !tacCarryState.armed;
+    tacCarryPickBtn.classList.toggle('active', tacCarryState.armed);
+    syncTacCarryChairName();
+  });
+  tacCarryRunBtn.addEventListener('click', tacCarryRun);
+  tacCarryClearBtn.addEventListener('click', () => {
+    tacCarryState.chair = null;
+    tacCarryClearResult();
+    syncTacCarryChairName();
+    renderTacChairs();
+  });
+  tacCarryInitialEl.addEventListener('input', () => {
+    tacCarryInitialVal.textContent = `${tacCarryInitialEl.value}%`;
+  });
+  syncTacCarryChairRow();
+  syncTacCarryChairName();
+}
+
+buildTacCarryCard();
+
+
 let tacResizeTimer = null;
 window.addEventListener('resize', () => {
   clearTimeout(tacResizeTimer);
@@ -1385,6 +1839,13 @@ tacShowCoordsEl.addEventListener('change', () => {
 
 tacSelGlowEl.addEventListener('change', () => {
   tacDisplay.selGlow = tacSelGlowEl.checked;
+  renderTacBoard();
+  tacSave();
+});
+
+
+tacHideEndpointsEl.addEventListener('change', () => {
+  tacDisplay.hideEndpoints = tacHideEndpointsEl.checked;
   renderTacBoard();
   tacSave();
 });
@@ -2589,6 +3050,7 @@ export function renderTacBoard() {
       if (isChain && !((isChainStart && end === 'a') || (isChainEnd && end === 'b'))) return;
       const dot = document.createElement('div');
       dot.className = 'tac-measure-dot';
+      if (tacDisplay.hideEndpoints) dot.classList.add('hidden-endpoint');
       dot.dataset.idx = idx;
       dot.dataset.end = end;
       dot.style.left = `${m[kx] * 100}%`;
@@ -5167,11 +5629,16 @@ export function syncTacSubCards() {
   tacDrawCard.style.display = tacTool === 'draw' ? '' : 'none';
   tacTextCard.style.display = tacTool === 'draw' ? '' : 'none';
   tacMeasureCard.style.display = tacTool === 'measure' ? '' : 'none';
+  if (tacCarryCard) {
+    tacCarryCard.style.display = tacTool === 'deduce' ? '' : 'none';
+    if (tacTool === 'deduce') syncTacCarryChairRow();
+  }
   tacDisplayCard.style.display = tacTool === 'display' ? '' : 'none';
   if (tacTool === 'select') tacManageCard.open = true;
   if (tacTool === 'roles') tacRolesCard.open = true;
   if (tacTool === 'draw') { tacDrawCard.open = true; tacTextCard.open = true; }
   if (tacTool === 'measure') tacMeasureCard.open = true;
+  if (tacTool === 'deduce' && tacCarryCard) tacCarryCard.open = true;
   if (tacTool === 'display') tacDisplayCard.open = true;
 }
 
@@ -5186,7 +5653,8 @@ export function setTacTool(tool) {
   tacTextPlacing = false;
   updateTacTextUi();
   tacChainRoute = null; 
-  tacSelMeasure = null; 
+  tacSelMeasure = null;
+  if (tool !== 'deduce') tacCarryDisarm();
   tacticView.querySelectorAll('.tac-tool').forEach((b) =>
     b.classList.toggle('active', !!b.dataset.tool && b.dataset.tool === tool));
   tacticView.classList.toggle('tac-mode-draw', tool === 'draw');
@@ -5531,6 +5999,11 @@ export async function tacExportImage() {
   if (base) ctx.drawImage(base, vx * W0, vy * H0, W0 * vw, H0 * vh, 0, 0, W, H);
   else { ctx.fillStyle = '#1e293b'; ctx.fillRect(0, 0, W, H); }
 
+  // 挂人范围色带（地图对齐画布，随整图旋转步骤一起旋转）
+  if (tacCarryCanvas && tacCarryState.resultMapId === S.currentMapId) {
+    ctx.drawImage(tacCarryCanvas, vx * W0, vy * H0, W0 * vw, H0 * vh, 0, 0, W, H);
+  }
+
   
   const svgClone = tacArrowSvg.cloneNode(true);
   if (!tacDisplay.exportRot) {
@@ -5854,6 +6327,7 @@ export async function tacExportImage() {
   ctx.save();
   ctx.lineWidth = Math.max(1.5, W * K / 400);
   board.measures.forEach((m, idx) => {
+    if (tacDisplay.hideEndpoints) return;
     const isChain = m.chain != null;
     if (isChain && !(chainFirst[m.chain] === idx || chainLast[m.chain] === idx)) return;
     const dotColor = tacMeasureSegColor(m);
@@ -5998,6 +6472,20 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
   const itemEl = e.target.closest('.tac-item-circle, .tac-item-pin');
   const textEl = e.target.closest('.tac-text');
   const p = tacPos(e);
+
+  // 选椅模式：点击椅子选中用于挂人范围计算
+  // （椅子图标 pointer-events:none，按地图坐标找最近椅子）
+  if (tacCarryState.armed) {
+    const [W0, H0] = MAPS_DATA[S.currentMapId].mapSize;
+    const mx = p.x * W0, my = p.y * H0;
+    let best = null, bestD = Infinity;
+    for (const c of tacCarryGroundChairs()) {
+      const d = Math.hypot(c.x - mx, c.z - my);
+      if (d < bestD) { bestD = d; best = c; }
+    }
+    if (best && bestD <= W0 * 0.04) tacCarrySelect(best.kind, best.index);
+    return;
+  }
 
   
   if (tacTextPlacing) {
@@ -6250,8 +6738,31 @@ tacMapWrap.addEventListener('pointermove', (e) => {
     return;
   }
   const p = tacPos(e);
-  
-  tacUpdateSnapRipple(p);
+
+  // 选椅模式：悬停地面椅子时显示红色波纹
+  if (tacCarryState.armed) {
+    const [W0, H0] = MAPS_DATA[S.currentMapId].mapSize;
+    const mx = p.x * W0, my = p.y * H0;
+    let best = null, bestD = Infinity;
+    for (const c of tacCarryGroundChairs()) {
+      const d = Math.hypot(c.x - mx, c.z - my);
+      if (d < bestD) { bestD = d; best = c; }
+    }
+    if (best && bestD <= W0 * 0.04) {
+      const [vu, vv] = tacRotPt(best.x / W0, best.z / H0);
+      tacSnapRipple.style.left = `${vu * 100}%`;
+      tacSnapRipple.style.top = `${vv * 100}%`;
+      tacSnapRipple.style.removeProperty('--snap-c');
+      tacSnapRipple.style.removeProperty('--snap-g');
+      tacSnapRipple.classList.add('show', 'chair');
+      tacSnapRipple.classList.remove('door');
+    } else {
+      tacSnapRipple.classList.remove('show', 'chair');
+    }
+  } else {
+    tacSnapRipple.classList.remove('chair');
+    tacUpdateSnapRipple(p);
+  }
   tacUpdateCoordsTip(p, e);
   
   if (tacDragMeasure) {

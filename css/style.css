@@ -2510,6 +2510,7 @@ details.ded-card[open] > summary .arrow { transform: rotate(90deg); }
   touch-action: none;
 }
 .tac-mode-measure .tac-measure-dot { pointer-events: auto; cursor: grab; }
+.tac-measure-dot.hidden-endpoint { opacity: 0; }
 .tac-mode-measure .tac-measure-dot:active { cursor: grabbing; }
 .tac-measure-label {
   font-size: 13px;
@@ -2905,12 +2906,32 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
   border-top: 1px solid var(--border);
   padding-top: 13px;
 }
+#tacCarryCard .tac-sec-label:not(:first-of-type) {
+  border-top: 1px solid var(--border);
+  padding-top: 13px;
+}
+#tacCarryCard .tac-speed-line:has(input[type="range"]) { flex-wrap: nowrap; }
+#tacCarryCard .tac-speed-line input[type="range"] { flex: 1 1 auto; min-width: 60px; }
+#tacCarryPickBtn { padding: 9px 20px; font-size: 13px; }
+#tacCarryCard .tac-carry-pick .tac-carry-chair-name {
+  color: #ffd54f;
+  font-weight: 700;
+}
+#tacCarryCard .tac-carry-pick .tac-display-toggle {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-secondary);
+  flex: none;
+}
 .tac-sec-label:first-of-type { margin-top: 2px; }
 .tac-size-val { color: var(--accent); }
 
 
 
-.tac-tools { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.tac-tools { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 480px) {
+  .tac-tools { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 
 
 .tac-text {
@@ -3181,6 +3202,11 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 .tac-snap-ripple.door::after {
   border-color: rgba(251, 146, 60, 0.95);
   box-shadow: 0 0 10px rgba(251, 146, 60, 0.55);
+}
+.tac-snap-ripple.chair::before,
+.tac-snap-ripple.chair::after {
+  border-color: rgba(255, 82, 82, 0.95);
+  box-shadow: 0 0 10px rgba(255, 82, 82, 0.55);
 }
 .tac-snap-ripple::after { animation-delay: 0.55s; }
 @keyframes tacSnapWave {
@@ -4293,4 +4319,103 @@ div.tac-fixed-spawn .cam-dir.up {
   .tac-modal { max-height: 88vh; }
   .tac-modal-body { max-height: 66vh; }
   .toast-message { max-width: 70vw; }
+}
+
+/* ---- 选椅看范围（挂人范围近似） ---- */
+#tacCarryCard .tac-carry-pick {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+#tacCarryCard .tac-carry-chair-name {
+  font-size: 12px;
+  color: var(--text-secondary);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#tacCarryCard .tac-carry-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+#tacCarryCard .tac-carry-big {
+  flex: 1 1 0;
+  padding: 10px 4px;
+  font-size: 13px;
+}
+#tacCarryCard .tac-carry-progress {
+  margin-top: 10px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border);
+  overflow: hidden;
+}
+#tacCarryCard .tac-carry-progress-bar {
+  height: 100%;
+  width: 0;
+  background: #3b82f6;
+  transition: width .12s linear;
+}
+#tacCarryCard .tac-carry-summary {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+#tacCarryCard .tac-carry-legend {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px 12px;
+  margin-top: 8px;
+  font-size: 11px;
+  overflow-x: auto;
+}
+@media (max-width: 480px) {
+  #tacCarryCard .tac-carry-legend { flex-wrap: wrap; }
+}
+#tacCarryCard .tac-carry-legend .tac-carry-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+#tacCarryCard .tac-carry-legend .tac-carry-band {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  padding: 2px 8px;
+  border: 1px solid var(--border, rgba(128, 128, 128, 0.35));
+  border-radius: 10px;
+  background: transparent;
+  color: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+#tacCarryCard .tac-carry-legend .tac-carry-band.off {
+  opacity: 0.35;
+}
+#tacCarryBuffBody .tac-cb-name { width: 32%; }
+#tacCarryBuffBody .tac-cb-value { width: 26%; }
+#tacCarryCard .tac-carry-legend .tac-carry-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex: none;
+}
+.tac-carry-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+.tac-chair.tac-carry-ring {
+  aspect-ratio: 1;
+  border: 2px solid #ff5252;
+  border-radius: 50%;
+  pointer-events: none;
 }

@@ -8,7 +8,7 @@ import { prepareAssets } from './prepare-assets.mjs';
 test('packaging excludes deployment credentials and rejects symlinks', async () => {
   const source = await mkdtemp(join(tmpdir(), 'tactical-friend-source-'));
   try {
-    for (const directory of ['js', 'css', 'locales']) await mkdir(join(source, directory));
+    for (const directory of ['js', 'css', 'locales', 'grid-data']) await mkdir(join(source, directory));
     await writeFile(join(source, 'index.html'), '<html><head></head><body>fixture</body></html>');
     await writeFile(join(source, 'js/main.js'), 'export {};');
     await writeFile(join(source, 'css/style.css'), 'body {}');

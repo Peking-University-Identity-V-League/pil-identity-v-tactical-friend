@@ -19,7 +19,8 @@
       ".css",
       ".json",
       ".svg",
-      ".txt"
+      ".txt",
+      ".png"
     ],
     "gzipLevel": 6,
     "brotliQuality": 5

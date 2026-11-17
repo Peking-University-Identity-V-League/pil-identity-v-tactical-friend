@@ -9,6 +9,7 @@ const allowedExtensions = new Map([
   ['css', '.css'],
   ['js', '.js'],
   ['locales', '.json'],
+  ['grid-data', '.png'],
 ]);
 
 export async function prepareAssets(sourceRoot, commit, configRevision = 'local', { version = true } = {}) {

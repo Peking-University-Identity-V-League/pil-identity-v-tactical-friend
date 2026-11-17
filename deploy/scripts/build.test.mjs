@@ -11,7 +11,7 @@ const buildScript = new URL('./build.mjs', import.meta.url);
 test('an explicit application checkout is packaged without running or resetting upstream code', async () => {
   const source = await mkdtemp(join(tmpdir(), 'tactical-build-'));
   try {
-    for (const directory of ['css', 'js', 'locales']) await mkdir(join(source, directory));
+    for (const directory of ['css', 'js', 'locales', 'grid-data']) await mkdir(join(source, directory));
     await writeFile(join(source, 'index.html'), '<html><head></head><body>committed</body></html>');
     await writeFile(join(source, 'css/style.css'), 'body {}');
     await writeFile(join(source, 'js/main.js'), 'export {};');
