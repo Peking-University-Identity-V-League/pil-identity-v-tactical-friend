@@ -9,10 +9,11 @@ test('the public 3D path opens the map list and a complete self-contained scene'
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/tactical-friend/3d/');
-  await expect(page.locator('.grid a')).toHaveCount(10);
+  await expect(page.locator('.grid a')).toHaveCount(10, { timeout: 30000 });
   await page.getByRole('link', { name: '军工厂', exact: true }).click();
-  await expect(page).toHaveURL(/\/tactical-friend\/3d\/ordnance_factory1\.html$/);
-  await page.waitForFunction(() => window.measureAPI?.stats().ready && window.tacticsAPI?.stats().ready && window.viewerAPI?.worldCollision?.().state === 'ready');
+  await expect(page).toHaveURL(/\/tactical-friend\/3d\/ordnance_factory1\.html$/, { timeout: 60000 });
+  // waitForFunction 默认仅 30s 且不吃 test.setTimeout，CI 软件渲染下必须显式放宽
+  await page.waitForFunction(() => window.measureAPI?.stats().ready && window.tacticsAPI?.stats().ready && window.viewerAPI?.worldCollision?.().state === 'ready', null, { timeout: 240000 });
   expect(await page.evaluate(() => window.viewerAPI.worldCollision().triangleCount)).toBeGreaterThan(0);
   await expect(page.locator('.pil-handoff-back')).toHaveAttribute('href', /\/tactical-friend\/\?map=0$/);
   expect(errors).toEqual([]);
@@ -26,10 +27,11 @@ for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
     await page.goto(prefix + '/');
     await page.locator('.home-card').first().click();
     await page.locator('[data-map-3d]:visible').first().click();
-    await expect(page).toHaveURL(new RegExp(prefix + '/3d/ordnance_factory1\\.html$'));
-    await page.waitForFunction(() => window.measureAPI?.stats().ready && window.tacticsAPI?.stats().ready);
-    await expect(page.locator('.pil-handoff-back')).toHaveAttribute('href', new RegExp(prefix + '/\\?map=0$'));
+    await expect(page).toHaveURL(new RegExp(prefix + '/3d/ordnance_factory1\\.html$'), { timeout: 60000 });
+    // waitForFunction 默认仅 30s 且不吃 test.setTimeout，CI 软件渲染下必须显式放宽
+    await page.waitForFunction(() => window.measureAPI?.stats().ready && window.tacticsAPI?.stats().ready, null, { timeout: 180000 });
+    await expect(page.locator('.pil-handoff-back')).toHaveAttribute('href', new RegExp(prefix + '/\\?map=0$'), { timeout: 30000 });
     await page.locator('.pil-handoff-back').click();
-    await expect(page).toHaveURL(new RegExp(prefix + '/\\?map=0$'));
+    await expect(page).toHaveURL(new RegExp(prefix + '/\\?map=0$'), { timeout: 60000 });
   });
 }
