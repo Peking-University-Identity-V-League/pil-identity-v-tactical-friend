@@ -167,3 +167,92 @@ export function computeTideField(g, startCell, profile, opts = {}) {
   return computeField(g, startCell, profile,
     { ...opts, bands: tideRangeBands(), bandAt: tideBandAt });
 }
+
+/**
+ * 两点间最优路径（分块 Dijkstra + 父指针回溯）。
+ * 与 computeField 同一套 8 连通/禁穿墙角/时间依赖速度模型，
+ * 但只搜到终点格被 settle 为止，并记录父指针用于回溯折线。
+ * 返回 Promise<{ seconds, distM, path, reached, cancelled, unreachable }>：
+ * - seconds/distM：起点格到终点格的最短用时（秒）与折线距离（米）。
+ * - path：[{x, y}...] 栅格坐标序列，含起点与终点，按行进顺序排列。
+ * - unreachable：终点不可走或搜尽全图仍未到达。
+ * initialSeconds：起点已耗时（例如从地下室椅子先走到楼梯出口）。
+ */
+export function computePath(g, startCell, endCell, profile, { onProgress, initialSeconds = 0 } = {}) {
+  const { grid, gridW, gridH, metersPerCell } = g;
+  const total = gridW * gridH;
+  const time = new Float64Array(total).fill(Infinity);
+  const distM = new Float64Array(total).fill(Infinity);
+  const parent = new Int32Array(total).fill(-1);
+  const startIdx = startCell.y * gridW + startCell.x;
+  const endIdx = endCell.y * gridW + endCell.x;
+  const empty = { seconds: Infinity, distM: Infinity, path: [], reached: 0, unreachable: true };
+  if (!grid[startIdx] || !grid[endIdx]) return { promise: Promise.resolve(empty), cancel() {} };
+  time[startIdx] = initialSeconds;
+  distM[startIdx] = 0;
+  const heap = makeHeap();
+  heap.push(initialSeconds, startIdx);
+  const orth = metersPerCell, diag = metersPerCell * Math.SQRT2;
+  let settled = 0;
+  let cancelled = false;
+  const token = { cancel() { cancelled = true; } };
+
+  const CHUNK = 20000;
+  const promise = new Promise((resolve) => {
+    const finish = (extra = {}) => {
+      if (extra.cancelled || extra.unreachable) {
+        resolve({ seconds: Infinity, distM: Infinity, path: [], reached: settled, ...extra });
+        return;
+      }
+      const path = [];
+      for (let i = endIdx; i !== -1; i = parent[i]) {
+        path.push({ x: i % gridW, y: (i / gridW) | 0 });
+      }
+      path.reverse();
+      resolve({
+        seconds: time[endIdx] - initialSeconds,
+        distM: distM[endIdx],
+        path,
+        reached: settled,
+        ...extra,
+      });
+    };
+    const step = () => {
+      if (cancelled) { finish({ cancelled: true }); return; }
+      let n = 0;
+      while (heap.size && n < CHUNK) {
+        const t = heap.topKey();
+        const idx = heap.pop();
+        if (t > time[idx] + 1e-12) continue;  // 过期堆条目
+        n++;
+        settled++;
+        if (idx === endIdx) { finish(); return; }
+        const x = idx % gridW, y = (idx / gridW) | 0;
+        const speed = profile.speedAt(t);
+        for (let dy = -1; dy <= 1; dy++) {
+          for (let dx = -1; dx <= 1; dx++) {
+            if (!dx && !dy) continue;
+            const nx = x + dx, ny = y + dy;
+            if (nx < 0 || ny < 0 || nx >= gridW || ny >= gridH) continue;
+            const ni = ny * gridW + nx;
+            if (!grid[ni]) continue;
+            if (dx && dy && (!grid[y * gridW + nx] || !grid[ny * gridW + x])) continue; // 禁穿墙角
+            const edgeM = (dx && dy) ? diag : orth;
+            const nt = t + edgeM / speed;
+            if (nt + 1e-12 < time[ni]) {
+              time[ni] = nt;
+              distM[ni] = distM[idx] + edgeM;
+              parent[ni] = idx;
+              heap.push(nt, ni);
+            }
+          }
+        }
+      }
+      onProgress?.(heap.size ? Math.min(0.99, settled / Math.max(settled + heap.size, 1)) : 1);
+      if (heap.size) setTimeout(step, 0);
+      else finish({ unreachable: true });
+    };
+    setTimeout(step, 0);
+  });
+  return { promise, cancel: token.cancel };
+}
