@@ -8,9 +8,14 @@
   地下室与二楼不参与；
 - 阻挡：wall-payload 碰撞三角形中「近竖直面」(|法线y|/|法线| < 0.5)，
   对象过滤 (group & 68) 排除、(layer & 1) 必需，与 coarse-walls 一致；
-  仅取 Y 范围与站立高度带 [2, 25] 相交的墙，避免地下室/二楼墙误伤地面；
+  与 coarse-walls 相同，墙必须实际跨越「局部地面高度 + 10」（约 0.84m）的
+  空气层才阻挡：低矮台面边缘（如马戏团舞台）、地下室冒出地面的井壁、
+  悬空的高墙/门楣都不会误伤地面层通行；
 - 窗口封堵：passage-data 的 window 连接在牵气球时不可通过，
   在窗口中点按半径封格。
+- 地下室：导航 centroid 低于地面带的三角形聚成簇，逐簇输出楼梯出口格
+  （地面层栅格上坡道最深点）、坡道附加距离与平面中心，供前端从地下室
+  椅子出发时以「偏移秒数 + 出口格起搜」近似三维的跨楼层计算。
 坐标经 board-calibration.json 的 worldToPixel 仿射直接落到二维底图像素坐标系。
 """
 import base64
@@ -20,6 +25,7 @@ import math
 import re
 import struct
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 from PIL import Image
@@ -33,9 +39,10 @@ MANIFEST_JS = ROOT / 'js' / 'data' / 'nav-grid-manifest.js'
 CELL_PX = 2            # 每格对应底图 2x2 像素
 GROUND_Y_MIN = -30.0   # 导航网格地面层（源坐标单位，11.85 ≈ 1m）
 GROUND_Y_MAX = 45.0
-WALL_Y_MIN = 2.0       # 墙体生效的站立高度带
+WALL_Y_MIN = 2.0       # 兜底规则（墙附近找不到导航时）的站立高度带
 WALL_Y_MAX = 25.0
-WALL_MIN_Y_SPAN = 8.0  # 墙面最小高度（源单位），排除台阶竖板
+WALL_MIN_Y_SPAN = 8.0  # 兜底规则：墙面最小高度（源单位），排除台阶竖板
+WALL_HEIGHT_OFFSET = 10.0  # 与 3D coarse-walls heightOffset 一致（源单位，约 0.84m）
 WINDOW_SEAL_METERS = 0.7   # 窗口封堵半径
 SOURCE_UNITS_PER_METER = 11.85
 
@@ -79,7 +86,34 @@ def extract_nav_triangles(html: str):
             for i0, i1, i2 in zip(indices[::3], indices[1::3], indices[2::3])]
 
 
-def extract_wall_triangles(html: str):
+def make_nav_height_sampler(nav_tris):
+    """按质心 XZ 空间哈希索引（地面层）导航三角形，查询任意 XZ 的局部地面高度。"""
+    buckets = defaultdict(list)
+    for t in nav_tris:
+        cx = sum(p[0] for p in t) / 3
+        cy = sum(p[1] for p in t) / 3
+        cz = sum(p[2] for p in t) / 3
+        buckets[(int(cx // 20), int(cz // 20))].append((cx, cz, cy))
+
+    def height_at(x, z):
+        best, best_d = None, float('inf')
+        for ring in range(8):
+            r = ring * 20
+            found = False
+            for bx in range(int((x - r - 20) // 20), int((x + r + 20) // 20) + 1):
+                for bz in range(int((z - r - 20) // 20), int((z + r + 20) // 20) + 1):
+                    for cx, cz, cy in buckets.get((bx, bz), ()):
+                        d = (cx - x) ** 2 + (cz - z) ** 2
+                        if d < best_d:
+                            best, best_d, found = cy, d, True
+            if found and ring >= 1:
+                break
+        return best
+
+    return height_at
+
+
+def extract_wall_triangles(html: str, height_at=None):
     wp = json.loads(extract_block(html, 'wall-payload', 'application/json'))
     data = json.loads(gzip.decompress(base64.b64decode(wp['base64'])))
     assert data['schema'] == 'pil-source-collision-triangles-v1'
@@ -106,11 +140,19 @@ def extract_wall_triangles(html: str):
                 continue
             ymin = min(p0[1], p1[1], p2[1])
             ymax = max(p0[1], p1[1], p2[1])
-            if ymax < WALL_Y_MIN or ymin > WALL_Y_MAX:
-                continue
-            # 排除台阶竖板等矮面，只保留真正阻挡通行的墙
-            if ymax - ymin < WALL_MIN_Y_SPAN:
-                continue
+            h = height_at((p0[0] + p1[0] + p2[0]) / 3,
+                          (p0[2] + p1[2] + p2[2]) / 3) if height_at else None
+            if h is not None:
+                # 与 3D coarse-walls 一致：行路线段在「局部地面 + heightOffset」高度上
+                # 与墙面相交才算阻挡。低台面边缘、地下室井壁、悬空高墙不封地面。
+                if not (ymin < h + WALL_HEIGHT_OFFSET < ymax):
+                    continue
+            else:
+                # 找不到附近导航（远离可走区域），退回站立高度带规则
+                if ymax < WALL_Y_MIN or ymin > WALL_Y_MAX:
+                    continue
+                if ymax - ymin < WALL_MIN_Y_SPAN:
+                    continue
             walls.append((p0, p1, p2))
     return walls
 
@@ -176,23 +218,134 @@ def stroke_segment(grid, gw, gh, p, q, radius_cells, value):
                   p[1] + (q[1] - p[1]) * t, radius_cells, value)
 
 
-def rasterize(html, entry, cell_px):
+def extract_basements(nav_tris, to_cell, cell_px, anchors_px, scene='?'):
+    """地下室聚类与楼梯参数。
+
+    导航 centroid Y < GROUND_Y_MIN 的三角形为地下室带（含坡道下半段），
+    按 XZ 桶连通聚簇。簇可能与实际房间错位（坡道与房间分裂成两簇、
+    纯房间簇没有坡道），因此以 maps.js 声明的地下室椅子质心为锚：
+    每个声明地下室绑定最近的一个「带坡道簇」（slopeExtraM > 0.3）。
+    每处声明地下室输出：
+    - exit：坡道跨入地下室带的最高点（像素），即地面栅格上 flood 的起点；
+    - slopeExtraM：坡道斜面相对水平投影的附加距离（米）；
+    - center：声明椅子质心（像素），供前端按椅子位置就近匹配。
+    """
+    below = []
+    for t in nav_tris:
+        cy = (t[0][1] + t[1][1] + t[2][1]) / 3
+        if cy < GROUND_Y_MIN:
+            below.append((sum(p[0] for p in t) / 3, cy, sum(p[2] for p in t) / 3))
+    if not below:
+        return []
+
+    # 桶连通聚簇（桶 20 源单位 ≈ 1.7m，8 邻域）
+    buckets = defaultdict(list)
+    for i, (cx, cy, cz) in enumerate(below):
+        buckets[(int(cx // 20), int(cz // 20))].append(i)
+    seen = set()
+    clusters = []
+    for b in list(buckets):
+        todo = [b]
+        comp = []
+        while todo:
+            cur = todo.pop()
+            if cur in seen or cur not in buckets:
+                continue
+            seen.add(cur)
+            comp.extend(buckets[cur])
+            for dx in (-1, 0, 1):
+                for dz in (-1, 0, 1):
+                    nb = (cur[0] + dx, cur[1] + dz)
+                    if nb not in seen:
+                        todo.append(nb)
+        if comp:
+            clusters.append(comp)
+
+    cands = []
+    for comp in clusters:
+        if len(comp) < 20:  # 过滤零散噪声
+            continue
+        pts = [below[i] for i in comp]
+        ramp_top = max(pts, key=lambda p: p[1])       # 坡道最高点（跨入地下室带处）
+        floor_y = min(p[1] for p in pts)
+        # 坡道脚：接近地面层且离坡道顶最近的点
+        foot = min((p for p in pts if p[1] < floor_y + 5),
+                   key=lambda p: (p[0] - ramp_top[0]) ** 2 + (p[2] - ramp_top[2]) ** 2,
+                   default=None)
+        if foot is None:
+            continue
+        h_run = math.hypot(ramp_top[0] - foot[0], ramp_top[2] - foot[2])
+        v_run = ramp_top[1] - foot[1]
+        slope_extra = max(0.0, math.hypot(h_run, v_run) - h_run) / SOURCE_UNITS_PER_METER
+        ex, ey = to_cell(ramp_top[0], ramp_top[2])
+        cx, cz = sum(p[0] for p in pts) / len(pts), sum(p[2] for p in pts) / len(pts)
+        ccx, ccy = to_cell(cx, cz)
+        cands.append({
+            'exit': [round(ex * cell_px, 1), round(ey * cell_px, 1)],
+            'slopeExtraM': round(slope_extra, 2),
+            'center': [round(ccx * cell_px, 1), round(ccy * cell_px, 1)],
+        })
+
+    result = []
+    for ax, ay in anchors_px:
+        ramped = [c for c in cands if c['slopeExtraM'] > 0.3]
+        pool = ramped or cands
+        if not pool:
+            print(f'  !! {scene} 声明地下室 ({ax:.0f},{ay:.0f}) 无可用簇')
+            continue
+        best = min(pool, key=lambda c: math.hypot(c['center'][0] - ax,
+                                                  c['center'][1] - ay))
+        d = math.hypot(best['center'][0] - ax, best['center'][1] - ay)
+        if d > 200 or not ramped:
+            print(f'  !! {scene} 声明地下室 ({ax:.0f},{ay:.0f}) 匹配存疑: '
+                  f'簇中心 {best["center"]} 距离 {d:.0f}px 坡道 {best["slopeExtraM"]}m')
+        result.append({
+            'exit': best['exit'],
+            'slopeExtraM': best['slopeExtraM'],
+            'center': [round(ax, 1), round(ay, 1)],
+        })
+    return result
+
+
+def read_basement_anchors():
+    """从 maps.js 解析每张地图声明的地下室椅子质心（像素），按 mapId 顺序。"""
+    src = MAPS_JS.read_text(encoding='utf-8')
+    anchors = {}
+    blocks = re.findall(r'const basements = \{(.*?)\n    \};', src, re.S)
+    for map_id, block in enumerate(blocks):
+        per = []
+        for m in re.finditer(r'basement_\d+:\s*\{(.*?)\n\s*\},', block, re.S):
+            rm = re.search(r'rocketChairs:\s*(\[\[.*?\]\])', m.group(1), re.S)
+            if not rm:
+                continue
+            pts = [(float(x), float(z)) for x, z in
+                   re.findall(r'\[\s*(-?[\d.]+),\s*-?[\d.]+,\s*(-?[\d.]+)\s*\]',
+                              rm.group(1))]
+            if pts:
+                per.append([sum(p[0] for p in pts) / len(pts),
+                            sum(p[1] for p in pts) / len(pts)])
+        anchors[str(map_id)] = per
+    return anchors
+
+
+def rasterize(html, entry, cell_px, anchors_px):
     map_w, map_h = entry['size']
     gw, gh = (map_w + cell_px - 1) // cell_px, (map_h + cell_px - 1) // cell_px
     grid = bytearray(gw * gh)
     to_cell = make_projector(entry['worldToPixel'], cell_px)
 
-    nav_tris = extract_nav_triangles(html)
-    nav_kept = 0
-    for t0, t1, t2 in nav_tris:
+    nav_tris_all = extract_nav_triangles(html)
+    nav_ground = []
+    for t0, t1, t2 in nav_tris_all:
         cy = (t0[1] + t1[1] + t2[1]) / 3
         if not (GROUND_Y_MIN <= cy <= GROUND_Y_MAX):
             continue
-        nav_kept += 1
+        nav_ground.append((t0, t1, t2))
         fill_triangle(grid, gw, gh, to_cell(t0[0], t0[2]),
                       to_cell(t1[0], t1[2]), to_cell(t2[0], t2[2]), 255)
 
-    walls = extract_wall_triangles(html)
+    height_at = make_nav_height_sampler(nav_ground)
+    walls = extract_wall_triangles(html, height_at)
     for t0, t1, t2 in walls:
         q0, q1, q2 = to_cell(t0[0], t0[2]), to_cell(t1[0], t1[2]), to_cell(t2[0], t2[2])
         # 投影面积（格²）：斜面填充投影，近竖直面（退化）沿三边描边
@@ -205,8 +358,9 @@ def rasterize(html, entry, cell_px):
             stroke_segment(grid, gw, gh, q1, q2, 0.75, 0)
             stroke_segment(grid, gw, gh, q2, q0, 0.75, 0)
 
-    meters_per_px = None  # 由调用方补充
-    return gw, gh, grid, nav_kept, len(walls), to_cell
+    basements = extract_basements(nav_tris_all, to_cell, cell_px,
+                                  anchors_px, scene=entry['scene'])
+    return gw, gh, grid, len(nav_ground), len(walls), to_cell, basements
 
 
 def read_panel_widths():
@@ -219,6 +373,7 @@ def read_panel_widths():
 def main():
     cal = json.loads(CAL_PATH.read_text(encoding='utf-8'))
     widths_m, panel_sizes = read_panel_widths()
+    anchors_all = read_basement_anchors()
     OUT_DIR.mkdir(exist_ok=True)
     manifest = {}
     for entry in cal['maps']:
@@ -233,7 +388,8 @@ def main():
         assert (panel_w, panel_h) == tuple(entry['size']), f'{scene} 底图尺寸不一致'
         meters_per_cell = width_m / panel_w * CELL_PX
 
-        gw, gh, grid, nav_kept, wall_count, to_cell = rasterize(html, entry, CELL_PX)
+        gw, gh, grid, nav_kept, wall_count, to_cell, basements = rasterize(
+            html, entry, CELL_PX, anchors_all.get(str(map_id), []))
 
         # 封堵窗口（牵气球不可翻窗）
         windows = extract_window_points(html)
@@ -254,9 +410,11 @@ def main():
             'gridH': gh,
             'cellPx': CELL_PX,
             'metersPerCell': round(meters_per_cell, 4),
+            'basements': basements,
         }
         print(f'{scene}: 导航三角 {nav_kept} 墙 {wall_count} 窗 {len(windows)} '
               f'栅格 {gw}x{gh} 可行走 {walkable} ({walkable * 100 // (gw * gh)}%) '
+              f'地下室 {len(basements)} '
               f'png {out.stat().st_size // 1024}KB')
     js = ('// 由 scripts/build_nav_grid.py 生成，勿手改\n'
           'export const NAV_GRID_MANIFEST = '

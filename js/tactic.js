@@ -853,10 +853,20 @@ export function syncTacChairText() {
     { index: S.tacChairIndex + 1, count: ch.sets.length });
 }
 
+// 切换刷点组/地下室位置后，已选椅子不再属于当前显示组时，取消选中并清除计算结果
+function tacCarryDeselectIfGone(kind) {
+  if (tacCarryState.chair?.kind !== kind) return;
+  tacCarryState.chair = null;
+  tacCarryDisarm();
+  tacCarryClearResult();
+  syncTacCarryChairName();
+}
+
 export function switchTacChair(step) {
   const ch = MAPS_DATA[S.currentMapId].rocketChairs;
   if (!ch || !ch.sets.length) return;
   S.tacChairIndex = (S.tacChairIndex + step + ch.sets.length) % ch.sets.length;
+  tacCarryDeselectIfGone('set');
   syncTacChairText();
   renderTacChairs();
   saveRegionSel();
@@ -875,6 +885,7 @@ export function switchTacBasement(step) {
   if (!count) return;
   S.tacChairBasementIndex = (S.tacChairBasementIndex + step + count) % count;
   S.tacBoxBasementIndex = S.tacChairBasementIndex;
+  tacCarryDeselectIfGone('basement');
   syncTacBasementText();
   renderTacChairs();
   renderTacBoxes();
@@ -1485,10 +1496,28 @@ async function tacCarryRun() {
   try {
     const g = await loadNavGrid(S.currentMapId);
     if (!g) { tacCarrySummary.textContent = translate('ui.tacCarry.noGrid'); return; }
-    const start = snapToWalkable(g, sel.x, sel.z);
-    if (!start) { tacCarrySummary.textContent = translate('ui.tacCarry.unsupportedChair'); return; }
     const profile = createCarryProfile(readTacCarryParams());
+    // 地下室椅子：从楼梯出口格起搜，椅子→出口（水平 + 坡道斜面附加）折算为已耗时
+    let start = snapToWalkable(g, sel.x, sel.z);
+    let initialSeconds = 0;
+    if (sel.kind === 'basement' && g.basements?.length) {
+      let best = null, bestD = Infinity;
+      for (const b of g.basements) {
+        const d = Math.hypot(b.center[0] - sel.x, b.center[1] - sel.z);
+        if (d < bestD) { bestD = d; best = b; }
+      }
+      const exitStart = best && snapToWalkable(g, best.exit[0], best.exit[1]);
+      if (exitStart) {
+        const metersPerPx = g.metersPerCell / g.cellPx;
+        const distM = Math.hypot(best.exit[0] - sel.x, best.exit[1] - sel.z) * metersPerPx
+          + best.slopeExtraM;
+        initialSeconds = distM / profile.speedAt(0);
+        start = exitStart;
+      }
+    }
+    if (!start) { tacCarrySummary.textContent = translate('ui.tacCarry.unsupportedChair'); return; }
     const run = computeCarryField(g, start, profile, {
+      initialSeconds,
       onProgress: (p) => { tacCarryProgressBar.style.width = `${Math.round(p * 100)}%`; },
     });
     tacCarryState.cancel = run.cancel;
