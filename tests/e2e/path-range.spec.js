@@ -1,4 +1,4 @@
-import { test, expect, tool } from './helpers.js';
+import { test, expect, tool, switchMap } from './helpers.js';
 
 // 两点最优路径规划（#tacPathCard）：选择起点 A / 终点 B → 计算最优路径 →
 // 计算结果（默认展开）→ 设置区（默认收起，移速设置与测算卡片同构但状态私有）
@@ -22,7 +22,7 @@ test('path card picks A and B, computes the optimal path and clears', async ({ p
   // 选择起点 A
   await page.locator('#tacPathPickA').click();
   await expect(page.locator('#tacPathPickA')).toHaveText('点我取消选择');
-  await expect(page.locator('#tacPathStatusA')).toHaveText('请选择起点 A');
+  await expect(page.locator('#tacPathStatusA')).toHaveText('请在地图上选择起点 A');
   await clickMap(page, 0.3, 0.5);
   await expect(page.locator('#tacPathStatusA')).toHaveText(/像素坐标\(\d+, \d+\)/);
   await expect(page.locator('.tac-path-point.a')).toHaveCount(1);
@@ -30,7 +30,7 @@ test('path card picks A and B, computes the optimal path and clears', async ({ p
 
   // 选择终点 B
   await page.locator('#tacPathPickB').click();
-  await expect(page.locator('#tacPathStatusB')).toHaveText('请选择终点 B');
+  await expect(page.locator('#tacPathStatusB')).toHaveText('请在地图上选择终点 B');
   await clickMap(page, 0.7, 0.5);
   await expect(page.locator('#tacPathStatusB')).toHaveText(/像素坐标\(\d+, \d+\)/);
   await expect(page.locator('.tac-path-point.b')).toHaveCount(1);
@@ -82,8 +82,8 @@ test('path picking disarms the carry card picking and vice versa', async ({ page
   await expect(page.locator('#tacCarryPickBtn')).toHaveText('点我取消选择');
 });
 
-// 与狂欢之椅推算的绘制结果互斥：路径计算清除推算覆盖层，反之亦然
-test('path and carry overlays clear each other', async ({ page }) => {
+// 与狂欢之椅推算的计算结果可以共存：两边覆盖层互不清除
+test('path and carry overlays coexist', async ({ page }) => {
   await tool(page, 'deduce');
   // 先算路径
   await page.locator('#tacPathPickA').click();
@@ -93,18 +93,38 @@ test('path and carry overlays clear each other', async ({ page }) => {
   await page.locator('#tacPathRun').click();
   await expect(page.locator('.tac-path-canvas')).toBeVisible({ timeout: 30000 });
 
-  // 再算狂欢之椅推算：路径折线被清除
+  // 再算狂欢之椅推算：路径折线保留，两张覆盖层共存
   await page.locator('#tacCarryShowChairs').check();
   await page.locator('#tacCarryPickBtn').click();
   await page.locator('.tac-chair[data-chair-kind]').first().click({ force: true });
   await page.locator('#tacCarryRun').click();
   await expect(page.locator('.tac-carry-canvas:not(.tac-path-canvas)')).toBeVisible({ timeout: 30000 });
-  await expect(page.locator('.tac-path-canvas')).toHaveCount(0);
+  await expect(page.locator('.tac-path-canvas')).toHaveCount(1);
+  await expect(page.locator('#tacPathResultBox')).toBeVisible();
 
-  // 再算路径：狂欢之椅推算覆盖层被清除
+  // 再算路径：狂欢之椅推算覆盖层同样保留
   await page.locator('#tacPathRun').click();
   await expect(page.locator('.tac-path-canvas')).toBeVisible({ timeout: 30000 });
-  await expect(page.locator('.tac-carry-canvas:not(.tac-path-canvas)')).toHaveCount(0);
+  await expect(page.locator('.tac-carry-canvas:not(.tac-path-canvas)')).toHaveCount(1);
+});
+
+// 切换地图：起点 A / 终点 B 与计算结果均不带入新地图
+test('switching maps clears the path endpoints and result', async ({ page }) => {
+  await tool(page, 'deduce');
+  await page.locator('#tacPathPickA').click();
+  await clickMap(page, 0.3, 0.5);
+  await page.locator('#tacPathPickB').click();
+  await clickMap(page, 0.7, 0.5);
+  await page.locator('#tacPathRun').click();
+  await expect(page.locator('.tac-path-canvas')).toBeVisible({ timeout: 30000 });
+
+  await switchMap(page, 1);
+  await expect(page.locator('.tac-path-canvas')).toHaveCount(0);
+  await expect(page.locator('.tac-path-point')).toHaveCount(0);
+  await expect(page.locator('.tac-path-label')).toHaveCount(0);
+  await expect(page.locator('#tacPathStatusA')).toHaveText('当前未选择起点 A');
+  await expect(page.locator('#tacPathStatusB')).toHaveText('当前未选择终点 B');
+  await expect(page.locator('#tacPathResultBox')).toBeHidden();
 });
 
 // 移速设置区：与测算卡片同结构但状态私有；走路比跑动慢，计算结果随之变化

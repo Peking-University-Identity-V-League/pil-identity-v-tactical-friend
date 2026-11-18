@@ -22,7 +22,7 @@ test('carry range card picks a chair, computes bands and clears', async ({ page 
 
   // 进入选椅模式：状态变为请选择，悬停椅子出现红色波纹
   await page.locator('#tacCarryPickBtn').click();
-  await expect(page.locator('#tacCarryChairName')).toHaveText('请选择狂欢之椅');
+  await expect(page.locator('#tacCarryChairName')).toHaveText('请在地图上选择狂欢之椅');
   const first = chairs.first();
   const box = await first.boundingBox();
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
@@ -52,7 +52,7 @@ test('switching tools while picking disarms the chair picker', async ({ page }) 
   await tool(page, 'deduce');
   await page.locator('#tacCarryShowChairs').check();
   await page.locator('#tacCarryPickBtn').click();
-  await expect(page.locator('#tacCarryChairName')).toHaveText('请选择狂欢之椅');
+  await expect(page.locator('#tacCarryChairName')).toHaveText('请在地图上选择狂欢之椅');
   await tool(page, 'measure');
   await expect(page.locator('#tacCarryPickBtn')).not.toHaveClass(/active/);
   await tool(page, 'deduce');
@@ -224,7 +224,7 @@ test('point mode picks a start point, computes and resets on mode switch', async
 
   await page.locator('#tacCarryPickBtn').click();
   await expect(page.locator('#tacCarryPickBtn')).toHaveText('点我取消选择');
-  await expect(page.locator('#tacCarryChairName')).toHaveText('请选择起点');
+  await expect(page.locator('#tacCarryChairName')).toHaveText('请在地图上选择起点');
   const box = await page.locator('#tacMapWrap').boundingBox();
   await page.mouse.click(box.x + box.width * 0.5, box.y + box.height * 0.5);
   await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中起点：像素坐标(');
