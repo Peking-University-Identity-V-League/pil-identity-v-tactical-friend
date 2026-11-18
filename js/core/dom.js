@@ -176,6 +176,37 @@ export const tacCarryDetailBoxEl = $('tacCarryDetailBox');
 export const tacCarryDetailToggleEl = $('tacCarryDetailToggle');
 export const tacCarryDetailBodyEl = $('tacCarryDetailBody');
 
+export const tacDedScenarioCarryEl = $('tacDedScenarioCarry');
+export const tacDedScenarioTideEl = $('tacDedScenarioTide');
+export const tacDedSettingsCarryEl = $('tacDedSettingsCarry');
+export const tacDedSettingsTideEl = $('tacDedSettingsTide');
+export const tacTideBaseSpeedEl = $('tacTideBaseSpeed');
+export const tacTideSpeedRoleEl = $('tacTideSpeedRole');
+export const tacTideSpeedFormEl = $('tacTideSpeedForm');
+export const tacTideTraitAddBtn = $('tacTideTraitAddBtn');
+export const tacTideTalentAddBtn = $('tacTideTalentAddBtn');
+export const tacTideOtherAddBtn = $('tacTideOtherAddBtn');
+export const tacTideBuffAddBtn = $('tacTideBuffAddBtn');
+export const tacTideBaseDetailToggleEl = $('tacTideBaseDetailToggle');
+export const tacTideBaseDetailBodyEl = $('tacTideBaseDetailBody');
+export const tacTideBuffToggleEl = $('tacTideBuffToggle');
+export const tacTideBuffBodyEl = $('tacTideBuffBody');
+export const tacTideTraitModal = $('tacTideTraitModal');
+export const tacTideTraitList = $('tacTideTraitList');
+export const tacTideTraitClose = $('tacTideTraitClose');
+export const tacTideTalentModal = $('tacTideTalentModal');
+export const tacTideTalentList = $('tacTideTalentList');
+export const tacTideTalentClose = $('tacTideTalentClose');
+export const tacTideOtherModal = $('tacTideOtherModal');
+export const tacTideOtherList = $('tacTideOtherList');
+export const tacTideOtherClose = $('tacTideOtherClose');
+export const tacTideBuffModal = $('tacTideBuffModal');
+export const tacTideBuffName = $('tacTideBuffName');
+export const tacTideBuffPct = $('tacTideBuffPct');
+export const tacTideBuffDur = $('tacTideBuffDur');
+export const tacTideBuffOk = $('tacTideBuffOk');
+export const tacTideBuffClose = $('tacTideBuffClose');
+
 export const tacDisplayCard = $('tacDisplayCard');
 
 export const tacRolesCard = $('tacRolesCard');

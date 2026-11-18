@@ -4,6 +4,7 @@
 
 import { NAV_GRID_MANIFEST } from '../data/nav-grid-manifest.js';
 import { carryBandAt, carryRangeBands } from './carry-model.js';
+import { tideBandAt, tideRangeBands } from './tide-model.js';
 
 const gridCache = new Map();  // mapId -> Promise<{grid, gridW, gridH, cellPx, metersPerCell} | null>
 
@@ -92,16 +93,16 @@ function makeHeap() {
 }
 
 /**
- * 从椅子格出发的分块 Dijkstra（时间依赖速度，狂欢到期后降速仍满足 FIFO）。
+ * 从起点格出发的分块 Dijkstra（时间依赖速度，限时加成到期后降速仍满足 FIFO）。
  * onProgress(0..1) 每块回调一次；返回 Promise<{
  *   bands, bandOf: Int8Array, time: Float64Array, reached: number, budget: number }>
  * bandOf: 每格色带编号 0-4，未到达/不可走为 -1。
+ * bands/bandAt 由调用方注入（挂椅用 carry 色带，搏命用 tide 色带）。
  * initialSeconds：起点已耗时（地下室椅子从楼梯出口起搜时，椅子→出口的
  * 耗时），色带判定与速度曲线从该时刻开始。
  */
-export function computeCarryField(g, startCell, profile, { onProgress, initialSeconds = 0 } = {}) {
+function computeField(g, startCell, profile, { onProgress, initialSeconds = 0, bands, bandAt }) {
   const { grid, gridW, gridH, metersPerCell } = g;
-  const bands = carryRangeBands(profile);
   const budget = profile.remainingSeconds;
   const total = gridW * gridH;
   const time = new Float64Array(total).fill(Infinity);
@@ -109,7 +110,7 @@ export function computeCarryField(g, startCell, profile, { onProgress, initialSe
   const startIdx = startCell.y * gridW + startCell.x;
   if (!grid[startIdx]) return Promise.resolve({ bands, bandOf, time, reached: 0, budget });
   time[startIdx] = initialSeconds;
-  bandOf[startIdx] = carryBandAt(bands, initialSeconds);
+  bandOf[startIdx] = bandAt(bands, initialSeconds);
   const heap = makeHeap();
   heap.push(initialSeconds, startIdx);
   const orth = metersPerCell, diag = metersPerCell * Math.SQRT2;
@@ -142,7 +143,7 @@ export function computeCarryField(g, startCell, profile, { onProgress, initialSe
             const nt = t + ((dx && dy) ? diag : orth) / speed;
             if (nt + 1e-12 < time[ni]) {
               time[ni] = nt;
-              bandOf[ni] = carryBandAt(bands, nt);
+              bandOf[ni] = bandAt(bands, nt);
               heap.push(nt, ni);
             }
           }
@@ -155,4 +156,14 @@ export function computeCarryField(g, startCell, profile, { onProgress, initialSe
     setTimeout(step, 0);
   });
   return { promise, cancel: token.cancel };
+}
+
+export function computeCarryField(g, startCell, profile, opts = {}) {
+  return computeField(g, startCell, profile,
+    { ...opts, bands: carryRangeBands(profile), bandAt: carryBandAt });
+}
+
+export function computeTideField(g, startCell, profile, opts = {}) {
+  return computeField(g, startCell, profile,
+    { ...opts, bands: tideRangeBands(), bandAt: tideBandAt });
 }
