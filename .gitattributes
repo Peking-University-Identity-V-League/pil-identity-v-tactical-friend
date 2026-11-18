@@ -1,3 +1,5 @@
 # Self-contained generated maps contain large embedded models and textures.
-maps-3d/h55_*.html -diff
-maps-3d/ordnance_*.html -diff
+# binary = -diff -merge -text：生成器在 Windows 上产出 CRLF，入口配置里的
+# bytes/sha256 按 CRLF 字节计算；禁止行尾转换，保证 CI（LF 检出）下载字节一致。
+maps-3d/h55_*.html binary
+maps-3d/ordnance_*.html binary
