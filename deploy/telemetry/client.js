@@ -30,7 +30,7 @@ async function start(attempt = 0) {
   }
   try {
     const [{ S }, { tacBoards }, definitions] = await Promise.all([
-      import('../js/core/state.js'), import('../js/core/persist.js'), import('../js/data/tactic-data.js'),
+      import('../js/core/state.js'), import('../js/core/persist.js'), import('../js/data/role.js'),
     ]);
     const roles = new Set(Object.keys(definitions.TAC_ROLES || {}));
     const items = new Set(Object.keys(definitions.TAC_ITEM_TYPES || {}));

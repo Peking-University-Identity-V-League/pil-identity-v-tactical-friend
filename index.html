@@ -237,11 +237,16 @@
 
         
         <div class="tac-sec-label tac-speed-title">
-          <span class="tac-speed-title-text" data-i18n="ui.tacSpeedTitleText.label"></span>
           <button type="button" class="tac-deselect" id="tacDeselect" data-i18n="ui.tacDeselect.label"></button>
           <span class="tac-status" id="tacStatus"></span>
           <span class="tac-status2" id="tacStatus2"></span>
         </div>
+        <div class="tac-carry-sep"></div>
+        <div class="tac-detail">
+          <div class="tac-detail-head">
+            <button type="button" class="tac-detail-toggle tac-lvl1" id="tacSpeedSettingsToggle"></button>
+          </div>
+          <div class="tac-detail-body" id="tacSpeedSettingsBody">
         <div class="tac-speed-head">
           <div class="side-toggle tac-camp-toggle" id="tacCampToggle">
             <button class="side-btn active" data-camp="survivor" data-i18n="characters.camps.survivor"></button>
@@ -289,8 +294,11 @@
           </div>
           <div class="tac-detail-body" id="tacBuffDetailBody" style="display:none"></div>
         </div>
+          </div>
+        </div>
+        <div class="tac-carry-sep"></div>
         <div class="tac-detail">
-          <button type="button" class="tac-detail-toggle" id="tacResultToggle" data-i18n="ui.tacResultToggle.label"></button>
+          <button type="button" class="tac-detail-toggle tac-lvl1" id="tacResultToggle" data-i18n="ui.tacResultToggle.label"></button>
           <div class="tac-detail-body" id="tacResultBody">
             
             <div class="tac-result" id="tacResult"></div>
@@ -358,24 +366,38 @@
             <div class="tac-carry-progress-bar" id="tacCarryProgressBar"></div>
           </div>
 
-          <div class="tac-sec-label tac-sec-divider" id="tacCarryResultLabel" data-i18n="ui.tacCarry.resultSection" style="display:none"></div>
-          <div class="tac-carry-summary" id="tacCarrySummary"></div>
-          <div class="tac-carry-summary" id="tacCarryChairCount" style="display:none"></div>
-          <div class="tac-detail" id="tacCarryDetailBox" style="display:none">
-            <div class="tac-detail-head">
-              <button type="button" class="tac-detail-toggle" id="tacCarryDetailToggle"></button>
+          <div id="tacCarryResultBox" style="display:none">
+            <div class="tac-carry-sep"></div>
+            <div class="tac-detail">
+              <div class="tac-detail-head">
+                <button type="button" class="tac-detail-toggle tac-lvl1" id="tacCarryResultToggle"></button>
+              </div>
+              <div class="tac-detail-body" id="tacCarryResultBody">
+                <div class="tac-carry-summary" id="tacCarrySummary"></div>
+                <div class="tac-carry-summary" id="tacCarryChairCount" style="display:none"></div>
+                <div class="tac-detail" id="tacCarryDetailBox" style="display:none">
+                  <div class="tac-detail-head">
+                    <button type="button" class="tac-detail-toggle" id="tacCarryDetailToggle"></button>
+                  </div>
+                  <div class="tac-detail-body" id="tacCarryDetailBody"></div>
+                </div>
+                <div class="tac-carry-legend" id="tacCarryLegend" style="display:none"></div>
+                <div class="tac-speed-line" id="tacCarryOpacityRow" style="display:none">
+                  <span class="tac-sub-label" data-i18n="ui.tacCarry.opacity"></span>
+                  <input type="range" id="tacCarryOpacity" min="10" max="100" step="5" value="65">
+                </div>
+                <p class="tac-text-hint" id="tacCarryNote" data-i18n="ui.tacCarry.note" style="display:none;margin:8px 0 0"></p>
+              </div>
             </div>
-            <div class="tac-detail-body" id="tacCarryDetailBody"></div>
           </div>
-          <div class="tac-carry-legend" id="tacCarryLegend" style="display:none"></div>
-          <div class="tac-speed-line" id="tacCarryOpacityRow" style="display:none">
-            <span class="tac-sub-label" data-i18n="ui.tacCarry.opacity"></span>
-            <input type="range" id="tacCarryOpacity" min="10" max="100" step="5" value="65">
-          </div>
-          <p class="tac-text-hint" id="tacCarryNote" data-i18n="ui.tacCarry.note" style="display:none;margin:8px 0 0"></p>
 
-          <div class="tac-sec-label tac-sec-divider" data-i18n="ui.tacCarry.settingsSection"></div>
-          <div class="tac-sec-label" data-i18n="ui.tacCarry.survivorSection"></div>
+          <div class="tac-carry-sep"></div>
+          <div class="tac-detail">
+            <div class="tac-detail-head">
+              <button type="button" class="tac-detail-toggle tac-lvl1" id="tacCarrySettingsToggle"></button>
+            </div>
+            <div class="tac-detail-body" id="tacCarrySettingsBody" style="display:none">
+            <div class="tac-sec-label" data-i18n="ui.tacCarry.survivorSection"></div>
           <div class="tac-speed-line tac-carry-surv-line">
             <span class="tac-sub-label" data-i18n="ui.tacCarry.survivor"></span>
             <select class="tac-speed-role" id="tacCarrySurvivor" style="flex:none;width:auto">
@@ -423,6 +445,8 @@
               <button type="button" class="tac-detail-toggle" id="tacCarryBuffToggle"></button>
             </div>
             <div class="tac-detail-body" id="tacCarryBuffBody"></div>
+          </div>
+            </div>
           </div>
         </div>
       </details>
@@ -571,26 +595,15 @@
         <div style="margin-top:12px">
 
         
-        <div class="tac-camp collapsed" id="tacCampSurvivor">
-          <button class="tac-camp-header" data-camp="survivor">
-            <span class="tac-camp-arrow">▾</span><span data-i18n="characters.camps.survivor"></span>
-          </button>
-          <div class="tac-roles" id="tacRolesSurvivor"></div>
+        <div class="side-toggle tac-camp-tabs" id="tacCampTabs">
+          <button type="button" class="side-btn active" data-camp="survivor" data-i18n="characters.camps.survivor"></button>
+          <button type="button" class="side-btn" data-camp="hunter" data-i18n="characters.camps.hunter"></button>
+          <button type="button" class="side-btn" data-camp="other" data-i18n="ui.common.other"></button>
         </div>
-        
-        <div class="tac-camp collapsed" id="tacCampHunter">
-          <button class="tac-camp-header" data-camp="hunter">
-            <span class="tac-camp-arrow">▾</span><span data-i18n="characters.camps.hunter"></span>
-          </button>
-          <div class="tac-roles" id="tacRolesHunter"></div>
-        </div>
-        
-        <div class="tac-camp collapsed" id="tacCampOther">
-          <button class="tac-camp-header" data-camp="other">
-            <span class="tac-camp-arrow">▾</span><span data-i18n="ui.common.other"></span>
-          </button>
-          <div class="tac-roles" id="tacRolesOther"></div>
-        </div>
+        <div class="tac-carry-sep"></div>
+        <div class="tac-roles" id="tacRolesSurvivor"></div>
+        <div class="tac-roles" id="tacRolesHunter" style="display:none"></div>
+        <div class="tac-roles" id="tacRolesOther" style="display:none"></div>
 
         
         <div class="tac-item-section" id="tacItemSection" style="display:none">

@@ -184,7 +184,8 @@ app/
     │
     └── data/
         ├── maps.js            ← 九图数据与推演规则
-        ├── tactic-data.js     ← 角色、道具、加成、速度和默认常量
+        ├── tactic-data.js     ← 加成、速度和默认常量
+        ├── role.js             ← 角色和道具注册表（TAC_ITEM_TYPES、TAC_ROLES）
         └── geo.js             ← 像素坐标、相对坐标、区域中心与距离换算
 ```
 
@@ -236,9 +237,9 @@ app/
 | 改区域点击和阵营选择 | `js/region.js` | `handleMapClick`、`changeStates`、`toggleSide` |
 | 改封禁密码机显示或分析面板 | `js/region.js` | `checkLock`、`updateDistancePanel` |
 | 改封禁密码机的计算方式 | `js/data/geo.js` | `calculateLockCipher` |
-| 新增角色 | `js/data/tactic-data.js` | `TAC_ROLES`，必要时同时改 `TAC_ITEM_TYPES` 和语言包 |
-| 新增道具 | `js/data/tactic-data.js` | `TAC_ITEM_TYPES`，并加入拥有者的 `items` |
-| 改角色基础速度或形态速度 | `js/data/tactic-data.js` | `TAC_MOVEMENT_SURVIVOR.states`、`TAC_MOVEMENT_SURVIVOR.roles`、`TAC_MOVEMENT_SURVIVOR.fixed`、`TAC_ROLES` |
+| 新增角色 | `js/data/role.js` | `TAC_ROLES`，必要时同时改 `TAC_ITEM_TYPES` 和语言包 |
+| 新增道具 | `js/data/role.js` | `TAC_ITEM_TYPES`，并加入拥有者的 `items` |
+| 改角色基础速度或形态速度 | `js/data/tactic-data.js` + `js/data/role.js` | `TAC_MOVEMENT_SURVIVOR.states`、`TAC_MOVEMENT_SURVIVOR.roles`、`TAC_MOVEMENT_SURVIVOR.fixed`、`TAC_ROLES` |
 | 改特质、天赋、其它加成 | `js/data/tactic-data.js` | `TAC_MOVEMENT_BUFFS.trait`、`TAC_MOVEMENT_BUFFS.talent`、`TAC_MOVEMENT_BUFFS.other` |
 | 改战术面板放置、拖动、删除 | `js/tactic.js` | `tacMapWrap.addEventListener('pointerdown'` 及后续事件 |
 | 改范围圈、箭头、测距线外观逻辑 | `js/tactic.js` | `shapeNode`、`measureNode`、`renderTacArrows` |
@@ -269,7 +270,7 @@ initializeI18n()
         ▼
 动态 import('./main.js')
         │
-        ├── 加载 data/maps.js 和 data/tactic-data.js
+        ├── 加载 data/maps.js、data/tactic-data.js 和 data/role.js
         ├── 加载 region.js、shell.js、tactic.js、deduce.js 等模块
         └── 各模块注册事件并准备共享状态
         │
@@ -284,7 +285,7 @@ enterMap(mapId) → selectMap(mapId) → 默认进入战术面板
 
 ### 4.1 为什么不是直接加载 `main.js`
 
-`maps.js` 和 `tactic-data.js` 中的名称、规则和提示也使用 `translate()`。如果语言包尚未加载就执行这些模块，会得到缺失翻译。因此，`bootstrap.js` 必须先把语言准备好，再动态加载 `main.js`。
+`maps.js`、`tactic-data.js` 和 `role.js` 中的名称、规则和提示也使用 `translate()`。如果语言包尚未加载就执行这些模块，会得到缺失翻译。因此，`bootstrap.js` 必须先把语言准备好，再动态加载 `main.js`。
 
 新增启动逻辑时，通常：
 
@@ -866,7 +867,7 @@ MAPS_DATA
 
 用于补充不属于常规点位列表、但需要参与坐标查找的密码机。普通修改优先改目标地图自己的 `ciphers`，只有确需额外点位时才使用这里。
 
-## 10.2 `js/data/tactic-data.js`：角色、道具和常量
+## 10.2 `js/data/tactic-data.js` 与 `js/data/role.js`：角色、道具和常量
 
 ### 速度相关数据
 
@@ -1151,7 +1152,7 @@ location.reload();
 
 假设新增角色没有复杂道具：
 
-1. 打开 `tactic-data.js` 的 `TAC_ROLES`；
+1. 打开 `role.js` 的 `TAC_ROLES`；
 2. 复制一个结构相近的角色；
 3. 改成唯一英文键；
 4. 设置 `camp`、`icon`，没有道具时使用空数组或参考现有结构；
@@ -1254,7 +1255,7 @@ window.addEventListener('keydown'
 推荐：
 
 - 新地图数据放 `maps.js`；
-- 新角色和道具放 `tactic-data.js`；
+- 新角色和道具放 `role.js`；
 - 新文案放语言包；
 - 新通用算法才放业务 JS；
 - 新样式放 `style.css`。
@@ -1381,7 +1382,7 @@ window.addEventListener('keydown'
 4. **`core/state.js` 和 `core/dom.js`**：理解共享状态和元素引用。
 5. **`data/maps.js` 中一张地图**：先只看军工厂，不必一次读完九张图。
 6. **`region.js`**：学习一个相对集中的业务页面。
-7. **`data/tactic-data.js`**：了解角色、道具和速度配置。
+7. **`data/tactic-data.js`** 和 **`data/role.js`**：了解角色、道具和速度配置。
 8. **`tactic.js` 中与你任务相关的函数**：按功能阅读，不必通读。
 9. **`deduce.js` 和推演辅助函数**：最后再研究规则引擎。
 
