@@ -16,15 +16,15 @@ const openSettings = async (page) => {
 test('path card picks A and B, computes the optimal path and clears', async ({ page }) => {
   await tool(page, 'deduce');
   await expect(page.locator('#tacPathCard')).toBeVisible();
-  await expect(page.locator('#tacPathStatusA')).toHaveText('当前未选中起点 A');
-  await expect(page.locator('#tacPathStatusB')).toHaveText('当前未选中终点 B');
+  await expect(page.locator('#tacPathStatusA')).toHaveText('当前未选择起点 A');
+  await expect(page.locator('#tacPathStatusB')).toHaveText('当前未选择终点 B');
 
   // 选择起点 A
   await page.locator('#tacPathPickA').click();
   await expect(page.locator('#tacPathPickA')).toHaveText('点我取消选择');
   await expect(page.locator('#tacPathStatusA')).toHaveText('请选择起点 A');
   await clickMap(page, 0.3, 0.5);
-  await expect(page.locator('#tacPathStatusA')).toContainText('当前已选中起点 A：像素坐标(');
+  await expect(page.locator('#tacPathStatusA')).toHaveText(/像素坐标\(\d+, \d+\)/);
   await expect(page.locator('.tac-path-point.a')).toHaveCount(1);
   await expect(page.locator('.tac-path-label').first()).toHaveText('起点 A');
 
@@ -32,7 +32,7 @@ test('path card picks A and B, computes the optimal path and clears', async ({ p
   await page.locator('#tacPathPickB').click();
   await expect(page.locator('#tacPathStatusB')).toHaveText('请选择终点 B');
   await clickMap(page, 0.7, 0.5);
-  await expect(page.locator('#tacPathStatusB')).toContainText('当前已选中终点 B：像素坐标(');
+  await expect(page.locator('#tacPathStatusB')).toHaveText(/像素坐标\(\d+, \d+\)/);
   await expect(page.locator('.tac-path-point.b')).toHaveCount(1);
   await expect(page.locator('.tac-path-label').nth(1)).toHaveText('终点 B');
 
@@ -51,8 +51,8 @@ test('path card picks A and B, computes the optimal path and clears', async ({ p
   await expect(page.locator('.tac-path-canvas')).toHaveCount(0);
   await expect(page.locator('.tac-path-point')).toHaveCount(0);
   await expect(page.locator('.tac-path-label')).toHaveCount(0);
-  await expect(page.locator('#tacPathStatusA')).toHaveText('当前未选中起点 A');
-  await expect(page.locator('#tacPathStatusB')).toHaveText('当前未选中终点 B');
+  await expect(page.locator('#tacPathStatusA')).toHaveText('当前未选择起点 A');
+  await expect(page.locator('#tacPathStatusB')).toHaveText('当前未选择终点 B');
   await expect(page.locator('#tacPathResultBox')).toBeHidden();
 });
 
