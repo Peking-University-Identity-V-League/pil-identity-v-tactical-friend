@@ -337,21 +337,51 @@
           </div>
           </div>
 
+          <div class="tac-carry-sep"></div>
+          <div class="tac-carry-modes">
+            <button type="button" class="side-btn active" id="tacCarryModeChair" data-i18n="ui.tacCarry.modeChair"></button>
+            <button type="button" class="side-btn" id="tacCarryModePoint" data-i18n="ui.tacCarry.modePoint"></button>
+          </div>
+          <div class="tac-carry-sep"></div>
           <div class="tac-carry-pick">
             <button type="button" class="tac-add-btn" id="tacCarryPickBtn" data-i18n="ui.tacCarry.pickChair"></button>
             <span class="tac-carry-chair-name" id="tacCarryChairName"></span>
-            <label class="tac-display-toggle"><input type="checkbox" id="tacCarryHideRing"><span data-i18n="ui.tacCarry.hideRing"></span></label>
+            <label class="tac-display-toggle" id="tacCarryHideRingLabel"><input type="checkbox" id="tacCarryHideRing"><span data-i18n="ui.tacCarry.hideRing"></span></label>
+          </div>
+          <div class="tac-carry-sep"></div>
+
+          <div class="tac-carry-actions">
+            <button type="button" class="tac-add-btn tac-carry-big" id="tacCarryRun" data-i18n="ui.tacCarry.run"></button>
+            <button type="button" class="tac-add-btn tac-carry-big" id="tacCarryClear" data-i18n="ui.tacCarry.clear"></button>
+          </div>
+          <div class="tac-carry-progress" id="tacCarryProgressBox" style="display:none">
+            <div class="tac-carry-progress-bar" id="tacCarryProgressBar"></div>
           </div>
 
+          <div class="tac-sec-label tac-sec-divider" id="tacCarryResultLabel" data-i18n="ui.tacCarry.resultSection" style="display:none"></div>
+          <div class="tac-carry-summary" id="tacCarrySummary"></div>
+          <div class="tac-carry-summary" id="tacCarryChairCount" style="display:none"></div>
+          <div class="tac-detail" id="tacCarryDetailBox" style="display:none">
+            <div class="tac-detail-head">
+              <button type="button" class="tac-detail-toggle" id="tacCarryDetailToggle"></button>
+            </div>
+            <div class="tac-detail-body" id="tacCarryDetailBody"></div>
+          </div>
+          <div class="tac-carry-legend" id="tacCarryLegend" style="display:none"></div>
+          <div class="tac-speed-line" id="tacCarryOpacityRow" style="display:none">
+            <span class="tac-sub-label" data-i18n="ui.tacCarry.opacity"></span>
+            <input type="range" id="tacCarryOpacity" min="10" max="100" step="5" value="65">
+          </div>
+          <p class="tac-text-hint" id="tacCarryNote" data-i18n="ui.tacCarry.note" style="display:none;margin:8px 0 0"></p>
+
+          <div class="tac-sec-label tac-sec-divider" data-i18n="ui.tacCarry.settingsSection"></div>
           <div class="tac-sec-label" data-i18n="ui.tacCarry.survivorSection"></div>
-          <div class="tac-speed-line">
+          <div class="tac-speed-line tac-carry-surv-line">
             <span class="tac-sub-label" data-i18n="ui.tacCarry.survivor"></span>
             <select class="tac-speed-role" id="tacCarrySurvivor" style="flex:none;width:auto">
               <option value="ordinary" data-i18n="ui.tacCarry.ordinary"></option>
               <option value="forward" data-i18n="ui.tacCarry.forward"></option>
             </select>
-          </div>
-          <div class="tac-speed-line">
             <span class="tac-sub-label" data-i18n="ui.tacCarry.initialProgress"></span>
             <input type="range" id="tacCarryInitial" min="0" max="99" step="1" value="0">
             <span class="tac-width-val" id="tacCarryInitialVal">0%</span>
@@ -394,21 +424,6 @@
             </div>
             <div class="tac-detail-body" id="tacCarryBuffBody"></div>
           </div>
-
-          <div class="tac-carry-actions">
-            <button type="button" class="tac-add-btn tac-carry-big" id="tacCarryRun" data-i18n="ui.tacCarry.run"></button>
-            <button type="button" class="tac-add-btn tac-carry-big" id="tacCarryClear" data-i18n="ui.tacCarry.clear"></button>
-          </div>
-          <div class="tac-carry-progress" id="tacCarryProgressBox" style="display:none">
-            <div class="tac-carry-progress-bar" id="tacCarryProgressBar"></div>
-          </div>
-          <div class="tac-carry-summary" id="tacCarrySummary"></div>
-          <div class="tac-carry-legend" id="tacCarryLegend" style="display:none"></div>
-          <div class="tac-speed-line" id="tacCarryOpacityRow" style="display:none">
-            <span class="tac-sub-label" data-i18n="ui.tacCarry.opacity"></span>
-            <input type="range" id="tacCarryOpacity" min="10" max="100" step="5" value="65">
-          </div>
-          <p class="tac-text-hint" id="tacCarryNote" data-i18n="ui.tacCarry.note" style="display:none;margin:8px 0 0"></p>
         </div>
       </details>
 

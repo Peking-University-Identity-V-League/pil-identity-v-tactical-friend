@@ -1,9 +1,9 @@
 
-import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacHideEndpointsEl, tacItemSection, tacMStyleBody, tacMStyleToggle, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacRot, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacCarryBuffBody, tacCarryCard, tacCarryChairName, tacCarryChairNextBtn, tacCarryChairPrevBtn, tacCarryChairSizeDefEl, tacCarryChairSizeEl, tacCarryChairText, tacCarryClearBtn, tacCarryBuffToggleEl, tacCarryHuntClose, tacCarryHuntList, tacCarryHuntModal, tacCarryHuntTalentBtn, tacCarryHunterEl, tacCarryHunterFormEl, tacCarryHunterSpeedEl, tacCarryInitialEl, tacCarryInitialVal, tacCarryLegend, tacCarryNote, tacCarryOpacityEl, tacCarryOpacityRowEl, tacCarryHideRingEl, tacCarryChairBasementEl, tacCarryBoxBasementEl, tacCarryBasementPrevBtn, tacCarryBasementNextBtn, tacCarryBasementTextEl, tacCarryPickBtn, tacCarryPickupEl, tacCarryPickupModeEl, tacCarryProgressBar, tacCarryProgressBox, tacCarryRunBtn, tacCarryShowChairsEl, tacCarrySpeedClose, tacCarrySpeedList, tacCarrySpeedModal, tacCarrySpeedTalentBtn, tacCarrySummary, tacCarrySurvClose, tacCarrySurvList, tacCarrySurvModal, tacCarrySurvTalentBtn, tacCarrySurvivorEl, tacShowChairBasementEl, tacBasementText, tacShowSpawnsEl, tacSpawnSizeEl, tacSpawnSizeDefEl, tacSpawnText, tacSnapBoxEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacticView } from './core/dom.js';
+import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacHideEndpointsEl, tacItemSection, tacMStyleBody, tacMStyleToggle, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacRot, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacCarryBuffBody, tacCarryCard, tacCarryChairName, tacCarryChairNextBtn, tacCarryChairPrevBtn, tacCarryChairSizeDefEl, tacCarryChairSizeEl, tacCarryChairText, tacCarryClearBtn, tacCarryBuffToggleEl, tacCarryHuntClose, tacCarryHuntList, tacCarryHuntModal, tacCarryHuntTalentBtn, tacCarryHunterEl, tacCarryHunterFormEl, tacCarryHunterSpeedEl, tacCarryInitialEl, tacCarryInitialVal, tacCarryLegend, tacCarryNote, tacCarryOpacityEl, tacCarryOpacityRowEl, tacCarryHideRingEl, tacCarryChairBasementEl, tacCarryBoxBasementEl, tacCarryBasementPrevBtn, tacCarryBasementNextBtn, tacCarryBasementTextEl, tacCarryPickBtn, tacCarryPickupEl, tacCarryResultLabel, tacCarryModeChairEl, tacCarryModePointEl, tacCarryHideRingLabelEl, tacCarryChairCountEl, tacCarryDetailBoxEl, tacCarryDetailToggleEl, tacCarryDetailBodyEl, tacCarryPickupModeEl, tacCarryProgressBar, tacCarryProgressBox, tacCarryRunBtn, tacCarryShowChairsEl, tacCarrySpeedClose, tacCarrySpeedList, tacCarrySpeedModal, tacCarrySpeedTalentBtn, tacCarrySummary, tacCarrySurvClose, tacCarrySurvList, tacCarrySurvModal, tacCarrySurvTalentBtn, tacCarrySurvivorEl, tacShowChairBasementEl, tacBasementText, tacShowSpawnsEl, tacSpawnSizeEl, tacSpawnSizeDefEl, tacSpawnText, tacSnapBoxEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacticView } from './core/dom.js';
 import { restoredMeasureIds, saveRegionSel, savedRot, tacBoard, tacDisplay, tacMeasureStyle, tacPersisted, tacSave, flushSave } from './core/persist.js';
 import { measureBaseAt, simulateMovement } from './core/measurements.js';
 import { measurementEndpoints, resolveMap3dTarget, isExternalMap3dEntry } from './core/map-handoff.js';
-import { CARRY_BAND_COLORS, CARRY_BAND_OPACITY, CARRY_DEFAULTS, CARRY_TALENTS, createCarryProfile } from './core/carry-model.js';
+import { CARRY_BAND_COLORS, CARRY_BAND_OPACITY, CARRY_DEFAULTS, CARRY_TALENTS, carryBandAt, carryDropBudget, createCarryProfile } from './core/carry-model.js';
 import { computeCarryField, loadNavGrid, navGridAvailable, snapToWalkable } from './core/nav-grid.js';
 import { getTreasureRings } from './core/treasure.js';
 import { S } from './core/state.js';
@@ -792,7 +792,7 @@ function tacBasementList() {
 
 export function renderTacChairs() {
   if (!tacMapWrap) return;
-  tacMapWrap.querySelectorAll('.tac-chair').forEach((el) => el.remove());
+  tacMapWrap.querySelectorAll('.tac-chair, .tac-carry-point').forEach((el) => el.remove());
   const map = MAPS_DATA[S.currentMapId];
   const ch = map.rocketChairs;
   if (!ch) return;
@@ -843,6 +843,14 @@ export function renderTacChairs() {
     bs[bIdx].rocketChairs.forEach((pt, i) => draw(pt,
       translate("application.renderTacChairsBasement", { index: bIdx + 1, count: bs.length }),
       'basement', i));
+  }
+  // 选点看挂椅的起点标记（红色圆点）
+  if (tacCarryState.chair?.kind === 'point') {
+    const dot = document.createElement('div');
+    dot.className = 'tac-carry-point';
+    dot.style.left = `${(tacCarryState.chair.x / imgW) * 100}%`;
+    dot.style.top = `${(tacCarryState.chair.z / imgH) * 100}%`;
+    tacLayer().appendChild(dot);
   }
 }
 
@@ -1364,16 +1372,18 @@ bindTacDisplayRow(tacShowDoorsEl, tacDoorSizeEl, tacDoorSizeDefEl,
   (v) => { tacDisplay.doors = v; renderTacLandmarks(); },
   (v) => { tacDisplay.doorSize = v; renderTacLandmarks(); });
 
-// ---- 选椅看范围（挂人范围二维近似，数据来自三维导航栅格） ----
+// ---- 狂欢之椅推算（挂人范围二维近似，数据来自三维导航栅格） ----
 export const tacCarryState = {
-  armed: false,               // 选椅模式：点击地图椅子进行选择
-  chair: null,                // { kind:'fixed'|'set', index, x, z } 底图像素坐标
+  mode: 'chair',              // 'chair' 选椅看范围 | 'point' 选点看挂椅
+  armed: false,               // 选择模式：点击地图椅子/任意点进行选择
+  chair: null,                // { kind:'fixed'|'set'|'basement', index, x, z } 或选点 { kind:'point', x, z }（底图像素坐标）
   running: false,
   cancel: null,
   resultMapId: null,          // 结果所属地图；切图后失效
   buffs: [],                  // 加成明细：[{ id, key, level }]
   hiddenBands: new Set(),     // 图例中被用户关掉的色带
   cache: null,                // 上次计算结果 { g, field }，用于切换色带时免重算重绘
+  detailMark: null,           // 挂椅明细中被点击框选的行下标（chairRows 下标），null = 无
 };
 let tacCarryBuffId = 0;
 let tacCarryCanvas = null;
@@ -1422,15 +1432,39 @@ export function syncTacCarryChairRow() {
 }
 
 function syncTacCarryChairName() {
+  const point = tacCarryState.mode === 'point';
   if (tacCarryState.armed) {
-    tacCarryChairName.textContent = translate('ui.tacCarry.picking');
+    tacCarryChairName.textContent = translate(point ? 'ui.tacCarry.pickingPoint' : 'ui.tacCarry.picking');
   } else if (tacCarryState.chair) {
-    tacCarryChairName.textContent = translate('ui.tacCarry.chairSelected', {
+    tacCarryChairName.textContent = translate(point ? 'ui.tacCarry.pointSelected' : 'ui.tacCarry.chairSelected', {
       x: Math.round(tacCarryState.chair.x), y: Math.round(tacCarryState.chair.z),
     });
   } else {
-    tacCarryChairName.textContent = translate('ui.tacCarry.noChair');
+    tacCarryChairName.textContent = translate(point ? 'ui.tacCarry.noPoint' : 'ui.tacCarry.noChair');
   }
+}
+
+// 选择按钮文案：待命时「点我选择…」，点选状态下「点我取消选择」
+function syncTacCarryPickBtn() {
+  const key = tacCarryState.armed ? 'ui.tacCarry.cancelPick'
+    : (tacCarryState.mode === 'point' ? 'ui.tacCarry.pickPoint' : 'ui.tacCarry.pickChair');
+  tacCarryPickBtn.dataset.i18n = key;
+  tacCarryPickBtn.textContent = translate(key);
+}
+
+// 选椅看范围 / 选点看挂椅 切换：清除计算结果并回到未选中状态，设置区保持不变
+function tacCarrySetMode(mode) {
+  if (tacCarryState.mode === mode) return;
+  tacCarryState.mode = mode;
+  tacCarryState.chair = null;
+  tacCarryDisarm();
+  tacCarryClearResult();
+  tacCarryModeChairEl.classList.toggle('active', mode === 'chair');
+  tacCarryModePointEl.classList.toggle('active', mode === 'point');
+  syncTacCarryPickBtn();
+  tacCarryHideRingLabelEl.style.display = mode === 'point' ? 'none' : '';
+  syncTacCarryChairName();
+  renderTacChairs();
 }
 
 function tacCarryDisarm() {
@@ -1438,6 +1472,7 @@ function tacCarryDisarm() {
   tacCarryState.armed = false;
   tacCarryPickBtn.classList.remove('active');
   tacSnapRipple?.classList.remove('show', 'chair');
+  syncTacCarryPickBtn();
   syncTacCarryChairName();
 }
 
@@ -1450,17 +1485,31 @@ function tacCarrySelect(kind, index) {
   renderTacChairs();
 }
 
+// 选点看挂椅：记录地图任意点为起点（底图像素坐标）
+function tacCarrySelectPoint(x, z) {
+  tacCarryState.chair = { kind: 'point', x, z };
+  tacCarryDisarm();
+  syncTacCarryChairName();
+  renderTacChairs();
+}
+
 function tacCarryClearResult() {
   tacCarryState.cancel?.();
   tacCarryState.running = false;
   tacCarryState.resultMapId = null;
   tacCarryState.cache = null;
   tacCarryState.hiddenBands.clear();
+  tacCarryState.detailMark = null;
   if (tacCarryCanvas) { tacCarryCanvas.remove(); tacCarryCanvas = null; }
+  tacLayer().querySelectorAll('.tac-carry-times, .tac-carry-mark-ring').forEach((el) => el.remove());
+  tacCarryResultLabel.style.display = 'none';
   tacCarryLegend.style.display = 'none';
   tacCarryLegend.innerHTML = '';
   tacCarryOpacityRowEl.style.display = 'none';
   tacCarrySummary.textContent = '';
+  tacCarryChairCountEl.style.display = 'none';
+  tacCarryDetailBoxEl.style.display = 'none';
+  tacCarryDetailBodyEl.innerHTML = '';
   tacCarryNote.style.display = 'none';
   tacCarryProgressBox.style.display = 'none';
 }
@@ -1515,7 +1564,11 @@ async function tacCarryRun() {
         start = exitStart;
       }
     }
-    if (!start) { tacCarrySummary.textContent = translate('ui.tacCarry.unsupportedChair'); return; }
+    if (!start) {
+      tacCarrySummary.textContent = translate(sel.kind === 'point'
+        ? 'ui.tacCarry.unsupportedPoint' : 'ui.tacCarry.unsupportedChair');
+      return;
+    }
     const run = computeCarryField(g, start, profile, {
       initialSeconds,
       onProgress: (p) => { tacCarryProgressBar.style.width = `${Math.round(p * 100)}%`; },
@@ -1524,7 +1577,7 @@ async function tacCarryRun() {
     const field = await run.promise;
     if (field.cancelled) return;
     tacCarryState.hiddenBands.clear();
-    tacCarryState.cache = { g, field };
+    tacCarryState.cache = { g, field, profile };
     renderTacCarryOverlay(g, field);
     tacCarryState.resultMapId = S.currentMapId;
     tacCarrySummary.textContent = translate('ui.tacCarry.summary', {
@@ -1533,6 +1586,7 @@ async function tacCarryRun() {
       cells: field.reached,
     });
     renderTacCarryLegend(field.bands);
+    tacCarryResultLabel.style.display = '';
     tacCarryNote.style.display = '';
   } finally {
     tacCarryState.running = false;
@@ -1543,62 +1597,185 @@ async function tacCarryRun() {
 }
 
 function renderTacCarryOverlay(g, field) {
-  const [W0, H0] = MAPS_DATA[S.currentMapId].mapSize;
-  const off = document.createElement('canvas');
-  off.width = g.gridW;
-  off.height = g.gridH;
-  const octx = off.getContext('2d');
-  const img = octx.createImageData(g.gridW, g.gridH);
-  const px = img.data;
   // 被关掉的色带，其格子改用最邻近的外侧点亮色带颜色（3次<2次<1次<不可再放<风险区）
   const resolveBand = (band) => {
     let b = band;
     while (b < CARRY_BAND_COLORS.length && tacCarryState.hiddenBands.has(b)) b++;
     return b < CARRY_BAND_COLORS.length ? b : -1;
   };
-  const factor = (parseFloat(tacCarryOpacityEl.value) || 65) / 100;
-  for (let i = 0; i < field.bandOf.length; i++) {
-    const band = resolveBand(field.bandOf[i]);
-    if (band < 0) continue;
-    const color = CARRY_BAND_COLORS[band];
-    const r = parseInt(color.slice(1, 3), 16);
-    const gg = parseInt(color.slice(3, 5), 16);
-    const b = parseInt(color.slice(5, 7), 16);
-    px[i * 4] = r;
-    px[i * 4 + 1] = gg;
-    px[i * 4 + 2] = b;
-    px[i * 4 + 3] = Math.round(CARRY_BAND_OPACITY[band] * factor * 255);
+  // 选点看挂椅不画颜色覆盖层，只标注各椅挂椅时间
+  if (tacCarryState.mode === 'point') {
+    tacCarryCanvas?.remove();
+    tacCarryCanvas = null;
+  } else {
+    const [W0, H0] = MAPS_DATA[S.currentMapId].mapSize;
+    const off = document.createElement('canvas');
+    off.width = g.gridW;
+    off.height = g.gridH;
+    const octx = off.getContext('2d');
+    const img = octx.createImageData(g.gridW, g.gridH);
+    const px = img.data;
+    const factor = (parseFloat(tacCarryOpacityEl.value) || 65) / 100;
+    for (let i = 0; i < field.bandOf.length; i++) {
+      const band = resolveBand(field.bandOf[i]);
+      if (band < 0) continue;
+      const color = CARRY_BAND_COLORS[band];
+      const r = parseInt(color.slice(1, 3), 16);
+      const gg = parseInt(color.slice(3, 5), 16);
+      const b = parseInt(color.slice(5, 7), 16);
+      px[i * 4] = r;
+      px[i * 4 + 1] = gg;
+      px[i * 4 + 2] = b;
+      px[i * 4 + 3] = Math.round(CARRY_BAND_OPACITY[band] * factor * 255);
+    }
+    octx.putImageData(img, 0, 0);
+    const canvas = document.createElement('canvas');
+    canvas.width = W0;
+    canvas.height = H0;
+    canvas.className = 'tac-carry-canvas';
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(off, 0, 0, W0, H0);
+    tacCarryCanvas?.remove();
+    tacCarryCanvas = canvas;
+    tacLayer().appendChild(canvas);
   }
-  octx.putImageData(img, 0, 0);
-  const canvas = document.createElement('canvas');
-  canvas.width = W0;
-  canvas.height = H0;
-  canvas.className = 'tac-carry-canvas';
-  const ctx = canvas.getContext('2d');
-  ctx.imageSmoothingEnabled = true;
-  ctx.drawImage(off, 0, 0, W0, H0);
-  tacCarryCanvas?.remove();
-  tacCarryCanvas = canvas;
-  tacLayer().appendChild(canvas);
+  renderTacCarryChairTimes(g, field, resolveBand);
+}
+
+// 选点看挂椅：在每把椅子上标注起点搬过去的秒数（与 3D「从起点挂椅」一致），
+// 文字颜色取所在色带；未到达的椅子标「未确认」；起点处标「牵气球起点」。
+function renderTacCarryChairTimes(g, field, resolveBand) {
+  tacLayer().querySelectorAll('.tac-carry-times').forEach((el) => el.remove());
+  if (tacCarryState.mode !== 'point') return;
+  const profile = tacCarryState.cache?.profile;
+  if (!profile) return;
+  const [W0, H0] = MAPS_DATA[S.currentMapId].mapSize;
+  const layer = document.createElement('div');
+  layer.className = 'tac-carry-times';
+  const addLabel = (x, z, text, color, cls = '') => {
+    const el = document.createElement('span');
+    el.className = cls ? `tac-carry-time ${cls}` : 'tac-carry-time';
+    el.textContent = text;
+    el.style.left = `${(x / W0) * 100}%`;
+    el.style.top = `${(z / H0) * 100}%`;
+    el.style.color = color;
+    // rotate 之后 translateY，保证文字正立且标签位于图标正上方
+    el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg) translateY(-15px)`;
+    layer.appendChild(el);
+  };
+  const cellIndex = (x, z) => {
+    const gx = Math.round(x / g.cellPx - 0.5), gy = Math.round(z / g.cellPx - 0.5);
+    return (gx >= 0 && gy >= 0 && gx < g.gridW && gy < g.gridH) ? gy * g.gridW + gx : -1;
+  };
+  const rows = [];
+  for (const c of tacCarryGroundChairs()) {
+    let t = Infinity;
+    if (c.kind === 'basement' && g.basements?.length) {
+      // 地下室椅：出口格时间 + 出口→椅子（水平 + 坡道附加）折算
+      let best = null, bestD = Infinity;
+      for (const b of g.basements) {
+        const d = Math.hypot(b.center[0] - c.x, b.center[1] - c.z);
+        if (d < bestD) { bestD = d; best = b; }
+      }
+      const ei = best && cellIndex(best.exit[0], best.exit[1]);
+      const tExit = ei >= 0 ? field.time[ei] : Infinity;
+      if (Number.isFinite(tExit)) {
+        const distM = Math.hypot(best.exit[0] - c.x, best.exit[1] - c.z)
+          * (g.metersPerCell / g.cellPx) + best.slopeExtraM;
+        t = tExit + distM / profile.speedAt(tExit);
+      }
+    } else {
+      const i = cellIndex(c.x, c.z);
+      if (i >= 0) t = field.time[i];
+    }
+    const band = carryBandAt(field.bands, t);
+    // 挂不上的椅子不标注
+    if (band < 0) continue;
+    const shown = resolveBand(band);
+    const risk = carryDropBudget(profile, t).risk;
+    addLabel(c.x, c.z,
+      translate(risk ? 'ui.tacCarry.timeRisk' : 'ui.tacCarry.timeSeconds',
+        { seconds: t.toFixed(1) }),
+      shown >= 0 ? CARRY_BAND_COLORS[shown] : '#a4afbb');
+    rows.push({ x: c.x, z: c.z, t, band });
+  }
+  if (tacCarryState.chair?.kind === 'point') {
+    addLabel(tacCarryState.chair.x, tacCarryState.chair.z,
+      translate('ui.tacCarry.startLabel'), '#ff5252', 'tac-carry-time-start');
+  }
+  tacLayer().appendChild(layer);
+  // 挂椅明细：按最短挂椅时间升序，缓存供明细表重开时复用
+  rows.sort((a, b) => a.t - b.t);
+  if (tacCarryState.cache) tacCarryState.cache.chairRows = rows;
+  if (tacCarryState.mode === 'point') {
+    tacCarryChairCountEl.textContent = translate('ui.tacCarry.chairCount', { count: rows.length });
+    tacCarryChairCountEl.style.display = '';
+    renderTacCarryDetail(rows);
+  } else {
+    tacCarryChairCountEl.style.display = 'none';
+    tacCarryDetailBoxEl.style.display = 'none';
+  }
+}
+
+// 挂椅明细表（仅选点模式）：默认收起，展开后按时间升序列出各可挂椅；
+// 点击行在地图上用正圆红框框出对应椅子，再点取消，点别的行切换
+let tacCarryDetailOpen = false;
+function renderTacCarryDetail(rows) {
+  tacCarryDetailToggleEl.textContent = translate('ui.tacCarry.detailToggle', { value: tacCarryDetailOpen ? '▾' : '▸' });
+  tacCarryDetailBoxEl.style.display = rows.length ? '' : 'none';
+  tacCarryDetailBodyEl.style.display = tacCarryDetailOpen ? '' : 'none';
+  if (!rows.length) return;
+  if (tacCarryDetailOpen) {
+    tacCarryDetailBodyEl.innerHTML = `<table class="tac-detail-tbl"><thead><tr>`
+      + `<th>${translate('ui.tacCarry.detailPos')}</th>`
+      + `<th>${translate('ui.tacCarry.detailTime')}</th>`
+      + `<th>${translate('ui.tacCarry.detailType')}</th></tr></thead><tbody>`
+      + rows.map((r, i) =>
+        `<tr data-row="${i}"${tacCarryState.detailMark === i ? ' class="marked"' : ''}>`
+        + `<td>${Math.round(r.x)}, ${Math.round(r.z)}</td><td>${r.t.toFixed(1)}</td>`
+        + `<td>${translate(`ui.tacCarry.band${r.band}`)}</td></tr>`).join('')
+      + '</tbody></table>';
+  }
+  renderTacCarryMark();
+}
+
+// 明细行点击后的椅子标记红圈（正圆，与选中椅红框同款）
+function renderTacCarryMark() {
+  tacLayer().querySelectorAll('.tac-carry-mark-ring').forEach((el) => el.remove());
+  const rows = tacCarryState.cache?.chairRows;
+  const i = tacCarryState.detailMark;
+  if (i == null || !rows?.[i] || tacCarryState.mode !== 'point') return;
+  const [imgW, imgH] = MAPS_DATA[S.currentMapId].mapSize;
+  const ring = document.createElement('div');
+  ring.className = 'tac-carry-mark-ring';
+  ring.style.left = `${(rows[i].x / imgW) * 100}%`;
+  ring.style.top = `${(rows[i].z / imgH) * 100}%`;
+  ring.style.width = `${tacDisplay.chairSize * 1.5}%`;
+  tacLayer().appendChild(ring);
 }
 
 function renderTacCarryLegend(bands) {
   tacCarryLegend.innerHTML = '';
+  // 选点看挂椅：图例只是颜色含义说明，不是可点击按钮
+  const staticLegend = tacCarryState.mode === 'point';
   bands.forEach((b) => {
     if (b.empty) return;
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'tac-carry-band';
-    btn.dataset.band = b.band;
-    if (tacCarryState.hiddenBands.has(b.band)) btn.classList.add('off');
-    btn.innerHTML = `<span class="tac-carry-swatch" style="background:${CARRY_BAND_COLORS[b.band]}"></span>`
+    const el = document.createElement(staticLegend ? 'span' : 'button');
+    if (!staticLegend) el.type = 'button';
+    el.className = 'tac-carry-band';
+    if (!staticLegend) {
+      el.dataset.band = b.band;
+      if (tacCarryState.hiddenBands.has(b.band)) el.classList.add('off');
+      el.title = translate('ui.tacCarry.bandToggleHint');
+      el.addEventListener('click', () => tacCarryToggleBand(b.band));
+    }
+    el.innerHTML = `<span class="tac-carry-swatch" style="background:${CARRY_BAND_COLORS[b.band]}"></span>`
       + `<span>${translate(`ui.tacCarry.band${b.band}`)}</span>`;
-    btn.title = translate('ui.tacCarry.bandToggleHint');
-    btn.addEventListener('click', () => tacCarryToggleBand(b.band));
-    tacCarryLegend.appendChild(btn);
+    tacCarryLegend.appendChild(el);
   });
   tacCarryLegend.style.display = '';
-  tacCarryOpacityRowEl.style.display = '';
+  tacCarryOpacityRowEl.style.display = tacCarryState.mode === 'point' ? 'none' : '';
 }
 
 function tacCarryToggleBand(band) {
@@ -1780,6 +1957,21 @@ function buildTacCarryCard() {
     tacCarryBuffOpen = !tacCarryBuffOpen;
     renderTacCarryBuffs();
   });
+  tacCarryDetailToggleEl.addEventListener('click', () => {
+    tacCarryDetailOpen = !tacCarryDetailOpen;
+    renderTacCarryDetail(tacCarryState.cache?.chairRows ?? []);
+  });
+  // 明细行点击：框出对应椅子；再点同一行取消，点别的行切换
+  tacCarryDetailBodyEl.addEventListener('click', (e) => {
+    const tr = e.target.closest('tr[data-row]');
+    if (!tr) return;
+    const i = +tr.dataset.row;
+    tacCarryState.detailMark = tacCarryState.detailMark === i ? null : i;
+    tacCarryDetailBodyEl.querySelectorAll('tr[data-row]').forEach((el) => {
+      el.classList.toggle('marked', +el.dataset.row === tacCarryState.detailMark);
+    });
+    renderTacCarryMark();
+  });
   tacCarryBuffBody.addEventListener('click', (e) => {
     const del = e.target.closest('.tac-carry-buff-del');
     if (!del) return;
@@ -1819,8 +2011,11 @@ function buildTacCarryCard() {
   tacCarryPickBtn.addEventListener('click', () => {
     tacCarryState.armed = !tacCarryState.armed;
     tacCarryPickBtn.classList.toggle('active', tacCarryState.armed);
+    syncTacCarryPickBtn();
     syncTacCarryChairName();
   });
+  tacCarryModeChairEl.addEventListener('click', () => tacCarrySetMode('chair'));
+  tacCarryModePointEl.addEventListener('click', () => tacCarrySetMode('point'));
   tacCarryRunBtn.addEventListener('click', tacCarryRun);
   tacCarryClearBtn.addEventListener('click', () => {
     tacCarryState.chair = null;
@@ -6536,11 +6731,15 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
   const textEl = e.target.closest('.tac-text');
   const p = tacPos(e);
 
-  // 选椅模式：点击椅子选中用于挂人范围计算
+  // 推算选择模式：选椅=点击椅子选中；选点=点击任意位置选起点
   // （椅子图标 pointer-events:none，按地图坐标找最近椅子）
   if (tacCarryState.armed) {
     const [W0, H0] = MAPS_DATA[S.currentMapId].mapSize;
     const mx = p.x * W0, my = p.y * H0;
+    if (tacCarryState.mode === 'point') {
+      tacCarrySelectPoint(mx, my);
+      return;
+    }
     let best = null, bestD = Infinity;
     for (const c of tacCarryGroundChairs()) {
       const d = Math.hypot(c.x - mx, c.z - my);

@@ -201,3 +201,83 @@ test('hunter dropdown exposes a form select for dual-form hunters', async ({ pag
   await expect(page.locator('#tacCarryHunter')).toHaveValue('custom');
   await expect(form).toBeHidden();
 });
+
+// 选点看挂椅：切换模式 → 选起点 → 计算 → 切回清除
+test('point mode picks a start point, computes and resets on mode switch', async ({ page }) => {
+  await tool(page, 'deduce');
+  await expect(page.locator('#tacCarryModeChair')).toHaveClass(/active/);
+
+  await page.locator('#tacCarryModePoint').click();
+  await expect(page.locator('#tacCarryModePoint')).toHaveClass(/active/);
+  await expect(page.locator('#tacCarryPickBtn')).toHaveText('点我选择起点');
+  await expect(page.locator('#tacCarryChairName')).toHaveText('当前未选中起点');
+  await expect(page.locator('#tacCarryHideRingLabel')).toBeHidden();
+
+  await page.locator('#tacCarryPickBtn').click();
+  await expect(page.locator('#tacCarryPickBtn')).toHaveText('点我取消选择');
+  await expect(page.locator('#tacCarryChairName')).toHaveText('请选择起点');
+  const box = await page.locator('#tacMapWrap').boundingBox();
+  await page.mouse.click(box.x + box.width * 0.5, box.y + box.height * 0.5);
+  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中起点：像素坐标(');
+  await expect(page.locator('#tacCarryPickBtn')).toHaveText('点我选择起点');
+  await expect(page.locator('.tac-carry-point')).toHaveCount(1);
+
+  await page.locator('#tacCarryRun').click();
+  // 选点模式不画颜色覆盖层，只标注各椅挂椅时间
+  await expect(page.locator('#tacCarrySummary')).toContainText('挣扎剩余 16.0 秒', { timeout: 60000 });
+  await expect(page.locator('.tac-carry-canvas')).toHaveCount(0);
+  await expect(page.locator('#tacCarryOpacityRow')).toBeHidden();
+
+  // 图例只是颜色含义说明，不是按钮
+  await expect(page.locator('#tacCarryLegend')).toBeVisible();
+  await expect(page.locator('#tacCarryLegend button')).toHaveCount(0);
+  expect(await page.locator('#tacCarryLegend .tac-carry-band').count()).toBeGreaterThan(0);
+
+  // 每把可挂椅子标出挂椅时间（颜色随色带），挂不上的不标注；起点处标「牵气球起点」
+  const times = page.locator('.tac-carry-time');
+  expect(await times.count()).toBeGreaterThan(0);
+  await expect(page.locator('.tac-carry-time-start')).toHaveText('牵气球起点');
+  const texts = await times.allTextContents();
+  expect(texts.some((t) => /^\d+\.\d 秒$/.test(t) || t.startsWith('风险 · '))).toBe(true);
+  expect(texts.some((t) => t === '未确认')).toBe(false);
+
+  // 摘要：最多可挂椅子数；明细默认收起，展开后按时间升序
+  const chairCount = page.locator('#tacCarryChairCount');
+  await expect(chairCount).toBeVisible();
+  const countText = await chairCount.textContent();
+  const m = countText.match(/最多可挂上 (\d+) 个狂欢之椅/);
+  expect(m).toBeTruthy();
+  const n = +m[1];
+  expect(n).toBeGreaterThan(0);
+  await expect(page.locator('#tacCarryDetailToggle')).toHaveText('▸ 挂椅明细');
+  await expect(page.locator('#tacCarryDetailBody')).toBeHidden();
+  await page.locator('#tacCarryDetailToggle').click();
+  await expect(page.locator('#tacCarryDetailToggle')).toHaveText('▾ 挂椅明细');
+  const rows = page.locator('#tacCarryDetailBody tbody tr');
+  expect(await rows.count()).toBe(n);
+  const timeTexts = await page.locator('#tacCarryDetailBody tbody tr td:nth-child(2)').allTextContents();
+  const timeVals = timeTexts.map(Number);
+  expect(timeVals.every((v, i) => i === 0 || v >= timeVals[i - 1])).toBe(true);
+
+  // 明细行点击：正圆红框框出对应椅子；再点取消；点别的行切换
+  await rows.nth(0).click();
+  await expect(page.locator('.tac-carry-mark-ring')).toHaveCount(1);
+  await expect(rows.nth(0)).toHaveClass(/marked/);
+  await rows.nth(1).click();
+  await expect(page.locator('.tac-carry-mark-ring')).toHaveCount(1);
+  await expect(rows.nth(0)).not.toHaveClass(/marked/);
+  await expect(rows.nth(1)).toHaveClass(/marked/);
+  await rows.nth(1).click();
+  await expect(page.locator('.tac-carry-mark-ring')).toHaveCount(0);
+  await expect(rows.nth(1)).not.toHaveClass(/marked/);
+
+  await page.locator('#tacCarryModeChair').click();
+  await expect(page.locator('.tac-carry-time')).toHaveCount(0);
+  await expect(page.locator('.tac-carry-canvas')).toHaveCount(0);
+  await expect(page.locator('.tac-carry-point')).toHaveCount(0);
+  await expect(chairCount).toBeHidden();
+  await expect(page.locator('#tacCarryDetailBox')).toBeHidden();
+  await expect(page.locator('#tacCarryChairName')).toHaveText('当前未选中狂欢之椅');
+  await expect(page.locator('#tacCarryPickBtn')).toHaveText('点我选择狂欢之椅');
+  await expect(page.locator('#tacCarryHideRingLabel')).toBeVisible();
+});
