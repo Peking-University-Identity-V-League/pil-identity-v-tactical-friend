@@ -55,7 +55,7 @@ test('tide scenario picks a chair, computes bands and clears', async ({ page }) 
   expect(await chairs.count()).toBeGreaterThan(0);
 
   await page.locator('#tacCarryPickBtn').click();
-  await expect(page.locator('#tacCarryChairName')).toHaveText('请选择狂欢之椅');
+  await expect(page.locator('#tacCarryChairName')).toHaveText('请在地图上选择狂欢之椅');
   const first = chairs.first();
   const box = await first.boundingBox();
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
@@ -133,6 +133,9 @@ test('tide point mode labels chairs within 20 seconds of the start point', async
   await page.mouse.click(box.x + box.width * 0.5, box.y + box.height * 0.5);
   await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中起点：像素坐标(');
   await expect(page.locator('.tac-carry-point')).toHaveCount(1);
+  // 选中起点的同时，点位上立即显示「起点」文字
+  await expect(page.locator('.tac-carry-time-start')).toHaveCount(1);
+  await expect(page.locator('.tac-carry-time-start')).toHaveText('起点');
 
   await page.locator('#tacCarryRun').click();
   // 选点模式不画颜色覆盖层，只标注各椅到达时间

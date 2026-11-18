@@ -478,8 +478,13 @@ export function syncTacImage() {
     tacCarryClearResult();
     if (tacCarryCard) syncTacCarryChairName();
   }
-  if (tacPathState.resultMapId !== null && tacPathState.resultMapId !== S.currentMapId) {
+  // 切图后路径规划的端点与结果均不带入新地图
+  if (tacPathState.points.a || tacPathState.points.b
+      || (tacPathState.resultMapId !== null && tacPathState.resultMapId !== S.currentMapId)) {
+    tacPathState.points = { a: null, b: null };
+    tacPathState.armed = null;
     tacPathClearResult();
+    if (tacPathCard) syncTacPathPickUI();
   }
   if (tacCarryCard) syncTacCarryChairRow();
 
@@ -799,7 +804,7 @@ function tacBasementList() {
 
 export function renderTacChairs() {
   if (!tacMapWrap) return;
-  tacMapWrap.querySelectorAll('.tac-chair, .tac-carry-point, .tac-path-point, .tac-path-label').forEach((el) => el.remove());
+  tacMapWrap.querySelectorAll('.tac-chair, .tac-carry-point, .tac-carry-time-start, .tac-path-point, .tac-path-label').forEach((el) => el.remove());
   const map = MAPS_DATA[S.currentMapId];
   const ch = map.rocketChairs;
   if (!ch) return;
@@ -851,13 +856,23 @@ export function renderTacChairs() {
       translate("application.renderTacChairsBasement", { index: bIdx + 1, count: bs.length }),
       'basement', i));
   }
-  // 选点看挂椅/可达椅的起点标记（红色圆点）
+  // 选点看挂椅/可达椅的起点标记（红色圆点 + 起点文字，随选中立即显示）
   if (tacCarryState.chair?.kind === 'point') {
     const dot = document.createElement('div');
     dot.className = 'tac-carry-point';
     dot.style.left = `${(tacCarryState.chair.x / imgW) * 100}%`;
     dot.style.top = `${(tacCarryState.chair.z / imgH) * 100}%`;
     tacLayer().appendChild(dot);
+    const startLabel = document.createElement('span');
+    startLabel.className = 'tac-carry-time tac-carry-time-start';
+    startLabel.textContent = translate(tacCarryState.scenario === 'tide'
+      ? 'ui.tacTide.startLabel' : 'ui.tacCarry.startLabel');
+    startLabel.style.left = dot.style.left;
+    startLabel.style.top = dot.style.top;
+    startLabel.style.color = '#ff5252';
+    // rotate 之后 translateY，保证文字正立且标签位于圆点正上方
+    startLabel.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg) translateY(-15px)`;
+    tacLayer().appendChild(startLabel);
   }
   // 两点最优路径规划的 A/B 端点标记
   renderTacPathPoints();
@@ -1524,6 +1539,7 @@ function tacDedSetScenario(scenario) {
   const mk = tide ? 'ui.tacTide.modePoint' : 'ui.tacCarry.modePoint';
   tacCarryModePointEl.dataset.i18n = mk;
   tacCarryModePointEl.textContent = translate(mk);
+  renderTacChairs();  // 起点文字随场景切换（牵气球起点 ↔ 起点）
   syncTacDedRunBtn();
 }
 
@@ -1600,7 +1616,6 @@ async function tacCarryRun() {
     tacCarrySummary.textContent = translate('ui.tacCarry.noGrid');
     return;
   }
-  tacPathClearResult();  // 与两点最优路径规划的绘制结果互斥
   tacCarryClearResult();
   tacCarryState.running = true;
   tacCarryRunBtn.textContent = translate('ui.tacCarry.running');
@@ -1766,10 +1781,6 @@ function renderTacCarryChairTimes(g, field, resolveBand) {
         { seconds: t.toFixed(1) }),
       shown >= 0 ? CARRY_BAND_COLORS[shown] : '#a4afbb');
     rows.push({ x: c.x, z: c.z, t, band });
-  }
-  if (tacCarryState.chair?.kind === 'point') {
-    addLabel(tacCarryState.chair.x, tacCarryState.chair.z,
-      translate('ui.tacCarry.startLabel'), '#ff5252', 'tac-carry-time-start');
   }
   tacLayer().appendChild(layer);
   // 挂椅明细：按最短挂椅时间升序，缓存供明细表重开时复用
@@ -2161,7 +2172,6 @@ async function tacTideRun() {
     tacCarrySummary.textContent = translate('ui.tacTide.noGrid');
     return;
   }
-  tacPathClearResult();  // 与两点最优路径规划的绘制结果互斥
   tacCarryClearResult();
   tacCarryState.running = true;
   tacCarryRunBtn.textContent = translate('ui.tacTide.running');
@@ -2322,10 +2332,6 @@ function renderTacTideChairTimes(g, field, resolveBand) {
         { seconds: t.toFixed(1) }),
       shown >= 0 ? TIDE_BAND_COLORS[shown] : '#a4afbb');
     rows.push({ x: c.x, z: c.z, t, band });
-  }
-  if (tacCarryState.chair?.kind === 'point') {
-    addLabel(tacCarryState.chair.x, tacCarryState.chair.z,
-      translate('ui.tacTide.startLabel'), '#ff5252', 'tac-carry-time-start');
   }
   tacLayer().appendChild(layer);
   // 椅子明细：按到达时间升序，缓存供明细表重开时复用
@@ -2886,7 +2892,6 @@ async function tacPathRun() {
     tacPathResultBoxEl.style.display = '';
     return;
   }
-  tacCarryClearResult();  // 与狂欢之椅推算的绘制结果互斥
   tacPathClearResult();
   tacPathState.running = true;
   tacPathRunBtn.textContent = translate('ui.tacPath.running');

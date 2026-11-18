@@ -4497,6 +4497,10 @@ div.tac-fixed-spawn .cam-dir.up {
 .tac-carry-time-start {
   font-size: 11px;
 }
+/* 两点最优路径规划：A/B 端点文字与「牵气球起点」「起点」同字号 */
+.tac-path-label {
+  font-size: 11px;
+}
 
 /* 狂欢之椅推算：模式按钮配色与全局 first/last 相反（选椅看范围=红，选点看挂椅=蓝） */
 #tacCarryCard .tac-carry-modes .side-btn:first-child.active {
