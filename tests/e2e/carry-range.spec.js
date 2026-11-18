@@ -146,6 +146,29 @@ test('opacity slider re-renders bands without recomputing', async ({ page }) => 
   await expect(page.locator('#tacCarryOpacityRow')).toBeHidden();
 });
 
+// 地下室行：与显示设置共享状态，地下室椅子纳入点选
+test('basement chairs become pickable when the basement row is enabled', async ({ page }) => {
+  await tool(page, 'deduce');
+  await page.locator('#tacCarryShowChairs').check();
+  await expect(page.locator('.tac-chair[data-chair-kind="basement"]')).toHaveCount(0);
+  await page.locator('#tacCarryChairBasement').check();
+  const basementChairs = page.locator('.tac-chair[data-chair-kind="basement"]');
+  expect(await basementChairs.count()).toBeGreaterThan(0);
+  // 与显示设置共享勾选状态
+  await tool(page, 'display');
+  await expect(page.locator('#tacShowChairBasement')).toBeChecked();
+  await page.locator('#tacShowChairBasement').uncheck();
+  await tool(page, 'deduce');
+  await expect(page.locator('#tacCarryChairBasement')).not.toBeChecked();
+  await expect(page.locator('.tac-chair[data-chair-kind="basement"]')).toHaveCount(0);
+  // 开启后可点选地下室椅子（点正中心，最近的一定是它自己）
+  await page.locator('#tacCarryChairBasement').check();
+  await page.locator('#tacCarryPickBtn').click();
+  await page.locator('.tac-chair[data-chair-kind="basement"]').first().click({ force: true });
+  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中狂欢之椅：像素坐标(');
+  await expect(page.locator('.tac-chair.tac-carry-selected[data-chair-kind="basement"]')).toHaveCount(1);
+});
+
 // 隐藏选中圈：勾选后立即隐藏，再次选中也不再显示
 test('hide-ring checkbox suppresses the selected-chair circle', async ({ page }) => {
   await tool(page, 'deduce');
