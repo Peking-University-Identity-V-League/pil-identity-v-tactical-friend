@@ -94,7 +94,7 @@ function makeHeap() {
 /**
  * 从椅子格出发的分块 Dijkstra（时间依赖速度，狂欢到期后降速仍满足 FIFO）。
  * onProgress(0..1) 每块回调一次；返回 Promise<{
- *   bands, bandOf: Int8Array, reached: number, budget: number }>
+ *   bands, bandOf: Int8Array, time: Float64Array, reached: number, budget: number }>
  * bandOf: 每格色带编号 0-4，未到达/不可走为 -1。
  * initialSeconds：起点已耗时（地下室椅子从楼梯出口起搜时，椅子→出口的
  * 耗时），色带判定与速度曲线从该时刻开始。
@@ -107,7 +107,7 @@ export function computeCarryField(g, startCell, profile, { onProgress, initialSe
   const time = new Float64Array(total).fill(Infinity);
   const bandOf = new Int8Array(total).fill(-1);
   const startIdx = startCell.y * gridW + startCell.x;
-  if (!grid[startIdx]) return Promise.resolve({ bands, bandOf, reached: 0, budget });
+  if (!grid[startIdx]) return Promise.resolve({ bands, bandOf, time, reached: 0, budget });
   time[startIdx] = initialSeconds;
   bandOf[startIdx] = carryBandAt(bands, initialSeconds);
   const heap = makeHeap();
@@ -120,7 +120,7 @@ export function computeCarryField(g, startCell, profile, { onProgress, initialSe
   const CHUNK = 20000;
   const promise = new Promise((resolve) => {
     const step = () => {
-      if (cancelled) { resolve({ bands, bandOf, reached: settled, budget, cancelled: true }); return; }
+      if (cancelled) { resolve({ bands, bandOf, time, reached: settled, budget, cancelled: true }); return; }
       let n = 0;
       while (heap.size && n < CHUNK) {
         const t = heap.topKey();
@@ -150,7 +150,7 @@ export function computeCarryField(g, startCell, profile, { onProgress, initialSe
       }
       onProgress?.(heap.size ? Math.min(0.99, (heap.topKey() ?? budget) / budget) : 1);
       if (heap.size) setTimeout(step, 0);
-      else resolve({ bands, bandOf, reached: settled, budget });
+      else resolve({ bands, bandOf, time, reached: settled, budget });
     };
     setTimeout(step, 0);
   });

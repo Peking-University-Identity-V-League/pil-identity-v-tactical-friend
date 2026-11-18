@@ -163,6 +163,14 @@ export const tacCarryBasementPrevBtn = $('tacCarryBasementPrev');
 export const tacCarryBasementNextBtn = $('tacCarryBasementNext');
 export const tacCarryBasementTextEl = $('tacCarryBasementText');
 export const tacCarryNote = $('tacCarryNote');
+export const tacCarryResultLabel = $('tacCarryResultLabel');
+export const tacCarryModeChairEl = $('tacCarryModeChair');
+export const tacCarryModePointEl = $('tacCarryModePoint');
+export const tacCarryHideRingLabelEl = $('tacCarryHideRingLabel');
+export const tacCarryChairCountEl = $('tacCarryChairCount');
+export const tacCarryDetailBoxEl = $('tacCarryDetailBox');
+export const tacCarryDetailToggleEl = $('tacCarryDetailToggle');
+export const tacCarryDetailBodyEl = $('tacCarryDetailBody');
 
 export const tacDisplayCard = $('tacDisplayCard');
 

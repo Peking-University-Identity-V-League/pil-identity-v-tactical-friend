@@ -2906,11 +2906,17 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
   border-top: 1px solid var(--border);
   padding-top: 13px;
 }
-#tacCarryCard .tac-sec-label:not(:first-of-type) {
+#tacCarryCard .tac-sec-label.tac-sec-divider {
   border-top: 1px solid var(--border);
   padding-top: 13px;
 }
+#tacCarryCard .tac-carry-sep {
+  border-top: 1px solid var(--border);
+  margin-top: 12px;
+}
 #tacCarryCard .tac-speed-line:has(input[type="range"]) { flex-wrap: nowrap; }
+/* 求生者+初始挣扎进度合并行：窄屏允许换行 */
+#tacCarryCard .tac-speed-line.tac-carry-surv-line { flex-wrap: wrap; row-gap: 6px; }
 #tacCarryCard .tac-speed-line input[type="range"] { flex: 1 1 auto; min-width: 60px; }
 #tacCarryPickBtn { padding: 9px 20px; font-size: 13px; }
 #tacCarryCard .tac-carry-pick .tac-carry-chair-name {
@@ -4418,4 +4424,72 @@ div.tac-fixed-spawn .cam-dir.up {
   border: 2px solid #ff5252;
   border-radius: 50%;
   pointer-events: none;
+}
+
+/* 选点看挂椅：起点红色圆点标记 */
+.tac-carry-point {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 82, 82, 0.9);
+  border: 2px solid #fff;
+  box-shadow: 0 0 6px rgba(255, 82, 82, 0.8);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
+}
+/* 狂欢之椅推算：模式切换按钮行 */
+#tacCarryCard .tac-carry-modes {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+#tacCarryCard .tac-carry-modes .side-btn { flex: 1 1 0; }
+/* 初始挣扎进度百分比文字收窄，避免 99% 超出边界 */
+#tacCarryCard #tacCarryInitialVal {
+  font-size: 11px;
+  min-width: 26px;
+  white-space: nowrap;
+}
+
+/* 选点看挂椅：椅子挂椅时间标签层（覆盖在范围画布之上） */
+.tac-carry-times {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.tac-carry-time {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.9), 0 0 6px rgba(0, 0, 0, 0.7);
+}
+.tac-carry-time-start {
+  font-size: 11px;
+}
+
+/* 狂欢之椅推算：模式按钮配色与全局 first/last 相反（选椅看范围=红，选点看挂椅=蓝） */
+#tacCarryCard .tac-carry-modes .side-btn:first-child.active {
+  background: linear-gradient(135deg, #f472b6, #fb7185);
+  box-shadow: 0 3px 13px var(--secondary-glow), 0 0 0 1px rgba(255,255,255,0.1);
+}
+#tacCarryCard .tac-carry-modes .side-btn:last-child.active {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  box-shadow: 0 3px 13px rgba(59, 130, 246, 0.4), 0 0 0 1px rgba(255,255,255,0.1);
+}
+/* 挂椅明细：行可点击，点击后地图上用正圆红框框出对应椅子 */
+#tacCarryDetailBody tr[data-row] { cursor: pointer; }
+#tacCarryDetailBody tr[data-row]:hover td { background: rgba(255, 213, 79, 0.12); }
+#tacCarryDetailBody tr[data-row].marked td { background: rgba(255, 82, 82, 0.18); }
+.tac-carry-mark-ring {
+  position: absolute;
+  aspect-ratio: 1;
+  border: 2px solid #ff5252;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
 }
