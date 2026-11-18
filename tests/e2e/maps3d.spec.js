@@ -3,7 +3,9 @@ import { test, expect } from '@playwright/test';
 test.use({ launchOptions: { args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader'] } });
 
 test('the public 3D path opens the map list and a complete self-contained scene', async ({ page }) => {
-  test.setTimeout(120000);
+  // 自包含 3D 场景就绪是纯 CPU 工作（解析 40MB runtime、构建碰撞 BVH）；
+  // GitHub 共享 runner（软件渲染）上可能远慢于本地，放宽到 5 分钟。
+  test.setTimeout(300000);
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/tactical-friend/3d/');
@@ -18,7 +20,8 @@ test('the public 3D path opens the map list and a complete self-contained scene'
 
 for (const prefix of ['/tactical-friend', '/zhanshuyanlian']) {
   test(`2D/3D navigation preserves ${prefix} in both directions`, async ({ page }) => {
-    test.setTimeout(120000);
+    // 同上：3D 就绪在 CI 软件渲染下耗时不可控，放宽到 4 分钟。
+    test.setTimeout(240000);
     await page.route('https://**/*', route => route.fulfill({ status: 200, contentType: 'image/svg+xml', body: '<svg xmlns="http://www.w3.org/2000/svg" width="750" height="644"/>' }));
     await page.goto(prefix + '/');
     await page.locator('.home-card').first().click();

@@ -157,6 +157,11 @@ export const tacCarryLegend = $('tacCarryLegend');
 export const tacCarryOpacityRowEl = $('tacCarryOpacityRow');
 export const tacCarryOpacityEl = $('tacCarryOpacity');
 export const tacCarryHideRingEl = $('tacCarryHideRing');
+export const tacCarryChairBasementEl = $('tacCarryChairBasement');
+export const tacCarryBoxBasementEl = $('tacCarryBoxBasement');
+export const tacCarryBasementPrevBtn = $('tacCarryBasementPrev');
+export const tacCarryBasementNextBtn = $('tacCarryBasementNext');
+export const tacCarryBasementTextEl = $('tacCarryBasementText');
 export const tacCarryNote = $('tacCarryNote');
 
 export const tacDisplayCard = $('tacDisplayCard');
