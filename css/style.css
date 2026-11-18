@@ -2910,7 +2910,8 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
   border-top: 1px solid var(--border);
   padding-top: 13px;
 }
-#tacCarryCard .tac-carry-sep {
+#tacCarryCard .tac-carry-sep,
+#tacPathCard .tac-carry-sep {
   border-top: 1px solid var(--border);
   margin-top: 12px;
 }
@@ -2918,8 +2919,9 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 /* 求生者+初始挣扎进度合并行：窄屏允许换行 */
 #tacCarryCard .tac-speed-line.tac-carry-surv-line { flex-wrap: wrap; row-gap: 6px; }
 #tacCarryCard .tac-speed-line input[type="range"] { flex: 1 1 auto; min-width: 60px; }
-#tacCarryPickBtn { padding: 6px 14px; font-size: 12px; }
-#tacCarryCard .tac-carry-pick .tac-carry-chair-name {
+#tacCarryPickBtn, #tacPathPickA, #tacPathPickB { padding: 6px 14px; font-size: 12px; flex: none; }
+#tacCarryCard .tac-carry-pick .tac-carry-chair-name,
+#tacPathCard .tac-carry-pick .tac-carry-chair-name {
   color: #ffd54f;
   font-weight: 700;
 }
@@ -4311,13 +4313,15 @@ div.tac-fixed-spawn .cam-dir.up {
 }
 
 /* ---- 选椅看范围（挂人范围近似） ---- */
-#tacCarryCard .tac-carry-pick {
+#tacCarryCard .tac-carry-pick,
+#tacPathCard .tac-carry-pick {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-top: 10px;
 }
-#tacCarryCard .tac-carry-chair-name {
+#tacCarryCard .tac-carry-chair-name,
+#tacPathCard .tac-carry-chair-name {
   font-size: 12px;
   color: var(--text-secondary);
   min-width: 0;
@@ -4325,30 +4329,35 @@ div.tac-fixed-spawn .cam-dir.up {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-#tacCarryCard .tac-carry-actions {
+#tacCarryCard .tac-carry-actions,
+#tacPathCard .tac-carry-actions {
   display: flex;
   gap: 8px;
   margin-top: 12px;
 }
-#tacCarryCard .tac-carry-big {
+#tacCarryCard .tac-carry-big,
+#tacPathCard .tac-carry-big {
   flex: 1 1 0;
   padding: 7px 4px;
   font-size: 12px;
 }
-#tacCarryCard .tac-carry-progress {
+#tacCarryCard .tac-carry-progress,
+#tacPathCard .tac-carry-progress {
   margin-top: 10px;
   height: 6px;
   border-radius: 3px;
   background: var(--border);
   overflow: hidden;
 }
-#tacCarryCard .tac-carry-progress-bar {
+#tacCarryCard .tac-carry-progress-bar,
+#tacPathCard .tac-carry-progress-bar {
   height: 100%;
   width: 0;
   background: #3b82f6;
   transition: width .12s linear;
 }
-#tacCarryCard .tac-carry-summary {
+#tacCarryCard .tac-carry-summary,
+#tacPathCard .tac-carry-summary {
   margin-top: 8px;
   font-size: 12px;
   color: var(--text-secondary);
@@ -4421,6 +4430,36 @@ div.tac-fixed-spawn .cam-dir.up {
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 2;
+}
+/* 两点最优路径规划：起点 A（红）/ 终点 B（蓝）端点圆点 */
+.tac-path-point {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
+}
+.tac-path-point.a {
+  background: rgba(255, 82, 82, 0.9);
+  box-shadow: 0 0 6px rgba(255, 82, 82, 0.8);
+}
+.tac-path-point.b {
+  background: rgba(50, 139, 255, 0.9);
+  box-shadow: 0 0 6px rgba(50, 139, 255, 0.8);
+}
+/* 两点最优路径规划：起点 A / 终点 B 两行电脑端优先同行，窄屏自动换行 */
+#tacPathCard .tac-path-picks {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+#tacPathCard .tac-path-picks .tac-carry-pick {
+  flex: 1 1 240px;
+  margin-top: 0;
+  min-width: 0;
 }
 /* 狂欢之椅推算：场景/模式切换按钮行（两组胶囊切换优先同行，窄屏自动换行） */
 #tacCarryCard .tac-ded-toggles {

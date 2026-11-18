@@ -308,6 +308,94 @@
       </details>
 
       
+      <details class="ded-card" id="tacPathCard" style="display:none" open>
+        <summary>
+          <span class="ded-sec-title" style="margin-bottom:0">
+            <span class="ded-sec-zh" data-i18n="ui.tacPath.title"></span>
+            <span class="ded-sec-en">Path Plan</span>
+          </span>
+          <span class="arrow">▶</span>
+        </summary>
+        <div style="margin-top:12px">
+          <div class="tac-path-picks">
+            <div class="tac-carry-pick">
+              <button type="button" class="tac-add-btn" id="tacPathPickA" data-i18n="ui.tacPath.pickA"></button>
+              <span class="tac-carry-chair-name" id="tacPathStatusA"></span>
+            </div>
+            <div class="tac-carry-pick">
+              <button type="button" class="tac-add-btn" id="tacPathPickB" data-i18n="ui.tacPath.pickB"></button>
+              <span class="tac-carry-chair-name" id="tacPathStatusB"></span>
+            </div>
+          </div>
+          <div class="tac-carry-sep"></div>
+
+          <div class="tac-carry-actions">
+            <button type="button" class="tac-add-btn tac-carry-big" id="tacPathRun" data-i18n="ui.tacPath.run"></button>
+            <button type="button" class="tac-add-btn tac-carry-big" id="tacPathClear" data-i18n="ui.tacPath.clear"></button>
+          </div>
+          <div class="tac-carry-progress" id="tacPathProgressBox" style="display:none">
+            <div class="tac-carry-progress-bar" id="tacPathProgressBar"></div>
+          </div>
+
+          <div id="tacPathResultBox" style="display:none">
+            <div class="tac-carry-sep"></div>
+            <div class="tac-detail">
+              <div class="tac-detail-head">
+                <button type="button" class="tac-detail-toggle tac-lvl1" id="tacPathResultToggle"></button>
+              </div>
+              <div class="tac-detail-body" id="tacPathResultBody">
+                <div class="tac-carry-summary" id="tacPathSummary"></div>
+                <p class="tac-text-hint" id="tacPathNote" data-i18n="ui.tacPath.note" style="display:none;margin:8px 0 0"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tac-carry-sep"></div>
+          <div class="tac-detail">
+            <div class="tac-detail-head">
+              <button type="button" class="tac-detail-toggle tac-lvl1" id="tacPathSettingsToggle"></button>
+            </div>
+            <div class="tac-detail-body" id="tacPathSettingsBody" style="display:none">
+              <div class="tac-speed-head">
+                <div class="side-toggle tac-camp-toggle" id="tacPathCampToggle">
+                  <button class="side-btn active" data-camp="survivor" data-i18n="characters.camps.survivor"></button>
+                  <button class="side-btn" data-camp="hunter" data-i18n="characters.camps.hunter"></button>
+                </div>
+              </div>
+              <div class="tac-speed-line">
+                <span class="tac-sub-label" data-i18n="ui.tacSubLabel.label"></span>
+                <div class="tac-speed-input-row">
+                  <input type="number" id="tacPathBaseSpeed" step="0.01" min="0.1" value="3.8" />
+                  <span>m/s</span>
+                </div>
+                <select class="tac-speed-role" id="tacPathSpeedRole"></select>
+                <select class="tac-speed-role" id="tacPathSpeedForm" style="display:none"></select>
+              </div>
+              <div class="tac-speed-line">
+                <span class="tac-sub-label" data-i18n="ui.tacSubLabel.labelAlternate"></span>
+                <button class="tac-add-btn" id="tacPathTraitAddBtn" type="button" data-i18n="ui.tacTraitAddBtn.label"></button>
+                <button class="tac-add-btn" id="tacPathTalentAddBtn" type="button" data-i18n="ui.tacTalentAddBtn.label"></button>
+                <button class="tac-add-btn" id="tacPathOtherAddBtn" type="button" data-i18n="ui.tacOtherAddBtn.label"></button>
+                <button class="tac-add-btn" id="tacPathBuffAddBtn" type="button" data-i18n="ui.tacBuffAddBtn.label"></button>
+              </div>
+              <div class="tac-detail">
+                <div class="tac-detail-head">
+                  <button type="button" class="tac-detail-toggle" id="tacPathBaseDetailToggle" data-i18n="ui.tacBaseDetailToggle.label"></button>
+                </div>
+                <div class="tac-detail-body" id="tacPathBaseDetailBody"></div>
+              </div>
+              <div class="tac-detail">
+                <div class="tac-detail-head">
+                  <button type="button" class="tac-detail-toggle" id="tacPathBuffToggle"></button>
+                </div>
+                <div class="tac-detail-body" id="tacPathBuffBody"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+
       <details class="ded-card" id="tacCarryCard" style="display:none" open>
         <summary>
           <span class="ded-sec-title" style="margin-bottom:0">
@@ -489,8 +577,6 @@
           </div>
         </div>
       </details>
-
-
 
 
       <div class="ded-card" id="tacDisplayCard" style="display:none">
@@ -1148,6 +1234,57 @@
         <input type="number" id="tacTideBuffPct" step="1" placeholder="" data-i18n-attributes="{&quot;placeholder&quot;:&quot;ui.tacBuffPct.placeholder&quot;}">
         <input type="number" id="tacTideBuffDur" step="0.1" min="0" placeholder="" data-i18n-attributes="{&quot;placeholder&quot;:&quot;ui.tacBuffDur.placeholder&quot;}">
         <button type="button" class="tac-talent-add" id="tacTideBuffOk" data-i18n="ui.common.add"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="tac-modal-mask" id="tacPathTraitModal" style="display:none">
+  <div class="tac-modal">
+    <div class="tac-modal-head">
+      <span data-i18n="ui.span.labelNinth"></span>
+      <button type="button" id="tacPathTraitClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+    </div>
+    <div class="tac-modal-body" id="tacPathTraitList"></div>
+  </div>
+</div>
+
+
+<div class="tac-modal-mask" id="tacPathTalentModal" style="display:none">
+  <div class="tac-modal">
+    <div class="tac-modal-head">
+      <span data-i18n="ui.span.labelEighth"></span>
+      <button type="button" id="tacPathTalentClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+    </div>
+    <div class="tac-modal-body" id="tacPathTalentList"></div>
+  </div>
+</div>
+
+
+<div class="tac-modal-mask" id="tacPathOtherModal" style="display:none">
+  <div class="tac-modal">
+    <div class="tac-modal-head">
+      <span data-i18n="ui.span.labelTenth"></span>
+      <button type="button" id="tacPathOtherClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+    </div>
+    <div class="tac-modal-body" id="tacPathOtherList"></div>
+  </div>
+</div>
+
+
+<div class="tac-modal-mask" id="tacPathBuffModal" style="display:none">
+  <div class="tac-modal">
+    <div class="tac-modal-head">
+      <span data-i18n="ui.span.labelEleventh"></span>
+      <button type="button" id="tacPathBuffClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+    </div>
+    <div class="tac-modal-body">
+      <div class="tac-buff-rows">
+        <input type="text" id="tacPathBuffName" placeholder="" maxlength="12" data-i18n-attributes="{&quot;placeholder&quot;:&quot;ui.tacBuffName.placeholder&quot;}">
+        <input type="number" id="tacPathBuffPct" step="1" placeholder="" data-i18n-attributes="{&quot;placeholder&quot;:&quot;ui.tacBuffPct.placeholder&quot;}">
+        <input type="number" id="tacPathBuffDur" step="0.1" min="0" placeholder="" data-i18n-attributes="{&quot;placeholder&quot;:&quot;ui.tacBuffDur.placeholder&quot;}">
+        <button type="button" class="tac-talent-add" id="tacPathBuffOk" data-i18n="ui.common.add"></button>
       </div>
     </div>
   </div>

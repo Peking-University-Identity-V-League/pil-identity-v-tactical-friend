@@ -1393,6 +1393,42 @@ export const TAC_ITEM_TYPES = {
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/4/45/73txs9wv78r9rrh0ghil23wf6tx4c3s.png',
   },
+  COAI: {
+    name: translate("items.COA.COAI.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/7/7c/qadm7b3peb0n2sb6uubuhqjxkbqk088.png/113px-COA%E2%85%A0logo.png',
+  },
+  COAII: {
+    name: translate("items.COA.COAII.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/6/62/phlorsskd718mi0q8539tdnibqfp9u3.png',
+  },
+  COAIII: {
+    name: translate("items.COA.COAIII.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/d/dd/pfnpjikr8sjuril00915cxpn05pypap.png',
+  },
+  COAIV: {
+    name: translate("items.COA.COAIV.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/4/43/c6tmcq2u3zumx1eprmirssxg7ttma1b.png/113px-COA%E2%85%A3logo.png',
+  },
+  COAV: {
+    name: translate("items.COA.COAV.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/a/ab/rlkj1aob9hzdbayy770fls7tt6urf8v.png',
+  },
+  COAVI: {
+    name: translate("items.COA.COAVI.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/9d/rfsk5c6o04rc80lgal0laehytmp4itj.png/113px-COA%E2%85%A5logo.png',
+  },
+  COAVII: {
+    name: translate("items.COA.COAVII.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/8/8c/3f9jo8i4heark1kbxeuugl43gcznlr0.png/113px-COA%E2%85%A6logo.png',
+  },
+  COAVIII: {
+    name: translate("items.COA.COAVIII.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/1b/5bnd616a5hagrucnx4wqtdj04b7snma.png/113px-COA%E2%85%A7logo.png',
+  },
+  COAIX: {
+    name: translate("items.COA.COAIX.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b7/f4b0qz1aer42dj90bl1v2fkzxnztxy1.png/113px-COA%E2%85%A8logo.png',
+  },
   ACT: {
     name: translate("items.teamIVL.ACT.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/6/65/rkk90lfizwyse6p6in3fdei8tzjjyuu.png',
@@ -2469,6 +2505,12 @@ export const TAC_ROLES = {
     camp: 'other',
     items: ['tinnitus', 'addiction', 'nostalgic', 'skittish', 'deerHunt', 'streetSweeper', 'wither', 'obsession', 'famine'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/a/ad/8ea9e6vugcfryv3zygj9bspjgqhj76j.png',
+  },
+  COA: {
+    name: translate("characters.COA.name"),
+    camp: 'other',
+    items: ['COAIX', 'COAVIII', 'COAVII', 'COAVI', 'COAV', 'COAIV', 'COAIII', 'COAII', 'COAI'],
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b7/f4b0qz1aer42dj90bl1v2fkzxnztxy1.png/150px-COA%E2%85%A8logo.png',
   },
   teamIVL: {
     name: translate("characters.teamIVL.name"),
