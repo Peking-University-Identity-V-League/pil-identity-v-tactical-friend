@@ -2918,7 +2918,7 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 /* 求生者+初始挣扎进度合并行：窄屏允许换行 */
 #tacCarryCard .tac-speed-line.tac-carry-surv-line { flex-wrap: wrap; row-gap: 6px; }
 #tacCarryCard .tac-speed-line input[type="range"] { flex: 1 1 auto; min-width: 60px; }
-#tacCarryPickBtn { padding: 9px 20px; font-size: 13px; }
+#tacCarryPickBtn { padding: 6px 14px; font-size: 12px; }
 #tacCarryCard .tac-carry-pick .tac-carry-chair-name {
   color: #ffd54f;
   font-weight: 700;
@@ -4332,8 +4332,8 @@ div.tac-fixed-spawn .cam-dir.up {
 }
 #tacCarryCard .tac-carry-big {
   flex: 1 1 0;
-  padding: 10px 4px;
-  font-size: 13px;
+  padding: 7px 4px;
+  font-size: 12px;
 }
 #tacCarryCard .tac-carry-progress {
   margin-top: 10px;
@@ -4422,13 +4422,18 @@ div.tac-fixed-spawn .cam-dir.up {
   pointer-events: none;
   z-index: 2;
 }
-/* 狂欢之椅推算：模式切换按钮行 */
-#tacCarryCard .tac-carry-modes {
+/* 狂欢之椅推算：场景/模式切换按钮行（两组胶囊切换优先同行，窄屏自动换行） */
+#tacCarryCard .tac-ded-toggles {
   display: flex;
   gap: 8px;
   margin-top: 10px;
+  flex-wrap: wrap;
 }
-#tacCarryCard .tac-carry-modes .side-btn { flex: 1 1 0; }
+#tacCarryCard .tac-ded-toggles .side-toggle {
+  flex: 1 1 0;
+  min-width: 150px;
+}
+#tacCarryCard .tac-carry-modes .side-btn { flex: 1 1 0; padding: 6px 8px; font-size: 11px; }
 /* 初始挣扎进度百分比文字收窄，避免 99% 超出边界 */
 #tacCarryCard #tacCarryInitialVal {
   font-size: 11px;
@@ -4488,3 +4493,7 @@ div.tac-fixed-spawn .cam-dir.up {
 .tac-detail:has(> .tac-detail-head > .tac-detail-toggle.tac-lvl1) { margin-top: 10px; }
 /* 测算卡片：分区细线分隔（与推算卡片一致） */
 #tacMeasureCard .tac-carry-sep { border-top: 1px solid var(--border); margin-top: 12px; }
+
+/* 化险为夷推算设置区：加成明细列宽 */
+#tacTideBuffBody .tac-cb-name { width: 32%; }
+#tacTideBuffBody .tac-cb-value { width: 26%; }
