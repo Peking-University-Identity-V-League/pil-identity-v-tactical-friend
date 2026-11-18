@@ -51,10 +51,10 @@ export const tool = (page, name) => page.locator(`.tac-tool[data-tool="${name}"]
 export const tab = (page, name) => page.locator(`.tab-btn[data-tab="${name}"]`).click();
 export async function pickRole(page, role) {
   const btn = page.locator(`.tac-role[data-role="${role}"]`);
-  const camp = page.locator(`.tac-camp:has(.tac-role[data-role="${role}"])`);
-  if (await camp.evaluate((el) => el.classList.contains('collapsed'))) {
-    await camp.locator('.tac-camp-header').click();
-  }
+  const boxId = await btn.evaluate((el) => el.parentElement.id);
+  const camp = boxId.replace('tacRoles', '').toLowerCase(); // survivor / hunter / other
+  const tabBtn = page.locator(`#tacCampTabs .side-btn[data-camp="${camp}"]`);
+  if (!(await tabBtn.evaluate((el) => el.classList.contains('active')))) await tabBtn.click();
   await btn.click();
 }
 

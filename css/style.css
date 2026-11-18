@@ -3361,31 +3361,15 @@ div.tac-fixed-spawn .cam-dir.up {
 @container tacpanel (min-width: 552px) { .tac-roles { grid-template-columns: repeat(8, 1fr); } }
 
 
-.tac-camp { margin-top: 8px; }
-.tac-camp-header {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 8px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text-secondary);
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.25s;
+#tacRolesCard .tac-camp-tabs { display: flex; gap: 8px; margin-top: 0; }
+#tacRolesCard .tac-camp-tabs .side-btn { flex: 1 1 0; }
+#tacRolesCard .tac-camp-tabs .side-btn.active {
+  color: #fff;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  box-shadow: 0 3px 13px rgba(59, 130, 246, 0.4), 0 0 0 1px rgba(255,255,255,0.1);
 }
-.tac-camp-header:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
-.tac-camp-arrow {
-  display: inline-block;
-  transition: transform 0.25s;
-  color: var(--accent);
-}
-.tac-camp.collapsed .tac-camp-arrow { transform: rotate(-90deg); }
-.tac-camp.collapsed .tac-roles { display: none; }
-.tac-camp .tac-roles { margin-top: 8px; }
+#tacRolesCard .tac-carry-sep { border-top: 1px solid var(--border); margin-top: 12px; }
+#tacRolesCard .tac-roles { margin-top: 12px; }
 .tac-role {
   display: flex;
   flex-direction: column;
@@ -4212,7 +4196,6 @@ div.tac-fixed-spawn .cam-dir.up {
   .tac-shape,
   .tac-act-btn,
   .tac-mstyle-toggle,
-  .tac-camp-header,
   .tac-item,
   .tac-manage-btn,
   .tac-range-opt { min-height: 44px; }
@@ -4493,3 +4476,15 @@ div.tac-fixed-spawn .cam-dir.up {
   pointer-events: none;
   z-index: 2;
 }
+
+/* 一级展开分区开关：更大更醒目（二级开关保持 11px 次要色） */
+.tac-detail-toggle.tac-lvl1 {
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--text);
+  padding: 6px 0 2px;
+}
+.tac-detail-toggle.tac-lvl1:hover { color: #fde68a; }
+.tac-detail:has(> .tac-detail-head > .tac-detail-toggle.tac-lvl1) { margin-top: 10px; }
+/* 测算卡片：分区细线分隔（与推算卡片一致） */
+#tacMeasureCard .tac-carry-sep { border-top: 1px solid var(--border); margin-top: 12px; }

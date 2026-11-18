@@ -1,5 +1,11 @@
 import { test, expect, tool } from './helpers.js';
 
+// 设置区默认收起，需要先展开再操作其中的控件
+const openSettings = async (page) => {
+  await page.locator('#tacCarrySettingsToggle').click();
+  await expect(page.locator('#tacCarrySettingsBody')).toBeVisible();
+};
+
 // 选椅看范围：推算工具 → 共享椅子行 → 点选椅子 → 计算色带 → 清除
 test('carry range card picks a chair, computes bands and clears', async ({ page }) => {
   await tool(page, 'deduce');
@@ -56,6 +62,7 @@ test('switching tools while picking disarms the chair picker', async ({ page }) 
 // 天赋弹窗添加加成，明细表列出且可删除，并影响计算结果
 test('talent modals fill the buff detail table and change the budget', async ({ page }) => {
   await tool(page, 'deduce');
+  await openSettings(page);
   // 弹窗2：巨钳 3 层（明细两行）
   await page.locator('#tacCarryHuntTalentBtn').click();
   const huntList = page.locator('#tacCarryHuntList');
@@ -94,6 +101,7 @@ test('talent modals fill the buff detail table and change the budget', async ({ 
 // 初始挣扎进度拉高后，可放下的色带数减少
 test('initial struggle progress shrinks the band count', async ({ page }) => {
   await tool(page, 'deduce');
+  await openSettings(page);
   await page.locator('#tacCarryShowChairs').check();
   await page.locator('#tacCarryPickBtn').click();
   await page.locator('.tac-chair[data-chair-kind]').first().click({ force: true });
@@ -189,6 +197,7 @@ test('hide-ring checkbox suppresses the selected-chair circle', async ({ page })
 // 监管者下拉：双形态监管出现形态二级下拉并联动基础移速数字框
 test('hunter dropdown exposes a form select for dual-form hunters', async ({ page }) => {
   await tool(page, 'deduce');
+  await openSettings(page);
   await expect(page.locator('#tacCarryHunterForm')).toBeHidden();
   await page.locator('#tacCarryHunter').selectOption('wuchang');
   const form = page.locator('#tacCarryHunterForm');
@@ -249,15 +258,32 @@ test('point mode picks a start point, computes and resets on mode switch', async
   expect(m).toBeTruthy();
   const n = +m[1];
   expect(n).toBeGreaterThan(0);
-  await expect(page.locator('#tacCarryDetailToggle')).toHaveText('▸ 挂椅明细');
-  await expect(page.locator('#tacCarryDetailBody')).toBeHidden();
-  await page.locator('#tacCarryDetailToggle').click();
   await expect(page.locator('#tacCarryDetailToggle')).toHaveText('▾ 挂椅明细');
   const rows = page.locator('#tacCarryDetailBody tbody tr');
   expect(await rows.count()).toBe(n);
   const timeTexts = await page.locator('#tacCarryDetailBody tbody tr td:nth-child(2)').allTextContents();
   const timeVals = timeTexts.map(Number);
   expect(timeVals.every((v, i) => i === 0 || v >= timeVals[i - 1])).toBe(true);
+  // 明细可收起再展开
+  await page.locator('#tacCarryDetailToggle').click();
+  await expect(page.locator('#tacCarryDetailToggle')).toHaveText('▸ 挂椅明细');
+  await expect(page.locator('#tacCarryDetailBody')).toBeHidden();
+  await page.locator('#tacCarryDetailToggle').click();
+  await expect(page.locator('#tacCarryDetailToggle')).toHaveText('▾ 挂椅明细');
+
+  // 计算结果区整体可收起，默认展开；设置区整体可收起，默认收起
+  await expect(page.locator('#tacCarryResultToggle')).toHaveText('▾ 计算结果');
+  await page.locator('#tacCarryResultToggle').click();
+  await expect(page.locator('#tacCarryResultToggle')).toHaveText('▸ 计算结果');
+  await expect(page.locator('#tacCarryResultBody')).toBeHidden();
+  await page.locator('#tacCarryResultToggle').click();
+  await expect(page.locator('#tacCarryResultBody')).toBeVisible();
+  await expect(page.locator('#tacCarrySettingsToggle')).toHaveText('▸ 设置区');
+  await expect(page.locator('#tacCarrySettingsBody')).toBeHidden();
+  await page.locator('#tacCarrySettingsToggle').click();
+  await expect(page.locator('#tacCarrySettingsToggle')).toHaveText('▾ 设置区');
+  await expect(page.locator('#tacCarrySettingsBody')).toBeVisible();
+  await page.locator('#tacCarrySettingsToggle').click();
 
   // 明细行点击：正圆红框框出对应椅子；再点取消；点别的行切换
   await rows.nth(0).click();

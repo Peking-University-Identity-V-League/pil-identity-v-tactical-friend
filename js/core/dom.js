@@ -163,7 +163,11 @@ export const tacCarryBasementPrevBtn = $('tacCarryBasementPrev');
 export const tacCarryBasementNextBtn = $('tacCarryBasementNext');
 export const tacCarryBasementTextEl = $('tacCarryBasementText');
 export const tacCarryNote = $('tacCarryNote');
-export const tacCarryResultLabel = $('tacCarryResultLabel');
+export const tacCarryResultBoxEl = $('tacCarryResultBox');
+export const tacCarryResultToggleEl = $('tacCarryResultToggle');
+export const tacCarryResultBodyEl = $('tacCarryResultBody');
+export const tacCarrySettingsToggleEl = $('tacCarrySettingsToggle');
+export const tacCarrySettingsBodyEl = $('tacCarrySettingsBody');
 export const tacCarryModeChairEl = $('tacCarryModeChair');
 export const tacCarryModePointEl = $('tacCarryModePoint');
 export const tacCarryHideRingLabelEl = $('tacCarryHideRingLabel');
@@ -301,6 +305,10 @@ export const tacBuffFilterBox = $('tacBuffFilterBox');
 export const tacResultToggle = $('tacResultToggle');
 
 export const tacResultBody = $('tacResultBody');
+
+export const tacSpeedSettingsToggleEl = $('tacSpeedSettingsToggle');
+
+export const tacSpeedSettingsBodyEl = $('tacSpeedSettingsBody');
 
 
 export const tacOtherAddBtn = $('tacOtherAddBtn');

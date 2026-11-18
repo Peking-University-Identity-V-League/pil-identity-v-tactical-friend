@@ -34,7 +34,7 @@ const { MAPS_DATA } = await import('../../js/data/maps.js');
 const { deduce } = await import('../../js/deduce.js');
 const { translate } = await import('../../js/core/i18n.js');
 const { tacRangeMetersOf } = await import('../../js/tactic.js');
-const { TAC_ROLES } = await import('../../js/data/tactic-data.js');
+const { TAC_ROLES } = await import('../../js/data/role.js');
 
 test('single-card range shape (coordinator) resolves meters', () => {
   const cfg = TAC_ROLES.coordinator.ranges;
