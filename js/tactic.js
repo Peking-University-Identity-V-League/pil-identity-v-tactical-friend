@@ -2542,7 +2542,7 @@ function buildTacTideTalentList() {
     const lv = b.levels
       ? `<select data-lv="${k}">`
         + b.levels.map((_, i) =>
-          translate("application.lv", { index: i + 1, count: i === b.levels.length - 1 ? ' selected' : '', value: i + 1 })).join('')
+          translate("application.lv", { index: i, count: i === b.levels.length - 1 ? ' selected' : '', value: i + 1 })).join('')
         + '</select>'
       : '';
     if (b.states) {
