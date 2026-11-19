@@ -266,8 +266,10 @@ def receive(component, stream, root=Path('/srv/pkuidv')):
                         continue
                     if not member.isfile() or member.sparse is not None:
                         raise DeployError('links-and-special-files-forbidden')
-                    compressed_text = path.suffix in {'.gz', '.br'} and path.with_suffix('').suffix.lower() in TEXT_EXTENSIONS
-                    if (path.suffix.lower() not in EXTENSIONS and not compressed_text) or member.size < 0 or member.size > (80 * 1024 * 1024 if component == 'tactical' and (relative.startswith('3d/releases/') or re.fullmatch(r'_assets/[a-f0-9]{64}/3d/[a-z0-9_.-]+', relative)) else MAX_FILE):
+                    original_extension = path.with_suffix('').suffix.lower()
+                    tactical_grid_png = component == 'tactical' and relative.startswith('grid-data/') and original_extension == '.png'
+                    compressed_asset = path.suffix in {'.gz', '.br'} and (original_extension in TEXT_EXTENSIONS or tactical_grid_png)
+                    if (path.suffix.lower() not in EXTENSIONS and not compressed_asset) or member.size < 0 or member.size > (80 * 1024 * 1024 if component == 'tactical' and (relative.startswith('3d/releases/') or re.fullmatch(r'_assets/[a-f0-9]{64}/3d/[a-z0-9_.-]+', relative)) else MAX_FILE):
                         raise DeployError('invalid-static-file')
                     expanded += member.size
                     if expanded > (1024 * 1024 * 1024 if component == 'tactical' else MAX_EXPANDED):
