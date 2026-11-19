@@ -29,7 +29,7 @@ test('carry range card picks a chair, computes bands and clears', async ({ page 
   await expect(page.locator('.tac-snap-ripple.chair.show')).toBeVisible();
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2); // 确认停住
   await first.click({ force: true });
-  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中狂欢之椅：像素坐标(');
+  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中狂欢之椅：像素坐标 (');
   await expect(first).toHaveClass(/tac-carry-selected/);
   await expect(page.locator('.tac-carry-ring')).toHaveCount(1);
   await expect(page.locator('.tac-snap-ripple.chair.show')).toHaveCount(0);
@@ -173,7 +173,7 @@ test('basement chairs become pickable when the basement row is enabled', async (
   await page.locator('#tacCarryChairBasement').check();
   await page.locator('#tacCarryPickBtn').click();
   await page.locator('.tac-chair[data-chair-kind="basement"]').first().click({ force: true });
-  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中狂欢之椅：像素坐标(');
+  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中狂欢之椅：像素坐标 (');
   await expect(page.locator('.tac-chair.tac-carry-selected[data-chair-kind="basement"]')).toHaveCount(1);
 });
 
@@ -227,7 +227,7 @@ test('point mode picks a start point, computes and resets on mode switch', async
   await expect(page.locator('#tacCarryChairName')).toHaveText('请在地图上选择起点');
   const box = await page.locator('#tacMapWrap').boundingBox();
   await page.mouse.click(box.x + box.width * 0.5, box.y + box.height * 0.5);
-  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中起点：像素坐标(');
+  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中起点：像素坐标 (');
   await expect(page.locator('#tacCarryPickBtn')).toHaveText('点我选择起点');
   await expect(page.locator('.tac-carry-point')).toHaveCount(1);
 
@@ -315,7 +315,7 @@ test('switching maps keeps each map\'s own carry selection and result', async ({
   const chairs = page.locator('.tac-chair[data-chair-kind]');
   await page.locator('#tacCarryPickBtn').click();
   await chairs.first().click({ force: true });
-  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中狂欢之椅：像素坐标(');
+  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中狂欢之椅：像素坐标 (');
   await page.locator('#tacCarryRun').click();
   await expect(page.locator('.tac-carry-canvas')).toBeVisible({ timeout: 30000 });
   const chairName = await page.locator('#tacCarryChairName').textContent();

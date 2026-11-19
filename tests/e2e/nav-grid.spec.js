@@ -81,3 +81,49 @@ test('grid path pipeline stays walkable on any map', async ({ page }) => {
     expect(r.longer, `map ${r.mapId} smoothing lengthened path`).toBe(0);
   }
 });
+
+// 翻窗开关回归：红教堂窗带应使「允许翻窗」的路径显著短于不允许；
+// 不允许时窗带等效纯阻挡（牵气球-上椅的行为）
+test('vault toggle opens window bands on red church', async ({ page }) => {
+  const r = await page.evaluate(async () => {
+    const { loadNavGrid, computePath, smoothPathOnGrid } = await import('/js/core/nav-grid.js');
+    const { NAV_GRID_MANIFEST } = await import('/js/data/nav-grid-manifest.js');
+    const mapId = Object.keys(NAV_GRID_MANIFEST).find((k) => NAV_GRID_MANIFEST[k].scene === 'h55_demo');
+    const g = await loadNavGrid(mapId);
+    const profile = { speedAt: () => 3.8 };
+    const W = g.gridW, H = g.gridH;
+    const winCells = [];
+    for (let i = 0; i < W * H; i++) if (g.win[i]) winCells.push(i);
+    if (!winCells.length) return { error: 'no window band' };
+    const c = winCells[(winCells.length / 2) | 0];
+    const cx = c % W, cy = (c / W) | 0;
+    const snap = (x, y) => {
+      for (let r = 0; r < 40; r++)
+        for (let dy = -r; dy <= r; dy++)
+          for (let dx = -r; dx <= r; dx++) {
+            if (Math.max(Math.abs(dx), Math.abs(dy)) !== r) continue;
+            const nx = x + dx, ny = y + dy;
+            if (nx >= 0 && ny >= 0 && nx < W && ny < H && g.grid[ny * W + nx]) return { x: nx, y: ny };
+          }
+      return null;
+    };
+    const len = (pts) => { let d = 0; for (let s = 1; s < pts.length; s++) d += Math.hypot(pts[s].x - pts[s - 1].x, pts[s].y - pts[s - 1].y); return d; };
+    const cases = [];
+    for (const [dx, dy] of [[1, 0], [0, 1], [1, 1], [1, -1]]) {
+      const A = snap(cx - dx * 20, cy - dy * 20);
+      const B = snap(cx + dx * 20, cy + dy * 20);
+      if (!A || !B) continue;
+      const noVault = await computePath(g, A, B, profile, { vault: false }).promise;
+      const vault = await computePath(g, A, B, profile, { vault: true }).promise;
+      cases.push({
+        noVault: noVault.path.length ? len(smoothPathOnGrid(g, noVault.path, false)) : null,
+        vault: vault.path.length ? len(smoothPathOnGrid(g, vault.path, true)) : null,
+      });
+    }
+    return { cases };
+  });
+  console.log(JSON.stringify(r));
+  expect(r.error).toBeUndefined();
+  const improved = r.cases.filter((c) => c.vault != null && (c.noVault == null || c.vault < c.noVault - 1));
+  expect(improved.length, JSON.stringify(r.cases)).toBeGreaterThan(0);
+});

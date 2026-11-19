@@ -2,7 +2,7 @@
 export const NAV_GRID_MANIFEST = {
   "0": {
     "scene": "ordnance_factory1",
-    "file": "grid-data/ordnance_factory1.png",
+    "file": "grid-data/ArmsFactory.png",
     "gridW": 750,
     "gridH": 644,
     "cellPx": 1,
@@ -172,7 +172,7 @@ export const NAV_GRID_MANIFEST = {
   },
   "1": {
     "scene": "h55_hospital2",
-    "file": "grid-data/h55_hospital2.png",
+    "file": "grid-data/SacredHeartHospital.png",
     "gridW": 644,
     "gridH": 604,
     "cellPx": 1,
@@ -302,7 +302,7 @@ export const NAV_GRID_MANIFEST = {
   },
   "2": {
     "scene": "h55_demo",
-    "file": "grid-data/h55_demo.png",
+    "file": "grid-data/TheRedChurch.png",
     "gridW": 596,
     "gridH": 599,
     "cellPx": 1,
@@ -416,7 +416,7 @@ export const NAV_GRID_MANIFEST = {
   },
   "3": {
     "scene": "h55_fishingvillage",
-    "file": "grid-data/h55_fishingvillage.png",
+    "file": "grid-data/LakesideVillage.png",
     "gridW": 1280,
     "gridH": 1208,
     "cellPx": 1,
@@ -574,7 +574,7 @@ export const NAV_GRID_MANIFEST = {
   },
   "4": {
     "scene": "h55_playground",
-    "file": "grid-data/h55_playground.png",
+    "file": "grid-data/MoonlitRiverPark.png",
     "gridW": 1492,
     "gridH": 1028,
     "cellPx": 1,
@@ -700,7 +700,7 @@ export const NAV_GRID_MANIFEST = {
   },
   "5": {
     "scene": "ordnance_factory2",
-    "file": "grid-data/ordnance_factory2.png",
+    "file": "grid-data/LeosMemory.png",
     "gridW": 750,
     "gridH": 635,
     "cellPx": 1,
@@ -806,7 +806,7 @@ export const NAV_GRID_MANIFEST = {
   },
   "6": {
     "scene": "h55_sleepingtown3",
-    "file": "grid-data/h55_sleepingtown3.png",
+    "file": "grid-data/EversleepingTown.png",
     "gridW": 750,
     "gridH": 874,
     "cellPx": 1,
@@ -896,7 +896,7 @@ export const NAV_GRID_MANIFEST = {
   },
   "7": {
     "scene": "h55_chinatown",
-    "file": "grid-data/h55_chinatown.png",
+    "file": "grid-data/ChinaTown.png",
     "gridW": 1345,
     "gridH": 1152,
     "cellPx": 1,
@@ -1042,7 +1042,7 @@ export const NAV_GRID_MANIFEST = {
   },
   "8": {
     "scene": "h55_deadforest_sp",
-    "file": "grid-data/h55_deadforest_sp.png",
+    "file": "grid-data/Darkwoods.png",
     "gridW": 1247,
     "gridH": 1265,
     "cellPx": 1,

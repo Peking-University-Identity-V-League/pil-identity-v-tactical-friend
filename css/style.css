@@ -4458,6 +4458,21 @@ div.tac-fixed-spawn .cam-dir.up {
   background: rgba(50, 139, 255, 0.9);
   box-shadow: 0 0 6px rgba(50, 139, 255, 0.8);
 }
+/* 起终点自动修正：修正后位置的空心圆环标记 */
+.tac-path-fix {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px dashed #fff;
+  background: transparent;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
+}
+.tac-path-fix.a { border-color: #ff5252; box-shadow: 0 0 6px rgba(255, 82, 82, 0.6); }
+.tac-path-fix.b { border-color: #328bff; box-shadow: 0 0 6px rgba(50, 139, 255, 0.6); }
+.tac-path-fix-label { font-style: italic; opacity: 0.9; }
 /* 两点最优路径规划：起点 A / 终点 B 两行电脑端优先同行，窄屏自动换行 */
 #tacPathCard .tac-path-picks {
   display: flex;
