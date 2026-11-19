@@ -7,8 +7,8 @@
 //             ∧ 不在封闭实体组件内部
 // 窗口不做额外封堵：实测 3D 路由会穿过这些开口（胶囊能过即视为可过），
 // 与 3D 结果保持一致；manifest 的 windows 仅作展示数据保留。
-// 输出：grid-data/<scene>.png（cellPx=1，255=可走）并更新
-// js/data/nav-grid-manifest.js（windows/basements 沿用旧清单的像素数据）。
+// 输出：grid-data/<地图英文名>.png（cellPx=1，255=可走 / 128=窗带 / 0=阻挡）
+// 并更新 js/data/nav-grid-manifest.js（windows/basements 沿用旧清单的像素数据）。
 //
 // 用法：node scripts/build_nav_grid_exact.mjs [scene ...]（缺省全量）
 
@@ -22,6 +22,18 @@ const CAL_PATH = join(ROOT, 'maps-3d', 'board-calibration.json');
 const MAPS_JS = join(ROOT, 'js', 'data', 'maps.js');
 const MANIFEST_JS = join(ROOT, 'js', 'data', 'nav-grid-manifest.js');
 const OUT_DIR = join(ROOT, 'grid-data');
+// 栅格文件命名：内部场景名 -> 规范地图名
+const GRID_FILE_NAME = {
+  h55_chinatown: 'ChinaTown',
+  h55_deadforest_sp: 'Darkwoods',
+  h55_demo: 'TheRedChurch',
+  h55_fishingvillage: 'LakesideVillage',
+  h55_hospital2: 'SacredHeartHospital',
+  h55_playground: 'MoonlitRiverPark',
+  h55_sleepingtown3: 'EversleepingTown',
+  ordnance_factory1: 'ArmsFactory',
+  ordnance_factory2: 'LeosMemory',
+};
 
 const SOURCE_UNITS_PER_METER = 11.85;
 const BODY_M = { radius: 0.23, halfHeight: 0.825, centerHeight: 1.025 };
@@ -285,12 +297,13 @@ function main() {
       }
     }
     const png = encodeGrayPng(W, H, grid);
-    const out = join(OUT_DIR, `${scene}.png`);
+    const gridName = GRID_FILE_NAME[scene] || scene;
+    const out = join(OUT_DIR, `${gridName}.png`);
     writeFileSync(out, png);
 
     manifest[String(mapId)] = {
       scene,
-      file: `grid-data/${scene}.png`,
+      file: `grid-data/${gridName}.png`,
       gridW: W, gridH: H, cellPx: 1,
       metersPerCell: +(widths[mapId] / W).toFixed(4),
       windows: old.windows || [],
