@@ -222,6 +222,7 @@ export const tacPathSummary = $('tacPathSummary');
 export const tacPathNote = $('tacPathNote');
 export const tacPathSettingsToggleEl = $('tacPathSettingsToggle');
 export const tacPathSettingsBodyEl = $('tacPathSettingsBody');
+export const tacPathVaultEl = $('tacPathVault');
 export const tacPathCampToggle = $('tacPathCampToggle');
 export const tacPathBaseSpeedEl = $('tacPathBaseSpeed');
 export const tacPathSpeedRoleEl = $('tacPathSpeedRole');

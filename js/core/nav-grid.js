@@ -30,8 +30,13 @@ export function loadNavGrid(mapId) {
       ctx.drawImage(bmp, 0, 0);
       const data = ctx.getImageData(0, 0, meta.gridW, meta.gridH).data;
       const grid = new Uint8Array(meta.gridW * meta.gridH);
-      for (let i = 0; i < grid.length; i++) grid[i] = data[i * 4] >= 128 ? 1 : 0;
-      return { grid, ...meta };
+      const win = new Uint8Array(meta.gridW * meta.gridH);
+      for (let i = 0; i < grid.length; i++) {
+        const v = data[i * 4];
+        grid[i] = v >= 192 ? 1 : 0;   // 255 = 可走
+        win[i] = (v >= 96 && v < 192) ? 1 : 0;  // 128 = 窗带（允许翻窗时可走）
+      }
+      return { grid, win, ...meta };
     } catch {
       return null;
     }
@@ -102,14 +107,15 @@ function makeHeap() {
  * initialSeconds：起点已耗时（地下室椅子从楼梯出口起搜时，椅子→出口的
  * 耗时），色带判定与速度曲线从该时刻开始。
  */
-function computeField(g, startCell, profile, { onProgress, initialSeconds = 0, bands, bandAt }) {
-  const { grid, gridW, gridH, metersPerCell } = g;
+function computeField(g, startCell, profile, { onProgress, initialSeconds = 0, bands, bandAt, vault = false }) {
+  const { grid, win, gridW, gridH, metersPerCell } = g;
+  const walk = (i) => grid[i] || (vault && win[i]);
   const budget = profile.remainingSeconds;
   const total = gridW * gridH;
   const time = new Float64Array(total).fill(Infinity);
   const bandOf = new Int8Array(total).fill(-1);
   const startIdx = startCell.y * gridW + startCell.x;
-  if (!grid[startIdx]) return Promise.resolve({ bands, bandOf, time, reached: 0, budget });
+  if (!walk(startIdx)) return Promise.resolve({ bands, bandOf, time, reached: 0, budget });
   time[startIdx] = initialSeconds;
   bandOf[startIdx] = bandAt(bands, initialSeconds);
   const heap = makeHeap();
@@ -139,8 +145,8 @@ function computeField(g, startCell, profile, { onProgress, initialSeconds = 0, b
             const nx = x + dx, ny = y + dy;
             if (nx < 0 || ny < 0 || nx >= gridW || ny >= gridH) continue;
             const ni = ny * gridW + nx;
-            if (!grid[ni]) continue;
-            if (dx && dy && (!grid[y * gridW + nx] || !grid[ny * gridW + x])) continue; // 禁穿墙角
+            if (!walk(ni)) continue;
+            if (dx && dy && (!walk(y * gridW + nx) || !walk(ny * gridW + x))) continue; // 禁穿墙角
             const nt = t + ((dx && dy) ? diag : orth) / speed;
             if (nt + 1e-12 < time[ni]) {
               time[ni] = nt;
@@ -161,12 +167,12 @@ function computeField(g, startCell, profile, { onProgress, initialSeconds = 0, b
 
 export function computeCarryField(g, startCell, profile, opts = {}) {
   return computeField(g, startCell, profile,
-    { ...opts, bands: carryRangeBands(profile), bandAt: carryBandAt });
+    { ...opts, vault: false, bands: carryRangeBands(profile), bandAt: carryBandAt });
 }
 
 export function computeTideField(g, startCell, profile, opts = {}) {
   return computeField(g, startCell, profile,
-    { ...opts, bands: tideRangeBands(), bandAt: tideBandAt });
+    { ...opts, vault: true, bands: tideRangeBands(), bandAt: tideBandAt });
 }
 
 /**
@@ -179,8 +185,9 @@ export function computeTideField(g, startCell, profile, opts = {}) {
  * - unreachable：终点不可走或搜尽全图仍未到达。
  * initialSeconds：起点已耗时（例如从地下室椅子先走到楼梯出口）。
  */
-export function computePath(g, startCell, endCell, profile, { onProgress, initialSeconds = 0 } = {}) {
-  const { grid, gridW, gridH, metersPerCell } = g;
+export function computePath(g, startCell, endCell, profile, { onProgress, initialSeconds = 0, vault = false } = {}) {
+  const { grid, win, gridW, gridH, metersPerCell } = g;
+  const walk = (i) => grid[i] || (vault && win[i]);
   const total = gridW * gridH;
   const time = new Float64Array(total).fill(Infinity);
   const distM = new Float64Array(total).fill(Infinity);
@@ -188,7 +195,7 @@ export function computePath(g, startCell, endCell, profile, { onProgress, initia
   const startIdx = startCell.y * gridW + startCell.x;
   const endIdx = endCell.y * gridW + endCell.x;
   const empty = { seconds: Infinity, distM: Infinity, path: [], reached: 0, unreachable: true };
-  if (!grid[startIdx] || !grid[endIdx]) return { promise: Promise.resolve(empty), cancel() {} };
+  if (!walk(startIdx) || !walk(endIdx)) return { promise: Promise.resolve(empty), cancel() {} };
   time[startIdx] = initialSeconds;
   distM[startIdx] = 0;
   // A* 启发式：到终点的欧氏距离 / 全程最大速度（速度只随加成到期降低时严格容许；
@@ -246,8 +253,8 @@ export function computePath(g, startCell, endCell, profile, { onProgress, initia
             const nx = x + dx, ny = y + dy;
             if (nx < 0 || ny < 0 || nx >= gridW || ny >= gridH) continue;
             const ni = ny * gridW + nx;
-            if (!grid[ni]) continue;
-            if (dx && dy && (!grid[y * gridW + nx] || !grid[ny * gridW + x])) continue; // 禁穿墙角
+            if (!walk(ni)) continue;
+            if (dx && dy && (!walk(y * gridW + nx) || !walk(ny * gridW + x))) continue; // 禁穿墙角
             const edgeM = (dx && dy) ? diag : orth;
             const nt = t + edgeM / speed;
             if (nt + 1e-12 < time[ni]) {
@@ -268,39 +275,39 @@ export function computePath(g, startCell, endCell, profile, { onProgress, initia
   return { promise, cancel: token.cancel };
 }
 
-// 栅格视线检查（supercover 走查，格坐标；禁斜穿墙角）
-export function gridLineOfSight(g, x0, y0, x1, y1) {
-  const { grid, gridW, gridH } = g;
+// 栅格视线检查（supercover 走查，格坐标；禁斜穿墙角；vault 时窗带视为可走）
+export function gridLineOfSight(g, x0, y0, x1, y1, vault = false) {
+  const { grid, win, gridW, gridH } = g;
+  const walk = (x, y) => x >= 0 && y >= 0 && x < gridW && y < gridH
+    && (grid[y * gridW + x] || (vault && win[y * gridW + x]));
   let x = x0, y = y0;
   const dx = Math.abs(x1 - x0), dy = Math.abs(y1 - y0);
   const sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
   let err = dx - dy;
   for (;;) {
-    if (x < 0 || y < 0 || x >= gridW || y >= gridH || !grid[y * gridW + x]) return false;
+    if (!walk(x, y)) return false;
     if (x === x1 && y === y1) return true;
     const e2 = 2 * err;
     if (e2 > -dy) {
       err -= dy;
-      const nx = x + sx;
-      if (nx < 0 || nx >= gridW || !grid[y * gridW + nx]) return false;
-      x = nx;
+      if (!walk(x + sx, y)) return false;
+      x += sx;
     }
     if (e2 < dx) {
       err += dx;
-      const ny = y + sy;
-      if (ny < 0 || ny >= gridH || !grid[ny * gridW + x]) return false;
-      y = ny;
+      if (!walk(x, y + sy)) return false;
+      y += sy;
     }
   }
 }
 
 // 栅格路径拉直：贪心保留最远可视拐点，输入/输出均为格坐标 [{x,y}...]
-export function smoothPathOnGrid(g, path) {
+export function smoothPathOnGrid(g, path, vault = false) {
   if (!path || path.length < 3) return path ? path.slice() : [];
   const out = [path[0]];
   let anchor = 0;
   for (let i = 2; i < path.length; i++) {
-    if (!gridLineOfSight(g, path[anchor].x, path[anchor].y, path[i].x, path[i].y)) {
+    if (!gridLineOfSight(g, path[anchor].x, path[anchor].y, path[i].x, path[i].y, vault)) {
       out.push(path[i - 1]);
       anchor = i - 1;
     }

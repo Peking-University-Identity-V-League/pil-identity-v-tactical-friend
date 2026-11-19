@@ -54,6 +54,20 @@ function parseWallPayload(html) {
   return JSON.parse(gunzipSync(Buffer.from(wp.base64, 'base64')).toString('utf-8'));
 }
 
+// passage-data 中启用的 window 连接：返回翻越轨迹段列表，每段为源单位 [x,z] 点列
+function parseWindowPaths(html) {
+  const pd = JSON.parse(extractBlock(html, 'passage-data'));
+  const out = [];
+  for (const conn of pd.actionConnections || []) {
+    if (conn.type !== 'window' || conn.enabled === false) continue;
+    const pts = (conn.path && conn.path.length >= 2)
+      ? conn.path
+      : (conn.from && conn.to ? [conn.from.point, conn.to.point] : null);
+    if (pts) out.push(pts.map((p) => [p[0], p[2]]));
+  }
+  return out;
+}
+
 function parseNavTriangles(html) {
   const raw = Buffer.from(extractBlock(html, 'nav-data'), 'base64');
   if (raw.toString('utf-8', 0, 4) !== 'glTF') throw new Error('nav-data 不是 GLB');
@@ -240,9 +254,36 @@ function main() {
         process.stdout.write(`\r${scene}: ${py + 1}/${H}`);
       }
     }
-    // 窗口不封堵：3D 路由实测会穿过这些开口（ capsules 可过即视为可过），
-    // manifest 中的 windows 仅作展示数据保留
+    // 窗户带标记（第三态 128）：passage-data 的 window 连接 path 是翻越轨迹，
+    // 沿轨迹 ±0.35m 内的阻挡格标记为窗带；运行时按「允许翻窗」开关决定可走性
+    // （默认可通过，与 3D 一致；不通过时退化为纯阻挡）。
     const old = oldManifest[String(mapId)] || {};
+    const metersPerPx = widths[mapId] / W;
+    const winR = 0.35 / metersPerPx;
+    let winCells = 0;
+    for (const pts of parseWindowPaths(html)) {
+      for (let s = 1; s < pts.length; s++) {
+        const au = a * pts[s - 1][0] + c * pts[s - 1][1] + e;
+        const av = b * pts[s - 1][0] + d * pts[s - 1][1] + f;
+        const bu = a * pts[s][0] + c * pts[s][1] + e;
+        const bv = b * pts[s][0] + d * pts[s][1] + f;
+        const segLen = Math.hypot(bu - au, bv - av);
+        const steps = Math.max(1, Math.ceil(segLen * 2));
+        for (let k = 0; k <= steps; k++) {
+          const u = au + (bu - au) * (k / steps);
+          const v = av + (bv - av) * (k / steps);
+          const x0 = Math.max(0, Math.floor(u - winR)), x1 = Math.min(W - 1, Math.ceil(u + winR));
+          const y0 = Math.max(0, Math.floor(v - winR)), y1 = Math.min(H - 1, Math.ceil(v + winR));
+          for (let py = y0; py <= y1; py++) {
+            for (let px = x0; px <= x1; px++) {
+              const dx = px + 0.5 - u, dy = py + 0.5 - v;
+              const i = py * W + px;
+              if (dx * dx + dy * dy <= winR * winR && grid[i] === 0) { grid[i] = 128; winCells++; }
+            }
+          }
+        }
+      }
+    }
     const png = encodeGrayPng(W, H, grid);
     const out = join(OUT_DIR, `${scene}.png`);
     writeFileSync(out, png);
@@ -257,7 +298,7 @@ function main() {
     };
     console.log(`\n${scene}: ${W}x${H} 可走 ${walkable} `
       + `(${(walkable * 100 / (W * H)).toFixed(1)}%) `
-      + `[无导航 ${noNav} 碰墙 ${wallHit} 实体内部 ${solidHit}] `
+      + `[无导航 ${noNav} 碰墙 ${wallHit} 实体内部 ${solidHit} 窗带 ${winCells}] `
       + `png ${(png.length / 1024).toFixed(0)}KB 用时 ${((Date.now() - t0) / 1000).toFixed(0)}s`);
   }
   const js = '// 由 scripts/build_nav_grid_exact.mjs 生成，勿手改\n'
