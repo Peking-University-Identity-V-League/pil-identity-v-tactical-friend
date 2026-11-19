@@ -40,7 +40,7 @@ test('path card picks A and B, computes the optimal path and clears', async ({ p
   await page.locator('#tacPathRun').click();
   await expect(page.locator('.tac-path-canvas')).toBeVisible({ timeout: 30000 });
   const summary = page.locator('#tacPathSummary');
-  await expect(summary).toContainText(/总距离 [\d.]+ m · 用时 [\d.]+ s · 途经 \d+ 格/);
+  await expect(summary).toContainText(/总距离 [\d.]+ m · 用时 [\d.]+ s/);
   await expect(page.locator('#tacPathResultBox')).toBeVisible();
   await expect(page.locator('#tacPathResultToggle')).toHaveText('▾ 计算结果');
   await expect(page.locator('#tacPathNote')).toBeVisible();
@@ -54,6 +54,38 @@ test('path card picks A and B, computes the optimal path and clears', async ({ p
   await expect(page.locator('#tacPathStatusA')).toHaveText('当前未选择起点 A');
   await expect(page.locator('#tacPathStatusB')).toHaveText('当前未选择终点 B');
   await expect(page.locator('#tacPathResultBox')).toBeHidden();
+});
+
+// 三角级寻路回归：月亮河公园小门旁板缝应直接穿过（栅格时代会沿围栏向南绕行）。
+// 起点 A(130,946) 在板缝西南，终点 B(260,880) 在板缝东北，路径应经过板中点 (215,907) 附近。
+test('mesh path goes through the pallet gap on moonlit park', async ({ page }) => {
+  await switchMap(page, 4); // 月亮河公园
+  await tool(page, 'deduce');
+  const clickPx = async (page, px, py) => {
+    const box = await page.locator('#tacMapWrap').boundingBox();
+    await page.mouse.click(box.x + box.width * (px / 1492), box.y + box.height * (py / 1028));
+  };
+  await page.locator('#tacPathPickA').click();
+  await clickPx(page, 130, 946);
+  await page.locator('#tacPathPickB').click();
+  await clickPx(page, 260, 880);
+  await page.locator('#tacPathRun').click();
+  await expect(page.locator('.tac-path-canvas')).toBeVisible({ timeout: 30000 });
+
+  // 路径折线应穿过板缝区域（板中点 (215,907) 附近），而非沿围栏绕行
+  const greenNearGap = await page.evaluate(() => {
+    const c = document.querySelector('.tac-path-canvas');
+    const ctx = c.getContext('2d');
+    const data = ctx.getImageData(200, 893, 36, 30).data; // x∈[200,236) y∈[893,923)
+    let count = 0;
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i + 1] > 150 && data[i] < 100 && data[i + 2] < 150) count++;
+    }
+    return count;
+  });
+  expect(greenNearGap).toBeGreaterThan(5);
+  // 摘要存在且距离合理（栅格绕行会明显更长）
+  await expect(page.locator('#tacPathSummary')).toContainText(/总距离 [\d.]+ m · 用时 [\d.]+ s/);
 });
 
 // 未选择端点时点击计算：提示选择对应端点

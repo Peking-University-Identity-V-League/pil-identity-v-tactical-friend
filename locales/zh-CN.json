@@ -1474,7 +1474,7 @@
   "ui.tacPath.selectedB": "像素坐标({x}, {y})",
   "ui.tacPath.settingsToggleFmt": "{value} 设置区",
   "ui.tacPath.startLabelA": "起点 A",
-  "ui.tacPath.summary": "总距离 {dist} m · 用时 {seconds} s · 途经 {cells} 格",
+  "ui.tacPath.summary": "总距离 {dist} m · 用时 {seconds} s",
   "ui.tacPath.title": "🧭 两点最优路径规划",
   "ui.tacPath.unreachable": "两点之间没有可通行路径",
   "ui.tacPath.unsupportedA": "起点 A 附近没有可行走区域",

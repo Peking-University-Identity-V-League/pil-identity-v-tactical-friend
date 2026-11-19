@@ -1,5 +1,6 @@
 // 导航栅格加载与挂人范围洪泛计算。
-// 栅格由 scripts/build_nav_grid.py 离线生成（grid-data/<scene>.png），
+// 栅格由 scripts/build_nav_grid_exact.mjs 离线烘焙（grid-data/<scene>.png，
+// 1px 分辨率，直接复用 3D 碰撞模型逐像素判定），
 // 与底图像素坐标对齐：格 (gx,gy) 中心 = 底图像素 (gx*cellPx + cellPx/2, ...)。
 
 import { NAV_GRID_MANIFEST } from '../data/nav-grid-manifest.js';
@@ -190,8 +191,17 @@ export function computePath(g, startCell, endCell, profile, { onProgress, initia
   if (!grid[startIdx] || !grid[endIdx]) return { promise: Promise.resolve(empty), cancel() {} };
   time[startIdx] = initialSeconds;
   distM[startIdx] = 0;
+  // A* 启发式：到终点的欧氏距离 / 全程最大速度（速度只随加成到期降低时严格容许；
+  // 偶有提速也只损失极少最优性，换大图数倍加速）
+  let maxSpeed = 0;
+  for (const t of [0, 5, 30, 130, 300, 1e9]) maxSpeed = Math.max(maxSpeed, profile.speedAt(t));
+  if (!(maxSpeed > 0)) maxSpeed = 1;
+  const hOf = (idx) => {
+    const x = idx % gridW, y = (idx / gridW) | 0;
+    return Math.hypot(x - endCell.x, y - endCell.y) * metersPerCell / maxSpeed;
+  };
   const heap = makeHeap();
-  heap.push(initialSeconds, startIdx);
+  heap.push(initialSeconds + hOf(startIdx), startIdx);
   const orth = metersPerCell, diag = metersPerCell * Math.SQRT2;
   let settled = 0;
   let cancelled = false;
@@ -221,8 +231,9 @@ export function computePath(g, startCell, endCell, profile, { onProgress, initia
       if (cancelled) { finish({ cancelled: true }); return; }
       let n = 0;
       while (heap.size && n < CHUNK) {
-        const t = heap.topKey();
+        const key = heap.topKey();
         const idx = heap.pop();
+        const t = key - hOf(idx);
         if (t > time[idx] + 1e-12) continue;  // 过期堆条目
         n++;
         settled++;
@@ -243,7 +254,7 @@ export function computePath(g, startCell, endCell, profile, { onProgress, initia
               time[ni] = nt;
               distM[ni] = distM[idx] + edgeM;
               parent[ni] = idx;
-              heap.push(nt, ni);
+              heap.push(nt + hOf(ni), ni);
             }
           }
         }
@@ -255,4 +266,45 @@ export function computePath(g, startCell, endCell, profile, { onProgress, initia
     setTimeout(step, 0);
   });
   return { promise, cancel: token.cancel };
+}
+
+// 栅格视线检查（supercover 走查，格坐标；禁斜穿墙角）
+export function gridLineOfSight(g, x0, y0, x1, y1) {
+  const { grid, gridW, gridH } = g;
+  let x = x0, y = y0;
+  const dx = Math.abs(x1 - x0), dy = Math.abs(y1 - y0);
+  const sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
+  let err = dx - dy;
+  for (;;) {
+    if (x < 0 || y < 0 || x >= gridW || y >= gridH || !grid[y * gridW + x]) return false;
+    if (x === x1 && y === y1) return true;
+    const e2 = 2 * err;
+    if (e2 > -dy) {
+      err -= dy;
+      const nx = x + sx;
+      if (nx < 0 || nx >= gridW || !grid[y * gridW + nx]) return false;
+      x = nx;
+    }
+    if (e2 < dx) {
+      err += dx;
+      const ny = y + sy;
+      if (ny < 0 || ny >= gridH || !grid[ny * gridW + x]) return false;
+      y = ny;
+    }
+  }
+}
+
+// 栅格路径拉直：贪心保留最远可视拐点，输入/输出均为格坐标 [{x,y}...]
+export function smoothPathOnGrid(g, path) {
+  if (!path || path.length < 3) return path ? path.slice() : [];
+  const out = [path[0]];
+  let anchor = 0;
+  for (let i = 2; i < path.length; i++) {
+    if (!gridLineOfSight(g, path[anchor].x, path[anchor].y, path[i].x, path[i].y)) {
+      out.push(path[i - 1]);
+      anchor = i - 1;
+    }
+  }
+  out.push(path[path.length - 1]);
+  return out;
 }
