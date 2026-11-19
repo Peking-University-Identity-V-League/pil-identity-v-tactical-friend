@@ -62,7 +62,7 @@ test('tide scenario picks a chair, computes bands and clears', async ({ page }) 
   await expect(page.locator('.tac-snap-ripple.chair.show')).toBeVisible();
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await first.click({ force: true });
-  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中狂欢之椅：像素坐标(');
+  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中狂欢之椅：像素坐标 (');
   await expect(first).toHaveClass(/tac-carry-selected/);
   await expect(page.locator('.tac-carry-ring')).toHaveCount(1);
 
@@ -101,7 +101,7 @@ test('switching scenario clears the computed result but keeps the chair', async 
   await expect(page.locator('.tac-carry-canvas')).toHaveCount(0);
   await expect(page.locator('#tacCarryResultBox')).toBeHidden();
   await expect(page.locator('#tacCarryNote')).toBeHidden();
-  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中狂欢之椅：像素坐标(');
+  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中狂欢之椅：像素坐标 (');
 
   // tide 场景直接可算（无需重新选椅）
   await page.locator('#tacCarryRun').click();
@@ -112,7 +112,7 @@ test('switching scenario clears the computed result but keeps the chair', async 
   await page.locator('#tacDedScenarioCarry').click();
   await expect(page.locator('.tac-carry-canvas')).toHaveCount(0);
   await expect(page.locator('#tacCarryResultBox')).toBeHidden();
-  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中狂欢之椅：像素坐标(');
+  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中狂欢之椅：像素坐标 (');
 });
 
 // 化险为夷 · 选点看可达椅：切换模式 → 选起点 → 计算 → 椅子时间标注与明细
@@ -131,7 +131,7 @@ test('tide point mode labels chairs within 20 seconds of the start point', async
   await page.locator('#tacCarryPickBtn').click();
   const box = await page.locator('#tacMapWrap').boundingBox();
   await page.mouse.click(box.x + box.width * 0.5, box.y + box.height * 0.5);
-  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中起点：像素坐标(');
+  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中起点：像素坐标 (');
   await expect(page.locator('.tac-carry-point')).toHaveCount(1);
   // 选中起点的同时，点位上立即显示「起点」文字
   await expect(page.locator('.tac-carry-time-start')).toHaveCount(1);

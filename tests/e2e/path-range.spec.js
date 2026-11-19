@@ -24,7 +24,7 @@ test('path card picks A and B, computes the optimal path and clears', async ({ p
   await expect(page.locator('#tacPathPickA')).toHaveText('点我取消选择');
   await expect(page.locator('#tacPathStatusA')).toHaveText('请在地图上选择起点 A');
   await clickMap(page, 0.3, 0.5);
-  await expect(page.locator('#tacPathStatusA')).toHaveText(/像素坐标\(\d+, \d+\)/);
+  await expect(page.locator('#tacPathStatusA')).toHaveText(/像素坐标 \(\d+, \d+\)/);
   await expect(page.locator('.tac-path-point.a')).toHaveCount(1);
   await expect(page.locator('.tac-path-label').first()).toHaveText('起点 A');
 
@@ -32,7 +32,7 @@ test('path card picks A and B, computes the optimal path and clears', async ({ p
   await page.locator('#tacPathPickB').click();
   await expect(page.locator('#tacPathStatusB')).toHaveText('请在地图上选择终点 B');
   await clickMap(page, 0.7, 0.5);
-  await expect(page.locator('#tacPathStatusB')).toHaveText(/像素坐标\(\d+, \d+\)/);
+  await expect(page.locator('#tacPathStatusB')).toHaveText(/像素坐标 \(\d+, \d+\)/);
   await expect(page.locator('.tac-path-point.b')).toHaveCount(1);
   await expect(page.locator('.tac-path-label').nth(1)).toHaveText('终点 B');
 
@@ -152,7 +152,7 @@ test('switching maps keeps each map\'s own path endpoints and result', async ({ 
   await expect(page.locator('.tac-path-canvas')).toBeVisible({ timeout: 30000 });
   const statusA = await page.locator('#tacPathStatusA').textContent();
   const summary = await page.locator('#tacPathSummary').textContent();
-  expect(statusA).toContain('像素坐标(');
+  expect(statusA).toContain('像素坐标 (');
 
   // 切到另一张图：端点与结果不显示
   await switchMap(page, 1);
@@ -254,4 +254,40 @@ test('path buff modals fill the private buff table', async ({ page }) => {
   await page.locator('.tac-path-buff-del').first().click();
   await expect(page.locator('#tacPathBuffBody tbody tr')).toHaveCount(1);
   await expect(page.locator('#tacPathBuffBody')).not.toContainText('膝跳反射');
+});
+
+// 起终点自动修正：起点选在唐人街酒楼内部（墙体），默认勾选时自动吸附到最近
+// 可走区域并给出说明行与空心环标记；取消勾选则走旧逻辑（无修正痕迹）
+test('path card auto-fixes wall endpoint when enabled', async ({ page }) => {
+  await tool(page, 'deduce');
+  await switchMap(page, 7); // 唐人街
+  await tool(page, 'deduce');
+  await expect(page.locator('#tacMapTitle')).toHaveText(/唐人街/);
+  await page.locator('#tacPathSettingsToggle').click();
+  const fix = page.locator('#tacPathFix');
+  await expect(fix).toBeChecked();
+
+  const img = page.locator('#tacMapImage');
+  const box = await img.boundingBox();
+  await page.locator('#tacPathPickA').click();
+  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+  const m = (await page.locator('#tacPathStatusA').textContent()).match(/\((\d+), (\d+)\)/);
+  const kx = +m[1] / (box.width / 2), ky = +m[2] / (box.height / 2);
+  const clickAt = (px, py) => page.mouse.click(box.x + px / kx, box.y + py / ky);
+
+  await page.locator('#tacPathPickA').click();
+  await clickAt(860, 750); // 酒楼内部
+  await page.locator('#tacPathPickB').click();
+  await clickAt(720, 420); // 街道
+
+  await page.locator('#tacPathRun').click();
+  await expect(page.locator('#tacPathSummary')).toContainText(/总距离/, { timeout: 60000 });
+  await expect(page.locator('#tacPathFixNote')).toContainText('起点 A 已自动修正');
+  await expect(page.locator('.tac-path-fix.a')).toHaveCount(1);
+
+  await fix.uncheck();
+  await page.locator('#tacPathRun').click();
+  await expect(page.locator('#tacPathSummary')).not.toHaveText('', { timeout: 60000 });
+  await expect(page.locator('#tacPathFixNote')).toBeHidden();
+  await expect(page.locator('.tac-path-fix')).toHaveCount(0);
 });
