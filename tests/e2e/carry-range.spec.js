@@ -1,4 +1,4 @@
-import { test, expect, tool } from './helpers.js';
+import { test, expect, tool, switchMap } from './helpers.js';
 
 // 设置区默认收起，需要先展开再操作其中的控件
 const openSettings = async (page) => {
@@ -306,4 +306,34 @@ test('point mode picks a start point, computes and resets on mode switch', async
   await expect(page.locator('#tacCarryChairName')).toHaveText('当前未选中狂欢之椅');
   await expect(page.locator('#tacCarryPickBtn')).toHaveText('点我选择狂欢之椅');
   await expect(page.locator('#tacCarryHideRingLabel')).toBeVisible();
+});
+
+// 切换地图：推算结果按地图各自保留——切走不带入新地图，切回后恢复选中椅与色带
+test('switching maps keeps each map\'s own carry selection and result', async ({ page }) => {
+  await tool(page, 'deduce');
+  await page.locator('#tacCarryShowChairs').check();
+  const chairs = page.locator('.tac-chair[data-chair-kind]');
+  await page.locator('#tacCarryPickBtn').click();
+  await chairs.first().click({ force: true });
+  await expect(page.locator('#tacCarryChairName')).toContainText('当前已选中狂欢之椅：像素坐标(');
+  await page.locator('#tacCarryRun').click();
+  await expect(page.locator('.tac-carry-canvas')).toBeVisible({ timeout: 30000 });
+  const chairName = await page.locator('#tacCarryChairName').textContent();
+  const summary = await page.locator('#tacCarrySummary').textContent();
+
+  // 切到另一张图：选中椅与结果不显示
+  await switchMap(page, 1);
+  await expect(page.locator('.tac-carry-canvas')).toHaveCount(0);
+  await expect(page.locator('.tac-carry-ring')).toHaveCount(0);
+  await expect(page.locator('#tacCarryChairName')).toHaveText('当前未选中狂欢之椅');
+  await expect(page.locator('#tacCarryResultBox')).toBeHidden();
+
+  // 切回原图：选中椅红圈、色带与摘要恢复（切图后工具栏重置为「选择」，需重新打开推算）
+  await switchMap(page, 0);
+  await tool(page, 'deduce');
+  await expect(page.locator('.tac-carry-canvas')).toBeVisible({ timeout: 30000 });
+  await expect(page.locator('.tac-carry-ring')).toHaveCount(1);
+  await expect(page.locator('#tacCarryChairName')).toHaveText(chairName);
+  await expect(page.locator('#tacCarrySummary')).toHaveText(summary);
+  await expect(page.locator('#tacCarryResultBox')).toBeVisible();
 });

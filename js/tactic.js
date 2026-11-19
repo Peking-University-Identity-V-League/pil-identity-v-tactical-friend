@@ -472,20 +472,8 @@ export function syncTacImage() {
   const url = getImageUrl(S.currentMapId);
   const count = MAPS_DATA[S.currentMapId].cipherCombinations.length;
 
-  // 切图后推算结果失效
-  if (tacCarryState.resultMapId !== null && tacCarryState.resultMapId !== S.currentMapId) {
-    tacCarryState.chair = null;
-    tacCarryClearResult();
-    if (tacCarryCard) syncTacCarryChairName();
-  }
-  // 切图后路径规划的端点与结果均不带入新地图
-  if (tacPathState.points.a || tacPathState.points.b
-      || (tacPathState.resultMapId !== null && tacPathState.resultMapId !== S.currentMapId)) {
-    tacPathState.points = { a: null, b: null };
-    tacPathState.armed = null;
-    tacPathClearResult();
-    if (tacPathCard) syncTacPathPickUI();
-  }
+  // 推算绘制按地图各自保留：保存旧图的选中与结果，恢复目标图的（无则清空）
+  tacDedOnMapSwitch();
   if (tacCarryCard) syncTacCarryChairRow();
 
   // 先同步当前地图的旋转角，保证后续渲染使用正确的 tacRotK
@@ -1434,6 +1422,102 @@ export const tacPathState = {
 let tacPathBuffId = 0;
 let tacPathCanvas = null;
 
+/* ---- 推算绘制按地图各自保留（切图保存 / 切回恢复，move 语义） ---- */
+const tacDedStore = new Map();  // mapId -> { carry: {chair, cache, hiddenBands, detailMark}|null, path: {points, cache}|null }
+let tacDedLiveMapId = null;     // 实时选中/结果当前所属的地图
+
+function tacDedSaveCurrent() {
+  if (tacDedLiveMapId == null) return;
+  const carry = (tacCarryState.chair || tacCarryState.cache) ? {
+    chair: tacCarryState.chair && { ...tacCarryState.chair },
+    cache: tacCarryState.cache,
+    hiddenBands: new Set(tacCarryState.hiddenBands),
+    detailMark: tacCarryState.detailMark,
+  } : null;
+  const path = (tacPathState.points.a || tacPathState.points.b || tacPathState.cache) ? {
+    points: {
+      a: tacPathState.points.a && { ...tacPathState.points.a },
+      b: tacPathState.points.b && { ...tacPathState.points.b },
+    },
+    cache: tacPathState.cache,
+  } : null;
+  if (carry || path) tacDedStore.set(tacDedLiveMapId, { carry, path });
+  else tacDedStore.delete(tacDedLiveMapId);
+}
+
+// 场景/模式切换会清除计算结果：仓库里其它地图暂存的推算结果也一并作废
+function tacDedStoreClearCarry() {
+  for (const [id, e] of tacDedStore) {
+    e.carry = null;
+    if (!e.path) tacDedStore.delete(id);
+  }
+}
+
+function tacDedOnMapSwitch() {
+  if (tacDedLiveMapId === S.currentMapId) return;
+  tacDedSaveCurrent();
+  // 清空实时视觉与状态（不触碰仓库）
+  tacCarryDisarm();
+  tacCarryState.chair = null;
+  tacCarryClearResult();
+  tacPathDisarm();
+  tacPathState.points = { a: null, b: null };
+  tacPathClearResult();
+  // 恢复目标图暂存的选中与结果
+  const entry = tacDedStore.get(S.currentMapId);
+  if (entry) {
+    tacDedStore.delete(S.currentMapId);
+    if (entry.carry) {
+      tacCarryState.chair = entry.carry.chair;
+      tacCarryState.hiddenBands = entry.carry.hiddenBands;
+      tacCarryState.detailMark = entry.carry.detailMark;
+      const c = entry.carry.cache;
+      if (c) {
+        tacCarryState.cache = c;
+        tacCarryState.resultMapId = S.currentMapId;
+        renderTacDedOverlay(c);
+        const tide = c.scenario === 'tide';
+        tacCarrySummary.textContent = tide
+          ? translate('ui.tacTide.summary', { cells: c.field.reached })
+          : translate('ui.tacCarry.summary', {
+            seconds: c.profile.remainingSeconds.toFixed(1),
+            pickup: c.profile.pickupSeconds.toFixed(1),
+            cells: c.field.reached,
+          });
+        if (tide) renderTacTideLegend(c.field.bands);
+        else renderTacCarryLegend(c.field.bands);
+        syncTacCarryResultBox();
+        tacCarryResultBoxEl.style.display = '';
+        tacCarryNote.dataset.i18n = tide ? 'ui.tacTide.note' : 'ui.tacCarry.note';
+        tacCarryNote.textContent = translate(tacCarryNote.dataset.i18n);
+        tacCarryNote.style.display = '';
+      }
+    }
+    if (entry.path) {
+      tacPathState.points = entry.path.points;
+      const c = entry.path.cache;
+      if (c) {
+        tacPathState.cache = c;
+        tacPathState.resultMapId = S.currentMapId;
+        renderTacPathOverlay(c.g, c.result, c.sA, c.sB);
+        tacPathSummary.textContent = translate('ui.tacPath.summary', {
+          dist: c.totalMeters.toFixed(1),
+          seconds: c.totalSeconds.toFixed(1),
+          cells: c.result.path.length,
+        });
+        syncTacPathResultBox();
+        tacPathResultBoxEl.style.display = '';
+        tacPathNote.dataset.i18n = 'ui.tacPath.note';
+        tacPathNote.textContent = translate('ui.tacPath.note');
+        tacPathNote.style.display = '';
+      }
+    }
+  }
+  tacDedLiveMapId = S.currentMapId;
+  if (tacCarryCard) { syncTacCarryChairName(); syncTacCarryPickBtn(); }
+  if (tacPathCard) syncTacPathPickUI();
+}
+
 // 当前地图上显示的可选椅子（与显示设置共享刷点组与开关；
 // 地下室椅子仅在「地下室」显示开启时纳入，x/z 投影到地面层做二维近似）
 function tacCarryGroundChairs() {
@@ -1505,6 +1589,7 @@ function tacCarrySetMode(mode) {
   tacCarryState.chair = null;
   tacCarryDisarm();
   tacCarryClearResult();
+  tacDedStoreClearCarry();
   tacCarryModeChairEl.classList.toggle('active', mode === 'chair');
   tacCarryModePointEl.classList.toggle('active', mode === 'point');
   syncTacCarryPickBtn();
@@ -1530,6 +1615,7 @@ function tacDedSetScenario(scenario) {
   if (tacCarryState.scenario === scenario) return;
   tacCarryState.scenario = scenario;
   tacCarryClearResult();
+  tacDedStoreClearCarry();
   const tide = scenario === 'tide';
   tacDedScenarioCarryEl.classList.toggle('active', !tide);
   tacDedScenarioTideEl.classList.toggle('active', tide);
@@ -7733,6 +7819,10 @@ export async function tacExportImage() {
   if (tacCarryCanvas && tacCarryState.resultMapId === S.currentMapId) {
     ctx.drawImage(tacCarryCanvas, vx * W0, vy * H0, W0 * vw, H0 * vh, 0, 0, W, H);
   }
+  // 两点最优路径折线（同为地图对齐画布）
+  if (tacPathCanvas && tacPathState.resultMapId === S.currentMapId) {
+    ctx.drawImage(tacPathCanvas, vx * W0, vy * H0, W0 * vw, H0 * vh, 0, 0, W, H);
+  }
 
   
   const svgClone = tacArrowSvg.cloneNode(true);
@@ -7962,6 +8052,99 @@ export async function tacExportImage() {
       });
     });
     uctx.restore();
+
+    // ---- 推算标注（红圈 / 圆点 / 时间文字，全部保持正立） ----
+    // 屏幕上的固定 px 尺寸（圆点 12px、文字 10/11px、标签上移 15px）按输出比例换算
+    const fx = (oW / wrapX) * K;
+    const ringLw = Math.max(1.5, 2 * (W * K) / wrapW);
+    const drawRing = (x, z) => {
+      const [cx, cy] = PXY(x / W0, z / H0);
+      const d = tacDisplay.chairSize * 1.5 / 100 * W * K;
+      uctx.save();
+      uctx.strokeStyle = '#ff5252';
+      uctx.lineWidth = ringLw;
+      uctx.beginPath();
+      uctx.arc(cx, cy, Math.max(1, d / 2 - ringLw / 2), 0, Math.PI * 2);
+      uctx.stroke();
+      uctx.restore();
+    };
+    const drawDot = (x, z, color) => {
+      const [cx, cy] = PXY(x / W0, z / H0);
+      uctx.save();
+      uctx.fillStyle = color;
+      uctx.strokeStyle = '#fff';
+      uctx.lineWidth = Math.max(1, 2 * fx);
+      uctx.beginPath();
+      uctx.arc(cx, cy, Math.max(2, 6 * fx), 0, Math.PI * 2);
+      uctx.fill();
+      uctx.stroke();
+      uctx.restore();
+    };
+    const drawLabel = (x, z, text, color, sizePx) => {
+      const [cx, cy] = PXY(x / W0, z / H0);
+      const px = sizePx * fx;
+      uctx.save();
+      uctx.font = `700 ${px}px 'Noto Sans SC', sans-serif`;
+      uctx.textAlign = 'center';
+      uctx.textBaseline = 'middle';
+      uctx.lineJoin = 'round';
+      uctx.strokeStyle = 'rgba(0, 0, 0, 0.85)';
+      uctx.lineWidth = Math.max(1.5, px / 5);
+      uctx.strokeText(text, cx, cy - 15 * fx);
+      uctx.fillStyle = color;
+      uctx.fillText(text, cx, cy - 15 * fx);
+      uctx.restore();
+    };
+    // 选中椅的正圆红框（与屏幕一致：椅子模式、未勾选隐藏选中圈、对应图标组显示中）
+    const sel = tacCarryState.chair;
+    if (sel && sel.kind !== 'point' && !tacDisplay.carryHideRing
+        && (sel.kind === 'basement' ? tacDisplay.chairsBasement : tacDisplay.chairs)) {
+      drawRing(sel.x, sel.z);
+    }
+    // 明细行点击的标记红圈
+    const markRows = tacCarryState.cache?.chairRows;
+    if (tacCarryState.detailMark != null && markRows?.[tacCarryState.detailMark]
+        && tacCarryState.mode === 'point') {
+      drawRing(markRows[tacCarryState.detailMark].x, markRows[tacCarryState.detailMark].z);
+    }
+    // 选点模式的起点圆点 / 路径规划的 A/B 端点圆点
+    if (sel?.kind === 'point') drawDot(sel.x, sel.z, 'rgba(255, 82, 82, 0.9)');
+    if (tacPathState.points.a) drawDot(tacPathState.points.a.x, tacPathState.points.a.z, 'rgba(255, 82, 82, 0.9)');
+    if (tacPathState.points.b) drawDot(tacPathState.points.b.x, tacPathState.points.b.z, 'rgba(50, 139, 255, 0.9)');
+    // 选点模式各椅时间标注（颜色随被关色带外推，与屏幕一致）
+    const cache = tacCarryState.cache;
+    if (cache && tacCarryState.resultMapId === S.currentMapId
+        && tacCarryState.mode === 'point' && cache.chairRows) {
+      const tide = cache.scenario === 'tide';
+      const colors = tide ? TIDE_BAND_COLORS : CARRY_BAND_COLORS;
+      const resolve = (band) => {
+        let b = band;
+        while (b < colors.length && tacCarryState.hiddenBands.has(b)) b++;
+        return b < colors.length ? b : -1;
+      };
+      for (const r of cache.chairRows) {
+        const shown = resolve(r.band);
+        const text = tide
+          ? translate(r.band === 4 ? 'ui.tacTide.timeMargin' : 'ui.tacTide.timeSeconds', { seconds: r.t.toFixed(1) })
+          : translate(carryDropBudget(cache.profile, r.t).risk
+            ? 'ui.tacCarry.timeRisk' : 'ui.tacCarry.timeSeconds', { seconds: r.t.toFixed(1) });
+        drawLabel(r.x, r.z, text, shown >= 0 ? colors[shown] : '#a4afbb', 10);
+      }
+    }
+    // 起点文字（牵气球起点 / 起点）与路径 A/B 端点文字
+    if (sel?.kind === 'point') {
+      drawLabel(sel.x, sel.z,
+        translate(tacCarryState.scenario === 'tide' ? 'ui.tacTide.startLabel' : 'ui.tacCarry.startLabel'),
+        '#ff5252', 11);
+    }
+    if (tacPathState.points.a) {
+      drawLabel(tacPathState.points.a.x, tacPathState.points.a.z,
+        translate('ui.tacPath.startLabelA'), '#ff5252', 11);
+    }
+    if (tacPathState.points.b) {
+      drawLabel(tacPathState.points.b.x, tacPathState.points.b.z,
+        translate('ui.tacPath.endLabelB'), '#328bff', 11);
+    }
   };
 
   // 固定点位范围椭圆（教授鳞片 / 摄影师照相机 / 疯眼控制台及范围 / 小丑零件 / 冒险家书页）

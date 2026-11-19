@@ -108,8 +108,9 @@ test('path and carry overlays coexist', async ({ page }) => {
   await expect(page.locator('.tac-carry-canvas:not(.tac-path-canvas)')).toHaveCount(1);
 });
 
-// 切换地图：起点 A / 终点 B 与计算结果均不带入新地图
-test('switching maps clears the path endpoints and result', async ({ page }) => {
+// 切换地图：起点 A / 终点 B 与计算结果按地图各自保留——
+// 切走的地图不带入新地图，切回后恢复原图的端点、折线与摘要
+test('switching maps keeps each map\'s own path endpoints and result', async ({ page }) => {
   await tool(page, 'deduce');
   await page.locator('#tacPathPickA').click();
   await clickMap(page, 0.3, 0.5);
@@ -117,7 +118,11 @@ test('switching maps clears the path endpoints and result', async ({ page }) => 
   await clickMap(page, 0.7, 0.5);
   await page.locator('#tacPathRun').click();
   await expect(page.locator('.tac-path-canvas')).toBeVisible({ timeout: 30000 });
+  const statusA = await page.locator('#tacPathStatusA').textContent();
+  const summary = await page.locator('#tacPathSummary').textContent();
+  expect(statusA).toContain('像素坐标(');
 
+  // 切到另一张图：端点与结果不显示
   await switchMap(page, 1);
   await expect(page.locator('.tac-path-canvas')).toHaveCount(0);
   await expect(page.locator('.tac-path-point')).toHaveCount(0);
@@ -125,6 +130,16 @@ test('switching maps clears the path endpoints and result', async ({ page }) => 
   await expect(page.locator('#tacPathStatusA')).toHaveText('当前未选择起点 A');
   await expect(page.locator('#tacPathStatusB')).toHaveText('当前未选择终点 B');
   await expect(page.locator('#tacPathResultBox')).toBeHidden();
+
+  // 切回原图：端点、折线与计算结果恢复（切图后工具栏重置为「选择」，需重新打开推算）
+  await switchMap(page, 0);
+  await tool(page, 'deduce');
+  await expect(page.locator('.tac-path-canvas')).toBeVisible({ timeout: 30000 });
+  await expect(page.locator('.tac-path-point')).toHaveCount(2);
+  await expect(page.locator('.tac-path-label')).toHaveCount(2);
+  await expect(page.locator('#tacPathStatusA')).toHaveText(statusA);
+  await expect(page.locator('#tacPathSummary')).toHaveText(summary);
+  await expect(page.locator('#tacPathResultBox')).toBeVisible();
 });
 
 // 移速设置区：与测算卡片同结构但状态私有；走路比跑动慢，计算结果随之变化
