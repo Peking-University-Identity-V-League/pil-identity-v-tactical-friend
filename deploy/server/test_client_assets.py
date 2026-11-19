@@ -7,7 +7,7 @@ def sha(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def package(commit='a'*40, content=b'export const value=1;', tamper=None, maps=False, changed_map=False):
+def package(commit='a'*40, content=b'export const value=1;', tamper=None, maps=False, changed_map=False, extra=None):
     hashes = {'js/bootstrap.js': sha(content)}
     policy = 'c'*64
     version = sha(json.dumps({'policy': policy, 'files': hashes}, separators=(',', ':')).encode())
@@ -30,6 +30,7 @@ def package(commit='a'*40, content=b'export const value=1;', tamper=None, maps=F
         for name in map_hashes:
             raw[metadata['asset_urls']['3d/' + name]] = (name + (' changed' if changed_map and name == 'map0.html' else '')).encode()
         raw['3d/__release.json'] = json.dumps({'component': 'maps-3d', 'source_commit': commit, 'asset_format': 'per-file', 'entry_mode': 'stable', 'asset_version': metadata['maps3d_version'], 'files': map_hashes, 'asset_urls': {name: metadata['asset_urls']['3d/' + name] for name in map_hashes}}).encode()
+    raw.update(extra or {})
     files, rows = {}, {}
     for name, data in raw.items():
         files[name] = data
@@ -80,6 +81,35 @@ class ClientAssetTests(unittest.TestCase):
                 current = (root/'tactical/current').resolve()
                 with self.assertRaises(DeployError): receive('tactical', package('b'*40, tamper=tamper)[0], root)
                 self.assertEqual((root/'tactical/current').resolve(), current)
+
+    def test_tactical_grid_png_sidecars_are_published_and_hash_checked(self):
+        name = 'grid-data/map.png'
+        png = b'grid image'
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            receive('tactical', package(extra={name: png})[0], root)
+            current = (root / 'tactical/current').resolve()
+            self.assertEqual((current / name).read_bytes(), png)
+            for suffix in ('.gz', '.br'):
+                with self.subTest(suffix=suffix):
+                    sidecar = name + suffix
+                    self.assertTrue((current / sidecar).is_file())
+
+                    def tamper(files, _):
+                        files[sidecar] = b'corrupt'
+
+                    with self.assertRaisesRegex(DeployError, 'invalid-client-asset-manifest'):
+                        receive('tactical', package('b'*40, extra={name: png}, tamper=tamper)[0], root)
+                    self.assertEqual((root / 'tactical/current').resolve(), current)
+
+    def test_precompressed_png_outside_tactical_grid_is_rejected(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            cases = [('tactical', 'image.png'), ('home', 'grid-data/map.png')]
+            for component, name in cases:
+                with self.subTest(component=component, name=name):
+                    with self.assertRaisesRegex(DeployError, 'invalid-static-file'):
+                        receive(component, package(extra={name: b'grid image'})[0], root)
 
     def test_existing_immutable_content_cannot_be_overwritten(self):
         with tempfile.TemporaryDirectory() as temp:
