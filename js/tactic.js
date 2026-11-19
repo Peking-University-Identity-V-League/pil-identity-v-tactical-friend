@@ -4,7 +4,7 @@ import { restoredMeasureIds, saveRegionSel, savedRot, tacBoard, tacDisplay, tacM
 import { measureBaseAt, simulateMovement } from './core/measurements.js';
 import { measurementEndpoints, resolveMap3dTarget, isExternalMap3dEntry } from './core/map-handoff.js';
 import { CARRY_BAND_COLORS, CARRY_BAND_OPACITY, CARRY_DEFAULTS, CARRY_TALENTS, carryBandAt, carryDropBudget, createCarryProfile } from './core/carry-model.js';
-import { computeCarryField, computePath, computeTideField, loadNavGrid, navGridAvailable, snapToWalkable } from './core/nav-grid.js';
+import { computeCarryField, computePath, computeTideField, loadNavGrid, navGridAvailable, snapToWalkable, smoothPathOnGrid } from './core/nav-grid.js';
 import { TIDE_BAND_COLORS, TIDE_BAND_OPACITY, TIDE_SECONDS, createTideProfile, tideBandAt } from './core/tide-model.js';
 import { getTreasureRings } from './core/treasure.js';
 import { S } from './core/state.js';
@@ -1503,7 +1503,6 @@ function tacDedOnMapSwitch() {
         tacPathSummary.textContent = translate('ui.tacPath.summary', {
           dist: c.totalMeters.toFixed(1),
           seconds: c.totalSeconds.toFixed(1),
-          cells: c.result.path.length,
         });
         syncTacPathResultBox();
         tacPathResultBoxEl.style.display = '';
@@ -2967,6 +2966,24 @@ function tacPathSnap(g, pt, profile) {
   return null;
 }
 
+// 沿路径距离对时间依赖速度积分求用时：限时加成在到期时刻变速，
+// 按到期时间点分段精确积分（速度在段内恒定）。
+function tacPathSecondsFor(profile, distM) {
+  const breaks = [...new Set(tacPathState.buffs
+    .map((b) => b.duration).filter((d) => d > 0))].sort((x, y) => x - y);
+  let t = 0, rem = distM, bi = 0;
+  while (rem > 1e-9) {
+    const v = Math.max(profile.speedAt(t), 1e-6);
+    while (bi < breaks.length && breaks[bi] <= t + 1e-9) bi++;
+    const next = bi < breaks.length ? breaks[bi] : Infinity;
+    if (!Number.isFinite(next)) return t + rem / v;
+    const cover = v * (next - t);
+    if (cover >= rem) return t + rem / v;
+    rem -= cover; t = next;
+  }
+  return t;
+}
+
 async function tacPathRun() {
   if (tacPathState.running) return;
   const { a, b } = tacPathState.points;
@@ -2992,6 +3009,21 @@ async function tacPathRun() {
       return;
     }
     const profile = readTacPathProfile();
+    const showResult = (result, sA, sB, totalSeconds, totalMeters) => {
+      tacPathState.cache = { g, result, sA, sB, profile, totalSeconds, totalMeters };
+      renderTacPathOverlay(g, result, sA, sB);
+      tacPathState.resultMapId = S.currentMapId;
+      tacPathSummary.textContent = translate('ui.tacPath.summary', {
+        dist: totalMeters.toFixed(1),
+        seconds: totalSeconds.toFixed(1),
+      });
+      syncTacPathResultBox();
+      tacPathResultBoxEl.style.display = '';
+      tacPathNote.dataset.i18n = 'ui.tacPath.note';
+      tacPathNote.textContent = translate('ui.tacPath.note');
+      tacPathNote.style.display = '';
+    };
+    // 栅格寻路（1px 精确栅格，由 3D 碰撞数据逐像素烘焙）+ 栅格视线拉直
     const sA = tacPathSnap(g, a, profile);
     if (!sA) {
       tacPathSummary.textContent = translate('ui.tacPath.unsupportedA');
@@ -3011,7 +3043,7 @@ async function tacPathRun() {
       onProgress: (p) => { tacPathProgressBar.style.width = `${Math.round(p * 100)}%`; },
     });
     tacPathState.cancel = run.cancel;
-    const result = await run.promise;
+    let result = await run.promise;
     if (result.cancelled) return;
     if (result.unreachable) {
       tacPathSummary.textContent = translate('ui.tacPath.unreachable');
@@ -3019,21 +3051,26 @@ async function tacPathRun() {
       tacPathResultBoxEl.style.display = '';
       return;
     }
-    const totalSeconds = result.seconds + sB.extraSeconds;
-    const totalMeters = result.distM + sA.extraMeters + sB.extraMeters;
-    tacPathState.cache = { g, result, sA, sB, profile, totalSeconds, totalMeters };
-    renderTacPathOverlay(g, result, sA, sB);
-    tacPathState.resultMapId = S.currentMapId;
-    tacPathSummary.textContent = translate('ui.tacPath.summary', {
-      dist: totalMeters.toFixed(1),
-      seconds: totalSeconds.toFixed(1),
-      cells: result.path.length,
-    });
-    syncTacPathResultBox();
-    tacPathResultBoxEl.style.display = '';
-    tacPathNote.dataset.i18n = 'ui.tacPath.note';
-    tacPathNote.textContent = translate('ui.tacPath.note');
-    tacPathNote.style.display = '';
+    let resultSeconds = result.seconds;
+    let resultMeters = result.distM;
+    // 栅格视线拉直：去掉 8 连通锯齿，按折线实长重算距离与用时
+    if (result.path.length > 2) {
+      const smoothedCells = smoothPathOnGrid(g, result.path);
+      const metersPerPx = g.metersPerCell / g.cellPx;
+      const smoothed = smoothedCells.map((c) => [(c.x + 0.5) * g.cellPx, (c.y + 0.5) * g.cellPx]);
+      if (smoothed.length >= 2) {
+        let d = 0;
+        for (let i = 1; i < smoothed.length; i++) {
+          d += Math.hypot(smoothed[i][0] - smoothed[i - 1][0], smoothed[i][1] - smoothed[i - 1][1]);
+        }
+        resultMeters = d * metersPerPx;
+        resultSeconds = tacPathSecondsFor(profile, resultMeters);
+        result = { ...result, pathPx: smoothed };
+      }
+    }
+    const totalSeconds = resultSeconds + sB.extraSeconds;
+    const totalMeters = resultMeters + sA.extraMeters + sB.extraMeters;
+    showResult(result, sA, sB, totalSeconds, totalMeters);
   } finally {
     tacPathState.running = false;
     tacPathRunBtn.dataset.i18n = 'ui.tacPath.run';
@@ -3066,8 +3103,9 @@ function renderTacPathOverlay(g, result, sA, sB) {
   canvas.height = H0;
   canvas.className = 'tac-carry-canvas tac-path-canvas';
   const ctx = canvas.getContext('2d');
-  const seq = tacPathSimplify(result.path)
-    .map((c) => [(c.x + 0.5) * g.cellPx, (c.y + 0.5) * g.cellPx]);
+  const seq = result.pathPx
+    ? result.pathPx.map((p) => [p[0], p[1]])
+    : tacPathSimplify(result.path).map((c) => [(c.x + 0.5) * g.cellPx, (c.y + 0.5) * g.cellPx]);
   const a = tacPathState.points.a, b = tacPathState.points.b;
   // 地下室近似段：端点与楼梯出口之间补直线段
   if (sA.extraMeters && a) seq.unshift([a.x, a.z]);
