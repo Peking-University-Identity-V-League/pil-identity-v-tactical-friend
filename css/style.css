@@ -3365,10 +3365,18 @@ div.tac-fixed-spawn .cam-dir.up {
 
 #tacRolesCard .tac-camp-tabs { display: flex; gap: 8px; margin-top: 0; }
 #tacRolesCard .tac-camp-tabs .side-btn { flex: 1 1 0; }
-#tacRolesCard .tac-camp-tabs .side-btn.active {
-  color: #fff;
+#tacRolesCard .tac-camp-tabs .side-btn.active { color: #fff; }
+#tacRolesCard .tac-camp-tabs .side-btn[data-camp="survivor"].active {
   background: linear-gradient(135deg, #3b82f6, #2563eb);
   box-shadow: 0 3px 13px rgba(59, 130, 246, 0.4), 0 0 0 1px rgba(255,255,255,0.1);
+}
+#tacRolesCard .tac-camp-tabs .side-btn[data-camp="hunter"].active {
+  background: linear-gradient(135deg, #f472b6, #fb7185);
+  box-shadow: 0 3px 13px var(--secondary-glow), 0 0 0 1px rgba(255,255,255,0.1);
+}
+#tacRolesCard .tac-camp-tabs .side-btn[data-camp="other"].active {
+  background: linear-gradient(135deg, #34d399, #10b981);
+  box-shadow: 0 3px 13px rgba(52, 211, 153, 0.35), 0 0 0 1px rgba(255,255,255,0.1);
 }
 #tacRolesCard .tac-carry-sep { border-top: 1px solid var(--border); margin-top: 12px; }
 #tacRolesCard .tac-roles { margin-top: 12px; }
@@ -4490,6 +4498,7 @@ div.tac-fixed-spawn .cam-dir.up {
 .tac-carry-time {
   position: absolute;
   font-size: 10px;
+  line-height: 1.2; /* 祖先层 line-height:0 会压平包围盒，影响可见性判定与命中测试 */
   font-weight: 700;
   white-space: nowrap;
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.9), 0 0 6px rgba(0, 0, 0, 0.7);
