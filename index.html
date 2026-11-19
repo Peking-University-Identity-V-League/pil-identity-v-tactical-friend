@@ -121,6 +121,30 @@
         <div class="tac-manage-list" id="tacManageList" style="margin-top:12px"></div>
       </details>
 
+      <details class="ded-card" id="tacCipherCard" style="display:none">
+        <summary>
+          <span class="ded-sec-title" style="margin-bottom:0">
+            <span class="ded-sec-zh" data-i18n="ui.tacCipherCard.title"></span>
+            <span class="ded-sec-en">Cipher</span>
+          </span>
+          <span class="arrow">▶</span>
+        </summary>
+        <div style="margin-top:12px">
+          <div class="tac-manage-row tac-display-row">
+            <label class="tac-display-toggle"><input type="checkbox" id="tacCipherCardShow" checked><span data-i18n="ui.common.show"></span></label>
+            <span class="tac-display-mid">
+              <span class="switch-btn" id="tacCipherCardPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacDispCipherPrev.title&quot;}">‹</span>
+              <span class="tac-display-text" id="tacCipherCardText"></span>
+              <span class="switch-btn" id="tacCipherCardNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacDispCipherNext.title&quot;}">›</span>
+            </span>
+            <label class="tac-manage-slider"><span data-i18n="ui.tacManageSlider.label"></span><input type="range" id="tacCipherCardSize" min="3" max="12" step="0.5" value="6"></label>
+            <label class="tac-manage-def"><input type="checkbox" id="tacCipherCardSizeDef" checked><span data-i18n="ui.common.default"></span></label>
+          </div>
+          <div class="tac-carry-sep"></div>
+          <div id="tacCipherList"></div>
+        </div>
+      </details>
+
       
       <details class="ded-card" id="tacDrawCard" style="display:none" open>
         <summary>

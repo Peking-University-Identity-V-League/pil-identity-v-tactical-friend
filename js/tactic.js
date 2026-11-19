@@ -1,5 +1,5 @@
 
-import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacHideEndpointsEl, tacItemSection, tacMStyleBody, tacMStyleToggle, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacRot, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacCarryBuffBody, tacCarryCard, tacCarryChairName, tacCarryChairNextBtn, tacCarryChairPrevBtn, tacCarryChairSizeDefEl, tacCarryChairSizeEl, tacCarryChairText, tacCarryClearBtn, tacCarryBuffToggleEl, tacCarryHuntClose, tacCarryHuntList, tacCarryHuntModal, tacCarryHuntTalentBtn, tacCarryHunterEl, tacCarryHunterFormEl, tacCarryHunterSpeedEl, tacCarryInitialEl, tacCarryInitialVal, tacCarryLegend, tacCarryNote, tacCarryOpacityEl, tacCarryOpacityRowEl, tacCarryHideRingEl, tacCarryChairBasementEl, tacCarryBoxBasementEl, tacCarryBasementPrevBtn, tacCarryBasementNextBtn, tacCarryBasementTextEl, tacCarryPickBtn, tacCarryPickupEl, tacCarryResultBoxEl, tacCarryResultToggleEl, tacCarryResultBodyEl, tacCarrySettingsToggleEl, tacCarrySettingsBodyEl, tacCarryModeChairEl, tacCarryModePointEl, tacCarryHideRingLabelEl, tacCarryChairCountEl, tacCarryDetailBoxEl, tacCarryDetailToggleEl, tacCarryDetailBodyEl, tacCarryPickupModeEl, tacCarryProgressBar, tacCarryProgressBox, tacCarryRunBtn, tacCarryShowChairsEl, tacCarrySpeedClose, tacCarrySpeedList, tacCarrySpeedModal, tacCarrySpeedTalentBtn, tacCarrySummary, tacCarrySurvClose, tacCarrySurvList, tacCarrySurvModal, tacCarrySurvTalentBtn, tacCarrySurvivorEl, tacShowChairBasementEl, tacBasementText, tacShowSpawnsEl, tacSpawnSizeEl, tacSpawnSizeDefEl, tacSpawnText, tacSnapBoxEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacSpeedSettingsToggleEl, tacSpeedSettingsBodyEl, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacDedScenarioCarryEl, tacDedScenarioTideEl, tacDedSettingsCarryEl, tacDedSettingsTideEl, tacTideBaseSpeedEl, tacTideSpeedRoleEl, tacTideSpeedFormEl, tacTideTraitAddBtn, tacTideTalentAddBtn, tacTideOtherAddBtn, tacTideBuffAddBtn, tacTideBaseDetailToggleEl, tacTideBaseDetailBodyEl, tacTideBuffToggleEl, tacTideBuffBodyEl, tacTideTraitModal, tacTideTraitList, tacTideTraitClose, tacTideTalentModal, tacTideTalentList, tacTideTalentClose, tacTideOtherModal, tacTideOtherList, tacTideOtherClose, tacTideBuffModal, tacTideBuffName, tacTideBuffPct, tacTideBuffDur, tacTideBuffOk, tacTideBuffClose, tacPathCard, tacPathPickA, tacPathPickB, tacPathStatusA, tacPathStatusB, tacPathRunBtn, tacPathClearBtn, tacPathProgressBox, tacPathProgressBar, tacPathResultBoxEl, tacPathResultToggleEl, tacPathResultBodyEl, tacPathSummary, tacPathNote, tacPathFixNote, tacPathSettingsToggleEl, tacPathSettingsBodyEl, tacPathVaultEl, tacPathFixEl, tacPathCampToggle, tacPathBaseSpeedEl, tacPathSpeedRoleEl, tacPathSpeedFormEl, tacPathTraitAddBtn, tacPathTalentAddBtn, tacPathOtherAddBtn, tacPathBuffAddBtn, tacPathBaseDetailToggleEl, tacPathBaseDetailBodyEl, tacPathBuffToggleEl, tacPathBuffBodyEl, tacPathTraitModal, tacPathTraitList, tacPathTraitClose, tacPathTalentModal, tacPathTalentList, tacPathTalentClose, tacPathOtherModal, tacPathOtherList, tacPathOtherClose, tacPathBuffModal, tacPathBuffName, tacPathBuffPct, tacPathBuffDur, tacPathBuffOk, tacPathBuffClose, tacticView } from './core/dom.js';
+import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacCipherCard, tacCipherCardShowEl, tacCipherCardPrevBtn, tacCipherCardNextBtn, tacCipherCardText, tacCipherCardSizeEl, tacCipherCardSizeDefEl, tacCipherList, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacHideEndpointsEl, tacItemSection, tacMStyleBody, tacMStyleToggle, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacRot, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacCarryBuffBody, tacCarryCard, tacCarryChairName, tacCarryChairNextBtn, tacCarryChairPrevBtn, tacCarryChairSizeDefEl, tacCarryChairSizeEl, tacCarryChairText, tacCarryClearBtn, tacCarryBuffToggleEl, tacCarryHuntClose, tacCarryHuntList, tacCarryHuntModal, tacCarryHuntTalentBtn, tacCarryHunterEl, tacCarryHunterFormEl, tacCarryHunterSpeedEl, tacCarryInitialEl, tacCarryInitialVal, tacCarryLegend, tacCarryNote, tacCarryOpacityEl, tacCarryOpacityRowEl, tacCarryHideRingEl, tacCarryChairBasementEl, tacCarryBoxBasementEl, tacCarryBasementPrevBtn, tacCarryBasementNextBtn, tacCarryBasementTextEl, tacCarryPickBtn, tacCarryPickupEl, tacCarryResultBoxEl, tacCarryResultToggleEl, tacCarryResultBodyEl, tacCarrySettingsToggleEl, tacCarrySettingsBodyEl, tacCarryModeChairEl, tacCarryModePointEl, tacCarryHideRingLabelEl, tacCarryChairCountEl, tacCarryDetailBoxEl, tacCarryDetailToggleEl, tacCarryDetailBodyEl, tacCarryPickupModeEl, tacCarryProgressBar, tacCarryProgressBox, tacCarryRunBtn, tacCarryShowChairsEl, tacCarrySpeedClose, tacCarrySpeedList, tacCarrySpeedModal, tacCarrySpeedTalentBtn, tacCarrySummary, tacCarrySurvClose, tacCarrySurvList, tacCarrySurvModal, tacCarrySurvTalentBtn, tacCarrySurvivorEl, tacShowChairBasementEl, tacBasementText, tacShowSpawnsEl, tacSpawnSizeEl, tacSpawnSizeDefEl, tacSpawnText, tacSnapBoxEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacSpeedSettingsToggleEl, tacSpeedSettingsBodyEl, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacDedScenarioCarryEl, tacDedScenarioTideEl, tacDedSettingsCarryEl, tacDedSettingsTideEl, tacTideBaseSpeedEl, tacTideSpeedRoleEl, tacTideSpeedFormEl, tacTideTraitAddBtn, tacTideTalentAddBtn, tacTideOtherAddBtn, tacTideBuffAddBtn, tacTideBaseDetailToggleEl, tacTideBaseDetailBodyEl, tacTideBuffToggleEl, tacTideBuffBodyEl, tacTideTraitModal, tacTideTraitList, tacTideTraitClose, tacTideTalentModal, tacTideTalentList, tacTideTalentClose, tacTideOtherModal, tacTideOtherList, tacTideOtherClose, tacTideBuffModal, tacTideBuffName, tacTideBuffPct, tacTideBuffDur, tacTideBuffOk, tacTideBuffClose, tacPathCard, tacPathPickA, tacPathPickB, tacPathStatusA, tacPathStatusB, tacPathRunBtn, tacPathClearBtn, tacPathProgressBox, tacPathProgressBar, tacPathResultBoxEl, tacPathResultToggleEl, tacPathResultBodyEl, tacPathSummary, tacPathNote, tacPathFixNote, tacPathSettingsToggleEl, tacPathSettingsBodyEl, tacPathVaultEl, tacPathFixEl, tacPathCampToggle, tacPathBaseSpeedEl, tacPathSpeedRoleEl, tacPathSpeedFormEl, tacPathTraitAddBtn, tacPathTalentAddBtn, tacPathOtherAddBtn, tacPathBuffAddBtn, tacPathBaseDetailToggleEl, tacPathBaseDetailBodyEl, tacPathBuffToggleEl, tacPathBuffBodyEl, tacPathTraitModal, tacPathTraitList, tacPathTraitClose, tacPathTalentModal, tacPathTalentList, tacPathTalentClose, tacPathOtherModal, tacPathOtherList, tacPathOtherClose, tacPathBuffModal, tacPathBuffName, tacPathBuffPct, tacPathBuffDur, tacPathBuffOk, tacPathBuffClose, tacticView } from './core/dom.js';
 import { restoredMeasureIds, saveRegionSel, savedRot, tacBoard, tacDisplay, tacMeasureStyle, tacPersisted, tacSave, flushSave } from './core/persist.js';
 import { measureBaseAt, simulateMovement } from './core/measurements.js';
 import { measurementEndpoints, resolveMap3dTarget, isExternalMap3dEntry } from './core/map-handoff.js';
@@ -471,7 +471,6 @@ export const tacUndoStack = [];
 
 export function syncTacImage() {
   const url = getImageUrl(S.currentMapId);
-  const count = MAPS_DATA[S.currentMapId].cipherCombinations.length;
 
   // 推算绘制按地图各自保留：保存旧图的选中与结果，恢复目标图的（无则清空）
   tacDedOnMapSwitch();
@@ -479,8 +478,8 @@ export function syncTacImage() {
 
   // 先同步当前地图的旋转角，保证后续渲染使用正确的 tacRotK
   tacApplyRotation();
-  tacDispCipherText.textContent = translate("region.updateCipherText", { index: S.currentCipherIndex + 1, count: count });
   renderTacCiphers();
+  syncTacCipherCard();
   renderTacZones();
   renderTacLandmarks();
   renderTacChairs();
@@ -530,20 +529,52 @@ function setTacFontSize(el, units, cap) {
 }
 
 
+const TAC_CIPHER_PROGRESS_LS_KEY = 'tacCipherProgressV1';
+export const TAC_CIPHER_DONE_ICON_URL = 'https://i0.hdslb.com/bfs/new_dyn/470e117efe38e8ff949c47249932ec73262863779.png@1192w_1192h.avif';
+
+// 每张地图各密码机的破译进度（0-100；null/0 表示未开启进度显示）
+export let tacCipherProgress = {};
+try {
+  tacCipherProgress = JSON.parse(localStorage.getItem(TAC_CIPHER_PROGRESS_LS_KEY) || '{}') || {};
+} catch (err) { tacCipherProgress = {}; }
+
+function tacCipherProgressSave() {
+  try { localStorage.setItem(TAC_CIPHER_PROGRESS_LS_KEY, JSON.stringify(tacCipherProgress)); } catch (err) { /* ignore */ }
+}
+
+export function tacCipherPctOf(mapId, cid) {
+  const v = tacCipherProgress[mapId] ? tacCipherProgress[mapId][cid] : null;
+  if (typeof v !== 'number' || !isFinite(v) || v < 0) return null;
+  return Math.min(100, Math.round(v));
+}
+
+function tacCipherSetPct(mapId, cid, pct) {
+  if (!tacCipherProgress[mapId]) tacCipherProgress[mapId] = {};
+  if (pct == null) delete tacCipherProgress[mapId][cid];
+  else tacCipherProgress[mapId][cid] = Math.min(100, Math.max(0, Math.round(pct)));
+  tacCipherProgressSave();
+}
+
+function tacCipherIconFor(pct) {
+  if (pct != null && pct >= 100) return TAC_CIPHER_DONE_ICON_URL;
+  return CIPHER_ICON_URL;
+}
+
 export function renderTacCiphers() {
   if (!tacMapWrap) return;
   // The prediction remains visible and must update even when cipher icons do not.
   renderTacTreasure();
-  tacMapWrap.querySelectorAll('.tac-cipher').forEach((el) => el.remove());
+  tacMapWrap.querySelectorAll('.tac-cipher, .tac-cipher-pct').forEach((el) => el.remove());
   if (!tacDisplay.ciphers || !cipherIcon.loaded) return;
   const map = MAPS_DATA[S.currentMapId];
   const [imgW, imgH] = map.mapSize;
   map.cipherCombinations[S.currentCipherIndex].forEach((cid) => {
     const c = cipherOf(S.currentMapId, cid);
     if (!c) return;
+    const pct = tacCipherPctOf(S.currentMapId, cid);
     const el = document.createElement('img');
     el.className = 'tac-cipher';
-    el.src = CIPHER_ICON_URL;
+    el.src = tacCipherIconFor(pct);
     el.alt = c.name;
     el.title = c.name;
     el.draggable = false;
@@ -552,6 +583,15 @@ export function renderTacCiphers() {
     el.style.width = `${tacDisplay.cipherSize}%`;
     el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
     tacLayer().appendChild(el);
+    if (pct != null) {
+      const txt = document.createElement('span');
+      txt.className = 'tac-cipher-pct';
+      txt.textContent = `${pct}%`;
+      txt.style.left = `${(c.location[0] / imgW) * 100}%`;
+      txt.style.top = `${(c.location[1] / imgH) * 100}%`;
+      txt.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg) translateY(${tacDisplay.cipherSize / 2 + 0.05}cqw)`;
+      tacLayer().appendChild(txt);
+    }
   });
 }
 
@@ -561,6 +601,109 @@ export function switchTacCipher(step) {
   S.currentCipherIndex = (S.currentCipherIndex + step + count) % count;
   syncTacImage();
   saveRegionSel();
+}
+
+
+// 密码机卡片：与显示设置共享「显示 / 切组 / 图标大小」，下方列出当前组 5 台密码机的进度设置
+export function syncTacCipherCard() {
+  if (!tacCipherCard) return;
+  const map = MAPS_DATA[S.currentMapId];
+  const count = map.cipherCombinations.length;
+  const text = translate("region.updateCipherText", { index: S.currentCipherIndex + 1, count: count });
+  tacDispCipherText.textContent = text;
+  tacCipherCardText.textContent = text;
+  tacCipherCardShowEl.checked = !!tacDisplay.ciphers;
+  tacShowCiphersEl.checked = !!tacDisplay.ciphers;
+  tacCipherCardSizeEl.value = tacDisplay.cipherSize;
+  tacCipherSizeEl.value = tacDisplay.cipherSize;
+  tacCipherCardSizeDefEl.checked = tacDisplay.cipherSize === TAC_DISPLAY_DEFAULT.cipherSize;
+  tacCipherSizeDefEl.checked = tacCipherCardSizeDefEl.checked;
+  tacCipherList.innerHTML = '';
+  map.cipherCombinations[S.currentCipherIndex].forEach((cid) => {
+    const c = cipherOf(S.currentMapId, cid);
+    if (!c) return;
+    const pct = tacCipherPctOf(S.currentMapId, cid);
+    const row = document.createElement('div');
+    row.className = 'tac-cipher-row';
+    const icon = document.createElement('img');
+    icon.className = 'tac-cipher-row-icon';
+    icon.src = tacCipherIconFor(pct);
+    icon.alt = c.name;
+    icon.draggable = false;
+    const name = document.createElement('span');
+    name.className = 'tac-cipher-row-name';
+    name.textContent = c.name;
+    const enableLabel = document.createElement('label');
+    enableLabel.className = 'tac-display-toggle';
+    const enable = document.createElement('input');
+    enable.type = 'checkbox';
+    enable.checked = pct != null;
+    const enableText = document.createElement('span');
+    enableText.textContent = translate("ui.tacCipherCard.enableProgress");
+    enableLabel.appendChild(enable);
+    enableLabel.appendChild(enableText);
+    const slider = document.createElement('input');
+    slider.type = 'range';
+    slider.min = '0';
+    slider.max = '100';
+    slider.step = '1';
+    slider.value = pct != null ? pct : 0;
+    slider.disabled = pct == null;
+    slider.className = 'tac-cipher-row-slider';
+    const val = document.createElement('span');
+    val.className = 'tac-cipher-row-val';
+    val.textContent = pct != null ? `${pct}%` : '';
+    enable.addEventListener('change', () => {
+      if (enable.checked) {
+        slider.disabled = false;
+        tacCipherSetPct(S.currentMapId, cid, parseInt(slider.value, 10));
+      } else {
+        slider.disabled = true;
+        tacCipherSetPct(S.currentMapId, cid, null);
+      }
+      syncTacCipherCard();
+      renderTacCiphers();
+    });
+    slider.addEventListener('input', () => {
+      tacCipherSetPct(S.currentMapId, cid, parseInt(slider.value, 10));
+      const p = tacCipherPctOf(S.currentMapId, cid);
+      val.textContent = p != null ? `${p}%` : '';
+      icon.src = tacCipherIconFor(p);
+      renderTacCiphers();
+    });
+    row.appendChild(icon);
+    row.appendChild(name);
+    row.appendChild(enableLabel);
+    row.appendChild(slider);
+    row.appendChild(val);
+    tacCipherList.appendChild(row);
+  });
+}
+
+if (tacCipherCard) {
+  tacCipherCardSizeDefEl._default = TAC_DISPLAY_DEFAULT.cipherSize;
+  tacCipherCardShowEl.addEventListener('change', () => {
+    tacDisplay.ciphers = tacCipherCardShowEl.checked;
+    tacShowCiphersEl.checked = tacCipherCardShowEl.checked;
+    renderTacCiphers();
+    tacSave();
+  });
+  tacCipherCardPrevBtn.addEventListener('click', () => switchTacCipher(-1));
+  tacCipherCardNextBtn.addEventListener('click', () => switchTacCipher(1));
+  tacCipherCardSizeEl.addEventListener('input', () => {
+    tacDisplay.cipherSize = parseFloat(tacCipherCardSizeEl.value);
+    tacCipherSizeEl.value = tacCipherCardSizeEl.value;
+    const isDef = tacDisplay.cipherSize === TAC_DISPLAY_DEFAULT.cipherSize;
+    tacCipherCardSizeDefEl.checked = isDef;
+    tacCipherSizeDefEl.checked = isDef;
+    renderTacCiphers();
+    tacSave();
+  });
+  tacCipherCardSizeDefEl.addEventListener('change', () => {
+    if (!tacCipherCardSizeDefEl.checked) return;
+    tacCipherCardSizeEl.value = TAC_DISPLAY_DEFAULT.cipherSize;
+    tacCipherCardSizeEl.dispatchEvent(new Event('input'));
+  });
 }
 
  
@@ -1348,8 +1491,8 @@ tacShowZonesEl.addEventListener('change', () => {
 });
 
 bindTacDisplayRow(tacShowCiphersEl, tacCipherSizeEl, tacCipherSizeDefEl,
-  (v) => { tacDisplay.ciphers = v; renderTacCiphers(); },
-  (v) => { tacDisplay.cipherSize = v; renderTacCiphers(); });
+  (v) => { tacDisplay.ciphers = v; renderTacCiphers(); syncTacCipherCard(); },
+  (v) => { tacDisplay.cipherSize = v; renderTacCiphers(); syncTacCipherCard(); });
 
 bindTacDisplayRow(tacShowDungeonEl, tacDungeonSizeEl, tacDungeonSizeDefEl,
   (v) => { tacDisplay.dungeon = v; renderTacLandmarks(); },
@@ -7550,6 +7693,7 @@ export function enterTactic() {
 
 export function syncTacSubCards() {
   tacManageCard.style.display = tacTool === 'select' ? '' : 'none';
+  if (tacCipherCard) tacCipherCard.style.display = tacTool === 'select' ? '' : 'none';
   tacRolesCard.style.display = tacTool === 'roles' ? '' : 'none';
   tacDrawCard.style.display = tacTool === 'draw' ? '' : 'none';
   tacTextCard.style.display = tacTool === 'draw' ? '' : 'none';
@@ -7560,7 +7704,7 @@ export function syncTacSubCards() {
   }
   if (tacPathCard) tacPathCard.style.display = tacTool === 'deduce' ? '' : 'none';
   tacDisplayCard.style.display = tacTool === 'display' ? '' : 'none';
-  if (tacTool === 'select') tacManageCard.open = true;
+  if (tacTool === 'select') { tacManageCard.open = true; if (tacCipherCard) tacCipherCard.open = true; }
   if (tacTool === 'roles') tacRolesCard.open = true;
   if (tacTool === 'draw') { tacDrawCard.open = true; tacTextCard.open = true; }
   if (tacTool === 'measure') tacMeasureCard.open = true;
@@ -8002,12 +8146,28 @@ export async function tacExportImage() {
     const wrapX = (rotK % 2 === 1) ? wrapH : wrapW;
     if (tacDisplay.ciphers && ciphIcon) {
       const size = tacDisplay.cipherSize / 100 * W * K;
+      const pctPx = 12 * (oW / wrapX) * K;
+      uctx.save();
+      uctx.font = `800 ${pctPx}px 'Noto Sans SC', sans-serif`;
+      uctx.textAlign = 'center';
+      uctx.textBaseline = 'top';
+      uctx.lineJoin = 'round';
       map.cipherCombinations[S.currentCipherIndex].forEach((cid) => {
         const c = cipherOf(S.currentMapId, cid);
         if (!c) return;
         const [x, y] = PXY(c.location[0] / W0, c.location[1] / H0);
         uctx.drawImage(ciphIcon, x - size / 2, y - size / 2, size, size);
+        const pct = tacCipherPctOf(S.currentMapId, cid);
+        if (pct != null) {
+          const ty = y + size / 2 + pctPx * 0.1;
+          uctx.strokeStyle = 'rgba(0, 0, 0, 0.85)';
+          uctx.lineWidth = Math.max(1.5, pctPx / 6);
+          uctx.strokeText(`${pct}%`, x, ty);
+          uctx.fillStyle = '#f8fafc';
+          uctx.fillText(`${pct}%`, x, ty);
+        }
       });
+      uctx.restore();
     }
     if (tacDisplay.dungeon && dungeonIcon && map.dungeons.length) {
       const pt = map.dungeons[S.tacDungeonIndex % map.dungeons.length];

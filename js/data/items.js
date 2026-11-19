@@ -1485,6 +1485,38 @@ export const TAC_ITEM_TYPES = {
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/d/dd/kxoweq8pjttah3tp1ldvhfs9wzwg4pp.png/90px-%E6%8A%A4%E7%9B%BE.png',
   },
 
+  survivorS: {
+    name: translate("items.tier.survivorS.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/99/livxjh9tz91afbnw29yyqnltvvcra9j.png/90px-%E8%AE%A4%E7%9F%A5%E5%88%86_%E6%B1%82%E7%94%9F%E8%80%85S%EF%BC%88%E5%A4%A7%EF%BC%89_%E5%9B%BE%E6%A0%87.png',
+  },
+  survivorA: {
+    name: translate("items.tier.survivorA.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b8/b1h1e4kttqopiebu1vpw5svreq1fs34.png/90px-%E8%AE%A4%E7%9F%A5%E5%88%86_%E6%B1%82%E7%94%9F%E8%80%85A%EF%BC%88%E5%A4%A7%EF%BC%89_%E5%9B%BE%E6%A0%87.png',
+  },
+  survivorB: {
+    name: translate("items.tier.survivorB.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/01/mfbhdp4zp1cfe42l78a7nkpkuuio1ux.png/90px-%E8%AE%A4%E7%9F%A5%E5%88%86_%E6%B1%82%E7%94%9F%E8%80%85B%EF%BC%88%E5%A4%A7%EF%BC%89_%E5%9B%BE%E6%A0%87.png',
+  },
+  survivorC: {
+    name: translate("items.tier.survivorC.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/55/9egpmk0rr67wulo8piur7kl8suvkfik.png/90px-%E8%AE%A4%E7%9F%A5%E5%88%86_%E6%B1%82%E7%94%9F%E8%80%85C%EF%BC%88%E5%A4%A7%EF%BC%89_%E5%9B%BE%E6%A0%87.png',
+  },
+  hunterS: {
+    name: translate("items.tier.hunterS.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/24/cddhn1hbtyuepyo722sqdamxj3nxhxl.png/90px-%E8%AE%A4%E7%9F%A5%E5%88%86_%E7%9B%91%E7%AE%A1%E8%80%85S%EF%BC%88%E5%A4%A7%EF%BC%89_%E5%9B%BE%E6%A0%87.png',
+  },
+  hunterA: {
+    name: translate("items.tier.hunterA.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/f0/1apbmm6hvjd0n8z81hxrmc5aro0qqkx.png/90px-%E8%AE%A4%E7%9F%A5%E5%88%86_%E7%9B%91%E7%AE%A1%E8%80%85A%EF%BC%88%E5%A4%A7%EF%BC%89_%E5%9B%BE%E6%A0%87.png',
+  },
+  hunterB: {
+    name: translate("items.tier.hunterB.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/bd/11yz78kt7ypexlakqtrsum3mdxny7ct.png/90px-%E8%AE%A4%E7%9F%A5%E5%88%86_%E7%9B%91%E7%AE%A1%E8%80%85B%EF%BC%88%E5%A4%A7%EF%BC%89_%E5%9B%BE%E6%A0%87.png',
+  },
+  hunterC: {
+    name: translate("items.tier.hunterC.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/07/rjrqraeprag2ern4s44sijd6nsqe6v2.png/90px-%E8%AE%A4%E7%9F%A5%E5%88%86_%E7%9B%91%E7%AE%A1%E8%80%85C%EF%BC%88%E5%A4%A7%EF%BC%89_%E5%9B%BE%E6%A0%87.png',
+  },
   survivorTier1: {
     name: translate("items.tier.survivorTier1.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/d/d0/gvf0cxza0vkpa04ubf2u6s3538559dl.png/75px-%E5%B7%A5%E8%9C%82.png',

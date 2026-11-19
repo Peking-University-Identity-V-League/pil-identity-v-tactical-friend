@@ -188,7 +188,7 @@ export function deduce(map, marks) {
             + translate("deduction.propagateSeventh", { count: c }),
           true,
         );
-      } else if (rule.kind === 'atLeast') {
+      } else if (rule.kind === 'atLeast1') {
         
         const [a, b] = rule.positions;
         if (state[a] === 'no' && state[b] === 'no') {
@@ -213,7 +213,7 @@ export function deduce(map, marks) {
         } else if (state[b] !== null && state[a] === null) {
           changed = flush(rule, [a], state[b]);
         }
-      } else if (rule.kind === 'atMost') {
+      } else if (rule.kind === 'atMost1') {
         
         const yesIdx = pick(rule.positions, 'yes');
         if (yesIdx.length > rule.n) {
@@ -245,10 +245,10 @@ export function deduce(map, marks) {
           changed = flush(rule, rule.pres.filter((p) => state[p] === null), 'no')
             || changed;
         }
-      } else if (rule.kind === 'chainRun') {
+      } else if (rule.kind === 'chainThree') {
         
         const ps = rule.positions;
-        const chainScope = { kind: 'chainRun', positions: [...ps] };
+        const chainScope = { kind: 'chainThree', positions: [...ps] };
         for (let k = 0; k + 2 < ps.length; k++) {
           if (state[ps[k]] === 'yes' && state[ps[k + 1]] === 'yes'
             && state[ps[k + 2]] === 'yes') {
@@ -511,7 +511,7 @@ export function renderDedMap(d) {
     ? d.steps[S.dedSelectedStep].scope
     : null;
   
-  if (scope && (scope.kind === 'chain' || scope.kind === 'chainRun')
+  if (scope && (scope.kind === 'chain' || scope.kind === 'chainThree')
     && scope.positions) {
     const pts = scope.positions
       .map((id) => S.dedMap.ciphers[id].location.join(','));
