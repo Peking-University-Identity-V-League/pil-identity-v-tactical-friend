@@ -1019,7 +1019,7 @@ export const TAC_ROLES = {
     name: translate("characters.COA.name"),
     camp: 'other',
     items: ['COAIX', 'COAVIII', 'COAVII', 'COAVI', 'COAV', 'COAIV', 'COAIII', 'COAII', 'COAI'],
-    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b7/f4b0qz1aer42dj90bl1v2fkzxnztxy1.png/150px-COA%E2%85%A8logo.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/c/c4/r67qgzgmse7iiog4x21nf5xwedncgkd.png/90px-%E5%BA%94%E6%8F%B4%E7%A5%A8.png',
   },
   teamIVL: {
     name: translate("characters.teamIVL.name"),
