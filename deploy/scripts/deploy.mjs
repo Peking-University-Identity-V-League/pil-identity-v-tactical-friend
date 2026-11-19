@@ -80,22 +80,42 @@ export async function deploy() {
     const archiveSize = (await stat(archivePath)).size;
     if (archiveSize > 700 * 1024 * 1024) throw new Error('Static release is too large.');
     let receipt;
-    try {
-      receipt = await new Promise((resolve, reject) => {
-        const request = httpsRequest({ hostname: host, servername: 'pkuidv.com', path: '/_deploy/' + expected.component, method: 'POST', signal: AbortSignal.timeout(600000), headers: { Host: 'pkuidv.com', Authorization: 'Bearer ' + token, 'Content-Type': 'application/gzip', 'Content-Length': archiveSize } }, response => {
-          let size = 0;
-          const chunks = [];
-          response.on('data', chunk => { size += chunk.length; if (size > 65536) request.destroy(); else chunks.push(chunk); });
-          response.on('error', reject);
-          response.on('end', () => { try { const result = JSON.parse(Buffer.concat(chunks).toString('utf8')); if (response.statusCode !== 200 || result.ok !== true) reject(new Error()); else resolve(result); } catch { reject(new Error()); } });
+    // 单次上传；HTTP 错误状态码记入 error.httpStatus（状态码不含凭据，可安全输出）
+    const uploadOnce = () => new Promise((resolve, reject) => {
+      const request = httpsRequest({ hostname: host, servername: 'pkuidv.com', path: '/_deploy/' + expected.component, method: 'POST', signal: AbortSignal.timeout(600000), headers: { Host: 'pkuidv.com', Authorization: 'Bearer ' + token, 'Content-Type': 'application/gzip', 'Content-Length': archiveSize } }, response => {
+        let size = 0;
+        const chunks = [];
+        response.on('data', chunk => { size += chunk.length; if (size > 65536) request.destroy(); else chunks.push(chunk); });
+        response.on('error', reject);
+        response.on('end', () => {
+          let result = null;
+          try { result = JSON.parse(Buffer.concat(chunks).toString('utf8')); } catch { /* 非 JSON 响应当作 HTTP 错误处理 */ }
+          if (response.statusCode === 200 && result && result.ok === true) { resolve(result); return; }
+          const error = new Error('HTTP ' + response.statusCode);
+          error.httpStatus = response.statusCode;
+          reject(error);
         });
-        request.on('error', reject);
-        const upload = createReadStream(archivePath);
-        upload.on('error', error => request.destroy(error));
-        request.on('close', () => upload.destroy());
-        upload.pipe(request);
       });
-    } catch { throw new Error('CST HTTPS upload failed. Raw credential-bearing request diagnostics are suppressed.'); }
+      request.on('error', reject);
+      const upload = createReadStream(archivePath);
+      upload.on('error', error => request.destroy(error));
+      request.on('close', () => upload.destroy());
+      upload.pipe(request);
+    });
+    try {
+      try {
+        receipt = await uploadOnce();
+      } catch (firstError) {
+        // 网络层错误（DNS/TLS/超时，多为瞬时抖动）自动重试一次；HTTP 错误状态码不重试
+        if (firstError && firstError.httpStatus) throw firstError;
+        receipt = await uploadOnce();
+      }
+    } catch (error) {
+      const reason = error && error.httpStatus
+        ? 'HTTP status ' + error.httpStatus
+        : 'network error after one retry';
+      throw new Error('CST HTTPS upload failed (' + reason + '). Raw credential-bearing request diagnostics are suppressed.');
+    }
     if (receipt?.ok !== true || receipt.component !== expected.component || receipt.release !== expected.release) {
       throw new Error('CST returned an unexpected deployment receipt.');
     }
