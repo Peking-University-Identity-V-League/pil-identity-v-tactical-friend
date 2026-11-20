@@ -37,7 +37,7 @@ test('switching spawn groups cycles through all six groups and persists per map'
 
 test('all nine maps expose their own spawn groups', async ({ page }) => {
   // 地图顺序与选择器一致：军工厂、圣心医院、红教堂、湖景村、月亮河公园、里奥的回忆、永眠镇、唐人街、不归林
-  const groups = [6, 6, 6, 7, 7, 8, 7, 6, 5];
+  const groups = [6, 6, 6, 7, 7, 9, 7, 6, 5];
   await tool(page, 'display');
   for (let i = 0; i < groups.length; i++) {
     if (i > 0) {
@@ -57,10 +57,10 @@ test('sacred heart hospital has its own six spawn groups', async ({ page }) => {
   await expect(entry(page).locator('#tacSpawnText')).toHaveText('第 1 / 6 组位置');
   await entry(page).locator('#tacShowSpawns').check();
   await expect(icons(page)).toHaveCount(5);
-  // 圣心医院第 1 组：首个求生者出生点 (516, 92) / 地图 (644, 604)
+  // 圣心医院第 1 组：首个求生者出生点 (250, 72) / 地图 (644, 604)
   const pos = await icons(page).first().evaluate(el => [el.style.left, el.style.top]);
-  expect(parseFloat(pos[0])).toBeCloseTo(516 / 644 * 100, 1);
-  expect(parseFloat(pos[1])).toBeCloseTo(92 / 604 * 100, 1);
+  expect(parseFloat(pos[0])).toBeCloseTo(250 / 644 * 100, 1);
+  expect(parseFloat(pos[1])).toBeCloseTo(72 / 604 * 100, 1);
 });
 
 test('spawn icon size follows the slider and the default checkbox restores it', async ({ page }) => {
