@@ -1757,4 +1757,13 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.shop.inkTrace.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/91/erplgorlku7fsniz8bxljuye6ho3i00.png/60px-%E5%A2%A8%E8%BF%B9.png',
   },
+
+  stickerYes: {
+    name: translate("items.sticker.stickerYes.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/f0/i5t59p90spm2lctax5l3kblu89zuddu.png/90px-%E8%A1%A8%E6%83%85%E5%9B%BE%E6%A0%87_%E6%98%AF.png',
+  },
+  stickerNo: {
+    name: translate("items.sticker.stickerNo.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/8/89/1ikv68kcghq1vgjmafzz2gqfh9ijs3f.png/90px-%E8%A1%A8%E6%83%85%E5%9B%BE%E6%A0%87_%E5%90%A6.png',
+  },
 };
