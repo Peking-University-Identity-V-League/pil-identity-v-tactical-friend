@@ -260,6 +260,22 @@ export const tacRolesCard = $('tacRolesCard');
 
 export const tacManageCard = $('tacManageCard');
 
+export const tacCipherCard = $('tacCipherCard');
+
+export const tacCipherCardShowEl = $('tacCipherCardShow');
+
+export const tacCipherCardPrevBtn = $('tacCipherCardPrev');
+
+export const tacCipherCardNextBtn = $('tacCipherCardNext');
+
+export const tacCipherCardText = $('tacCipherCardText');
+
+export const tacCipherCardSizeEl = $('tacCipherCardSize');
+
+export const tacCipherCardSizeDefEl = $('tacCipherCardSizeDef');
+
+export const tacCipherList = $('tacCipherList');
+
 export const tacManageList = $('tacManageList');
 
 export const tacMStyleToggle = $('tacMStyleToggle');

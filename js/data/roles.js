@@ -1012,7 +1012,7 @@ export const TAC_ROLES = {
   tier: {
     name: translate("characters.tier.name"),
     camp: 'other',
-    items: ['survivorTier1', 'hunterTier1', 'survivorTier2', 'hunterTier2', 'survivorTier3', 'hunterTier3', 'survivorTier4', 'hunterTier4', 'survivorTier5', 'hunterTier5', 'survivorTier6', 'hunterTier6', 'survivorTier7', 'hunterTier7', 'survivorPeakTier7', 'hunterPeakTier7', 'fiveplayerTier1', 'fiveplayerTier2', 'fiveplayerTier3', 'fiveplayerTier4', 'fiveplayerTier5', 'fiveplayerTier6'],
+    items: ['survivorS', 'hunterS', 'survivorA', 'hunterA', 'survivorB', 'hunterB', 'survivorC', 'hunterC', 'survivorTier1', 'hunterTier1', 'survivorTier2', 'hunterTier2', 'survivorTier3', 'hunterTier3', 'survivorTier4', 'hunterTier4', 'survivorTier5', 'hunterTier5', 'survivorTier6', 'hunterTier6', 'survivorTier7', 'hunterTier7', 'survivorPeakTier7', 'hunterPeakTier7', 'fiveplayerTier1', 'fiveplayerTier2', 'fiveplayerTier3', 'fiveplayerTier4', 'fiveplayerTier5', 'fiveplayerTier6'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/9c/s4pg1uvmq2ti5438oat571e1wkhdj7k.png/60px-%E4%B8%BB%E7%95%8C%E9%9D%A2_%E4%B8%AA%E4%BA%BA%E8%B5%84%E6%96%99_%E5%9B%BE%E6%A0%87.png',
   },
   COA: {

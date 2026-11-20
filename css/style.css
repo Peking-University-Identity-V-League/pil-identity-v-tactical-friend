@@ -2490,6 +2490,65 @@ details.ded-card[open] > summary .arrow { transform: rotate(90deg); }
   filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.55));
 }
 
+/* 密码机卡片：地图上密码机上方的破译百分比数字 */
+.tac-cipher-pct {
+  position: absolute;
+  z-index: 3;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 800;
+  color: #f8fafc;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.95), 0 1px 2px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 密码机卡片：列表行 */
+.tac-cipher-row {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto minmax(80px, 1fr) 38px;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  font-size: 12px;
+}
+.tac-cipher-row + .tac-cipher-row { border-top: 1px solid rgba(148, 163, 184, 0.15); }
+.tac-cipher-row-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+.tac-cipher-row-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #e2e8f0;
+}
+.tac-cipher-row .tac-display-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.tac-cipher-row-slider {
+  width: 100%;
+  min-width: 0;
+  accent-color: #38bdf8;
+}
+.tac-cipher-row-val {
+  min-width: 0;
+  text-align: right;
+  font-weight: 700;
+  color: #7dd3fc;
+  font-variant-numeric: tabular-nums;
+}
+
 .tac-mode-delete .tac-arrow-svg g { pointer-events: stroke; cursor: pointer; }
 .tac-mode-delete .tac-arrow-svg g:hover { opacity: 0.55; }
 
