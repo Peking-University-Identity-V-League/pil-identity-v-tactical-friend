@@ -1007,13 +1007,19 @@ export const TAC_ROLES = {
     name: translate("characters.violentStruggle.name"),
     camp: 'other',
     items: ['bogusBag', 'crowbar', 'smokeBottle', 'blackMud', 'coldsnapFlask', 'speedPill', 'attentionPill', 'luckyPill', 'coagulant', 'powerPill', 'combustionPill', 'recoveryPill', 'ragePotion', 'resistancePotion', 'agilityPotion', 'powerupPill', 'ravenItem', 'clairvoyanceItem', 'theGuardianItem', 'resonanceItem', 'dovlinItem', 'shield'],
-    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/8/80/l8j4zg3mchzy23p6xv8ifclqaqjdt01.png/60px-%E4%B8%BB%E7%95%8C%E9%9D%A2_%E6%AF%8F%E6%97%A5%E6%B4%BB%E5%8A%A8_%E5%9B%BE%E6%A0%87.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/e/ec/s809wohdjq9p30dtfwu34hcy40zl71c.png/90px-%E8%AE%B0%E5%BF%86%E7%A2%8E%E7%89%87_%E9%87%8D%E9%80%A2%E4%B9%8B%E6%97%B6.png',
   },
   tier: {
     name: translate("characters.tier.name"),
     camp: 'other',
     items: ['survivorS', 'hunterS', 'survivorA', 'hunterA', 'survivorB', 'hunterB', 'survivorC', 'hunterC', 'survivorTier1', 'hunterTier1', 'survivorTier2', 'hunterTier2', 'survivorTier3', 'hunterTier3', 'survivorTier4', 'hunterTier4', 'survivorTier5', 'hunterTier5', 'survivorTier6', 'hunterTier6', 'survivorTier7', 'hunterTier7', 'survivorPeakTier7', 'hunterPeakTier7', 'fiveplayerTier1', 'fiveplayerTier2', 'fiveplayerTier3', 'fiveplayerTier4', 'fiveplayerTier5', 'fiveplayerTier6'],
-    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/9c/s4pg1uvmq2ti5438oat571e1wkhdj7k.png/60px-%E4%B8%BB%E7%95%8C%E9%9D%A2_%E4%B8%AA%E4%BA%BA%E8%B5%84%E6%96%99_%E5%9B%BE%E6%A0%87.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/2b/4lnyrl54i7z952kcy8zzj87yn07by0h.png/60px-%E6%8E%92%E4%BD%8D%E4%BF%9D%E6%8A%A4%E5%8D%A1.png',
+  },
+  shop: {
+    name: translate("characters.shop.name"),
+    camp: 'other',
+    items: ['clue', 'inspiration', 'fragment', 'echo', 'sealingWax', 'spyGlasses', 'commemorationToken', 'costumeRemnant', 'stickerToken', 'inkTrace'],
+    icon: 'https://patchwiki.biligame.com/images/dwrg/e/e9/hcvexmfva8ohhsdm19at0iok2garrac.png',
   },
   COA: {
     name: translate("characters.COA.name"),
@@ -1033,11 +1039,11 @@ export const TAC_ROLES = {
     items: ['AWG', 'AXZ', 'DFM', 'FL', 'QTD', 'RC', 'SZ', 'Zeta'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/5a/aduticjamiol9j9dn01c3mqwkknvb8w.png/150px-IJLlogo.png',
   },
-  shop: {
-    name: translate("characters.shop.name"),
+  sticker: {
+    name: translate("characters.sticker.name"),
     camp: 'other',
-    items: ['clue', 'inspiration', 'fragment', 'echo', 'sealingWax', 'spyGlasses', 'commemorationToken', 'costumeRemnant', 'stickerToken', 'inkTrace'],
-    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/4/4d/4wvzaphujb2wp3smcorfi8v9f8m9pu1.png/60px-%E4%B8%BB%E7%95%8C%E9%9D%A2_%E5%95%86%E5%9F%8E_%E5%9B%BE%E6%A0%87.png',
+    items: ['stickerYes', 'stickerNo'],
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/12/ierbsudwlrq55fze3uguu8xbhpy8b5r.png/90px-%E6%B6%82%E9%B8%A6_%E7%BC%AA%E6%96%AF%E5%8D%B0%E8%AE%B0_%E5%9B%BE%E6%A0%87.png',
   },
 };
 
