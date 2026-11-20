@@ -72,7 +72,7 @@ export const TAC_ROLES = {
   mercenary: {
     name: translate("characters.mercenary.name"),
     camp: 'survivor',
-    items: ['elbowPads'],
+    items: ['elbowPads', 'elbowPadsOff'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/4/4c/3q44aot13l2d3en8vhxflg2hkq1e5h9.png/90px-%E4%BD%A3%E5%85%B5%E5%A4%B4%E5%83%8F.png',
   },
   coordinator: {
@@ -90,7 +90,7 @@ export const TAC_ROLES = {
   mechanic: {
     name: translate("characters.mechanic.name"),
     camp: 'survivor',
-    items: ['doll'],
+    items: ['mechanicsDoll', 'mechanicsDollControl'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/35/der9jwp2lihygo0cq7wpfkqz84zg63a.png/90px-%E6%9C%BA%E6%A2%B0%E5%B8%88%E5%A4%B4%E5%83%8F.png',
   },
   forward: {
@@ -146,7 +146,7 @@ export const TAC_ROLES = {
         { size_m: 8.44, label: translate("characters.femaleDancer.range.label.slide") },
       ],
     },
-    items: ['fastMusicbox', 'slowMusicbox'],
+    items: ['fastMusicbox', 'slowMusicbox', 'musicboxSwitch'],
     maxItems: 3,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/14/6u90w90cko8ucql7td6s2g66tirtqm6.png/90px-%E8%88%9E%E5%A5%B3%E5%A4%B4%E5%83%8F.png',
   },
@@ -159,7 +159,7 @@ export const TAC_ROLES = {
   embalmer: {
     name: translate("characters.embalmer.name"),
     camp: 'survivor',
-    items: ['coffin'],
+    items: ['makeupBox', 'coffin'],
     maxItems: 1,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/a/ac/9ycf32ktg7qe2234e49d8mzrc18ma1w.png/90px-%E5%85%A5%E6%AE%93%E5%B8%88%E5%A4%B4%E5%83%8F.png',
   },
@@ -187,7 +187,7 @@ export const TAC_ROLES = {
         { size_m: 12.7, label: translate("characters.enchantress.range.label.guardStackReduce") },
       ],
     },
-    items: ['cursedEmblem'],
+    items: ['cursedEmblem', 'cursedEmblemSpecial'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/61/ezw8a4g51y9o4zufeug2rbeemzmdzs5.png/90px-%E5%92%92%E6%9C%AF%E5%B8%88%E5%A4%B4%E5%83%8F.png',
   },
   wildling: {
@@ -200,7 +200,7 @@ export const TAC_ROLES = {
         { size_m: 17, label: translate("characters.wildling.range.label.bumpAddKnockBackMax") },
       ],
     },
-    items: ['wildlingPartner', 'wildlingPartnerRide'],
+    items: ['wildlingPartner', 'wildlingPartnerRide', 'wildlingPartnerFollowingState', 'wildlingPartnerRidingState', 'wildlingPartnerRidingStateCross'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b0/qix27d33osv7o1ti0g244pf7xzp8d0x.png/90px-%E9%87%8E%E4%BA%BA%E5%A4%B4%E5%83%8F.png',
   },
   acrobat: {
@@ -214,7 +214,7 @@ export const TAC_ROLES = {
         { size_m: 12, label: translate("characters.acrobat.range.label.leapAddSomersault") },
       ],
     },
-    items: ['bomb'],
+    items: ['stickyBomb', 'nitroBomb', 'fireBomb', 'stickyBombThrow', 'nitroBombThrow', 'fireBombThrow'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/c/c4/c6whxfr6ba7v3pv5xcskfvv0rvgt4e8.png/90px-%E6%9D%82%E6%8A%80%E6%BC%94%E5%91%98%E5%A4%B4%E5%83%8F.png',
   },
   firstOfficer: {
@@ -234,7 +234,7 @@ export const TAC_ROLES = {
   barmaid: {
     name: translate("characters.barmaid.name"),
     camp: 'survivor',
-    items: ['duphrin', 'strongDovlin'],
+    items: ['duphrin', 'strongDovlin', 'mixDovlin'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/d/d1/qxsohhayojydlkq1rvfpb9fefsvei2m.png/90px-%E8%B0%83%E9%85%92%E5%B8%88%E5%A4%B4%E5%83%8F.png',
   },
   postman: {
@@ -258,7 +258,7 @@ export const TAC_ROLES = {
         { size_m: 9.7, label: translate("characters.graveKeeper.range.label.tremor") },
       ],
     },
-    items: ['shovel'],
+    items: ['shovel', 'shovelEmerge'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/5c/dc57y6fvws61am1wmtpnqjzbeu0pnmy.png/90px-%E5%AE%88%E5%A2%93%E4%BA%BA%E5%A4%B4%E5%83%8F.png',
   },
   prisoner: {
@@ -270,20 +270,20 @@ export const TAC_ROLES = {
         { size_m: 5.9, label: translate("characters.prisoner.range.label.severeElectricCurrentStun") },
       ],
     },
-    items: ['insulatingGloves', 'severeElectricCurrent'],
+    items: ['insulatingGloves', 'severeElectricCurrent', 'electricalArea'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/8/80/6lii1orabnu42oto26e1o570vl5w6f1.png/90px-%22%E5%9B%9A%E5%BE%92%22%E5%A4%B4%E5%83%8F.png',
   },
   entomologist: {
     name: translate("characters.entomologist.name"),
     camp: 'survivor',
-    items: ['swarm'],
+    items: ['swarmNet', 'swarmNetWave'],
     maxItems: 1,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/63/3s9842m4mdlccry2lxz1u1cr8cecz3s.png/90px-%E6%98%86%E8%99%AB%E5%AD%A6%E8%80%85%E5%A4%B4%E5%83%8F.png',
   },
   painter: {
     name: translate("characters.painter.name"),
     camp: 'survivor',
-    items: ['drawingBoard'],
+    items: ['paintBruahAndDrawingBoard', 'drawingBoard'],
     maxItems: 2,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/56/821z7af4xzflb8o5ad3jxjzqzxswqqh.png/90px-%E7%94%BB%E5%AE%B6%E5%A4%B4%E5%83%8F.png',
   },
@@ -298,7 +298,7 @@ export const TAC_ROLES = {
         { size_m: 15.2, label: translate("characters.batter.range.label.altruism") },
       ],
     },
-    items: ['cricketBat'],
+    items: ['cricketBat', 'rampage'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/64/qfrijnvjm5sr2pq8ny1mv2zxj60k7b0.png/90px-%E5%87%BB%E7%90%83%E6%89%8B%E5%A4%B4%E5%83%8F.png',
   },
   toyMerchant: {
@@ -420,7 +420,7 @@ export const TAC_ROLES = {
         { size_m: 12.7, label: translate("characters.aeroplanist.range.label.essentialTremor") },
       ],
     },
-    items: ['jetpack'],
+    items: ['jetpack', 'jetpackPropel'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/11/pkpubifvltwi4g20xgegmmfr5hp0w7e.png/90px-%E9%A3%9E%E8%A1%8C%E5%AE%B6%E5%A4%B4%E5%83%8F.png',
   },
   cheerleader: {
@@ -432,7 +432,7 @@ export const TAC_ROLES = {
         { size_m: 20, label: translate("characters.cheerleader.range.label.encourage") },
       ],
     },
-    items: ['pompoms', 'inspire'],
+    items: ['pompoms', 'inspire', 'inspireIcon', 'encourage1', 'encourage2', 'encourageCheerful', 'encourageExcited'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/4/49/ksf2totnw4cumjj4rf0jxcoryl5ispq.png/90px-%E6%8B%89%E6%8B%89%E9%98%9F%E5%91%98%E5%A4%B4%E5%83%8F.png',
   },
   puppeteer: {
@@ -478,7 +478,7 @@ export const TAC_ROLES = {
         { size_m: 7, label: translate("characters.knight.range.label.chivalrousSympathy") },
       ],
     },
-    items: ['helmet', 'tacticalForesight', 'chivalrousSympathy'],
+    items: ['helmet', 'tacticalForesight', 'tacticalForesightAttack', 'tacticalForesightAbility', 'tacticalForesightStalemate', 'chivalrousSympathy'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/97/10yk7nm7qb4focpftij0jl8d4y15itk.png/90px-%E2%80%9C%E9%AA%91%E5%A3%AB%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
   meteorologist: {
@@ -490,7 +490,7 @@ export const TAC_ROLES = {
         { size_m: 32, label: translate("characters.meteorologist.range.label.warmRain") },
       ],
     },
-    items: ['stormGlass'],
+    items: ['stormGlass', 'gale1', 'gale2', 'gale3', 'stratus1', 'stratus2', 'stratus3', 'rainfall', 'stormGlassDecompose'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/d/d1/31tsfob5vzra69oorilz2powtnzcaxj.png/90px-%E6%B0%94%E8%B1%A1%E5%AD%A6%E5%AE%B6%E5%A4%B4%E5%83%8F.png',
   },
   archer: {
@@ -548,10 +548,11 @@ export const TAC_ROLES = {
   prodigy: {
     name: translate("characters.prodigy.name"),
     camp: 'survivor',
-    items: ['hamster', 'kinestheticLearning'],
+    items: ['hamster', 'hamsterCancel', 'dirtball', 'pushingState', 'performanceState'],
     speed: { [translate("characters.prodigy.speed.exhibition")]: 3.92, [translate("characters.prodigy.speed.pushBall")]: 3.8 },
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/08/ejzgnfep2tdh21cx73mskh1svrj4uur.png/90px-%E2%80%9C%E7%A5%9E%E7%AB%A5%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
+
   hellEmber: {
     name: translate("characters.hellEmber.name"),
     camp: 'hunter',
@@ -1006,7 +1007,7 @@ export const TAC_ROLES = {
   violentStruggle: {
     name: translate("characters.violentStruggle.name"),
     camp: 'other',
-    items: ['bogusBag', 'crowbar', 'smokeBottle', 'blackMud', 'coldsnapFlask', 'speedPill', 'attentionPill', 'luckyPill', 'coagulant', 'powerPill', 'combustionPill', 'recoveryPill', 'ragePotion', 'resistancePotion', 'agilityPotion', 'powerupPill', 'ravenItem', 'clairvoyanceItem', 'theGuardianItem', 'resonanceItem', 'dovlinItem', 'shield'],
+    items: ['snowball', 'bogusBag', 'crowbar', 'smokeBottle', 'blackMud', 'coldsnapFlask', 'speedPill', 'attentionPill', 'luckyPill', 'coagulant', 'powerPill', 'combustionPill', 'recoveryPill', 'ragePotion', 'resistancePotion', 'agilityPotion', 'powerupPill', 'tarotRaven', 'tarotClairvoyance', 'tarotTheGuardian', 'tarotResonance', 'tarotDovlin', 'shield', 'blackjackChips', 'tarotStars', 'frenzyRhapsodyNormalBall', 'frenzyRhapsodyExplosiveBall', 'frenzyRhapsodyDashBall', 'frenzyRhapsodySniperBall', 'hideAndSeekMonstersTreasure', 'hideAndSeekOwl', 'hideAndSeekSyringe', 'hideAndSeekDecoy', 'hideAndSeekMechanicsDoll', 'hideAndSeekScaledSkin', 'hideAndSeekWildlingPartner'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/e/ec/s809wohdjq9p30dtfwu34hcy40zl71c.png/90px-%E8%AE%B0%E5%BF%86%E7%A2%8E%E7%89%87_%E9%87%8D%E9%80%A2%E4%B9%8B%E6%97%B6.png',
   },
   tier: {
@@ -1046,4 +1047,3 @@ export const TAC_ROLES = {
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/12/ierbsudwlrq55fze3uguu8xbhpy8b5r.png/90px-%E6%B6%82%E9%B8%A6_%E7%BC%AA%E6%96%AF%E5%8D%B0%E8%AE%B0_%E5%9B%BE%E6%A0%87.png',
   },
 };
-
