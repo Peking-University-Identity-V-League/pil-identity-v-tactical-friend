@@ -500,7 +500,7 @@ export function syncTacImage() {
   renderTacSpawns();
   syncTacSpawnText();
   const spawnEntry = $('tacSpawnEntry');
-  if (spawnEntry) spawnEntry.style.display = (MAPS_DATA[S.currentMapId].spawns || []).length ? '' : 'none';
+  if (spawnEntry) spawnEntry.style.display = (MAPS_DATA[S.currentMapId].spawnPoints || []).length ? '' : 'none';
   if (url === tacImageState.loaded) return;
   tacImageState.loaded = url;
   const [mw, mh] = MAPS_DATA[S.currentMapId].mapSize;
@@ -736,7 +736,7 @@ export function renderTacSpawns() {
   if (!tacMapWrap) return;
   tacMapWrap.querySelectorAll('.tac-spawn').forEach((el) => el.remove());
   const map = MAPS_DATA[S.currentMapId];
-  const groups = map.spawns || [];
+  const groups = map.spawnPoints || [];
   if (!tacDisplay.spawns || !groups.length) return;
   const group = groups[S.tacSpawnIndex % groups.length];
   const [imgW, imgH] = map.mapSize;
@@ -758,12 +758,12 @@ export function renderTacSpawns() {
 }
 
 export function syncTacSpawnText() {
-  const n = (MAPS_DATA[S.currentMapId].spawns || []).length;
+  const n = (MAPS_DATA[S.currentMapId].spawnPoints || []).length;
   tacSpawnText.textContent = translate("application.syncTacDungeonText", { index: S.tacSpawnIndex + 1, value: n });
 }
 
 export function switchTacSpawn(step) {
-  const n = (MAPS_DATA[S.currentMapId].spawns || []).length;
+  const n = (MAPS_DATA[S.currentMapId].spawnPoints || []).length;
   if (!n) return;
   S.tacSpawnIndex = (S.tacSpawnIndex + step + n) % n;
   syncTacSpawnText();
@@ -8182,8 +8182,8 @@ export async function tacExportImage() {
         uctx.drawImage(doorIcon, x - size / 2, y - size / 2, size, size);
       });
     }
-    if (tacDisplay.spawns && spawnSurvIcon && spawnHuntIcon && (map.spawns || []).length) {
-      const group = map.spawns[S.tacSpawnIndex % map.spawns.length];
+    if (tacDisplay.spawns && spawnSurvIcon && spawnHuntIcon && (map.spawnPoints || []).length) {
+      const group = map.spawnPoints[S.tacSpawnIndex % map.spawnPoints.length];
       const size = tacDisplay.spawnSize / 100 * W * K;
       const drawSpawn = (pt, icon) => {
         const [x, y] = PXY(pt[0] / W0, pt[1] / H0);

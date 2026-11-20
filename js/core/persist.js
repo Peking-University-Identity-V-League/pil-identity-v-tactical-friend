@@ -152,7 +152,7 @@ export function restoreRegionSel(mapId) {
     Math.max(0, MAPS_DATA[mapId].dungeons.length - 1),
     Math.max(0, savedDungeons[mapId] | 0),
   );
-  const spawnCount = (MAPS_DATA[mapId].spawns || []).length;
+  const spawnCount = (MAPS_DATA[mapId].spawnPoints || []).length;
   S.tacSpawnIndex = spawnCount
     ? Math.min(Math.max(0, savedSpawns[mapId] | 0), spawnCount - 1) : 0;
   const ch = MAPS_DATA[mapId].rocketChairs;

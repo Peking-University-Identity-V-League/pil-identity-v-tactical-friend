@@ -74,7 +74,7 @@ export const MAPS_DATA = [
 
     const escapeDoors = [[682, 240], [45, 320], [682, 260], [45, 300]];
 
-    const spawns = [
+    const spawnPoints = [
       { survivor: [[143, 235], [292, 250], [366, 382], [498, 452]], hunter: [556, 212] },
       { survivor: [[132, 344], [292, 250], [400, 200], [672, 182]], hunter: [430, 450] },
       { survivor: [[156, 262], [316, 376], [403, 496], [440, 594]], hunter: [105, 556] },
@@ -204,7 +204,7 @@ export const MAPS_DATA = [
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
-      fixedSpawns, spawns,
+      fixedSpawns, spawnPoints,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { fixed, region, exactly, either } = dedHelpers(ciphers);
@@ -292,7 +292,7 @@ export const MAPS_DATA = [
 
     const escapeDoors = [[326, 530], [615, 88], [311, 530], [615, 104]];
 
-    const spawns = [
+    const spawnPoints = [
       { survivor: [[250, 72], [362, 87], [420, 309], [395, 482]], hunter: [181, 305] },
       { survivor: [[443, 179], [361, 336], [347, 466], [192, 475]], hunter: [167, 179] },
       { survivor: [[516, 92], [487, 202], [229, 305], [361, 336]], hunter: [252, 46] },
@@ -419,7 +419,7 @@ export const MAPS_DATA = [
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
-      fixedSpawns, spawns,
+      fixedSpawns, spawnPoints,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { exactly, either, same, atLeast1, chain } = dedHelpers(ciphers);
@@ -512,7 +512,7 @@ export const MAPS_DATA = [
 
     const escapeDoors = [[297, 543], [474, 90], [283, 543], [488, 90]];
 
-    const spawns = [
+    const spawnPoints = [
       { survivor: [[510, 195], [401, 236], [295, 355], [295, 520]], hunter: [501, 440] },
       { survivor: [[370, 195], [485, 243], [211, 304], [207, 426]], hunter: [428, 447] },
       { survivor: [[297, 177], [514, 189], [184, 236], [138, 436]], hunter: [401, 365] },
@@ -637,7 +637,7 @@ export const MAPS_DATA = [
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
-      spawns,
+      spawnPoints,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { fixed, region, exactly, atLeast1, chain } = dedHelpers(ciphers);
@@ -738,7 +738,7 @@ export const MAPS_DATA = [
 
     const escapeDoors = [[878, 1066], [200, 134], [834, 1066], [238, 134]];
 
-    const spawns = [
+    const spawnPoints = [
       { survivor: [[644, 347], [369, 462], [494, 658], [955, 738]], hunter: [1032, 378] },
       { survivor: [[764, 295], [873, 485], [521, 630], [677, 787]], hunter: [1162, 717] },
       { survivor: [[873, 485], [1101, 563], [494, 658], [297, 842]], hunter: [902, 885] },
@@ -869,7 +869,7 @@ export const MAPS_DATA = [
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
-      spawns,
+      spawnPoints,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { fixed, region, exactly, either, same, chain } = dedHelpers(ciphers);
@@ -972,7 +972,7 @@ export const MAPS_DATA = [
 
     const escapeDoors = [[1312, 88], [130, 946], [1340, 88], [101, 946]];
 
-    const spawns = [
+    const spawnPoints = [
       { survivor: [[1116, 296], [736, 308], [551, 627], [740, 759]], hunter: [1191, 764] },
       { survivor: [[275, 281], [1247, 461], [669, 733], [925, 753]], hunter: [743, 219] },
       { survivor: [[863, 362], [1291, 464], [364, 516], [493, 808]], hunter: [939, 744] },
@@ -1102,7 +1102,7 @@ export const MAPS_DATA = [
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
-      spawns,
+      spawnPoints,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { fixed, region, exactly, either, chain } = dedHelpers(ciphers);
@@ -1196,7 +1196,7 @@ export const MAPS_DATA = [
 
     const escapeDoors = [[64, 230], [612, 58], [64, 211], [630, 58]];
 
-    const spawns = [
+    const spawnPoints = [
       { survivor: [[131, 233], [345, 308], [178, 334], [423, 596]], hunter: [175, 578] },
       { survivor: [[131, 233], [267, 254], [491, 367], [521, 483]], hunter: [265, 514] },
       { survivor: [[295, 128], [267, 254], [371, 471], [574, 539]], hunter: [570, 255] },
@@ -1326,7 +1326,7 @@ export const MAPS_DATA = [
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
-      spawns,
+      spawnPoints,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { region, exactly, chain, implies, link } = dedHelpers(ciphers);
@@ -1435,7 +1435,7 @@ export const MAPS_DATA = [
 
     const escapeDoors = [[387, 20], [225, 616], [404, 20], [209, 616]];
 
-    const spawns = [
+    const spawnPoints = [
       { survivor: [[394, 320], [611, 325], [618, 511], [366, 667]], hunter: [109, 417] },
       { survivor: [[638, 180], [394, 320], [331, 493], [496, 701]], hunter: [100, 213] },
       { survivor: [[164, 322], [560, 327], [412, 424], [366, 667]], hunter: [305, 40] },
@@ -1562,7 +1562,7 @@ export const MAPS_DATA = [
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
-      spawns,
+      spawnPoints,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { fixed, region, either, atMost1 } = dedHelpers(ciphers);
@@ -1653,7 +1653,7 @@ export const MAPS_DATA = [
 
     const escapeDoors = [[705, 1134], [780, 18], [667, 1134], [818, 18]];
 
-    const spawns = [
+    const spawnPoints = [
       { survivor: [[924, 123], [1003, 582], [416, 771], [739, 994]], hunter: [170, 177] },
       { survivor: [[570, 218], [836, 396], [288, 449], [916, 856]], hunter: [437, 951] },
       { survivor: [[181, 678], [1270, 693], [475, 1002], [1044, 1009]], hunter: [720, 483] },
@@ -1781,7 +1781,7 @@ export const MAPS_DATA = [
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
-      spawns,
+      spawnPoints,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { fixed, region, either, same, atLeast1, atMost1, chainThree, allAbsent } = dedHelpers(ciphers);
@@ -1887,7 +1887,7 @@ export const MAPS_DATA = [
 
     const escapeDoors = [[1214, 772], [50, 224], [1214, 816], [50, 180]];
 
-    const spawns = [
+    const spawnPoints = [
       { survivor: [[602, 266], [237, 401], [1018, 463], [352, 805]], hunter: [894, 974] },
       { survivor: [[1011, 241], [863, 472], [641, 626], [472, 1075]], hunter: [306, 211] },
       { survivor: [[473, 183], [457, 620], [793, 823], [1090, 883]], hunter: [1030, 196] },
@@ -2015,7 +2015,7 @@ export const MAPS_DATA = [
       zonesInfo, zoneNames, ciphers,
       cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
       fixedSpawns,
-      spawns,
+      spawnPoints,
       law_urls, fixedHint, hints,
       deduction: (() => {
         const { region, exactly, either, atMost1, same, chain } = dedHelpers(ciphers);
