@@ -18,7 +18,7 @@ async function placeBomb(page, kind) {
 test('timeBomb: cross range two tiers, radius/width desc, multi-select', async ({ page }) => {
   await placeBomb(page, 'timeBomb');
   // 道具一级按钮统一为两个
-  await expect(rangeBox(page).locator('.tac-range-opt:not(.tac-range-sub)')).toHaveText(['显示道具范围', '隐藏范围']);
+  await expect(rangeBox(page).locator('.tac-range-opt:not(.tac-range-sub)')).toHaveText(['显示道具范围', '隐藏']);
   // 新创建默认显示第一个范围：十字形（两个矩形臂）
   const cross = page.locator('.tac-item-circle.tac-item-cross');
   await expect(cross).toHaveCount(1);

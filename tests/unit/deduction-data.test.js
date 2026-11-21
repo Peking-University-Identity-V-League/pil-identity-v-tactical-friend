@@ -71,7 +71,7 @@ test('buildTacRangeRows renders range manage box (dreamWitch)', async () => {
     buildTacRangeRows(settings, cfg, { rangeBox: { tab: 'range', subs: [0, 1, 2], talents: {}, fill: false } }, false, opts);
     assert.ok(rows.some((r) => r.className === 'tac-manage-box'),
       'range manage box rendered');
-    assert.ok(rows.some((r) => allText(r).includes(translate('ui.tacRangeBox.showTrait'))),
+    assert.ok(rows.some((r) => allText(r).includes(translate('ui.tac.manangeBox.range.showTrait'))),
       'unified level-1 buttons rendered');
     ['20m', '42.2m', '59.1m'].forEach((m) => assert.ok(
       rows.some((r) => allText(r).includes(m)), `${m} description line rendered`));

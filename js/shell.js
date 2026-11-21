@@ -16,7 +16,7 @@ export const TAB_TITLES = {
   deduce: [translate("navigation.tabTitlesZeroThird"), 'Identity V Cipher Deduction'],
 };
 
-export const HOME_TITLE = [translate("ui.application.title"), 'Identity V Tactical Friend'];
+export const HOME_TITLE = [translate("ui.title"), 'Identity V Tactical Friend'];
 
 
 export const dedDataOf = (mapId) => (MAPS_DATA[mapId] ? MAPS_DATA[mapId].deduction : null);

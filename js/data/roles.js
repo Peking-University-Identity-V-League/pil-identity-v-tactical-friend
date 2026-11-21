@@ -605,14 +605,14 @@ export const TAC_ROLES = {
   geisha: {
     name: translate("characters.geisha.name"),
     camp: 'hunter',
-    speed: { [translate("characters.geisha.speed.beautyForm")]: 4.73, [translate("characters.geisha.speed.prajnaForm")]: 4.56 },
+    speed: { [translate("characters.geisha.beautyForm")]: 4.73, [translate("characters.geisha.prajnaForm")]: 4.56 },
     items: ['swallowtailButterfly', 'dashHit', 'soulDeparture'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/bd/qcstapls4hnm6fckekl6l6890h19vst.png/90px-%E7%BA%A2%E8%9D%B6%E5%A4%B4%E5%83%8F.png',
   },
   wuchang: {
     name: translate("characters.wuchang.name"),
     camp: 'hunter',
-    speed: { [translate("characters.wuchang.speed.xieBiAn")]: 4.73, [translate("characters.wuchang.speed.fanWuJiu")]: 4.56 },
+    speed: { [translate("characters.wuchang.xieBiAn")]: 4.73, [translate("characters.wuchang.fanWuJiu")]: 4.56 },
     items: ['umbrella', 'siphonSoulWaveringSoul'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/2a/gd5yd3hfaohhj2pozgqf2cfivpadbn6.png/90px-%E5%AE%BF%E4%BC%9E%E4%B9%8B%E9%AD%82%E5%A4%B4%E5%83%8F.png',
   },
@@ -654,7 +654,7 @@ export const TAC_ROLES = {
   dreamWitch: {
     name: translate("characters.dreamWitch.name"),
     camp: 'hunter',
-    speed: { [translate("characters.dreamWitch.speed.originalBody")]: 6.08, [translate("items.dreamWitch.follower.name")]: 4.56 },
+    speed: { [translate("characters.dreamWitch.originalBody")]: 6.08, [translate("items.dreamWitch.follower.name")]: 4.56 },
     ranges: {
       key: 'showTrait',
       options: [
@@ -764,7 +764,7 @@ export const TAC_ROLES = {
   theBreakingWheel: {
     name: translate("characters.theBreakingWheel.name"),
     camp: 'hunter',
-    speed: { [translate("characters.theBreakingWheel.speed.humanForm")]: 4.64, [translate("characters.theBreakingWheel.speed.wheelForm")]: 10.13 },
+    speed: { [translate("characters.theBreakingWheel.humanForm")]: 4.64, [translate("characters.theBreakingWheel.wheelForm")]: 10.13 },
     ranges: {
       key: 'showTrait',
       options: [
@@ -876,7 +876,7 @@ export const TAC_ROLES = {
   theShadow: {
     name: translate("characters.theShadow.name"),
     camp: 'hunter',
-    speed: { [translate("characters.theShadow.speed.ivy")]: 4.64, [translate("items.theShadow.yithian.name")]: 7.59 },
+    speed: { [translate("characters.theShadow.ivy")]: 4.64, [translate("items.theShadow.yithian.name")]: 7.59 },
     ranges: {
       key: 'showTrait',
       options: [

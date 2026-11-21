@@ -20,7 +20,7 @@ async function placeRole(page, role, x = 0.3, y = 0.3) {
 test('range box: level-1 shows subs without lighting; subs toggle manually (explorer)', async ({ page }) => {
   await placeRole(page, 'explorer');
   // 一级按钮统一为三个
-  await expect(rangeBox(page).locator('.tac-range-opt:not(.tac-range-sub)')).toHaveText(['显示特质范围', '显示天赋范围', '隐藏范围']);
+  await expect(rangeBox(page).locator('.tac-range-opt:not(.tac-range-sub)')).toHaveText(['显示特质范围', '显示天赋范围', '隐藏']);
   await lv1(page, '显示特质范围').click();
   await expect(lv1(page, '显示特质范围')).toHaveClass(/active/);
   // 一级按钮只展示二级按钮，不点亮；范围不显示
@@ -50,7 +50,7 @@ test('range box: level-1 shows subs without lighting; subs toggle manually (expl
 test('range box: role without ranges still gets unified level-1 (forward)', async ({ page }) => {
   await placeRole(page, 'forward', 0.5, 0.5);
   await expect(rangeBox(page).locator('.tac-box-title')).toHaveCount(1);
-  await expect(rangeBox(page).locator('.tac-range-opt:not(.tac-range-sub)')).toHaveText(['显示特质范围', '显示天赋范围', '隐藏范围']);
+  await expect(rangeBox(page).locator('.tac-range-opt:not(.tac-range-sub)')).toHaveText(['显示特质范围', '显示天赋范围', '隐藏']);
   // 无特质子范围
   await lv1(page, '显示特质范围').click();
   await expect(rangeBox(page).locator('.tac-range-sub')).toHaveCount(0);
@@ -65,7 +65,7 @@ test('range box: default group level-1 button is yellow on first selection (cata
   await tool(page, 'select');
   await clickPoint(page, 0.45, 0.4);
   // 道具一级按钮统一为两个；默认显示范围：二级「弹射板车范围」绿，一级「显示道具范围」同时变黄
-  await expect(rangeBox(page).locator('.tac-range-opt:not(.tac-range-sub)')).toHaveText(['显示道具范围', '隐藏范围']);
+  await expect(rangeBox(page).locator('.tac-range-opt:not(.tac-range-sub)')).toHaveText(['显示道具范围', '隐藏']);
   await expect(lv2(page, '弹射板车范围')).toHaveClass(/active/);
   await expect(lv1(page, '显示道具范围')).toHaveClass(/active/);
   await expect(page.locator('.tac-item-circle')).toHaveCount(1);
@@ -97,7 +97,7 @@ test('range box: customize has icon, no talents, slider radius 0 hides circle', 
   await expect(page.locator('.tac-token[data-role="customize"] img')).toHaveCount(1);
   // camp=other 一级按钮统一为：显示范围 / 隐藏范围，不显示天赋范围
   await expect(lv1(page, '显示天赋范围')).toHaveCount(0);
-  await expect(rangeBox(page).locator('.tac-range-opt:not(.tac-range-sub)')).toHaveText(['显示范围', '隐藏范围']);
+  await expect(rangeBox(page).locator('.tac-range-opt:not(.tac-range-sub)')).toHaveText(['显示范围', '隐藏']);
   await lv1(page, '显示范围').click();
   await expect(lv1(page, '显示范围')).toHaveClass(/active/);
   // 二级按钮「自定义范围」未点亮：无范围调节、无范围圈
@@ -124,7 +124,7 @@ test('range box: customize has icon, no talents, slider radius 0 hides circle', 
 
 test('range box: hunter trait subs toggle independently, multiple can light (dreamWitch)', async ({ page }) => {
   await placeRole(page, 'dreamWitch', 0.4, 0.4);
-  await expect(rangeBox(page).locator('.tac-range-opt:not(.tac-range-sub)')).toHaveText(['显示特质范围', '显示天赋范围', '隐藏范围']);
+  await expect(rangeBox(page).locator('.tac-range-opt:not(.tac-range-sub)')).toHaveText(['显示特质范围', '显示天赋范围', '隐藏']);
   await lv1(page, '显示特质范围').click();
   await expect(lv1(page, '显示特质范围')).toHaveClass(/active/);
   // 三个 range.card 标签平铺为二级按钮；一级不点亮，需亲手点击
@@ -159,7 +159,7 @@ test('range box: new item shows first range; subs toggle as multi-select (poseid
   await tool(page, 'select');
   await clickPoint(page, 0.5, 0.4);
   // 道具新创建默认显示第一个范围；一级按钮变黄
-  await expect(rangeBox(page).locator('.tac-range-opt:not(.tac-range-sub)')).toHaveText(['显示道具范围', '隐藏范围']);
+  await expect(rangeBox(page).locator('.tac-range-opt:not(.tac-range-sub)')).toHaveText(['显示道具范围', '隐藏']);
   await expect(lv1(page, '显示道具范围')).toHaveClass(/active/);
   await expect(lv2(page, '第一次催眠范围')).toHaveClass(/active/);
   await expect(lv2(page, '第二次催眠范围')).not.toHaveClass(/active/);
@@ -169,7 +169,7 @@ test('range box: new item shows first range; subs toggle as multi-select (poseid
   await expect(lv2(page, '第二次催眠范围')).toHaveClass(/active/);
   await expect(lv2(page, '第一次催眠范围')).toHaveClass(/active/);
   // 隐藏范围后清空
-  await lv1(page, '隐藏范围').click();
+  await lv1(page, '隐藏').click();
   await expect(lv1(page, '显示道具范围')).not.toHaveClass(/active/);
   await expect(page.locator('.tac-item-circle')).toHaveCount(0);
 });

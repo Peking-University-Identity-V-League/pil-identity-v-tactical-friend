@@ -193,8 +193,8 @@ function tacTalentButtons(hostRole, camp) {
         out.push({
           tk: 'fearRadius', kind, label: def.name, base: opt.size_m,
           variants: [
-            { key: 'beauty', label: translate("ui.tacRangeBox.beautyForm"), mult: 0.8 },
-            { key: 'prajna', label: translate("ui.tacRangeBox.prajnaForm"), mult: 1.1 },
+            { key: 'beauty', label: translate("characters.geisha.beautyForm"), mult: 0.8 },
+            { key: 'prajna', label: translate("characters.geisha.prajnaForm"), mult: 1.1 },
           ],
         });
         continue;
@@ -639,7 +639,7 @@ export function syncTacCipherCard() {
     enable.type = 'checkbox';
     enable.checked = pct != null;
     const enableText = document.createElement('span');
-    enableText.textContent = translate("ui.tacCipherCard.enableProgress");
+    enableText.textContent = translate("ui.tac.cipherCard.enableProgress");
     enableLabel.appendChild(enable);
     enableLabel.appendChild(enableText);
     const slider = document.createElement('input');
@@ -998,7 +998,7 @@ export function renderTacChairs() {
     const startLabel = document.createElement('span');
     startLabel.className = 'tac-carry-time tac-carry-time-start';
     startLabel.textContent = translate(tacCarryState.scenario === 'tide'
-      ? 'ui.tacTide.startLabel' : 'ui.tacCarry.startLabel');
+      ? 'ui.tac.cal.rocketChair.startLabel' : 'ui.tacCarry.startLabel');
     startLabel.style.left = dot.style.left;
     startLabel.style.top = dot.style.top;
     startLabel.style.color = '#ff5252';
@@ -1292,8 +1292,8 @@ export function tacSetZoomLock(on) {
   if (!lock) return;
   lock.classList.toggle('active', on);
   lock.innerHTML = on ? TAC_ZOOM_LOCK_ICONS.locked : TAC_ZOOM_LOCK_ICONS.unlocked;
-  lock.title = on ? translate("application.tacSetZoomLock")
-    : translate("application.tacSetZoomLockAlternate");
+  lock.title = on ? translate("ui.tac.map.zoomLock.message1")
+    : translate("ui.tac.map.zoomLock.message2");
 }
 
 
@@ -1622,7 +1622,7 @@ function tacDedOnMapSwitch() {
         renderTacDedOverlay(c);
         const tide = c.scenario === 'tide';
         tacCarrySummary.textContent = tide
-          ? translate('ui.tacTide.summary', { cells: c.field.reached })
+          ? translate('ui.tac.cal.rocketChair.tideTurner.result.summary', { cells: c.field.reached })
           : translate('ui.tacCarry.summary', {
             seconds: c.profile.remainingSeconds.toFixed(1),
             pickup: c.profile.pickupSeconds.toFixed(1),
@@ -1632,7 +1632,7 @@ function tacDedOnMapSwitch() {
         else renderTacCarryLegend(c.field.bands);
         syncTacCarryResultBox();
         tacCarryResultBoxEl.style.display = '';
-        tacCarryNote.dataset.i18n = tide ? 'ui.tacTide.note' : 'ui.tacCarry.note';
+        tacCarryNote.dataset.i18n = tide ? 'ui.tac.cal.rocketChair.tideTurner.result.note' : 'ui.tac.cal.rocketChair.balloon.result.note';
         tacCarryNote.textContent = translate(tacCarryNote.dataset.i18n);
         tacCarryNote.style.display = '';
       }
@@ -1644,7 +1644,7 @@ function tacDedOnMapSwitch() {
         tacPathState.cache = c;
         tacPathState.resultMapId = S.currentMapId;
         renderTacPathOverlay(c.g, c.result, c.sA, c.sB);
-        tacPathSummary.textContent = translate('ui.tacPath.summary', {
+        tacPathSummary.textContent = translate('ui.tac.path.result.summary', {
           dist: c.totalMeters.toFixed(1),
           seconds: c.totalSeconds.toFixed(1),
         });
@@ -1655,16 +1655,16 @@ function tacDedOnMapSwitch() {
         for (const which of ['a', 'b']) {
           const fx = c.fixed?.[which];
           if (!fx) continue;
-          fixLines.push(translate('ui.tacPath.fixNote', {
-            name: translate(which === 'a' ? 'ui.tacPath.startLabelA' : 'ui.tacPath.endLabelB'),
+          fixLines.push(translate('ui.tac.path.result.note.fixed', {
+            name: translate(which === 'a' ? 'ui.tac.path.map.startLabelA' : 'ui.tac.path.map.endLabelB'),
             fx: Math.round(fx.from.x), fy: Math.round(fx.from.z),
             tx: Math.round(fx.to.x), ty: Math.round(fx.to.z),
           }));
         }
         tacPathFixNote.textContent = fixLines.join('\n');
         tacPathFixNote.style.display = fixLines.length ? '' : 'none';
-        tacPathNote.dataset.i18n = 'ui.tacPath.note';
-        tacPathNote.textContent = translate('ui.tacPath.note');
+        tacPathNote.dataset.i18n = 'ui.tac.path.result.note';
+        tacPathNote.textContent = translate('ui.tac.path.result.note');
         tacPathNote.style.display = '';
       }
     }
@@ -1760,7 +1760,7 @@ function syncTacDedRunBtn() {
   const tide = tacCarryState.scenario === 'tide';
   const point = tacCarryState.mode === 'point';
   const key = tide
-    ? (point ? 'ui.tacTide.runPoint' : 'ui.tacTide.run')
+    ? (point ? 'ui.tac.cal.rocketChair.runPoint' : 'ui.tac.cal.rocketChair.run')
     : (point ? 'ui.tacCarry.runPoint' : 'ui.tacCarry.run');
   tacCarryRunBtn.dataset.i18n = key;
   tacCarryRunBtn.textContent = translate(key);
@@ -1778,7 +1778,7 @@ function tacDedSetScenario(scenario) {
   tacDedSettingsCarryEl.style.display = tide ? 'none' : '';
   tacDedSettingsTideEl.style.display = tide ? '' : 'none';
   // 模式按钮 2 的文案随场景变化（选点看可挂椅 / 选点看可达椅）
-  const mk = tide ? 'ui.tacTide.modePoint' : 'ui.tacCarry.modePoint';
+  const mk = tide ? 'ui.tac.cal.rocketChair.tideTurner.type2.modePoint' : 'ui.tacCarry.modePoint';
   tacCarryModePointEl.dataset.i18n = mk;
   tacCarryModePointEl.textContent = translate(mk);
   renderTacChairs();  // 起点文字随场景切换（牵气球起点 ↔ 起点）
@@ -1909,8 +1909,8 @@ async function tacCarryRun() {
     renderTacCarryLegend(field.bands);
     syncTacCarryResultBox();
     tacCarryResultBoxEl.style.display = '';
-    tacCarryNote.dataset.i18n = 'ui.tacCarry.note';
-    tacCarryNote.textContent = translate('ui.tacCarry.note');
+    tacCarryNote.dataset.i18n = 'ui.tac.cal.rocketChair.balloon.result.note';
+    tacCarryNote.textContent = translate('ui.tac.cal.rocketChair.balloon.result.note');
     tacCarryNote.style.display = '';
   } finally {
     tacCarryState.running = false;
@@ -2054,7 +2054,7 @@ function renderTacCarryDetail(rows) {
       + rows.map((r, i) =>
         `<tr data-row="${i}"${tacCarryState.detailMark === i ? ' class="marked"' : ''}>`
         + `<td>${Math.round(r.x)}, ${Math.round(r.z)}</td><td>${r.t.toFixed(1)}</td>`
-        + `<td>${translate(`ui.tacCarry.band${r.band}`)}</td></tr>`).join('')
+        + `<td>${translate(`ui.tac.cal.rocketChair.balloon.band${r.band}`)}</td></tr>`).join('')
       + '</tbody></table>';
   }
   renderTacCarryMark();
@@ -2099,11 +2099,11 @@ function renderTacCarryLegend(bands) {
     if (!staticLegend) {
       el.dataset.band = b.band;
       if (tacCarryState.hiddenBands.has(b.band)) el.classList.add('off');
-      el.title = translate('ui.tacCarry.bandToggleHint');
+      el.title = translate('ui.tac.cal.rocketChair.balloon.band.message');
       el.addEventListener('click', () => tacDedToggleBand(b.band));
     }
     el.innerHTML = `<span class="tac-carry-swatch" style="background:${CARRY_BAND_COLORS[b.band]}"></span>`
-      + `<span>${translate(`ui.tacCarry.band${b.band}`)}</span>`;
+      + `<span>${translate(`ui.tac.cal.rocketChair.balloon.band${b.band}`)}</span>`;
     tacCarryLegend.appendChild(el);
   });
   tacCarryLegend.style.display = '';
@@ -2407,21 +2407,21 @@ async function tacTideRun() {
   if (tacCarryState.running) return;
   const sel = tacCarryState.chair;
   if (!sel) {
-    showToast(translate(tacCarryState.mode === 'point' ? 'ui.tacCarry.pickingPoint' : 'ui.tacTide.picking'));
+    showToast(translate(tacCarryState.mode === 'point' ? 'ui.tacCarry.pickingPoint' : 'ui.tac.cal.rocketChair.picking'));
     return;
   }
   if (!navGridAvailable(S.currentMapId)) {
-    tacCarrySummary.textContent = translate('ui.tacTide.noGrid');
+    tacCarrySummary.textContent = translate('ui.tac.cal.rocketChair.noGrid');
     return;
   }
   tacCarryClearResult();
   tacCarryState.running = true;
-  tacCarryRunBtn.textContent = translate('ui.tacTide.running');
+  tacCarryRunBtn.textContent = translate('ui.tac.cal.rocketChair.running');
   tacCarryProgressBox.style.display = '';
   tacCarryProgressBar.style.width = '0%';
   try {
     const g = await loadNavGrid(S.currentMapId);
-    if (!g) { tacCarrySummary.textContent = translate('ui.tacTide.noGrid'); return; }
+    if (!g) { tacCarrySummary.textContent = translate('ui.tac.cal.rocketChair.noGrid'); return; }
     const profile = readTacTideProfile();
     // 地下室椅子：从楼梯出口格起搜，椅子→出口（水平 + 坡道斜面附加）折算为已耗时
     let start = snapToWalkable(g, sel.x, sel.z);
@@ -2443,7 +2443,7 @@ async function tacTideRun() {
     }
     if (!start) {
       tacCarrySummary.textContent = translate(sel.kind === 'point'
-        ? 'ui.tacTide.unsupportedPoint' : 'ui.tacTide.unsupportedChair');
+        ? 'ui.tac.cal.rocketChair.unsupportedPoint' : 'ui.tac.cal.rocketChair.unsupportedChair');
       return;
     }
     const run = computeTideField(g, start, profile, {
@@ -2457,12 +2457,12 @@ async function tacTideRun() {
     tacCarryState.cache = { scenario: 'tide', g, field, profile };
     renderTacTideOverlay(g, field);
     tacCarryState.resultMapId = S.currentMapId;
-    tacCarrySummary.textContent = translate('ui.tacTide.summary', { cells: field.reached });
+    tacCarrySummary.textContent = translate('ui.tac.cal.rocketChair.tideTurner.result.summary', { cells: field.reached });
     renderTacTideLegend(field.bands);
     syncTacCarryResultBox();
     tacCarryResultBoxEl.style.display = '';
-    tacCarryNote.dataset.i18n = 'ui.tacTide.note';
-    tacCarryNote.textContent = translate('ui.tacTide.note');
+    tacCarryNote.dataset.i18n = 'ui.tac.cal.rocketChair.tideTurner.result.note';
+    tacCarryNote.textContent = translate('ui.tac.cal.rocketChair.tideTurner.result.note');
     tacCarryNote.style.display = '';
   } finally {
     tacCarryState.running = false;
@@ -2570,7 +2570,7 @@ function renderTacTideChairTimes(g, field, resolveBand) {
     if (band < 0) continue;
     const shown = resolveBand(band);
     addLabel(c.x, c.z,
-      translate(band === 4 ? 'ui.tacTide.timeMargin' : 'ui.tacTide.timeSeconds',
+      translate(band === 4 ? 'ui.tac.cal.rocketChair.timeMargin' : 'ui.tac.cal.rocketChair.timeSeconds',
         { seconds: t.toFixed(1) }),
       shown >= 0 ? TIDE_BAND_COLORS[shown] : '#a4afbb');
     rows.push({ x: c.x, z: c.z, t, band });
@@ -2582,7 +2582,7 @@ function renderTacTideChairTimes(g, field, resolveBand) {
   if (tacCarryState.mode === 'point') {
     // 统计只计 20 秒内可达（余量带需额外加速，不计入）
     const reachable = rows.filter((r) => r.band < 4).length;
-    tacCarryChairCountEl.textContent = translate('ui.tacTide.chairCount', { count: reachable });
+    tacCarryChairCountEl.textContent = translate('ui.tac.cal.rocketChair.tideTurner.result.chairCount', { count: reachable });
     tacCarryChairCountEl.style.display = '';
     renderTacTideDetail(rows);
   } else {
@@ -2594,19 +2594,19 @@ function renderTacTideChairTimes(g, field, resolveBand) {
 // 椅子明细表（仅选点模式）：与 carry 场景共用折叠开关与表格容器；
 // 点击行在地图上用正圆红框框出对应椅子，再点取消，点别的行切换
 function renderTacTideDetail(rows) {
-  tacCarryDetailToggleEl.textContent = translate('ui.tacTide.detailToggle', { value: tacCarryDetailOpen ? '▾' : '▸' });
+  tacCarryDetailToggleEl.textContent = translate('ui.tac.cal.rocketChair.tideTurner.result.table.title', { value: tacCarryDetailOpen ? '▾' : '▸' });
   tacCarryDetailBoxEl.style.display = rows.length ? '' : 'none';
   tacCarryDetailBodyEl.style.display = tacCarryDetailOpen ? '' : 'none';
   if (!rows.length) return;
   if (tacCarryDetailOpen) {
     tacCarryDetailBodyEl.innerHTML = `<table class="tac-detail-tbl"><thead><tr>`
-      + `<th>${translate('ui.tacTide.detailPos')}</th>`
-      + `<th>${translate('ui.tacTide.detailTime')}</th>`
-      + `<th>${translate('ui.tacTide.detailType')}</th></tr></thead><tbody>`
+      + `<th>${translate('ui.tac.cal.rocketChair.tideTurner.result.table.detailPos')}</th>`
+      + `<th>${translate('ui.tac.cal.rocketChair.tideTurner.result.table.detailTime')}</th>`
+      + `<th>${translate('ui.tac.cal.rocketChair.tideTurner.result.table.detailType')}</th></tr></thead><tbody>`
       + rows.map((r, i) =>
         `<tr data-row="${i}"${tacCarryState.detailMark === i ? ' class="marked"' : ''}>`
         + `<td>${Math.round(r.x)}, ${Math.round(r.z)}</td><td>${r.t.toFixed(1)}</td>`
-        + `<td>${translate(`ui.tacTide.band${r.band}`)}</td></tr>`).join('')
+        + `<td>${translate(`ui.tac.cal.rocketChair.tideTurner.band${r.band}`)}</td></tr>`).join('')
       + '</tbody></table>';
   }
   renderTacCarryMark();
@@ -2624,11 +2624,11 @@ function renderTacTideLegend(bands) {
     if (!staticLegend) {
       el.dataset.band = b.band;
       if (tacCarryState.hiddenBands.has(b.band)) el.classList.add('off');
-      el.title = translate('ui.tacTide.bandToggleHint');
+      el.title = translate('ui.tac.cal.rocketChair.tideTurner.band.message');
       el.addEventListener('click', () => tacDedToggleBand(b.band));
     }
     el.innerHTML = `<span class="tac-carry-swatch" style="background:${TIDE_BAND_COLORS[b.band]}"></span>`
-      + `<span>${translate(`ui.tacTide.band${b.band}`)}</span>`;
+      + `<span>${translate(`ui.tac.cal.rocketChair.tideTurner.band${b.band}`)}</span>`;
     tacCarryLegend.appendChild(el);
   });
   tacCarryLegend.style.display = '';
@@ -2720,9 +2720,9 @@ function renderTacTideBaseDetail() {
   if (!tacTideBaseDetailOpen) return;
   const b = tacCarryState.tide.base;
   tacTideBaseDetailBodyEl.innerHTML = `<table class="tac-detail-tbl"><thead><tr>`
-    + `<th>${translate('ui.tacTide.baseColName')}</th>`
-    + `<th>${translate('ui.tacTide.baseColSpeed')}</th>`
-    + `<th>${translate('ui.tacTide.baseColDist')}</th></tr></thead><tbody>`
+    + `<th>${translate('ui.tac.cal.rocketChair.baseColName')}</th>`
+    + `<th>${translate('ui.tac.cal.rocketChair.baseColSpeed')}</th>`
+    + `<th>${translate('ui.tac.cal.rocketChair.baseColDist')}</th></tr></thead><tbody>`
     + `<tr><td>${b.name}</td><td class="tac-col-speed"><b>${Math.round(b.speed * 100) / 100}</b></td>`
     + `<td>${Math.round(b.speed * TIDE_SECONDS * 10) / 10}</td></tr></tbody></table>`;
 }
@@ -2745,9 +2745,9 @@ function renderTacTideBuffs() {
     return;
   }
   tacTideBuffBodyEl.innerHTML = `<table class="tac-detail-tbl"><thead><tr>`
-    + `<th class="tac-cb-name">${translate('ui.tacTide.buffColName')}</th>`
-    + `<th class="tac-cb-value">${translate('ui.tacTide.buffColValue')}</th>`
-    + `<th>${translate('ui.tacTide.buffColDuration')}</th>`
+    + `<th class="tac-cb-name">${translate('ui.tac.cal.rocketChair.buffColName')}</th>`
+    + `<th class="tac-cb-value">${translate('ui.tac.cal.rocketChair.buffColValue')}</th>`
+    + `<th>${translate('ui.tac.cal.rocketChair.buffColDuration')}</th>`
     + `<th class="tac-col-del"></th></tr></thead><tbody>`
     + rows.map((r) =>
       `<tr><td>${r.name}</td><td>${r.value}</td><td>${r.duration}</td>`
@@ -3020,15 +3020,15 @@ function syncTacPathPickUI() {
     const btn = A ? tacPathPickA : tacPathPickB;
     const st = A ? tacPathStatusA : tacPathStatusB;
     const armed = tacPathState.armed === which;
-    const key = armed ? 'ui.tacPath.cancelPick' : (A ? 'ui.tacPath.pickA' : 'ui.tacPath.pickB');
+    const key = armed ? 'ui.tac.path.pick.cancel' : (A ? 'ui.tac.path.pick.buttonA' : 'ui.tac.path.pick.buttonB');
     btn.dataset.i18n = key;
     btn.textContent = translate(key);
     btn.classList.toggle('active', armed);
     const pt = tacPathState.points[which];
-    if (armed) st.textContent = translate(A ? 'ui.tacPath.pickingA' : 'ui.tacPath.pickingB');
-    else if (pt) st.textContent = translate(A ? 'ui.tacPath.selectedA' : 'ui.tacPath.selectedB',
+    if (armed) st.textContent = translate(A ? 'ui.tac.path.pick.status.pickingA' : 'ui.tac.path.pick.status.pickingB');
+    else if (pt) st.textContent = translate(A ? 'ui.tac.path.pick.status.selectedA' : 'ui.tac.path.pick.status.selectedB',
       { x: Math.round(pt.x), y: Math.round(pt.z) });
-    else st.textContent = translate(A ? 'ui.tacPath.noA' : 'ui.tacPath.noB');
+    else st.textContent = translate(A ? 'ui.tac.path.pick.status.noA' : 'ui.tac.path.pick.status.noB');
   }
 }
 
@@ -3069,7 +3069,7 @@ function renderTacPathPoints() {
     tacLayer().appendChild(dot);
     const label = document.createElement('span');
     label.className = 'tac-carry-time tac-path-label';
-    label.textContent = translate(A ? 'ui.tacPath.startLabelA' : 'ui.tacPath.endLabelB');
+    label.textContent = translate(A ? 'ui.tac.path.map.startLabelA' : 'ui.tac.path.map.endLabelB');
     label.style.left = dot.style.left;
     label.style.top = dot.style.top;
     label.style.color = A ? '#ff5252' : '#328bff';
@@ -3091,7 +3091,7 @@ function renderTacPathPoints() {
     tacLayer().appendChild(ring);
     const fl = document.createElement('span');
     fl.className = 'tac-carry-time tac-path-label tac-path-fix-label';
-    fl.textContent = translate(A ? 'ui.tacPath.fixedLabelA' : 'ui.tacPath.fixedLabelB');
+    fl.textContent = translate(A ? 'ui.tac.path.map.fixedLabelA' : 'ui.tac.path.map.fixedLabelB');
     fl.style.left = ring.style.left;
     fl.style.top = ring.style.top;
     fl.style.color = A ? '#ff5252' : '#328bff';
@@ -3113,8 +3113,8 @@ function tacPathClearResult() {
   tacPathFixNote.textContent = '';
   tacPathNote.style.display = 'none';
   tacPathProgressBox.style.display = 'none';
-  tacPathRunBtn.dataset.i18n = 'ui.tacPath.run';
-  tacPathRunBtn.textContent = translate('ui.tacPath.run');
+  tacPathRunBtn.dataset.i18n = 'ui.tac.path.run';
+  tacPathRunBtn.textContent = translate('ui.tac.path.run');
 }
 
 // 从私有移速状态构建计算档案（与测算同语义：1+Σ(mult-1)，postMult 再乘）
@@ -3170,23 +3170,23 @@ function tacPathSecondsFor(profile, distM) {
 async function tacPathRun() {
   if (tacPathState.running) return;
   const { a, b } = tacPathState.points;
-  if (!a) { showToast(translate('ui.tacPath.pickingA')); return; }
-  if (!b) { showToast(translate('ui.tacPath.pickingB')); return; }
+  if (!a) { showToast(translate('ui.tac.path.pick.status.pickingA')); return; }
+  if (!b) { showToast(translate('ui.tac.path.pick.status.pickingB')); return; }
   if (!navGridAvailable(S.currentMapId)) {
-    tacPathSummary.textContent = translate('ui.tacPath.noGrid');
+    tacPathSummary.textContent = translate('ui.tac.path.noGrid');
     syncTacPathResultBox();
     tacPathResultBoxEl.style.display = '';
     return;
   }
   tacPathClearResult();
   tacPathState.running = true;
-  tacPathRunBtn.textContent = translate('ui.tacPath.running');
+  tacPathRunBtn.textContent = translate('ui.tac.path.run.running');
   tacPathProgressBox.style.display = '';
   tacPathProgressBar.style.width = '0%';
   try {
     const g = await loadNavGrid(S.currentMapId);
     if (!g) {
-      tacPathSummary.textContent = translate('ui.tacPath.noGrid');
+      tacPathSummary.textContent = translate('ui.tac.path.noGrid');
       syncTacPathResultBox();
       tacPathResultBoxEl.style.display = '';
       return;
@@ -3196,7 +3196,7 @@ async function tacPathRun() {
       tacPathState.cache = { g, result, sA, sB, profile, totalSeconds, totalMeters, fixed };
       renderTacPathOverlay(g, result, sA, sB);
       tacPathState.resultMapId = S.currentMapId;
-      tacPathSummary.textContent = translate('ui.tacPath.summary', {
+      tacPathSummary.textContent = translate('ui.tac.path.result.summary', {
         dist: totalMeters.toFixed(1),
         seconds: totalSeconds.toFixed(1),
       });
@@ -3205,8 +3205,8 @@ async function tacPathRun() {
       for (const which of ['a', 'b']) {
         const fx = fixed?.[which];
         if (!fx) continue;
-        fixLines.push(translate('ui.tacPath.fixNote', {
-          name: translate(which === 'a' ? 'ui.tacPath.startLabelA' : 'ui.tacPath.endLabelB'),
+        fixLines.push(translate('ui.tac.path.result.note.fixed', {
+          name: translate(which === 'a' ? 'ui.tac.path.map.startLabelA' : 'ui.tac.path.map.endLabelB'),
           fx: Math.round(fx.from.x), fy: Math.round(fx.from.z),
           tx: Math.round(fx.to.x), ty: Math.round(fx.to.z),
         }));
@@ -3216,8 +3216,8 @@ async function tacPathRun() {
       renderTacPathPoints();
       syncTacPathResultBox();
       tacPathResultBoxEl.style.display = '';
-      tacPathNote.dataset.i18n = 'ui.tacPath.note';
-      tacPathNote.textContent = translate('ui.tacPath.note');
+      tacPathNote.dataset.i18n = 'ui.tac.path.result.note';
+      tacPathNote.textContent = translate('ui.tac.path.result.note');
       tacPathNote.style.display = '';
     };
     // 栅格寻路（1px 精确栅格，由 3D 碰撞数据逐像素烘焙）+ 栅格视线拉直
@@ -3242,14 +3242,14 @@ async function tacPathRun() {
     };
     const sA = snapEndpoint('a', a);
     if (!sA) {
-      tacPathSummary.textContent = translate('ui.tacPath.unsupportedA');
+      tacPathSummary.textContent = translate('ui.tac.path.unsupportedA');
       syncTacPathResultBox();
       tacPathResultBoxEl.style.display = '';
       return;
     }
     const sB = snapEndpoint('b', b);
     if (!sB) {
-      tacPathSummary.textContent = translate('ui.tacPath.unsupportedB');
+      tacPathSummary.textContent = translate('ui.tac.path.unsupportedB');
       syncTacPathResultBox();
       tacPathResultBoxEl.style.display = '';
       return;
@@ -3264,7 +3264,7 @@ async function tacPathRun() {
     let result = await run.promise;
     if (result.cancelled) return;
     if (result.unreachable) {
-      tacPathSummary.textContent = translate('ui.tacPath.unreachable');
+      tacPathSummary.textContent = translate('ui.tac.path.unreachable');
       syncTacPathResultBox();
       tacPathResultBoxEl.style.display = '';
       return;
@@ -3291,8 +3291,8 @@ async function tacPathRun() {
     showResult(result, sA, sB, totalSeconds, totalMeters, fixed);
   } finally {
     tacPathState.running = false;
-    tacPathRunBtn.dataset.i18n = 'ui.tacPath.run';
-    tacPathRunBtn.textContent = translate('ui.tacPath.run');
+    tacPathRunBtn.dataset.i18n = 'ui.tac.path.run';
+    tacPathRunBtn.textContent = translate('ui.tac.path.run');
     tacPathProgressBar.style.width = '100%';
     setTimeout(() => { if (!tacPathState.running) tacPathProgressBox.style.display = 'none'; }, 400);
   }
@@ -3357,7 +3357,7 @@ function syncTacPathResultBox() {
 }
 let tacPathSettingsOpen = false;
 function syncTacPathSettingsBox() {
-  tacPathSettingsToggleEl.textContent = translate('ui.tacPath.settingsToggleFmt', { value: tacPathSettingsOpen ? '▾' : '▸' });
+  tacPathSettingsToggleEl.textContent = translate('ui.tac.path.setting.title', { value: tacPathSettingsOpen ? '▾' : '▸' });
   tacPathSettingsBodyEl.style.display = tacPathSettingsOpen ? '' : 'none';
 }
 
@@ -3505,8 +3505,8 @@ function renderTacPathBaseDetail() {
   if (!tacPathBaseDetailOpen) return;
   const b = tacPathState.base;
   tacPathBaseDetailBodyEl.innerHTML = `<table class="tac-detail-tbl"><thead><tr>`
-    + `<th>${translate('ui.tacPath.baseColName')}</th>`
-    + `<th>${translate('ui.tacPath.baseColSpeed')}</th></tr></thead><tbody>`
+    + `<th>${translate('ui.tac.path.setting.velocity.base.table.name')}</th>`
+    + `<th>${translate('ui.tac.path.setting.velocity.base.table.speed')}</th></tr></thead><tbody>`
     + `<tr><td>${b.name}</td><td class="tac-col-speed"><b>${Math.round(b.speed * 100) / 100}</b></td></tr></tbody></table>`;
 }
 
@@ -3528,9 +3528,9 @@ function renderTacPathBuffs() {
     return;
   }
   tacPathBuffBodyEl.innerHTML = `<table class="tac-detail-tbl"><thead><tr>`
-    + `<th class="tac-cb-name">${translate('ui.tacPath.buffColName')}</th>`
-    + `<th class="tac-cb-value">${translate('ui.tacPath.buffColValue')}</th>`
-    + `<th>${translate('ui.tacPath.buffColDuration')}</th>`
+    + `<th class="tac-cb-name">${translate('ui.tac.path.setting.velocity.buff.table.name')}</th>`
+    + `<th class="tac-cb-value">${translate('ui.tac.path.setting.velocity.buff.table.value')}</th>`
+    + `<th>${translate('ui.tac.path.setting.velocity.buff.table.duration')}</th>`
     + `<th class="tac-col-del"></th></tr></thead><tbody>`
     + rows.map((r) =>
       `<tr><td>${r.name}</td><td>${r.value}</td><td>${r.duration}</td>`
@@ -5155,16 +5155,16 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
 
   const refresh = () => { renderTacBoard(); renderTacManage(); };
 
-  const box = tacManageBox(settings, "ui.tacRangeBox.title");
+  const box = tacManageBox(settings, "ui.tac.manangeBox.range.title");
 
   const modeLine = document.createElement('div');
-  const lv1Defs = [{ mk: 'range', label: cfg.key === 'showItem' ? translate("ui.tacRangeBox.showItem")
-    : cfg.key === 'showTrait' ? translate("ui.tacRangeBox.showTrait")
-    : translate("ui.tacRangeBox.showPlain") }];
+  const lv1Defs = [{ mk: 'range', label: cfg.key === 'showItem' ? translate("ui.tac.manangeBox.range.showItem")
+    : cfg.key === 'showTrait' ? translate("ui.tac.manangeBox.range.showTrait")
+    : translate("ui.tac.manangeBox.range.showPlain") }];
   if (groupKind === 'trait') {
-    lv1Defs.push({ mk: 'talents', label: translate("ui.tacRangeBox.showTalents") });
+    lv1Defs.push({ mk: 'talents', label: translate("ui.tac.manangeBox.range.showTalents") });
   }
-  lv1Defs.push({ mk: 'hide', label: translate("ui.tacRangeBox.hide") });
+  lv1Defs.push({ mk: 'hide', label: translate("ui.tac.manangeBox.range.hide") });
   modeLine.className = 'tac-box-line';
   modeLine.innerHTML = `<div class="tac-range-opts">` + lv1Defs.map((d) =>
     `<button type="button" data-mk="${d.mk}" class="tac-range-opt`
@@ -5348,16 +5348,16 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
       row.className = 'tac-range-desc';
       const txt = document.createElement('span');
       txt.textContent = e2.opt.crossWidth != null
-        ? `${(e2.opt.label || '') + postfix} ${translate("ui.tacRangeBox.radius")} ${tacRangeFmt(e2.meters)}m ${translate("ui.tacRangeBox.crossWidth")} ${tacRangeFmt(e2.opt.crossWidth)}m`
+        ? `${(e2.opt.label || '') + postfix} ${translate("ui.tac.manangeBox.range.unit.radius")} ${tacRangeFmt(e2.meters)}m ${translate("ui.tac.manangeBox.range.unit.crossWidth")} ${tacRangeFmt(e2.opt.crossWidth)}m`
         : e2.opt.ringInner != null
-          ? `${(e2.opt.label || '') + postfix} ${translate("ui.tacRangeBox.innerRadius")} ${tacRangeFmt(e2.opt.ringInner)}m ${translate("ui.tacRangeBox.outerRadius")} ${tacRangeFmt(e2.meters)}m`
-          : `${(e2.opt.label || '') + postfix} ${translate("ui.tacRangeBox.radius")} ${tacRangeFmt(e2.meters)}m`;
+          ? `${(e2.opt.label || '') + postfix} ${translate("ui.tac.manangeBox.range.unit.innerRadius")} ${tacRangeFmt(e2.opt.ringInner)}m ${translate("ui.tac.manangeBox.range.unit.outerRadius")} ${tacRangeFmt(e2.meters)}m`
+          : `${(e2.opt.label || '') + postfix} ${translate("ui.tac.manangeBox.range.unit.radius")} ${tacRangeFmt(e2.meters)}m`;
       row.appendChild(txt);
       const del = document.createElement('button');
       del.type = 'button';
       del.className = 'tac-range-del';
       del.textContent = '×';
-      del.title = translate("ui.tacRangeBox.delDesc");
+      del.title = translate("ui.tac.manangeBox.range.delete.message");
       del.addEventListener('click', () => {
         const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
         rbx.subs = rbx.subs.filter((v) => v !== e2.i);
@@ -5370,13 +5370,13 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
       const row = document.createElement('div');
       row.className = 'tac-range-desc';
       const txt = document.createElement('span');
-      txt.textContent = `${tr.label}${tr.sub ? '·' + tr.sub : postfix} ${translate("ui.tacRangeBox.radius")} ${tacRangeFmt(tr.meters)}m`;
+      txt.textContent = `${tr.label}${tr.sub ? '·' + tr.sub : postfix} ${translate("ui.tac.manangeBox.range.unit.radius")} ${tacRangeFmt(tr.meters)}m`;
       row.appendChild(txt);
       const del = document.createElement('button');
       del.type = 'button';
       del.className = 'tac-range-del';
       del.textContent = '×';
-      del.title = translate("ui.tacRangeBox.delDesc");
+      del.title = translate("ui.tac.manangeBox.range.delete.message");
       del.addEventListener('click', () => {
         const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
         delete rbx.talents[tr.tk];
@@ -5393,7 +5393,7 @@ export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
   const fillLabel = document.createElement('label');
   fillLabel.className = 'tac-range-fill';
   fillLabel.innerHTML = `<input type="checkbox"`
-    + `${(rb ? rb.fill : defFill) ? ' checked' : ''}> ${translate("ui.tacRangeBox.fill")}`;
+    + `${(rb ? rb.fill : defFill) ? ' checked' : ''}> ${translate("ui.tac.manangeBox.range.setting.fill")}`;
   const fillInput = fillLabel.querySelector('input');
   if (fillInput) fillInput.addEventListener('change', (ev) => {
     const rbx = tacRbEnsure(cfg, inst, hideByDefault, defFill);
@@ -5621,34 +5621,34 @@ function buildMirrorManageBox(settings, host) {
   const mi = aq ? (board.items.find((it) => it.kind === 'mirrorImage' && it.aqIid === aq.iid)
     || board.items.find((it) => it.kind === 'mirrorImage' && it.aqIid == null)) : null;
 
-  const box = tacManageBox(settings, "ui.tacManageMirror.title");
+  const box = tacManageBox(settings, "ui.tac.manangeBox.bloodyQueen.aquaMirror.title");
   const line = document.createElement('div');
   line.className = 'tac-box-line';
   box.appendChild(line);
   line.innerHTML =
     `<label class="tac-manage-glow"><input type="checkbox" data-mq="allow"`
-    + `${host.linkAuto !== false ? ' checked' : ''}> ${translate("ui.tacManageMirror.allow")}</label>`
+    + `${host.linkAuto !== false ? ' checked' : ''}> ${translate("ui.tac.manangeBox.link.allow")}</label>`
     + `<label class="tac-manage-glow"><input type="checkbox" data-mq="link"`
     + `${(linked ? aq.linkShow !== false && bq.linkShow !== false : host.linkShow !== false) ? ' checked' : ''}${linked ? '' : ' disabled'}>`
-    + ` ${translate("ui.tacManageMirror.link")}</label>`
+    + ` ${translate("ui.tac.manangeBox.link.show")}</label>`
     + `<label class="tac-manage-glow"><input type="checkbox" data-mq="show"`
     + `${aq && aq.showMirror ? ' checked' : ''}${aq ? '' : ' disabled'}>`
-    + ` ${translate("ui.tacManageMirror.show")}</label>`
+    + ` ${translate("ui.tac.manangeBox.bloodyQueen.aquaMirror.button.showMirrorImage")}</label>`
     + `<button type="button" class="tac-manage-toggle${aq && aq.fixedMirror ? ' on' : ''}" data-mq="fix"`
     + `${aq && aq.showMirror ? '' : ' disabled'}>`
-    + translate("ui.tacManageMirror.fix", {  }) + `</button>`
+    + translate("ui.tac.manangeBox.bloodyQueen.aquaMirror.button.fix", {  }) + `</button>`
     + `<button type="button" class="tac-manage-swap"`
     + `${aq && aq.showMirror && mi ? '' : ' disabled'}>`
-    + translate("ui.tacManageMirror.swap", {  }) + `</button>`;
+    + translate("ui.tac.manangeBox.bloodyQueen.aquaMirror.button.swap", {  }) + `</button>`;
 
   const status = document.createElement('span');
   status.className = 'tac-box-hint tac-link-status';
   status.textContent = translate(linked
-    ? "ui.tacManageMirror.statusLinked"
-    : "ui.tacManageMirror.statusNone",
+    ? "ui.tac.manangeBox.link.status.statusLinked"
+    : "ui.tac.manangeBox.link.status.statusNone",
     { name: linked ? tacInstDispName(isTok ? aq : bq) : null });
   box.appendChild(status);
-  tacBoxHint(box, translate("ui.tacManageMirror.hint", {  }));
+  tacBoxHint(box, translate("ui.tac.manangeBox.bloodyQueen.aquaMirror.hint", {  }));
 
   const refreshAll = () => {
     renderTacBoard();
@@ -5707,36 +5707,36 @@ function buildHittingPointBox(settings, host) {
   const comp = tacHpComponent(host);
   const opens = tacHpComponentOpen(comp);
   const canClose = !host.hpClosed && opens.length === 3;
-  const box = tacManageBox(settings, 'ui.tacManageBox.hittingPoint');
+  const box = tacManageBox(settings, 'ui.tac.manangeBox.cueist.contactPoint.title');
   const allowOn = host.linkAuto !== false;
   box.innerHTML +=
     `<div class="tac-link-opts">`
     + `<label class="tac-link-opt"><input type="checkbox" data-hp="allow"`
-    + `${allowOn ? ' checked' : ''}> ${translate("ui.tacLinkBox.auto")}</label>`
+    + `${allowOn ? ' checked' : ''}> ${translate("ui.tac.manangeBox.link.allow")}</label>`
     + `<label class="tac-link-opt"><input type="checkbox" data-hp="show"`
     + `${host.linkShow !== false ? ' checked' : ''}${allowOn ? '' : ' disabled'}>`
-    + ` ${translate("ui.tacLinkBox.show")}</label>`
+    + ` ${translate("ui.tac.manangeBox.link.show")}</label>`
     + `<label class="tac-link-opt"><input type="checkbox" data-hp="close"`
-    + `${canClose ? '' : ' disabled'}> ${translate("ui.tacLinkBox.hpClose")}</label>`
+    + `${canClose ? '' : ' disabled'}> ${translate("ui.tac.manangeBox.cueist.contactPoint.button.close")}</label>`
     + `</div>`;
   const { reg, close } = tacHpPeers(host);
   const status = document.createElement('span');
   status.className = 'tac-box-hint tac-link-status';
-  let sKey = 'ui.tacLinkBox.statusNone';
+  let sKey = 'ui.tac.manangeBox.link.status.statusNone';
   let sVars = {};
   if (close.length && reg.length) {
-    sKey = 'ui.tacLinkBox.hpStatusClosed';
+    sKey = 'ui.tac.manangeBox.link.status.hpStatusClosed';
     sVars = { a: tacInstDispName(reg[0]), b: tacInstDispName(close[0]) };
   } else if (reg.length >= 2) {
-    sKey = 'ui.tacLinkBox.hpStatusTwo';
+    sKey = 'ui.tac.manangeBox.link.status.hpStatusTwo';
     sVars = { a: tacInstDispName(reg[0]), b: tacInstDispName(reg[1]) };
   } else if (reg.length === 1) {
-    sKey = 'ui.tacLinkBox.statusLinked';
+    sKey = 'ui.tac.manangeBox.link.status.statusLinked';
     sVars = { name: tacInstDispName(reg[0]) };
   }
   status.textContent = translate(sKey, sVars);
   box.appendChild(status);
-  const hKey = reg.length >= 2 ? 'ui.tacLinkBox.hpHintMulti' : 'ui.tacLinkBox.hpHintPair';
+  const hKey = reg.length >= 2 ? 'ui.tac.manangeBox.link.hint.same.multi' : 'ui.tac.manangeBox.link.hint.same.pair';
   tacBoxHint(box, translate(hKey, {
     name: (TAC_ITEM_TYPES[TAC_HP_KIND] || {}).name,
     minM: TAC_HP_MIN_M,
@@ -5773,13 +5773,13 @@ function buildHittingPointBox(settings, host) {
 // 连线管理（同造物两两相连 / 异造物相连 共用）
 // host: 道具实例或角色实例；info: { cross, roleName, itemName, maxM }
 function buildLinkManageBox(settings, host, info) {
-  const box = tacManageBox(settings, "ui.tacLinkBox.title");
+  const box = tacManageBox(settings, "ui.tac.manangeBox.link.title");
   box.innerHTML +=
     `<div class="tac-link-opts">`
     + `<label class="tac-link-opt"><input type="checkbox" data-lk="auto"`
-    + `${host.linkAuto !== false ? ' checked' : ''}> ${translate("ui.tacLinkBox.auto")}</label>`
+    + `${host.linkAuto !== false ? ' checked' : ''}> ${translate("ui.tac.manangeBox.link.allow")}</label>`
     + `<label class="tac-link-opt"><input type="checkbox" data-lk="show"`
-    + `${host.linkShow !== false ? ' checked' : ''}> ${translate("ui.tacLinkBox.show")}</label>`
+    + `${host.linkShow !== false ? ' checked' : ''}> ${translate("ui.tac.manangeBox.link.show")}</label>`
     + `</div>`;
   const isTok = !host.kind;
   let partnerName = null;
@@ -5796,11 +5796,11 @@ function buildLinkManageBox(settings, host, info) {
   const status = document.createElement('span');
   status.className = 'tac-box-hint tac-link-status';
   status.textContent = translate(partnerName
-    ? "ui.tacLinkBox.statusLinked" : "ui.tacLinkBox.statusNone", { name: partnerName });
+    ? "ui.tac.manangeBox.link.status.statusLinked" : "ui.tac.manangeBox.link.status.statusNone", { name: partnerName });
   box.appendChild(status);
   const hintKey = info.cross
-    ? (info.maxM ? "ui.tacLinkBox.crossHint" : "ui.tacLinkBox.crossHintNoMax")
-    : (info.maxM ? "ui.tacLinkBox.sameHint" : "ui.tacLinkBox.sameHintNoMax");
+    ? (info.maxM ? "ui.tac.manangeBox.link.hint.cross" : "ui.tac.manangeBox.link.hint.crossNoMax")
+    : (info.maxM ? "ui.tac.manangeBox.link.hint.sameHint" : "ui.tac.manangeBox.link.hint.sameHintNoMax");
   tacBoxHint(box, translate(hintKey, {
     name: info.itemName, item: info.itemName,
     role: info.roleName, maxM: info.maxM,
@@ -5851,23 +5851,23 @@ function buildAbyssManageBox(settings, host) {
     nt = sp.linkTid != null ? tacTokenByTid(sp.linkTid) : null;
   }
   const linked = !!(sp && nt);
-  const box = tacManageBox(settings, "ui.tacManageBox.abyss");
+  const box = tacManageBox(settings, "ui.tac.manangeBox.naiad.puddles.title");
   box.innerHTML +=
     `<div class="tac-link-opts">`
     + `<label class="tac-link-opt"><input type="checkbox" data-ab="allow"`
-    + `${host.linkAuto !== false ? ' checked' : ''}> ${translate("ui.tacLinkBox.auto")}</label>`
+    + `${host.linkAuto !== false ? ' checked' : ''}> ${translate("ui.tac.manangeBox.link.allow")}</label>`
     + `<label class="tac-link-opt"><input type="checkbox" data-ab="abyss"`
     + `${sp && sp.abyss && sp.abyss.on ? ' checked' : ''}${linked ? '' : ' disabled'}>`
-    + ` ${translate("ui.tacManageBox.abyssSim")}</label>`
+    + ` ${translate("ui.tac.manangeBox.naiad.puddles.button.simulation")}</label>`
     + `</div>`;
   const partnerName = linked ? tacInstDispName(isTok ? sp : nt) : null;
   const status = document.createElement('span');
   status.className = 'tac-box-hint tac-link-status';
   status.textContent = translate(partnerName
-    ? "ui.tacLinkBox.statusLinked" : "ui.tacLinkBox.statusNone", { name: partnerName });
+    ? "ui.tac.manangeBox.link.status.statusLinked" : "ui.tac.manangeBox.link.status.statusNone", { name: partnerName });
   box.appendChild(status);
-  tacBoxHint(box, translate("ui.tacManageBox.abyssHint", { maxM: TAC_ABYSS_MAX_M }));
-  tacBoxHint(box, translate("ui.tacManageBox.abyssFixHint", {  }));
+  tacBoxHint(box, translate("ui.tac.manangeBox.naiad.puddles.hint1", { maxM: TAC_ABYSS_MAX_M }));
+  tacBoxHint(box, translate("ui.tac.manangeBox.naiad.puddles.hint2", {  }));
   box.querySelector('input[data-ab="allow"]').addEventListener('change', (e) => {
     host.linkAuto = e.target.checked;
     if (e.target.checked) {
@@ -5906,11 +5906,11 @@ export function renderTacManage() {
   const info = document.createElement('div');
   info.className = 'tac-manage-info';
   info.innerHTML = `<span class="tac-manage-count">${
-    translate("ui.tacManageInfo.count", { count: entries.length })}</span>`;
+    translate("ui.tac.manange.count", { count: entries.length })}</span>`;
   const resetBtn = document.createElement('button');
   resetBtn.type = 'button';
   resetBtn.className = 'tac-manage-reset';
-  resetBtn.textContent = translate("ui.tacManageInfo.reset");
+  resetBtn.textContent = translate("ui.tac.manange.button.reset");
   resetBtn.addEventListener('click', () => {
     board.order = [];
     tacSave();
@@ -5921,7 +5921,7 @@ export function renderTacManage() {
   side.className = 'tac-manage-side';
   const hint = document.createElement('span');
   hint.className = 'tac-manage-hint';
-  hint.textContent = translate("ui.tacManageInfo.hint");
+  hint.textContent = translate("ui.tac.manange.hint");
   side.appendChild(hint);
   side.appendChild(resetBtn);
   info.appendChild(side);
@@ -5981,11 +5981,11 @@ export function renderTacManage() {
 
 
     if (role === 'explorer') {
-      const box = tacManageBox(settings, "ui.tacManageBox.treasure");
+      const box = tacManageBox(settings, "ui.tac.manangeBox.explorer.passwordPage.title");
       box.innerHTML +=
         `<label class="tac-manage-glow"><input type="checkbox"`
-        + translate("application.renderTacManageTreasure", { value: token.showTreasureRange ? ' checked' : '' });
-      tacBoxHint(box, translate("ui.tacManageBox.treasureHint", {  }));
+        + translate("ui.tac.manangeBox.explorer.passwordPage.button.deduce", { value: token.showTreasureRange ? ' checked' : '' });
+      tacBoxHint(box, translate("ui.tac.manangeBox.explorer.passwordPage.hint", {  }));
       box.querySelector('input').addEventListener('change', (e) => {
         // 最多同时开启一个：开启当前冒险家时立即关闭其它所有冒险家
         if (e.target.checked) {
@@ -6012,10 +6012,10 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
       const roleTokens = board.tokens.filter((t) => t.role === role);
       const anyFlag = (f) => roleTokens.some((t) => t[f]);
       const setAll = (f, v) => roleTokens.forEach((t) => { t[f] = v; });
-      const fsTitleKey = role === 'professor' ? "ui.tacManageBox.scale"
-        : role === 'photographer' ? "ui.tacManageBox.camera"
-        : role === 'madEyes' ? "ui.tacManageBox.console"
-        : role === 'smileyFace' ? "ui.tacManageBox.parts" : null;
+      const fsTitleKey = role === 'professor' ? "ui.tac.manangeBox.professor.scale.title"
+        : role === 'photographer' ? "ui.tac.manangeBox.photographer.camera.title"
+        : role === 'madEyes' ? "ui.tac.manangeBox.madEyes.console.title"
+        : role === 'smileyFace' ? "ui.tac.manangeBox.smileyFace.part.title" : null;
       const fsBox = fsTitleKey ? tacManageBox(settings, fsTitleKey) : settings;
       const fsRangeItem = (Array.isArray(fixedSpawnCfg.item)
         ? fixedSpawnCfg.item : [fixedSpawnCfg.item])
@@ -6030,7 +6030,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
         + translate("application.renderTacManageSeventh", { value: anyFlag('showFixedSpawns') ? ' checked' : '', label: fixedSpawnCfg.label })
         + (hasOrient
           ? `<label class="tac-manage-glow"><input type="checkbox" data-fsdir`
-          + `${anyFlag('showSpawnDir') ? ' checked' : ''}> ${translate("ui.tacManageBox.showDir")}</label>`
+          + `${anyFlag('showSpawnDir') ? ' checked' : ''}> ${translate("ui.tac.manangeBox.character.showDir")}</label>`
           : '');
       fsRow.querySelector('input').addEventListener('change', (e) => {
         setAll('showFixedSpawns', e.target.checked);
@@ -6094,7 +6094,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
         const m = tacRoleRangeMeters(role, token);
         if (el && m !== null) el.style.width = `${tacItemMetersToPercent(m)}%`;
       };
-      buildTacRangeRows(settings, rgCfg, token, true, { softUpdate: syncRoleCircleWidth, hostRole: role, groupKind: (roleCamp === 'survivor' || roleCamp === 'hunter') ? 'trait' : 'plain', labelPrefix: translate("characters.default.range.label.showPrefix"), labelPostfix: translate("characters.default.range.label.showPostfix") });
+      buildTacRangeRows(settings, rgCfg, token, true, { softUpdate: syncRoleCircleWidth, hostRole: role, groupKind: (roleCamp === 'survivor' || roleCamp === 'hunter') ? 'trait' : 'plain', labelPrefix: translate("ui.tac.manangeBox.range.show"), labelPostfix: translate("ui.tac.manangeBox.range") });
     }
 
     const row = document.createElement('div');
@@ -6218,8 +6218,8 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
         hostRole: it.role,
         groupKind: 'item',
         defFill: !!itDef.fill,
-        labelPrefix: translate("items.default.range.label.showPrefix"),
-        labelPostfix: translate("items.default.range.label.showPostfix") });
+        labelPrefix: translate("ui.tac.manangeBox.range.show"),
+        labelPostfix: translate("ui.tac.manangeBox.range") });
   }
 
   
@@ -7178,8 +7178,8 @@ export function updateTacMeasureInfo() {
   }
 
   const fmt = (v) => (v == null ? '--' : (Math.round(v * 100) / 100).toFixed(2));
-  const headHtml = translate("application.headHtml")
-    + translate("application.headHtmlAlternate");
+  const headHtml = translate("ui.tac.measure.result.table.title1")
+    + translate("ui.tac.measure.result.table.title2");
   const segRow = (label, s, mIdx, sel) => {
     const multi = s.parts.length > 1;
     const part = s.parts[0];
@@ -7631,7 +7631,7 @@ export function buildTacSpeedPanel() {
     const open = tacMStyleBody.style.display === 'none'; 
     tacMStyleBody.style.display = open ? '' : 'none';
     tacMStyleToggle.classList.toggle('open', open);
-    tacMStyleToggle.textContent = open ? translate("application.buildTacSpeedPanelSixth") : translate("application.buildTacSpeedPanelSeventh");
+    tacMStyleToggle.textContent = open ? translate("ui.common.style.title.show") : translate("ui.common.style.title.hide");
   });
   
   tacMeasureModesEl.querySelectorAll('.side-btn').forEach((btn) => {
@@ -7918,10 +7918,10 @@ tacTextSizeEl.addEventListener('input', () => {
 
 export function updateTacTextUi() {
   tacTextAddBtn.classList.toggle('active', tacTextPlacing);
-  tacTextAddBtn.textContent = tacTextPlacing ? translate("application.updateTacTextUi") : translate("application.updateTacTextUiAlternate");
+  tacTextAddBtn.textContent = tacTextPlacing ? translate("application.updateTacTextUi") : translate("ui.tac.text.add.button");
   tacTextHint.textContent = tacTextPlacing
     ? translate("application.updateTacTextUiThird")
-    : translate("application.updateTacTextUiFourth");
+    : translate("ui.tac.text.note");
 }
 
 tacTextAddBtn.addEventListener('click', () => {
@@ -7944,7 +7944,7 @@ export function renderTacTextList() {
   tacTextList.innerHTML = '';
   if (!texts.length) {
     tacTextList.innerHTML =
-      translate("application.renderTacTextList");
+      translate("ui.tac.text.add.status");
     return;
   }
   if (tacSelectedText !== null && !texts[tacSelectedText]) tacSelectedText = null;
@@ -8402,7 +8402,7 @@ export async function tacExportImage() {
       for (const r of cache.chairRows) {
         const shown = resolve(r.band);
         const text = tide
-          ? translate(r.band === 4 ? 'ui.tacTide.timeMargin' : 'ui.tacTide.timeSeconds', { seconds: r.t.toFixed(1) })
+          ? translate(r.band === 4 ? 'ui.tac.cal.rocketChair.timeMargin' : 'ui.tac.cal.rocketChair.timeSeconds', { seconds: r.t.toFixed(1) })
           : translate(carryDropBudget(cache.profile, r.t).risk
             ? 'ui.tacCarry.timeRisk' : 'ui.tacCarry.timeSeconds', { seconds: r.t.toFixed(1) });
         drawLabel(r.x, r.z, text, shown >= 0 ? colors[shown] : '#a4afbb', 10);
@@ -8411,16 +8411,16 @@ export async function tacExportImage() {
     // 起点文字（牵气球起点 / 起点）与路径 A/B 端点文字
     if (sel?.kind === 'point') {
       drawLabel(sel.x, sel.z,
-        translate(tacCarryState.scenario === 'tide' ? 'ui.tacTide.startLabel' : 'ui.tacCarry.startLabel'),
+        translate(tacCarryState.scenario === 'tide' ? 'ui.tac.cal.rocketChair.startLabel' : 'ui.tacCarry.startLabel'),
         '#ff5252', 11);
     }
     if (tacPathState.points.a) {
       drawLabel(tacPathState.points.a.x, tacPathState.points.a.z,
-        translate('ui.tacPath.startLabelA'), '#ff5252', 11);
+        translate('ui.tac.path.map.startLabelA'), '#ff5252', 11);
     }
     if (tacPathState.points.b) {
       drawLabel(tacPathState.points.b.x, tacPathState.points.b.z,
-        translate('ui.tacPath.endLabelB'), '#328bff', 11);
+        translate('ui.tac.path.map.endLabelB'), '#328bff', 11);
     }
   };
 
@@ -8569,7 +8569,7 @@ export async function tacExportImage() {
     await paintUprightOverlays();
   }
 
-  const fileName = translate("application.fileName", { name: map.mapName });
+  const fileName = translate("ui.tac.export.saveName", { name: map.mapName });
   // 微信 / B 站 App 的 webview 会拦截 <a download> 下载，改为弹出图片供长按保存
   const saveByLongPress = /MicroMessenger|bili/i.test(navigator.userAgent);
   const openSaveOverlay = (dataUrl) => {
@@ -8589,12 +8589,12 @@ export async function tacExportImage() {
   try {
     if (saveByLongPress) {
       if (!openSaveOverlay(out.toDataURL('image/png'))) throw new Error('save overlay unavailable');
-      showToast(translate("ui.tacSaveOverlay.toast"));
+      showToast(translate("ui.tac.export.saveOverlay.toast"));
       return;
     }
     if (out.toBlob) {
       out.toBlob(async (blob) => {
-        if (!blob) { showToast(translate("application.tacExportImage")); return; }
+        if (!blob) { showToast(translate("ui.tac.export.note.fail1")); return; }
         const file = new File([blob], fileName, { type: 'image/png' });
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
           try {
@@ -8607,14 +8607,14 @@ export async function tacExportImage() {
         const url = URL.createObjectURL(blob);
         download(url);
         setTimeout(() => URL.revokeObjectURL(url), 4000);
-        showToast(translate("application.tacExportImageAlternate"));
+        showToast(translate("ui.tac.export.note.true"));
       }, 'image/png');
     } else {
       download(out.toDataURL('image/png'));
-      showToast(translate("application.tacExportImageAlternate"));
+      showToast(translate("ui.tac.export.note.true"));
     }
   } catch (err) {
-    showToast(translate("application.tacExportImageThird"));
+    showToast(translate("ui.tac.export.note.fail2"));
   }
 }
 
