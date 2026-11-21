@@ -22,11 +22,11 @@ export function mountImageOverlays(container) {
   container.insertAdjacentHTML('afterbegin',
     '<div class="loading-overlay">'
     + '<div class="loading-spinner"></div>'
-    + translate("application.mountImageOverlays")
+    + translate("ui.map.mountImageOverlays.run")
     + '</div>')
   container.insertAdjacentHTML('beforeend',
     '<div class="image-error" style="display:none">'
-    + translate("application.mountImageOverlaysAlternate")
+    + translate("ui.map.mountImageOverlays.false")
     + '</div>')
   return {
     loading: container.querySelector('.loading-overlay'),
