@@ -315,7 +315,7 @@ export const TAC_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 1.2, label: translate("items.entomologist.swarmNetNetWave.name") },
+        { size_m: 1.2, label: translate("items.entomologist.swarmNetWave.name") },
       ],
     },
     render: 'circle',

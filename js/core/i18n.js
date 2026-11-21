@@ -40,7 +40,7 @@ export function translate(messageKey, parameters = {}) {
 }
 
 export function translateDocument(root = document) {
-  document.title = translate('ui.application.title');
+  document.title = translate('ui.title');
   root.querySelectorAll('[data-i18n]').forEach((element) => {
     element.textContent = translate(element.dataset.i18n);
   });
