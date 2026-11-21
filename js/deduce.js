@@ -493,7 +493,7 @@ export function renderDedTopBar(d) {
     dedConclusion.textContent = translate("ui.ded.nav.result.true", { value: d.candidates[0] + 1 });
   } else {
     dedConclusion.innerHTML = translate("ui.ded.nav.result.pend1")
-      + translate("ui.ded.nav.result.pend2", { count: d.candidates.length, countSecondary: S.dedMap.configs.length });
+      + `<small>${translate("ui.ded.nav.result.pend2", { count: d.candidates.length, countSecondary: S.dedMap.configs.length })}</small>`;
   }
 }
 
@@ -578,12 +578,18 @@ export function renderDedSteps(d) {
     const li = document.createElement('li');
     li.className = 'ded-step' + (S.dedSelectedStep === i ? ' active' : '');
     const conclusions = step.conclusions.map((c, j) =>
-      `${j > 0 ? translate("ui.ded.what.conclusions") : ''}`
+      `${j > 0 ? `<span class="sep">${translate("ui.ded.what.conclusions")}</span>` : ''}`
       + `<span class="${c.value === 'yes' ? 'c-yes' : 'c-no'}">`
       + `${posName(S.dedMap, c.id)}${c.value === 'yes' ? translate("deduction.status.present") : translate("deduction.status.absent")}</span>`
     ).join('');
     li.innerHTML =
-      translate("ui.ded.basis.text", { value: S.dedSelectedStep === i, valueSecondary: stepNum(i + 1), kind: kind, valueTertiary: rest ? `<span class="ded-step-rest">${rest}</span>` : '', conclusions: conclusions });
+      `<button type="button" class="ded-step-btn" aria-pressed="${S.dedSelectedStep === i}">`
+        + `<span class="ded-step-num">${stepNum(i + 1)}</span>`
+        + `<span style="min-width:0;flex:1">`
+        + `<span class="ded-step-rule"><span class="ded-step-kind">${kind}</span>`
+        + `${rest ? `<span class="ded-step-rest">${rest}</span>` : ''}</span>`
+        + `<p class="ded-step-result">${translate("ui.ded.basis.result", { conclusions: conclusions })}</p>`
+        + `</span></button>`;
     li.querySelector('button').addEventListener('click', () => {
       S.dedSelectedStep = S.dedSelectedStep === i ? null : i;
       renderDeduction();
@@ -621,11 +627,11 @@ export function renderDedLayouts(d) {
         : userMark === 'no' ? 'm-no'
         : s === 'yes' ? 'i-yes'
         : s === 'no' ? 'i-no' : '';
-      return `<span class="${cls}"${userMark ? translate("deduction.names") : ''}>`
+      return `<span class="${cls}"${userMark ? ` title="${translate("deduction.names")}"` : ''}>`
         + `${posName(S.dedMap, p)}</span>`;
     }).join('');
     li.innerHTML =
-      translate("ui.ded.what.text3", { value: unique ? ' unique' : '', valueSecondary: ci + 1 })
+      `<span class="ded-layout-badge${unique ? ' unique' : ''}">${translate("ui.ded.what.text3", { valueSecondary: ci + 1 })}</span>`
       + `<span class="ded-layout-names"
           style="grid-template-columns:repeat(${cfg.length}, minmax(0, 1fr))">
           ${names}</span>`;
