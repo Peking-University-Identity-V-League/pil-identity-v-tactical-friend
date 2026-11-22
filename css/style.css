@@ -358,6 +358,15 @@ html[lang="en-US"] .footer-line-pil {
   display: none;
 }
 
+/* 卡片标题、地图切换菜单、地图切换按钮的英文副标注只在中文界面显示；其它非英语语言（如越南语）只显示本语言 */
+html:not([lang="zh-CN"]) .ded-sec-en,
+html:not([lang="zh-CN"]) .map-switch-item .msi-en,
+html:not([lang="zh-CN"]) #currentMapTitleEn,
+html:not([lang="zh-CN"]) #dedMapTitleEn,
+html:not([lang="zh-CN"]) #tacMapTitleEn {
+  display: none;
+}
+
 /* 英文界面下的尺寸适配：长单词换行、缩小字号，防止内容溢出 */
 /* 角色选择网格的角色名 */
 html[lang="en-US"] .tac-role {
@@ -381,6 +390,106 @@ html[lang="en-US"] .ded-layout-badge {
 }
 html[lang="en-US"] .ded-layout-names {
   font-size: 10px;
+}
+
+/* 越南语界面下的尺寸适配：文本普遍偏长，缩小字号并允许换行，防止内容溢出 */
+/* 工具栏按钮（英语单词同样偏长，一并缩小） */
+html[lang="en-US"] .tac-tool,
+html[lang="vi-VN"] .tac-tool {
+  font-size: 10px;
+  letter-spacing: 0;
+}
+/* 顶部栏的密码机组切换文本与推演结论 */
+html[lang="vi-VN"] .cipher-text {
+  font-size: 12px;
+  white-space: nowrap;
+}
+html[lang="vi-VN"] .ded-conclusion {
+  font-size: 12px;
+  padding: 6px 12px;
+}
+/* 顶部栏阵营切换胶囊 */
+html[lang="vi-VN"] .top-bar .side-btn {
+  font-size: 11px;
+  padding: 6px 10px;
+}
+/* 狂欢之椅推算的场景/模式切换按钮 */
+html[lang="vi-VN"] .tac-carry-modes .side-btn {
+  font-size: 10px;
+  padding: 6px 4px;
+  line-height: 1.15;
+  text-align: center;
+}
+/* 密码机推演的布局列表 */
+html[lang="vi-VN"] .ded-layout-badge {
+  width: auto;
+  min-width: 44px;
+  font-size: 10px;
+}
+html[lang="vi-VN"] .ded-layout-names {
+  font-size: 10px;
+}
+/* 两点路径规划：按钮文字过长时，按钮与状态自动换行 */
+html[lang="vi-VN"] #tacPathCard .tac-carry-pick {
+  flex-wrap: wrap;
+}
+html[lang="vi-VN"] #tacPathCard .tac-carry-pick .tac-add-btn {
+  font-size: 10px;
+  white-space: normal;
+  line-height: 1.25;
+}
+/* 区选分析表格：编号列加宽、表头竖向居中 */
+html[lang="vi-VN"] .cipher-list-header,
+html[lang="vi-VN"] .cipher-row {
+  grid-template-columns: minmax(52px, auto) 0.9fr 1.8fr;
+}
+html[lang="vi-VN"] .cipher-list-header {
+  font-size: 11px;
+  align-items: center;
+}
+/* 区选顶栏：操作按钮过多时自动换行 */
+html[lang="vi-VN"] #selectView .top-bar .side-actions {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+/* 狂欢之椅推算：两组模式胶囊上下排列，按钮均分宽度 */
+html[lang="vi-VN"] #tacCarryCard .tac-ded-toggles {
+  flex-direction: column;
+  align-items: stretch;
+}
+html[lang="vi-VN"] #tacCarryCard .tac-ded-toggles .side-toggle .side-btn {
+  flex: 1 1 auto;
+  white-space: nowrap;
+}
+/* 狂欢之椅推算：选椅按钮文字过长时，按钮与状态自动换行 */
+html[lang="vi-VN"] #tacCarryCard .tac-carry-pick {
+  flex-wrap: wrap;
+}
+html[lang="vi-VN"] #tacCarryCard .tac-carry-pick .tac-add-btn {
+  font-size: 10px;
+  white-space: normal;
+  line-height: 1.25;
+}
+/* 顶部导航页签：缩小字号，防止与居中大标题重叠 */
+html[lang="vi-VN"] .tab-btn {
+  font-size: 11px;
+  padding: 10px 16px;
+  letter-spacing: 0;
+}
+/* 英语/越南语文本普遍偏长：显示设置等左侧标签与信息表格的值允许换行，不再省略号截断 */
+html[lang="en-US"] .tac-manage-name,
+html[lang="vi-VN"] .tac-manage-name {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  line-height: 1.25;
+}
+html[lang="en-US"] .coord-pair .coord-value,
+html[lang="vi-VN"] .coord-pair .coord-value {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
 }
 
 .home-card-name-en {
@@ -2414,10 +2523,34 @@ details.ded-card[open] > summary .arrow { transform: rotate(90deg); }
     justify-content: center;
   }
 }
+/* 越南语页签偏长：1181–1400px 区间也启用导航换行，防止与居中大标题重叠 */
+@media (min-width: 1181px) and (max-width: 1400px) {
+  html[lang="vi-VN"] .header { flex-wrap: wrap; row-gap: 10px; }
+  html[lang="vi-VN"] .header-title { width: 100%; order: 1; }
+  html[lang="vi-VN"] .header-nav {
+    position: static;
+    transform: none;
+    order: 2;
+    width: 100%;
+    justify-content: center;
+  }
+}
 @media (max-width: 480px) {
   .tab-btn { padding: 8px 10px; font-size: 11px; }
   .ded-marker-label { font-size: 14px; font-size: min(14px, 3.4vw); }
+  /* 英语/越南语的位置名偏长：再缩小一档并允许换行变窄，减轻标签互相重叠 */
+  html[lang="en-US"] .ded-marker-label,
+  html[lang="vi-VN"] .ded-marker-label {
+    font-size: 11px;
+    font-size: min(11px, 2.6vw);
+    white-space: normal;
+    max-width: 17vw;
+    text-align: center;
+    line-height: 1.15;
+  }
   .ded-conclusion { font-size: 12px; padding: 6px 12px; }
+  /* 上一组/下一组圆形切换按钮缩小一档（与语言无关） */
+  .switch-btn { width: 26px; height: 26px; font-size: 13px; }
 }
 
 
@@ -3527,6 +3660,9 @@ div.tac-fixed-spawn .cam-dir.up {
 .tac-style-flex .tac-colors { flex: 1 1 auto; }
 .tac-style-flex > span { flex: none; }
 .tac-style-flex input[type="range"] { flex: 1 1 90px; min-width: 90px; }
+/* 粗细标签+滑块+数值作为一个整体参与换行，不拆开 */
+.tac-width-group { display: inline-flex; align-items: center; gap: 10px; min-width: 0; }
+.tac-width-group input[type="range"] { flex: 1 1 90px; min-width: 90px; width: auto; }
 
 .tac-mstyle-toggle {
   padding: 6px 10px;

@@ -8,6 +8,7 @@ const RESUME_VIEW_KEY = 'identityV.resumeView';
 const LOCALE_DISPLAY_NAMES = {
   'zh-CN': '简体中文',
   'en-US': 'English',
+  'vi-VN': 'Tiếng Việt',
 };
 
 function localeDisplayName(locale) {
