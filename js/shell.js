@@ -8,15 +8,15 @@ import { checkLock, drawCanvas, loadMapImage, selectMap, updateCipherDots, updat
 import { enterTactic, tacResetTransient } from './core/tactic-loader.js';
 
 
-import { translate } from './core/i18n.js';
+import { translate, translateEn } from './core/i18n.js';
 
 export const TAB_TITLES = {
-  tactic: [translate("ui.tac.title"), 'Identity V Tactical Board'],
-  region: [translate("ui.sel.title"), 'Identity V Region Selection'],
-  deduce: [translate("ui.ded.title"), 'Identity V Cipher Deduction'],
+  tactic: [translate("ui.tac.title"), translateEn("ui.tac.title")],
+  region: [translate("ui.sel.title"), translateEn("ui.sel.title")],
+  deduce: [translate("ui.ded.title"), translateEn("ui.ded.title")],
 };
 
-export const HOME_TITLE = [translate("ui.title"), 'Identity V Tactical Friend'];
+export const HOME_TITLE = [translate("ui.title"), translateEn("ui.title")];
 
 
 export const dedDataOf = (mapId) => (MAPS_DATA[mapId] ? MAPS_DATA[mapId].deduction : null);

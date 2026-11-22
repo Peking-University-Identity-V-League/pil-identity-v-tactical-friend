@@ -5,6 +5,7 @@ export const SUPPORTED_LOCALE_LIST = SUPPORTED_LOCALES;
 
 let activeLocale = DEFAULT_LOCALE;
 let activeMessages = {};
+let englishMessages = null;
 
 function resolveLocale(requestedLocale) {
   const normalizedLocale = String(requestedLocale || '').toLowerCase();
@@ -39,10 +40,22 @@ export function translate(messageKey, parameters = {}) {
   return interpolate(template, parameters);
 }
 
+// 非英语界面下，英文副标注一律取英语语言包中同一键的值
+export function translateEn(messageKey, parameters = {}) {
+  const source = activeLocale === 'en-US' ? activeMessages : (englishMessages || activeMessages);
+  const template = source[messageKey];
+  if (typeof template !== 'string') return translate(messageKey, parameters);
+  return interpolate(template, parameters);
+}
+
 export function translateDocument(root = document) {
   document.title = translate('ui.title');
   root.querySelectorAll('[data-i18n]').forEach((element) => {
     element.textContent = translate(element.dataset.i18n);
+  });
+  root.querySelectorAll('[data-i18n-en]').forEach((element) => {
+    // 副标注不重复主文案开头的 emoji / 符号
+    element.textContent = translateEn(element.dataset.i18nEn).replace(/^[^\p{L}\p{N}]+\s*/u, '');
   });
   root.querySelectorAll('[data-i18n-attributes]').forEach((element) => {
     const attributeMappings = JSON.parse(element.dataset.i18nAttributes);
@@ -52,16 +65,27 @@ export function translateDocument(root = document) {
   });
 }
 
-export async function initializeI18n() {
-  activeLocale = resolveLocale(readPreferredLocale());
+async function loadLocaleMessages(locale) {
   const assets = JSON.parse(document.getElementById('pil-assets')?.textContent || '{}');
-  const assetURL = assets[`locales/${activeLocale}.json`];
-  const localeURL = new URL(assetURL || `./locales/${activeLocale}.json`, window.location.href);
+  const assetURL = assets[`locales/${locale}.json`];
+  const localeURL = new URL(assetURL || `./locales/${locale}.json`, window.location.href);
   const revision = document.querySelector('meta[name="pil-client-revision"]')?.content;
   if (!assetURL && /^[a-f0-9]{40}$/.test(revision || '')) localeURL.searchParams.set('v', revision);
   const response = await fetch(localeURL);
-  if (!response.ok) throw new Error(`Unable to load locale: ${activeLocale}`);
-  activeMessages = await response.json();
+  if (!response.ok) throw new Error(`Unable to load locale: ${locale}`);
+  return response.json();
+}
+
+export async function initializeI18n() {
+  activeLocale = resolveLocale(readPreferredLocale());
+  const needsEnglish = activeLocale !== 'en-US';
+  const [active, english] = await Promise.all([
+    loadLocaleMessages(activeLocale),
+    // 英文副标注需要英语语言包；加载失败时静默退回当前语言
+    needsEnglish ? loadLocaleMessages('en-US').catch(() => null) : Promise.resolve(null),
+  ]);
+  activeMessages = active;
+  englishMessages = english;
   document.documentElement.lang = activeLocale;
   translateDocument();
 }
