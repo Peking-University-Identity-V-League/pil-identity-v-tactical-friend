@@ -8,7 +8,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 25.3, label: translate("characters.luckyGuy.range.label.detectChestNearby") },
+        { size_m: 25.3, label: translate("characters.luckyGuy.range.detectChestNearby") },
       ],
     },
     items: ['luckyParcel'],
@@ -32,7 +32,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 8, label: translate("characters.thief.range.label.flashlightShining") },
+        { size_m: 8, label: translate("characters.thief.range.flashlightShining") },
       ],
     },
     items: ['flashlight'],
@@ -44,7 +44,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 15, label: translate("characters.gardener.range.label.locateRocketChairNearby") },
+        { size_m: 15, label: translate("characters.gardener.range.locateRocketChairNearby") },
       ],
     },
     items: ['toolkit'],
@@ -62,8 +62,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 60, label: translate("characters.explorer.range.label.senseHunter") },
-        { size_m: 70, label: translate("characters.explorer.range.label.passwordPage") },
+        { size_m: 60, label: translate("characters.explorer.range.senseHunter") },
+        { size_m: 70, label: translate("characters.explorer.range.passwordPage") },
       ],
     },
     items: ['gulliversTravels'],
@@ -81,7 +81,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 10, label: translate("characters.coordinator.range.label.flareGunCanUse") },
+        { size_m: 10, label: translate("characters.coordinator.range.flareGunCanUse") },
       ],
     },
     items: ['flareGun'],
@@ -105,9 +105,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 25.3, label: translate("characters.theMindsEye.range.label.tapTapLocatePosition") },
-        { size_m: 6.8, label: translate("characters.theMindsEye.range.label.strikeInteractionSpeedReduceOne") },
-        { size_m: 25.3, label: translate("characters.theMindsEye.range.label.strikeInteractionSpeedReduceTwo") },
+        { size_m: 25.3, label: translate("characters.theMindsEye.range.tapTapLocatePosition") },
+        { size_m: 6.8, label: translate("characters.theMindsEye.range.strikeInteractionSpeedReduceOne") },
+        { size_m: 25.3, label: translate("characters.theMindsEye.range.strikeInteractionSpeedReduceTwo") },
       ],
     },
     items: ['cane'],
@@ -131,7 +131,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 15.2, label: translate("characters.cowboy.range.label.lassoHitMax") },
+        { size_m: 15.2, label: translate("characters.cowboy.range.lassoHitMax") },
       ],
     },
     items: ['lasso'],
@@ -143,7 +143,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 8.44, label: translate("characters.femaleDancer.range.label.slide") },
+        { size_m: 8.44, label: translate("characters.femaleDancer.range.slide") },
       ],
     },
     items: ['fastMusicbox', 'slowMusicbox', 'musicboxSwitch'],
@@ -169,8 +169,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 14.5, label: translate("characters.prospector.range.label.magnetThrowMax") },
-        { size_m: 18, label: translate("characters.prospector.range.label.stunReduce") },
+        { size_m: 14.5, label: translate("characters.prospector.range.magnetThrowMax") },
+        { size_m: 18, label: translate("characters.prospector.range.stunReduce") },
       ],
     },
     items: ['meteoriteMagnetN', 'meteoriteMagnetS'],
@@ -182,9 +182,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 5.1, label: translate("characters.enchantress.range.label.apeCurseParalyze") },
-        { size_m: 16.9, label: translate("characters.enchantress.range.label.guardStack") },
-        { size_m: 12.7, label: translate("characters.enchantress.range.label.guardStackReduce") },
+        { size_m: 5.1, label: translate("characters.enchantress.range.apeCurseParalyze") },
+        { size_m: 16.9, label: translate("characters.enchantress.range.guardStack") },
+        { size_m: 12.7, label: translate("characters.enchantress.range.guardStackReduce") },
       ],
     },
     items: ['cursedEmblem', 'cursedEmblemSpecial'],
@@ -196,8 +196,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 15, label: translate("characters.wildling.range.label.bumpMax") },
-        { size_m: 17, label: translate("characters.wildling.range.label.bumpAddKnockBackMax") },
+        { size_m: 15, label: translate("characters.wildling.range.bumpMax") },
+        { size_m: 17, label: translate("characters.wildling.range.bumpAddKnockBackMax") },
       ],
     },
     items: ['wildlingPartner', 'wildlingPartnerRide', 'wildlingPartnerFollowingState', 'wildlingPartnerRidingState', 'wildlingPartnerRidingStateCross'],
@@ -209,9 +209,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 4, label: translate("characters.acrobat.range.label.leapDefault") },
-        { size_m: 7.5, label: translate("characters.acrobat.range.label.leapMax") },
-        { size_m: 12, label: translate("characters.acrobat.range.label.leapAddSomersault") },
+        { size_m: 4, label: translate("characters.acrobat.range.leapDefault") },
+        { size_m: 7.5, label: translate("characters.acrobat.range.leapMax") },
+        { size_m: 12, label: translate("characters.acrobat.range.leapAddSomersault") },
       ],
     },
     items: ['stickyBomb', 'nitroBomb', 'fireBomb', 'stickyBombThrow', 'nitroBombThrow', 'fireBombThrow'],
@@ -223,9 +223,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 27, label: translate("characters.firstOfficer.range.label.hypnotize1") },
-        { size_m: 8.4, label: translate("characters.firstOfficer.range.label.hypnotize2") },
-        { size_m: 5.1, label: translate("characters.firstOfficer.range.label.hypnotize3") },
+        { size_m: 27, label: translate("characters.firstOfficer.range.hypnotize1") },
+        { size_m: 8.4, label: translate("characters.firstOfficer.range.hypnotize2") },
+        { size_m: 5.1, label: translate("characters.firstOfficer.range.hypnotize3") },
       ],
     },
     items: ['poseidonWatch'],
@@ -243,7 +243,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 16.9, label: translate("characters.postman.range.label.postDogDashMax") },
+        { size_m: 16.9, label: translate("characters.postman.range.postDogDashMax") },
       ],
     },
     items: ['letter', 'postDog'],
@@ -255,7 +255,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 9.7, label: translate("characters.graveKeeper.range.label.tremor") },
+        { size_m: 9.7, label: translate("characters.graveKeeper.range.tremor") },
       ],
     },
     items: ['shovel', 'shovelEmerge'],
@@ -267,7 +267,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 5.9, label: translate("characters.prisoner.range.label.severeElectricCurrentStun") },
+        { size_m: 5.9, label: translate("characters.prisoner.range.severeElectricCurrentStun") },
       ],
     },
     items: ['insulatingGloves', 'severeElectricCurrent', 'electricalArea'],
@@ -293,9 +293,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 10.1, label: translate("characters.batter.range.label.cricketBatCanHit") },
-        { size_m: 17.55, label: translate("characters.batter.range.label.cricketBatHitAddKnockBackMax") },
-        { size_m: 15.2, label: translate("characters.batter.range.label.altruism") },
+        { size_m: 10.1, label: translate("characters.batter.range.cricketBatCanHit") },
+        { size_m: 17.55, label: translate("characters.batter.range.cricketBatHitAddKnockBackMax") },
+        { size_m: 15.2, label: translate("characters.batter.range.altruism") },
       ],
     },
     items: ['cricketBat', 'rampage'],
@@ -314,8 +314,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 13, label: translate("characters.psychologist.range.label.subjectiveAnchor") },
-        { size_m: 13, label: translate("characters.psychologist.range.label.bonded") },
+        { size_m: 13, label: translate("characters.psychologist.range.subjectiveAnchor") },
+        { size_m: 13, label: translate("characters.psychologist.range.bonded") },
       ],
     },
     items: ['whistle', 'subjectiveAnchor', 'bonded'],
@@ -327,7 +327,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 13, label: translate("characters.patient.range.label.bonded") },
+        { size_m: 13, label: translate("characters.patient.range.bonded") },
       ],
     },
     items: ['grapplingHook', 'bonded'],
@@ -339,8 +339,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 13.5, label: translate("characters.novelist.range.label.metaphorDefault") },
-        { size_m: 9.8, label: translate("characters.novelist.range.label.metaphorReduce") },
+        { size_m: 13.5, label: translate("characters.novelist.range.metaphorDefault") },
+        { size_m: 9.8, label: translate("characters.novelist.range.metaphorReduce") },
       ],
     },
     items: ['sketchBook'],
@@ -352,7 +352,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 3.4, label: translate("characters.littleGirl.range.label.memorySync") },
+        { size_m: 3.4, label: translate("characters.littleGirl.range.memorySync") },
       ],
     },
     items: ['memoryFragment', 'memorySync', 'pity'],
@@ -364,8 +364,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 6, label: translate("characters.weepingClown.range.label.rocketExplode") },
-        { size_m: 3, label: translate("characters.weepingClown.range.label.stunHunter") },
+        { size_m: 6, label: translate("characters.weepingClown.range.rocketExplode") },
+        { size_m: 3, label: translate("characters.weepingClown.range.stunHunter") },
       ],
     },
     items: ['rocket'],
@@ -383,10 +383,10 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 4.9, label: translate("characters.antiquarian.range.label.flip") },
-        { size_m: 3.5, label: translate("characters.antiquarian.range.label.sweepSwing") },
-        { size_m: 4.7, label: translate("characters.antiquarian.range.label.stab") },
-        { size_m: 12.7, label: translate("characters.antiquarian.range.label.obscure") },
+        { size_m: 4.9, label: translate("characters.antiquarian.range.flip") },
+        { size_m: 3.5, label: translate("characters.antiquarian.range.sweepSwing") },
+        { size_m: 4.7, label: translate("characters.antiquarian.range.stab") },
+        { size_m: 12.7, label: translate("characters.antiquarian.range.obscure") },
       ],
     },
     items: ['mechanicalFlute'],
@@ -404,7 +404,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 15, label: translate("characters.journalist.range.label.phantomPlacement") },
+        { size_m: 15, label: translate("characters.journalist.range.phantomPlacement") },
       ],
     },
     items: ['cameraJournalist'],
@@ -416,8 +416,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 18.5, label: translate("characters.aeroplanist.range.label.jetpackPropelThreeMax") },
-        { size_m: 12.7, label: translate("characters.aeroplanist.range.label.essentialTremor") },
+        { size_m: 18.5, label: translate("characters.aeroplanist.range.jetpackPropelThreeMax") },
+        { size_m: 12.7, label: translate("characters.aeroplanist.range.essentialTremor") },
       ],
     },
     items: ['jetpack', 'jetpackPropel'],
@@ -429,7 +429,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 20, label: translate("characters.cheerleader.range.label.encourage") },
+        { size_m: 20, label: translate("characters.cheerleader.range.encourage") },
       ],
     },
     items: ['pompoms', 'inspire', 'inspireIcon', 'encourage1', 'encourage2', 'encourageCheerful', 'encourageExcited'],
@@ -447,9 +447,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 4.2, label: translate("characters.fireInvestigator.range.label.deployDefault") },
-        { size_m: 12.64, label: translate("characters.fireInvestigator.range.label.deployMax") },
-        { size_m: 9.6, label: translate("characters.fireInvestigator.range.label.repulsion") },
+        { size_m: 4.2, label: translate("characters.fireInvestigator.range.deployDefault") },
+        { size_m: 12.64, label: translate("characters.fireInvestigator.range.deployMax") },
+        { size_m: 9.6, label: translate("characters.fireInvestigator.range.repulsion") },
       ],
     },
     items: ['airbag'],
@@ -462,7 +462,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 18, label: translate("characters.faroLady.range.label.cloak") },
+        { size_m: 18, label: translate("characters.faroLady.range.cloak") },
       ],
     },
     items: ['aromatherapyCane', 'dexterous'],
@@ -474,8 +474,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 13, label: translate("characters.knight.range.label.tacticalForesight") },
-        { size_m: 7, label: translate("characters.knight.range.label.chivalrousSympathy") },
+        { size_m: 13, label: translate("characters.knight.range.tacticalForesight") },
+        { size_m: 7, label: translate("characters.knight.range.chivalrousSympathy") },
       ],
     },
     items: ['helmet', 'tacticalForesight', 'tacticalForesightAttack', 'tacticalForesightAbility', 'tacticalForesightStalemate', 'chivalrousSympathy'],
@@ -487,7 +487,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 32, label: translate("characters.meteorologist.range.label.warmRain") },
+        { size_m: 32, label: translate("characters.meteorologist.range.warmRain") },
       ],
     },
     items: ['stormGlass', 'gale1', 'gale2', 'gale3', 'stratus1', 'stratus2', 'stratus3', 'rainfall', 'stormGlassDecompose'],
@@ -499,9 +499,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 18, label: translate("characters.archer.range.label.keelBowHitMax") },
-        { size_m: 12, label: translate("characters.archer.range.label.keelBowCanHitCore") },
-        { size_m: 4.5, label: translate("characters.archer.range.label.crossbow") },
+        { size_m: 18, label: translate("characters.archer.range.keelBowHitMax") },
+        { size_m: 12, label: translate("characters.archer.range.keelBowCanHitCore") },
+        { size_m: 4.5, label: translate("characters.archer.range.crossbow") },
       ],
     },
     items: ['keelBow', 'crossBow'],
@@ -525,8 +525,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 6, label: translate("characters.matador.range.label.muletaDash") },
-        { size_m: 2.25, label: translate("characters.matador.range.label.muletaSweep") },
+        { size_m: 6, label: translate("characters.matador.range.muletaDash") },
+        { size_m: 2.25, label: translate("characters.matador.range.muletaSweep") },
       ],
     },
     items: ['muleta', 'gaoneraPass'],
@@ -538,7 +538,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 20.3, label: translate("characters.mimeArtist.range.label.emotionAccumulation") },
+        { size_m: 20.3, label: translate("characters.mimeArtist.range.emotionAccumulation") },
       ],
     },
     items: ['propUmbrella'],
@@ -560,7 +560,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 55, label: translate("characters.hellEmber.range.label.puppetCastMax") },
+        { size_m: 55, label: translate("characters.hellEmber.range.puppetCastMax") },
       ],
     },
     items: ['phantom', 'puppet1', 'puppet2'],
@@ -573,9 +573,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 19.5, label: translate("characters.smileyFace.range.label.rocketDashMaxTier1") },
-        { size_m: 26, label: translate("characters.smileyFace.range.label.rocketDashMaxTier2") },
-        { size_m: 24, label: translate("characters.smileyFace.range.label.partSeen") },
+        { size_m: 19.5, label: translate("characters.smileyFace.range.rocketDashMaxTier1") },
+        { size_m: 26, label: translate("characters.smileyFace.range.rocketDashMaxTier2") },
+        { size_m: 24, label: translate("characters.smileyFace.range.partSeen") },
       ],
     },
     items: ['windWings', 'drill', 'propeller', 'rocketDash'],
@@ -623,7 +623,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 33, label: translate("characters.photographer.range.label.locateCamera") },
+        { size_m: 33, label: translate("characters.photographer.range.locateCamera") },
       ],
     },
     items: ['camera', 'recordedMoment', 'timeJump'],
@@ -643,9 +643,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 42.2, label: translate("characters.theFeaster.range.label.tentaclePlacement") },
-        { size_m: 21.1, label: translate("characters.theFeaster.range.label.tentacleControlHit") },
-        { size_m: 21.1, label: translate("characters.theFeaster.range.label.nightmareGaze") },
+        { size_m: 42.2, label: translate("characters.theFeaster.range.tentaclePlacement") },
+        { size_m: 21.1, label: translate("characters.theFeaster.range.tentacleControlHit") },
+        { size_m: 21.1, label: translate("characters.theFeaster.range.nightmareGaze") },
       ],
     },
     items: ['tentacles', 'nightmareAttack', 'nightmareGaze'],
@@ -658,9 +658,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 20, label: translate("characters.dreamWitch.range.label.hiddenDreamsurvivorNotification") },
-        { size_m: 42.2, label: translate("characters.dreamWitch.range.label.followerControlTier0Tier1") },
-        { size_m: 59.1, label: translate("characters.dreamWitch.range.label.followerControlTier2") },
+        { size_m: 20, label: translate("characters.dreamWitch.range.hiddenDreamsurvivorNotification") },
+        { size_m: 42.2, label: translate("characters.dreamWitch.range.followerControlTier0Tier1") },
+        { size_m: 59.1, label: translate("characters.dreamWitch.range.followerControlTier2") },
       ],
     },
     items: ['follower', 'witchMark', 'hiddenDream', 'preach', 'leech'],
@@ -680,7 +680,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 3, label: translate("characters.evilReptilian.range.label.lethalCrash") },
+        { size_m: 3, label: translate("characters.evilReptilian.range.lethalCrash") },
       ],
     },
     items: ['preyingLeap', 'crash', 'lethalCrash'],
@@ -693,7 +693,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 25.3, label: translate("characters.bloodyQueen.range.label.aquaMirrorPlacement") },
+        { size_m: 25.3, label: translate("characters.bloodyQueen.range.aquaMirrorPlacement") },
       ],
     },
     items: ['aquaMirror', 'mirrorRotation'],
@@ -706,7 +706,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 35.5, label: translate("characters.guard26.range.label.bombThrowMax") },
+        { size_m: 35.5, label: translate("characters.guard26.range.bombThrowMax") },
       ],
     },
     items: ['timeBomb', 'remoteControlledBomb'],
@@ -719,9 +719,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 30, label: translate("characters.disciple.range.label.guidePlacement") },
-        { size_m: 10.5, label: translate("characters.disciple.range.label.catwalkTier0") },
-        { size_m: 12.5, label: translate("characters.disciple.range.label.catwalkTier2") },
+        { size_m: 30, label: translate("characters.disciple.range.guidePlacement") },
+        { size_m: 10.5, label: translate("characters.disciple.range.catwalkTier0") },
+        { size_m: 12.5, label: translate("characters.disciple.range.catwalkTier2") },
       ],
     },
     items: ['cat', 'guide', 'catwalk'],
@@ -734,7 +734,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 20.5, label: translate("characters.violinist.range.label.musicNotePlacement") },
+        { size_m: 20.5, label: translate("characters.violinist.range.musicNotePlacement") },
       ],
     },
     items: ['musicNote', 'infiniteMovement', 'terrifyingMelody'],
@@ -747,8 +747,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 22.5, label: translate("characters.sculptor.range.label.sculpturePlacement") },
-        { size_m: 12, label: translate("characters.sculptor.range.label.hieroglyphicGraveyardHint") },
+        { size_m: 22.5, label: translate("characters.sculptor.range.sculpturePlacement") },
+        { size_m: 12, label: translate("characters.sculptor.range.hieroglyphicGraveyardHint") },
       ],
     },
     items: ['sculpture', 'sculptureOfNobility', 'hieroglyphicGraveyard'],
@@ -768,8 +768,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 11.8, label: translate("characters.theBreakingWheel.range.label.pessimistic") },
-        { size_m: 10.1, label: translate("characters.theBreakingWheel.range.label.ridicule") },
+        { size_m: 11.8, label: translate("characters.theBreakingWheel.range.pessimistic") },
+        { size_m: 10.1, label: translate("characters.theBreakingWheel.range.ridicule") },
       ],
     },
     items: ['wheelForm', 'nailBoard', 'wheelOfImpalement', 'pessimistic', 'ridicule'],
@@ -790,7 +790,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 4.2, label: translate("characters.waxArtist.range.label.waxenCoatSplash") },
+        { size_m: 4.2, label: translate("characters.waxArtist.range.waxenCoatSplash") },
       ],
     },
     items: ['waxBlock', 'moltenWax', 'waxSculpting'],
@@ -803,7 +803,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 6.33, label: translate("characters.nightmare.range.label.dive") },
+        { size_m: 6.33, label: translate("characters.nightmare.range.dive") },
       ],
     },
     items: ['raven', 'spy', 'badOmen'],
@@ -816,7 +816,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 20, label: translate("characters.clerk.range.label.replayMax") },
+        { size_m: 20, label: translate("characters.clerk.range.replayMax") },
       ],
     },
     items: ['record', 'inspect', 'replay', 'invalid'],
@@ -836,9 +836,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 15.9, label: translate("characters.nightWatch.range.label.tempest") },
-        { size_m: 11.8, label: translate("characters.nightWatch.range.label.tempestCyclone") },
-        { size_m: 15.2, label: translate("characters.nightWatch.range.label.windwalkCharge") },
+        { size_m: 15.9, label: translate("characters.nightWatch.range.tempest") },
+        { size_m: 11.8, label: translate("characters.nightWatch.range.tempestCyclone") },
+        { size_m: 15.2, label: translate("characters.nightWatch.range.windwalkCharge") },
       ],
     },
     items: ['tempest', 'windwalk', 'tempestCyclone', 'windwalkCharge', 'windControl'],
@@ -851,8 +851,8 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 4.64, label: translate("characters.operaSinger.range.label.shadowLeapTier0Tier1") },
-        { size_m: 5.568, label: translate("characters.operaSinger.range.label.shadowLeapTier2") },
+        { size_m: 4.64, label: translate("characters.operaSinger.range.shadowLeapTier0Tier1") },
+        { size_m: 5.568, label: translate("characters.operaSinger.range.shadowLeapTier2") },
       ],
     },
     items: ['remnant', 'shadowstrike'],
@@ -865,9 +865,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 40, label: translate("characters.foolsGold.range.label.pickaxeThrowMax") },
-        { size_m: 60, label: translate("characters.foolsGold.range.label.pickaxeReturn") },
-        { size_m: 60, label: translate("characters.foolsGold.range.label.magneticRockPlacemnt") },
+        { size_m: 40, label: translate("characters.foolsGold.range.pickaxeThrowMax") },
+        { size_m: 60, label: translate("characters.foolsGold.range.pickaxeReturn") },
+        { size_m: 60, label: translate("characters.foolsGold.range.magneticRockPlacemnt") },
       ],
     },
     items: ['pickaxe', 'magneticRock'],
@@ -880,7 +880,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 15, label: translate("characters.theShadow.range.label.corruption") },
+        { size_m: 15, label: translate("characters.theShadow.range.corruption") },
       ],
     },
     items: ['yithian', 'ancientVisage', 'psychicIntrusion', 'corruptedOstracon'],
@@ -900,7 +900,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 3.54, label: translate("characters.hullabaloo.range.label.bombsArea") },
+        { size_m: 3.54, label: translate("characters.hullabaloo.range.bombsArea") },
       ],
     },
     items: ['cloneHullabaloo', 'encore', 'trapeze'],
@@ -920,9 +920,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 15.2, label: translate("characters.cueist.range.label.contactPointFirstPlacement") },
-        { size_m: 8, label: translate("characters.cueist.range.label.maxwellsDemon") },
-        { size_m: { min: 8, max: 11 }, label: translate("characters.cueist.range.label.cueBallCapturePlacement") },
+        { size_m: 15.2, label: translate("characters.cueist.range.contactPointFirstPlacement") },
+        { size_m: 8, label: translate("characters.cueist.range.maxwellsDemon") },
+        { size_m: { min: 8, max: 11 }, label: translate("characters.cueist.range.cueBallCapturePlacement") },
       ],
     },
     items: ['contactPoint', 'cueBall', 'maxwellsDemon'],
@@ -935,7 +935,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 28, label: translate("characters.queenBee.range.label.swarmOfInsectsControl") },
+        { size_m: 28, label: translate("characters.queenBee.range.swarmOfInsectsControl") },
       ],
     },
     items: ['swarmOfInsects', 'stinger'],
@@ -948,11 +948,11 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 6.56, ringInner: 4.56, label: translate("characters.dentist.range.label.dentalMirrorLensAngle1") },
-        { size_m: 11.4, ringInner: 9.4, label: translate("characters.dentist.range.label.dentalMirrorLensAngle2") },
-        { size_m: 18.9, ringInner: 16.9, label: translate("characters.dentist.range.label.dentalMirrorLensAngle3") },
-        { size_m: { min: 12.7, max: 35 }, label: translate("characters.dentist.range.label.beamPlacement") },
-        { size_m: 32, label: translate("characters.dentist.range.label.ultravioletFade") },
+        { size_m: 6.56, ringInner: 4.56, label: translate("characters.dentist.range.dentalMirrorLensAngle1") },
+        { size_m: 11.4, ringInner: 9.4, label: translate("characters.dentist.range.dentalMirrorLensAngle2") },
+        { size_m: 18.9, ringInner: 16.9, label: translate("characters.dentist.range.dentalMirrorLensAngle3") },
+        { size_m: { min: 12.7, max: 35 }, label: translate("characters.dentist.range.beamPlacement") },
+        { size_m: 32, label: translate("characters.dentist.range.ultravioletFade") },
       ],
     },
     items: ['beam', 'dentalMirror', 'darkMire'],
@@ -965,9 +965,9 @@ export const TAC_ROLES = {
     ranges: {
       key: 'showTrait',
       options: [
-        { size_m: 48, label: translate("characters.herztier.range.label.bestialAwakening") },
-        { size_m: [7, 14], label: translate("characters.herztier.range.label.lunge") },
-        { size_m: 25, label: translate("characters.herztier.range.label.heightenedSenses") },
+        { size_m: 48, label: translate("characters.herztier.range.bestialAwakening") },
+        { size_m: [7, 14], label: translate("characters.herztier.range.lunge") },
+        { size_m: 25, label: translate("characters.herztier.range.heightenedSenses") },
       ],
     },
     items: ['bestialAwakening', 'lunge', 'heightenedSenses'],
@@ -979,7 +979,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'show',
       options: [
-        { size_m: { min: 0, max: null }, label: translate("characters.customize.range.label.show") },
+        { size_m: { min: 0, max: null }, label: translate("characters.customize.range.show") },
       ],
     },
     color: '#fbbf24',
