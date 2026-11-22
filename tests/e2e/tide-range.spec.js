@@ -222,13 +222,13 @@ test('tide buff modals fill the private buff table', async ({ page }) => {
   await openSettings(page);
   await toTide(page);
 
-  // 天赋加成：膝跳反射（50% 3s）
+  // 天赋加成：膝跳反射（50% 3s，表格内不带 s 单位，列头为“时间 s”）
   await page.locator('#tacTideTalentAddBtn').click();
   const talentList = page.locator('#tacTideTalentList');
   await talentList.locator('.tac-talent-row', { hasText: '膝跳反射' }).locator('.tac-talent-add').click();
   await expect(page.locator('#tacTideBuffBody')).toContainText('膝跳反射');
   await expect(page.locator('#tacTideBuffBody')).toContainText('50%');
-  await expect(page.locator('#tacTideBuffBody')).toContainText('3s');
+  await expect(page.locator('#tacTideBuffBody')).toContainText('50%3');
 
   // 自定义加成：测试 +20% 时间不限
   await page.locator('#tacTideBuffAddBtn').click();

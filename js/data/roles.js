@@ -979,7 +979,7 @@ export const TAC_ROLES = {
     ranges: {
       key: 'show',
       options: [
-        { size_m: { min: 0, max: null }, label: translate("characters.customize.range.show") },
+        { size_m: { min: 0, max: null }, label: translate("characters.customize.name") },
       ],
     },
     color: '#fbbf24',

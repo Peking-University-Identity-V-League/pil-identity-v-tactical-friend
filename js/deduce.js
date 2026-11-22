@@ -108,13 +108,11 @@ export function deduce(map, marks) {
       const [a, b] = [chain[k], chain[(k + 1) % chain.length]];
       if (!contraFrozen && rule.mode === 'yes'
         && state[a] === 'yes' && state[b] === 'yes') {
-        contradiction = translate("ui.ded.contradict.runChain", { name: rule.name, nameSecondary: posName(map, a), nameTertiary: posName(map, b) })
-          + translate("ui.ded.contradict.runChainAlternate");
+        contradiction = translate("ui.ded.contradict.runChain.yes", { name: rule.name, nameSecondary: posName(map, a), nameTertiary: posName(map, b) });
       }
       if (!contraFrozen && rule.mode === 'no'
         && state[a] === 'no' && state[b] === 'no') {
-        contradiction = translate("ui.ded.contradict.runChain", { name: rule.name, nameSecondary: posName(map, a), nameTertiary: posName(map, b) })
-          + translate("ui.ded.contradict.runChainThird");
+        contradiction = translate("ui.ded.contradict.runChain.no", { name: rule.name, nameSecondary: posName(map, a), nameTertiary: posName(map, b) });
       }
     }
     
@@ -173,19 +171,15 @@ export function deduce(map, marks) {
         
         changed = propagateCount(
           rule, rule.min, rule.max,
-          (c) => translate("ui.ded.contradict.atLeast", { list: rule.list, value: cnNum(rule.min) })
-            + translate("ui.ded.contradict.region.no", { count: c }),
-          (c) => translate("ui.ded.contradict.atMost", { list: rule.list, value: cnNum(rule.max) })
-            + translate("ui.ded.contradict.region.yes", { count: c }),
+          (c) => translate("ui.ded.contradict.region.atLeast", { list: rule.list, value: cnNum(rule.min), count: c }),
+          (c) => translate("ui.ded.contradict.region.atMost", { list: rule.list, value: cnNum(rule.max), count: c }),
         );
       } else if (rule.kind === 'exactly') {
         
         changed = propagateCount(
           rule, rule.n, rule.n,
-          (c) => translate("ui.ded.contradict.exactly", { list: rule.list, n: rule.n })
-            + translate("ui.ded.contradict.exactly.no", { count: c }),
-          (c) => translate("ui.ded.contradict.exactly", { list: rule.list, n: rule.n })
-            + translate("ui.ded.contradict.exactly.yes", { count: c }),
+          (c) => translate("ui.ded.contradict.exactly.no", { list: rule.list, n: rule.n, count: c }),
+          (c) => translate("ui.ded.contradict.exactly.yes", { list: rule.list, n: rule.n, count: c }),
           true,
         );
       } else if (rule.kind === 'atLeast1') {
@@ -193,8 +187,7 @@ export function deduce(map, marks) {
         const [a, b] = rule.positions;
         if (state[a] === 'no' && state[b] === 'no') {
           if (!contraFrozen) {
-            contradiction = translate("ui.ded.contradict.atLeast", { list: rule.list, value: cnNum(rule.n) })
-              + translate("ui.ded.contradict.atLeast.no");
+            contradiction = translate("ui.ded.contradict.atLeast.no", { list: rule.list, value: cnNum(rule.n) });
           }
         } else {
           const other = state[a] === 'no' ? b : state[b] === 'no' ? a : null;
@@ -205,8 +198,7 @@ export function deduce(map, marks) {
         const [a, b] = rule.positions;
         if (state[a] !== null && state[b] !== null && state[a] !== state[b]) {
           if (!contraFrozen) {
-            contradiction = translate("ui.ded.contradict.same", { list: rule.list })
-              + translate("ui.ded.contradict.same.reason");
+            contradiction = translate("ui.ded.contradict.same", { list: rule.list });
           }
         } else if (state[a] !== null && state[b] === null) {
           changed = flush(rule, [b], state[a]);
@@ -218,8 +210,7 @@ export function deduce(map, marks) {
         const yesIdx = pick(rule.positions, 'yes');
         if (yesIdx.length > rule.n) {
           if (!contraFrozen) {
-            contradiction = translate("ui.ded.contradict.atMost", { list: rule.list, value: cnNum(rule.n) })
-              + translate("ui.ded.contradict.exactly.yes", { count: yesIdx.length });
+            contradiction = translate("ui.ded.contradict.atMost.yes", { list: rule.list, value: cnNum(rule.n), count: yesIdx.length });
           }
         } else if (yesIdx.length === rule.n) {
           changed = flush(rule, pick(rule.positions, null), 'no');
@@ -253,9 +244,7 @@ export function deduce(map, marks) {
           if (state[ps[k]] === 'yes' && state[ps[k + 1]] === 'yes'
             && state[ps[k + 2]] === 'yes') {
             if (!contraFrozen) {
-              contradiction = translate("ui.ded.contradict.chainThree.text2", { name: rule.name, nameSecondary: posName(map, ps[k]) })
-                + translate("ui.ded.contradict.chainThree.text1", { name: posName(map, ps[k + 1]), nameSecondary: posName(map, ps[k + 2]) })
-                + translate("ui.ded.contradict.chainThree.text3");
+              contradiction = translate("ui.ded.contradict.chainThree", { name: rule.name, nameSecondary: posName(map, ps[k]), nameTertiary: posName(map, ps[k + 1]), nameQuaternary: posName(map, ps[k + 2]) });
             }
           }
         }
@@ -352,8 +341,7 @@ export function deduce(map, marks) {
     .map((_, i) => i)
     .filter((i) => consistent(map.configs[i]));
   if (!contradiction && candidates.length === 0) {
-    contradiction = translate("ui.ded.what.deduce", { count: cnNum(map.configs.length) })
-      + translate("ui.ded.what.deduceAlternate");
+    contradiction = translate("ui.ded.contradict.noLayout", { count: cnNum(map.configs.length) });
   }
 
   return { state, marks, steps, contradiction, candidates, sources };
@@ -549,7 +537,7 @@ export function renderDedMap(d) {
     btn.style.left = `${(x / mw) * 100}%`;
     btn.style.top = `${(y / mh) * 100}%`;
     btn.title = `${pos.name}·${stateText}`;
-    btn.setAttribute('aria-label', translate("ui.ded.what.text4", { name: pos.name, stateText: stateText }));
+    btn.setAttribute('aria-label', translate("ui.ded.map.cipher.ariaLabel", { name: pos.name, stateText: stateText }));
     btn.innerHTML =
       `<span class="ded-marker-circle">${icon}</span>`
       + `<span class="ded-marker-label">${pos.name}</span>`;
@@ -578,7 +566,7 @@ export function renderDedSteps(d) {
     const li = document.createElement('li');
     li.className = 'ded-step' + (S.dedSelectedStep === i ? ' active' : '');
     const conclusions = step.conclusions.map((c, j) =>
-      `${j > 0 ? `<span class="sep">${translate("ui.ded.what.conclusions")}</span>` : ''}`
+      `${j > 0 ? `<span class="sep">${translate("ui.ded.basis.separator.deduce")}</span>` : ''}`
       + `<span class="${c.value === 'yes' ? 'c-yes' : 'c-no'}">`
       + `${posName(S.dedMap, c.id)}${c.value === 'yes' ? translate("deduction.status.present") : translate("deduction.status.absent")}</span>`
     ).join('');
@@ -631,7 +619,7 @@ export function renderDedLayouts(d) {
         + `${posName(S.dedMap, p)}</span>`;
     }).join('');
     li.innerHTML =
-      `<span class="ded-layout-badge${unique ? ' unique' : ''}">${translate("ui.ded.what.text3", { valueSecondary: ci + 1 })}</span>`
+      `<span class="ded-layout-badge${unique ? ' unique' : ''}">${translate("ui.ded.layout.name", { valueSecondary: ci + 1 })}</span>`
       + `<span class="ded-layout-names"
           style="grid-template-columns:repeat(${cfg.length}, minmax(0, 1fr))">
           ${names}</span>`;

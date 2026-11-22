@@ -96,7 +96,7 @@ export const TAC_MOVEMENT_BUFFS = {
     webersLaw: { name: translate("talent.survivor.webersLaw"), levels: [1.1, 1.15, 1.2], duration: 3.5, camp: 'survivor' },
     borrowedTime: {
       name: translate("talent.survivor.borrowedTime"), mult: 1.5, duration: 5, camp: 'survivor',
-      extra: { name: translate("application.buff.common.name.layer", { name: translate("talent.survivor.escape"), value: 3 }), mult: 1.05, camp: 'survivor' },
+      extra: { name: translate("application.buff.common.name.level", { name: translate("talent.survivor.escape"), value: 3 }), mult: 1.05, camp: 'survivor' },
     },
     escape: { name: translate("talent.survivor.escape"), levels: [1.03, 1.04, 1.05], camp: 'survivor' },
     wellEarned: { name: translate("talent.survivor.wellEarned"), mult: 1.25, duration: 4, camp: 'survivor' },
