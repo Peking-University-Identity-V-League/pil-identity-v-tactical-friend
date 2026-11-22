@@ -78,7 +78,7 @@
   "characters.cueist.range.contactPointFirstPlacement": "First contact point placement",
   "characters.cueist.range.cueBallCapturePlacement": "Cue ball placement after capture",
   "characters.cueist.range.maxwellsDemon": "Entry path",
-  "characters.customize.name": "Custom",
+  "characters.custom.name": "Custom",
   "characters.dentist.name": "Dentist",
   "characters.dentist.range.beamPlacement": "Beam placement",
   "characters.dentist.range.dentalMirrorLensAngle1": "Dental Mirror 5x lens",

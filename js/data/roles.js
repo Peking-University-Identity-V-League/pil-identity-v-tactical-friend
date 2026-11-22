@@ -965,8 +965,8 @@ export const TAC_ROLES = {
     items: ['bestialAwakening', 'lunge', 'heightenedSenses'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/5f/d9d4dwfp18lwnmcmymoy3iylx2pai6j.png/90px-%E2%80%9C%E5%BF%83%E5%85%BD%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
-  customize: {
-    name: translate("characters.customize.name"),
+  custom: {
+    name: translate("characters.custom.name"),
     camp: 'other',
     ranges: {
       key: 'show',
