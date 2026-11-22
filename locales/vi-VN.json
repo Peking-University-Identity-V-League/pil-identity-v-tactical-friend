@@ -1638,6 +1638,7 @@
   "ui.tac.tool.title": "🧰 Thanh công cụ",
   "ui.tac.tool.undo": "↩ Hoàn tác",
   "ui.title": "Công cụ học tập diễn tập chiến thuật Identity V",
+  "items.teamIVL.CPG.name": "CPG",
   "items.teamIVL.GW.name": "GW",
   "items.teamIVL.JHS.name": "JHS",
   "items.teamIVL.RB.name": "RB",
@@ -1648,5 +1649,6 @@
   "items.teamIJL.Dawn.name": "Dawn",
   "items.teamIJL.FAV.name": "FAV",
   "items.teamIJL.LVS.name": "LVS",
-  "items.teamIJL.SST.name": "SST"
+  "items.teamIJL.SST.name": "SST",
+  "characters.teamOther.name": ""
 }

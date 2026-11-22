@@ -1035,6 +1035,12 @@ export const TAC_ROLES = {
     items: TAC_MATCH_KEYS.teamIJL,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/5a/aduticjamiol9j9dn01c3mqwkknvb8w.png/150px-IJLlogo.png',
   },
+  teamOther: {
+    name: translate("characters.teamOther.name"),
+    camp: 'other',
+    items: TAC_MATCH_KEYS.teamOther,
+    icon: 'https://patchwiki.biligame.com/images/dwrg/a/ae/qdi9y752shi6vjyg43qy5u04o23osyr.png',
+  },
   sticker: {
     name: translate("characters.sticker.name"),
     camp: 'other',

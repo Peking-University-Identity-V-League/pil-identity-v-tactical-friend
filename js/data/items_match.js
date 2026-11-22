@@ -103,27 +103,27 @@ export const TAC_MATCH_TYPES = {
   },
   GW: {
     name: translate("items.teamIVL.GW.name"),
-    icon: 'https://wiki.biligame.com/dwrg/GW#/media/%E6%96%87%E4%BB%B6:GW%E7%94%B5%E5%AD%90%E7%AB%9E%E6%8A%80%E4%BF%B1%E4%B9%90%E9%83%A8_LOGO.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/0f/2ozkblzjwxrlanecuel62k846ybzrym.png/450px-GW%E7%94%B5%E5%AD%90%E7%AB%9E%E6%8A%80%E4%BF%B1%E4%B9%90%E9%83%A8_LOGO.png',
   },
   JHS: {
     name: translate("items.teamIVL.JHS.name"),
-    icon: 'https://wiki.biligame.com/dwrg/JHS#/media/%E6%96%87%E4%BB%B6:%E6%B1%9F%E6%B9%96%E9%A3%8E%E6%9A%B4%E7%94%B5%E5%AD%90%E7%AB%9E%E6%8A%80%E4%BF%B1%E4%B9%90%E9%83%A8_LOGO.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/7/73/3fyhwwkeb7z6nut5xczmmreqcmioyjc.png/450px-%E6%B1%9F%E6%B9%96%E9%A3%8E%E6%9A%B4%E7%94%B5%E5%AD%90%E7%AB%9E%E6%8A%80%E4%BF%B1%E4%B9%90%E9%83%A8_LOGO.png',
   },
   RB: {
     name: translate("items.teamIVL.RB.name"),
-    icon: 'https://wiki.biligame.com/dwrg/RB#/media/%E6%96%87%E4%BB%B6:%E7%91%9E%E5%8D%9A%E6%81%A9%E7%94%B5%E5%AD%90%E7%AB%9E%E6%8A%80%E4%BF%B1%E4%B9%90%E9%83%A8_LOGO.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/9/9c/37nd61ppxvo6d5vf74c92h7l5mj90jk.png',
   },
   TIANBA: {
     name: translate("items.teamIVL.TIANBA.name"),
-    icon: 'https://wiki.biligame.com/dwrg/TIANBA#/media/%E6%96%87%E4%BB%B6:%E5%A4%A9%E9%9C%B8%E7%94%B5%E5%AD%90%E7%AB%9E%E6%8A%80%E4%BF%B1%E4%B9%90%E9%83%A8_LOGO.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/8/8e/fns8odotc7aiee8ydv6o0tj1qgql8fo.png',
   },
   XROCK: {
     name: translate("items.teamIVL.XROCK.name"),
-    icon: 'https://wiki.biligame.com/dwrg/XROCK#/media/%E6%96%87%E4%BB%B6:XROCK%E7%94%B5%E5%AD%90%E7%AB%9E%E6%8A%80%E4%BF%B1%E4%B9%90%E9%83%A8_LOGO.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/1/1a/91i9z7ns8jocs329ohtejgsie15i1sf.png',
   },
   YS: {
     name: translate("items.teamIVL.YS.name"),
-    icon: 'https://wiki.biligame.com/dwrg/YS#/media/%E6%96%87%E4%BB%B6:YS%E7%94%B5%E5%AD%90%E7%AB%9E%E6%8A%80%E4%BF%B1%E4%B9%90%E9%83%A8_LOGO.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/a/af/bu2xa9ev7ooigggk9bjoszz1gbp1d7p.png/450px-YS%E7%94%B5%E5%AD%90%E7%AB%9E%E6%8A%80%E4%BF%B1%E4%B9%90%E9%83%A8_LOGO.png',
   },
 
   AWG: {
@@ -205,7 +205,19 @@ export const TAC_MATCH_KEYS = {
     'MRC',
     'TE',
     'WBG',
-    'Wolves',
+    'Wolves'    
+  ],
+  teamIJL: [
+    'AWG',
+    'AXZ',
+    'DFM',
+    'FL',
+    'QTD',
+    'RC',
+    'SZ',
+    'Zeta'
+  ],
+  teamOther: [
     'GG2',
     'GR2',
     'MRC2',
@@ -217,16 +229,6 @@ export const TAC_MATCH_KEYS = {
     'TIANBA',
     'XROCK',
     'YS',
-  ],
-  teamIJL: [
-    'AWG',
-    'AXZ',
-    'DFM',
-    'FL',
-    'QTD',
-    'RC',
-    'SZ',
-    'Zeta',
     'CG',
     'Dawn',
     'FAV',

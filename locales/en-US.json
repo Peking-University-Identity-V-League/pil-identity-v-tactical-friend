@@ -1648,5 +1648,6 @@
   "items.teamIJL.Dawn.name": "Dawn",
   "items.teamIJL.FAV.name": "FAV",
   "items.teamIJL.LVS.name": "LVS",
-  "items.teamIJL.SST.name": "SST"
+  "items.teamIJL.SST.name": "SST",
+  "characters.teamOther.name": "Other Team"
 }
