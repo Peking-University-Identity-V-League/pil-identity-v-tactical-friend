@@ -91,10 +91,10 @@ test('range box: unchecking fill keeps the range visible (musicbox)', async ({ p
   await expect(fillCb).not.toBeChecked();
 });
 
-test('range box: customize has icon, no talents, slider radius 0 hides circle', async ({ page }) => {
-  await placeRole(page, 'customize', 0.5, 0.2);
+test('range box: custom has icon, no talents, slider radius 0 hides circle', async ({ page }) => {
+  await placeRole(page, 'custom', 0.5, 0.2);
   // 图标正常渲染
-  await expect(page.locator('.tac-token[data-role="customize"] img')).toHaveCount(1);
+  await expect(page.locator('.tac-token[data-role="custom"] img')).toHaveCount(1);
   // camp=other 一级按钮统一为：显示范围 / 隐藏范围，不显示天赋范围
   await expect(lv1(page, '显示天赋范围')).toHaveCount(0);
   await expect(rangeBox(page).locator('.tac-range-opt:not(.tac-range-sub)')).toHaveText(['显示范围', '隐藏范围']);
@@ -102,7 +102,7 @@ test('range box: customize has icon, no talents, slider radius 0 hides circle', 
   await expect(lv1(page, '显示范围')).toHaveClass(/active/);
   // 二级按钮「自定义范围」未点亮：无范围调节、无范围圈
   const slider = rangeBox(page).locator('input[type="range"]');
-  const roleCircle = page.locator('.tac-role-circle[data-role="customize"]');
+  const roleCircle = page.locator('.tac-role-circle[data-role="custom"]');
   await expect(lv2(page, '自定义范围')).not.toHaveClass(/active/);
   await expect(slider).toHaveCount(0);
   await expect(roleCircle).toHaveCount(0);
