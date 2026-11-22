@@ -3309,6 +3309,7 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 .tac-dungeon,
 .tac-door,
 .tac-chair,
+.tac-locker,
 .tac-box,
 .tac-spawn {
   position: absolute;

@@ -58,6 +58,8 @@ export const MAPS_DATA = [
       fixed: [[129, 140], [570, 186], [202, 303], [382, 357]],
     };
 
+    const lockers = [[557, 112], [686, 161], [128, 166], [632, 182], [323, 184], [584, 189], [412, 368], [386, 560], [195, 583], [268, 594]];
+
     const basements = {
       basement_1: {
         rocketChairs: [[517, -33, 468], [565, -33, 487], [548, -33, 492], [526, -33, 499]],
@@ -201,7 +203,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
       fixedSpawns, spawnPoints,
       law_urls, fixedHint, hints,
       deduction: (() => {
@@ -274,6 +276,8 @@ export const MAPS_DATA = [
     const chests = {
       fixed: [[239, 58], [292, 108], [373, 1, 195], [150, 345], [391, 348], [366, 476], [564, 495]],
     };
+
+    const lockers = [[270, 41], [581, 277], [106, 291], [156, 306]];
 
     const basements = {
       basement_1: {
@@ -415,7 +419,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
       fixedSpawns, spawnPoints,
       law_urls, fixedHint, hints,
       deduction: (() => {
@@ -493,6 +497,8 @@ export const MAPS_DATA = [
     const chests = {
       fixed: [[153, 142], [145, 261], [442, 370], [132, 381], [138, 470], [525, 477], [330, 497]],
     };
+
+    const lockers = [[549, 130], [431, 144], [328, 149], [487, 225], [523, 244], [239, 263], [449, 298], [123, 301], [204, 506], [362, 518]];
 
     const basements = {
       basement_1: {
@@ -631,7 +637,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
       fixedSpawns,
       spawnPoints,
       law_urls, fixedHint, hints,
@@ -718,6 +724,8 @@ export const MAPS_DATA = [
     const chests = {
       fixed: [[157, 516], [346, 555], [230, 668], [854, 703], [195, 839], [818, 996], [324, 1065]],
     };
+
+    const lockers = [[496, 296], [273, 402], [276, 579], [399, 995]];
 
     const basements = {
       basement_1: {
@@ -862,7 +870,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
       fixedSpawns,
       spawnPoints,
       law_urls, fixedHint, hints,
@@ -951,6 +959,8 @@ export const MAPS_DATA = [
     const chests = {
       fixed: [[834, 184], [63, 223], [1280, 319], [855, 458], [1402, 781], [734, 789], [249, 802]],
     };
+
+    const lockers = [[454, 146], [144, 509], [1094, 520], [1005, 762]];
 
     const basements = {
       basement_1: {
@@ -1094,7 +1104,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
       fixedSpawns,
       spawnPoints,
       law_urls, fixedHint, hints,
@@ -1173,6 +1183,8 @@ export const MAPS_DATA = [
     const chests = {
       fixed: [[274, 115], [538, 166], [622, 234], [175, 337], [381, 402], [592, 423], [183, 556]],
     };
+
+    const lockers = [[248, 59], [89, 114], [388, 127], [635, 166], [112, 325], [652, 475], [126, 576], [75, 577]];
 
     const basements = {
       basement_1: {
@@ -1316,7 +1328,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
       fixedSpawns,
       spawnPoints,
       law_urls, fixedHint, hints,
@@ -1410,6 +1422,8 @@ export const MAPS_DATA = [
     const chests = {
       fixed: [[231, 139], [576, 217], [302, 358], [180, 371], [428, 704]],
     };
+
+    const lockers = [[564, 210], [229, 328], [412, 358], [458, 548], [105, 597], [674, 743], [348, 850]];
 
     const basements = {
       basement_1: {
@@ -1550,7 +1564,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
       fixedSpawns,
       spawnPoints,
       law_urls, fixedHint, hints,
@@ -1627,6 +1641,8 @@ export const MAPS_DATA = [
     const chests = {
       fixed: [[959, 1, 324], [225, 1, 527], [505, 1, 918], [950, 1, 1038]],
     };
+
+    const lockers = [[259, 148], [824, 184], [942, 382], [1259, 539], [229, 904], [936, 1114]];
 
     const basements = {
       basement_1: {
@@ -1768,7 +1784,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
       fixedSpawns,
       spawnPoints,
       law_urls, fixedHint, hints,
@@ -1860,6 +1876,8 @@ export const MAPS_DATA = [
     const chests = {
       fixed: [[305, 125], [1023, 223], [503, 574], [966, 882], [418, 57, 983]],
     };
+
+    const lockers = [[307, 71], [1013, 206], [672, 261], [512, 436], [959, 549], [128, 656], [1029, 893], [128, 982], [686, 1043]];
 
     const basements = {
       basement_1: {
@@ -2001,7 +2019,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize,
       zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, basements, widthM,
+      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
       fixedSpawns,
       spawnPoints,
       law_urls, fixedHint, hints,

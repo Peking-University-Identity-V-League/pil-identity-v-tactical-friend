@@ -147,7 +147,6 @@ export const TAC_ROLES = {
       ],
     },
     items: ['fastMusicbox', 'slowMusicbox', 'musicboxSwitch'],
-    maxItems: 3,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/14/6u90w90cko8ucql7td6s2g66tirtqm6.png/90px-%E8%88%9E%E5%A5%B3%E5%A4%B4%E5%83%8F.png',
   },
   seer: {
@@ -160,7 +159,6 @@ export const TAC_ROLES = {
     name: translate("characters.embalmer.name"),
     camp: 'survivor',
     items: ['makeupBox', 'coffin'],
-    maxItems: 1,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/a/ac/9ycf32ktg7qe2234e49d8mzrc18ma1w.png/90px-%E5%85%A5%E6%AE%93%E5%B8%88%E5%A4%B4%E5%83%8F.png',
   },
   prospector: {
@@ -277,14 +275,12 @@ export const TAC_ROLES = {
     name: translate("characters.entomologist.name"),
     camp: 'survivor',
     items: ['swarmNet', 'swarmNetWave'],
-    maxItems: 1,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/6/63/3s9842m4mdlccry2lxz1u1cr8cecz3s.png/90px-%E6%98%86%E8%99%AB%E5%AD%A6%E8%80%85%E5%A4%B4%E5%83%8F.png',
   },
   painter: {
     name: translate("characters.painter.name"),
     camp: 'survivor',
     items: ['paintBruahAndDrawingBoard', 'drawingBoard'],
-    maxItems: 2,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/56/821z7af4xzflb8o5ad3jxjzqzxswqqh.png/90px-%E7%94%BB%E5%AE%B6%E5%A4%B4%E5%83%8F.png',
   },
   batter: {
@@ -305,7 +301,6 @@ export const TAC_ROLES = {
     name: translate("characters.toyMerchant.name"),
     camp: 'survivor',
     items: ['catapult', 'woodenWings', 'toyBox', 'toyContainer'],
-    maxItems: 2,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/9e/sjqzxjfh9dr8zjhdl3y9g5xoibszlck.png/90px-%E7%8E%A9%E5%85%B7%E5%95%86%E5%A4%B4%E5%83%8F.png',
   },
   psychologist: {
@@ -453,7 +448,6 @@ export const TAC_ROLES = {
       ],
     },
     items: ['airbag'],
-    maxItems: 2,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/38/7yxt90beix98wxs6z3guktddhnpj1t1.png/90px-%E7%81%AB%E7%81%BE%E8%B0%83%E6%9F%A5%E5%91%98%E5%A4%B4%E5%83%8F.png',
   },
   faroLady: {
@@ -542,7 +536,6 @@ export const TAC_ROLES = {
       ],
     },
     items: ['propUmbrella'],
-    maxItems: 3,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b4/ezpalvrvblo048p3uaf9ejyqlggq095.png/90px-%E9%BB%98%E5%89%A7%E8%89%BA%E4%BA%BA%E5%A4%B4%E5%83%8F.png',
   },
   prodigy: {
@@ -780,7 +773,6 @@ export const TAC_ROLES = {
     camp: 'hunter',
     speed: 4.64,
     items: ['spearfishing', 'surgingTides'],
-    maxItems: 1,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/d/dc/dah1qypfv56191rerxkkvdytfvki1jh.png/90px-%E6%B8%94%E5%A5%B3%E5%A4%B4%E5%83%8F.png',
   },
   waxArtist: {
@@ -983,14 +975,13 @@ export const TAC_ROLES = {
       ],
     },
     color: '#fbbf24',
-    items: ['customSurvivor', 'customHunter', 'customEscapeDoor', 'customCipherMachine', 'customDungeon', 'customRocketChair', 'customBox'],
+    items: ['customSurvivor', 'customHunter', 'customEscapeDoor', 'customCipherMachine', 'customDungeon', 'customRocketChair', 'customLocker', 'customBox'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/f/f6/o8ixpxb56avrj5e2tzdyps58h8rfa7i.png',
   },
   trait: {
     name: translate("characters.trait.name"),
     camp: 'other',
     items: ['listen', 'abnormal', 'excitement', 'patroller', 'teleport', 'peeper', 'blink', 'warp'],
-    maxItems: [3, 2],
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/bd/4aby06f4kbl87b14cihk5o3y1k61e8l.png',
   },
   talentSurvivor: {

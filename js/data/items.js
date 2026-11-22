@@ -1454,10 +1454,22 @@ export const TAC_ITEM_TYPES = {
 
   customSurvivor: {
     name: translate("common.survivor"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: { min: 0, max: null }, label: translate("common.survivor") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/4/45/omv2vmop0j63s9aprhjjkt4psykuy5p.png',
   },
   customHunter: {
     name: translate("common.hunter"),
+    ranges: {
+      key: 'showItem',
+      options: [
+        { size_m: { min: 0, max: null }, label: translate("common.hunter") },
+      ],
+    },
     icon: 'https://patchwiki.biligame.com/images/dwrg/7/7a/f3sec5gnnhzh1xprcbxeaxa1uuzhkmo.png',
   },
   customEscapeDoor: {
@@ -1476,9 +1488,13 @@ export const TAC_ITEM_TYPES = {
     name: translate("common.rocketChair"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/d/d2/knxq0splk1giitvevupgf0oezgyhl7e.png',
   },
+  customLocker: {
+    name: translate("common.locker"),
+    icon: 'https://website.homeworkkun.top/WIKI/%E5%9C%B0%E5%9B%BE/guizi.png',
+  },
   customBox: {
     name: translate("common.box"),
-    icon: 'https://i0.hdslb.com/bfs/new_dyn/a651cfc24c47f2fa125f20c90f5dda6896830223.png@1192w.avif',
+    icon: 'https://website.homeworkkun.top/WIKI/%E5%9C%B0%E5%9B%BE/xiangzi.png',
   },
 
   listen: {

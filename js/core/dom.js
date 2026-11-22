@@ -496,6 +496,12 @@ export const tacBasementText = $('tacBasementText');
 
 export const tacSnapBoxEl = $('tacSnapBox');
 
+export const tacShowLockersEl = $('tacShowLockers');
+
+export const tacLockerSizeEl = $('tacLockerSize');
+
+export const tacLockerSizeDefEl = $('tacLockerSizeDef');
+
 export const tacShowBoxesEl = $('tacShowBoxes');
 
 export const tacBoxSizeEl = $('tacBoxSize');
