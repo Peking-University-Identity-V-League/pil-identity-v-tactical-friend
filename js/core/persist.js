@@ -199,6 +199,7 @@ export const tacDisplay = {
   doorLock: false, 
   chairs: false, chairSize: TAC_DISPLAY_DEFAULT.chairSize,
   chairsBasement: false,
+  lockers: false, lockerSize: TAC_DISPLAY_DEFAULT.lockerSize,
   boxes: false, boxSize: TAC_DISPLAY_DEFAULT.boxSize,
   boxesBasement: false,
   

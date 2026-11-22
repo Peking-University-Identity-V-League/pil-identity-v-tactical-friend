@@ -158,14 +158,16 @@ export const TAC_FIXED_SPAWN_ICONS = {
   console: 'https://patchwiki.biligame.com/images/dwrg/f/f7/jbqdvznjphrq602qh303r24qdn3ti4b.png',
 };
 
-export const BOX_ICON_URL = 'https://i0.hdslb.com/bfs/new_dyn/a651cfc24c47f2fa125f20c90f5dda6896830223.png@1192w.avif';
+export const BOX_ICON_URL = 'https://website.homeworkkun.top/WIKI/%E5%9C%B0%E5%9B%BE/xiangzi.png';
+
+export const LOCKER_ICON_URL = 'https://website.homeworkkun.top/WIKI/%E5%9C%B0%E5%9B%BE/guizi.png';
 
 
 export const SPAWN_SURVIVOR_ICON_URL = 'https://patchwiki.biligame.com/images/dwrg/4/45/omv2vmop0j63s9aprhjjkt4psykuy5p.png';
 
 export const SPAWN_HUNTER_ICON_URL = 'https://patchwiki.biligame.com/images/dwrg/7/7a/f3sec5gnnhzh1xprcbxeaxa1uuzhkmo.png';
 
-export const TAC_DISPLAY_DEFAULT = { cipherSize: 6, dungeonSize: 6, doorSize: 6, chairSize: 6, boxSize: 1.5, spawnSize: 6 };
+export const TAC_DISPLAY_DEFAULT = { cipherSize: 6, dungeonSize: 6, doorSize: 6, chairSize: 6, lockerSize: 6, boxSize: 6, spawnSize: 6 };
 
 export const TAC_ZOOM_MIN = 1, TAC_ZOOM_MAX = 5;
 
