@@ -5,31 +5,18 @@ import { translate } from '../core/i18n.js';
 // 仅部分人格外加 ranges（有明确距离参数、需要在地图上画圈的）；其余只有名称和图标。
 export const TAC_TALENT_TYPES = {
   fearRadius: {
-
     name: translate("talent.survivor.fearRadius"),
-
     ranges: {
-
       key: 'showItem',
-
       fearMods: {
-
         hunter: [['hunter', translate("characters.camps.hunter"), 1], ['beauty', translate("talent.survivor.fearRadius.range.mode.geisha.beautyForm"), 0.8], ['prajna', translate("talent.survivor.fearRadius.range.mode.geisha.prajnaForm"), 1.1]],
-
         survivor: [['survivor', translate("characters.camps.survivor"), 1], ['prisoner', translate("talent.survivor.fearRadius.range.mode.prisoner"), 0.8], ['archer', translate("talent.survivor.fearRadius.range.mode.archer"), 0.76]],
-
       },
-
       options: [
-
         { size_m: 32.07, label: translate("talent.survivor.fearRadius") },
-
       ],
-
     },
-
     icon: 'https://patchwiki.biligame.com/images/dwrg/2/24/dv1pstoj7a8ftqf9l3jazt1cpe4sxwo.png',
-
   },
   borrowedTime: {
     name: translate("talent.survivor.borrowedTime"),
@@ -96,23 +83,14 @@ export const TAC_TALENT_TYPES = {
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/ba/ekoulk3p7v7y5si2b6gv6r3787r8tte.png',
   },
   sneak: {
-
     name: translate("talent.survivor.sneak"),
-
     ranges: {
-
       key: 'showItem',
-
       options: [
-
         { size_m: 22, label: translate("talent.survivor.sneak") },
-
       ],
-
     },
-
     icon: 'https://patchwiki.biligame.com/images/dwrg/1/13/o8d12vi02km7ozis0f2io312tsynodg.png',
-
   },
   doctor: {
     name: translate("talent.survivor.doctor"),
@@ -179,23 +157,14 @@ export const TAC_TALENT_TYPES = {
     icon: 'https://patchwiki.biligame.com/images/dwrg/2/21/m75mep3g3geppbh0wiz8yj84wrhp188.png',
   },
   webersLaw: {
-
     name: translate("talent.survivor.webersLaw"),
-
     ranges: {
-
       key: 'showItem',
-
       options: [
-
         { size_m: 18, label: translate("talent.survivor.webersLaw") },
-
       ],
-
     },
-
     icon: 'https://patchwiki.biligame.com/images/dwrg/2/28/4opnhwv5mnc78m81u6ulz3t2b50yhxj.png',
-
   },
   survivorsInstinct: {
     name: translate("talent.survivor.survivorsInstinct"),
@@ -222,23 +191,14 @@ export const TAC_TALENT_TYPES = {
     icon: 'https://patchwiki.biligame.com/images/dwrg/2/2a/0sjfxsryqw4hmowjjp3mcd4njul5ebz.png',
   },
   tinnitus: {
-
     name: translate("talent.hunter.tinnitus"),
-
     ranges: {
-
       key: 'showItem',
-
       options: [
-
         { size_m: 36, label: translate("talent.hunter.tinnitus") },
-
       ],
-
     },
-
     icon: 'https://patchwiki.biligame.com/images/dwrg/f/f5/2546goc080xvxx8kde4sk2h1vry3k4n.png',
-
   },
   trumpCard: {
     name: translate("talent.hunter.trumpCard"),
@@ -285,42 +245,24 @@ export const TAC_TALENT_TYPES = {
     icon: 'https://patchwiki.biligame.com/images/dwrg/e/ed/d4h8n5a5oek1lwcxbsb5ot4og0l7rev.png',
   },
   addiction: {
-
     name: translate("talent.hunter.addiction"),
-
     ranges: {
-
       key: 'showItem',
-
       options: [
-
         { size_m: 20, label: translate("talent.hunter.addiction") },
-
       ],
-
     },
-
     icon: 'https://patchwiki.biligame.com/images/dwrg/e/eb/flp1movyr3427678u7a854cde31icqk.png',
-
   },
   nostalgic: {
-
     name: translate("talent.hunter.nostalgic"),
-
     ranges: {
-
       key: 'showItem',
-
       options: [
-
         { size_m: 32, label: translate("talent.hunter.nostalgic") },
-
       ],
-
     },
-
     icon: 'https://patchwiki.biligame.com/images/dwrg/e/ef/80q87s7z71ecm5yhz07bd9lo3hs1g8c.png',
-
   },
   inertia: {
     name: translate("talent.hunter.inertia"),
@@ -355,42 +297,24 @@ export const TAC_TALENT_TYPES = {
     icon: 'https://patchwiki.biligame.com/images/dwrg/3/36/7s5zwko6w8o5dofzihh1icuwd6unab6.png',
   },
   skittish: {
-
     name: translate("talent.hunter.skittish"),
-
     ranges: {
-
       key: 'showItem',
-
       options: [
-
         { size_m: 12, label: translate("talent.hunter.skittish") },
-
       ],
-
     },
-
     icon: 'https://patchwiki.biligame.com/images/dwrg/0/0c/dmvkzw1a11nxskx0hhoq6bnfslsvw9c.png',
-
   },
   deerHunt: {
-
     name: translate("talent.hunter.deerHunt"),
-
     ranges: {
-
       key: 'showItem',
-
       options: [
-
         { size_m: 18, label: translate("talent.hunter.deerHunt") },
-
       ],
-
     },
-
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/b7/d9ojgfgmihbwmaw6vkmbg96it0s2eb3.png',
-
   },
   tolerance: {
     name: translate("talent.hunter.tolerance"),
@@ -409,23 +333,14 @@ export const TAC_TALENT_TYPES = {
     icon: 'https://patchwiki.biligame.com/images/dwrg/3/3b/9vr6n98dn8ncs3ey2a2j7r0pre662qz.png',
   },
   streetSweeper: {
-
     name: translate("talent.hunter.streetSweeper"),
-
     ranges: {
-
       key: 'showItem',
-
       options: [
-
         { size_m: [30, 45, 60], label: translate("talent.hunter.streetSweeper") },
-
       ],
-
     },
-
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/bd/re4lu3k5iknzh748yg85tcdvla2b0t2.png',
-
   },
   controlFreak: {
     name: translate("talent.hunter.controlFreak"),
@@ -444,23 +359,14 @@ export const TAC_TALENT_TYPES = {
     icon: 'https://patchwiki.biligame.com/images/dwrg/a/ab/tgy9teeck5fbb45l4rqhfeuzefgme4h.png',
   },
   wither: {
-
     name: translate("talent.hunter.wither"),
-
     ranges: {
-
       key: 'showItem',
-
       options: [
-
         { size_m: 10, label: translate("talent.hunter.wither") },
-
       ],
-
     },
-
     icon: 'https://patchwiki.biligame.com/images/dwrg/4/48/9edy2j55gu74hyrt4jqx4cxkunwyray.png',
-
   },
   destructiveness: {
     name: translate("talent.hunter.destructiveness"),
@@ -479,46 +385,28 @@ export const TAC_TALENT_TYPES = {
     icon: 'https://patchwiki.biligame.com/images/dwrg/4/4e/2lii838vqevzhtadrgyvszn86pi8duq.png',
   },
   obsession: {
-
     name: translate("talent.hunter.obsession"),
-
     ranges: {
-
       key: 'showItem',
-
       options: [
-
         { size_m: 16, label: translate("talent.hunter.obsession") },
-
       ],
-
     },
-
     icon: 'https://patchwiki.biligame.com/images/dwrg/6/6b/ra1r6rk9depicpmew855rzug25sy8ut.png',
-
   },
   mischievous: {
     name: translate("talent.hunter.mischievous"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/8/8b/3nhtqryf6cqg7z97yoofqtvx2mfxyb9.png',
   },
   famine: {
-
     name: translate("talent.hunter.famine"),
-
     ranges: {
-
       key: 'showItem',
-
       options: [
-
         { size_m: 16, label: translate("talent.hunter.famine") },
-
       ],
-
     },
-
     icon: 'https://patchwiki.biligame.com/images/dwrg/4/45/73txs9wv78r9rrh0ghil23wf6tx4c3s.png',
-
   },
 };
 
