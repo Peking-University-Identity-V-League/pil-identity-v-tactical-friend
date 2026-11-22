@@ -23,7 +23,7 @@ export const TAC_MOVEMENT_SURVIVOR = {
   },
   stateNames: {
     run: translate("movement.survivor.run"), walk: translate("movement.survivor.walk"), crouch: translate("movement.survivor.crouch"), crawl: translate("movement.survivor.crawl"),
-    role: translate("ui.common.roles"), fixed: translate("movement.survivor.fixed"), custom: translate("ui.common.custom"), hunter: translate("characters.camps.hunter")
+    role: translate("common.roles"), fixed: translate("movement.survivor.fixed"), custom: translate("common.custom"), hunter: translate("characters.camps.hunter")
   },
 };
 

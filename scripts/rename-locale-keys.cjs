@@ -29,7 +29,11 @@ for (let i = 0, j = 0; i < a.length || j < b.length;) {
   const mb = !isComment && lb && lb.match(keyRe);
   if (isComment) { // 注释行：删除本行旧键；注释中带完整键名时校验一致
     if (!ma) { structural++; console.error('COMMENT-ON-NONKEY line b', j + 1, lb); j++; continue; }
-    if (mc && ma[2] !== mc[2]) { structural++; console.error('COMMENT-MISMATCH line a', i + 1, ma[2], '| b', j + 1, mc[2]); i++; j++; continue; }
+    // 注释嵌入键名与 zh 行键名不同时：值一致视为“弃用说明”（注释键名=改用目标），按位置删除放行
+    if (mc && ma[2] !== mc[2]) {
+      if (normVal(ma[4]) === normVal(mc[4])) console.log('INFO: 注释键名与 zh 行不同但值一致（按位置删除） line a', i + 1, ma[2], '| 注释', mc[2]);
+      else { structural++; console.error('COMMENT-MISMATCH line a', i + 1, ma[2], '| b', j + 1, mc[2]); i++; j++; continue; }
+    }
     if (!mc) console.log('WARN: 无法解析的注释行（按位置删除） line b', j + 1, lb.trim());
     deletedKeys.push(ma[2]); i++; j++; continue;
   }
@@ -71,10 +75,13 @@ const walk = (d) => {
 };
 walk('.');
 
-// 3) 删除键必须零引用（完整键 + 模板前缀家族）
+// 3) 删除键必须零引用（完整键 + 模板前缀家族）；
+// 若同名键同时是重命名目标（静态占位键被动态模板键合并），删除仅丢弃旧值，引用不受影响
 {
+  const renamedTargets = new Set(Object.values(map));
   let bad = 0;
   for (const k of deletedKeys) {
+    if (renamedTargets.has(k)) continue;
     const re = new RegExp(esc(k) + '(?=["\'`&])');
     const pre = k.match(/^(.*?)\d+$/)?.[1];
     for (const f of files) {

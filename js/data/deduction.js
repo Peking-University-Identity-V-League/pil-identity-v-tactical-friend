@@ -15,7 +15,7 @@ export function dedHelpers(positions) {
   const ids = (...cipherNames) => cipherNames.map((n) =>
     positions.findIndex((p) => p.name === n));
 
-  const sep = translate("ui.punctuation.listSeparator");
+  const sep = translate("ui.ded.basis.separator");
   const join = (cipherNames) => cipherNames.join(sep);
 
   // 统一规则构造：所有规则都收同一个选项对象，用不到的字段传 null 或省略；
@@ -120,7 +120,7 @@ export function dedHelpers(positions) {
 
 
 export function dedRuleBook(rules) {
-  const slash = (r) => r.list.split(translate("ui.punctuation.listSeparator")).join(' / ');
+  const slash = (r) => r.list.split(translate("ui.ded.basis.separator")).join(' / ');
   return rules.map((r) => {
     switch (r.kind) {
       case 'fixed':

@@ -72,7 +72,7 @@
         <div class="map-container">
           <div class="ded-map-wrap tac-map-wrap" id="tacMapWrap">
             <div class="tac-rot" id="tacRot">
-              <img id="tacMapImage" class="map-image" alt="" draggable="false"  data-i18n-attributes="{&quot;alt&quot;:&quot;ui.common.map&quot;}"/>
+              <img id="tacMapImage" class="map-image" alt="" draggable="false"  data-i18n-attributes="{&quot;alt&quot;:&quot;common.map&quot;}"/>
               <svg class="tac-arrow-svg" id="tacArrowSvg" aria-hidden="true"></svg>
             </div>
             <div class="tac-snap-ripple" id="tacSnapRipple" aria-hidden="true"></div>
@@ -131,14 +131,14 @@
         </summary>
         <div style="margin-top:12px">
           <div class="tac-manage-row tac-display-row">
-            <label class="tac-display-toggle"><input type="checkbox" id="tacCipherCardShow" checked><span data-i18n="ui.common.show"></span></label>
+            <label class="tac-display-toggle"><input type="checkbox" id="tacCipherCardShow" checked><span data-i18n="common.show"></span></label>
             <span class="tac-display-mid">
               <span class="switch-btn" id="tacCipherCardPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.cipher.layout.prev.message&quot;}">‹</span>
               <span class="tac-display-text" id="tacCipherCardText"></span>
               <span class="switch-btn" id="tacCipherCardNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.cipher.layout.next.message&quot;}">›</span>
             </span>
             <label class="tac-manage-slider"><span data-i18n="ui.common.icon.size"></span><input type="range" id="tacCipherCardSize" min="3" max="12" step="0.5" value="6"></label>
-            <label class="tac-manage-def"><input type="checkbox" id="tacCipherCardSizeDef" checked><span data-i18n="ui.common.default"></span></label>
+            <label class="tac-manage-def"><input type="checkbox" id="tacCipherCardSizeDef" checked><span data-i18n="common.default"></span></label>
           </div>
           <div class="tac-carry-sep"></div>
           <div id="tacCipherList"></div>
@@ -163,7 +163,7 @@
 
         <div class="tac-sec-label" data-i18n="ui.common.style"></div>
         <div class="tac-style-flex">
-          <span data-i18n="ui.common.color"></span>
+          <span data-i18n="common.color"></span>
           <div class="tac-colors" id="tacColors">
             <button class="tac-color active" data-color="#ef4444" style="--c:#ef4444" title="" data-i18n-attributes="{&quot;title&quot;:&quot;colors.red&quot;}"></button>
             <button class="tac-color" data-color="#f97316" style="--c:#f97316" title="" data-i18n-attributes="{&quot;title&quot;:&quot;colors.orange&quot;}"></button>
@@ -200,7 +200,7 @@
 
         <div class="tac-sec-label" data-i18n="ui.common.style"></div>
         <div class="tac-style-flex">
-          <span data-i18n="ui.common.color"></span>
+          <span data-i18n="common.color"></span>
           <div class="tac-colors" id="tacTextColors">
             <button class="tac-color" data-color="#ef4444" style="--c:#ef4444" title="" data-i18n-attributes="{&quot;title&quot;:&quot;colors.red&quot;}"></button>
             <button class="tac-color" data-color="#f97316" style="--c:#f97316" title="" data-i18n-attributes="{&quot;title&quot;:&quot;colors.orange&quot;}"></button>
@@ -234,14 +234,14 @@
         <div style="margin-top:12px">
         <div class="tac-sec-label" data-i18n="ui.tac.measure.setting.draw.title"></div>
         <div class="side-toggle tac-mmodes" id="tacMeasureModes">
-          <button class="side-btn active" data-mmode="single" data-i18n="ui.sideBtn.label"></button>
-          <button class="side-btn" data-mmode="chain" data-i18n="ui.sideBtn.labelAlternate"></button>
+          <button class="side-btn active" data-mmode="single" data-i18n="ui.tac.measure.line.straightline.button"></button>
+          <button class="side-btn" data-mmode="chain" data-i18n="ui.tac.measure.line.polyline.button"></button>
           <button class="tac-mstyle-toggle open" id="tacMStyleToggle" type="button"
             title="" data-i18n="ui.common.style.title.show" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.style.message&quot;}"></button>
         </div>
         <div class="tac-mstyle-body" id="tacMStyleBody">
           <div class="tac-style-flex">
-            <span data-i18n="ui.common.color"></span>
+            <span data-i18n="common.color"></span>
             <div class="tac-colors" id="tacMeasureColors">
               <button class="tac-color" data-color="#ef4444" style="--c:#ef4444" title="" data-i18n-attributes="{&quot;title&quot;:&quot;colors.red&quot;}"></button>
               <button class="tac-color" data-color="#f97316" style="--c:#f97316" title="" data-i18n-attributes="{&quot;title&quot;:&quot;colors.orange&quot;}"></button>
@@ -252,7 +252,7 @@
               <button class="tac-color" data-color="#f1f5f9" style="--c:#f1f5f9" title="" data-i18n-attributes="{&quot;title&quot;:&quot;colors.white&quot;}"></button>
               <button class="tac-color" data-color="#0f172a" style="--c:#0f172a" title="" data-i18n-attributes="{&quot;title&quot;:&quot;colors.black&quot;}"></button>
             </div>
-            <label class="tac-display-toggle"><input type="checkbox" id="tacHideEndpoints"><span data-i18n="ui.tacMeasure.hideEndpoints"></span></label>
+            <label class="tac-display-toggle"><input type="checkbox" id="tacHideEndpoints"><span data-i18n="ui.tac.measure.setting.draw.hide.button"></span></label>
             <span data-i18n="ui.common.strokeWidth"></span>
             <input type="range" id="tacMeasureWidth" min="2" max="8" step="1" value="3" />
             <span class="tac-width-val" id="tacMeasureWidthVal">3</span>
@@ -261,7 +261,7 @@
 
         
         <div class="tac-sec-label tac-speed-title">
-          <button type="button" class="tac-deselect" id="tacDeselect" data-i18n="ui.tacDeselect.label"></button>
+          <button type="button" class="tac-deselect" id="tacDeselect" data-i18n="ui.tac.measure.line.choose"></button>
           <span class="tac-status" id="tacStatus"></span>
           <span class="tac-status2" id="tacStatus2"></span>
         </div>
@@ -277,16 +277,16 @@
             <button class="side-btn" data-camp="hunter" data-i18n="characters.camps.hunter"></button>
           </div>
           <div class="tac-scope-wrap" id="tacScopeWrap" style="display:none"
-            title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tacScopeWrap.title&quot;}">
-            <span class="tac-scope-label" data-i18n="ui.tacScopeLabel.label"></span>
+            title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.measure.setting.line.button.message&quot;}">
+            <span class="tac-scope-label" data-i18n="ui.tac.measure.setting.line.label"></span>
             <div class="side-toggle tac-scope-toggle" id="tacScopeToggle">
-              <button class="side-btn" data-scope="seg" data-i18n="ui.sideBtn.labelThird"></button>
-              <button class="side-btn active" data-scope="chain" data-i18n="ui.sideBtn.labelFourth"></button>
+              <button class="side-btn" data-scope="seg" data-i18n="ui.tac.measure.line.single"></button>
+              <button class="side-btn active" data-scope="chain" data-i18n="ui.tac.measure.line.all"></button>
             </div>
           </div>
         </div>
         <div class="tac-speed-line">
-          <span class="tac-sub-label" data-i18n="ui.tacSubLabel.label"></span>
+          <span class="tac-sub-label" data-i18n="application.velocity.base.label"></span>
           <div class="tac-speed-input-row">
             <input type="number" id="tacBaseSpeed" step="0.01" min="0.1" value="3.8" />
             <span>m/s</span>
@@ -295,10 +295,10 @@
           <select class="tac-speed-role" id="tacSpeedForm" style="display:none"></select>
         </div>
         <div class="tac-speed-line">
-          <span class="tac-sub-label" data-i18n="ui.tacSubLabel.labelAlternate"></span>
-          <button class="tac-add-btn" id="tacTraitAddBtn" type="button" data-i18n="ui.tacTraitAddBtn.label"></button>
-          <button class="tac-add-btn" id="tacTalentAddBtn" type="button" data-i18n="ui.tacTalentAddBtn.label"></button>
-          <button class="tac-add-btn" id="tacOtherAddBtn" type="button" data-i18n="ui.tacOtherAddBtn.label"></button>
+          <span class="tac-sub-label" data-i18n="application.velocity.buff.label"></span>
+          <button class="tac-add-btn" id="tacTraitAddBtn" type="button" data-i18n="application.velocity.buff.trait"></button>
+          <button class="tac-add-btn" id="tacTalentAddBtn" type="button" data-i18n="application.velocity.buff.talent"></button>
+          <button class="tac-add-btn" id="tacOtherAddBtn" type="button" data-i18n="application.velocity.buff.other"></button>
           <button class="tac-add-btn" id="tacBuffAddBtn" type="button" data-i18n="application.velocity.buff.custom"></button>
         </div>
 
@@ -322,7 +322,7 @@
         </div>
         <div class="tac-carry-sep"></div>
         <div class="tac-detail">
-          <button type="button" class="tac-detail-toggle tac-lvl1" id="tacResultToggle" data-i18n="ui.tacResultToggle.label"></button>
+          <button type="button" class="tac-detail-toggle tac-lvl1" id="tacResultToggle"></button>
           <div class="tac-detail-body" id="tacResultBody">
             
             <div class="tac-result" id="tacResult"></div>
@@ -392,7 +392,7 @@
                 </div>
               </div>
               <div class="tac-speed-line">
-                <span class="tac-sub-label" data-i18n="ui.tacSubLabel.label"></span>
+                <span class="tac-sub-label" data-i18n="application.velocity.base.label"></span>
                 <div class="tac-speed-input-row">
                   <input type="number" id="tacPathBaseSpeed" step="0.01" min="0.1" value="3.8" />
                   <span>m/s</span>
@@ -401,10 +401,10 @@
                 <select class="tac-speed-role" id="tacPathSpeedForm" style="display:none"></select>
               </div>
               <div class="tac-speed-line">
-                <span class="tac-sub-label" data-i18n="ui.tacSubLabel.labelAlternate"></span>
-                <button class="tac-add-btn" id="tacPathTraitAddBtn" type="button" data-i18n="ui.tacTraitAddBtn.label"></button>
-                <button class="tac-add-btn" id="tacPathTalentAddBtn" type="button" data-i18n="ui.tacTalentAddBtn.label"></button>
-                <button class="tac-add-btn" id="tacPathOtherAddBtn" type="button" data-i18n="ui.tacOtherAddBtn.label"></button>
+                <span class="tac-sub-label" data-i18n="application.velocity.buff.label"></span>
+                <button class="tac-add-btn" id="tacPathTraitAddBtn" type="button" data-i18n="application.velocity.buff.trait"></button>
+                <button class="tac-add-btn" id="tacPathTalentAddBtn" type="button" data-i18n="application.velocity.buff.talent"></button>
+                <button class="tac-add-btn" id="tacPathOtherAddBtn" type="button" data-i18n="application.velocity.buff.other"></button>
                 <button class="tac-add-btn" id="tacPathBuffAddBtn" type="button" data-i18n="application.velocity.buff.custom"></button>
               </div>
               <div class="tac-detail">
@@ -436,16 +436,16 @@
         <div style="margin-top:12px">
           <div class="tac-display-list">
           <div class="tac-manage-entry">
-            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="game.rocketChair"></span></div>
+            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="common.rocketChair"></span></div>
             <div class="tac-manage-row tac-display-row">
-              <label class="tac-display-toggle"><input type="checkbox" id="tacCarryShowChairs"><span data-i18n="ui.common.show"></span></label>
+              <label class="tac-display-toggle"><input type="checkbox" id="tacCarryShowChairs"><span data-i18n="common.show"></span></label>
               <span class="tac-display-mid">
                 <span class="switch-btn" id="tacCarryChairPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.rocketChair.prev.message&quot;}">‹</span>
                 <span class="tac-display-text" id="tacCarryChairText"></span>
                 <span class="switch-btn" id="tacCarryChairNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.rocketChair.next.message&quot;}">›</span>
               </span>
               <label class="tac-manage-slider"><span data-i18n="ui.common.icon.size"></span><input type="range" id="tacCarryChairSize" min="3" max="12" step="0.5" value="6"></label>
-              <label class="tac-manage-def"><input type="checkbox" id="tacCarryChairSizeDef" checked><span data-i18n="ui.common.default"></span></label>
+              <label class="tac-manage-def"><input type="checkbox" id="tacCarryChairSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
           <div class="tac-manage-entry">
@@ -533,13 +533,13 @@
             <span class="tac-width-val" id="tacCarryInitialVal">0%</span>
           </div>
           <div class="tac-speed-line">
-            <span class="tac-sub-label" data-i18n="ui.tacSubLabel.labelAlternate"></span>
+            <span class="tac-sub-label" data-i18n="application.velocity.buff.label"></span>
             <button type="button" class="tac-add-btn" id="tacCarrySurvTalentBtn" data-i18n="ui.tac.rocketChair.balloon.setting.balloon.survivor.buff.talent"></button>
           </div>
 
           <div class="tac-sec-label" data-i18n="ui.tac.rocketChair.balloon.setting.hunter.title"></div>
           <div class="tac-speed-line">
-            <span class="tac-sub-label" data-i18n="ui.tacSubLabel.label"></span>
+            <span class="tac-sub-label" data-i18n="application.velocity.base.label"></span>
             <div class="tac-speed-input-row">
               <input type="number" id="tacCarryHunterSpeed" step="0.01" min="0.1" value="4.64" />
               <span>m/s</span>
@@ -554,12 +554,12 @@
               <span>s</span>
             </div>
             <select class="tac-speed-role" id="tacCarryPickupMode" style="flex:none;width:auto">
-              <option value="default" data-i18n="ui.common.default"></option>
-              <option value="custom" data-i18n="ui.common.custom"></option>
+              <option value="default" data-i18n="common.default"></option>
+              <option value="custom" data-i18n="common.custom"></option>
             </select>
           </div>
           <div class="tac-speed-line">
-            <span class="tac-sub-label" data-i18n="ui.tacSubLabel.labelAlternate"></span>
+            <span class="tac-sub-label" data-i18n="application.velocity.buff.label"></span>
             <button type="button" class="tac-add-btn" id="tacCarryHuntTalentBtn" data-i18n="ui.tac.rocketChair.balloon.setting.balloon.hunter.buff.talent"></button>
             <button type="button" class="tac-add-btn" id="tacCarrySpeedTalentBtn" data-i18n="ui.tac.rocketChair.balloon.setting.balloon.hunter.buff.trait"></button>
           </div>
@@ -574,7 +574,7 @@
             <div id="tacDedSettingsTide" style="display:none">
               <div class="tac-sec-label" data-i18n="ui.tac.rocketChair.tideTurner.setting.velocity.survivor.title"></div>
               <div class="tac-speed-line">
-                <span class="tac-sub-label" data-i18n="ui.tacSubLabel.label"></span>
+                <span class="tac-sub-label" data-i18n="application.velocity.base.label"></span>
                 <div class="tac-speed-input-row">
                   <input type="number" id="tacTideBaseSpeed" step="0.01" min="0.1" value="3.8" />
                   <span>m/s</span>
@@ -583,10 +583,10 @@
                 <select class="tac-speed-role" id="tacTideSpeedForm" style="display:none"></select>
               </div>
               <div class="tac-speed-line">
-                <span class="tac-sub-label" data-i18n="ui.tacSubLabel.labelAlternate"></span>
-                <button class="tac-add-btn" id="tacTideTraitAddBtn" type="button" data-i18n="ui.tacTraitAddBtn.label"></button>
-                <button class="tac-add-btn" id="tacTideTalentAddBtn" type="button" data-i18n="ui.tacTalentAddBtn.label"></button>
-                <button class="tac-add-btn" id="tacTideOtherAddBtn" type="button" data-i18n="ui.tacOtherAddBtn.label"></button>
+                <span class="tac-sub-label" data-i18n="application.velocity.buff.label"></span>
+                <button class="tac-add-btn" id="tacTideTraitAddBtn" type="button" data-i18n="application.velocity.buff.trait"></button>
+                <button class="tac-add-btn" id="tacTideTalentAddBtn" type="button" data-i18n="application.velocity.buff.talent"></button>
+                <button class="tac-add-btn" id="tacTideOtherAddBtn" type="button" data-i18n="application.velocity.buff.other"></button>
                 <button class="tac-add-btn" id="tacTideBuffAddBtn" type="button" data-i18n="application.velocity.buff.custom"></button>
               </div>
               <div class="tac-detail">
@@ -620,78 +620,78 @@
             <div class="tac-manage-entry">
               <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="ui.tac.display.region"></span></div>
               <div class="tac-manage-row tac-display-row">
-                <label class="tac-display-toggle"><input type="checkbox" id="tacShowZones"><span data-i18n="ui.common.show"></span></label>
+                <label class="tac-display-toggle"><input type="checkbox" id="tacShowZones"><span data-i18n="common.show"></span></label>
               </div>
             </div>
           <div class="tac-manage-entry" id="tacSpawnEntry">
-            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="game.spawnPoint"></span></div>
+            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="common.spawnPoint"></span></div>
             <div class="tac-manage-row tac-display-row">
-              <label class="tac-display-toggle"><input type="checkbox" id="tacShowSpawns"><span data-i18n="ui.common.show"></span></label>
+              <label class="tac-display-toggle"><input type="checkbox" id="tacShowSpawns"><span data-i18n="common.show"></span></label>
               <span class="tac-display-mid">
                 <span class="switch-btn" id="tacSpawnPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.spawnPoint.layout.prev.message&quot;}">‹</span>
                 <span class="tac-display-text" id="tacSpawnText"></span>
                 <span class="switch-btn" id="tacSpawnNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.spawnPoint.layout.next.message&quot;}">›</span>
               </span>
               <label class="tac-manage-slider"><span data-i18n="ui.common.icon.size"></span><input type="range" id="tacSpawnSize" min="3" max="12" step="0.5" value="6"></label>
-              <label class="tac-manage-def"><input type="checkbox" id="tacSpawnSizeDef" checked><span data-i18n="ui.common.default"></span></label>
+              <label class="tac-manage-def"><input type="checkbox" id="tacSpawnSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
           <div class="tac-manage-entry">
-            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="game.escapeDoor"></span></div>
+            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="common.escapeDoor"></span></div>
             <div class="tac-manage-row tac-display-row">
-              <label class="tac-display-toggle"><input type="checkbox" id="tacShowDoors" checked><span data-i18n="ui.common.show"></span></label>
+              <label class="tac-display-toggle"><input type="checkbox" id="tacShowDoors" checked><span data-i18n="common.show"></span></label>
               <span class="tac-display-mid">
                 <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.escapeDoor.location.message&quot;}"><input type="checkbox" id="tacDoorLock"><span data-i18n="ui.tac.display.escapeDoor.location"></span></label>
               </span>
               <label class="tac-manage-slider"><span data-i18n="ui.common.icon.size"></span><input type="range" id="tacDoorSize" min="3" max="12" step="0.5" value="6"></label>
-              <label class="tac-manage-def"><input type="checkbox" id="tacDoorSizeDef" checked><span data-i18n="ui.common.default"></span></label>
+              <label class="tac-manage-def"><input type="checkbox" id="tacDoorSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
           <div class="tac-manage-entry">
-            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="game.cipherMachine"></span></div>
+            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="common.cipherMachine"></span></div>
             <div class="tac-manage-row tac-display-row">
-              <label class="tac-display-toggle"><input type="checkbox" id="tacShowCiphers" checked><span data-i18n="ui.common.show"></span></label>
+              <label class="tac-display-toggle"><input type="checkbox" id="tacShowCiphers" checked><span data-i18n="common.show"></span></label>
               <span class="tac-display-mid">
                 <span class="switch-btn" id="tacDispCipherPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.cipher.layout.prev.message&quot;}">‹</span>
                 <span class="tac-display-text" id="tacDispCipherText" data-i18n="ui.tac.display.cipher.layout"></span>
                 <span class="switch-btn" id="tacDispCipherNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.cipher.layout.next.message&quot;}">›</span>
               </span>
               <label class="tac-manage-slider"><span data-i18n="ui.common.icon.size"></span><input type="range" id="tacCipherSize" min="3" max="12" step="0.5" value="6"></label>
-              <label class="tac-manage-def"><input type="checkbox" id="tacCipherSizeDef" checked><span data-i18n="ui.common.default"></span></label>
+              <label class="tac-manage-def"><input type="checkbox" id="tacCipherSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
           <div class="tac-manage-entry">
-            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="game.dungeon"></span></div>
+            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="common.dungeon"></span></div>
             <div class="tac-manage-row tac-display-row">
-              <label class="tac-display-toggle"><input type="checkbox" id="tacShowDungeon"><span data-i18n="ui.common.show"></span></label>
+              <label class="tac-display-toggle"><input type="checkbox" id="tacShowDungeon"><span data-i18n="common.show"></span></label>
               <span class="tac-display-mid">
                 <span class="switch-btn" id="tacDungeonPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.dungeon.layout.prev.message&quot;}">‹</span>
                 <span class="tac-display-text" id="tacDungeonText"></span>
                 <span class="switch-btn" id="tacDungeonNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.dungeon.layout.next.message&quot;}">›</span>
               </span>
               <label class="tac-manage-slider"><span data-i18n="ui.common.icon.size"></span><input type="range" id="tacDungeonSize" min="3" max="12" step="0.5" value="6"></label>
-              <label class="tac-manage-def"><input type="checkbox" id="tacDungeonSizeDef" checked><span data-i18n="ui.common.default"></span></label>
+              <label class="tac-manage-def"><input type="checkbox" id="tacDungeonSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
           <div class="tac-manage-entry" id="tacChairEntry">
-            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="game.rocketChair"></span></div>
+            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="common.rocketChair"></span></div>
             <div class="tac-manage-row tac-display-row">
-              <label class="tac-display-toggle"><input type="checkbox" id="tacShowChairs"><span data-i18n="ui.common.show"></span></label>
+              <label class="tac-display-toggle"><input type="checkbox" id="tacShowChairs"><span data-i18n="common.show"></span></label>
               <span class="tac-display-mid">
                 <span class="switch-btn" id="tacChairPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.rocketChair.prev.message&quot;}">‹</span>
                 <span class="tac-display-text" id="tacChairText"></span>
                 <span class="switch-btn" id="tacChairNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.rocketChair.next.message&quot;}">›</span>
               </span>
               <label class="tac-manage-slider"><span data-i18n="ui.common.icon.size"></span><input type="range" id="tacChairSize" min="3" max="12" step="0.5" value="6"></label>
-              <label class="tac-manage-def"><input type="checkbox" id="tacChairSizeDef" checked><span data-i18n="ui.common.default"></span></label>
+              <label class="tac-manage-def"><input type="checkbox" id="tacChairSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
           <div class="tac-manage-entry" id="tacBoxEntry">
-            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="game.box"></span></div>
+            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="common.box"></span></div>
             <div class="tac-manage-row tac-display-row">
-              <label class="tac-display-toggle"><input type="checkbox" id="tacShowBoxes"><span data-i18n="ui.common.show"></span></label>
+              <label class="tac-display-toggle"><input type="checkbox" id="tacShowBoxes"><span data-i18n="common.show"></span></label>
               <label class="tac-manage-slider"><span data-i18n="ui.common.icon.size"></span><input type="range" id="tacBoxSize" min="1" max="12" step="0.5" value="1.5"></label>
-              <label class="tac-manage-def"><input type="checkbox" id="tacBoxSizeDef" checked><span data-i18n="ui.common.default"></span></label>
+              <label class="tac-manage-def"><input type="checkbox" id="tacBoxSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
           <div class="tac-manage-entry" id="tacBasementEntry">
@@ -716,12 +716,12 @@
             <div class="tac-display-group-label" data-i18n="ui.tac.draw.setting.label"></div>
             <div class="tac-display-snap no-line">
               <span class="tac-display-snap-label" data-i18n="ui.tac.draw.setting.autoSnap.button"></span>
-              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapDoor" checked><span data-i18n="game.escapeDoor"></span></label>
-              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapCipher" checked><span data-i18n="game.cipherMachine"></span></label>
-              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapDungeon" checked><span data-i18n="game.dungeon"></span></label>
-              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapChair" checked><span data-i18n="game.rocketChair"></span></label>
-              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapBox" checked><span data-i18n="game.box"></span></label>
-              <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.draw.setting.autoSnap.button.message&quot;}"><input type="checkbox" id="tacSnapPoint" checked><span data-i18n="ui.common.endpoint"></span></label>
+              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapDoor" checked><span data-i18n="common.escapeDoor"></span></label>
+              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapCipher" checked><span data-i18n="common.cipherMachine"></span></label>
+              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapDungeon" checked><span data-i18n="common.dungeon"></span></label>
+              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapChair" checked><span data-i18n="common.rocketChair"></span></label>
+              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapBox" checked><span data-i18n="common.box"></span></label>
+              <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.draw.setting.autoSnap.button.message&quot;}"><input type="checkbox" id="tacSnapPoint" checked><span data-i18n="common.endpoint"></span></label>
             </div>
             <div class="tac-display-snap no-line">
               <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.draw.setting.deleteSingle.button.message&quot;}"><input type="checkbox" id="tacDelSegOnly"><span data-i18n="ui.tac.draw.setting.deleteSingle.button"></span></label>
@@ -754,7 +754,7 @@
         <div class="side-toggle tac-camp-tabs" id="tacCampTabs">
           <button type="button" class="side-btn active" data-camp="survivor" data-i18n="characters.camps.survivor"></button>
           <button type="button" class="side-btn" data-camp="hunter" data-i18n="characters.camps.hunter"></button>
-          <button type="button" class="side-btn" data-camp="other" data-i18n="ui.common.other"></button>
+          <button type="button" class="side-btn" data-camp="other" data-i18n="common.other"></button>
         </div>
         <div class="tac-carry-sep"></div>
         <div class="tac-roles" id="tacRolesSurvivor"></div>
@@ -803,7 +803,7 @@
       <div class="map-viewer">
         <div class="map-container" id="regionMapContainer">
           <div class="map-wrapper" id="mapWrapper">
-            <img id="mapImage" class="map-image" alt=""  data-i18n-attributes="{&quot;alt&quot;:&quot;ui.common.map&quot;}"/>
+            <img id="mapImage" class="map-image" alt=""  data-i18n-attributes="{&quot;alt&quot;:&quot;common.map&quot;}"/>
             <canvas id="mapCanvas" class="map-canvas"></canvas>
           </div>
           
@@ -825,8 +825,8 @@
             </div>
           </div>
           <div class="selection-info">
-            <span class="info-text" id="survivorInfo" data-i18n="ui.sel.nav.status.survivor"></span>
-            <span class="info-text" id="hunterInfo" data-i18n="ui.sel.nav.status.hunter"></span>
+            <span class="info-text" id="survivorInfo"></span>
+            <span class="info-text" id="hunterInfo"></span>
           </div>
         </div>
       </div>
@@ -906,22 +906,22 @@
             <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="ui.sel.settings.survivorhunter"></span></div>
             <div class="tac-manage-row tac-display-row">
               <label class="tac-manage-slider"><span data-i18n="ui.common.icon.size"></span><input type="range" id="selRoleSize" min="20" max="100" step="2" value="50"></label>
-              <label class="tac-manage-def"><input type="checkbox" id="selRoleSizeDef" checked><span data-i18n="ui.common.default"></span></label>
+              <label class="tac-manage-def"><input type="checkbox" id="selRoleSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
           <div class="tac-manage-entry">
-            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="game.cipherMachine"></span></div>
+            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="common.cipherMachine"></span></div>
             <div class="tac-manage-row tac-display-row">
               <label class="tac-manage-slider"><span data-i18n="ui.common.icon.size"></span><input type="range" id="selCipherSize" min="2" max="12" step="0.5" value="5.2"></label>
-              <label class="tac-manage-def"><input type="checkbox" id="selCipherSizeDef" checked><span data-i18n="ui.common.default"></span></label>
+              <label class="tac-manage-def"><input type="checkbox" id="selCipherSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
           <div class="tac-manage-entry">
-            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="game.escapeDoor"></span></div>
+            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="common.escapeDoor"></span></div>
             <div class="tac-manage-row tac-display-row">
-              <label class="tac-display-toggle"><input type="checkbox" id="selShowDoors"><span data-i18n="ui.common.show"></span></label>
+              <label class="tac-display-toggle"><input type="checkbox" id="selShowDoors"><span data-i18n="common.show"></span></label>
               <label class="tac-manage-slider"><span data-i18n="ui.common.icon.size"></span><input type="range" id="selDoorSize" min="2" max="12" step="0.5" value="6"></label>
-              <label class="tac-manage-def"><input type="checkbox" id="selDoorSizeDef" checked><span data-i18n="ui.common.default"></span></label>
+              <label class="tac-manage-def"><input type="checkbox" id="selDoorSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
         </div>
@@ -949,7 +949,7 @@
       <div class="map-viewer">
         <div class="map-container">
           <div class="ded-map-wrap" id="dedMapWrap">
-            <img id="dedMapImage" class="map-image" alt="" draggable="false"  data-i18n-attributes="{&quot;alt&quot;:&quot;ui.common.map&quot;}"/>
+            <img id="dedMapImage" class="map-image" alt="" draggable="false"  data-i18n-attributes="{&quot;alt&quot;:&quot;common.map&quot;}"/>
             <svg class="ded-chain-svg" id="dedChainSvg" aria-hidden="true"></svg>
             
           </div>
@@ -1136,8 +1136,8 @@
 <div class="tac-modal-mask" id="tacTalentModal" style="display:none">
   <div class="tac-modal">
     <div class="tac-modal-head">
-      <span data-i18n="ui.span.labelEighth"></span>
-      <button type="button" id="tacTalentClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+      <span data-i18n="application.velocity.buff.talent.popup.title"></span>
+      <button type="button" id="tacTalentClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;common.close&quot;}">×</button>
     </div>
     <div class="tac-modal-body" id="tacTalentList"></div>
   </div>
@@ -1148,7 +1148,7 @@
   <div class="tac-modal">
     <div class="tac-modal-head">
       <span data-i18n="ui.tac.rocketChair.balloon.setting.balloon.survivor.buff.talent"></span>
-      <button type="button" id="tacCarrySurvClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+      <button type="button" id="tacCarrySurvClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;common.close&quot;}">×</button>
     </div>
     <div class="tac-modal-body" id="tacCarrySurvList"></div>
   </div>
@@ -1159,7 +1159,7 @@
   <div class="tac-modal">
     <div class="tac-modal-head">
       <span data-i18n="ui.tac.rocketChair.balloon.setting.balloon.hunter.buff.talent"></span>
-      <button type="button" id="tacCarryHuntClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+      <button type="button" id="tacCarryHuntClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;common.close&quot;}">×</button>
     </div>
     <div class="tac-modal-body" id="tacCarryHuntList"></div>
   </div>
@@ -1170,7 +1170,7 @@
   <div class="tac-modal">
     <div class="tac-modal-head">
       <span data-i18n="ui.tac.rocketChair.balloon.setting.balloon.hunter.buff.trait"></span>
-      <button type="button" id="tacCarrySpeedClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+      <button type="button" id="tacCarrySpeedClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;common.close&quot;}">×</button>
     </div>
     <div class="tac-modal-body" id="tacCarrySpeedList"></div>
   </div>
@@ -1181,8 +1181,8 @@
 <div class="tac-modal-mask" id="tacTraitModal" style="display:none">
   <div class="tac-modal">
     <div class="tac-modal-head">
-      <span data-i18n="ui.span.labelNinth"></span>
-      <button type="button" id="tacTraitClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+      <span data-i18n="application.velocity.buff.trait.popup.title"></span>
+      <button type="button" id="tacTraitClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;common.close&quot;}">×</button>
     </div>
     <div class="tac-modal-body" id="tacTraitList"></div>
   </div>
@@ -1192,8 +1192,8 @@
 <div class="tac-modal-mask" id="tacOtherModal" style="display:none">
   <div class="tac-modal">
     <div class="tac-modal-head">
-      <span data-i18n="ui.span.labelTenth"></span>
-      <button type="button" id="tacOtherClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+      <span data-i18n="application.velocity.buff.other.popup.title"></span>
+      <button type="button" id="tacOtherClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;common.close&quot;}">×</button>
     </div>
     <div class="tac-modal-body" id="tacOtherList"></div>
   </div>
@@ -1203,15 +1203,15 @@
 <div class="tac-modal-mask" id="tacBuffModal" style="display:none">
   <div class="tac-modal">
     <div class="tac-modal-head">
-      <span data-i18n="ui.span.labelEleventh"></span>
-      <button type="button" id="tacBuffClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+      <span data-i18n="application.velocity.buff.custom.popup.title"></span>
+      <button type="button" id="tacBuffClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;common.close&quot;}">×</button>
     </div>
     <div class="tac-modal-body">
       <div class="tac-buff-rows">
         <input type="text" id="tacBuffName" placeholder="" maxlength="12" data-i18n-attributes="{&quot;placeholder&quot;:&quot;application.velocity.buff.custom.name.placeholder&quot;}">
         <input type="number" id="tacBuffPct" step="1" placeholder="" data-i18n-attributes="{&quot;placeholder&quot;:&quot;application.velocity.buff.custom.value.placeholder&quot;}">
         <input type="number" id="tacBuffDur" step="0.1" min="0" placeholder="" data-i18n-attributes="{&quot;placeholder&quot;:&quot;application.velocity.buff.custom.duration.placeholder&quot;}">
-        <button type="button" class="tac-talent-add" id="tacBuffOk" data-i18n="ui.common.add"></button>
+        <button type="button" class="tac-talent-add" id="tacBuffOk" data-i18n="common.add"></button>
       </div>
     </div>
   </div>
@@ -1221,8 +1221,8 @@
 <div class="tac-modal-mask" id="tacTideTraitModal" style="display:none">
   <div class="tac-modal">
     <div class="tac-modal-head">
-      <span data-i18n="ui.span.labelNinth"></span>
-      <button type="button" id="tacTideTraitClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+      <span data-i18n="application.velocity.buff.trait.popup.title"></span>
+      <button type="button" id="tacTideTraitClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;common.close&quot;}">×</button>
     </div>
     <div class="tac-modal-body" id="tacTideTraitList"></div>
   </div>
@@ -1232,8 +1232,8 @@
 <div class="tac-modal-mask" id="tacTideTalentModal" style="display:none">
   <div class="tac-modal">
     <div class="tac-modal-head">
-      <span data-i18n="ui.span.labelEighth"></span>
-      <button type="button" id="tacTideTalentClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+      <span data-i18n="application.velocity.buff.talent.popup.title"></span>
+      <button type="button" id="tacTideTalentClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;common.close&quot;}">×</button>
     </div>
     <div class="tac-modal-body" id="tacTideTalentList"></div>
   </div>
@@ -1243,8 +1243,8 @@
 <div class="tac-modal-mask" id="tacTideOtherModal" style="display:none">
   <div class="tac-modal">
     <div class="tac-modal-head">
-      <span data-i18n="ui.span.labelTenth"></span>
-      <button type="button" id="tacTideOtherClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+      <span data-i18n="application.velocity.buff.other.popup.title"></span>
+      <button type="button" id="tacTideOtherClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;common.close&quot;}">×</button>
     </div>
     <div class="tac-modal-body" id="tacTideOtherList"></div>
   </div>
@@ -1254,15 +1254,15 @@
 <div class="tac-modal-mask" id="tacTideBuffModal" style="display:none">
   <div class="tac-modal">
     <div class="tac-modal-head">
-      <span data-i18n="ui.span.labelEleventh"></span>
-      <button type="button" id="tacTideBuffClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+      <span data-i18n="application.velocity.buff.custom.popup.title"></span>
+      <button type="button" id="tacTideBuffClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;common.close&quot;}">×</button>
     </div>
     <div class="tac-modal-body">
       <div class="tac-buff-rows">
         <input type="text" id="tacTideBuffName" placeholder="" maxlength="12" data-i18n-attributes="{&quot;placeholder&quot;:&quot;application.velocity.buff.custom.name.placeholder&quot;}">
         <input type="number" id="tacTideBuffPct" step="1" placeholder="" data-i18n-attributes="{&quot;placeholder&quot;:&quot;application.velocity.buff.custom.value.placeholder&quot;}">
         <input type="number" id="tacTideBuffDur" step="0.1" min="0" placeholder="" data-i18n-attributes="{&quot;placeholder&quot;:&quot;application.velocity.buff.custom.duration.placeholder&quot;}">
-        <button type="button" class="tac-talent-add" id="tacTideBuffOk" data-i18n="ui.common.add"></button>
+        <button type="button" class="tac-talent-add" id="tacTideBuffOk" data-i18n="common.add"></button>
       </div>
     </div>
   </div>
@@ -1272,8 +1272,8 @@
 <div class="tac-modal-mask" id="tacPathTraitModal" style="display:none">
   <div class="tac-modal">
     <div class="tac-modal-head">
-      <span data-i18n="ui.span.labelNinth"></span>
-      <button type="button" id="tacPathTraitClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+      <span data-i18n="application.velocity.buff.trait.popup.title"></span>
+      <button type="button" id="tacPathTraitClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;common.close&quot;}">×</button>
     </div>
     <div class="tac-modal-body" id="tacPathTraitList"></div>
   </div>
@@ -1283,8 +1283,8 @@
 <div class="tac-modal-mask" id="tacPathTalentModal" style="display:none">
   <div class="tac-modal">
     <div class="tac-modal-head">
-      <span data-i18n="ui.span.labelEighth"></span>
-      <button type="button" id="tacPathTalentClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+      <span data-i18n="application.velocity.buff.talent.popup.title"></span>
+      <button type="button" id="tacPathTalentClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;common.close&quot;}">×</button>
     </div>
     <div class="tac-modal-body" id="tacPathTalentList"></div>
   </div>
@@ -1294,8 +1294,8 @@
 <div class="tac-modal-mask" id="tacPathOtherModal" style="display:none">
   <div class="tac-modal">
     <div class="tac-modal-head">
-      <span data-i18n="ui.span.labelTenth"></span>
-      <button type="button" id="tacPathOtherClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+      <span data-i18n="application.velocity.buff.other.popup.title"></span>
+      <button type="button" id="tacPathOtherClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;common.close&quot;}">×</button>
     </div>
     <div class="tac-modal-body" id="tacPathOtherList"></div>
   </div>
@@ -1305,15 +1305,15 @@
 <div class="tac-modal-mask" id="tacPathBuffModal" style="display:none">
   <div class="tac-modal">
     <div class="tac-modal-head">
-      <span data-i18n="ui.span.labelEleventh"></span>
-      <button type="button" id="tacPathBuffClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+      <span data-i18n="application.velocity.buff.custom.popup.title"></span>
+      <button type="button" id="tacPathBuffClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;common.close&quot;}">×</button>
     </div>
     <div class="tac-modal-body">
       <div class="tac-buff-rows">
         <input type="text" id="tacPathBuffName" placeholder="" maxlength="12" data-i18n-attributes="{&quot;placeholder&quot;:&quot;application.velocity.buff.custom.name.placeholder&quot;}">
         <input type="number" id="tacPathBuffPct" step="1" placeholder="" data-i18n-attributes="{&quot;placeholder&quot;:&quot;application.velocity.buff.custom.value.placeholder&quot;}">
         <input type="number" id="tacPathBuffDur" step="0.1" min="0" placeholder="" data-i18n-attributes="{&quot;placeholder&quot;:&quot;application.velocity.buff.custom.duration.placeholder&quot;}">
-        <button type="button" class="tac-talent-add" id="tacPathBuffOk" data-i18n="ui.common.add"></button>
+        <button type="button" class="tac-talent-add" id="tacPathBuffOk" data-i18n="common.add"></button>
       </div>
     </div>
   </div>
@@ -1323,8 +1323,8 @@
 <div class="tac-modal-mask" id="tacHelpModal" style="display:none">
   <div class="tac-modal">
     <div class="tac-modal-head">
-      <span data-i18n="ui.common.help"></span>
-      <button type="button" id="tacHelpClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.close&quot;}">×</button>
+      <span data-i18n="common.help"></span>
+      <button type="button" id="tacHelpClose" title="" data-i18n-attributes="{&quot;title&quot;:&quot;common.close&quot;}">×</button>
     </div>
     <div class="tac-modal-body">
       <div class="tac-help-text"><span data-i18n="ui.tac.help.quick.text0"></span><br>
@@ -1341,7 +1341,7 @@
   <div class="updates-box" role="dialog" aria-modal="true" aria-label="" data-i18n-attributes="{&quot;aria-label&quot;:&quot;ui.footer.updates.popup.title&quot;}">
     <div class="updates-head">
       <span class="updates-title" data-i18n="ui.footer.updates.popup.title"></span>
-      <button type="button" class="updates-close" aria-label="" data-i18n="ui.common.close" data-i18n-attributes="{&quot;aria-label&quot;:&quot;ui.common.close&quot;}"></button>
+      <button type="button" class="updates-close" aria-label="" data-i18n="common.close" data-i18n-attributes="{&quot;aria-label&quot;:&quot;common.close&quot;}"></button>
     </div>
     <div class="updates-body"></div>
   </div>
@@ -1350,7 +1350,7 @@
 <div class="tac-save-overlay" id="tacSaveOverlay" hidden>
   <div class="tac-save-box">
     <p class="tac-save-tip" data-i18n="ui.tac.export.saveOverlay.tip"></p>
-    <img id="tacSaveImg" alt="" data-i18n-attributes="{&quot;alt&quot;:&quot;ui.common.map&quot;}" draggable="false" />
+    <img id="tacSaveImg" alt="" data-i18n-attributes="{&quot;alt&quot;:&quot;common.map&quot;}" draggable="false" />
     <button type="button" class="tac-save-close" id="tacSaveClose" data-i18n="ui.tac.export.saveOverlay.close"></button>
   </div>
 </div>

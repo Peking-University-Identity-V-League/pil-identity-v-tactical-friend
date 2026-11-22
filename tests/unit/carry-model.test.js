@@ -36,7 +36,7 @@ test('default bands cut at 4/8/12/14.4/16 seconds', () => {
 });
 
 test('forward with iron grip 3 slows the struggle to 0.95 and drops to 6%', () => {
-  const p = createCarryProfile({ survivorId: 'forward', buffs: [{ key: 'ironGrip', level: 3 }] });
+  const p = createCarryProfile({ survivorId: 'forward', buffs: [{ key: 'giantClaw', level: 3 }] });
   assert.ok(Math.abs(p.struggleRate - 0.95) < 1e-9);
   assert.ok(Math.abs(p.remainingSeconds - 16 / 0.95) < 1e-9);
   assert.equal(p.dropProgressPercent, 6);
@@ -51,9 +51,9 @@ test('will to survive 3 speeds the struggle up and shortens the budget', () => {
 test('speed talents stack, wanted slows the hunter', () => {
   const p = createCarryProfile({
     buffs: [
-      { key: 'hospitality', level: 3 },
-      { key: 'taunt', level: 2 },
-      { key: 'wanted', level: 1 },
+      { key: 'hospitable', level: 3 },
+      { key: 'mock', level: 2 },
+      { key: 'wantedOrder', level: 1 },
     ],
   });
   assert.ok(Math.abs(p.speedAt(99) - 4.64 * 1.10) < 1e-9);
@@ -61,7 +61,7 @@ test('speed talents stack, wanted slows the hunter', () => {
 
 test('carnival is flat within a carry and control lasts only 3 seconds', () => {
   const p = createCarryProfile({
-    buffs: [{ key: 'carnival', level: 3 }, { key: 'control', level: 1 }],
+    buffs: [{ key: 'carnival', level: 3 }, { key: 'controlFreak', level: 1 }],
   });
   assert.ok(Math.abs(p.speedAt(0) - 4.64 * 1.15) < 1e-9);
   assert.ok(Math.abs(p.speedAt(2.999) - 4.64 * 1.15) < 1e-9);
@@ -69,7 +69,7 @@ test('carnival is flat within a carry and control lasts only 3 seconds', () => {
 });
 
 test('playful shortens the pickup animation', () => {
-  const p = createCarryProfile({ buffs: [{ key: 'playful', level: 1 }], pickupSeconds: 2 });
+  const p = createCarryProfile({ buffs: [{ key: 'mischievous', level: 1 }], pickupSeconds: 2 });
   assert.ok(Math.abs(p.pickupSeconds - 2 / 1.2) < 1e-9);
 });
 
@@ -93,12 +93,12 @@ test('drop budget counts remaining drops and flags the risk zone', () => {
 test('normalize clamps invalid input instead of throwing', () => {
   const s = normalizeCarrySelection({
     survivorId: 'nobody',
-    buffs: [{ key: 'ironGrip', level: 99 }, { key: 'ghost', level: 1 }, null, { key: 'hunting' }],
+    buffs: [{ key: 'giantClaw', level: 99 }, { key: 'ghost', level: 1 }, null, { key: 'huntersInstinct' }],
     baseSpeed: -5,
     initialProgress: 250,
   });
   assert.equal(s.survivorId, 'ordinary');
-  assert.deepEqual(s.buffs, [{ key: 'ironGrip', level: 3 }, { key: 'hunting', level: 3 }]);
+  assert.deepEqual(s.buffs, [{ key: 'giantClaw', level: 3 }, { key: 'huntersInstinct', level: 3 }]);
   assert.equal(s.baseSpeed, 0.1);
   assert.equal(s.initialProgress, 100);
   assert.deepEqual(normalizeCarryBuffs('junk'), []);

@@ -384,7 +384,7 @@ export function switchCipher(step) {
 
 export function updateCipherText() {
   const count = MAPS_DATA[S.currentMapId].cipherCombinations.length
-  cipherText.textContent = translate("region.updateCipherText", { index: S.currentCipherIndex + 1, count: count })
+  cipherText.textContent = translate("ui.sel.nav.cipher", { index: S.currentCipherIndex + 1, count: count })
 }
 
 export function updateCipherDots() {
@@ -459,7 +459,7 @@ export function handleMapClick(e) {
 export function changeStates(index) {
   if (S.currentSide > 0) {
     if (S.hunterState[index] < 0) {
-      showToast(translate("region.changeStates"))
+      showToast(translate("ui.sel.nav.note.false2"))
       return
     }
     if (S.survivorState[index] > 0) {
@@ -474,7 +474,7 @@ export function changeStates(index) {
     }
   } else {
     if (S.survivorState[index] > 0) {
-      showToast(translate("region.changeStatesAlternate"))
+      showToast(translate("ui.sel.nav.note.false1"))
       return
     }
     if (S.hunterState[index] === 0) {
@@ -501,8 +501,8 @@ export function changeStates(index) {
 export function updateSelectionInfo() {
   const sCount = S.survivorState.filter(s => s > 0).length
   const hCount = S.hunterState.filter(s => s < 0).length
-  survivorInfo.textContent = translate("region.updateSelectionInfo", { count: sCount })
-  hunterInfo.textContent = translate("region.updateSelectionInfoAlternate", { count: hCount })
+  survivorInfo.textContent = translate("ui.sel.nav.status.survivor", { count: sCount })
+  hunterInfo.textContent = translate("ui.sel.nav.status.hunter", { count: hCount })
   updateDistancePanel()
 }
 
@@ -553,7 +553,7 @@ export function updateDistancePanel() {
   if (hasHunter) {
     const hunterPixelX = Math.round(hunterPos.x * mapSize[0])
     const hunterPixelY = Math.round(hunterPos.y * mapSize[1])
-    hunterZoneName.textContent = zoneNamesList[hunterZoneIdx] || translate("region.updateDistancePanel")
+    hunterZoneName.textContent = zoneNamesList[hunterZoneIdx] || translate("maps.default.zoneNames")
     hunterPixelCoord.textContent = hunterPixelX + ', ' + hunterPixelY
     lockCipherName.textContent = lockName
     
