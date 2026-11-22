@@ -7,6 +7,16 @@
 <link rel="icon" href="https://patchwiki.biligame.com/images/dwrg/thumb/9/92/0xd8ech9g51s7zz2ngvasxjduvak6cd.png/90px-%E8%A1%A8%E6%83%85%E5%9B%BE%E6%A0%87_%E6%9C%9F%E5%BE%85.png">
 <title data-i18n="ui.title"></title>
 <link rel="stylesheet" href="css/style.css">
+<!-- 首屏关键模块预加载：浏览器解析 HTML 时即并行下载，不必等语言包加载完成。
+     tactic.js 故意不在此列——进入战术面板时才按需加载。 -->
+<link rel="modulepreload" href="js/bootstrap.js">
+<link rel="modulepreload" href="js/main.js">
+<link rel="modulepreload" href="js/region.js">
+<link rel="modulepreload" href="js/shell.js">
+<link rel="modulepreload" href="js/deduce.js">
+<link rel="modulepreload" href="js/data/maps.js">
+<link rel="modulepreload" href="js/core/dom.js">
+<link rel="modulepreload" href="js/core/i18n.js">
 
 </head>
 <body>
@@ -91,7 +101,7 @@
         <summary>
           <span class="ded-sec-title" style="margin-bottom:0">
             <span class="ded-sec-zh" data-i18n="ui.tac.tool.title"></span>
-            <span class="ded-sec-en">Tools</span>
+            <span class="ded-sec-en" data-i18n-en="ui.tac.tool.title"></span>
           </span>
           <span class="arrow">▶</span>
         </summary>
@@ -114,7 +124,7 @@
         <summary>
           <span class="ded-sec-title" style="margin-bottom:0">
             <span class="ded-sec-zh" data-i18n="ui.tac.creation.title"></span>
-            <span class="ded-sec-en">Manage</span>
+            <span class="ded-sec-en" data-i18n-en="ui.tac.creation.title"></span>
           </span>
           <span class="arrow">▶</span>
         </summary>
@@ -125,7 +135,7 @@
         <summary>
           <span class="ded-sec-title" style="margin-bottom:0">
             <span class="ded-sec-zh" data-i18n="ui.tac.cipherCard.title"></span>
-            <span class="ded-sec-en">Cipher</span>
+            <span class="ded-sec-en" data-i18n-en="ui.tac.cipherCard.title"></span>
           </span>
           <span class="arrow">▶</span>
         </summary>
@@ -150,7 +160,7 @@
         <summary>
           <span class="ded-sec-title" style="margin-bottom:0">
             <span class="ded-sec-zh" data-i18n="ui.tac.pattern.title"></span>
-            <span class="ded-sec-en">Draw</span>
+            <span class="ded-sec-en" data-i18n-en="ui.tac.pattern.title"></span>
           </span>
           <span class="arrow">▶</span>
         </summary>
@@ -186,7 +196,7 @@
         <summary>
           <span class="ded-sec-title" style="margin-bottom:0">
             <span class="ded-sec-zh" data-i18n="ui.tac.text.title"></span>
-            <span class="ded-sec-en">Text</span>
+            <span class="ded-sec-en" data-i18n-en="ui.tac.text.title"></span>
           </span>
           <span class="arrow">▶</span>
         </summary>
@@ -227,7 +237,7 @@
         <summary>
           <span class="ded-sec-title" style="margin-bottom:0">
             <span class="ded-sec-zh" data-i18n="ui.tac.measure.title"></span>
-            <span class="ded-sec-en">Measure</span>
+            <span class="ded-sec-en" data-i18n-en="ui.tac.measure.title"></span>
           </span>
           <span class="arrow">▶</span>
         </summary>
@@ -336,7 +346,7 @@
         <summary>
           <span class="ded-sec-title" style="margin-bottom:0">
             <span class="ded-sec-zh" data-i18n="ui.tac.path.title"></span>
-            <span class="ded-sec-en">Path Plan</span>
+            <span class="ded-sec-en" data-i18n-en="ui.tac.path.title"></span>
           </span>
           <span class="arrow">▶</span>
         </summary>
@@ -429,7 +439,7 @@
         <summary>
           <span class="ded-sec-title" style="margin-bottom:0">
             <span class="ded-sec-zh" data-i18n="ui.tac.rocketChair.title"></span>
-            <span class="ded-sec-en">Chair Range</span>
+            <span class="ded-sec-en" data-i18n-en="ui.tac.rocketChair.title"></span>
           </span>
           <span class="arrow">▶</span>
         </summary>
@@ -611,7 +621,7 @@
       <div class="ded-card" id="tacDisplayCard" style="display:none">
         <h3 class="ded-sec-title">
           <span class="ded-sec-zh" data-i18n="ui.tac.tool.setting"></span>
-          <span class="ded-sec-en">Settings</span>
+          <span class="ded-sec-en" data-i18n-en="ui.tac.tool.setting"></span>
         </h3>
         <div class="tac-display-list" style="margin-top:12px">
 
@@ -752,7 +762,7 @@
         <summary>
           <span class="ded-sec-title" style="margin-bottom:0">
             <span class="ded-sec-zh" data-i18n="ui.tac.role.title"></span>
-            <span class="ded-sec-en">Roles</span>
+            <span class="ded-sec-en" data-i18n-en="ui.tac.role.title"></span>
           </span>
           <span class="arrow">▶</span>
         </summary>
@@ -846,7 +856,7 @@
         <summary>
           <span class="ded-sec-title" style="margin-bottom:0">
             <span class="ded-sec-zh" data-i18n="ui.sel.analysis.title"></span>
-            <span class="ded-sec-en">Cipher Analysis</span>
+            <span class="ded-sec-en" data-i18n-en="ui.sel.analysis.title"></span>
           </span>
           <span class="arrow">▶</span>
         </summary>
@@ -890,7 +900,7 @@
         <summary>
           <span class="ded-sec-title" style="margin-bottom:0">
             <span class="ded-sec-zh" data-i18n="ui.sel.hint.title"></span>
-            <span class="ded-sec-en">Hints</span>
+            <span class="ded-sec-en" data-i18n-en="ui.sel.hint.title"></span>
           </span>
           <span class="arrow">▶</span>
         </summary>
@@ -905,7 +915,7 @@
         <summary>
           <span class="ded-sec-title" style="margin-bottom:0">
             <span class="ded-sec-zh" data-i18n="ui.tac.tool.setting"></span>
-            <span class="ded-sec-en">Settings</span>
+            <span class="ded-sec-en" data-i18n-en="ui.tac.tool.setting"></span>
           </span>
           <span class="arrow">▶</span>
         </summary>
@@ -979,7 +989,7 @@
         <summary>
           <span class="ded-sec-title" style="margin-bottom:0">
             <span class="ded-sec-zh" data-i18n="ui.ded.basis.title"></span>
-            <span class="ded-sec-en">Deduction Basis</span>
+            <span class="ded-sec-en" data-i18n-en="ui.ded.basis.title"></span>
           </span>
           <span class="arrow">▶</span>
         </summary>
@@ -993,7 +1003,7 @@
         <summary>
           <span class="ded-sec-title" style="margin-bottom:0">
             <span class="ded-sec-zh" data-i18n="ui.ded.layout.title"></span>
-            <span class="ded-sec-en">All Layouts</span>
+            <span class="ded-sec-en" data-i18n-en="ui.ded.layout.title"></span>
           </span>
           <span class="arrow">▶</span>
         </summary>
@@ -1006,7 +1016,7 @@
         <summary>
           <span class="ded-sec-title" style="margin-bottom:0">
             <span class="ded-sec-zh" data-i18n="ui.ded.ruleBook.title"></span>
-            <span class="ded-sec-en">Rule Reference</span>
+            <span class="ded-sec-en" data-i18n-en="ui.ded.ruleBook.title"></span>
           </span>
           <span class="arrow">▶</span>
         </summary>
@@ -1037,7 +1047,7 @@
         <summary>
           <span class="ded-sec-title" style="margin-bottom:0">
             <span class="ded-sec-zh" data-i18n="ui.ded.more.title"></span>
-            <span class="ded-sec-en">More Tools</span>
+            <span class="ded-sec-en" data-i18n-en="ui.ded.more.title"></span>
           </span>
           <span class="arrow">▶</span>
         </summary>
@@ -1088,7 +1098,7 @@
 <div class="footer">
   <div class="footer-lang">
     <button class="footer-lang-btn" id="footerLangBtn" type="button" aria-haspopup="true" aria-expanded="false"
-      title="切换界面语言（目前仅支持简体中文）">简体中文<span class="footer-lang-arrow">▴</span></button>
+      title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.footer.language.message&quot;}"><span id="footerLangCurrent">简体中文</span><span class="footer-lang-arrow">▴</span></button>
     <button class="footer-lang-btn footer-updates-btn" id="footerUpdatesBtn" type="button"
       title="" aria-label="" data-i18n="ui.footer.updates.button.text" data-i18n-attributes="{&quot;title&quot;:&quot;ui.footer.updates.button.text&quot;,&quot;aria-label&quot;:&quot;ui.footer.updates.button.text&quot;}">
       <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
@@ -1104,7 +1114,7 @@
       href="https://pkuidv.com" target="_blank"
       rel="noopener noreferrer"
       title="" data-i18n="ui.footer.brand.text" data-i18n-attributes="{&quot;title&quot;:&quot;ui.footer.brand.message&quot;}"></a></p>
-    <p class="footer-line">PIL (Peking University Identity V League)</p>
+    <p class="footer-line footer-line-pil" data-i18n-en="ui.footer.brand.text"></p>
     <p class="footer-line footer-sponsor-line"><a class="footer-sponsor" href="https://afdian.com/a/pkuidv"
       target="_blank" rel="noopener noreferrer" title="" aria-label="" data-umami-event="sponsor_afdian_open"
       data-i18n-attributes="{&quot;title&quot;:&quot;ui.footer.sponsor.message&quot;,&quot;aria-label&quot;:&quot;ui.footer.sponsor.message&quot;}">

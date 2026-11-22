@@ -346,6 +346,43 @@ body:not(.has-tabs) .header-nav { display: none; }
   letter-spacing: 1px;
   color: var(--text);
 }
+/* 英文界面下隐藏中文旁的英文副标题（地图卡片、地图切换、各面板标题、顶部副标题、卡片英文小字、页脚 PIL 全称） */
+html[lang="en-US"] .home-card-name-en,
+html[lang="en-US"] .map-switch-item .msi-en,
+html[lang="en-US"] #currentMapTitleEn,
+html[lang="en-US"] #dedMapTitleEn,
+html[lang="en-US"] #tacMapTitleEn,
+html[lang="en-US"] #pageSubtitle,
+html[lang="en-US"] .ded-sec-en,
+html[lang="en-US"] .footer-line-pil {
+  display: none;
+}
+
+/* 英文界面下的尺寸适配：长单词换行、缩小字号，防止内容溢出 */
+/* 角色选择网格的角色名 */
+html[lang="en-US"] .tac-role {
+  font-size: 9px;
+  line-height: 1.2;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+/* 狂欢之椅推算等卡片的模式切换按钮 */
+html[lang="en-US"] .tac-carry-modes .side-btn {
+  font-size: 10px;
+  padding: 6px 4px;
+  line-height: 1.15;
+  text-align: center;
+}
+/* 密码机推演的布局列表 */
+html[lang="en-US"] .ded-layout-badge {
+  width: auto;
+  min-width: 44px;
+  font-size: 10px;
+}
+html[lang="en-US"] .ded-layout-names {
+  font-size: 10px;
+}
+
 .home-card-name-en {
   font-size: 10px;
   color: var(--text-secondary);

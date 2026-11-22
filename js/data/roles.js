@@ -978,8 +978,8 @@ export const TAC_ROLES = {
     items: ['customSurvivor', 'customHunter', 'customEscapeDoor', 'customCipherMachine', 'customDungeon', 'customRocketChair', 'customLocker', 'customBox'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/f/f6/o8ixpxb56avrj5e2tzdyps58h8rfa7i.png',
   },
-  trait: {
-    name: translate("characters.trait.name"),
+  skill: {
+    name: translate("characters.skill.name"),
     camp: 'other',
     items: ['listen', 'abnormal', 'excitement', 'patroller', 'teleport', 'peeper', 'blink', 'warp'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/bd/4aby06f4kbl87b14cihk5o3y1k61e8l.png',

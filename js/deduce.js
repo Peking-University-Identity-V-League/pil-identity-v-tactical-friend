@@ -568,7 +568,7 @@ export function renderDedSteps(d) {
     const conclusions = step.conclusions.map((c, j) =>
       `${j > 0 ? `<span class="sep">${translate("ui.ded.basis.separator.deduce")}</span>` : ''}`
       + `<span class="${c.value === 'yes' ? 'c-yes' : 'c-no'}">`
-      + `${posName(S.dedMap, c.id)}${c.value === 'yes' ? translate("deduction.status.present") : translate("deduction.status.absent")}</span>`
+      + `${posName(S.dedMap, c.id)} ${c.value === 'yes' ? translate("deduction.status.present") : translate("deduction.status.absent")}</span>`
     ).join('');
     li.innerHTML =
       `<button type="button" class="ded-step-btn" aria-pressed="${S.dedSelectedStep === i}">`
