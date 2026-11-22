@@ -11,6 +11,9 @@ export default defineConfig({
     baseURL: 'http://127.0.0.1:7218',
     browserName: 'chromium',
     viewport: { width: 1600, height: 1400 },
+    // 固定中文环境：Playwright 默认 locale 是 en-US，多语言支持上线后
+    // 会按 navigator.language 自动进英文界面，导致既有中文断言全部失败
+    locale: 'zh-CN',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },

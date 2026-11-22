@@ -5,7 +5,7 @@ import { S } from './core/state.js';
 import { MAPS_DATA } from './data/maps.js';
 import { enterDeduce } from './deduce.js';
 import { checkLock, drawCanvas, loadMapImage, selectMap, updateCipherDots, updateCipherText } from './region.js';
-import { enterTactic, tacResetTransient } from './tactic.js';
+import { enterTactic, tacResetTransient } from './core/tactic-loader.js';
 
 
 import { translate } from './core/i18n.js';

@@ -1,8 +1,13 @@
 import { changeLocale, getActiveLocale, initializeI18n, SUPPORTED_LOCALE_LIST } from './core/i18n.js';
+import { homeView } from './core/dom.js';
+import { S } from './core/state.js';
 import { initUpdatesUI } from './updates-ui.js';
+
+const RESUME_VIEW_KEY = 'identityV.resumeView';
 
 const LOCALE_DISPLAY_NAMES = {
   'zh-CN': '简体中文',
+  'en-US': 'English',
 };
 
 function localeDisplayName(locale) {
@@ -21,11 +26,29 @@ async function startApplication() {
     const clean = new URL(window.location.href);
     clean.searchParams.delete('map');
     history.replaceState(history.state, '', clean);
+  } else {
+    // 切换语言触发的整页刷新：恢复刷新前所在的地图与标签页
+    let resume = null;
+    try {
+      resume = JSON.parse(sessionStorage.getItem(RESUME_VIEW_KEY) || 'null');
+      sessionStorage.removeItem(RESUME_VIEW_KEY);
+    } catch { /* sessionStorage 不可用时静默跳过 */ }
+    if (resume && Number.isInteger(resume.map) && resume.map >= 0 && resume.map <= 8) {
+      const { enterMap } = await import('./region.js');
+      enterMap(resume.map);
+      if (resume.tab === 'deduce' || resume.tab === 'region') {
+        const { switchTab } = await import('./shell.js');
+        switchTab(resume.tab);
+      }
+    }
   }
 
   const langBtn = document.getElementById('footerLangBtn');
   const langMenu = document.getElementById('footerLangMenu');
   if (!langBtn || !langMenu) return;
+
+  const langCurrent = document.getElementById('footerLangCurrent');
+  if (langCurrent) langCurrent.textContent = localeDisplayName(getActiveLocale());
 
   const renderLangMenu = () => {
     const current = getActiveLocale();
@@ -38,7 +61,15 @@ async function startApplication() {
       option.textContent = localeDisplayName(locale);
       option.setAttribute('role', 'menuitem');
       option.addEventListener('click', () => {
-        if (locale !== current) changeLocale(locale);
+        if (locale !== current) {
+          if (!homeView.classList.contains('active')) {
+            try {
+              sessionStorage.setItem(RESUME_VIEW_KEY,
+                JSON.stringify({ map: S.currentMapId, tab: S.currentTab }));
+            } catch { /* sessionStorage 不可用时放弃恢复 */ }
+          }
+          changeLocale(locale);
+        }
         else langMenu.hidden = true;
       });
       langMenu.appendChild(option);

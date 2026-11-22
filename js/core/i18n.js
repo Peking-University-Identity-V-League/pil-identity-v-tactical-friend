@@ -1,6 +1,6 @@
 const DEFAULT_LOCALE = 'zh-CN';
 const LOCALE_STORAGE_KEY = 'identityV.locale';
-const SUPPORTED_LOCALES = [DEFAULT_LOCALE];
+const SUPPORTED_LOCALES = [DEFAULT_LOCALE, 'en-US'];
 export const SUPPORTED_LOCALE_LIST = SUPPORTED_LOCALES;
 
 let activeLocale = DEFAULT_LOCALE;

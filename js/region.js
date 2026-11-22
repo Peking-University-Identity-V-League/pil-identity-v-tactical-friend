@@ -8,7 +8,7 @@ import { MAPS_DATA, getImageUrl } from './data/maps.js';
 import { ESCAPE_DOOR_ICON_URL } from './data/tactic-data.js';
 import { updateLawBtn } from './deduce.js';
 import { dedDataOf, showView, updateTabUi } from './shell.js';
-import { enterTactic, renderTacCiphers, tacResetTransient } from './tactic.js';
+import { enterTactic, renderTacCiphers, tacResetTransient } from './core/tactic-loader.js';
 
 import { translate } from './core/i18n.js';
 
