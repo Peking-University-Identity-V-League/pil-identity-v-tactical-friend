@@ -1636,5 +1636,16 @@
   "ui.tac.tool.setting": "⚙ 设置",
   "ui.tac.tool.title": "🧰 工具栏",
   "ui.tac.tool.undo": "↩ 撤销",
-  "ui.title": "第五人格战术演练学习工具"
+  "ui.title": "第五人格战术演练学习工具",
+  "items.teamIVL.GW.name": "GW",
+  "items.teamIVL.JHS.name": "JHS",
+  "items.teamIVL.RB.name": "RB",
+  "items.teamIVL.TIANBA.name": "TIANBA",
+  "items.teamIVL.XROCK.name": "XROCK",
+  "items.teamIVL.YS.name": "YS",
+  "items.teamIJL.CG.name": "CG",
+  "items.teamIJL.Dawn.name": "Dawn",
+  "items.teamIJL.FAV.name": "FAV",
+  "items.teamIJL.LVS.name": "LVS",
+  "items.teamIJL.SST.name": "SST"
 }

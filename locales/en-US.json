@@ -1636,5 +1636,17 @@
   "ui.tac.tool.setting": "⚙ Settings",
   "ui.tac.tool.title": "🧰 Tool",
   "ui.tac.tool.undo": "↩ Undo",
-  "ui.title": "Identity V Tactical Friend"
+  "ui.title": "Identity V Tactical Friend",
+  "items.teamIVL.CPG.name": "CPG",
+  "items.teamIVL.GW.name": "GW",
+  "items.teamIVL.JHS.name": "JHS",
+  "items.teamIVL.RB.name": "RB",
+  "items.teamIVL.TIANBA.name": "TIANBA",
+  "items.teamIVL.XROCK.name": "XROCK",
+  "items.teamIVL.YS.name": "YS",
+  "items.teamIJL.CG.name": "CG",
+  "items.teamIJL.Dawn.name": "Dawn",
+  "items.teamIJL.FAV.name": "FAV",
+  "items.teamIJL.LVS.name": "LVS",
+  "items.teamIJL.SST.name": "SST"
 }

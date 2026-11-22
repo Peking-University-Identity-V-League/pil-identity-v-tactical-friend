@@ -1637,5 +1637,16 @@
   "ui.tac.tool.setting": "⚙ Cài đặt",
   "ui.tac.tool.title": "🧰 Thanh công cụ",
   "ui.tac.tool.undo": "↩ Hoàn tác",
-  "ui.title": "Công cụ học tập diễn tập chiến thuật Identity V"
+  "ui.title": "Công cụ học tập diễn tập chiến thuật Identity V",
+  "items.teamIVL.GW.name": "GW",
+  "items.teamIVL.JHS.name": "JHS",
+  "items.teamIVL.RB.name": "RB",
+  "items.teamIVL.TIANBA.name": "TIANBA",
+  "items.teamIVL.XROCK.name": "XROCK",
+  "items.teamIVL.YS.name": "YS",
+  "items.teamIJL.CG.name": "CG",
+  "items.teamIJL.Dawn.name": "Dawn",
+  "items.teamIJL.FAV.name": "FAV",
+  "items.teamIJL.LVS.name": "LVS",
+  "items.teamIJL.SST.name": "SST"
 }
