@@ -47,10 +47,10 @@ test('same item can be placed multiple times (lasso x2)', async ({ page }) => {
 });
 
 test('same-kind link: warp pairs automatically, third stays unlinked, relink on delete', async ({ page }) => {
-  await placeRole(page, 'trait', 0.1, 0.1);
-  await placeItem(page, 'trait', 'warp', 0.2, 0.3);
-  await placeItem(page, 'trait', 'warp', 0.4, 0.3);
-  await placeItem(page, 'trait', 'warp', 0.6, 0.3);
+  await placeRole(page, 'skill', 0.1, 0.1);
+  await placeItem(page, 'skill', 'warp', 0.2, 0.3);
+  await placeItem(page, 'skill', 'warp', 0.4, 0.3);
+  await placeItem(page, 'skill', 'warp', 0.6, 0.3);
   let board = await state(page);
   const [w1, w2, w3] = board.items.filter((it) => it.kind === 'warp');
   expect(w1.linkIid).toBe(w2.iid);
@@ -67,9 +67,9 @@ test('same-kind link: warp pairs automatically, third stays unlinked, relink on 
 });
 
 test('same-kind link manage box: toggles checked, show-link hides the line', async ({ page }) => {
-  await placeRole(page, 'trait', 0.1, 0.1);
-  await placeItem(page, 'trait', 'warp', 0.2, 0.3);
-  await placeItem(page, 'trait', 'warp', 0.4, 0.3);
+  await placeRole(page, 'skill', 0.1, 0.1);
+  await placeItem(page, 'skill', 'warp', 0.2, 0.3);
+  await placeItem(page, 'skill', 'warp', 0.4, 0.3);
   await tool(page, 'select');
   await clickPoint(page, 0.2, 0.3);
   const box = linkBox(page);
@@ -150,14 +150,14 @@ test('unlimited link: portal / ultralong passage pair with 无限制 hint and vi
 });
 
 test('link-moment show sync: any checked -> both checked; both unchecked -> stays unchecked', async ({ page }) => {
-  await placeRole(page, 'trait', 0.1, 0.1);
-  await placeItem(page, 'trait', 'warp', 0.2, 0.3);
+  await placeRole(page, 'skill', 0.1, 0.1);
+  await placeItem(page, 'skill', 'warp', 0.2, 0.3);
   // 移行1 未连线时取消显示连线
   await tool(page, 'select');
   await clickPoint(page, 0.2, 0.3);
   await linkBox(page).locator('input[data-lk="show"]').uncheck();
   // 创建移行2 自动相连：一端打勾（默认）→ 相连瞬间两端都勾
-  await placeItem(page, 'trait', 'warp', 0.4, 0.3);
+  await placeItem(page, 'skill', 'warp', 0.4, 0.3);
   let board = await state(page);
   const [w1, w2] = board.items.filter((it) => it.kind === 'warp');
   expect(w1.linkShow).toBe(true);

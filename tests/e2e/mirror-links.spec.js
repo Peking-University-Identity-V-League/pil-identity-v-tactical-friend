@@ -65,9 +65,9 @@ test('range desc lines have hover delete × that removes range and un-highlights
 });
 
 test('link box shows linked status name; show-link is shared by both ends', async ({ page }) => {
-  await placeRole(page, 'trait', 0.1, 0.1);
-  await placeItem(page, 'trait', 'warp', 0.2, 0.3);
-  await placeItem(page, 'trait', 'warp', 0.4, 0.3);
+  await placeRole(page, 'skill', 0.1, 0.1);
+  await placeItem(page, 'skill', 'warp', 0.2, 0.3);
+  await placeItem(page, 'skill', 'warp', 0.4, 0.3);
   await tool(page, 'select');
   await clickPoint(page, 0.2, 0.3);
   const box = linkBox(page);

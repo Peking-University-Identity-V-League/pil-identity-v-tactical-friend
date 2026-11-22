@@ -1,11 +1,12 @@
 const DEFAULT_LOCALE = 'zh-CN';
 const LOCALE_STORAGE_KEY = 'identityV.locale';
-const SUPPORTED_LOCALES = [DEFAULT_LOCALE, 'en-US'];
+const SUPPORTED_LOCALES = [DEFAULT_LOCALE, 'en-US', 'vi-VN'];
 export const SUPPORTED_LOCALE_LIST = SUPPORTED_LOCALES;
 
 let activeLocale = DEFAULT_LOCALE;
 let activeMessages = {};
 let englishMessages = null;
+let fallbackMessages = null;
 
 function resolveLocale(requestedLocale) {
   const normalizedLocale = String(requestedLocale || '').toLowerCase();
@@ -32,7 +33,9 @@ function interpolate(template, parameters) {
 }
 
 export function translate(messageKey, parameters = {}) {
-  const template = activeMessages[messageKey];
+  let template = activeMessages[messageKey];
+  // 其它语言包缺键时回退中文
+  if (typeof template !== 'string' && fallbackMessages) template = fallbackMessages[messageKey];
   if (typeof template !== 'string') {
     console.warn(`Missing translation: ${messageKey}`);
     return messageKey;
@@ -79,13 +82,17 @@ async function loadLocaleMessages(locale) {
 export async function initializeI18n() {
   activeLocale = resolveLocale(readPreferredLocale());
   const needsEnglish = activeLocale !== 'en-US';
-  const [active, english] = await Promise.all([
+  const needsFallback = activeLocale !== DEFAULT_LOCALE;
+  const [active, english, fallback] = await Promise.all([
     loadLocaleMessages(activeLocale),
     // 英文副标注需要英语语言包；加载失败时静默退回当前语言
     needsEnglish ? loadLocaleMessages('en-US').catch(() => null) : Promise.resolve(null),
+    // 非中文语言包缺键时回退中文；加载失败时静默退回键名
+    needsFallback ? loadLocaleMessages(DEFAULT_LOCALE).catch(() => null) : Promise.resolve(null),
   ]);
   activeMessages = active;
   englishMessages = english;
+  fallbackMessages = fallback;
   document.documentElement.lang = activeLocale;
   translateDocument();
 }

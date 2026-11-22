@@ -16,7 +16,7 @@ import { TAC_ITEM_TYPES } from './data/items.js';
 import { TAC_ROLES } from './data/roles.js';
 import { CIPHER_ICON_URL, cipherIcon } from './region.js';
 
-import { translate } from './core/i18n.js';
+import { translate, getActiveLocale } from './core/i18n.js';
 
 export const { loading: tacLoading, error: tacImageError } =
   mountImageOverlays(tacMapWrap);
@@ -5197,7 +5197,9 @@ export function renderTacBoard() {
 export function buildTacRangeRows(settings, cfg, inst, hideByDefault, opts) {
   opts = opts || {};
   const prefix = opts.labelPrefix || '';
-  const postfix = opts.labelPostfix || '';
+  // 拉丁字母后缀（英文 Range、越南语 Phạm Vi）与范围名之间补空格；中文“范围”直接拼接
+  const postfixRaw = opts.labelPostfix || '';
+  const postfix = postfixRaw && /^[A-Za-zÀ-ÿ]/.test(postfixRaw) ? ` ${postfixRaw}` : postfixRaw;
   const defFill = !!opts.defFill;
   const hostRole = opts.hostRole;
   const hostCamp = tacHostCamp(hostRole);
@@ -7259,8 +7261,9 @@ export function updateTacMeasureInfo() {
     }
     return r;
   };
-  // 折线分段编号的中文数字（仅中文界面审美习惯，非翻译内容，故不放语言包）
+  // 折线分段编号：中文界面用中文数字（审美习惯），其它语言用阿拉伯数字
   const CN_NUMERALS = '一二三四五六七八九十';
+  const segNumeral = (i) => (getActiveLocale() === 'zh-CN' ? CN_NUMERALS[i] || (i + 1) : i + 1);
 
   let html;
   if (chainSegs && chainSegs.length) {
@@ -7274,7 +7277,7 @@ export function updateTacMeasureInfo() {
         + '<td>--</td><td>--</td>'
         + `<td>${fmt(sim.t0)}</td></tr>`
         + sim.segs.map((s, si) => segRow(
-            translate("ui.tac.measure.result.polyline.name.single", { value: CN_NUMERALS[si] || (si + 1), valueSecondary: tacLetter(si), valueTertiary: tacLetter(si + 1) }),
+            translate("ui.tac.measure.result.polyline.name.single", { value: segNumeral(si), valueSecondary: tacLetter(si), valueTertiary: tacLetter(si + 1) }),
             s, chainSegs[si].i, selIdx === chainSegs[si].i)).join('')
         + '</table>';
       if (tacMeasurePending) {
