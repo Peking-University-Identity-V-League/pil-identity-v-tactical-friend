@@ -10,9 +10,7 @@ export const MAPS_DATA = [
     const mapId = 0;
     const mapName = translate("maps.armsFactory.mapName");
     const mapNameEn = 'Arms Factory';
-    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/thumb/4/44/'
-      + 'bk8sfefxhz54qr2uxqq6grugfshrczs.png/750px-%E5%86%9B%E5%B7%A5%E5%8E%82'
-      + '_%E4%BF%AF%E8%A7%86%E5%9B%BE_%E5%85%A8.png';
+    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/thumb/4/44/bk8sfefxhz54qr2uxqq6grugfshrczs.png/750px-%E5%86%9B%E5%B7%A5%E5%8E%82_%E4%BF%AF%E8%A7%86%E5%9B%BE_%E5%85%A8.png';
     const mapSize = [750, 644];
     const zonesInfo = [27, 30, 226.1, 197, 3, 3];
     const zoneNames = [
@@ -232,8 +230,7 @@ export const MAPS_DATA = [
     const mapId = 1;
     const mapName = translate("maps.sacredHeartHospital.mapName");
     const mapNameEn = 'Sacred Heart Hospital';
-    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/6/64/'
-      + '1znuvz3676hq8xyjdd26vxz99l3n3ds.png';
+    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/6/64/1znuvz3676hq8xyjdd26vxz99l3n3ds.png';
     const mapSize = [644, 604];
     const zonesInfo = [65.5, 19.5, 188, 174.5, 3, 3];
     const zoneNames = [
@@ -451,8 +448,7 @@ export const MAPS_DATA = [
     const mapId = 2;
     const mapName = translate("maps.theRedChurch.mapName");
     const mapNameEn = 'The Red Church';
-    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/2/21/'
-      + 'tqsaom4k0h9tijgczzutlq6tyatxtty.png';
+    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/2/21/tqsaom4k0h9tijgczzutlq6tyatxtty.png';
     const mapSize = [596, 599];
     const zonesInfo = [72.5, 104.3, 163.7, 141.7, 3, 3];
     const zoneNames = [
@@ -675,8 +671,7 @@ export const MAPS_DATA = [
     const mapId = 3;
     const mapName = translate("maps.lakesideVillage.mapName");
     const mapNameEn = 'Lakeside Village';
-    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/0/0e/'
-      + 'h7t6n6gum5qpc0h8mhhk5fissh04xbq.png';
+    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/0/0e/h7t6n6gum5qpc0h8mhhk5fissh04xbq.png';
     const mapSize = [1280, 1208];
     const zonesInfo = [154, 202, 244, 281, 4, 3];
     const zoneNames = [
@@ -909,8 +904,7 @@ export const MAPS_DATA = [
     const mapId = 4;
     const mapName = translate("maps.moonlitRiverPark.mapName");
     const mapNameEn = 'Moonlit River Park';
-    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/1/10/'
-      + '3qp1mkiy5mhg421bfbytquibtwyh5j8.png';
+    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/1/10/3qp1mkiy5mhg421bfbytquibtwyh5j8.png';
     const mapSize = [1492, 1028];
     const zonesInfo = [14, 89.8, 364.6, 281.2, 4, 3];
     const zoneNames = [
@@ -1132,9 +1126,7 @@ export const MAPS_DATA = [
     const mapId = 5;
     const mapName = translate("maps.leosMemory.mapName");
     const mapNameEn = "Leo's Memory";
-    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/thumb/5/53/'
-      + 't9v9ezb7qvnlatez60eex59ab1f7w8p.png/750px-%E9%87%8C%E5%A5%A5%E7%9A%84'
-      + '%E5%9B%9E%E5%BF%86_%E4%BF%AF%E8%A7%86%E5%9B%BE_%E5%85%A8.png';
+    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/thumb/5/53/t9v9ezb7qvnlatez60eex59ab1f7w8p.png/750px-%E9%87%8C%E5%A5%A5%E7%9A%84%E5%9B%9E%E5%BF%86_%E4%BF%AF%E8%A7%86%E5%9B%BE_%E5%85%A8.png';
     const mapSize = [750, 635];
     const zonesInfo = [38.5, 28.5, 222.3, 194.7, 3, 3];
     const zoneNames = [
@@ -1371,9 +1363,7 @@ export const MAPS_DATA = [
     const mapId = 6;
     const mapName = translate("maps.eversleepingTown.mapName");
     const mapNameEn = 'Eversleeping Town';
-    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/thumb/2/2f/'
-      + 'cdwrcy0q4j8t8wqmo6gv50xbe0mptak.png/750px-%E6%B0%B8%E7%9C%A0%E9%95%87'
-      + '_%E4%BF%AF%E8%A7%86%E5%9B%BE_%E5%85%A8.png';
+    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/thumb/2/2f/cdwrcy0q4j8t8wqmo6gv50xbe0mptak.png/750px-%E6%B0%B8%E7%9C%A0%E9%95%87_%E4%BF%AF%E8%A7%86%E5%9B%BE_%E5%85%A8.png';
 
     const mapSize = [750, 874];
     const zonesInfo = [89.4, 30.2, 206.1, 196.3, 3, 3];
@@ -1591,8 +1581,7 @@ export const MAPS_DATA = [
     const mapId = 7;
     const mapName = translate("maps.chinaTown.mapName");
     const mapNameEn = 'China Town';
-    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/c/cb/'
-      + '4g9knengpuuk8uyssm4zvpf1evw3d80.png';
+    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/c/cb/4g9knengpuuk8uyssm4zvpf1evw3d80.png';
     const mapSize = [1345, 1152];
     const zonesInfo = [83, 39, 406.5, 355.1, 3, 3];
     const zoneNames = [
@@ -1826,8 +1815,7 @@ export const MAPS_DATA = [
     const mapId = 8;
     const mapName = translate("maps.darkwoods.mapName");
     const mapNameEn = 'Darkwoods';
-    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/f/f7/'
-      + '40wez8dwwtlpyuljfmydkle6lpp0gdv.png';
+    const mapImage = 'https://patchwiki.biligame.com/images/dwrg/f/f7/40wez8dwwtlpyuljfmydkle6lpp0gdv.png';
     const mapSize = [1247, 1265];
     const zonesInfo = [41.5, 40.5, 393.2, 381.5, 3, 3];
     const zoneNames = [

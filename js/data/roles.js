@@ -983,6 +983,7 @@ export const TAC_ROLES = {
       ],
     },
     color: '#fbbf24',
+    items: ['customSurvivor', 'customHunter', 'customEscapeDoor', 'customCipherMachine', 'customDungeon', 'customRocketChair', 'customBox'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/f/f6/o8ixpxb56avrj5e2tzdyps58h8rfa7i.png',
   },
   trait: {

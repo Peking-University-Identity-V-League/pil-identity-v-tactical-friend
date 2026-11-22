@@ -4620,6 +4620,8 @@ div.tac-fixed-spawn .cam-dir.up {
 /* 测算卡片：分区细线分隔（与推算卡片一致） */
 #tacMeasureCard .tac-carry-sep { border-top: 1px solid var(--border); margin-top: 12px; }
 
-/* 化险为夷推算设置区：加成明细列宽 */
+/* 化险为夷推算设置区：基础明细与加成明细的前两列宽对齐（第三列自适应剩余宽度） */
 #tacTideBuffBody .tac-cb-name { width: 32%; }
 #tacTideBuffBody .tac-cb-value { width: 26%; }
+#tacTideBaseDetailBody .tac-detail-tbl th:nth-child(1) { width: 32%; }
+#tacTideBaseDetailBody .tac-detail-tbl th:nth-child(2) { width: 26%; }
