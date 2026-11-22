@@ -735,7 +735,7 @@
   "maps.armsFactory.cipher.w2.feature": "W1 group Cottage Area, always 2: Cottage Area / Lumberyard",
   "maps.armsFactory.cipher.w2.name": "Cottage",
   "maps.armsFactory.cipher.w3.feature": "W1 group Cottage Area, always 2: Cottage Area / Lumberyard",
-  "maps.armsFactory.cipher.w3.name": "Side Gate Ruins",
+  "maps.armsFactory.cipher.w3.name": "Ruins (Side Entrance)",
   "maps.armsFactory.cipher.w4.feature": "W2 group, always 2: Center Field / Junkyard",
   "maps.armsFactory.cipher.w4.name": "Junkyard",
   "maps.armsFactory.fixedHint": "Reading the Center Field of Arms Factory reveals the whole map's cipher layout.",
