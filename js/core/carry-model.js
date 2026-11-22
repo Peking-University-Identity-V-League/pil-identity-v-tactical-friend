@@ -18,8 +18,9 @@ export const CARRY_DROP_PROGRESS_DEFAULT = 25;
 
 // 天赋加成。数据源统一在 talents.js 的 buff 字段（速度类 speedBuff / 牵起类 pickupBuff /
 // 挣扎类 struggleBuff / 放下加进度类 dropBuff），此处派生成既有形状。
-// group：survivor=求生者挣扎 / hunterStruggle=监管者挣扎与牵起 / hunterSpeed=监管者速度
-// levels 按层数索引（从 1 层开始）；duration 为限时秒数（0 = 时间不限）
+// kind=计算类型：struggle=挣扎速度 / pickup=牵起速度 / speed=移动速度；dropProgress=放下加进度
+// group 仅用于弹窗分组：survivor=求生者挣扎 / hunterStruggle=监管者挣扎与牵起 / hunterSpeed=监管者速度
+// levels 按层数索引（从 1 层开始）；duration 为限时秒数（无时限则不写）
 const round4 = (v) => Math.round(v * 10000) / 10000;
 
 export const CARRY_TALENTS = Object.freeze(Object.fromEntries(
@@ -27,19 +28,20 @@ export const CARRY_TALENTS = Object.freeze(Object.fromEntries(
     const b = t.buff || {};
     // 求生者挣扎类
     if (t.camp === 'survivor' && b.struggleBuff) {
-      return [[key, { group: 'survivor', levels: b.struggleBuff.levels }]];
+      return [[key, { group: 'survivor', kind: 'struggle', levels: b.struggleBuff.levels }]];
     }
     // 监管者挣扎类与牵起类（牵起速度只影响牵起用时，与挣扎进度分列展示）
     if (t.camp === 'hunter' && (b.struggleBuff || b.pickupBuff)) {
-      const src = b.pickupBuff || b.struggleBuff;
-      const def = { group: 'hunterStruggle', levels: src.levels };
+      const def = b.struggleBuff
+        ? { group: 'hunterStruggle', kind: 'struggle', levels: b.struggleBuff.levels }
+        : { group: 'hunterStruggle', kind: 'pickup', levels: b.pickupBuff.levels };
       if (b.dropBuff) def.dropProgress = b.dropBuff.levels;
       return [[key, def]];
     }
     // 监管者速度类中标记了 carry 的（牵气球移动时同样生效）
     if (t.camp === 'hunter' && b.speedBuff && b.speedBuff.carry) {
       const src = b.speedBuff;
-      const def = { group: 'hunterSpeed', levels: (src.levels || [src.mult]).map((v) => round4(v - 1)) };
+      const def = { group: 'hunterSpeed', kind: 'speed', levels: (src.levels || [src.mult]).map((v) => round4(v - 1)) };
       if (src.duration) def.duration = src.duration;
       return [[key, def]];
     }
@@ -91,24 +93,21 @@ export function createCarryProfile(input = {}) {
   let speedBonus = 0;
   let pickupSpeedup = 0;
   let dropProgressPercent = CARRY_DROP_PROGRESS_DEFAULT;
-  let controlBonus = 0;
+  const timedSpeedBuffs = []; // { value, duration }：限时速度加成，仅在 duration 秒内生效
   for (const { key, level } of selection.buffs) {
     const def = CARRY_TALENTS[key];
     const value = def.levels[level - 1];
-    if (def.group === 'survivor') struggleBonus += value;
-    else if (def.group === 'hunterSpeed') {
-      if (key === 'controlFreak') controlBonus += value; // 掌控欲：牵起后 3 秒（二维近似为前 3 秒）
-      else speedBonus += value;                          // 狂欢 120s 远大于挂椅时间，按常驻处理
-    } else if (key === 'mischievous') pickupSpeedup += value;
-    else if (key === 'giantClaw') {
-      struggleBonus += value;
-      dropProgressPercent = def.dropProgress[level - 1]; // 同名多层取最高层
+    if (def.kind === 'struggle') struggleBonus += value;
+    if (def.dropProgress) dropProgressPercent = def.dropProgress[level - 1]; // 同名多层取最高层
+    if (def.kind === 'pickup') pickupSpeedup += value;
+    if (def.kind === 'speed') {
+      if (def.duration) timedSpeedBuffs.push({ value, duration: def.duration });
+      else speedBonus += value;
     }
   }
   const struggleRate = 1 + struggleBonus;
   const remainingSeconds = selection.baseStruggleSeconds
     * (1 - selection.initialProgress / 100) / struggleRate;
-  const controlDuration = CARRY_TALENTS.controlFreak.duration;
   return {
     version: CARRY_RULES_VERSION,
     selection,
@@ -117,8 +116,10 @@ export function createCarryProfile(input = {}) {
     dropProgressPercent,
     pickupSeconds: selection.pickupSeconds / (1 + pickupSpeedup),
     speedAt(seconds) {
-      const bonus = seconds < controlDuration ? controlBonus : 0;
-      return selection.baseSpeed * (1 + speedBonus + bonus);
+      const timed = timedSpeedBuffs
+        .filter((b) => seconds < b.duration)
+        .reduce((sum, b) => sum + b.value, 0);
+      return selection.baseSpeed * (1 + speedBonus + timed);
     },
   };
 }
