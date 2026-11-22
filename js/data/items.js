@@ -1498,47 +1498,47 @@ export const TAC_ITEM_TYPES = {
   },
 
   listen: {
-    name: translate("items.trait.listen.name"),
+    name: translate("items.skill.listen.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/0/07/0obrswd76b8u690r6ramdcrectlbpiy.png',
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 11, label: translate("items.trait.listen.name") },
+        { size_m: 11, label: translate("items.skill.listen.name") },
       ],
     },
   },
   abnormal: {
-    name: translate("items.trait.abnormal.name"),
+    name: translate("items.skill.abnormal.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/d/d2/piv0htrn7il01b3egjeperc9d4s7td3.png',
   },
   excitement: {
-    name: translate("items.trait.excitement.name"),
+    name: translate("items.skill.excitement.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/d/d9/9vlw3opxe521jiwh27lfuld8q92ctxa.png',
   },
   patroller: {
-    name: translate("items.trait.patroller.name"),
+    name: translate("items.skill.patroller.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/a/aa/rb5j6n9m9gumvpy0jhhnrrhmt5riifi.png',
   },
   teleport: {
-    name: translate("items.trait.teleport.name"),
+    name: translate("items.skill.teleport.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/0/04/6rs6gkhobw3hqwjpylsryrl3eq5jdtv.png',
   },
   peeper: {
-    name: translate("items.trait.peeper.name"),
+    name: translate("items.skill.peeper.name"),
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 13, label: translate("items.trait.peeper.name") },
+        { size_m: 13, label: translate("items.skill.peeper.name") },
       ],
     },
     icon: 'https://patchwiki.biligame.com/images/dwrg/b/ba/4sgjzcxl8526632orcqqgwkt5pv9s4f.png',
   },
   blink: {
-    name: translate("items.trait.blink.name"),
+    name: translate("items.skill.blink.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/5/5e/8ivnan4wru8d5lrbacu4oz1vsixnpjc.png',
   },
   warp: {
-    name: translate("items.trait.warp.name"),
+    name: translate("items.skill.warp.name"),
     render: 'link',
     linkMaxM: 60,
     linkColor: '#f8fafc',
