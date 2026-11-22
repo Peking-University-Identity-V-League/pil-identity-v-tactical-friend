@@ -2209,29 +2209,27 @@ function syncTacCarryPickupUI() {
 function carryTalentLocaleKey(key, def) {
   return `talent.${def.group === 'survivor' ? 'survivor' : 'hunter'}.${key}`;
 }
-// 天赋描述按结构化键组合：类型 + 数值 + 层数 + 时限 + 条件（替代原来的整句 desc 键）
+// 天赋描述按 buff 类型组合：类型 + 数值 + 层数 + 时限 + 条件（替代原来的整句 desc 键）
+// 个别天赋的类型/条件文案覆盖（展示用，不参与计算）
+const CARRY_TALENT_META = {
+  huntersInstinct: { type: 'talent.hunter.huntersInstinct.type.desc', condition: 'talent.hunter.huntersInstinct.condition.desc' },
+  mock: { condition: 'talent.hunter.mock.condition.desc' },
+};
 function carryTalentDesc(key, def) {
   const pct = (arr) => arr.map((v) => `${Math.round(v * 1000) / 10}%`).join('/');
   const layer = def.levels.length > 1
     ? translate('application.buff.common.desc.level', { count: def.levels.length }) : '';
-  const dur = def.group === 'hunterSpeed'
+  const dur = def.kind === 'speed'
     ? (def.duration ? ` ${def.duration}s` : translate('application.buff.common.desc.duration')) : '';
-  const speed = translate('talent.common.type.velocity.desc2');
-  switch (key) {
-    case 'willToSurvive':
-      return `${translate('talent.common.type.balloon.desc1')} ${pct(def.levels)}${layer}`;
-    case 'giantClaw':
-      return `${translate('talent.common.type.balloon.desc1')} ${pct(def.levels)} `
-        + `${translate('talent.common.type.balloon.desc3')} ${def.dropProgress.map((v) => `${v}%`).join('/')}${layer}`;
-    case 'mischievous':
-      return `${translate('talent.common.type.balloon.desc2')} ${pct(def.levels)}`;
-    case 'huntersInstinct':
-      return `${translate('talent.hunter.huntersInstinct.type.desc')} ${pct(def.levels)}${layer}${dur} ${translate('talent.hunter.huntersInstinct.condition.desc')}`;
-    case 'mock':
-      return `${speed} ${pct(def.levels)}${layer}${dur} ${translate('talent.hunter.mock.condition.desc')}`;
-    default: // hospitable / wantedOrder / carnival / controlFreak
-      return `${speed} ${pct(def.levels)}${layer}${dur}`;
-  }
+  const meta = CARRY_TALENT_META[key] || {};
+  const speedType = translate(meta.type || 'talent.common.type.velocity.desc2');
+  const parts = [];
+  if (def.kind === 'struggle') parts.push(`${translate('talent.common.type.balloon.desc1')} ${pct(def.levels)}`);
+  if (def.dropProgress) parts.push(`${translate('talent.common.type.balloon.desc3')} ${def.dropProgress.map((v) => `${v}%`).join('/')}`);
+  if (def.kind === 'pickup') parts.push(`${translate('talent.common.type.balloon.desc2')} ${pct(def.levels)}`);
+  if (def.kind === 'speed') parts.push(`${speedType} ${pct(def.levels)}${dur}`);
+  const cond = meta.condition ? ` ${translate(meta.condition)}` : '';
+  return `${parts.join(' ')}${layer}${cond}`;
 }
 function buildTacCarryModalList(listEl, group) {
   listEl.innerHTML = Object.entries(CARRY_TALENTS)
@@ -2287,14 +2285,17 @@ function renderTacCarryBuffs() {
     const base = translate(carryTalentLocaleKey(b.key, def));
     const name = def.levels.length > 1 ? `${base} ${b.level}层` : base;
     const dur = def.duration ? ` · ${def.duration}s` : '';
-    if (b.key === 'giantClaw') {
+    // 按 buff 类型拆行：挣扎类 / 放下加进度类 / 牵起类 / 速度类，一个天赋可占多行
+    if (def.kind === 'struggle') {
       rows.push({ id: b.id, name, value: pct(def.levels[b.level - 1]) + dur, type: translate('talent.common.type.balloon.desc1') });
+    }
+    if (def.dropProgress) {
       rows.push({ id: b.id, name, value: pct(def.dropProgress[b.level - 1] / 100), type: translate('talent.common.type.balloon.desc3') });
-    } else if (b.key === 'mischievous') {
+    }
+    if (def.kind === 'pickup') {
       rows.push({ id: b.id, name, value: pct(def.levels[b.level - 1]), type: translate('talent.common.type.balloon.desc2') });
-    } else if (def.group === 'survivor') {
-      rows.push({ id: b.id, name, value: pct(def.levels[b.level - 1]), type: translate('talent.common.type.balloon.desc1') });
-    } else {
+    }
+    if (def.kind === 'speed') {
       rows.push({ id: b.id, name, value: pct(def.levels[b.level - 1]) + dur, type: translate('talent.common.type.velocity.desc2') });
     }
   }
