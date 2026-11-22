@@ -11,9 +11,9 @@ import { enterTactic, tacResetTransient } from './tactic.js';
 import { translate } from './core/i18n.js';
 
 export const TAB_TITLES = {
-  tactic: [translate("navigation.tabTitlesZero"), 'Identity V Tactical Board'],
-  region: [translate("navigation.tabTitlesZeroAlternate"), 'Identity V Region Selection'],
-  deduce: [translate("navigation.tabTitlesZeroThird"), 'Identity V Cipher Deduction'],
+  tactic: [translate("ui.tac.title"), 'Identity V Tactical Board'],
+  region: [translate("ui.sel.title"), 'Identity V Region Selection'],
+  deduce: [translate("ui.ded.title"), 'Identity V Cipher Deduction'],
 };
 
 export const HOME_TITLE = [translate("ui.title"), 'Identity V Tactical Friend'];
@@ -129,13 +129,13 @@ export function switchMap(mapId) {
   else { checkLock(); drawCanvas() }
   updateTabUi()
   saveRegionSel() 
-  showToast(translate("navigation.switchMap", { name: MAPS_DATA[mapId].mapName }))
+  showToast(translate("ui.nav.map.note", { name: MAPS_DATA[mapId].mapName }))
 }
 
 
 document.querySelectorAll('.map-title-group').forEach((el) => {
   el.classList.add('map-switch-trigger')
-  el.setAttribute('title', translate("navigation.message"))
+  el.setAttribute('title', translate("ui.nav.map.button.message"))
   const caret = document.createElement('span')
   caret.className = 'map-switch-caret'
   caret.textContent = '▾'

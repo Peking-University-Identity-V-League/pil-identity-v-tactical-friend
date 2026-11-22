@@ -18,15 +18,15 @@ export const CARRY_DROP_PROGRESS_DEFAULT = 25;
 // 天赋加成。group：survivor=求生者挣扎 / hunterStruggle=监管者挣扎 / hunterSpeed=监管者速度
 // levels 按层数索引（从 1 层开始）；duration 为限时秒数（0 = 时间不限）
 export const CARRY_TALENTS = Object.freeze({
-  willToSurvive: { group: 'survivor', levels: [0.10, 0.15, 0.20] },              // 求生意志
-  ironGrip: { group: 'hunterStruggle', levels: [-0.05, -0.10, -0.15], dropProgress: [18, 12, 6] }, // 巨钳
-  playful: { group: 'hunterStruggle', levels: [0.20] },                         // 嬉弄：牵气球加快
-  hunting: { group: 'hunterSpeed', levels: [0.01, 0.015, 0.02] },               // 狩猎本能
-  hospitality: { group: 'hunterSpeed', levels: [0.04, 0.06, 0.08] },            // 好客之道
-  wanted: { group: 'hunterSpeed', levels: [-0.02, -0.01, 0] },                  // 通缉
-  taunt: { group: 'hunterSpeed', levels: [0.03, 0.04, 0.05] },                  // 嘲弄
-  carnival: { group: 'hunterSpeed', levels: [0.03, 0.04, 0.05], duration: 120 }, // 狂欢
-  control: { group: 'hunterSpeed', levels: [0.10], duration: 3 },               // 掌控欲
+  willToSurvive: { group: 'survivor', levels: [0.10, 0.15, 0.20] },                // 求生意志
+  giantClaw: { group: 'hunterStruggle', levels: [-0.05, -0.10, -0.15], dropProgress: [18, 12, 6] }, // 巨钳
+  mischievous: { group: 'hunterStruggle', levels: [0.20] },                        // 嬉弄：牵气球加快
+  huntersInstinct: { group: 'hunterSpeed', levels: [0.01, 0.015, 0.02] },          // 狩猎本能
+  hospitable: { group: 'hunterSpeed', levels: [0.04, 0.06, 0.08] },                // 好客之道
+  wantedOrder: { group: 'hunterSpeed', levels: [-0.02, -0.01, 0] },                // 通缉
+  mock: { group: 'hunterSpeed', levels: [0.03, 0.04, 0.05] },                      // 嘲弄
+  carnival: { group: 'hunterSpeed', levels: [0.03, 0.04, 0.05], duration: 120 },   // 狂欢
+  controlFreak: { group: 'hunterSpeed', levels: [0.10], duration: 3 },             // 掌控欲
 });
 
 export const CARRY_DEFAULTS = Object.freeze({
@@ -80,10 +80,10 @@ export function createCarryProfile(input = {}) {
     const value = def.levels[level - 1];
     if (def.group === 'survivor') struggleBonus += value;
     else if (def.group === 'hunterSpeed') {
-      if (key === 'control') controlBonus += value; // 掌控欲：牵起后 3 秒（二维近似为前 3 秒）
-      else speedBonus += value;                     // 狂欢 120s 远大于挂椅时间，按常驻处理
-    } else if (key === 'playful') pickupSpeedup += value;
-    else if (key === 'ironGrip') {
+      if (key === 'controlFreak') controlBonus += value; // 掌控欲：牵起后 3 秒（二维近似为前 3 秒）
+      else speedBonus += value;                          // 狂欢 120s 远大于挂椅时间，按常驻处理
+    } else if (key === 'mischievous') pickupSpeedup += value;
+    else if (key === 'giantClaw') {
       struggleBonus += value;
       dropProgressPercent = def.dropProgress[level - 1]; // 同名多层取最高层
     }
@@ -91,7 +91,7 @@ export function createCarryProfile(input = {}) {
   const struggleRate = 1 + struggleBonus;
   const remainingSeconds = selection.baseStruggleSeconds
     * (1 - selection.initialProgress / 100) / struggleRate;
-  const controlDuration = CARRY_TALENTS.control.duration;
+  const controlDuration = CARRY_TALENTS.controlFreak.duration;
   return {
     version: CARRY_RULES_VERSION,
     selection,

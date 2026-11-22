@@ -274,7 +274,7 @@ export function tacStateMatches(buffStates, state) {
 
 
 export function tacLevelLabel(key, i) {
-  return key === 'stratus' ? [translate("application.entriesZero"), translate("application.entriesOne")][i] : translate("application.tacLevelLabel", { value: i + 1 });
+  return key === 'stratus' ? [translate("application.buff.common.level.min"), translate("application.buff.common.level.max")][i] : translate("application.buff.common.level", { value: i + 1 });
 }
 
 
@@ -609,7 +609,7 @@ export function syncTacCipherCard() {
   if (!tacCipherCard) return;
   const map = MAPS_DATA[S.currentMapId];
   const count = map.cipherCombinations.length;
-  const text = translate("region.updateCipherText", { index: S.currentCipherIndex + 1, count: count });
+  const text = translate("ui.sel.nav.cipher", { index: S.currentCipherIndex + 1, count: count });
   tacDispCipherText.textContent = text;
   tacCipherCardText.textContent = text;
   tacCipherCardShowEl.checked = !!tacDisplay.ciphers;
@@ -753,8 +753,8 @@ export function renderTacSpawns() {
     el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
     tacLayer().appendChild(el);
   };
-  group.survivor.forEach((pt) => place(pt, SPAWN_SURVIVOR_ICON_URL, translate("game.spawnPoint")));
-  place(group.hunter, SPAWN_HUNTER_ICON_URL, translate("game.spawnPoint"));
+  group.survivor.forEach((pt) => place(pt, SPAWN_SURVIVOR_ICON_URL, translate("common.spawnPoint")));
+  place(group.hunter, SPAWN_HUNTER_ICON_URL, translate("common.spawnPoint"));
 }
 
 export function syncTacSpawnText() {
@@ -782,8 +782,7 @@ export function renderTacLandmarks() {
     const el = document.createElement('img');
     el.className = 'tac-dungeon';
     el.src = DUNGEON_ICON_URL;
-    el.alt = translate("game.dungeon");
-    el.title = translate("application.renderTacLandmarks", { index: S.tacDungeonIndex + 1, count: map.dungeons.length });
+    el.alt = translate("common.dungeon");
     el.draggable = false;
     el.style.left = `${(pt[0] / imgW) * 100}%`;
     el.style.top = `${(pt[1] / imgH) * 100}%`;
@@ -792,13 +791,11 @@ export function renderTacLandmarks() {
     tacLayer().appendChild(el);
   }
   if (tacDisplay.doors) {
-    const lockMode = tacDisplay.doorLock && map.escapeDoors.length >= 4;
     tacDoorPoints(map).forEach((pt, i) => {
       const el = document.createElement('img');
       el.className = 'tac-door';
       el.src = ESCAPE_DOOR_ICON_URL;
-      el.alt = translate("application.renderTacLandmarksAlternate", { value: i + 1 });
-      el.title = translate("application.renderTacLandmarksFourth", { value: i + 1, valueSecondary: lockMode ? translate("application.renderTacLandmarksThird") : '' });
+      el.alt = translate("common.escapeDoor.alt", { value: i + 1 });
       el.draggable = false;
       el.style.left = `${(pt[0] / imgW) * 100}%`;
       el.style.top = `${(pt[1] / imgH) * 100}%`;
@@ -943,7 +940,7 @@ export function renderTacChairs() {
   const [imgW, imgH] = map.mapSize;
   // 椅子点格式：[x, z]（地面）或 [x, y, z]（地下室，y 为高度）
   const xz = (pt) => (pt.length > 2 ? [pt[0], pt[2]] : pt);
-  const draw = (pt, title, kind, index) => {
+  const draw = (pt, kind, index) => {
     const [px, pz] = xz(pt);
     const el = document.createElement('img');
     el.className = 'tac-chair';
@@ -955,8 +952,7 @@ export function renderTacChairs() {
       }
     }
     el.src = CHAIR_ICON_URL;
-    el.alt = translate("game.rocketChair");
-    el.title = title;
+    el.alt = translate("common.rocketChair");
     el.draggable = false;
     el.style.left = `${(px / imgW) * 100}%`;
     el.style.top = `${(pz / imgH) * 100}%`;
@@ -974,19 +970,16 @@ export function renderTacChairs() {
     }
   };
   if (tacDisplay.chairs) {
-    ch.fixed.forEach((pt, i) => draw(pt, translate("application.renderTacChairsFixed"), 'fixed', i));
+    ch.fixed.forEach((pt, i) => draw(pt, 'fixed', i));
     const setIdx = ch.sets.length ? S.tacChairIndex % ch.sets.length : -1;
     if (setIdx >= 0) {
-      ch.sets[setIdx].forEach((pt, i) => draw(pt,
-        translate("application.renderTacChairs", { index: setIdx + 1, count: ch.sets.length }), 'set', i));
+      ch.sets[setIdx].forEach((pt, i) => draw(pt, 'set', i));
     }
   }
   const bs = tacBasementList();
   if (tacDisplay.chairsBasement && bs.length) {
     const bIdx = S.tacChairBasementIndex % bs.length;
-    bs[bIdx].rocketChairs.forEach((pt, i) => draw(pt,
-      translate("application.renderTacChairsBasement", { index: bIdx + 1, count: bs.length }),
-      'basement', i));
+    bs[bIdx].rocketChairs.forEach((pt, i) => draw(pt, 'basement', i));
   }
   // 选点看挂椅/可达椅的起点标记（红色圆点 + 起点文字，随选中立即显示）
   if (tacCarryState.chair?.kind === 'point') {
@@ -1065,13 +1058,12 @@ export function renderTacBoxes() {
   const [imgW, imgH] = map.mapSize;
   // 箱子点格式与椅子相同：[x, z]（地面）或 [x, y, z]（带高度，如地下室/二楼）
   const xz = (pt) => (pt.length > 2 ? [pt[0], pt[2]] : pt);
-  const draw = (pt, title) => {
+  const draw = (pt) => {
     const [px, pz] = xz(pt);
     const el = document.createElement('img');
     el.className = 'tac-box';
     el.src = BOX_ICON_URL;
-    el.alt = translate("game.box");
-    el.title = title;
+    el.alt = translate("common.box");
     el.draggable = false;
     el.style.left = `${(px / imgW) * 100}%`;
     el.style.top = `${(pz / imgH) * 100}%`;
@@ -1080,13 +1072,12 @@ export function renderTacBoxes() {
     tacLayer().appendChild(el);
   };
   if (tacDisplay.boxes) {
-    bx.fixed.forEach((pt) => draw(pt, translate("application.renderTacBoxesFixed")));
+    bx.fixed.forEach((pt) => draw(pt));
   }
   const bs = tacBasementList();
   if (tacDisplay.boxesBasement && bs.length) {
     const bIdx = S.tacChairBasementIndex % bs.length;
-    bs[bIdx].chest.forEach((pt) => draw(pt,
-      translate("application.renderTacBoxesBasement", { index: bIdx + 1, count: bs.length })));
+    bs[bIdx].chest.forEach((pt) => draw(pt));
   }
 }
 
@@ -1722,7 +1713,7 @@ function syncTacCarryChairName() {
   if (tacCarryState.armed) {
     tacCarryChairName.textContent = translate(point ? 'ui.tac.rocketChair.common.point.pick.status.picking' : 'ui.tac.rocketChair.common.rc.pick.status.picking');
   } else if (tacCarryState.chair) {
-    tacCarryChairName.textContent = translate(point ? 'ui.tac.rocketChair.common.point.pick.status.selected' : 'ui.tac.rocketChair.pick.status.selected.c', {
+    tacCarryChairName.textContent = translate(point ? 'ui.tac.rocketChair.common.point.pick.status.selected' : 'ui.tac.rocketChair.common.rc.pick.status.selected', {
       x: Math.round(tacCarryState.chair.x), y: Math.round(tacCarryState.chair.z),
     });
   } else {
@@ -1732,7 +1723,7 @@ function syncTacCarryChairName() {
 
 // 选择按钮文案：待命时「点我选择…」，点选状态下「点我取消选择」
 function syncTacCarryPickBtn() {
-  const key = tacCarryState.armed ? 'ui.tac.rocketChair.pick.cancel'
+  const key = tacCarryState.armed ? 'ui.tac.rocketChair.common.pick.cancel'
     : (tacCarryState.mode === 'point' ? 'ui.tac.rocketChair.common.point.pick.button' : 'ui.tac.rocketChair.common.rc.pick.button');
   tacCarryPickBtn.dataset.i18n = key;
   tacCarryPickBtn.textContent = translate(key);
@@ -1887,7 +1878,7 @@ async function tacCarryRun() {
     }
     if (!start) {
       tacCarrySummary.textContent = translate(sel.kind === 'point'
-        ? 'ui.tac.rocketChair.unsupportedPoint' : 'ui.tac.rocketChair.unsupportedChair');
+        ? 'ui.tac.rocketChair.error.unsupportedPoint' : 'ui.tac.rocketChair.error.unsupportedChair');
       return;
     }
     const run = computeCarryField(g, start, profile, {
@@ -2029,7 +2020,7 @@ function renderTacCarryChairTimes(g, field, resolveBand) {
   rows.sort((a, b) => a.t - b.t);
   if (tacCarryState.cache) tacCarryState.cache.chairRows = rows;
   if (tacCarryState.mode === 'point') {
-    tacCarryChairCountEl.textContent = translate('ui.tacCarry.chairCount', { count: rows.length });
+    tacCarryChairCountEl.textContent = translate('ui.tac.rocketChair.balloon.result.chairCount', { count: rows.length });
     tacCarryChairCountEl.style.display = '';
     renderTacCarryDetail(rows);
   } else {
@@ -2099,7 +2090,7 @@ function renderTacCarryLegend(bands) {
     if (!staticLegend) {
       el.dataset.band = b.band;
       if (tacCarryState.hiddenBands.has(b.band)) el.classList.add('off');
-      el.title = translate('ui.tac.rocketChair.balloon.band.message');
+      el.title = translate('ui.tac.rocketChair.common.band.message');
       el.addEventListener('click', () => tacDedToggleBand(b.band));
     }
     el.innerHTML = `<span class="tac-carry-swatch" style="background:${CARRY_BAND_COLORS[b.band]}"></span>`
@@ -2140,10 +2131,10 @@ function buildTacCarryHunterOptions() {
     const sp0 = (def.speed != null && typeof def.speed === 'object')
       ? Object.values(def.speed)[0] : def.speed;
     opts += sp0
-      ? `<option value="${key}">${translate("application.tacBuildRoleOptionsFourth", { name: def.name, sp0 })}</option>`
-      : `<option value="${key}" disabled>${translate("application.tacBuildRoleOptionsFifth", { name: def.name })}</option>`;
+      ? `<option value="${key}">${translate("application.velocity.base.choose", { name: def.name, sp0 })}</option>`
+      : `<option value="${key}" disabled>${translate("application.velocity.base.choose.default", { name: def.name })}</option>`;
   }
-  tacCarryHunterEl.innerHTML = opts + `<option value="custom">${translate("ui.common.custom")}</option>`;
+  tacCarryHunterEl.innerHTML = opts + `<option value="custom">${translate("common.custom")}</option>`;
   tacCarryHunterEl.value = 'hellEmber';
 }
 
@@ -2153,7 +2144,7 @@ function syncTacCarryHunterForm() {
   if (info && info.dual) {
     if (tacCarryHunterFormEl.dataset.sig !== key) {
       tacCarryHunterFormEl.innerHTML = info.forms.map((f, i) =>
-        `<option value="${i}">${translate("application.syncTacSpeedForm", { name: f.name, speed: f.speed })}</option>`).join('');
+        `<option value="${i}">${translate("application.velocity.base.choose.two", { name: f.name, speed: f.speed })}</option>`).join('');
       tacCarryHunterFormEl.dataset.sig = key;
     }
     tacCarryHunterFormEl.style.display = '';
@@ -2177,41 +2168,31 @@ function syncTacCarryPickupUI() {
 }
 
 // 天赋弹窗列表：group = survivor / hunterStruggle / hunterSpeed
-// CARRY_TALENTS 内部键 → 语言包键（语言包按游戏内天赋名命名，非统一前缀，需显式映射）
-const CARRY_TALENT_I18N = Object.freeze({
-  willToSurvive: 'talent.survivor.willToSurvive',
-  ironGrip: 'talent.hunter.giantClaw',
-  playful: 'talent.hunter.mischievous',
-  hunting: 'talent.hunter.huntersInstinct',
-  hospitality: 'talent.hunter.hospitable',
-  wanted: 'talent.hunter.wantedOrder',
-  taunt: 'talent.hunter.mock',
-  carnival: 'talent.hunter.carnival',
-  control: 'talent.hunter.controlFreak',
-});
+// CARRY_TALENTS 内部键与语言包键名一致：survivor 组 → talent.survivor.<key>，其余 → talent.hunter.<key>
+function carryTalentLocaleKey(key, def) {
+  return `talent.${def.group === 'survivor' ? 'survivor' : 'hunter'}.${key}`;
+}
 // 天赋描述按结构化键组合：类型 + 数值 + 层数 + 时限 + 条件（替代原来的整句 desc 键）
 function carryTalentDesc(key, def) {
   const pct = (arr) => arr.map((v) => `${Math.round(v * 1000) / 10}%`).join('/');
   const layer = def.levels.length > 1
-    ? translate('application.buff.common.desc.layer', { count: def.levels.length }) : '';
+    ? translate('application.buff.common.desc.level', { count: def.levels.length }) : '';
   const dur = def.group === 'hunterSpeed'
     ? (def.duration ? ` ${def.duration}s` : translate('application.buff.common.desc.duration')) : '';
   const speed = translate('talent.common.type.velocity.desc2');
   switch (key) {
     case 'willToSurvive':
       return `${translate('talent.common.type.balloon.desc1')} ${pct(def.levels)}${layer}`;
-    case 'ironGrip':
-      return `${translate('talent.common.type.balloon.desc1')} ${pct(def.levels)}，`
+    case 'giantClaw':
+      return `${translate('talent.common.type.balloon.desc1')} ${pct(def.levels)} `
         + `${translate('talent.common.type.balloon.desc3')} ${def.dropProgress.map((v) => `${v}%`).join('/')}${layer}`;
-    case 'playful':
+    case 'mischievous':
       return `${translate('talent.common.type.balloon.desc2')} ${pct(def.levels)}`;
-    case 'hunting':
-      return `${speed} ${pct(def.levels)}${layer}${dur}（${translate('talent.hunter.huntersInstinct.condition.desc')}）`;
-    case 'taunt':
-      return `${speed} ${pct(def.levels)}${layer}${dur}（${translate('talent.hunter.mock.condition.desc')}）`;
-    case 'control':
-      return `${speed} ${translate('talent.hunter.controlFreak.desc')}`;
-    default: // hospitality / wanted / carnival
+    case 'huntersInstinct':
+      return `${translate('talent.hunter.huntersInstinct.type.desc')} ${pct(def.levels)}${layer}${dur} ${translate('talent.hunter.huntersInstinct.condition.desc')}`;
+    case 'mock':
+      return `${speed} ${pct(def.levels)}${layer}${dur} ${translate('talent.hunter.mock.condition.desc')}`;
+    default: // hospitable / wantedOrder / carnival / controlFreak
       return `${speed} ${pct(def.levels)}${layer}${dur}`;
   }
 }
@@ -2219,16 +2200,16 @@ function buildTacCarryModalList(listEl, group) {
   listEl.innerHTML = Object.entries(CARRY_TALENTS)
     .filter(([, d]) => d.group === group)
     .map(([key, d]) => {
-      const name = translate(CARRY_TALENT_I18N[key]);
+      const name = translate(carryTalentLocaleKey(key, d));
       const lv = d.levels.length > 1
         ? `<select data-clv="${key}">`
           + d.levels.map((_, i) =>
-            `<option value="${i + 1}"${i === d.levels.length - 1 ? ' selected' : ''}>${translate("application.lv", { value: i + 1 })}</option>`).join('')
+            `<option value="${i + 1}"${i === d.levels.length - 1 ? ' selected' : ''}>${translate("application.buff.common.level", { value: i + 1 })}</option>`).join('')
           + '</select>'
         : '';
       return `<div class="tac-talent-row"><span class="tac-talent-name">${name}`
         + `<small>${carryTalentDesc(key, d)}</small></span>${lv}`
-        + `<button type="button" class="tac-talent-add" data-ck="${key}">${translate('ui.tacCarry.add')}</button></div>`;
+        + `<button type="button" class="tac-talent-add" data-ck="${key}">${translate('common.add')}</button></div>`;
     }).join('');
 }
 
@@ -2266,13 +2247,13 @@ function renderTacCarryBuffs() {
   const rows = [];
   for (const b of tacCarryState.buffs) {
     const def = CARRY_TALENTS[b.key];
-    const base = translate(CARRY_TALENT_I18N[b.key]);
+    const base = translate(carryTalentLocaleKey(b.key, def));
     const name = def.levels.length > 1 ? `${base} ${b.level}层` : base;
     const dur = def.duration ? ` · ${def.duration}s` : '';
-    if (b.key === 'ironGrip') {
+    if (b.key === 'giantClaw') {
       rows.push({ id: b.id, name, value: pct(def.levels[b.level - 1]) + dur, type: translate('talent.common.type.balloon.desc1') });
       rows.push({ id: b.id, name, value: pct(def.dropProgress[b.level - 1] / 100), type: translate('talent.common.type.balloon.desc3') });
-    } else if (b.key === 'playful') {
+    } else if (b.key === 'mischievous') {
       rows.push({ id: b.id, name, value: pct(def.levels[b.level - 1]), type: translate('talent.common.type.balloon.desc2') });
     } else if (def.group === 'survivor') {
       rows.push({ id: b.id, name, value: pct(def.levels[b.level - 1]), type: translate('talent.common.type.balloon.desc1') });
@@ -2481,7 +2462,7 @@ async function tacTideRun() {
     }
     if (!start) {
       tacCarrySummary.textContent = translate(sel.kind === 'point'
-        ? 'ui.tac.rocketChair.unsupportedPoint' : 'ui.tac.rocketChair.unsupportedChair');
+        ? 'ui.tac.rocketChair.error.unsupportedPoint' : 'ui.tac.rocketChair.error.unsupportedChair');
       return;
     }
     const run = computeTideField(g, start, profile, {
@@ -2679,9 +2660,9 @@ function renderTacTideLegend(bands) {
 function buildTacTideRoleOptions() {
   let opts = Object.entries(TAC_MOVEMENT_SURVIVOR.states).map(([k, st]) =>
     `<option value="${k}">${st.name} ${st.speed}m/s</option>`).join('');
-  opts += `<option value="role">${translate("ui.common.roles")}</option>`;
+  opts += `<option value="role">${translate("common.roles")}</option>`;
   opts += `<option value="fixed">${translate("ui.common.fixed")}</option>`;
-  tacTideSpeedRoleEl.innerHTML = opts + `<option value="custom">${translate("ui.common.custom")}</option>`;
+  tacTideSpeedRoleEl.innerHTML = opts + `<option value="custom">${translate("common.custom")}</option>`;
   tacTideSpeedRoleEl.value = 'run';
 }
 
@@ -2715,7 +2696,7 @@ function tacTidePanelBase() {
   const speed = v > 0 ? v : TAC_MOVEMENT_SURVIVOR.states.run.speed;
   const key = tacTideSpeedRoleEl.value;
   if (key === 'custom') {
-    return { name: translate("ui.common.custom"), speed, camp: 'survivor', role: null, form: 0, stKey: 'custom' };
+    return { name: translate("common.custom"), speed, camp: 'survivor', role: null, form: 0, stKey: 'custom' };
   }
   if (TAC_MOVEMENT_SURVIVOR.states[key]) {
     return { name: TAC_MOVEMENT_SURVIVOR.states[key].name, speed: TAC_MOVEMENT_SURVIVOR.states[key].speed,
@@ -2750,7 +2731,7 @@ function tacTideApplyBase(base) {
   renderTacTideBuffs();
 }
 
-// 基础明细：名称 / 速度 / 20 秒移动距离（默认展开）
+// 基础明细：基础移速 / 速度 / 20 秒移动距离（默认展开）
 let tacTideBaseDetailOpen = true;
 function renderTacTideBaseDetail() {
   tacTideBaseDetailToggleEl.textContent = translate("application.velocity.base.detail", { value: tacTideBaseDetailOpen ? '▾' : '▸' });
@@ -2758,14 +2739,14 @@ function renderTacTideBaseDetail() {
   if (!tacTideBaseDetailOpen) return;
   const b = tacCarryState.tide.base;
   tacTideBaseDetailBodyEl.innerHTML = `<table class="tac-detail-tbl"><thead><tr>`
-    + `<th>${translate('ui.tac.rocketChair.baseColName')}</th>`
-    + `<th>${translate('ui.tac.rocketChair.baseColSpeed')}</th>`
-    + `<th>${translate('ui.tac.rocketChair.tideTurner.baseColDist')}</th></tr></thead><tbody>`
+    + `<th>${translate('application.velocity.base.detail.table.name')}</th>`
+    + `<th>${translate('application.velocity.base.detail.table.speed')}</th>`
+    + `<th>${translate('ui.tac.rocketChair.tideTurner.setting.velocity.base.detail.table.distance')}</th></tr></thead><tbody>`
     + `<tr><td>${b.name}</td><td class="tac-col-speed"><b>${Math.round(b.speed * 100) / 100}</b></td>`
     + `<td>${Math.round(b.speed * TIDE_SECONDS * 10) / 10}</td></tr></tbody></table>`;
 }
 
-// 加成明细表（默认展开）：加成 / 加成值 / 时长 / 删除
+// 加成明细表（默认展开）：加成 / 加成值 / 时间 s / 删除（格式对齐测算卡片加成明细，表内不带 s 单位）
 let tacTideBuffOpen = true;
 function renderTacTideBuffs() {
   tacTideBuffToggleEl.textContent = translate('application.velocity.buff.detail', { value: tacTideBuffOpen ? '▾' : '▸' });
@@ -2776,16 +2757,16 @@ function renderTacTideBuffs() {
     id: b.id,
     name: b.name,
     value: pct(b.mult) + (b.postMult ? translate("application.buff.common.desc.multi") : ''),
-    duration: b.duration ? `${b.duration}s` : translate("application.buff.common.desc.duration"),
+    duration: b.duration ? b.duration : translate("application.buff.common.desc.duration"),
   }));
   if (!rows.length) {
     tacTideBuffBodyEl.innerHTML = `<div class="tac-detail-empty">${translate('application.velocity.buff.detail.hint.none')}</div>`;
     return;
   }
   tacTideBuffBodyEl.innerHTML = `<table class="tac-detail-tbl"><thead><tr>`
-    + `<th class="tac-cb-name">${translate('ui.tac.rocketChair.buffColName')}</th>`
-    + `<th class="tac-cb-value">${translate('ui.tac.rocketChair.buffColValue')}</th>`
-    + `<th>${translate('ui.tac.rocketChair.buffColDuration')}</th>`
+    + `<th class="tac-cb-name">${translate('application.velocity.buff.detail.table.name')}</th>`
+    + `<th class="tac-cb-value">${translate('application.velocity.buff.detail.table.value')}</th>`
+    + `<th>${translate('application.velocity.buff.detail.table.duration')}</th>`
     + `<th class="tac-col-del"></th></tr></thead><tbody>`
     + rows.map((r) =>
       `<tr><td>${r.name}</td><td>${r.value}</td><td>${r.duration}</td>`
@@ -2822,7 +2803,7 @@ function buildTacTideTraitList() {
   tacTideTraitList.innerHTML = rows.map((t) => {
     let desc = t.levels
       ? `${t.levels.map((m) => `${Math.round((m - 1) * 100)}%`).join('/')}`
-        + translate("application.buff.common.desc.layer", { count: t.levels.length })
+        + translate("application.buff.common.desc.level", { count: t.levels.length })
         + (t.duration ? ` ${t.duration}s` : translate("application.buff.common.desc.duration"))
       : `${Math.round((t.mult - 1) * 100)}%${t.postMult ? translate("application.buff.common.desc.multi") : ''}`
         + (t.duration ? ` ${t.duration}s` : translate("application.buff.common.desc.duration"));
@@ -2837,7 +2818,7 @@ function buildTacTideTraitList() {
       : '';
     return `<div class="tac-talent-row"><span class="tac-talent-name">${t.role} · ${t.name}`
       + `<small>${desc}</small></span>${lv}`
-      + `<button type="button" class="tac-talent-add" data-tk="${t.key}">${translate("ui.common.add")}</button></div>`;
+      + `<button type="button" class="tac-talent-add" data-tk="${t.key}">${translate("common.add")}</button></div>`;
   }).join('');
 }
 
@@ -2847,12 +2828,12 @@ function buildTacTideTalentList() {
   tacTideTalentList.innerHTML = rows.map(([k, b]) => {
     let desc = b.levels
       ? `${b.levels.map((m) => `${Math.round((m - 1) * 100)}%`).join('/')}`
-        + translate("application.buff.common.desc.layer", { count: b.levels.length }) + (b.duration ? ` ${b.duration}s` : translate("application.buff.common.desc.duration"))
+        + translate("application.buff.common.desc.level", { count: b.levels.length }) + (b.duration ? ` ${b.duration}s` : translate("application.buff.common.desc.duration"))
       : `${Math.round((b.mult - 1) * 100)}%` + (b.duration ? ` ${b.duration}s` : translate("application.buff.common.desc.duration"));
     const lv = b.levels
       ? `<select data-lv="${k}">`
         + b.levels.map((_, i) =>
-          `<option value="${i}"${i === b.levels.length - 1 ? ' selected' : ''}>${translate("application.lv", { value: i + 1 })}</option>`).join('')
+          `<option value="${i}"${i === b.levels.length - 1 ? ' selected' : ''}>${translate("application.buff.common.level", { value: i + 1 })}</option>`).join('')
         + '</select>'
       : '';
     if (b.states) {
@@ -2860,7 +2841,7 @@ function buildTacTideTalentList() {
     }
     return `<div class="tac-talent-row"><span class="tac-talent-name">${b.name}`
       + `<small>${desc}${b.extra ? translate("talent.common.involve.desc1", { name: b.extra.name }) : ''}</small></span>${lv}`
-      + `<button type="button" class="tac-talent-add" data-k="${k}">${translate("ui.common.add")}</button></div>`;
+      + `<button type="button" class="tac-talent-add" data-k="${k}">${translate("common.add")}</button></div>`;
   }).join('');
 }
 
@@ -2869,7 +2850,7 @@ function buildTacTideOtherList() {
   tacTideOtherList.innerHTML = rows.map((t) => {
     let desc = t.levels
       ? `${t.levels.map((m) => `${Math.round((m - 1) * 100)}%`).join('/')}`
-        + translate("application.buff.common.desc.layer", { count: t.levels.length })
+        + translate("application.buff.common.desc.level", { count: t.levels.length })
         + (t.duration ? ` ${t.duration}s` : translate("application.buff.common.desc.duration"))
       : `${Math.round((t.mult - 1) * 100)}%`
         + (t.duration ? ` ${t.duration}s` : translate("application.buff.common.desc.duration"));
@@ -2879,12 +2860,12 @@ function buildTacTideOtherList() {
     const lv = t.levels
       ? `<select data-olv="${t.key}">`
         + t.levels.map((_, i) =>
-          `<option value="${i + 1}"${i === t.levels.length - 1 ? ' selected' : ''}>${translate("application.lv", { value: i + 1 })}</option>`).join('')
+          `<option value="${i + 1}"${i === t.levels.length - 1 ? ' selected' : ''}>${translate("application.buff.common.level", { value: i + 1 })}</option>`).join('')
         + '</select>'
       : '';
     return `<div class="tac-talent-row"><span class="tac-talent-name">${t.name}`
       + `<small>${desc}</small></span>${lv}`
-      + `<button type="button" class="tac-talent-add" data-ok="${t.key}">${translate("ui.common.add")}</button></div>`;
+      + `<button type="button" class="tac-talent-add" data-ok="${t.key}">${translate("common.add")}</button></div>`;
   }).join('');
 }
 
@@ -2980,7 +2961,7 @@ function buildTacTideSettings() {
     const lvSel = tacTideTalentList.querySelector(`select[data-lv="${k}"]`);
     const lv = lvSel ? +lvSel.value : null;
     const mult = def.levels ? def.levels[lv ?? def.levels.length - 1] : def.mult;
-    const name = def.levels ? translate("application.buff.common.name.layer", { name: def.name, value: lv + 1 }) : def.name;
+    const name = def.levels ? translate("application.buff.common.name.level", { name: def.name, value: lv + 1 }) : def.name;
     const entry = { type: 'talent', key: k, name, mult, duration: def.duration || 0 };
     if (def.extra) entry.extra = { name: def.extra.name, mult: def.extra.mult, duration: 0 };
     tacTideTalentModal.style.display = 'none';
@@ -2997,7 +2978,7 @@ function buildTacTideSettings() {
     if (!def) return;
     const lvSel = tacTideOtherList.querySelector(`select[data-olv="${def.key}"]`);
     const lv = lvSel ? +lvSel.value : null;
-    const name = def.levels ? translate("application.buff.common.name.layer", { name: def.name, value: lv + 1 }) : def.name;
+    const name = def.levels ? translate("application.buff.common.name.level", { name: def.name, value: lv + 1 }) : def.name;
     const entry = {
       type: 'other', key: def.key, name,
       mult: def.levels ? def.levels[lv ?? def.levels.length - 1] : def.mult,
@@ -3015,7 +2996,7 @@ function buildTacTideSettings() {
     tacTideBuffModal.style.display = 'none';
     if (!pct) { showToast(translate("application.velocity.buff.note.false5")); return; }
     const dur = parseFloat(tacTideBuffDur.value) || 0;
-    const name = (tacTideBuffName.value || '').trim() || translate("ui.common.custom");
+    const name = (tacTideBuffName.value || '').trim() || translate("common.custom");
     const ok = tacTideAddBuff({ type: 'custom', key: '', name, mult: 1 + pct / 100, duration: dur });
     if (ok) {
       tacTideBuffName.value = '';
@@ -3406,9 +3387,9 @@ function buildTacPathRoleOptions() {
   if (tacPathState.camp === 'survivor') {
     let opts = Object.entries(TAC_MOVEMENT_SURVIVOR.states).map(([k, st]) =>
       `<option value="${k}">${st.name} ${st.speed}m/s</option>`).join('');
-    opts += `<option value="role">${translate("ui.common.roles")}</option>`;
+    opts += `<option value="role">${translate("common.roles")}</option>`;
     opts += `<option value="fixed">${translate("ui.common.fixed")}</option>`;
-    tacPathSpeedRoleEl.innerHTML = opts + `<option value="custom">${translate("ui.common.custom")}</option>`;
+    tacPathSpeedRoleEl.innerHTML = opts + `<option value="custom">${translate("common.custom")}</option>`;
     tacPathSpeedRoleEl.value = 'run';
     return;
   }
@@ -3418,10 +3399,10 @@ function buildTacPathRoleOptions() {
     const sp0 = (def.speed != null && typeof def.speed === 'object')
       ? Object.values(def.speed)[0] : def.speed;
     opts += sp0
-      ? `<option value="${key}"${key === 'hellEmber' ? ' selected' : ''}>${translate("application.tacBuildRoleOptionsFourth", { name: def.name, sp0 })}</option>`
-      : `<option value="${key}" disabled>${translate("application.tacBuildRoleOptionsFifth", { name: def.name })}</option>`;
+      ? `<option value="${key}"${key === 'hellEmber' ? ' selected' : ''}>${translate("application.velocity.base.choose", { name: def.name, sp0 })}</option>`
+      : `<option value="${key}" disabled>${translate("application.velocity.base.choose.default", { name: def.name })}</option>`;
   }
-  tacPathSpeedRoleEl.innerHTML = opts + `<option value="custom">${translate("ui.common.custom")}</option>`;
+  tacPathSpeedRoleEl.innerHTML = opts + `<option value="custom">${translate("common.custom")}</option>`;
   tacPathSpeedRoleEl.value = 'hellEmber';
 }
 
@@ -3449,7 +3430,7 @@ function syncTacPathSpeedForm() {
   if (info && info.dual) {
     if (tacPathSpeedFormEl.dataset.sig !== key) {
       tacPathSpeedFormEl.innerHTML = info.forms.map((f, i) =>
-        `<option value="${i}">${translate("application.syncTacSpeedForm", { name: f.name, speed: f.speed })}</option>`).join('');
+        `<option value="${i}">${translate("application.velocity.base.choose.two", { name: f.name, speed: f.speed })}</option>`).join('');
       tacPathSpeedFormEl.dataset.sig = key;
     }
     tacPathSpeedFormEl.style.display = '';
@@ -3487,7 +3468,7 @@ function tacPathPanelBase() {
   const key = tacPathSpeedRoleEl.value;
   const camp = tacPathState.camp;
   if (key === 'custom') {
-    return { name: translate("ui.common.custom"), speed, camp, role: null, form: 0, stKey: 'custom' };
+    return { name: translate("common.custom"), speed, camp, role: null, form: 0, stKey: 'custom' };
   }
   if (camp === 'survivor' && TAC_MOVEMENT_SURVIVOR.states[key]) {
     return { name: TAC_MOVEMENT_SURVIVOR.states[key].name, speed: TAC_MOVEMENT_SURVIVOR.states[key].speed,
@@ -3600,7 +3581,7 @@ function buildTacPathTraitList() {
   tacPathTraitList.innerHTML = rows.map((t) => {
     let desc = t.levels
       ? `${t.levels.map((m) => `${Math.round((m - 1) * 100)}%`).join('/')}`
-        + translate("application.buff.common.desc.layer", { count: t.levels.length })
+        + translate("application.buff.common.desc.level", { count: t.levels.length })
         + (t.duration ? ` ${t.duration}s` : translate("application.buff.common.desc.duration"))
       : `${Math.round((t.mult - 1) * 100)}%${t.postMult ? translate("application.buff.common.desc.multi") : ''}`
         + (t.duration ? ` ${t.duration}s` : translate("application.buff.common.desc.duration"));
@@ -3624,7 +3605,7 @@ function buildTacPathTraitList() {
       : '';
     return `<div class="tac-talent-row"><span class="tac-talent-name">${t.role} · ${t.name}`
       + `<small>${desc}</small></span>${lv}`
-      + `<button type="button" class="tac-talent-add" data-tk="${t.key}">${translate("ui.common.add")}</button></div>`;
+      + `<button type="button" class="tac-talent-add" data-tk="${t.key}">${translate("common.add")}</button></div>`;
   }).join('');
 }
 
@@ -3634,12 +3615,12 @@ function buildTacPathTalentList() {
   tacPathTalentList.innerHTML = rows.map(([k, b]) => {
     let desc = b.levels
       ? `${b.levels.map((m) => `${Math.round((m - 1) * 100)}%`).join('/')}`
-        + translate("application.buff.common.desc.layer", { count: b.levels.length }) + (b.duration ? ` ${b.duration}s` : translate("application.buff.common.desc.duration"))
+        + translate("application.buff.common.desc.level", { count: b.levels.length }) + (b.duration ? ` ${b.duration}s` : translate("application.buff.common.desc.duration"))
       : `${Math.round((b.mult - 1) * 100)}%` + (b.duration ? ` ${b.duration}s` : translate("application.buff.common.desc.duration"));
     const lv = b.levels
       ? `<select data-lv="${k}">`
         + b.levels.map((_, i) =>
-          `<option value="${i}"${i === b.levels.length - 1 ? ' selected' : ''}>${translate("application.lv", { value: i + 1 })}</option>`).join('')
+          `<option value="${i}"${i === b.levels.length - 1 ? ' selected' : ''}>${translate("application.buff.common.level", { value: i + 1 })}</option>`).join('')
         + '</select>'
       : '';
     if (b.states) {
@@ -3647,7 +3628,7 @@ function buildTacPathTalentList() {
     }
     return `<div class="tac-talent-row"><span class="tac-talent-name">${b.name}`
       + `<small>${desc}${b.extra ? translate("talent.common.involve.desc1", { name: b.extra.name }) : ''}</small></span>${lv}`
-      + `<button type="button" class="tac-talent-add" data-k="${k}">${translate("ui.common.add")}</button></div>`;
+      + `<button type="button" class="tac-talent-add" data-k="${k}">${translate("common.add")}</button></div>`;
   }).join('');
 }
 
@@ -3656,7 +3637,7 @@ function buildTacPathOtherList() {
   tacPathOtherList.innerHTML = rows.map((t) => {
     let desc = t.levels
       ? `${t.levels.map((m) => `${Math.round((m - 1) * 100)}%`).join('/')}`
-        + translate("application.buff.common.desc.layer", { count: t.levels.length })
+        + translate("application.buff.common.desc.level", { count: t.levels.length })
         + (t.duration ? ` ${t.duration}s` : translate("application.buff.common.desc.duration"))
       : `${Math.round((t.mult - 1) * 100)}%`
         + (t.duration ? ` ${t.duration}s` : translate("application.buff.common.desc.duration"));
@@ -3666,12 +3647,12 @@ function buildTacPathOtherList() {
     const lv = t.levels
       ? `<select data-olv="${t.key}">`
         + t.levels.map((_, i) =>
-          `<option value="${i + 1}"${i === t.levels.length - 1 ? ' selected' : ''}>${translate("application.lv", { value: i + 1 })}</option>`).join('')
+          `<option value="${i + 1}"${i === t.levels.length - 1 ? ' selected' : ''}>${translate("application.buff.common.level", { value: i + 1 })}</option>`).join('')
         + '</select>'
       : '';
     return `<div class="tac-talent-row"><span class="tac-talent-name">${t.name}`
       + `<small>${desc}</small></span>${lv}`
-      + `<button type="button" class="tac-talent-add" data-ok="${t.key}">${translate("ui.common.add")}</button></div>`;
+      + `<button type="button" class="tac-talent-add" data-ok="${t.key}">${translate("common.add")}</button></div>`;
   }).join('');
 }
 
@@ -3798,7 +3779,7 @@ function buildTacPathCard() {
     const lvSel = tacPathTalentList.querySelector(`select[data-lv="${k}"]`);
     const lv = lvSel ? +lvSel.value : null;
     const mult = def.levels ? def.levels[lv ?? def.levels.length - 1] : def.mult;
-    const name = def.levels ? translate("application.buff.common.name.layer", { name: def.name, value: lv + 1 }) : def.name;
+    const name = def.levels ? translate("application.buff.common.name.level", { name: def.name, value: lv + 1 }) : def.name;
     const entry = { type: 'talent', key: k, name, mult, duration: def.duration || 0 };
     if (def.extra) entry.extra = { name: def.extra.name, mult: def.extra.mult, duration: 0 };
     tacPathTalentModal.style.display = 'none';
@@ -3815,7 +3796,7 @@ function buildTacPathCard() {
     if (!def) return;
     const lvSel = tacPathOtherList.querySelector(`select[data-olv="${def.key}"]`);
     const lv = lvSel ? +lvSel.value : null;
-    const name = def.levels ? translate("application.buff.common.name.layer", { name: def.name, value: lv + 1 }) : def.name;
+    const name = def.levels ? translate("application.buff.common.name.level", { name: def.name, value: lv + 1 }) : def.name;
     const entry = {
       type: 'other', key: def.key, name,
       mult: def.levels ? def.levels[lv ?? def.levels.length - 1] : def.mult,
@@ -3833,7 +3814,7 @@ function buildTacPathCard() {
     tacPathBuffModal.style.display = 'none';
     if (!pct) { showToast(translate("application.velocity.buff.note.false5")); return; }
     const dur = parseFloat(tacPathBuffDur.value) || 0;
-    const name = (tacPathBuffName.value || '').trim() || translate("ui.common.custom");
+    const name = (tacPathBuffName.value || '').trim() || translate("common.custom");
     const ok = tacPathAddBuff({ type: 'custom', key: '', name, mult: 1 + pct / 100, duration: dur });
     if (ok) {
       tacPathBuffName.value = '';
@@ -5154,7 +5135,7 @@ export function renderTacBoard() {
       const dotColor = tacMeasureSegColor(m);
       dot.style.background = dotColor; 
       dot.style.boxShadow = `0 0 6px ${dotColor}`;
-      dot.title = translate("application.renderTacBoard");
+      dot.title = translate("ui.tac.measure.map.endpoint");
       tacLayer().appendChild(dot);
     });
   });
@@ -6003,7 +5984,7 @@ export function renderTacManage() {
   tacManageList.appendChild(settings);
   if (!tacManageSel) {
     settings.innerHTML =
-      `<div class="tac-manage-empty">${translate("application.renderTacManageAlternate")}</div>`;
+      `<div class="tac-manage-empty">${translate("ui.tac.creation.hint")}</div>`;
     return;
   }
 
@@ -6065,7 +6046,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
         .some((it) => it && it.flag_orientation);
       fsRow.innerHTML =
         `<label class="tac-manage-glow"><input type="checkbox"`
-        + `${anyFlag('showFixedSpawns') ? ' checked' : ''}>${translate("ui.common.show")}${fixedSpawnCfg.label}</label>`
+        + `${anyFlag('showFixedSpawns') ? ' checked' : ''}>${translate("common.show")}${fixedSpawnCfg.label}</label>`
         + (hasOrient
           ? `<label class="tac-manage-glow"><input type="checkbox" data-fsdir`
           + `${anyFlag('showSpawnDir') ? ' checked' : ''}> ${translate("ui.tac.manangeBox.character.showDir")}</label>`
@@ -6086,26 +6067,30 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
 
       if (fsRangeItem && MAPS_DATA[S.currentMapId].widthM) {
         const dev = roleTokens.find((t) => t.fixedSpawnDevice)?.fixedSpawnDevice || 'pc';
-        const [devW, devH] = fsRangeItem.rangeScreenM[dev];
         const radioName = `tac-fsdev-${S.currentMapId}-${role}`;
         const rangeRow = document.createElement('div');
         rangeRow.className = fsTitleKey ? 'tac-box-line' : 'tac-manage-row';
         rangeRow.innerHTML =
-          `<label class="tac-manage-glow"><input type="checkbox"`
-          + `${anyFlag('showFixedSpawnRange') ? ' checked' : ''}>${translate("ui.tac.manangeBox.madEyes.console.showRange.button", { rangeM: fsRangeItem.rangeM, devW: devW, devH: devH })}</label>`
+          '<label class="tac-manage-glow"></label>'
           + `<label class="tac-manage-glow"><input type="radio" name="${radioName}"${dev === 'pc' ? ' checked' : ''}>PC</label>`
           + `<label class="tac-manage-glow"><input type="radio" name="${radioName}"${dev === 'ios' ? ' checked' : ''}>IOS</label>`;
-        rangeRow.querySelector('input[type="checkbox"]').addEventListener('change', (e) => {
-          setAll('showFixedSpawnRange', e.target.checked);
-          renderTacFixedSpawns();
-          tacSave();
-        });
+        // 复选框文字含理论范围（随 PC/IOS 切换重写整个标签并重新绑定事件）
+        const cbLabel = rangeRow.querySelector('label.tac-manage-glow');
+        const syncRangeLabel = (devKey) => {
+          const [devW, devH] = fsRangeItem.rangeScreenM[devKey];
+          cbLabel.innerHTML = `<input type="checkbox"${anyFlag('showFixedSpawnRange') ? ' checked' : ''}>`
+            + translate("ui.tac.manangeBox.madEyes.console.showRange.button", { rangeM: fsRangeItem.rangeM, devW, devH });
+          cbLabel.querySelector('input').addEventListener('change', (e) => {
+            setAll('showFixedSpawnRange', e.target.checked);
+            renderTacFixedSpawns();
+            tacSave();
+          });
+        };
+        syncRangeLabel(dev);
         const [pcRadio, iosRadio] = rangeRow.querySelectorAll('input[type="radio"]');
-        const theory = rangeRow.querySelector('.tac-fsdev-theory');
         const onDevChange = (next) => {
           setAll('fixedSpawnDevice', next);
-          const [w, h] = fsRangeItem.rangeScreenM[next];
-          theory.textContent = translate("application.onDevChange", { rangeM: fsRangeItem.rangeM, width: w, height: h });
+          syncRangeLabel(next);
           renderTacFixedSpawns();
           tacSave();
         };
@@ -6132,7 +6117,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
         const m = tacRoleRangeMeters(role, token);
         if (el && m !== null) el.style.width = `${tacItemMetersToPercent(m)}%`;
       };
-      buildTacRangeRows(settings, rgCfg, token, true, { softUpdate: syncRoleCircleWidth, hostRole: role, groupKind: (roleCamp === 'survivor' || roleCamp === 'hunter') ? 'trait' : 'plain', labelPrefix: translate("ui.tac.manangeBox.range.show"), labelPostfix: translate("ui.tac.manangeBox.range") });
+      buildTacRangeRows(settings, rgCfg, token, true, { softUpdate: syncRoleCircleWidth, hostRole: role, groupKind: (roleCamp === 'survivor' || roleCamp === 'hunter') ? 'trait' : 'plain', labelPrefix: translate("common.show"), labelPostfix: translate("common.range") });
     }
 
     const row = document.createElement('div');
@@ -6145,8 +6130,8 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
       + `<label class="tac-manage-glow"><input type="checkbox"`
       + `${token.glow ? ' checked' : ''}>${translate("ui.tac.manangeBox.highlight")}</label>`
       + `<label class="tac-manage-def"><input type="checkbox"`
-      + `${isRoleDefault() ? ' checked' : ''}>${translate("ui.common.default")}</label>`
-      + `<button type="button" class="tac-manage-del">${translate("ui.common.delete")}</button>`;
+      + `${isRoleDefault() ? ' checked' : ''}>${translate("common.default")}</label>`
+      + `<button type="button" class="tac-manage-del">${translate("common.delete")}</button>`;
     const slider = row.querySelector('input[type="range"]');
     const [hideCb, glowCb, defCb] = row.querySelectorAll('input[type="checkbox"]');
     slider.addEventListener('input', () => {
@@ -6256,8 +6241,8 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
         hostRole: it.role,
         groupKind: 'item',
         defFill: !!itDef.fill,
-        labelPrefix: translate("ui.tac.manangeBox.range.show"),
-        labelPostfix: translate("ui.tac.manangeBox.range") });
+        labelPrefix: translate("common.show"),
+        labelPostfix: translate("common.range") });
   }
 
   
@@ -6271,8 +6256,8 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     + `<label class="tac-manage-glow"><input type="checkbox"`
     + `${it.glow ? ' checked' : ''}>${translate("ui.tac.manangeBox.highlight")}</label>`
     + `<label class="tac-manage-def"><input type="checkbox"`
-    + `${isDefault ? ' checked' : ''}>${translate("ui.common.default")}</label>`
-    + `<button type="button" class="tac-manage-del">${translate("ui.common.delete")}</button>`;
+    + `${isDefault ? ' checked' : ''}>${translate("common.default")}</label>`
+    + `<button type="button" class="tac-manage-del">${translate("common.delete")}</button>`;
   settings.appendChild(row);
   const sizeSlider = row.querySelector('input[type="range"]');
   const [hideCb, glowCb, defCb] = row.querySelectorAll('input[type="checkbox"]');
@@ -6618,7 +6603,7 @@ export function syncTacSpeedForm() {
   if (info && info.dual) {
     if (tacSpeedForm.dataset.sig !== key) {
       tacSpeedForm.innerHTML = info.forms.map((f, i) =>
-        `<option value="${i}">${translate("application.syncTacSpeedForm", { name: f.name, speed: f.speed })}</option>`).join('');
+        `<option value="${i}">${translate("application.velocity.base.choose.two", { name: f.name, speed: f.speed })}</option>`).join('');
       tacSpeedForm.dataset.sig = key;
     }
     tacSpeedForm.style.display = '';
@@ -6634,9 +6619,9 @@ export function tacBuildRoleOptions() {
     
     let opts = Object.entries(TAC_MOVEMENT_SURVIVOR.states).map(([k, st]) =>
       `<option value="${k}">${st.name} ${st.speed}m/s</option>`).join('');
-    opts += `<option value="role">${translate("ui.common.roles")}</option>`;
+    opts += `<option value="role">${translate("common.roles")}</option>`;
     opts += `<option value="fixed">${translate("ui.common.fixed")}</option>`;
-    tacSpeedRole.innerHTML = opts + `<option value="custom">${translate("ui.common.custom")}</option>`;
+    tacSpeedRole.innerHTML = opts + `<option value="custom">${translate("common.custom")}</option>`;
     tacSpeedRole.value = 'run';
     return;
   }
@@ -6646,10 +6631,10 @@ export function tacBuildRoleOptions() {
     const sp0 = (def.speed != null && typeof def.speed === 'object')
       ? Object.values(def.speed)[0] : def.speed;
     opts += sp0
-      ? `<option value="${key}"${key === 'hellEmber' ? ' selected' : ''}>${translate("application.tacBuildRoleOptionsFourth", { name: def.name, sp0 })}</option>`
-      : `<option value="${key}" disabled>${translate("application.tacBuildRoleOptionsFifth", { name: def.name })}</option>`;
+      ? `<option value="${key}"${key === 'hellEmber' ? ' selected' : ''}>${translate("application.velocity.base.choose", { name: def.name, sp0 })}</option>`
+      : `<option value="${key}" disabled>${translate("application.velocity.base.choose.default", { name: def.name })}</option>`;
   }
-  tacSpeedRole.innerHTML = opts + `<option value="custom">${translate("ui.common.custom")}</option>`;
+  tacSpeedRole.innerHTML = opts + `<option value="custom">${translate("common.custom")}</option>`;
   tacSpeedRole.value = 'hellEmber';
 }
 
@@ -6668,7 +6653,7 @@ export function tacPanelBase() {
   const speed = v > 0 ? v : TAC_MOVEMENT_SURVIVOR.states.run.speed;
   const key = tacSpeedRole.value;
   if (key === 'custom') {
-    return { name: translate("ui.common.custom"), speed, camp: tacCamp, role: null, form: 0, stKey: 'custom' };
+    return { name: translate("common.custom"), speed, camp: tacCamp, role: null, form: 0, stKey: 'custom' };
   }
   if (tacCamp === 'survivor' && TAC_MOVEMENT_SURVIVOR.states[key]) { 
     return { name: TAC_MOVEMENT_SURVIVOR.states[key].name, speed: TAC_MOVEMENT_SURVIVOR.states[key].speed,
@@ -6767,7 +6752,7 @@ export function tacSyncSpeedPanel() {
         syncTacSpeedForm();
         tacSpeedForm.value = base.role ? `${base.role}:${base.form || 0}` : 'survivor';
         if (!tacSpeedForm.value) tacSpeedForm.selectedIndex = 0;
-      } else if (base.name === translate("ui.common.custom")) {
+      } else if (base.name === translate("common.custom")) {
         tacSpeedRole.value = 'custom';
         syncTacSpeedForm();
       }
@@ -6775,7 +6760,7 @@ export function tacSyncSpeedPanel() {
       tacSpeedRole.value = base.role;
       syncTacSpeedForm();
       tacSpeedForm.value = String(base.form || 0);
-    } else if (base.name === translate("ui.common.custom")) {
+    } else if (base.name === translate("common.custom")) {
       tacSpeedRole.value = 'custom';
       syncTacSpeedForm();
     }
@@ -6789,9 +6774,9 @@ export function tacSyncSpeedPanel() {
       wantRole = (base.stKey && TAC_MOVEMENT_SURVIVOR.states[base.stKey]) ? base.stKey
         : (base.fixed || base.stKey === 'fixed') ? 'fixed'
         : (base.stKey === 'role' || (base.role && TAC_ROLES[base.role])) ? 'role'
-        : (base.name === translate("ui.common.custom") ? 'custom' : null);
+        : (base.name === translate("common.custom") ? 'custom' : null);
     } else {
-      wantRole = base.role || (base.name === translate("ui.common.custom") ? 'custom' : null);
+      wantRole = base.role || (base.name === translate("common.custom") ? 'custom' : null);
     }
     if (wantRole && tacSpeedRole.value !== wantRole
         && tacSpeedRole.querySelector(`option[value="${wantRole}"]`)) {
@@ -6918,7 +6903,7 @@ export function renderTacBaseDetail() {
     tacBaseMergeBox.style.display = 'none';
     const b = tacPending.base;
     tacBaseDetailBody.innerHTML =
-      `<table class="tac-detail-tbl"><tr><th>${translate("ui.tac.measure.table.col.baseSpeed")}</th><th class="tac-col-speed">${translate("ui.tac.measure.table.col.speed")}</th><th class="tac-col-pt">${translate("ui.common.start")}</th><th class="tac-col-pt">${translate("ui.common.end")}</th><th class="tac-col-del"></th></tr>`
+      `<table class="tac-detail-tbl"><tr><th>${translate("application.velocity.base.detail.table.name")}</th><th class="tac-col-speed">${translate("application.velocity.base.detail.table.speed")}</th><th class="tac-col-pt">${translate("ui.tac.measure.startPoint")}</th><th class="tac-col-pt">${translate("ui.tac.measure.endPoint")}</th><th class="tac-col-del"></th></tr>`
       + `<tr><td>${b.name}</td><td class="tac-col-speed"><b>${Math.round(b.speed * 100) / 100}</b></td>`
       + '<td class="tac-col-pt">—</td><td class="tac-col-pt">—</td><td class="tac-col-del"></td></tr></table>';
     return;
@@ -6927,12 +6912,12 @@ export function renderTacBaseDetail() {
   const L = tacSelLine();
   const rows = tacBaseDisplayRows(tgt.lc);
   tacBaseDetailBody.innerHTML =
-    `<table class="tac-detail-tbl"><tr><th>${translate("ui.tac.measure.table.col.baseSpeed")}</th><th class="tac-col-speed">${translate("ui.tac.measure.table.col.speed")}</th><th class="tac-col-pt">${translate("ui.common.start")}</th><th class="tac-col-pt">${translate("ui.common.end")}</th><th class="tac-col-del"></th></tr>`
+    `<table class="tac-detail-tbl"><tr><th>${translate("application.velocity.base.detail.table.name")}</th><th class="tac-col-speed">${translate("application.velocity.base.detail.table.speed")}</th><th class="tac-col-pt">${translate("ui.tac.measure.startPoint")}</th><th class="tac-col-pt">${translate("ui.tac.measure.endPoint")}</th><th class="tac-col-del"></th></tr>`
     + rows.map((r, i) => `<tr class="tac-base-row" data-brow="${i}"><td>${r.name}</td>`
       + `<td class="tac-col-speed"><b>${Math.round(r.speed * 100) / 100}</b></td>`
       + `<td class="tac-col-pt">${tacLetter(r.from)}</td>`
       + `<td class="tac-col-pt">${tacLetter(r.to)}</td>`
-      + `<td class="tac-col-del"><button type="button" class="tac-buff-del" data-basedel="${i}" title="${translate("ui.common.delete")}">×</button></td></tr>`).join('')
+      + `<td class="tac-col-del"><button type="button" class="tac-buff-del" data-basedel="${i}" title="${translate("common.delete")}">×</button></td></tr>`).join('')
     + '</table>';
   
   tacBaseDetailBody.querySelectorAll('[data-brow]').forEach((tr) => {
@@ -6996,10 +6981,10 @@ export function renderTacBuffDetail() {
       tacBuffFilter.to = n;
       tacBuffFilter.all = true;
     }
-    tacBuffFilterBox.innerHTML = `<span>${translate("ui.tac.measure.velocity.buff.detail.seg.button")}</span>`
+    tacBuffFilterBox.innerHTML = `<span>${translate("ui.tac.measure.setting.velocity.buff.detail.seg.button")}</span>`
       + `<select id="tacBuffFilterFrom"${tacBuffFilter.all ? ' disabled' : ''}>${tacLetterOptions(n, tacBuffFilter.from)}</select>`
       + `<select id="tacBuffFilterTo"${tacBuffFilter.all ? ' disabled' : ''}>${tacLetterOptions(n, tacBuffFilter.to)}</select>`
-      + `<label><input type="checkbox" id="tacBuffFilterAll"${tacBuffFilter.all ? ' checked' : ''}>${translate("application.renderTacBuffDetailThird")}</label>`;
+      + `<label><input type="checkbox" id="tacBuffFilterAll"${tacBuffFilter.all ? ' checked' : ''}>${translate("ui.tac.measure.setting.velocity.buff.detail.all.button")}</label>`;
     tacBuffFilterBox.style.display = '';
     if (!tacBuffFilter.all) {
       shown = buffs.filter((b) =>
@@ -7019,14 +7004,14 @@ export function renderTacBuffDetail() {
       : `<select data-bto="${b.id}">${tacLetterOptions(n, Math.min(b.to, n))}</select>`;
     return `<tr><td>${b.name}</td><td class="tac-col-speed2">${amp}</td><td class="tac-col-speed2">${dur}</td>`
       + `<td class="tac-col-pt">${fromCell}</td><td class="tac-col-pt">${toCell}</td>`
-      + `<td class="tac-col-del"><button type="button" class="tac-buff-del" data-bdel="${b.id}" title="${translate("ui.common.delete")}">×</button></td></tr>`;
+      + `<td class="tac-col-del"><button type="button" class="tac-buff-del" data-bdel="${b.id}" title="${translate("common.delete")}">×</button></td></tr>`;
   }).join('');
 
   tacBuffDetailBody.innerHTML =
     (shown.length
-      ? `<table class="tac-detail-tbl"><tr><th>${translate("ui.tac.measure.table.col.buff")}</th><th class="tac-col-speed2">${translate("ui.tac.measure.table.col.buffValue")}</th><th class="tac-col-speed2">${translate("ui.tac.measure.table.col.duration")}</th><th class="tac-col-pt">${translate("ui.common.start")}</th><th class="tac-col-pt">${translate("ui.common.end")}</th><th class="tac-col-del"></th></tr>`
+      ? `<table class="tac-detail-tbl"><tr><th>${translate("application.velocity.buff.detail.table.name")}</th><th class="tac-col-speed2">${translate("application.velocity.buff.detail.table.value")}</th><th class="tac-col-speed2">${translate("application.velocity.buff.detail.table.duration")}</th><th class="tac-col-pt">${translate("ui.tac.measure.startPoint")}</th><th class="tac-col-pt">${translate("ui.tac.measure.endPoint")}</th><th class="tac-col-del"></th></tr>`
         + rowsHtml + '</table>'
-      : `<div class="tac-detail-empty">${buffs.length ? translate("application.renderTacBuffDetailFifth") : translate("application.velocity.buff.detail.hint.none")}</div>`);
+      : `<div class="tac-detail-empty">${buffs.length ? translate("ui.tac.measure.setting.velocity.buff.detail.hint.none") : translate("application.velocity.buff.detail.hint.none")}</div>`);
 
   
   const fromSel = $('tacBuffFilterFrom');
@@ -7100,7 +7085,7 @@ export function buildTacTraitList() {
   tacTraitList.innerHTML = rows.map((t) => {
     let desc = t.levels
       ? `${t.levels.map((m) => `${Math.round((m - 1) * 100)}%`).join('/')}`
-        + translate("application.buff.common.desc.layer", { count: t.levels.length })
+        + translate("application.buff.common.desc.level", { count: t.levels.length })
         + (t.duration ? ` ${t.duration}s` : translate("application.buff.common.desc.duration"))
       : `${Math.round((t.mult - 1) * 100)}%${t.postMult ? translate("application.buff.common.desc.multi") : ''}`
         + (t.duration ? ` ${t.duration}s` : translate("application.buff.common.desc.duration"));
@@ -7124,7 +7109,7 @@ export function buildTacTraitList() {
       : '';
     return `<div class="tac-talent-row"><span class="tac-talent-name">${t.role} · ${t.name}`
       + `<small>${desc}</small></span>${lv}`
-      + `<button type="button" class="tac-talent-add" data-tk="${t.key}">${translate("ui.common.add")}</button></div>`;
+      + `<button type="button" class="tac-talent-add" data-tk="${t.key}">${translate("common.add")}</button></div>`;
   }).join('');
 }
 
@@ -7134,7 +7119,7 @@ export function buildTacOtherList() {
   tacOtherList.innerHTML = rows.map((t) => {
     let desc = t.levels
       ? `${t.levels.map((m) => `${Math.round((m - 1) * 100)}%`).join('/')}`
-        + translate("application.buff.common.desc.layer", { count: t.levels.length })
+        + translate("application.buff.common.desc.level", { count: t.levels.length })
         + (t.duration ? ` ${t.duration}s` : translate("application.buff.common.desc.duration"))
       : `${Math.round((t.mult - 1) * 100)}%`
         + (t.duration ? ` ${t.duration}s` : translate("application.buff.common.desc.duration"));
@@ -7144,12 +7129,12 @@ export function buildTacOtherList() {
     const lv = t.levels
       ? `<select data-olv="${t.key}">`
         + t.levels.map((_, i) =>
-          `<option value="${i}"${i === t.levels.length - 1 ? ' selected' : ''}>${translate("application.lv", { value: i + 1 })}</option>`).join('')
+          `<option value="${i}"${i === t.levels.length - 1 ? ' selected' : ''}>${translate("application.buff.common.level", { value: i + 1 })}</option>`).join('')
         + '</select>'
       : '';
     return `<div class="tac-talent-row"><span class="tac-talent-name">${t.name}`
       + `<small>${desc}</small></span>${lv}`
-      + `<button type="button" class="tac-talent-add" data-ok="${t.key}">${translate("ui.common.add")}</button></div>`;
+      + `<button type="button" class="tac-talent-add" data-ok="${t.key}">${translate("common.add")}</button></div>`;
   }).join('');
 }
 
@@ -7160,12 +7145,12 @@ export function buildTacTalentList() {
   tacTalentList.innerHTML = rows.map(([k, b]) => {
     let desc = b.levels
       ? `${b.levels.map((m) => `${Math.round((m - 1) * 100)}%`).join('/')}`
-        + translate("application.buff.common.desc.layer", { count: b.levels.length }) + (b.duration ? ` ${b.duration}s` : translate("application.buff.common.desc.duration"))
+        + translate("application.buff.common.desc.level", { count: b.levels.length }) + (b.duration ? ` ${b.duration}s` : translate("application.buff.common.desc.duration"))
       : `${Math.round((b.mult - 1) * 100)}%` + (b.duration ? ` ${b.duration}s` : translate("application.buff.common.desc.duration"));
     const lv = b.levels
       ? `<select data-lv="${k}">`
         + b.levels.map((_, i) =>
-          `<option value="${i}"${i === b.levels.length - 1 ? ' selected' : ''}>${translate("application.lv", { value: i + 1 })}</option>`).join('')
+          `<option value="${i}"${i === b.levels.length - 1 ? ' selected' : ''}>${translate("application.buff.common.level", { value: i + 1 })}</option>`).join('')
         + '</select>'
       : '';
     if (b.states) {
@@ -7173,7 +7158,7 @@ export function buildTacTalentList() {
     }
     return `<div class="tac-talent-row"><span class="tac-talent-name">${b.name}`
       + `<small>${desc}${b.extra ? translate("talent.common.involve.desc1", { name: b.extra.name }) : ''}</small></span>${lv}`
-      + `<button type="button" class="tac-talent-add" data-k="${k}">${translate("ui.common.add")}</button></div>`;
+      + `<button type="button" class="tac-talent-add" data-k="${k}">${translate("common.add")}</button></div>`;
   }).join('');
 }
 
@@ -7216,8 +7201,8 @@ export function updateTacMeasureInfo() {
   }
 
   const fmt = (v) => (v == null ? '--' : (Math.round(v * 100) / 100).toFixed(2));
-  const headHtml = `<table><tr><th></th><th>${translate("ui.tac.measure.table.col.dist")}</th><th>${translate("ui.tac.measure.table.col.time")}</th>`
-    + `<th>${translate("ui.tac.measure.table.col.speedActual")}</th><th>${translate("ui.tac.measure.table.col.buff")}</th><th>${translate("ui.tac.measure.table.col.baseTime")}</th></tr>`;
+  const headHtml = `<table><tr><th></th><th>${translate("ui.tac.measure.result.table.distance")}</th><th>${translate("ui.tac.measure.result.table.time")}</th>`
+    + `<th>${translate("ui.tac.measure.result.table.speed")}</th><th>${translate("application.velocity.buff.detail.table.name")}</th><th>${translate("ui.tac.measure.result.table.baseTime")}</th></tr>`;
   const segRow = (label, s, mIdx, sel) => {
     const multi = s.parts.length > 1;
     const part = s.parts[0];
@@ -7237,7 +7222,8 @@ export function updateTacMeasureInfo() {
     }
     return r;
   };
-  const CN = translate("application.cn");
+  // 折线分段编号的中文数字（仅中文界面审美习惯，非翻译内容，故不放语言包）
+  const CN_NUMERALS = '一二三四五六七八九十';
 
   let html;
   if (chainSegs && chainSegs.length) {
@@ -7251,7 +7237,7 @@ export function updateTacMeasureInfo() {
         + '<td>--</td><td>--</td>'
         + `<td>${fmt(sim.t0)}</td></tr>`
         + sim.segs.map((s, si) => segRow(
-            translate("ui.tac.measure.result.polyline.name.single", { value: CN[si] || (si + 1), valueSecondary: tacLetter(si), valueTertiary: tacLetter(si + 1) }),
+            translate("ui.tac.measure.result.polyline.name.single", { value: CN_NUMERALS[si] || (si + 1), valueSecondary: tacLetter(si), valueTertiary: tacLetter(si + 1) }),
             s, chainSegs[si].i, selIdx === chainSegs[si].i)).join('')
         + '</table>';
       if (tacMeasurePending) {
@@ -7421,7 +7407,7 @@ export function buildTacSpeedPanel() {
         return;
       }
     }
-    tacApplyBaseInput({ name: translate("ui.common.custom"), speed: v, camp: tacCamp, role: null, form: 0 });
+    tacApplyBaseInput({ name: translate("common.custom"), speed: v, camp: tacCamp, role: null, form: 0 });
   });
   
   tacTraitAddBtn.addEventListener('click', () => {
@@ -7550,7 +7536,7 @@ export function buildTacSpeedPanel() {
     if (!def) return;
     const lvSel = tacOtherList.querySelector(`select[data-olv="${def.key}"]`);
     const lv = lvSel ? +lvSel.value : null;
-    const name = def.levels ? translate("application.buff.common.name.layer", { name: def.name, value: lv + 1 }) : def.name;
+    const name = def.levels ? translate("application.buff.common.name.level", { name: def.name, value: lv + 1 }) : def.name;
     const entry = {
       type: 'other', key: def.key, name,
       mult: def.levels ? def.levels[lv ?? def.levels.length - 1] : def.mult,
@@ -7583,7 +7569,7 @@ export function buildTacSpeedPanel() {
     const lvSel = tacTalentList.querySelector(`select[data-lv="${k}"]`);
     const lv = lvSel ? +lvSel.value : null;
     const mult = def.levels ? def.levels[lv ?? def.levels.length - 1] : def.mult;
-    const name = def.levels ? translate("application.buff.common.name.layer", { name: def.name, value: lv + 1 }) : def.name;
+    const name = def.levels ? translate("application.buff.common.name.level", { name: def.name, value: lv + 1 }) : def.name;
     const entry = { type: 'talent', key: k, name, mult, duration: def.duration || 0 };
     if (def.extra) entry.extra = { name: def.extra.name, mult: def.extra.mult, duration: 0 };
     tacTalentModal.style.display = 'none'; 
@@ -7608,7 +7594,7 @@ export function buildTacSpeedPanel() {
     tacBuffModal.style.display = 'none'; 
     if (!pct) { showToast(translate("application.velocity.buff.note.false5")); return; }
     const dur = parseFloat(tacBuffDur.value) || 0; 
-    const name = (tacBuffName.value || '').trim() || translate("ui.common.custom");
+    const name = (tacBuffName.value || '').trim() || translate("common.custom");
     const ok = tacAddBuffEntry({ type: 'custom', key: '', name, mult: 1 + pct / 100, duration: dur });
     if (ok) {
       tacBuffName.value = '';
@@ -7651,6 +7637,7 @@ export function buildTacSpeedPanel() {
     tacResultToggle.textContent = translate("ui.tac.measure.result.title", { value: tacResultOpen ? '▾' : '▸' });
     tacResultBody.style.display = tacResultOpen ? '' : 'none';
   });
+  tacResultToggle.textContent = translate("ui.tac.measure.result.title", { value: tacResultOpen ? '▾' : '▸' });
   // 速度设置区：整体可收起，默认展开
   const syncTacSpeedSettings = () => {
     tacSpeedSettingsToggleEl.textContent = translate("ui.tac.measure.setting.velocity.title", { value: tacSpeedSettingsOpen ? '▾' : '▸' });
@@ -8728,7 +8715,7 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
 
   
   if (tacTextPlacing) {
-    const content = (tacTextInput.value || '').trim() || translate("application.content");
+    const content = (tacTextInput.value || '').trim() || translate("ui.tac.text.default.content");
     tacBoard().texts.push({
       x: p.x, y: p.y, text: content,
       color: tacTextStyle.color, size: tacTextStyle.size,
