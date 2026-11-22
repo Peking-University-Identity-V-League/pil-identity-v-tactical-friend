@@ -1,4 +1,7 @@
 import { translate } from '../core/i18n.js';
+import { TAC_TALENT_KEYS } from './talents.js';
+import { TAC_TIER_KEYS } from './items_tier.js';
+import { TAC_MATCH_KEYS } from './items_match.js';
 
 
 export const TAC_ROLES = {
@@ -987,13 +990,13 @@ export const TAC_ROLES = {
   talentSurvivor: {
     name: translate("characters.talentSurvivor.name"),
     camp: 'other',
-    items: ['fearRadius', 'webersLaw', 'sneak'],
+    items: TAC_TALENT_KEYS.survivor,
     icon: 'https://patchwiki.biligame.com/images/dwrg/0/07/r5uy2z33ro1xgmw8qpp847h4bfvf8ld.png',
   },
   talentHunter: {
     name: translate("characters.talentHunter.name"),
     camp: 'other',
-    items: ['tinnitus', 'addiction', 'nostalgic', 'skittish', 'deerHunt', 'streetSweeper', 'wither', 'obsession', 'famine'],
+    items: TAC_TALENT_KEYS.hunter,
     icon: 'https://patchwiki.biligame.com/images/dwrg/a/ad/8ea9e6vugcfryv3zygj9bspjgqhj76j.png',
   },
   violentStruggle: {
@@ -1005,7 +1008,7 @@ export const TAC_ROLES = {
   tier: {
     name: translate("characters.tier.name"),
     camp: 'other',
-    items: ['survivorS', 'hunterS', 'survivorA', 'hunterA', 'survivorB', 'hunterB', 'survivorC', 'hunterC', 'survivorTier1', 'hunterTier1', 'survivorTier2', 'hunterTier2', 'survivorTier3', 'hunterTier3', 'survivorTier4', 'hunterTier4', 'survivorTier5', 'hunterTier5', 'survivorTier6', 'hunterTier6', 'survivorTier7', 'hunterTier7', 'survivorPeakTier7', 'hunterPeakTier7', 'fiveplayerTier1', 'fiveplayerTier2', 'fiveplayerTier3', 'fiveplayerTier4', 'fiveplayerTier5', 'fiveplayerTier6'],
+    items: TAC_TIER_KEYS,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/2b/4lnyrl54i7z952kcy8zzj87yn07by0h.png/60px-%E6%8E%92%E4%BD%8D%E4%BF%9D%E6%8A%A4%E5%8D%A1.png',
   },
   shop: {
@@ -1014,23 +1017,35 @@ export const TAC_ROLES = {
     items: ['clue', 'inspiration', 'fragment', 'echo', 'sealingWax', 'spyGlasses', 'commemorationToken', 'costumeRemnant', 'stickerToken', 'inkTrace'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/e/e9/hcvexmfva8ohhsdm19at0iok2garrac.png',
   },
+  match: {
+    name: translate("characters.match.name"),
+    camp: 'other',
+    items: TAC_MATCH_KEYS.MATCH,
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/1d/n6kazuplw11fyir9s5d7j19xulzqpyw.png/90px-%E7%BA%AA%E5%BF%B5%E6%A8%A1%E5%9E%8B.png',
+  },
   COA: {
     name: translate("characters.COA.name"),
     camp: 'other',
-    items: ['COAIX', 'COAVIII', 'COAVII', 'COAVI', 'COAV', 'COAIV', 'COAIII', 'COAII', 'COAI'],
+    items: TAC_MATCH_KEYS.COA,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/c/c4/r67qgzgmse7iiog4x21nf5xwedncgkd.png/90px-%E5%BA%94%E6%8F%B4%E7%A5%A8.png',
   },
   teamIVL: {
     name: translate("characters.teamIVL.name"),
     camp: 'other',
-    items: ['ACT', 'ASC', 'DOU5', 'FPXZQ', 'GG', 'GR', 'MRC', 'TE', 'WBG', 'Wolves'],
+    items: TAC_MATCH_KEYS.teamIVL,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/8/86/e9s5lbtwl2criihcp5h70ehtst9hlk9.png/150px-IVLlogo.png',
   },
   teamIJL: {
     name: translate("characters.teamIJL.name"),
     camp: 'other',
-    items: ['AWG', 'AXZ', 'DFM', 'FL', 'QTD', 'RC', 'SZ', 'Zeta'],
+    items: TAC_MATCH_KEYS.teamIJL,
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/5a/aduticjamiol9j9dn01c3mqwkknvb8w.png/150px-IJLlogo.png',
+  },
+  teamOther: {
+    name: translate("characters.teamOther.name"),
+    camp: 'other',
+    items: TAC_MATCH_KEYS.teamOther,
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/2a/murcy0o946l10afkudirruke3cuqfqa.png/90px-%E9%99%A4%E5%B0%98%E5%88%B7.png',
   },
   sticker: {
     name: translate("characters.sticker.name"),

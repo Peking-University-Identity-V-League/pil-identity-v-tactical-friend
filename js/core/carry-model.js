@@ -1,3 +1,4 @@
+import { TAC_TALENT_TYPES } from '../data/talents.js';
 // 牵气球挂椅时间模型 —— 移植自 maps-3d 运行页内嵌 worker
 // （CARRY_RULES_VERSION = balloon-planning-2026-11-17-ui-v4），保持参数与公式一致。
 // 二维近似：不含楼层与翻窗，色带按地面栅格的绕行路径时间划分。
@@ -15,19 +16,35 @@ export const CARRY_SURVIVORS = Object.freeze({
 // https://wiki.biligame.com/dwrg/巨钳 (checked 2026-11-11)
 export const CARRY_DROP_PROGRESS_DEFAULT = 25;
 
-// 天赋加成。group：survivor=求生者挣扎 / hunterStruggle=监管者挣扎 / hunterSpeed=监管者速度
+// 天赋加成。数据源统一在 talents.js 的 buff 字段（速度类 speedBuff / 牵起类 pickupBuff /
+// 挣扎类 struggleBuff / 放下加进度类 dropBuff），此处派生成既有形状。
+// group：survivor=求生者挣扎 / hunterStruggle=监管者挣扎与牵起 / hunterSpeed=监管者速度
 // levels 按层数索引（从 1 层开始）；duration 为限时秒数（0 = 时间不限）
-export const CARRY_TALENTS = Object.freeze({
-  willToSurvive: { group: 'survivor', levels: [0.10, 0.15, 0.20] },                // 求生意志
-  giantClaw: { group: 'hunterStruggle', levels: [-0.05, -0.10, -0.15], dropProgress: [18, 12, 6] }, // 巨钳
-  mischievous: { group: 'hunterStruggle', levels: [0.20] },                        // 嬉弄：牵气球加快
-  huntersInstinct: { group: 'hunterSpeed', levels: [0.01, 0.015, 0.02] },          // 狩猎本能
-  hospitable: { group: 'hunterSpeed', levels: [0.04, 0.06, 0.08] },                // 好客之道
-  wantedOrder: { group: 'hunterSpeed', levels: [-0.02, -0.01, 0] },                // 通缉
-  mock: { group: 'hunterSpeed', levels: [0.03, 0.04, 0.05] },                      // 嘲弄
-  carnival: { group: 'hunterSpeed', levels: [0.03, 0.04, 0.05], duration: 120 },   // 狂欢
-  controlFreak: { group: 'hunterSpeed', levels: [0.10], duration: 3 },             // 掌控欲
-});
+const round4 = (v) => Math.round(v * 10000) / 10000;
+
+export const CARRY_TALENTS = Object.freeze(Object.fromEntries(
+  Object.entries(TAC_TALENT_TYPES).flatMap(([key, t]) => {
+    const b = t.buff || {};
+    // 求生者挣扎类
+    if (t.camp === 'survivor' && b.struggleBuff) {
+      return [[key, { group: 'survivor', levels: b.struggleBuff.levels }]];
+    }
+    // 监管者挣扎类与牵起类（牵起速度只影响牵起用时，与挣扎进度分列展示）
+    if (t.camp === 'hunter' && (b.struggleBuff || b.pickupBuff)) {
+      const src = b.pickupBuff || b.struggleBuff;
+      const def = { group: 'hunterStruggle', levels: src.levels };
+      if (b.dropBuff) def.dropProgress = b.dropBuff.levels;
+      return [[key, def]];
+    }
+    // 监管者速度类中标记了 carry 的（牵气球移动时同样生效）
+    if (t.camp === 'hunter' && b.speedBuff && b.speedBuff.carry) {
+      const src = b.speedBuff;
+      const def = { group: 'hunterSpeed', levels: (src.levels || [src.mult]).map((v) => round4(v - 1)) };
+      if (src.duration) def.duration = src.duration;
+      return [[key, def]];
+    }
+    return [];
+  })));
 
 export const CARRY_DEFAULTS = Object.freeze({
   survivorId: 'ordinary',

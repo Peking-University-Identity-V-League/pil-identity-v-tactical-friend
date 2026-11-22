@@ -315,10 +315,34 @@ function main() {
       + `png ${(png.length / 1024).toFixed(0)}KB 用时 ${((Date.now() - t0) / 1000).toFixed(0)}s`);
   }
   const js = '// 由 scripts/build_nav_grid_exact.mjs 生成，勿手改\n'
-    + 'export const NAV_GRID_MANIFEST = '
-    + JSON.stringify(manifest, null, 2) + ';\n';
+    + formatManifest(manifest);
   writeFileSync(MANIFEST_JS, js);
   console.log(`清单已写入 ${MANIFEST_JS}`);
 }
 
-main();
+// 紧凑序列化：windows 每个点位一行，避免文件被坐标撑得过长
+export function formatManifest(manifest) {
+  const EOL = '\n';
+  const entries = Object.entries(manifest);
+  const parts = entries.map(([id, meta], mi) => {
+    const lines = [`  ${JSON.stringify(id)}: {`];
+    const ks = Object.keys(meta);
+    ks.forEach((k, i) => {
+      const last = i === ks.length - 1;
+      if (k === 'windows') {
+        lines.push(`    "windows": [`);
+        for (const [x, y] of meta[k]) lines.push(`      [${JSON.stringify(x)}, ${JSON.stringify(y)}],`);
+        lines.push(`    ]${last ? '' : ','}`);
+      } else {
+        lines.push(`    ${JSON.stringify(k)}: ${JSON.stringify(meta[k])}${last ? '' : ','}`);
+      }
+    });
+    lines.push(`  }${mi === entries.length - 1 ? '' : ','}`);
+    return lines.join(EOL);
+  });
+  return 'export const NAV_GRID_MANIFEST = {'
+    + EOL + parts.join(EOL) + EOL + '};' + EOL;
+}
+
+import { pathToFileURL } from 'node:url';
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();

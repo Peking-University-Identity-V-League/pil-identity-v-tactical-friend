@@ -1,4 +1,21 @@
 import { translate } from '../core/i18n.js';
+import { TAC_TALENT_TYPES } from './talents.js';
+
+
+// 天赋速度加成：数据源统一在 talents.js 的 buff.speedBuff，此处派生成 tactic.js 消费的既有形状
+const TAC_TALENT_SPEED_BUFFS = Object.fromEntries(
+  Object.entries(TAC_TALENT_TYPES)
+    .filter(([, t]) => t.buff && t.buff.speedBuff)
+    .map(([key, t]) => {
+      const { aim, carry, extra, ...rest } = t.buff.speedBuff;
+      const out = { name: t.name, ...rest, camp: t.camp };
+      if (extra) out.extra = {
+        name: translate("application.buff.common.name.level", { name: TAC_TALENT_TYPES[extra.talent].name, value: extra.level }),
+        mult: extra.mult,
+        camp: t.camp,
+      };
+      return [key, out];
+    }));
 
 
 export const TAC_SVG_NS = 'http://www.w3.org/2000/svg';
@@ -91,35 +108,8 @@ export const TAC_MOVEMENT_BUFFS = {
       { key: 'heightenedSenses', role: translate("characters.herztier.name"), name: translate("movement.buff.trait.herztier.heightenedSenses.name"), mult: 1.08, duration: 10 },
     ],
   },
-  talent: {
-    kneeJerkReflex: { name: translate("talent.survivor.kneeJerkReflex"), mult: 1.5, duration: 3, camp: 'survivor' },
-    webersLaw: { name: translate("talent.survivor.webersLaw"), levels: [1.1, 1.15, 1.2], duration: 3.5, camp: 'survivor' },
-    borrowedTime: {
-      name: translate("talent.survivor.borrowedTime"), mult: 1.5, duration: 5, camp: 'survivor',
-      extra: { name: translate("application.buff.common.name.level", { name: translate("talent.survivor.escape"), value: 3 }), mult: 1.05, camp: 'survivor' },
-    },
-    escape: { name: translate("talent.survivor.escape"), levels: [1.03, 1.04, 1.05], camp: 'survivor' },
-    wellEarned: { name: translate("talent.survivor.wellEarned"), mult: 1.25, duration: 4, camp: 'survivor' },
-    mutualSupport: { name: translate("talent.survivor.mutualSupport"), levels: [1.04, 1.08], camp: 'survivor' },
-    symbioticEffect: { name: translate("talent.survivor.symbioticEffect"), levels: [1.06, 1.1], camp: 'survivor' },
-    sticker: { name: translate("talent.survivor.sticker"), levels: [1.3, 1.6, 1.9], camp: 'survivor', states: ['crawl'] },
-    touchEffect: { name: translate("talent.survivor.touchEffect"), levels: [1.16, 1.28, 1.4], duration: 1.5, camp: 'survivor' },
-    companionEffect: { name: translate("talent.survivor.companionEffect"), mult: 1.28, duration: 2, camp: 'survivor' },
-    birdcageEffect: { name: translate("talent.survivor.birdcageEffect"), mult: 1.1, camp: 'survivor' },
-    saviorComplex: { name: translate("talent.survivor.saviorComplex"), levels: [1.05, 1.1, 1.15], duration: 3, camp: 'survivor' },
-    herdMentality: { name: translate("talent.survivor.herdMentality"), levels: [1.04, 1.06, 1.08], camp: 'survivor' },
-    empathy: { name: translate("talent.survivor.empathy"), mult: 1.14, duration: 12, camp: 'survivor' },
-    huntersInstinct: { name: translate("talent.hunter.huntersInstinct"), levels: [1.01, 1.015, 1.02], camp: 'hunter' },
-    hospitable: { name: translate("talent.hunter.hospitable"), levels: [1.04, 1.06, 1.08], camp: 'hunter' },
-    wantedOrder: { name: translate("talent.hunter.wantedOrder"), levels: [0.98, 0.99, 1], camp: 'hunter' },
-    nostalgic: { name: translate("talent.hunter.nostalgic"), mult: 1.1, duration: 14, camp: 'hunter' },
-    mock: { name: translate("talent.hunter.mock"), levels: [1.03, 1.04, 1.05], camp: 'hunter' },
-    carnival: { name: translate("talent.hunter.carnival"), levels: [1.03, 1.04, 1.05], duration: 120, camp: 'hunter' },
-    hunt: { name: translate("talent.hunter.hunt"), mult: 1.1, camp: 'hunter' },
-    controlFreak: { name: translate("talent.hunter.controlFreak"), mult: 1.1, duration: 3, camp: 'hunter' },
-    lingeringMight: { name: translate("talent.hunter.lingeringMight"), mult: 1.1, duration: 50, camp: 'hunter' },
-    obsession: { name: translate("talent.hunter.obsession"), mult: 1.05, duration: 15, camp: 'hunter' },
-  },
+  talent: TAC_TALENT_SPEED_BUFFS,
+
   other: {
     survivor: [
       { key: 'fastMusicbox', name: translate("movement.buff.other.fastMusicbox.name"), levels: [1.15, 1.25, 1.35] },
