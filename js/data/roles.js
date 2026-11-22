@@ -1017,6 +1017,12 @@ export const TAC_ROLES = {
     items: ['clue', 'inspiration', 'fragment', 'echo', 'sealingWax', 'spyGlasses', 'commemorationToken', 'costumeRemnant', 'stickerToken', 'inkTrace'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/e/e9/hcvexmfva8ohhsdm19at0iok2garrac.png',
   },
+  match: {
+    name: translate("characters.match.name"),
+    camp: 'other',
+    items: TAC_MATCH_KEYS.MATCH,
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/1d/n6kazuplw11fyir9s5d7j19xulzqpyw.png/90px-%E7%BA%AA%E5%BF%B5%E6%A8%A1%E5%9E%8B.png',
+  },
   COA: {
     name: translate("characters.COA.name"),
     camp: 'other',
@@ -1039,7 +1045,7 @@ export const TAC_ROLES = {
     name: translate("characters.teamOther.name"),
     camp: 'other',
     items: TAC_MATCH_KEYS.teamOther,
-    icon: 'https://patchwiki.biligame.com/images/dwrg/a/ae/qdi9y752shi6vjyg43qy5u04o23osyr.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/2a/murcy0o946l10afkudirruke3cuqfqa.png/90px-%E9%99%A4%E5%B0%98%E5%88%B7.png',
   },
   sticker: {
     name: translate("characters.sticker.name"),

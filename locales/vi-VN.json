@@ -1650,5 +1650,16 @@
   "items.teamIJL.FAV.name": "FAV",
   "items.teamIJL.LVS.name": "LVS",
   "items.teamIJL.SST.name": "SST",
-  "characters.teamOther.name": ""
+  "characters.teamOther.name": "",
+  "characters.match.name": "",
+  "items.match.AsianGames.name": "",
+  "items.match.IVC.name": "IVC",
+  "items.match.IVS.name": "IVS",
+  "items.match.IVT.name": "IVT",
+  "items.match.divisionCHN.name": "CHN",
+  "items.match.divisionCHNHMT.name": "CHN HMT",
+  "items.match.divisionJPN.name": "JPN",
+  "items.match.divisionKOR.name": "KOR",
+  "items.match.divisionSEA.name": "SEA",
+  "items.match.divisionNAEU.name": "NA-EU"
 }

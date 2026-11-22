@@ -1649,5 +1649,16 @@
   "items.teamIJL.FAV.name": "FAV",
   "items.teamIJL.LVS.name": "LVS",
   "items.teamIJL.SST.name": "SST",
-  "characters.teamOther.name": "其它战队"
+  "characters.teamOther.name": "其它战队",
+  "characters.match.name": "赛事",
+  "items.match.AsianGames.name": "亚运会",
+  "items.match.IVC.name": "IVC",
+  "items.match.IVS.name": "IVS",
+  "items.match.IVT.name": "IVT",
+  "items.match.divisionCHN.name": "中国大陆赛区",
+  "items.match.divisionCHNHMT.name": "中国港澳台赛区",
+  "items.match.divisionJPN.name": "日本赛区",
+  "items.match.divisionKOR.name": "韩国赛区",
+  "items.match.divisionSEA.name": "东南亚赛区",
+  "items.match.divisionNAEU.name": "欧美赛区"
 }

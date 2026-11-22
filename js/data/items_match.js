@@ -180,10 +180,64 @@ export const TAC_MATCH_TYPES = {
     icon: 'https://patchwiki.biligame.com/images/dwrg/a/a5/5aoygpuusersg20m0i4jt256vr6lgi2.png',
   },
 
+  AsianGames: {
+    name: translate("items.match.AsianGames.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b0/mept70wk1itqdjv13f79bfs35c3jx2m.png/150px-2026%E4%BA%9A%E8%BF%90%E4%BC%9Alogo.png',
+  },
+  IVC: {
+    name: translate("items.match.IVC.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b4/mp30gu0d5sscu5l0j90e1cxgrsdtpor.png/113px-IVC2019_LOGO.png',
+  },
+  IVS: {
+    name: translate("items.match.IVS.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/a/aa/hgp0pk6ue0ivxnh91x6ymnmvtyo22ra.png',
+  },
+  IVT: {
+    name: translate("items.match.IVT.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/90/abtcp7zqv8roi0hbll0evzy31n51baj.png/150px-IVTlogo.png',
+  },
+  
+  divisionCHN: {
+    name: translate("items.match.divisionCHN.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b7/0yrvpu270zy7wrtwp9zc5jbmy5d9t90.png/128px-%E5%9C%B0%E5%8C%BA%E5%9B%BE%E6%A0%87_%E4%B8%AD%E5%9B%BD%E5%A4%A7%E9%99%86%EF%BC%88COA%E2%85%A8%EF%BC%89.png',
+  },
+  divisionCHNHMT: {
+    name: translate("items.match.divisionCHNHMT.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/3c/7r2953pp5krbe1b0z00oan746269q2x.png/128px-%E5%9C%B0%E5%8C%BA%E5%9B%BE%E6%A0%87_%E6%B8%AF%E6%BE%B3%E5%8F%B0%EF%BC%88COA%E2%85%A8%EF%BC%89.png',
+  },
+  divisionJPN: {
+    name: translate("items.match.divisionJPN.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/bc/avff5wzbl9b8y3csurs93hjbjg04y71.png/128px-%E5%9C%B0%E5%8C%BA%E5%9B%BE%E6%A0%87_%E6%97%A5%E6%9C%AC%EF%BC%88COA%E2%85%A8%EF%BC%89.png',
+  },
+  divisionKOR: {
+    name: translate("items.match.divisionKOR.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/c/cb/1p6ydsgce76oenrjxwkal8p75gi8b0y.png/128px-%E5%9C%B0%E5%8C%BA%E5%9B%BE%E6%A0%87_%E9%9F%A9%E5%9B%BD%EF%BC%88COA%E2%85%A8%EF%BC%89.png',
+  },
+  divisionSEA: {
+    name: translate("items.match.divisionSEA.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/d/d3/ida9pbfo9413ae99sl3voaqi4cex2tt.png/128px-%E5%9C%B0%E5%8C%BA%E5%9B%BE%E6%A0%87_%E4%B8%9C%E5%8D%97%E4%BA%9A%EF%BC%88COA%E2%85%A8%EF%BC%89.png',
+  },
+  divisionNAEU: {
+    name: translate("items.match.divisionNAEU.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/3b/gler8jprd6v3r7fmt2rfhoo7cb4s71k.png/128px-%E5%9C%B0%E5%8C%BA%E5%9B%BE%E6%A0%87_%E6%AC%A7%E7%BE%8E%EF%BC%88COA%E2%85%A8%EF%BC%89.png',
+  },
+
 };
 
 // 赛事键清单（与角色 items 顺序一致，保证选择器显示顺序不变）
 export const TAC_MATCH_KEYS = {
+  MATCH: [
+    'AsianGames',
+    'IVC',
+    'IVS',
+    'IVT',
+    'divisionCHN',
+    'divisionCHNHMT',
+    'divisionJPN',
+    'divisionKOR',
+    'divisionSEA',
+    'divisionNAEU'
+  ],
   COA: [
     'COAIX',
     'COAVIII',
