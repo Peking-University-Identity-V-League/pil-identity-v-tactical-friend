@@ -36,7 +36,7 @@ test('manage numbering counts by display name across roles and items', async ({ 
   await placeItem(page, 'disciple', 'cat', 0.4, 0.4);
   await placeItem(page, 'disciple', 'guide', 0.5, 0.5);
   const names = (await page.locator('.tac-manage-btn-name').allTextContents()).map((n) => n.trim());
-  expect(names).toEqual(['使徒', '指引 1', '爱猫', '指引 2']);
+  expect(names).toEqual(['"使徒"', '指引 1', '爱猫', '指引 2']);
 });
 
 test('same item can be placed multiple times (lasso x2)', async ({ page }) => {
