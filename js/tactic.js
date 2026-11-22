@@ -609,7 +609,7 @@ export function syncTacCipherCard() {
   if (!tacCipherCard) return;
   const map = MAPS_DATA[S.currentMapId];
   const count = map.cipherCombinations.length;
-  const text = translate("ui.sel.nav.cipher", { index: S.currentCipherIndex + 1, count: count });
+  const text = translate("ui.tac.display.cipher.layout", { index: S.currentCipherIndex + 1, count: count });
   tacDispCipherText.textContent = text;
   tacCipherCardText.textContent = text;
   tacCipherCardShowEl.checked = !!tacDisplay.ciphers;
@@ -759,7 +759,7 @@ export function renderTacSpawns() {
 
 export function syncTacSpawnText() {
   const n = (MAPS_DATA[S.currentMapId].spawnPoints || []).length;
-  tacSpawnText.textContent = translate("ui.tac.display.dungeon.layout", { index: S.tacSpawnIndex + 1, value: n });
+  tacSpawnText.textContent = translate("ui.tac.display.spawnPoint.layout", { index: S.tacSpawnIndex + 1, count: n });
 }
 
 export function switchTacSpawn(step) {
@@ -914,7 +914,7 @@ export function renderTacTreasure() {
 
 export function syncTacDungeonText() {
   const n = MAPS_DATA[S.currentMapId].dungeons.length;
-  tacDungeonText.textContent = translate("ui.tac.display.dungeon.layout", { index: S.tacDungeonIndex + 1, value: n });
+  tacDungeonText.textContent = translate("ui.tac.display.dungeon.layout", { index: S.tacDungeonIndex + 1, count: n });
 }
 
 export function switchTacDungeon(step) {
@@ -991,7 +991,7 @@ export function renderTacChairs() {
     const startLabel = document.createElement('span');
     startLabel.className = 'tac-carry-time tac-carry-time-start';
     startLabel.textContent = translate(tacCarryState.scenario === 'tide'
-      ? 'ui.tac.rocketChair.tideTurnern.point.map.startLabel' : 'ui.tac.rocketChair.balloon.point.map.startLabel');
+      ? 'ui.tac.rocketChair.tideTurner.point.map.startLabel' : 'ui.tac.rocketChair.balloon.point.map.startLabel');
     startLabel.style.left = dot.style.left;
     startLabel.style.top = dot.style.top;
     startLabel.style.color = '#ff5252';
@@ -1768,7 +1768,10 @@ function tacDedSetScenario(scenario) {
   tacDedScenarioTideEl.classList.toggle('active', tide);
   tacDedSettingsCarryEl.style.display = tide ? 'none' : '';
   tacDedSettingsTideEl.style.display = tide ? '' : 'none';
-  // 模式按钮 2 的文案随场景变化（选点看可挂椅 / 选点看可达椅）
+  // 模式按钮的文案随场景变化（选椅看范围 / 选点看可挂椅 / 选点看可达椅）
+  const mkChair = tide ? 'ui.tac.rocketChair.tideTurner.mode.rc' : 'ui.tac.rocketChair.balloon.mode.rc';
+  tacCarryModeChairEl.dataset.i18n = mkChair;
+  tacCarryModeChairEl.textContent = translate(mkChair);
   const mk = tide ? 'ui.tac.rocketChair.tideTurner.mode.point' : 'ui.tac.rocketChair.balloon.mode.point';
   tacCarryModePointEl.dataset.i18n = mk;
   tacCarryModePointEl.textContent = translate(mk);
@@ -2589,7 +2592,7 @@ function renderTacTideChairTimes(g, field, resolveBand) {
     if (band < 0) continue;
     const shown = resolveBand(band);
     addLabel(c.x, c.z,
-      translate(band === 4 ? 'ui.tac.rocketChair.tideTurnern.point.map.timeMargin' : 'ui.tac.rocketChair.tideTurnern.point.map.timeSeconds',
+      translate(band === 4 ? 'ui.tac.rocketChair.tideTurner.point.map.timeMargin' : 'ui.tac.rocketChair.tideTurner.point.map.timeSeconds',
         { seconds: t.toFixed(1) }),
       shown >= 0 ? TIDE_BAND_COLORS[shown] : '#a4afbb');
     rows.push({ x: c.x, z: c.z, t, band });
@@ -8427,7 +8430,7 @@ export async function tacExportImage() {
       for (const r of cache.chairRows) {
         const shown = resolve(r.band);
         const text = tide
-          ? translate(r.band === 4 ? 'ui.tac.rocketChair.tideTurnern.point.map.timeMargin' : 'ui.tac.rocketChair.tideTurnern.point.map.timeSeconds', { seconds: r.t.toFixed(1) })
+          ? translate(r.band === 4 ? 'ui.tac.rocketChair.tideTurner.point.map.timeMargin' : 'ui.tac.rocketChair.tideTurner.point.map.timeSeconds', { seconds: r.t.toFixed(1) })
           : translate(carryDropBudget(cache.profile, r.t).risk
             ? 'ui.tac.rocketChair.balloon.point.map.timeRisk' : 'ui.tac.rocketChair.balloon.point.map.timeSeconds', { seconds: r.t.toFixed(1) });
         drawLabel(r.x, r.z, text, shown >= 0 ? colors[shown] : '#a4afbb', 10);
@@ -8436,7 +8439,7 @@ export async function tacExportImage() {
     // 起点文字（牵气球起点 / 起点）与路径 A/B 端点文字
     if (sel?.kind === 'point') {
       drawLabel(sel.x, sel.z,
-        translate(tacCarryState.scenario === 'tide' ? 'ui.tac.rocketChair.tideTurnern.point.map.startLabel' : 'ui.tac.rocketChair.balloon.point.map.startLabel'),
+        translate(tacCarryState.scenario === 'tide' ? 'ui.tac.rocketChair.tideTurner.point.map.startLabel' : 'ui.tac.rocketChair.balloon.point.map.startLabel'),
         '#ff5252', 11);
     }
     if (tacPathState.points.a) {

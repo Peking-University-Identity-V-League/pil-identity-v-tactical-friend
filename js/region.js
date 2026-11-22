@@ -23,10 +23,8 @@ export let canvasHeight = 0
 
 
 export const ROLE_ICON_URLS = {
-  survivor: 'https://patchwiki.biligame.com/images/dwrg/4/45/'
-    + 'omv2vmop0j63s9aprhjjkt4psykuy5p.png',
-  hunter: 'https://patchwiki.biligame.com/images/dwrg/7/7a/'
-    + 'f3sec5gnnhzh1xprcbxeaxa1uuzhkmo.png',
+  survivor: 'https://patchwiki.biligame.com/images/dwrg/4/45/omv2vmop0j63s9aprhjjkt4psykuy5p.png',
+  hunter: 'https://patchwiki.biligame.com/images/dwrg/7/7a/f3sec5gnnhzh1xprcbxeaxa1uuzhkmo.png',
 }
 
 export const roleIcons = {
@@ -59,8 +57,7 @@ loadRoleIcon('survivor')
 loadRoleIcon('hunter')
 
 
-export const CIPHER_ICON_URL = 'https://patchwiki.biligame.com/images/dwrg/9/93/'
-  + 'eorb4lhtk2n7ej9iuuufhaadh3l2ec9.png'
+export const CIPHER_ICON_URL = 'https://patchwiki.biligame.com/images/dwrg/9/93/eorb4lhtk2n7ej9iuuufhaadh3l2ec9.png'
 
 export const cipherIcon = { img: null, loaded: false, retryTimer: null }
 
@@ -384,7 +381,7 @@ export function switchCipher(step) {
 
 export function updateCipherText() {
   const count = MAPS_DATA[S.currentMapId].cipherCombinations.length
-  cipherText.textContent = translate("ui.sel.nav.cipher", { index: S.currentCipherIndex + 1, count: count })
+  cipherText.textContent = translate("ui.tac.display.cipher.layout", { index: S.currentCipherIndex + 1, count: count })
 }
 
 export function updateCipherDots() {
