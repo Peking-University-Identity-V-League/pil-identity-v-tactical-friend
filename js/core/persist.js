@@ -102,6 +102,7 @@ export function flushSave() {
       map: S.currentMapId,
       boards: tacBoards,
       display: tacDisplay,
+      draw: tacDrawSettings,
       mstyle: tacMeasureStyle,
       regions: savedRegions,
       dedMarks: savedDedMarks,
@@ -190,6 +191,7 @@ export const tacMeasureStyle = {
   chain: { ...TAC_MEASURE_DEFAULT.chain },
 };
 
+// 显示设置：只放“地图上显示什么、显示多大”的开关与尺寸
 export const tacDisplay = {
   zones: false,
   spawns: false, spawnSize: TAC_DISPLAY_DEFAULT.spawnSize,
@@ -204,11 +206,33 @@ export const tacDisplay = {
   boxesBasement: false,
   phoneBooths: false, phoneBoothSize: TAC_DISPLAY_DEFAULT.phoneBoothSize,
 
-  snap: { escapeDoor: true, cipher: true, dungeon: true, rocketChair: true, locker: false, box: false, phoneBooth: false, endpoint: true },
-  delSegOnly: false,
   showCoords: false,
-  selGlow: true,
-  hideEndpoints: true, carryHideRing: false,
+  selGlow: false,
+  carryHideRing: false,
   exportCrop: true, exportRot: true,
 };
+
+// 绘制设置：测算卡片绘制设置区的行为开关（吸附、端点、折线删段），与显示设置分开持久化
+export const tacDrawSettings = {
+  snap: { escapeDoor: true, cipher: true, dungeon: true, rocketChair: true, locker: false, box: false, phoneBooth: false, endpoint: true },
+  delSegOnly: false,
+  hideEndpoints: true,
+};
+
+// 恢复持久化的设置：只读取当前结构定义的键，历史遗留键自动忽略
+if (tacPersisted && tacPersisted.display) {
+  const sd = tacPersisted.display;
+  for (const k of Object.keys(tacDisplay)) if (k in sd) tacDisplay[k] = sd[k];
+}
+if (tacPersisted && tacPersisted.draw) {
+  const dw = tacPersisted.draw;
+  for (const k of Object.keys(tacDrawSettings)) {
+    if (k === 'snap') tacDrawSettings.snap = { ...tacDrawSettings.snap, ...(dw.snap || {}) };
+    else if (k in dw) tacDrawSettings[k] = dw[k];
+  }
+}
+if (tacPersisted && tacPersisted.mstyle) {
+  if (tacPersisted.mstyle.single) Object.assign(tacMeasureStyle.single, tacPersisted.mstyle.single);
+  if (tacPersisted.mstyle.chain) Object.assign(tacMeasureStyle.chain, tacPersisted.mstyle.chain);
+}
 
