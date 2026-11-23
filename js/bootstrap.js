@@ -95,7 +95,7 @@ async function startApplication() {
 
   document.addEventListener('click', (event) => {
     if (langMenu.hidden) return;
-    if (event.target.closest('.footer-lang')) return;
+    if (event.target.closest('.footer-lang') || event.target.closest('.header-lang')) return;
     closeMenu();
   });
 }

@@ -305,6 +305,7 @@ export const tacShapesEl = $('tacShapes');
 export const tacMapWrap = $('tacMapWrap');
 
 export const tacTimelineEl = $('tacTimeline');
+export const tacTimelineFold = $('tacTimelineFold');
 
 export const tacTimelinePlay = $('tacTimelinePlay');
 

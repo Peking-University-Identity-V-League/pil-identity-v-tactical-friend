@@ -54,6 +54,8 @@ export function updateTabUi() {
   });
   const tabsVisible = tabBar.style.display !== 'none';
   document.body.classList.toggle('has-tabs', tabsVisible);
+  document.body.classList.toggle('tab-tactic', tabsVisible && S.currentTab === 'tactic');
+  if (S.currentTab !== 'tactic') document.body.classList.remove('tac-timeline-open');
   const [zh, en] = tabsVisible ? TAB_TITLES[S.currentTab] : HOME_TITLE;
   pageTitle.textContent = zh;
   pageSubtitle.textContent = en;
