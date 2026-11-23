@@ -3025,6 +3025,10 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 }
 
 .tac-detail-body { overflow-x: auto; }
+/* 绘制设置区内的样式/其它设置是普通控件行，不需要横向滚动，避免内容被裁出滚动条 */
+#tacDrawSettingsBody .tac-detail-body,
+#tacShapeStyleBody, #tacTextStyleBody { overflow-x: visible; }
+.tac-detail-body .tac-style-flex { line-height: 1.8; }
 @media (max-width: 768px) {
   .tac-detail-tbl { min-width: 470px; }
   .tac-result table { min-width: 460px; }

@@ -207,6 +207,6 @@ export const tacDisplay = {
   delSegOnly: false, 
   showCoords: false, 
   selGlow: true,
-  hideEndpoints: false, carryHideRing: false, 
+  hideEndpoints: true, carryHideRing: false, 
   exportCrop: true, exportRot: true, 
 };

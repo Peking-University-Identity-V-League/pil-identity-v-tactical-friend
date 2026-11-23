@@ -171,8 +171,12 @@
           <button class="tac-shape" data-shape="rect" data-i18n="ui.tac.pattern.square"></button>
         </div>
 
-        <div class="tac-sec-label" data-i18n="ui.common.style"></div>
-        <div class="tac-style-flex">
+        <div class="tac-detail">
+          <div class="tac-detail-head">
+            <button type="button" class="tac-detail-toggle" id="tacShapeStyleToggle"></button>
+          </div>
+          <div class="tac-detail-body" id="tacShapeStyleBody">
+            <div class="tac-style-flex">
           <span data-i18n="common.color"></span>
           <div class="tac-colors" id="tacColors">
             <button class="tac-color active" data-color="#ef4444" style="--c:#ef4444" title="" data-i18n-attributes="{&quot;title&quot;:&quot;colors.red&quot;}"></button>
@@ -185,6 +189,8 @@
             <button class="tac-color" data-color="#0f172a" style="--c:#0f172a" title="" data-i18n-attributes="{&quot;title&quot;:&quot;colors.black&quot;}"></button>
           </div>
           <span class="tac-width-group"><span data-i18n="ui.common.strokeWidth"></span><input type="range" id="tacWidth" min="2" max="8" step="1" value="4" /><span class="tac-width-val" id="tacWidthVal">4</span></span>
+            </div>
+          </div>
         </div>
         </div>
       </details>
@@ -206,8 +212,12 @@
         </div>
         <div class="tac-text-hint" id="tacTextHint" data-i18n="ui.tac.text.note"></div>
 
-        <div class="tac-sec-label" data-i18n="ui.common.style"></div>
-        <div class="tac-style-flex">
+        <div class="tac-detail">
+          <div class="tac-detail-head">
+            <button type="button" class="tac-detail-toggle" id="tacTextStyleToggle"></button>
+          </div>
+          <div class="tac-detail-body" id="tacTextStyleBody">
+            <div class="tac-style-flex">
           <span data-i18n="common.color"></span>
           <div class="tac-colors" id="tacTextColors">
             <button class="tac-color" data-color="#ef4444" style="--c:#ef4444" title="" data-i18n-attributes="{&quot;title&quot;:&quot;colors.red&quot;}"></button>
@@ -222,6 +232,8 @@
           <span data-i18n="ui.common.fontSize"></span>
           <input type="range" id="tacTextSize" min="10" max="36" step="1" value="12" />
           <span class="tac-width-val" id="tacTextSizeVal">12</span>
+            </div>
+          </div>
         </div>
 
         <div class="tac-sec-label"
@@ -243,8 +255,6 @@
         <div class="side-toggle tac-mmodes" id="tacMeasureModes">
           <button class="side-btn active" data-mmode="single" data-i18n="ui.tac.measure.line.straightline.button"></button>
           <button class="side-btn" data-mmode="chain" data-i18n="ui.tac.measure.line.polyline.button"></button>
-          <button class="tac-mstyle-toggle open" id="tacMStyleToggle" type="button"
-            title="" data-i18n="ui.common.style.title.show" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.style.message&quot;}"></button>
         </div>
 
         <div class="tac-sec-label tac-speed-title">
@@ -295,7 +305,7 @@
                   <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.draw.setting.autoSnap.button.message&quot;}"><input type="checkbox" id="tacSnapPoint" checked><span data-i18n="common.endpoint"></span></label>
                 </div>
                 <div class="tac-display-snap no-line">
-                  <label class="tac-display-toggle"><input type="checkbox" id="tacHideEndpoints"><span data-i18n="ui.tac.measure.setting.draw.hide.button"></span></label>
+                  <label class="tac-display-toggle"><input type="checkbox" id="tacHideEndpoints" checked><span data-i18n="ui.tac.measure.setting.draw.hide.button"></span></label>
                   <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.draw.setting.deleteSingle.button.message&quot;}"><input type="checkbox" id="tacDelSegOnly"><span data-i18n="ui.tac.draw.setting.deleteSingle.button"></span></label>
                 </div>
               </div>

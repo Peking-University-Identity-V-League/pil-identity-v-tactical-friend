@@ -278,15 +278,21 @@ export const tacCipherList = $('tacCipherList');
 
 export const tacManageList = $('tacManageList');
 
-export const tacMStyleToggle = $('tacMStyleToggle');
-
-export const tacMStyleBody = $('tacMStyleBody');
-
 export const tacDrawSettingsToggle = $('tacDrawSettingsToggle');
 
 export const tacDrawSettingsBody = $('tacDrawSettingsBody');
 
+export const tacMStyleBody = $('tacMStyleBody');
+
 export const tacDrawStyleToggle = $('tacDrawStyleToggle');
+
+export const tacShapeStyleToggle = $('tacShapeStyleToggle');
+
+export const tacShapeStyleBody = $('tacShapeStyleBody');
+
+export const tacTextStyleToggle = $('tacTextStyleToggle');
+
+export const tacTextStyleBody = $('tacTextStyleBody');
 
 export const tacDrawOtherToggle = $('tacDrawOtherToggle');
 
