@@ -2364,7 +2364,7 @@ function buildTacCarryCard() {
   if (!tacCarryCard) return;
   // 前锋选项的挣扎加成值跟随角色数据（survivor.js traits.struggle），不写死在文案里
   document.getElementById('tacCarrySurvivorForward').textContent =
-    translate("ui.tac.rocketChair.balloon.setting.balloon.survivor.base.choose.forward",
+    translate("ui.tac.rocketChair.balloon.setting.balloon.survivor.base.choose",
       { name: TAC_ROLES.forward.name, value: Math.round(CARRY_SURVIVORS.forward.struggleBonus * 100) });
   // 与显示设置共享的椅子行
   tacCarryChairSizeDefEl._default = TAC_DISPLAY_DEFAULT.rocketChairSize;

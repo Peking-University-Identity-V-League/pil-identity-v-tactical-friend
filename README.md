@@ -979,7 +979,7 @@ MAPS_DATA
 - `name`：角色显示名；
 - `camp`：`survivor`、`hunter` 或 `other`；
 - `speeds`：求生者角色专属基础移速列表；`group: 'role'` 归入角色移速组（可继续添加加成），`group: 'fixed'` 归入固定移速组（不可添加加成）；`tactic-data.js` 据此派生 `TAC_MOVEMENT_SURVIVOR.roles` / `fixed`；
-- `speed`：固定数值或按形态区分的速度对象（监管者形态速度；神童由 `speeds` 派生，不重复填数值）；
+- `speed`：固定数值或按形态区分的速度对象（监管者形态速度；求生者特殊移速只写 `speeds`，不要重复填写）；
 - `traits`：角色特质，键为特质键，值含 `name` 与加成字段，如 `speedBuff`（移动速度）、`struggleBuff`（挣扎进度，如前锋）；`tactic-data.js` 和 `carry-model.js` 按加成类型派生消费，不按角色名写死判断；
 - `fearRadius`：恐惧半径修正，`{ mult }` 或按形态的 `{ forms }`；
 - `items`：该角色可放置的道具键数组；
