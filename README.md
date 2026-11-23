@@ -187,6 +187,7 @@ app/
     │   ├── treasure.js        ← 页面与导出共用的书页范围计算
     │   ├── carry-model.js     ← 狂欢之椅推算（牵起/挣扎/放下按 buff 类型驱动）
     │   ├── tide-model.js      ← 化险为夷（下椅）相关计算
+    │   ├── anim.js            ← 造物动画纯计算（段时长、时刻插值，不依赖 DOM）
     │   ├── nav-grid.js        ← 导航栅格加载与寻路
     │   ├── map-handoff.js     ← 二维与三维地图测距端点同步
     │   ├── tactic-loader.js   ← 战术板数据加载
@@ -668,6 +669,20 @@ deduce(map, marks)
 | `tacMapWrap` 的指针事件 | 放置、选择、拖动、绘制和删除 |
 | `window` 的 `keydown` 事件 | Esc、Delete、Backspace、Ctrl/Cmd+Z、WASD、方向键 |
 
+### G. 造物动画
+
+| 函数或状态 | 用途 |
+|---|---|
+| `tacAnimEnsure()` | 取出或初始化造物的 `anim` 字段 |
+| `tacAnimConvertMode()` | 时刻 / 移速两种模式互转，路径点保留、派生值互算 |
+| `buildTacAnimBox()` | 管理卡片里的动画编辑区（模式、路径点行、播放控制） |
+| `renderTacAnimDots()` | 动画工具下绘制编号路径点 |
+| `tacAnimPlayStart()` / `tacAnimStop()` / `tacAnimReset()` | 播放（rAF 平滑移动）、停止、还原位置 |
+| `tacDragAnimDot` | 正在拖动的路径点 |
+| `tacTimeline` / `renderTacTimeline()` | 全局时间轴：统一时钟下所有动画造物协同播放、拖动寻址 |
+
+动画数据存放在角色 / 道具的 `anim` 字段，随战术板自动存档。播放只改 DOM 位置、不写回造物坐标；切工具、切图、拖动、删除、撤销都会停止播放并还原。段时长、时刻插值等纯计算在 `js/core/anim.js`，可直接单元测试；移速模式的每段可挂加成 buff（特质 / 天赋 / 其它，按角色、姿态、形态过滤），段时长用与测算卡片同款的 `simulateMovement()` 计算。
+
 ---
 
 ## 9. core：所有页面共用的基础能力
@@ -757,6 +772,7 @@ export const dedSteps = $('dedSteps');
 
 - `js/core/carry-model.js`：狂欢之椅推算，按 `pickupBuff` / `struggleBuff` / `dropBuff` / `speedBuff` 类型驱动计算，不按天赋名写死判断；
 - `js/core/tide-model.js`：化险为夷（下椅）相关计算；
+- `js/core/anim.js`：造物动画的纯计算核心（段时长、平均速度、按时刻插值位置），不依赖 DOM；
 - `js/core/nav-grid.js`：导航栅格数据的加载与寻路计算；
 - `js/core/map-handoff.js`：二维与三维地图之间的测距端点同步；
 - `js/core/tactic-loader.js`：战术板存档的加载与恢复。
@@ -1116,9 +1132,9 @@ identityV.locale
 
 ```js
 {
-  tokens: {},    // 角色标记
+  tokens: [],   // 角色标记（可有 anim 动画字段）
   arrows: [],   // 箭头和图形
-  items: [],    // 道具
+  items: [],    // 道具（可有 anim 动画字段）
   measures: [], // 测距线及速度配置
   texts: []     // 地图文字
 }

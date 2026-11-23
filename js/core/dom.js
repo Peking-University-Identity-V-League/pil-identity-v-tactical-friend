@@ -304,6 +304,16 @@ export const tacShapesEl = $('tacShapes');
 
 export const tacMapWrap = $('tacMapWrap');
 
+export const tacTimelineEl = $('tacTimeline');
+
+export const tacTimelinePlay = $('tacTimelinePlay');
+
+export const tacTimelineScrub = $('tacTimelineScrub');
+
+export const tacTimelineTime = $('tacTimelineTime');
+
+export const tacTimelineTracks = $('tacTimelineTracks');
+
 export const tacRot = $('tacRot');
 
 export const tacMapImage = $('tacMapImage');

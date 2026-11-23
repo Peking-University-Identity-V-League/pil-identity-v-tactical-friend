@@ -89,8 +89,13 @@
             <div class="tac-coords-tip" id="tacCoordsTip" aria-hidden="true"></div>
           </div>
         </div>
-        <div class="action-bar">
-          <button type="button" class="tac-help-btn" id="tacHelpBtn">?</button>
+        <div class="tac-timeline" id="tacTimeline" style="display:none">
+          <div class="tac-timeline-ctl">
+            <button type="button" class="tac-anim-btn tac-timeline-play" id="tacTimelinePlay">▶</button>
+            <input type="range" class="tac-timeline-scrub" id="tacTimelineScrub" min="0" max="0" step="0.1" value="0">
+            <span class="tac-timeline-time" id="tacTimelineTime">0.0s / 0.0s</span>
+          </div>
+          <div class="tac-timeline-tracks" id="tacTimelineTracks"></div>
         </div>
       </div>
     </div>
@@ -112,6 +117,7 @@
           <button class="tac-tool" data-tool="draw" data-i18n="ui.tac.tool.draw"></button>
           <button class="tac-tool" data-tool="measure" data-i18n="ui.tac.tool.measure"></button>
           <button class="tac-tool" data-tool="deduce" data-i18n="ui.tac.tool.calculation"></button>
+          <button class="tac-tool" data-tool="anim" data-i18n="ui.tac.tool.anim"></button>
           <button class="tac-tool" data-tool="display" data-i18n="ui.tac.tool.setting"></button>
           <button class="tac-tool" data-tool="delete" data-i18n="ui.tac.tool.delete"></button>
           <button class="tac-tool" id="tacUndoBtn" disabled data-i18n="ui.tac.tool.undo"></button>
@@ -658,9 +664,10 @@
 
 
       <div class="ded-card" id="tacDisplayCard" style="display:none">
-        <h3 class="ded-sec-title">
+        <h3 class="ded-sec-title tac-display-title">
           <span class="ded-sec-zh" data-i18n="ui.tac.tool.setting"></span>
           <span class="ded-sec-en" data-i18n-en="ui.tac.tool.setting"></span>
+          <button type="button" class="tac-help-btn" id="tacHelpBtn">?</button>
         </h3>
         <div class="tac-display-list" style="margin-top:12px">
 
