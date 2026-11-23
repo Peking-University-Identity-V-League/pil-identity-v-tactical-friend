@@ -1588,7 +1588,7 @@
   "ui.tac.rocketChair.balloon.setting.balloon.hunter.buff.trait": "+ 速度天赋加成",
   "ui.tac.rocketChair.balloon.setting.balloon.hunter.title": "监管者设置",
   "ui.tac.rocketChair.balloon.setting.balloon.survivor.base.choose.custom": "默认求生者",
-  "ui.tac.rocketChair.balloon.setting.balloon.survivor.base.choose.forward": "前锋（挣扎速度加快10%）",
+  "ui.tac.rocketChair.balloon.setting.balloon.survivor.base.choose.forward": "{name}（挣扎速度加快{value}%）",
   "ui.tac.rocketChair.balloon.setting.balloon.survivor.base.struggle.initial": "初始挣扎进度",
   "ui.tac.rocketChair.balloon.setting.balloon.survivor.base.title": "求生者",
   "ui.tac.rocketChair.balloon.setting.balloon.survivor.buff.talent": "+ 挣扎天赋加成",

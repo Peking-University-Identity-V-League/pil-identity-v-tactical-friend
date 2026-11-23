@@ -1589,7 +1589,7 @@
   "ui.tac.rocketChair.balloon.setting.balloon.hunter.buff.trait": "+ Tài năng tốc độ",
   "ui.tac.rocketChair.balloon.setting.balloon.hunter.title": "Cài đặt Thợ Săn",
   "ui.tac.rocketChair.balloon.setting.balloon.survivor.base.choose.custom": "Kẻ Sống Sót mặc định",
-  "ui.tac.rocketChair.balloon.setting.balloon.survivor.base.choose.forward": "Tiền Đạo (tốc độ vùng vẫy +10%)",
+  "ui.tac.rocketChair.balloon.setting.balloon.survivor.base.choose.forward": "{name} (tốc độ vùng vẫy +{value}%)",
   "ui.tac.rocketChair.balloon.setting.balloon.survivor.base.struggle.initial": "Vùng vẫy ban đầu",
   "ui.tac.rocketChair.balloon.setting.balloon.survivor.base.title": "Kẻ Sống Sót",
   "ui.tac.rocketChair.balloon.setting.balloon.survivor.buff.talent": "+ Tài năng vùng vẫy",

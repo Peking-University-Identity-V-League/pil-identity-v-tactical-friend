@@ -3,7 +3,7 @@ import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBase
 import { restoredMeasureIds, saveRegionSel, savedRot, tacBoard, tacDisplay, tacMeasureStyle, tacPersisted, tacSave, flushSave } from './core/persist.js';
 import { measureBaseAt, simulateMovement } from './core/measurements.js';
 import { measurementEndpoints, resolveMap3dTarget, isExternalMap3dEntry } from './core/map-handoff.js';
-import { CARRY_BAND_COLORS, CARRY_BAND_OPACITY, CARRY_DEFAULTS, CARRY_TALENTS, carryBandAt, carryDropBudget, createCarryProfile } from './core/carry-model.js';
+import { CARRY_BAND_COLORS, CARRY_BAND_OPACITY, CARRY_DEFAULTS, CARRY_SURVIVORS, CARRY_TALENTS, carryBandAt, carryDropBudget, createCarryProfile } from './core/carry-model.js';
 import { computeCarryField, computePath, computeTideField, loadNavGrid, navGridAvailable, snapToWalkable, smoothPathOnGrid } from './core/nav-grid.js';
 import { TIDE_BAND_COLORS, TIDE_BAND_OPACITY, TIDE_SECONDS, createTideProfile, tideBandAt } from './core/tide-model.js';
 import { getTreasureRings } from './core/treasure.js';
@@ -2362,6 +2362,10 @@ function renderTacCarryBuffs() {
 
 function buildTacCarryCard() {
   if (!tacCarryCard) return;
+  // 前锋选项的挣扎加成值跟随角色数据（survivor.js traits.struggle），不写死在文案里
+  document.getElementById('tacCarrySurvivorForward').textContent =
+    translate("ui.tac.rocketChair.balloon.setting.balloon.survivor.base.choose.forward",
+      { name: TAC_ROLES.forward.name, value: Math.round(CARRY_SURVIVORS.forward.struggleBonus * 100) });
   // 与显示设置共享的椅子行
   tacCarryChairSizeDefEl._default = TAC_DISPLAY_DEFAULT.rocketChairSize;
   bindTacDisplayRow(tacCarryShowChairsEl, tacCarryChairSizeEl, tacCarryChairSizeDefEl,

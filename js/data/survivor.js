@@ -1,7 +1,16 @@
 import { translate } from '../core/i18n.js';
 
 
-// 求生者角色数据：名称、移速、范围、道具、头像
+// 神童双形态移速：speeds 供 tactic-data.js 派生基础移速选项（group=role 角色移速 / fixed 固定移速），
+// speed 供 tacSpeedForms 形态名展示；数值只在此处定义一次
+const PRODIGY_SPEEDS = [
+  { form: 0, group: 'role', formName: translate("characters.prodigy.speed.exhibition"), name: translate("movement.survivor.prodigy0"), speed: 3.92 },
+  { form: 1, group: 'fixed', formName: translate("characters.prodigy.speed.pushBall"), name: translate("movement.survivor.prodigy1"), speed: 3.8 },
+];
+
+
+// 求生者角色数据：名称、特殊移速、特质、范围、道具、头像
+// speeds: 角色专属基础移速（form 形态序号；group 决定归入“角色”还是“固定”移速组）
 export const TAC_SURVIVOR_ROLES = {
   luckyGuy: {
     name: translate("characters.luckyGuy.name"),
@@ -226,6 +235,9 @@ export const TAC_SURVIVOR_ROLES = {
   wildling: {
     name: translate("characters.wildling.name"),
     camp: 'survivor',
+    speeds: [
+      { form: 0, group: 'role', name: translate("movement.survivor.wildling0"), speed: 3.65 },
+    ],
     traits: {
       ridingFullRage: { name: translate("movement.buff.trait.wildling.ridingFullRage.name"),
                         speedBuff: { aim: 'survivor', mult: 1.33 } },
@@ -356,6 +368,9 @@ export const TAC_SURVIVOR_ROLES = {
   toyMerchant: {
     name: translate("characters.toyMerchant.name"),
     camp: 'survivor',
+    speeds: [
+      { form: 0, group: 'fixed', name: translate("movement.survivor.toyMerchant0"), speed: 5.74 },
+    ],
     traits: {
       landing: { name: translate("movement.buff.trait.toyMerchant.landing.name"),
                  speedBuff: { aim: 'survivor', mult: 1.3, duration: 2 } },
@@ -607,6 +622,9 @@ export const TAC_SURVIVOR_ROLES = {
   lanternist: {
     name: translate("characters.lanternist.name"),
     camp: 'survivor',
+    speeds: [
+      { form: 0, group: 'fixed', name: translate("movement.survivor.lanternist0"), speed: 4.18 },
+    ],
     items: ['projectionLanternLivingImage', 'projectionLanternStaticProjection'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/00/ovc4lksvcclqsfd8548sof4m0207b9h.png/90px-%E5%B9%BB%E7%81%AF%E5%B8%88%E5%A4%B4%E5%83%8F.png',
   },
@@ -639,7 +657,8 @@ export const TAC_SURVIVOR_ROLES = {
     name: translate("characters.prodigy.name"),
     camp: 'survivor',
     items: ['hamster', 'hamsterCancel', 'dirtball', 'pushingState', 'performanceState'],
-    speed: { [translate("characters.prodigy.speed.exhibition")]: 3.92, [translate("characters.prodigy.speed.pushBall")]: 3.8 },
+    speeds: PRODIGY_SPEEDS,
+    speed: Object.fromEntries(PRODIGY_SPEEDS.map((s) => [s.formName, s.speed])),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/0/08/ejzgnfep2tdh21cx73mskh1svrj4uur.png/90px-%E2%80%9C%E7%A5%9E%E7%AB%A5%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
 };

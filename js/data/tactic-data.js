@@ -30,6 +30,15 @@ const deriveTraitSpeedBuffs = (roles) => Object.entries(roles).flatMap(([roleKey
     }));
 
 
+// 角色特殊移速：数据源统一在 survivor.js 的 speeds 字段（group=role 角色移速 / fixed 固定移速），
+// 此处派生成 'roleKey:form' 键控的既有形状
+const deriveSurvivorSpeedGroup = (group) => Object.fromEntries(
+  Object.entries(TAC_SURVIVOR_ROLES).flatMap(([roleKey, r]) =>
+    (r.speeds || [])
+      .filter((s) => s.group === group)
+      .map((s) => [`${roleKey}:${s.form || 0}`, { name: s.name, speed: s.speed, role: roleKey, form: s.form || 0 }])));
+
+
 export const TAC_SVG_NS = 'http://www.w3.org/2000/svg';
 
 
@@ -42,14 +51,9 @@ export const TAC_MOVEMENT_SURVIVOR = {
   },
   roles: {
     'survivor': { name: translate("characters.camps.survivor"), speed: 3.8, role: null },
-    'wildling:0': { name: translate("movement.survivor.wildling0"), speed: 3.65, role: 'wildling', form: 0 },
-    'prodigy:0': { name: translate("movement.survivor.prodigy0"), speed: 3.92, role: 'prodigy', form: 0 },
+    ...deriveSurvivorSpeedGroup('role'),
   },
-  fixed: {
-    'toyMerchant:0': { name: translate("movement.survivor.toyMerchant0"), speed: 5.74, role: 'toyMerchant', form: 0 },
-    'lanternist:0': { name: translate("movement.survivor.lanternist0"), speed: 4.18, role: 'lanternist', form: 0 },
-    'prodigy:1': { name: translate("movement.survivor.prodigy1"), speed: 3.8, role: 'prodigy', form: 1 },
-  },
+  fixed: deriveSurvivorSpeedGroup('fixed'),
   stateNames: {
     run: translate("movement.survivor.run"), walk: translate("movement.survivor.walk"), crouch: translate("movement.survivor.crouch"), crawl: translate("movement.survivor.crawl"),
     role: translate("common.roles"), fixed: translate("movement.survivor.fixed"), custom: translate("common.custom"), hunter: translate("characters.camps.hunter")

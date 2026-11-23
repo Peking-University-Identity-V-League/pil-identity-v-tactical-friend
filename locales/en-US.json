@@ -1588,7 +1588,7 @@
   "ui.tac.rocketChair.balloon.setting.balloon.hunter.buff.trait": "+ Speed talent",
   "ui.tac.rocketChair.balloon.setting.balloon.hunter.title": "Hunter Settings",
   "ui.tac.rocketChair.balloon.setting.balloon.survivor.base.choose.custom": "Default Survivor",
-  "ui.tac.rocketChair.balloon.setting.balloon.survivor.base.choose.forward": "Forward (struggle speed +10%)",
+  "ui.tac.rocketChair.balloon.setting.balloon.survivor.base.choose.forward": "{name} (struggle speed +{value}%)",
   "ui.tac.rocketChair.balloon.setting.balloon.survivor.base.struggle.initial": "Initial struggle progress",
   "ui.tac.rocketChair.balloon.setting.balloon.survivor.base.title": "Survivor",
   "ui.tac.rocketChair.balloon.setting.balloon.survivor.buff.talent": "+ Struggle talent",
