@@ -176,6 +176,64 @@ test('anim: speed buff shortens segment time and can be removed', async ({ page 
   expect(after).toBeCloseTo(before, 2);
 });
 
+test('anim: global timeline plays all creations together and scrubs', async ({ page }) => {
+  // 幸运儿：(0.3,0.3) → (0.6,0.3) → (0.6,0.6)，时刻 [0, 0.2, 0.4]
+  await setupAnim(page);
+  await setTime(page, 1, '0.2');
+  await setTime(page, 2, '0.4');
+  // 玩具商：(0.8,0.8) → (0.5,0.8)，时刻 [0, 0.8]
+  await tool(page, 'roles');
+  await pickRole(page, 'toyMerchant');
+  await clickPoint(page, 0.8, 0.8);
+  await tool(page, 'anim');
+  await clickPoint(page, 0.8, 0.8);
+  await clickPoint(page, 0.5, 0.8);
+  await setTime(page, 1, '0.8');
+
+  // 时间轴在动画工具下可见，两条轨道
+  await expect(page.locator('#tacTimeline')).toBeVisible();
+  await expect(page.locator('.tac-timeline-track')).toHaveCount(2);
+  await expect(page.locator('#tacTimelineTime')).toHaveText('0.0s / 0.8s');
+
+  const lucky = page.locator('.tac-token[data-tid="1"]');
+  const merchant = page.locator('.tac-token[data-tid="2"]');
+  // 全局播放：0.4s 后幸运儿到末点，0.8s 后玩具商到末点
+  await page.locator('#tacTimelinePlay').click();
+  await expect.poll(async () => lucky.evaluate((el) => el.style.left)).toBe('60%');
+  await expect.poll(async () => lucky.evaluate((el) => el.style.top)).toBe('60%');
+  await expect.poll(async () => merchant.evaluate((el) => el.style.left)).toBe('50%');
+  await expect.poll(async () => merchant.evaluate((el) => el.style.top)).toBe('80%');
+  // 播完按钮回到 ▶，时刻停在总时长
+  await expect(page.locator('#tacTimelinePlay')).toHaveText('▶');
+  await expect(page.locator('#tacTimelineTime')).toHaveText('0.8s / 0.8s');
+
+  // 拖动进度条回 0：两者瞬间回到各自起点
+  await page.locator('#tacTimelineScrub').evaluate((el) => {
+    el.value = '0';
+    el.dispatchEvent(new Event('input'));
+  });
+  await expect.poll(async () => lucky.evaluate((el) => el.style.left)).toBe('30%');
+  await expect.poll(async () => lucky.evaluate((el) => el.style.top)).toBe('30%');
+  await expect.poll(async () => merchant.evaluate((el) => el.style.left)).toBe('80%');
+
+  // 坐标不写回存档
+  const st = await read(page);
+  expect(st.board.tokens[0].x).toBeCloseTo(0.3, 3);
+  expect(st.board.tokens[1].x).toBeCloseTo(0.8, 3);
+});
+
+test('anim: repeated mode toggles keep the total time stable', async ({ page }) => {
+  await setupAnim(page);
+  const total = page.locator('.tac-anim-ctl .tac-anim-derive');
+  const readTotal = async () => parseFloat((await total.textContent()).match(/[\d.]+/)[0]);
+  const t0 = await readTotal();
+  for (let i = 0; i < 4; i++) {
+    await page.locator('.tac-anim-mode .tac-anim-btn', { hasText: '移速' }).click();
+    await page.locator('.tac-anim-mode .tac-anim-btn', { hasText: '时刻' }).click();
+  }
+  expect(await readTotal()).toBe(t0);
+});
+
 test('anim: speed presets follow the animated role', async ({ page }) => {
   // 普通求生者：四姿态 + 自定义，无角色专属移速
   await setupAnim(page);

@@ -2827,6 +2827,60 @@ details.ded-card[open] > summary .arrow { transform: rotate(90deg); }
   color: var(--text, #e2e8f0);
   font-size: 12px;
 }
+
+/* 全局时间轴 */
+.tac-timeline {
+  margin-top: 6px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+.tac-timeline-ctl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tac-timeline-play { min-width: 34px; }
+.tac-timeline-scrub { flex: 1; min-width: 0; accent-color: #f472b6; }
+.tac-timeline-time {
+  font-size: 12px;
+  color: var(--text-secondary, #94a3b8);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.tac-timeline-tracks { margin-top: 4px; }
+.tac-timeline-track {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 1px 0;
+  cursor: pointer;
+}
+.tac-timeline-track:hover .tac-timeline-track-name { color: #f9a8d4; }
+.tac-timeline-track-name {
+  width: 72px;
+  flex: none;
+  font-size: 11px;
+  color: var(--text-secondary, #94a3b8);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tac-timeline-lane {
+  position: relative;
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(148, 163, 184, 0.15);
+}
+.tac-timeline-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 4px;
+  background: rgba(244, 114, 182, 0.75);
+}
 .tac-measure-dot.hidden-endpoint { opacity: 0; }
 .tac-mode-measure .tac-measure-dot:active { cursor: grabbing; }
 .tac-measure-label {
@@ -4229,6 +4283,8 @@ div.tac-fixed-spawn .cam-dir.up {
 .tac-act-btn:disabled { opacity: 0.35; cursor: default; }
 
 
+.tac-display-title { display: flex; align-items: center; gap: 6px; }
+.tac-display-title .tac-help-btn { margin: 0 0 0 auto; }
 .tac-help-btn {
   margin: 0 auto 0 0;
   padding: 7px 18px;

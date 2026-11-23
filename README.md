@@ -679,6 +679,7 @@ deduce(map, marks)
 | `renderTacAnimDots()` | 动画工具下绘制编号路径点 |
 | `tacAnimPlayStart()` / `tacAnimStop()` / `tacAnimReset()` | 播放（rAF 平滑移动）、停止、还原位置 |
 | `tacDragAnimDot` | 正在拖动的路径点 |
+| `tacTimeline` / `renderTacTimeline()` | 全局时间轴：统一时钟下所有动画造物协同播放、拖动寻址 |
 
 动画数据存放在角色 / 道具的 `anim` 字段，随战术板自动存档。播放只改 DOM 位置、不写回造物坐标；切工具、切图、拖动、删除、撤销都会停止播放并还原。段时长、时刻插值等纯计算在 `js/core/anim.js`，可直接单元测试；移速模式的每段可挂加成 buff（特质 / 天赋 / 其它，按角色、姿态、形态过滤），段时长用与测算卡片同款的 `simulateMovement()` 计算。
 

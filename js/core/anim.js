@@ -94,3 +94,9 @@ export function animAvgSpeed(anim, geom, segIdx, segDurFn) {
   const s = animSegments(anim, geom, segDurFn)[segIdx];
   return s ? s.avgSpeed : null;
 }
+
+
+// 全局时间轴批量定位：entries = [{ anim, segDurFn? }...]，返回等长的 { x, y, done } | null
+export function animAllPositions(entries, geom, t) {
+  return entries.map((e) => (e && e.anim ? animPositionAt(e.anim, geom, t, e.segDurFn) : null));
+}

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { animAvgSpeed, animDuration, animPositionAt, animSegmentLenM, animSegments }
+import { animAllPositions, animAvgSpeed, animDuration, animPositionAt, animSegmentLenM, animSegments }
   from '../../js/core/anim.js';
 
 // 1000×1000 底图、横向 100m：0.1 相对距离 = 10m
@@ -100,4 +100,18 @@ test('speed mode: segDurFn overrides segment duration (buff simulation hook)', (
   // 位置插值也走覆盖后的时长
   const pos = animPositionAt(anim, GEOM, 11, fn);
   assert.ok(Math.abs(pos.x - 0.15) < 1e-9 && !pos.done);
+});
+
+test('animAllPositions: batch-locates entries for the global timeline', () => {
+  const a = { mode: 'time', points: [{ x: 0, y: 0 }, { x: 0.2, y: 0 }], times: [0, 4] };
+  const b = { mode: 'time', points: [{ x: 0.5, y: 0.5 }, { x: 0.5, y: 0.6 }], times: [2, 6] };
+  const at0 = animAllPositions([{ anim: a }, { anim: b }, null], GEOM, 0);
+  assert.deepEqual(at0[0], { x: 0, y: 0, done: false });
+  assert.deepEqual(at0[1], { x: 0.5, y: 0.5, done: false }); // 未到起点时刻，停在首点
+  assert.equal(at0[2], null);
+  const at3 = animAllPositions([{ anim: a }, { anim: b }], GEOM, 3);
+  assert.ok(Math.abs(at3[0].x - 0.15) < 1e-9);
+  assert.ok(Math.abs(at3[1].y - 0.525) < 1e-9);
+  const at9 = animAllPositions([{ anim: a }, { anim: b }], GEOM, 9);
+  assert.ok(at9[0].done && at9[1].done);
 });
