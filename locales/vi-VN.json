@@ -1375,6 +1375,7 @@
   "ui.tac.anim.addPoints": "Thêm điểm",
   "ui.tac.anim.avgSpeed": "TB {speed} m/s",
   "ui.tac.anim.clear": "Xóa hoạt ảnh",
+  "ui.tac.anim.disarm": "Nhấn để hủy thêm",
   "ui.tac.anim.hide.dots": "Ẩn điểm",
   "ui.tac.anim.hide.path": "Ẩn đường đi",
   "ui.tac.anim.hint.empty": "Nhấp vào bản đồ để thêm điểm đường đi",

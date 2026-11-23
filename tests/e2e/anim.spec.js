@@ -123,12 +123,15 @@ test('anim: arm toggle controls map-click adding and shows status', async ({ pag
   await placeRole(page, 'luckyGuy', 0.3, 0.3);
   await tool(page, 'anim');
   await clickPoint(page, 0.3, 0.3);
-  // 进入动画工具默认处于添加状态
+  // 进入动画工具默认处于添加状态：按钮显示「点此取消添加」
   const status = page.locator('.tac-anim-status');
+  const armBtn = page.locator('.tac-anim-arm-btn');
   await expect(status).toHaveText('在地图上点击添加路径点');
-  await expect(page.locator('.tac-anim-arm-btn')).toHaveClass(/active/);
-  // 取消添加：无动画时状态文字变为「未设置动画」，地图点击不再加点
-  await page.locator('.tac-anim-arm-btn').click();
+  await expect(armBtn).toHaveClass(/active/);
+  await expect(armBtn).toHaveText('点此取消添加');
+  // 取消添加：按钮回到「添加路径点」，无动画时状态文字变为「未设置动画」，地图点击不再加点
+  await armBtn.click();
+  await expect(armBtn).toHaveText('添加路径点');
   await expect(status).toHaveText('未设置动画');
   await clickPoint(page, 0.6, 0.3);
   await expect(page.locator('.tac-anim-dot')).toHaveCount(0);

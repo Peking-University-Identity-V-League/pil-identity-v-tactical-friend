@@ -1374,6 +1374,7 @@
   "ui.tac.anim.addPoints": "添加路径点",
   "ui.tac.anim.avgSpeed": "平均 {speed} m/s",
   "ui.tac.anim.clear": "清除动画",
+  "ui.tac.anim.disarm": "点此取消添加",
   "ui.tac.anim.hide.dots": "隐藏时刻点",
   "ui.tac.anim.hide.path": "隐藏动画线",
   "ui.tac.anim.hint.empty": "在地图上点击添加路径点",

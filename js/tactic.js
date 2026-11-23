@@ -5306,7 +5306,7 @@ function buildTacAnimBox(settings, obj) {
     const armBtn = document.createElement('button');
     armBtn.type = 'button';
     armBtn.className = 'tac-anim-btn tac-anim-arm-btn' + (tacAnimArmed ? ' active' : '');
-    armBtn.textContent = translate("ui.tac.anim.addPoints");
+    armBtn.textContent = translate(tacAnimArmed ? "ui.tac.anim.disarm" : "ui.tac.anim.addPoints");
     armBtn.addEventListener('click', () => {
       tacAnimArmed = !tacAnimArmed;
       renderTacBoard();

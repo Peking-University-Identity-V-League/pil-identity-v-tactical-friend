@@ -1374,6 +1374,7 @@
   "ui.tac.anim.addPoints": "Add waypoints",
   "ui.tac.anim.avgSpeed": "Avg {speed} m/s",
   "ui.tac.anim.clear": "Clear animation",
+  "ui.tac.anim.disarm": "Click to stop adding",
   "ui.tac.anim.hide.dots": "Hide points",
   "ui.tac.anim.hide.path": "Hide path",
   "ui.tac.anim.hint.empty": "Click the map to add waypoints",
