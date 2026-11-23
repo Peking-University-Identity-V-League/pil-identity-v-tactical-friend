@@ -6,9 +6,11 @@ import { translate } from './i18n.js';
 
 
 // ------------------------------------------------------------
-export const CN_NUM = [translate("numbers.zero"), translate("numbers.one"), translate("numbers.two"), translate("numbers.three"), translate("numbers.four"), translate("numbers.five"), translate("numbers.six"), translate("numbers.seven"), translate("numbers.eight"), translate("numbers.nine"), translate("numbers.ten")];
+// 数字显示：必须惰性翻译。本模块经 dom.js 被 bootstrap 静态引用，模块加载时语言包尚未就绪，
+// 若在模块顶层固化 translate 结果会冻结成裸键名
+const CN_NUM_KEYS = ["numbers.zero", "numbers.one", "numbers.two", "numbers.three", "numbers.four", "numbers.five", "numbers.six", "numbers.seven", "numbers.eight", "numbers.nine", "numbers.ten"];
 
-export const cnNum = (n) => CN_NUM[n] ?? String(n);
+export const cnNum = (n) => (CN_NUM_KEYS[n] != null ? translate(CN_NUM_KEYS[n]) : String(n));
 
       
 

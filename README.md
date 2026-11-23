@@ -711,7 +711,7 @@ export const dedSteps = $('dedSteps');
 | 导出 | 用途 |
 |---|---|
 | `$` | `document.getElementById()` 的简写 |
-| `CN_NUM`、`cnNum()` | 中文数字显示，用于规则说明 |
+| `cnNum()` | 中文数字显示（惰性翻译），用于规则说明 |
 | `mountImageOverlays()` | 给地图容器加入加载中和加载失败覆盖层 |
 | `loadImageWithStatus()` | 预加载图片、显示状态、丢弃过期请求、失败后每 5 秒重试 |
 

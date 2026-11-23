@@ -1556,6 +1556,7 @@
   "ui.tac.path.unsupported.B": "Gần điểm kết thúc B không có khu đi được",
   "ui.tac.pattern.arrow": "➤ Mũi tên",
   "ui.tac.pattern.circle": "◯ Vòng tròn đứt nét",
+  "ui.tac.pattern.line": "— Đường thẳng",
   "ui.tac.pattern.square": "▭ Khung đứt nét",
   "ui.tac.pattern.title": "✏️ Vẽ hình",
   "ui.tac.rocketChair.balloon": "Kéo bóng",

@@ -192,22 +192,23 @@ export const tacMeasureStyle = {
 
 export const tacDisplay = {
   zones: false,
-  ciphers: true, cipherSize: TAC_DISPLAY_DEFAULT.cipherSize, 
-  dungeon: false, dungeonSize: TAC_DISPLAY_DEFAULT.dungeonSize,
   spawns: false, spawnSize: TAC_DISPLAY_DEFAULT.spawnSize,
-  doors: true, doorSize: TAC_DISPLAY_DEFAULT.escapeDoorSize, 
-  doorLock: false, 
-  chairs: false, chairSize: TAC_DISPLAY_DEFAULT.rocketChairSize,
-  chairsBasement: false,
+  escapeDoors: true, escapeDoorSize: TAC_DISPLAY_DEFAULT.escapeDoorSize,
+  escapeDoorLock: false,
+  ciphers: true, cipherSize: TAC_DISPLAY_DEFAULT.cipherSize,
+  dungeon: false, dungeonSize: TAC_DISPLAY_DEFAULT.dungeonSize,
+  rocketChairs: false, rocketChairSize: TAC_DISPLAY_DEFAULT.rocketChairSize,
+  rocketChairsBasement: false,
   lockers: false, lockerSize: TAC_DISPLAY_DEFAULT.lockerSize,
   boxes: false, boxSize: TAC_DISPLAY_DEFAULT.boxSize,
   boxesBasement: false,
   phoneBooths: false, phoneBoothSize: TAC_DISPLAY_DEFAULT.phoneBoothSize,
-  
-  snap: { cipher: true, dungeon: true, door: true, chair: true, locker: false, box: false, phoneBooth: false, point: true },
-  delSegOnly: false, 
-  showCoords: false, 
+
+  snap: { escapeDoor: true, cipher: true, dungeon: true, rocketChair: true, locker: false, box: false, phoneBooth: false, endpoint: true },
+  delSegOnly: false,
+  showCoords: false,
   selGlow: true,
-  hideEndpoints: true, carryHideRing: false, 
-  exportCrop: true, exportRot: true, 
+  hideEndpoints: true, carryHideRing: false,
+  exportCrop: true, exportRot: true,
 };
+
