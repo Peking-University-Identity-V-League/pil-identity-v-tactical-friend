@@ -3025,6 +3025,10 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 }
 
 .tac-detail-body { overflow-x: auto; }
+/* 绘制设置区内的样式/其它设置是普通控件行，不需要横向滚动，避免内容被裁出滚动条 */
+#tacDrawSettingsBody .tac-detail-body,
+#tacShapeStyleBody, #tacTextStyleBody { overflow-x: visible; }
+.tac-detail-body .tac-style-flex { line-height: 1.8; }
 @media (max-width: 768px) {
   .tac-detail-tbl { min-width: 470px; }
   .tac-result table { min-width: 460px; }
@@ -3353,13 +3357,19 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 
 .tac-display-row .tac-display-toggle,
 .tac-display-snap .tac-display-toggle {
-  color: var(--text);
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+}
+/* 卡片设置区勾选按钮统一格式：字号、字重、勾选框与文字间距一致 */
+.tac-display-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
 }
 .tac-display-mid {
   flex: 1 1 auto;
@@ -3394,9 +3404,9 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 .tac-display-snap.no-line { padding-top: 2px; }
 .tac-display-snap.no-line::before { display: none; }
 .tac-display-snap-label {
-  color: var(--text);
-  font-size: 12px;
-  font-weight: 700;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 600;
 }
 
 .tac-display-group { display: flex; flex-direction: column; gap: 8px; }
@@ -3481,6 +3491,7 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 .tac-chair,
 .tac-locker,
 .tac-box,
+.tac-phone-booth,
 .tac-spawn {
   position: absolute;
   z-index: 2;
@@ -3687,7 +3698,6 @@ div.tac-fixed-spawn .cam-dir.up {
   background: linear-gradient(135deg, #34d399, #10b981);
   box-shadow: 0 3px 13px rgba(52, 211, 153, 0.35);
 }
-.tac-mstyle-body { margin-top: 10px; }
 
 .tac-result { font-size: 11px; }
 .tac-result table { width: 100%; border-collapse: collapse; }

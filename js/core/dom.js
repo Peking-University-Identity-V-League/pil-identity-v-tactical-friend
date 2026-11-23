@@ -278,9 +278,25 @@ export const tacCipherList = $('tacCipherList');
 
 export const tacManageList = $('tacManageList');
 
-export const tacMStyleToggle = $('tacMStyleToggle');
+export const tacDrawSettingsToggle = $('tacDrawSettingsToggle');
+
+export const tacDrawSettingsBody = $('tacDrawSettingsBody');
 
 export const tacMStyleBody = $('tacMStyleBody');
+
+export const tacDrawStyleToggle = $('tacDrawStyleToggle');
+
+export const tacShapeStyleToggle = $('tacShapeStyleToggle');
+
+export const tacShapeStyleBody = $('tacShapeStyleBody');
+
+export const tacTextStyleToggle = $('tacTextStyleToggle');
+
+export const tacTextStyleBody = $('tacTextStyleBody');
+
+export const tacDrawOtherToggle = $('tacDrawOtherToggle');
+
+export const tacDrawOtherBody = $('tacDrawOtherBody');
 
 export const tacBaseSpeedEl = $('tacBaseSpeed');
 
@@ -496,6 +512,8 @@ export const tacBasementText = $('tacBasementText');
 
 export const tacSnapBoxEl = $('tacSnapBox');
 
+export const tacSnapLockerEl = $('tacSnapLocker');
+
 export const tacShowLockersEl = $('tacShowLockers');
 
 export const tacLockerSizeEl = $('tacLockerSize');
@@ -507,5 +525,11 @@ export const tacShowBoxesEl = $('tacShowBoxes');
 export const tacBoxSizeEl = $('tacBoxSize');
 
 export const tacBoxSizeDefEl = $('tacBoxSizeDef');
+
+export const tacShowPhoneBoothsEl = $('tacShowPhoneBooths');
+
+export const tacPhoneBoothSizeEl = $('tacPhoneBoothSize');
+
+export const tacPhoneBoothSizeDefEl = $('tacPhoneBoothSizeDef');
 
 export const tacShowBoxBasementEl = $('tacShowBoxBasement');
