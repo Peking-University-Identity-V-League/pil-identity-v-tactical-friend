@@ -1,15 +1,16 @@
 import { TAC_TALENT_TYPES } from '../data/talents.js';
+import { TAC_SURVIVOR_ROLES } from '../data/survivor.js';
 // 牵气球挂椅时间模型 —— 移植自 maps-3d 运行页内嵌 worker
 // （CARRY_RULES_VERSION = balloon-planning-2026-11-17-ui-v4），保持参数与公式一致。
 // 二维近似：不含楼层与翻窗，色带按地面栅格的绕行路径时间划分。
 
 export const CARRY_RULES_VERSION = 'balloon-planning-2026-11-17-ui-v4';
 
-// 前锋的强力挣扎是角色特质，与人格等级无关
+// 前锋的强力挣扎是角色特质，与人格等级无关；数据源在 survivor.js 的 traits.struggle.struggleBuff
 // https://wiki.biligame.com/dwrg/前锋 (checked 2026-11-16)
 export const CARRY_SURVIVORS = Object.freeze({
   ordinary: { key: 'ordinary', struggleBonus: 0 },
-  forward: { key: 'forward', struggleBonus: 0.10 },
+  forward: { key: 'forward', struggleBonus: TAC_SURVIVOR_ROLES.forward.traits.struggle.struggleBuff.levels[0] },
 });
 
 // 无巨钳时每次放下增加的挣扎进度（百分点）

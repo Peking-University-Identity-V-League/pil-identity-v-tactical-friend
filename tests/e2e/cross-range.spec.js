@@ -48,9 +48,12 @@ test('timeBomb: fill toggles cross fill; selected highlight is circular', async 
   await expect(cross).toHaveCount(1);
   await fillCb.uncheck();
   await expect(rect).toHaveCSS('fill', /none/);
-  // 选中高亮边框为圆形
+  // 选中高亮默认开启：有圆形高亮边框；关闭“造物选中高亮”后无高亮
+  await tool(page, 'display');
   await expect(cross).toHaveClass(/selected/);
   await expect(cross).toHaveCSS('border-radius', '50%');
+  await page.locator('#tacSelGlow').uncheck();
+  await expect(cross).not.toHaveClass(/selected/);
 });
 
 test('dentist: mirror ranges render as annulus with inner/outer desc and fill', async ({ page }) => {

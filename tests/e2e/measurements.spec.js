@@ -108,7 +108,8 @@ test('undo single-segment deletion restores route IDs, configs and shared refere
   await selectSegment(page, 1);
   await page.locator('#tacBaseSpeed').fill('5');
   const original = (await read(page)).board.measures;
-  await tool(page, 'display');
+  await tool(page, 'measure');
+  await page.locator('#tacDrawSettingsToggle').click();
   await page.locator('#tacDelSegOnly').check();
   await tool(page, 'delete');
   await selectSegment(page, 1);
@@ -143,6 +144,10 @@ test('hide endpoints checkbox hides measure dots but keeps selected letters', as
   const dots = page.locator('.tac-measure-dot');
   await expect(dots).toHaveCount(2);
   await expect(dots.first()).toBeVisible();
+  await page.locator('#tacDrawSettingsToggle').click();
+  // 隐藏端点默认勾选，先取消确认圆点恢复显示
+  await page.locator('#tacHideEndpoints').uncheck();
+  await expect(dots.first()).not.toHaveClass(/hidden-endpoint/);
   await page.locator('#tacHideEndpoints').check();
   await expect(dots.first()).toHaveClass(/hidden-endpoint/);
   // 选中该线时 ABCD 字母依然正常显示

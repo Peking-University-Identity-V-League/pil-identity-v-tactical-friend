@@ -1,9 +1,10 @@
 
-import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacCipherCard, tacCipherCardShowEl, tacCipherCardPrevBtn, tacCipherCardNextBtn, tacCipherCardText, tacCipherCardSizeEl, tacCipherCardSizeDefEl, tacCipherList, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacHideEndpointsEl, tacItemSection, tacMStyleBody, tacMStyleToggle, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacRot, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacCarryBuffBody, tacCarryCard, tacCarryChairName, tacCarryChairNextBtn, tacCarryChairPrevBtn, tacCarryChairSizeDefEl, tacCarryChairSizeEl, tacCarryChairText, tacCarryClearBtn, tacCarryBuffToggleEl, tacCarryHuntClose, tacCarryHuntList, tacCarryHuntModal, tacCarryHuntTalentBtn, tacCarryHunterEl, tacCarryHunterFormEl, tacCarryHunterSpeedEl, tacCarryInitialEl, tacCarryInitialVal, tacCarryLegend, tacCarryNote, tacCarryOpacityEl, tacCarryOpacityRowEl, tacCarryHideRingEl, tacCarryChairBasementEl, tacCarryBoxBasementEl, tacCarryBasementPrevBtn, tacCarryBasementNextBtn, tacCarryBasementTextEl, tacCarryPickBtn, tacCarryPickupEl, tacCarryResultBoxEl, tacCarryResultToggleEl, tacCarryResultBodyEl, tacCarrySettingsToggleEl, tacCarrySettingsBodyEl, tacCarryModeChairEl, tacCarryModePointEl, tacCarryHideRingLabelEl, tacCarryChairCountEl, tacCarryDetailBoxEl, tacCarryDetailToggleEl, tacCarryDetailBodyEl, tacCarryPickupModeEl, tacCarryProgressBar, tacCarryProgressBox, tacCarryRunBtn, tacCarryShowChairsEl, tacCarrySpeedClose, tacCarrySpeedList, tacCarrySpeedModal, tacCarrySpeedTalentBtn, tacCarrySummary, tacCarrySurvClose, tacCarrySurvList, tacCarrySurvModal, tacCarrySurvTalentBtn, tacCarrySurvivorEl, tacShowChairBasementEl, tacBasementText, tacShowSpawnsEl, tacSpawnSizeEl, tacSpawnSizeDefEl, tacSpawnText, tacSnapBoxEl, tacShowLockersEl, tacLockerSizeEl, tacLockerSizeDefEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacSpeedSettingsToggleEl, tacSpeedSettingsBodyEl, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacDedScenarioCarryEl, tacDedScenarioTideEl, tacDedSettingsCarryEl, tacDedSettingsTideEl, tacTideBaseSpeedEl, tacTideSpeedRoleEl, tacTideSpeedFormEl, tacTideTraitAddBtn, tacTideTalentAddBtn, tacTideOtherAddBtn, tacTideBuffAddBtn, tacTideBaseDetailToggleEl, tacTideBaseDetailBodyEl, tacTideBuffToggleEl, tacTideBuffBodyEl, tacTideTraitModal, tacTideTraitList, tacTideTraitClose, tacTideTalentModal, tacTideTalentList, tacTideTalentClose, tacTideOtherModal, tacTideOtherList, tacTideOtherClose, tacTideBuffModal, tacTideBuffName, tacTideBuffPct, tacTideBuffDur, tacTideBuffOk, tacTideBuffClose, tacPathCard, tacPathPickA, tacPathPickB, tacPathStatusA, tacPathStatusB, tacPathRunBtn, tacPathClearBtn, tacPathProgressBox, tacPathProgressBar, tacPathResultBoxEl, tacPathResultToggleEl, tacPathResultBodyEl, tacPathSummary, tacPathNote, tacPathFixNote, tacPathSettingsToggleEl, tacPathSettingsBodyEl, tacPathVaultEl, tacPathFixEl, tacPathCampToggle, tacPathBaseSpeedEl, tacPathSpeedRoleEl, tacPathSpeedFormEl, tacPathTraitAddBtn, tacPathTalentAddBtn, tacPathOtherAddBtn, tacPathBuffAddBtn, tacPathBaseDetailToggleEl, tacPathBaseDetailBodyEl, tacPathBuffToggleEl, tacPathBuffBodyEl, tacPathTraitModal, tacPathTraitList, tacPathTraitClose, tacPathTalentModal, tacPathTalentList, tacPathTalentClose, tacPathOtherModal, tacPathOtherList, tacPathOtherClose, tacPathBuffModal, tacPathBuffName, tacPathBuffPct, tacPathBuffDur, tacPathBuffOk, tacPathBuffClose, tacticView } from './core/dom.js';
-import { restoredMeasureIds, saveRegionSel, savedRot, tacBoard, tacDisplay, tacMeasureStyle, tacPersisted, tacSave, flushSave } from './core/persist.js';
+import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacCipherCard, tacCipherCardShowEl, tacCipherCardPrevBtn, tacCipherCardNextBtn, tacCipherCardText, tacCipherCardSizeEl, tacCipherCardSizeDefEl, tacCipherList, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDrawSettingsToggle, tacDrawSettingsBody, tacDrawStyleToggle, tacDrawOtherToggle, tacDrawOtherBody, tacShapeStyleToggle, tacShapeStyleBody, tacTextStyleToggle, tacTextStyleBody, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacHideEndpointsEl, tacItemSection, tacMStyleBody, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacRot, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacCarryBuffBody, tacCarryCard, tacCarryChairName, tacCarryChairNextBtn, tacCarryChairPrevBtn, tacCarryChairSizeDefEl, tacCarryChairSizeEl, tacCarryChairText, tacCarryClearBtn, tacCarryBuffToggleEl, tacCarryHuntClose, tacCarryHuntList, tacCarryHuntModal, tacCarryHuntTalentBtn, tacCarryHunterEl, tacCarryHunterFormEl, tacCarryHunterSpeedEl, tacCarryInitialEl, tacCarryInitialVal, tacCarryLegend, tacCarryNote, tacCarryOpacityEl, tacCarryOpacityRowEl, tacCarryHideRingEl, tacCarryChairBasementEl, tacCarryBoxBasementEl, tacCarryBasementPrevBtn, tacCarryBasementNextBtn, tacCarryBasementTextEl, tacCarryPickBtn, tacCarryPickupEl, tacCarryResultBoxEl, tacCarryResultToggleEl, tacCarryResultBodyEl, tacCarrySettingsToggleEl, tacCarrySettingsBodyEl, tacCarryModeChairEl, tacCarryModePointEl, tacCarryHideRingLabelEl, tacCarryChairCountEl, tacCarryDetailBoxEl, tacCarryDetailToggleEl, tacCarryDetailBodyEl, tacCarryPickupModeEl, tacCarryProgressBar, tacCarryProgressBox, tacCarryRunBtn, tacCarryShowChairsEl, tacCarrySpeedClose, tacCarrySpeedList, tacCarrySpeedModal, tacCarrySpeedTalentBtn, tacCarrySummary, tacCarrySurvClose, tacCarrySurvList, tacCarrySurvModal, tacCarrySurvTalentBtn, tacCarrySurvivorEl, tacShowChairBasementEl, tacBasementText, tacShowSpawnsEl, tacSpawnSizeEl, tacSpawnSizeDefEl, tacSpawnText, tacSnapBoxEl, tacSnapLockerEl, tacSnapPhoneBoothEl, tacShowLockersEl, tacLockerSizeEl, tacLockerSizeDefEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowPhoneBoothsEl, tacPhoneBoothSizeEl, tacPhoneBoothSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacSpeedSettingsToggleEl, tacSpeedSettingsBodyEl, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTimelineEl, tacTimelineFold, tacTimelinePlay, tacTimelineScrub, tacTimelineTime, tacTimelineTracks, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacDedScenarioCarryEl, tacDedScenarioTideEl, tacDedSettingsCarryEl, tacDedSettingsTideEl, tacTideBaseSpeedEl, tacTideSpeedRoleEl, tacTideSpeedFormEl, tacTideTraitAddBtn, tacTideTalentAddBtn, tacTideOtherAddBtn, tacTideBuffAddBtn, tacTideBaseDetailToggleEl, tacTideBaseDetailBodyEl, tacTideBuffToggleEl, tacTideBuffBodyEl, tacTideTraitModal, tacTideTraitList, tacTideTraitClose, tacTideTalentModal, tacTideTalentList, tacTideTalentClose, tacTideOtherModal, tacTideOtherList, tacTideOtherClose, tacTideBuffModal, tacTideBuffName, tacTideBuffPct, tacTideBuffDur, tacTideBuffOk, tacTideBuffClose, tacPathCard, tacPathPickA, tacPathPickB, tacPathStatusA, tacPathStatusB, tacPathRunBtn, tacPathClearBtn, tacPathProgressBox, tacPathProgressBar, tacPathResultBoxEl, tacPathResultToggleEl, tacPathResultBodyEl, tacPathSummary, tacPathNote, tacPathFixNote, tacPathSettingsToggleEl, tacPathSettingsBodyEl, tacPathVaultEl, tacPathFixEl, tacPathCampToggle, tacPathBaseSpeedEl, tacPathSpeedRoleEl, tacPathSpeedFormEl, tacPathTraitAddBtn, tacPathTalentAddBtn, tacPathOtherAddBtn, tacPathBuffAddBtn, tacPathBaseDetailToggleEl, tacPathBaseDetailBodyEl, tacPathBuffToggleEl, tacPathBuffBodyEl, tacPathTraitModal, tacPathTraitList, tacPathTraitClose, tacPathTalentModal, tacPathTalentList, tacPathTalentClose, tacPathOtherModal, tacPathOtherList, tacPathOtherClose, tacPathBuffModal, tacPathBuffName, tacPathBuffPct, tacPathBuffDur, tacPathBuffOk, tacPathBuffClose, tacticView } from './core/dom.js';
+import { restoredMeasureIds, saveRegionSel, savedRot, tacBoard, tacDisplay, tacDrawSettings, tacMeasureStyle, tacSave, flushSave } from './core/persist.js';
 import { measureBaseAt, simulateMovement } from './core/measurements.js';
+import { animAllPositions, animDuration, animPositionAt, animSegments } from './core/anim.js';
 import { measurementEndpoints, resolveMap3dTarget, isExternalMap3dEntry } from './core/map-handoff.js';
-import { CARRY_BAND_COLORS, CARRY_BAND_OPACITY, CARRY_DEFAULTS, CARRY_TALENTS, carryBandAt, carryDropBudget, createCarryProfile } from './core/carry-model.js';
+import { CARRY_BAND_COLORS, CARRY_BAND_OPACITY, CARRY_DEFAULTS, CARRY_SURVIVORS, CARRY_TALENTS, carryBandAt, carryDropBudget, createCarryProfile } from './core/carry-model.js';
 import { computeCarryField, computePath, computeTideField, loadNavGrid, navGridAvailable, snapToWalkable, smoothPathOnGrid } from './core/nav-grid.js';
 import { TIDE_BAND_COLORS, TIDE_BAND_OPACITY, TIDE_SECONDS, createTideProfile, tideBandAt } from './core/tide-model.js';
 import { getTreasureRings } from './core/treasure.js';
@@ -11,7 +12,8 @@ import { S } from './core/state.js';
 import { $, loadImageWithStatus, mountImageOverlays } from './core/utils.js';
 import { cipherOf, mapsZonesRelative } from './data/geo.js';
 import { MAPS_DATA, getImageUrl } from './data/maps.js';
-import { BOX_ICON_URL, CHAIR_ICON_URL, DUNGEON_ICON_URL, ESCAPE_DOOR_ICON_URL, LOCKER_ICON_URL, SPAWN_HUNTER_ICON_URL, SPAWN_SURVIVOR_ICON_URL, TAC_ABYSS_MAX_M, TAC_DISPLAY_DEFAULT, TAC_FIXED_SPAWN_ICONS, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_MOVEMENT_SURVIVOR, TAC_MOVEMENT_BUFFS, TAC_SVG_NS, TAC_TREASURE_RULE, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
+import { COMMON_ICON_URL } from './data/items_common.js';
+import { TAC_ABYSS_MAX_M, TAC_DISPLAY_DEFAULT, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_MOVEMENT_SURVIVOR, TAC_MOVEMENT_BUFFS, TAC_SVG_NS, TAC_TREASURE_RULE, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
 import { TAC_ITEM_TYPES } from './data/items.js';
 import { TAC_ROLES } from './data/roles.js';
 import { CIPHER_ICON_URL, cipherIcon } from './region.js';
@@ -189,21 +191,16 @@ function tacTalentButtons(hostRole, camp) {
     const opt = def.ranges.options[0];
     if (!opt || opt.size_m == null) continue;
     if (kind === 'fearRadius') {
-      if (camp === 'hunter' && hostRole === 'geisha') {
+      // 恐惧半径修正数据在角色条目下（survivor.js / hunter.js 的 fearRadius 字段）
+      const fr = (TAC_ROLES[hostRole] || {}).fearRadius;
+      if (camp === 'hunter' && fr && fr.forms) {
         out.push({
           tk: 'fearRadius', kind, label: def.name, base: opt.size_m,
-          variants: [
-            { key: 'beauty', label: translate("characters.geisha.beautyForm"), mult: 0.8 },
-            { key: 'prajna', label: translate("characters.geisha.prajnaForm"), mult: 1.1 },
-          ],
+          variants: fr.forms.map((f) => ({ key: f.key, label: f.name, mult: f.mult })),
         });
         continue;
       }
-      let mult = 1;
-      if (camp !== 'hunter') {
-        if (hostRole === 'prisoner') mult = 0.8;
-        else if (hostRole === 'archer') mult = 0.76;
-      }
+      const mult = (camp !== 'hunter' && fr && fr.mult) || 1;
       out.push({ tk: 'fearRadius', kind, label: def.name, base: opt.size_m, mult });
       continue;
     }
@@ -300,31 +297,36 @@ export function syncTacDisplayUI() {
   tacShowSpawnsEl.checked = tacDisplay.spawns;
   tacSpawnSizeEl.value = tacDisplay.spawnSize;
   tacSpawnSizeDefEl.checked = tacDisplay.spawnSize === TAC_DISPLAY_DEFAULT.spawnSize;
-  tacShowChairsEl.checked = tacDisplay.chairs;
-  tacChairSizeEl.value = tacDisplay.chairSize;
-  tacChairSizeDefEl.checked = tacDisplay.chairSize === TAC_DISPLAY_DEFAULT.chairSize;
-  tacShowChairBasementEl.checked = tacDisplay.chairsBasement;
+  tacShowChairsEl.checked = tacDisplay.rocketChairs;
+  tacChairSizeEl.value = tacDisplay.rocketChairSize;
+  tacChairSizeDefEl.checked = tacDisplay.rocketChairSize === TAC_DISPLAY_DEFAULT.rocketChairSize;
+  tacShowChairBasementEl.checked = tacDisplay.rocketChairsBasement;
   tacShowLockersEl.checked = tacDisplay.lockers;
   tacLockerSizeEl.value = tacDisplay.lockerSize;
   tacLockerSizeDefEl.checked = tacDisplay.lockerSize === TAC_DISPLAY_DEFAULT.lockerSize;
   tacShowBoxesEl.checked = tacDisplay.boxes;
   tacBoxSizeEl.value = tacDisplay.boxSize;
   tacBoxSizeDefEl.checked = tacDisplay.boxSize === TAC_DISPLAY_DEFAULT.boxSize;
+  tacShowPhoneBoothsEl.checked = tacDisplay.phoneBooths;
+  tacPhoneBoothSizeEl.value = tacDisplay.phoneBoothSize;
+  tacPhoneBoothSizeDefEl.checked = tacDisplay.phoneBoothSize === TAC_DISPLAY_DEFAULT.phoneBoothSize;
   tacShowBoxBasementEl.checked = tacDisplay.boxesBasement;
-  tacShowDoorsEl.checked = tacDisplay.doors;
-  tacDoorSizeEl.value = tacDisplay.doorSize;
-  tacDoorSizeDefEl.checked = tacDisplay.doorSize === TAC_DISPLAY_DEFAULT.doorSize;
-  tacDoorLockEl.checked = tacDisplay.doorLock;
-  tacSnapCipherEl.checked = tacDisplay.snap.cipher;
-  tacSnapDungeonEl.checked = tacDisplay.snap.dungeon;
-  tacSnapDoorEl.checked = tacDisplay.snap.door;
-  tacSnapChairEl.checked = tacDisplay.snap.chair;
-  tacSnapBoxEl.checked = tacDisplay.snap.box;
-  tacSnapPointEl.checked = tacDisplay.snap.point;
-  tacDelSegOnlyEl.checked = tacDisplay.delSegOnly;
+  tacShowDoorsEl.checked = tacDisplay.escapeDoors;
+  tacDoorSizeEl.value = tacDisplay.escapeDoorSize;
+  tacDoorSizeDefEl.checked = tacDisplay.escapeDoorSize === TAC_DISPLAY_DEFAULT.escapeDoorSize;
+  tacDoorLockEl.checked = tacDisplay.escapeDoorLock;
+  tacSnapCipherEl.checked = tacDrawSettings.snap.cipher;
+  tacSnapDungeonEl.checked = tacDrawSettings.snap.dungeon;
+  tacSnapDoorEl.checked = tacDrawSettings.snap.escapeDoor;
+  tacSnapChairEl.checked = tacDrawSettings.snap.rocketChair;
+  tacSnapLockerEl.checked = tacDrawSettings.snap.locker;
+  tacSnapBoxEl.checked = tacDrawSettings.snap.box;
+  tacSnapPhoneBoothEl.checked = tacDrawSettings.snap.phoneBooth;
+  tacSnapPointEl.checked = tacDrawSettings.snap.endpoint;
+  tacDelSegOnlyEl.checked = tacDrawSettings.delSegOnly;
   tacShowCoordsEl.checked = tacDisplay.showCoords;
   tacSelGlowEl.checked = tacDisplay.selGlow;
-  tacHideEndpointsEl.checked = !!tacDisplay.hideEndpoints;
+  tacHideEndpointsEl.checked = !!tacDrawSettings.hideEndpoints;
   tacCarryHideRingEl.checked = !!tacDisplay.carryHideRing;
   const cropEl = $('tacExportCrop');
   if (cropEl) cropEl.checked = tacDisplay.exportCrop;
@@ -368,7 +370,7 @@ export let tacSelectedItem = null;
   
 export let tacArrowColor = '#ef4444';
 
-export let tacArrowWidth = 4;
+export let tacArrowWidth = 2;
 
 export let tacDrawShape = 'arrow';
 
@@ -417,6 +419,10 @@ export let tacResultOpen = true;
 
 let tacSpeedSettingsOpen = true;
 
+let tacDrawSettingsOpen = false;
+
+let tacDrawOtherOpen = true;
+
     
 
 export const tacBuffFilter = { from: 0, to: 0, all: true };
@@ -452,6 +458,18 @@ export let tacSelectedText = null;
 
   
 export let tacDragText = null;
+
+
+// 动画路径点拖拽：{ ptIdx, prev }，prev 为拖动前的 anim 快照（供撤销）
+export let tacDragAnimDot = null;
+
+
+// 播放中的动画：{ kind:'role'|'item', ref, raf }；只改 DOM 位置，不写回造物坐标
+export let tacAnimPlay = null;
+
+
+// 动画工具下是否处于「添加路径点」状态：进入动画工具自动开启，可手动取消
+export let tacAnimArmed = false;
 
       
 export let tacTextPlacing = false;
@@ -496,6 +514,9 @@ export function syncTacImage() {
   renderTacBoxes();
   const boxEntry = $('tacBoxEntry');
   if (boxEntry) boxEntry.style.display = MAPS_DATA[S.currentMapId].chests ? '' : 'none';
+  renderTacPhoneBooths();
+  const phoneBoothEntry = $('tacPhoneBoothEntry');
+  if (phoneBoothEntry) phoneBoothEntry.style.display = MAPS_DATA[S.currentMapId].phoneBooths ? '' : 'none';
   const basementEntry = $('tacBasementEntry');
   if (basementEntry) {
     const map = MAPS_DATA[S.currentMapId];
@@ -733,7 +754,7 @@ export function renderTacZones() {
 
 export function tacDoorPoints(map) {
   const d = map.escapeDoors;
-  if (tacDisplay.doorLock && d.length >= 4) return [d[2], d[3]];
+  if (tacDisplay.escapeDoorLock && d.length >= 4) return [d[2], d[3]];
   return d.slice(0, 2);
 }
 
@@ -759,8 +780,8 @@ export function renderTacSpawns() {
     el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
     tacLayer().appendChild(el);
   };
-  group.survivor.forEach((pt) => place(pt, SPAWN_SURVIVOR_ICON_URL, translate("common.spawnPoint")));
-  place(group.hunter, SPAWN_HUNTER_ICON_URL, translate("common.spawnPoint"));
+  group.survivor.forEach((pt) => place(pt, COMMON_ICON_URL.survivor, translate("common.spawnPoint")));
+  place(group.hunter, COMMON_ICON_URL.hunter, translate("common.spawnPoint"));
 }
 
 export function syncTacSpawnText() {
@@ -787,7 +808,7 @@ export function renderTacLandmarks() {
     const pt = map.dungeons[S.tacDungeonIndex % map.dungeons.length];
     const el = document.createElement('img');
     el.className = 'tac-dungeon';
-    el.src = DUNGEON_ICON_URL;
+    el.src = COMMON_ICON_URL.dungeon;
     el.alt = translate("common.dungeon");
     el.draggable = false;
     el.style.left = `${(pt[0] / imgW) * 100}%`;
@@ -796,16 +817,16 @@ export function renderTacLandmarks() {
     el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
     tacLayer().appendChild(el);
   }
-  if (tacDisplay.doors) {
+  if (tacDisplay.escapeDoors) {
     tacDoorPoints(map).forEach((pt, i) => {
       const el = document.createElement('img');
       el.className = 'tac-door';
-      el.src = ESCAPE_DOOR_ICON_URL;
+      el.src = COMMON_ICON_URL.escapeDoor;
       el.alt = translate("common.escapeDoor.alt", { value: i + 1 });
       el.draggable = false;
       el.style.left = `${(pt[0] / imgW) * 100}%`;
       el.style.top = `${(pt[1] / imgH) * 100}%`;
-      el.style.width = `${tacDisplay.doorSize}%`;
+      el.style.width = `${tacDisplay.escapeDoorSize}%`;
       el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
       tacLayer().appendChild(el);
     });
@@ -852,7 +873,7 @@ export function renderTacFixedSpawns() {
         const p = Array.isArray(pt) ? pt : pt.p;
         let el;
         if (item.flag_orientation) {
-          const iconUrl = TAC_FIXED_SPAWN_ICONS[item.icon] || item.icon;
+          const iconUrl = (TAC_ITEM_TYPES[item.icon] || {}).icon || COMMON_ICON_URL[item.icon] || item.icon;
           el = document.createElement('div');
           const dirSvg = token.showSpawnDir
             ? (() => {
@@ -957,12 +978,12 @@ export function renderTacChairs() {
         el.classList.add('tac-carry-selected');
       }
     }
-    el.src = CHAIR_ICON_URL;
+    el.src = COMMON_ICON_URL.rocketChair;
     el.alt = translate("common.rocketChair");
     el.draggable = false;
     el.style.left = `${(px / imgW) * 100}%`;
     el.style.top = `${(pz / imgH) * 100}%`;
-    el.style.width = `${tacDisplay.chairSize}%`;
+    el.style.width = `${tacDisplay.rocketChairSize}%`;
     el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
     tacLayer().appendChild(el);
     // 选中椅子的正圆红框：img 是替换元素不支持伪元素，用独立 div 画正圆
@@ -971,11 +992,11 @@ export function renderTacChairs() {
       ring.className = 'tac-chair tac-carry-ring';
       ring.style.left = el.style.left;
       ring.style.top = el.style.top;
-      ring.style.width = `${tacDisplay.chairSize * 1.5}%`;
+      ring.style.width = `${tacDisplay.rocketChairSize * 1.5}%`;
       tacLayer().appendChild(ring);
     }
   };
-  if (tacDisplay.chairs) {
+  if (tacDisplay.rocketChairs) {
     ch.fixed.forEach((pt, i) => draw(pt, 'fixed', i));
     const setIdx = ch.sets.length ? S.tacChairIndex % ch.sets.length : -1;
     if (setIdx >= 0) {
@@ -983,7 +1004,7 @@ export function renderTacChairs() {
     }
   }
   const bs = tacBasementList();
-  if (tacDisplay.chairsBasement && bs.length) {
+  if (tacDisplay.rocketChairsBasement && bs.length) {
     const bIdx = S.tacChairBasementIndex % bs.length;
     bs[bIdx].rocketChairs.forEach((pt, i) => draw(pt, 'basement', i));
   }
@@ -1065,12 +1086,33 @@ export function renderTacLockers() {
   map.lockers.forEach(([px, pz]) => {
     const el = document.createElement('img');
     el.className = 'tac-locker';
-    el.src = LOCKER_ICON_URL;
+    el.src = COMMON_ICON_URL.locker;
     el.alt = translate("common.locker");
     el.draggable = false;
     el.style.left = `${(px / imgW) * 100}%`;
     el.style.top = `${(pz / imgH) * 100}%`;
     el.style.width = `${tacDisplay.lockerSize}%`;
+    el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
+    tacLayer().appendChild(el);
+  });
+}
+
+export function renderTacPhoneBooths() {
+  if (!tacMapWrap) return;
+  tacMapWrap.querySelectorAll('.tac-phone-booth').forEach((el) => el.remove());
+  if (!tacDisplay.phoneBooths) return;
+  const map = MAPS_DATA[S.currentMapId];
+  if (!map || !map.phoneBooths || !map.phoneBooths.length) return;
+  const [imgW, imgH] = map.mapSize;
+  map.phoneBooths.forEach(([px, pz]) => {
+    const el = document.createElement('img');
+    el.className = 'tac-phone-booth';
+    el.src = COMMON_ICON_URL.phoneBooth;
+    el.alt = translate("common.phoneBooth");
+    el.draggable = false;
+    el.style.left = `${(px / imgW) * 100}%`;
+    el.style.top = `${(pz / imgH) * 100}%`;
+    el.style.width = `${tacDisplay.phoneBoothSize}%`;
     el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
     tacLayer().appendChild(el);
   });
@@ -1089,7 +1131,7 @@ export function renderTacBoxes() {
     const [px, pz] = xz(pt);
     const el = document.createElement('img');
     el.className = 'tac-box';
-    el.src = BOX_ICON_URL;
+    el.src = COMMON_ICON_URL.box;
     el.alt = translate("common.box");
     el.draggable = false;
     el.style.left = `${(px / imgW) * 100}%`;
@@ -1114,7 +1156,7 @@ export function tacSnapTarget(p, excl) {
   const map = MAPS_DATA[S.currentMapId];
   const [imgW, imgH] = map.mapSize;
   const pts = [];
-  if (tacDisplay.snap.cipher && tacDisplay.ciphers) {
+  if (tacDrawSettings.snap.cipher && tacDisplay.ciphers) {
     map.cipherCombinations[S.currentCipherIndex].forEach((cid) => {
       const c = cipherOf(S.currentMapId, cid);
       if (c) pts.push({
@@ -1123,36 +1165,36 @@ export function tacSnapTarget(p, excl) {
       });
     });
   }
-  if (tacDisplay.snap.dungeon && tacDisplay.dungeon && map.dungeons.length) {
+  if (tacDrawSettings.snap.dungeon && tacDisplay.dungeon && map.dungeons.length) {
     const pt = map.dungeons[S.tacDungeonIndex % map.dungeons.length];
     pts.push({
       x: pt[0] / imgW, y: pt[1] / imgH,
       size: tacDisplay.dungeonSize, kind: 'dungeon',
     });
   }
-  if (tacDisplay.snap.door && tacDisplay.doors) {
+  if (tacDrawSettings.snap.escapeDoor && tacDisplay.escapeDoors) {
     tacDoorPoints(map).forEach((pt) =>
       pts.push({
         x: pt[0] / imgW, y: pt[1] / imgH,
-        size: tacDisplay.doorSize, kind: 'door',
+        size: tacDisplay.escapeDoorSize, kind: 'door',
       }));
   }
-  if (tacDisplay.snap.chair && map.rocketChairs) {
+  if (tacDrawSettings.snap.rocketChair && map.rocketChairs) {
     const ch = map.rocketChairs;
     const pushChair = (pt) => {
       const px = pt[0], pz = pt.length > 2 ? pt[2] : pt[1];
-      pts.push({ x: px / imgW, y: pz / imgH, size: tacDisplay.chairSize, kind: 'chair' });
+      pts.push({ x: px / imgW, y: pz / imgH, size: tacDisplay.rocketChairSize, kind: 'chair' });
     };
-    if (tacDisplay.chairs) {
+    if (tacDisplay.rocketChairs) {
       ch.fixed.forEach(pushChair);
       if (ch.sets.length) ch.sets[S.tacChairIndex % ch.sets.length].forEach(pushChair);
     }
     const bs = tacBasementList();
-    if (tacDisplay.chairsBasement && bs.length) {
+    if (tacDisplay.rocketChairsBasement && bs.length) {
       bs[S.tacChairBasementIndex % bs.length].rocketChairs.forEach(pushChair);
     }
   }
-  if (tacDisplay.snap.box && map.chests) {
+  if (tacDrawSettings.snap.box && map.chests) {
     const bx = map.chests;
     const pushBox = (pt) => {
       const px = pt[0], pz = pt.length > 2 ? pt[2] : pt[1];
@@ -1166,11 +1208,21 @@ export function tacSnapTarget(p, excl) {
       bs[S.tacChairBasementIndex % bs.length].chest.forEach(pushBox);
     }
   }
-  if (tacDisplay.snap.point) {
+  if (tacDrawSettings.snap.locker && tacDisplay.lockers && map.lockers) {
+    map.lockers.forEach(([px, pz]) => {
+      pts.push({ x: px / imgW, y: pz / imgH, size: tacDisplay.lockerSize, kind: 'locker' });
+    });
+  }
+  if (tacDrawSettings.snap.phoneBooth && tacDisplay.phoneBooths && map.phoneBooths) {
+    map.phoneBooths.forEach(([px, pz]) => {
+      pts.push({ x: px / imgW, y: pz / imgH, size: tacDisplay.phoneBoothSize, kind: 'phoneBooth' });
+    });
+  }
+  if (tacDrawSettings.snap.endpoint) {
     const b = tacBoard();
     
     b.arrows.forEach((a) => {
-      if (a.shape !== 'arrow') return;
+      if (a.shape !== 'arrow' && a.shape !== 'line') return;
       pts.push({ x: a.x1, y: a.y1, kind: 'point', color: a.color });
       pts.push({ x: a.x2, y: a.y2, kind: 'point', color: a.color });
     });
@@ -1226,6 +1278,7 @@ export function tacSetRot(k) {
   renderTacChairs();
   renderTacLockers();
   renderTacBoxes();
+  renderTacPhoneBooths();
   renderTacBoard();
 }
 
@@ -1496,13 +1549,15 @@ tacDungeonSizeDefEl._default = TAC_DISPLAY_DEFAULT.dungeonSize;
 
 tacSpawnSizeDefEl._default = TAC_DISPLAY_DEFAULT.spawnSize;
 
-tacChairSizeDefEl._default = TAC_DISPLAY_DEFAULT.chairSize;
+tacChairSizeDefEl._default = TAC_DISPLAY_DEFAULT.rocketChairSize;
 
 tacLockerSizeDefEl._default = TAC_DISPLAY_DEFAULT.lockerSize;
 
 tacBoxSizeDefEl._default = TAC_DISPLAY_DEFAULT.boxSize;
 
-tacDoorSizeDefEl._default = TAC_DISPLAY_DEFAULT.doorSize;
+tacPhoneBoothSizeDefEl._default = TAC_DISPLAY_DEFAULT.phoneBoothSize;
+
+tacDoorSizeDefEl._default = TAC_DISPLAY_DEFAULT.escapeDoorSize;
 
 
 tacShowZonesEl.addEventListener('change', () => {
@@ -1524,12 +1579,12 @@ bindTacDisplayRow(tacShowSpawnsEl, tacSpawnSizeEl, tacSpawnSizeDefEl,
   (v) => { tacDisplay.spawnSize = v; renderTacSpawns(); });
 
 bindTacDisplayRow(tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl,
-  (v) => { tacDisplay.chairs = v; renderTacChairs(); },
-  (v) => { tacDisplay.chairSize = v; renderTacChairs(); });
+  (v) => { tacDisplay.rocketChairs = v; renderTacChairs(); },
+  (v) => { tacDisplay.rocketChairSize = v; renderTacChairs(); });
 
 tacShowChairBasementEl.addEventListener('change', () => {
-  tacDisplay.chairsBasement = tacShowChairBasementEl.checked;
-  tacCarryChairBasementEl.checked = tacDisplay.chairsBasement;
+  tacDisplay.rocketChairsBasement = tacShowChairBasementEl.checked;
+  tacCarryChairBasementEl.checked = tacDisplay.rocketChairsBasement;
   renderTacChairs();
   tacSave();
 });
@@ -1542,6 +1597,10 @@ bindTacDisplayRow(tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl,
   (v) => { tacDisplay.boxes = v; renderTacBoxes(); },
   (v) => { tacDisplay.boxSize = v; renderTacBoxes(); });
 
+bindTacDisplayRow(tacShowPhoneBoothsEl, tacPhoneBoothSizeEl, tacPhoneBoothSizeDefEl,
+  (v) => { tacDisplay.phoneBooths = v; renderTacPhoneBooths(); },
+  (v) => { tacDisplay.phoneBoothSize = v; renderTacPhoneBooths(); });
+
 tacShowBoxBasementEl.addEventListener('change', () => {
   tacDisplay.boxesBasement = tacShowBoxBasementEl.checked;
   tacCarryBoxBasementEl.checked = tacDisplay.boxesBasement;
@@ -1550,8 +1609,8 @@ tacShowBoxBasementEl.addEventListener('change', () => {
 });
 
 bindTacDisplayRow(tacShowDoorsEl, tacDoorSizeEl, tacDoorSizeDefEl,
-  (v) => { tacDisplay.doors = v; renderTacLandmarks(); },
-  (v) => { tacDisplay.doorSize = v; renderTacLandmarks(); });
+  (v) => { tacDisplay.escapeDoors = v; renderTacLandmarks(); },
+  (v) => { tacDisplay.escapeDoorSize = v; renderTacLandmarks(); });
 
 // ---- 狂欢之椅推算（挂人范围二维近似，数据来自三维导航栅格） ----
 export const tacCarryState = {
@@ -1716,7 +1775,7 @@ function tacCarryGroundChairs() {
       if (ground(pt)) out.push({ kind: 'set', index: i, x: xz(pt)[0], z: xz(pt)[1] });
     });
   }
-  if (tacDisplay.chairsBasement) {
+  if (tacDisplay.rocketChairsBasement) {
     const bs = tacBasementList();
     if (bs.length) {
       const bIdx = S.tacChairBasementIndex % bs.length;
@@ -1731,13 +1790,13 @@ function tacCarryGroundChairs() {
 
 export function syncTacCarryChairRow() {
   if (!tacCarryCard) return;
-  tacCarryShowChairsEl.checked = tacDisplay.chairs;
-  tacCarryChairSizeEl.value = tacDisplay.chairSize;
-  tacCarryChairSizeDefEl.checked = tacDisplay.chairSize === TAC_DISPLAY_DEFAULT.chairSize;
+  tacCarryShowChairsEl.checked = tacDisplay.rocketChairs;
+  tacCarryChairSizeEl.value = tacDisplay.rocketChairSize;
+  tacCarryChairSizeDefEl.checked = tacDisplay.rocketChairSize === TAC_DISPLAY_DEFAULT.rocketChairSize;
   const ch = MAPS_DATA[S.currentMapId].rocketChairs;
   tacCarryChairText.textContent = (!ch || !ch.sets.length) ? '--'
     : translate('ui.tac.display.rocketChair.layout', { index: S.tacChairIndex + 1, count: ch.sets.length });
-  tacCarryChairBasementEl.checked = tacDisplay.chairsBasement;
+  tacCarryChairBasementEl.checked = tacDisplay.rocketChairsBasement;
   tacCarryBoxBasementEl.checked = tacDisplay.boxesBasement;
   syncTacBasementText();
 }
@@ -2111,7 +2170,7 @@ function renderTacCarryMark() {
   ring.className = 'tac-carry-mark-ring';
   ring.style.left = `${(rows[i].x / imgW) * 100}%`;
   ring.style.top = `${(rows[i].z / imgH) * 100}%`;
-  ring.style.width = `${tacDisplay.chairSize * 1.5}%`;
+  ring.style.width = `${tacDisplay.rocketChairSize * 1.5}%`;
   tacLayer().appendChild(ring);
 }
 
@@ -2316,11 +2375,15 @@ function renderTacCarryBuffs() {
 
 function buildTacCarryCard() {
   if (!tacCarryCard) return;
+  // 前锋选项的挣扎加成值跟随角色数据（survivor.js traits.struggle），不写死在文案里
+  document.getElementById('tacCarrySurvivorForward').textContent =
+    translate("ui.tac.rocketChair.balloon.setting.balloon.survivor.base.choose",
+      { name: TAC_ROLES.forward.name, value: Math.round(CARRY_SURVIVORS.forward.struggleBonus * 100) });
   // 与显示设置共享的椅子行
-  tacCarryChairSizeDefEl._default = TAC_DISPLAY_DEFAULT.chairSize;
+  tacCarryChairSizeDefEl._default = TAC_DISPLAY_DEFAULT.rocketChairSize;
   bindTacDisplayRow(tacCarryShowChairsEl, tacCarryChairSizeEl, tacCarryChairSizeDefEl,
-    (v) => { tacDisplay.chairs = v; renderTacChairs(); syncTacDisplayUI(); },
-    (v) => { tacDisplay.chairSize = v; renderTacChairs(); syncTacDisplayUI(); });
+    (v) => { tacDisplay.rocketChairs = v; renderTacChairs(); syncTacDisplayUI(); },
+    (v) => { tacDisplay.rocketChairSize = v; renderTacChairs(); syncTacDisplayUI(); });
   tacCarryChairPrevBtn.addEventListener('click', () => { switchTacChair(-1); syncTacCarryChairRow(); });
   tacCarryChairNextBtn.addEventListener('click', () => { switchTacChair(1); syncTacCarryChairRow(); });
 
@@ -2394,8 +2457,8 @@ function buildTacCarryCard() {
 
   // 地下室椅子/箱子开关与组切换（与显示设置的地下室行共享状态）
   tacCarryChairBasementEl.addEventListener('change', () => {
-    tacDisplay.chairsBasement = tacCarryChairBasementEl.checked;
-    tacShowChairBasementEl.checked = tacDisplay.chairsBasement;
+    tacDisplay.rocketChairsBasement = tacCarryChairBasementEl.checked;
+    tacShowChairBasementEl.checked = tacDisplay.rocketChairsBasement;
     renderTacChairs();
     tacSave();
   });
@@ -2699,7 +2762,7 @@ function buildTacTideRoleOptions() {
   let opts = Object.entries(TAC_MOVEMENT_SURVIVOR.states).map(([k, st]) =>
     `<option value="${k}">${st.name} ${st.speed}m/s</option>`).join('');
   opts += `<option value="role">${translate("common.roles")}</option>`;
-  opts += `<option value="fixed">${translate("ui.common.fixed")}</option>`;
+  opts += `<option value="fixed">${translate("application.common.fixed")}</option>`;
   tacTideSpeedRoleEl.innerHTML = opts + `<option value="custom">${translate("common.custom")}</option>`;
   tacTideSpeedRoleEl.value = 'run';
 }
@@ -3426,7 +3489,7 @@ function buildTacPathRoleOptions() {
     let opts = Object.entries(TAC_MOVEMENT_SURVIVOR.states).map(([k, st]) =>
       `<option value="${k}">${st.name} ${st.speed}m/s</option>`).join('');
     opts += `<option value="role">${translate("common.roles")}</option>`;
-    opts += `<option value="fixed">${translate("ui.common.fixed")}</option>`;
+    opts += `<option value="fixed">${translate("application.common.fixed")}</option>`;
     tacPathSpeedRoleEl.innerHTML = opts + `<option value="custom">${translate("common.custom")}</option>`;
     tacPathSpeedRoleEl.value = 'run';
     return;
@@ -3902,45 +3965,55 @@ window.addEventListener('resize', () => {
 
 
 tacDoorLockEl.addEventListener('change', () => {
-  tacDisplay.doorLock = tacDoorLockEl.checked;
+  tacDisplay.escapeDoorLock = tacDoorLockEl.checked;
   renderTacLandmarks();
   tacSave();
 });
 
 
 tacSnapCipherEl.addEventListener('change', () => {
-  tacDisplay.snap.cipher = tacSnapCipherEl.checked;
+  tacDrawSettings.snap.cipher = tacSnapCipherEl.checked;
   tacSave();
 });
 
 tacSnapDungeonEl.addEventListener('change', () => {
-  tacDisplay.snap.dungeon = tacSnapDungeonEl.checked;
+  tacDrawSettings.snap.dungeon = tacSnapDungeonEl.checked;
   tacSave();
 });
 
 tacSnapDoorEl.addEventListener('change', () => {
-  tacDisplay.snap.door = tacSnapDoorEl.checked;
+  tacDrawSettings.snap.escapeDoor = tacSnapDoorEl.checked;
   tacSave();
 });
 
 tacSnapChairEl.addEventListener('change', () => {
-  tacDisplay.snap.chair = tacSnapChairEl.checked;
+  tacDrawSettings.snap.rocketChair = tacSnapChairEl.checked;
+  tacSave();
+});
+
+tacSnapLockerEl.addEventListener('change', () => {
+  tacDrawSettings.snap.locker = tacSnapLockerEl.checked;
   tacSave();
 });
 
 tacSnapBoxEl.addEventListener('change', () => {
-  tacDisplay.snap.box = tacSnapBoxEl.checked;
+  tacDrawSettings.snap.box = tacSnapBoxEl.checked;
+  tacSave();
+});
+
+tacSnapPhoneBoothEl.addEventListener('change', () => {
+  tacDrawSettings.snap.phoneBooth = tacSnapPhoneBoothEl.checked;
   tacSave();
 });
 
 tacSnapPointEl.addEventListener('change', () => {
-  tacDisplay.snap.point = tacSnapPointEl.checked;
+  tacDrawSettings.snap.endpoint = tacSnapPointEl.checked;
   tacSave();
 });
 
 
 tacDelSegOnlyEl.addEventListener('change', () => {
-  tacDisplay.delSegOnly = tacDelSegOnlyEl.checked;
+  tacDrawSettings.delSegOnly = tacDelSegOnlyEl.checked;
   tacSave();
 });
 
@@ -3960,7 +4033,7 @@ tacSelGlowEl.addEventListener('change', () => {
 
 
 tacHideEndpointsEl.addEventListener('change', () => {
-  tacDisplay.hideEndpoints = tacHideEndpointsEl.checked;
+  tacDrawSettings.hideEndpoints = tacHideEndpointsEl.checked;
   renderTacBoard();
   tacSave();
 });
@@ -3986,17 +4059,7 @@ $('tacBasementPrev').addEventListener('click', () => switchTacBasement(-1));
 $('tacBasementNext').addEventListener('click', () => switchTacBasement(1));
 
 
-if (tacPersisted && tacPersisted.display) {
-  const sd = tacPersisted.display;
-  Object.assign(tacDisplay, sd);
-  tacDisplay.snap = Object.assign({ cipher: true, dungeon: true, door: true, chair: true, box: true, point: true }, sd.snap || {});
-}
-
-if (tacPersisted && tacPersisted.mstyle) {
-  if (tacPersisted.mstyle.single) Object.assign(tacMeasureStyle.single, tacPersisted.mstyle.single);
-  if (tacPersisted.mstyle.chain) Object.assign(tacMeasureStyle.chain, tacPersisted.mstyle.chain);
-}
-
+// 显示/绘制/样式设置的持久化恢复已收拢在 persist.js 顶部（只认当前结构的键）
 syncTacDisplayUI();
 
 
@@ -4096,7 +4159,33 @@ export function rectNode(a, W, H, idx) {
 }
 
 
+export function lineNode(a, W, H, idx) {
+  const x1 = a.x1 * W, y1 = a.y1 * H;
+  const x2 = a.x2 * W, y2 = a.y2 * H;
+
+  const g = document.createElementNS(TAC_SVG_NS, 'g');
+  if (idx >= 0) g.dataset.idx = idx;
+
+  const hit = document.createElementNS(TAC_SVG_NS, 'line');
+  hit.setAttribute('x1', x1); hit.setAttribute('y1', y1);
+  hit.setAttribute('x2', x2); hit.setAttribute('y2', y2);
+  hit.setAttribute('stroke', 'rgba(0,0,0,0)');
+  hit.setAttribute('stroke-width', Math.max(16, a.width * 4));
+
+  const line = document.createElementNS(TAC_SVG_NS, 'line');
+  line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+  line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+  line.setAttribute('stroke', a.color);
+  line.setAttribute('stroke-width', a.width);
+  line.setAttribute('stroke-linecap', 'round');
+
+  g.append(hit, line);
+  return g;
+}
+
+
 export function shapeNode(a, W, H, idx) {
+  if (a.shape === 'line') return lineNode(a, W, H, idx);
   if (a.shape === 'circle') return circleNode(a, W, H, idx);
   if (a.shape === 'rect') return rectNode(a, W, H, idx);
   return arrowNode(a, W, H, idx);
@@ -4993,12 +5082,664 @@ export function renderTacArrows() {
     tacArrowSvg.appendChild(shapeNode(
       { ...tacDrawing, shape: tacDrawShape, color: tacArrowColor, width: tacArrowWidth }, W, H, -1));
   }
+
+  // 动画路径折线：显示当前选中造物的路径（可用「隐藏动画线」关闭）
+  if (!tacDrawSettings.hideAnimPath) {
+    const animObj = tacAnimTargetOf(tacManageSel);
+    if (animObj && animObj.anim && (animObj.anim.points || []).length >= 2) {
+      const poly = document.createElementNS(TAC_SVG_NS, 'polyline');
+      poly.setAttribute('points',
+        animObj.anim.points.map((pt) => `${pt.x * W},${pt.y * H}`).join(' '));
+      poly.setAttribute('fill', 'none');
+      poly.setAttribute('stroke', '#f472b6');
+      poly.setAttribute('stroke-width', 2.5);
+      poly.setAttribute('stroke-dasharray', '8 6');
+      poly.setAttribute('stroke-linejoin', 'round');
+      poly.setAttribute('stroke-linecap', 'round');
+      tacArrowSvg.appendChild(poly);
+    }
+  }
+}
+
+
+/* ================= 造物动画 =================
+ * 动画数据存在造物 token/item 的 anim 字段（随棋盘自动存档）：
+ *   { mode:'time'|'speed', points:[{x,y}], times:[...], speeds:[{name,speed}] }
+ * 播放只改 DOM 位置，不写回造物坐标；停止/重置后回到真实位置。 */
+
+function tacAnimGeom() {
+  const md = MAPS_DATA[S.currentMapId];
+  const [dw, dh] = md.mapSize;
+  return { dw, dh, widthM: md.widthM };
+}
+
+function tacAnimTargetOf(sel) {
+  if (!sel) return null;
+  return sel.type === 'role' ? tacTokenByTid(sel.tid) : (tacBoard().items[sel.idx] || null);
+}
+
+function tacAnimEnsure(obj) {
+  if (!obj.anim) obj.anim = { mode: 'time', points: [], times: [], speeds: [] };
+  const a = obj.anim;
+  a.points ||= [];
+  a.times ||= [];
+  a.speeds ||= [];
+  return a;
+}
+
+// 造物的撤销引用：角色用 tid，道具用当前下标
+function tacAnimPushUndo(obj, prev) {
+  if (obj.tid != null) tacUndoStack.push({ type: 'anim', kind: 'role', tid: obj.tid, prev });
+  else tacUndoStack.push({ type: 'anim', kind: 'item', idx: tacBoard().items.indexOf(obj), prev });
+}
+
+// 移速预设：监管者取自身移速（多形态多档）；求生者取四姿态 + 角色专属移速（如玩具商滑翔）
+function tacAnimSpeedPresets(obj) {
+  const def = TAC_ROLES[obj.role];
+  if (def && def.camp === 'hunter') {
+    if (def.speed != null && typeof def.speed === 'object') {
+      return Object.entries(def.speed).map(([name, v]) => ({ name, speed: v }));
+    }
+    if (def.speed > 0) return [{ name: def.name, speed: def.speed }];
+    return [];
+  }
+  const out = Object.values(TAC_MOVEMENT_SURVIVOR.states)
+    .map((s) => ({ name: s.name, speed: s.speed }));
+  if (def && Array.isArray(def.speeds)) {
+    def.speeds.forEach((s) => out.push({ name: s.name, speed: s.speed }));
+  }
+  return out;
+}
+
+// 新路径点的默认移速：预设第一项（监管者=自身移速，求生者=跑速）
+function tacAnimDefaultSpeed(obj) {
+  const first = tacAnimSpeedPresets(obj)[0];
+  if (first) return { ...first };
+  return { name: TAC_MOVEMENT_SURVIVOR.states.run.name, speed: TAC_MOVEMENT_SURVIVOR.states.run.speed };
+}
+
+// 段时长函数：段上有加成 buff 时，用与测算卡片同款的 simulateMovement 计算实际时长
+function tacAnimSegDurFn(obj) {
+  const speeds = (obj.anim && obj.anim.speeds) || [];
+  if (!speeds.some((s) => s && s.buffs && s.buffs.length)) return null;
+  return (i, lenM, v) => {
+    const buffs = speeds[i] && speeds[i].buffs;
+    if (!buffs || !buffs.length || !(v > 0)) return v > 0 ? lenM / v : 0;
+    return simulateMovement([lenM], {
+      bases: [{ from: 0, to: 1, speed: v }],
+      buffs: buffs.map((b) => ({ ...b, from: 0, to: 1 })),
+    }).total;
+  };
+}
+
+// 该造物当前段可用的加成列表：按阵营/角色/姿态/形态过滤（与测算卡片同规则）
+function tacAnimBuffOptions(obj, seg) {
+  const def = TAC_ROLES[obj.role] || {};
+  const camp = def.camp === 'hunter' ? 'hunter' : 'survivor';
+  // 段基础速度对应的姿态（仅求生者有姿态概念）与监管者形态序号
+  const stKey = camp === 'survivor'
+    ? Object.keys(TAC_MOVEMENT_SURVIVOR.states)
+      .find((k) => Math.abs(TAC_MOVEMENT_SURVIVOR.states[k].speed - seg.speed) < 1e-9) || null
+    : null;
+  let formIdx = 0;
+  if (def.speed != null && typeof def.speed === 'object') {
+    const fi = Object.values(def.speed).findIndex((v) => Math.abs(v - seg.speed) < 1e-9);
+    if (fi >= 0) formIdx = fi;
+  }
+  const stateOk = (states) => !states || (stKey && states.includes(stKey));
+  const out = [];
+  (TAC_MOVEMENT_BUFFS.trait[camp] || []).forEach((t) => {
+    if (t.role && t.role !== def.name) return;
+    if (t.forms && t.forms.length && !t.forms.includes(formIdx)) return;
+    if (!stateOk(t.states)) return;
+    out.push({ type: 'trait', key: t.key, def: t });
+  });
+  Object.entries(TAC_MOVEMENT_BUFFS.talent).forEach(([k, b]) => {
+    if (b.camp && b.camp !== camp) return;
+    if (!stateOk(b.states)) return;
+    out.push({ type: 'talent', key: k, def: b });
+  });
+  (TAC_MOVEMENT_BUFFS.other[camp] || []).forEach((t) => {
+    if (!stateOk(t.states)) return;
+    out.push({ type: 'other', key: t.key, def: t });
+  });
+  return out;
+}
+
+// 模式互转：位置保留，派生值互算（时刻<->移速）
+function tacAnimConvertMode(anim, geom, toMode, segDurFn) {
+  if (anim.mode === toMode) return;
+  const segs = animSegments(anim, geom, segDurFn);
+  if (toMode === 'speed') {
+    // 全精度存储（仅显示时取两位小数），保证时刻<->移速往返切换不漂移
+    anim.speeds = segs.map((s, i) => ({
+      name: translate("common.custom"),
+      speed: s.avgSpeed || TAC_MOVEMENT_SURVIVOR.states.run.speed,
+      buffs: (anim.speeds[i] || {}).buffs,
+    }));
+  } else {
+    anim.times = segs.length ? [segs[0].t0, ...segs.map((s) => s.t1)] : [];
+    while (anim.times.length < anim.points.length) {
+      anim.times.push((anim.times[anim.times.length - 1] ?? 0) + 3);
+    }
+  }
+  anim.mode = toMode;
+}
+
+// 移动造物的所有相关 DOM（角色含范围圈，道具含圆/钉两层）
+function tacAnimSetElPos(kind, ref, x, y) {
+  const sel = kind === 'role'
+    ? `.tac-token[data-tid="${ref}"], .tac-role-circle[data-tid="${ref}"]`
+    : `.tac-item-circle[data-idx="${ref}"], .tac-item-pin[data-idx="${ref}"]`;
+  tacMapWrap.querySelectorAll(sel).forEach((el) => {
+    el.style.left = `${x * 100}%`;
+    el.style.top = `${y * 100}%`;
+  });
+}
+
+// 停止播放；restore=true 时把 DOM 位置还原到造物真实坐标
+export function tacAnimStop(restore) {
+  if (!tacAnimPlay) return;
+  cancelAnimationFrame(tacAnimPlay.raf);
+  const { kind, ref } = tacAnimPlay;
+  tacAnimPlay = null;
+  if (!restore) return;
+  const obj = kind === 'role' ? tacTokenByTid(ref) : tacBoard().items[ref];
+  if (obj) tacAnimSetElPos(kind, ref, obj.x, obj.y);
+}
+
+// 重置按钮：无论是否播完，都把选中造物的 DOM 位置还原到真实坐标
+export function tacAnimReset() {
+  const sel = tacManageSel;
+  tacAnimStop(true);
+  const obj = tacAnimTargetOf(sel);
+  if (obj) tacAnimSetElPos(sel.type, sel.type === 'role' ? sel.tid : sel.idx, obj.x, obj.y);
+}
+
+
+/* ---- 全局时间轴：所有动画造物在统一时钟 T 下协同定位（只改 DOM，不存档） ---- */
+export const tacTimeline = { t: 0, playing: false, raf: 0 };
+
+// 当前地图上所有带有效动画的造物
+function tacTimelineEntries() {
+  const out = [];
+  tacBoard().tokens.forEach((tk) => {
+    if (tk.anim && (tk.anim.points || []).length >= 2) {
+      out.push({ kind: 'role', ref: tk.tid, obj: tk, name: tacInstDispName(tk) });
+    }
+  });
+  tacBoard().items.forEach((it, idx) => {
+    if (it.anim && (it.anim.points || []).length >= 2) {
+      out.push({ kind: 'item', ref: idx, obj: it, name: tacInstDispName(it) });
+    }
+  });
+  return out;
+}
+
+// 全局总时长 = 各动画结束时刻的最大值
+function tacTimelineTotal(entries) {
+  const geom = tacAnimGeom();
+  let total = 0;
+  (entries || tacTimelineEntries()).forEach((e) => {
+    const { end } = animDuration(e.obj.anim, geom, tacAnimSegDurFn(e.obj));
+    if (end > total) total = end;
+  });
+  return total;
+}
+
+// 把所有动画造物定位到时刻 t
+function tacTimelineApply(t) {
+  const geom = tacAnimGeom();
+  const entries = tacTimelineEntries();
+  const positions = animAllPositions(entries.map((e) => (
+    { anim: e.obj.anim, segDurFn: tacAnimSegDurFn(e.obj) })), geom, t);
+  positions.forEach((pos, i) => {
+    if (pos) tacAnimSetElPos(entries[i].kind, entries[i].ref, pos.x, pos.y);
+  });
+}
+
+function tacTimelineSyncUI(total) {
+  tacTimelineScrub.max = total;
+  tacTimelineScrub.value = Math.min(tacTimeline.t, total);
+  tacTimelineTime.textContent = `${tacTimeline.t.toFixed(1)}s / ${total.toFixed(1)}s`;
+  tacTimelinePlay.textContent = tacTimeline.playing ? '⏸' : '▶';
+  tacTimelinePlay.disabled = total <= 0;
+}
+
+// 重绘轨道与时间显示（renderTacBoard 调用）
+export function renderTacTimeline() {
+  const entries = tacTimelineEntries();
+  const total = tacTimelineTotal(entries);
+  if (tacTimeline.t > total) tacTimeline.t = total;
+  const geom = tacAnimGeom();
+  tacTimelineTracks.innerHTML = '';
+  entries.forEach((e) => {
+    const row = document.createElement('div');
+    row.className = 'tac-timeline-track';
+    const label = document.createElement('span');
+    label.className = 'tac-timeline-track-name';
+    label.textContent = e.name;
+    row.appendChild(label);
+    const lane = document.createElement('div');
+    lane.className = 'tac-timeline-lane';
+    if (total > 0) {
+      animSegments(e.obj.anim, geom, tacAnimSegDurFn(e.obj)).forEach((s) => {
+        if (s.dur <= 0) return;
+        const bar = document.createElement('div');
+        bar.className = 'tac-timeline-bar';
+        bar.style.left = `${(s.t0 / total) * 100}%`;
+        bar.style.width = `${(s.dur / total) * 100}%`;
+        lane.appendChild(bar);
+      });
+    }
+    row.appendChild(lane);
+    row.title = e.name;
+    row.addEventListener('click', () => {
+      tacManageSel = e.kind === 'role' ? { type: 'role', tid: e.ref } : { type: 'item', idx: e.ref };
+      if (e.kind === 'role') { tacSelected = e.ref; tacSelectedItem = null; }
+      else { tacSelectedItem = e.ref; tacSelected = null; }
+      renderTacBoard();
+    });
+    tacTimelineTracks.appendChild(row);
+  });
+  tacTimelineSyncUI(total);
+}
+
+// 停止全局播放；restore=true 时所有造物还原到真实坐标
+export function tacTimelineStop(restore) {
+  if (tacTimeline.raf) cancelAnimationFrame(tacTimeline.raf);
+  tacTimeline.raf = 0;
+  const wasPlaying = tacTimeline.playing;
+  tacTimeline.playing = false;
+  if (restore) {
+    tacTimelineEntries().forEach((e) => tacAnimSetElPos(e.kind, e.ref, e.obj.x, e.obj.y));
+  }
+  if (wasPlaying || restore) renderTacTimeline();
+}
+
+function tacTimelineToggle() {
+  if (tacTimeline.playing) { tacTimelineStop(false); return; }
+  const total = tacTimelineTotal();
+  if (total <= 0) return;
+  tacAnimStop(false); // 与单个造物的播放互斥
+  if (tacTimeline.t >= total) tacTimeline.t = 0;
+  const t0 = performance.now();
+  const base = tacTimeline.t;
+  tacTimeline.playing = true;
+  const step = (now) => {
+    if (!tacTimeline.playing) return;
+    tacTimeline.t = base + (now - t0) / 1000;
+    if (tacTimeline.t >= total) {
+      tacTimeline.t = total;
+      tacTimelineApply(total);
+      tacTimeline.playing = false;
+      tacTimeline.raf = 0;
+      renderTacTimeline();
+      return;
+    }
+    tacTimelineApply(tacTimeline.t);
+    tacTimelineSyncUI(total);
+    tacTimeline.raf = requestAnimationFrame(step);
+  };
+  tacTimeline.raf = requestAnimationFrame(step);
+  tacTimelineSyncUI(total);
+}
+
+tacTimelinePlay.addEventListener('click', tacTimelineToggle);
+if (tacTimelineFold) {
+  tacTimelineFold.addEventListener('click', () => {
+    const collapsed = tacTimelineEl.classList.toggle('collapsed');
+    tacTimelineFold.textContent = collapsed ? '▴' : '▾';
+    tacTimelineFold.title = translate(collapsed
+      ? 'ui.tac.anim.timeline.unfold' : 'ui.tac.anim.timeline.fold');
+  });
+}
+tacTimelineScrub.addEventListener('input', () => {
+  tacTimelineStop(false);
+  tacTimeline.t = parseFloat(tacTimelineScrub.value) || 0;
+  tacTimelineApply(tacTimeline.t);
+  tacTimelineSyncUI(tacTimelineTotal());
+});
+
+export function tacAnimPlayStart() {
+  const obj = tacAnimTargetOf(tacManageSel);
+  if (!obj || !obj.anim || (obj.anim.points || []).length < 2) return;
+  tacAnimStop(true);
+  tacTimelineStop(true); // 与全局播放互斥
+  const geom = tacAnimGeom();
+  const fn = tacAnimSegDurFn(obj);
+  const { start, end } = animDuration(obj.anim, geom, fn);
+  if (end <= start) return;
+  const kind = tacManageSel.type;
+  const ref = kind === 'role' ? tacManageSel.tid : tacManageSel.idx;
+  const t0 = performance.now();
+  const step = (now) => {
+    if (!tacAnimPlay) return;
+    const t = start + (now - t0) / 1000;
+    const pos = animPositionAt(obj.anim, geom, t, fn);
+    if (!pos) { tacAnimStop(true); return; }
+    tacAnimSetElPos(kind, ref, pos.x, pos.y);
+    if (pos.done) { tacAnimStop(false); return; }
+    tacAnimPlay.raf = requestAnimationFrame(step);
+  };
+  tacAnimPlay = { kind, ref, raf: requestAnimationFrame(step) };
+}
+
+// 地图上的编号路径点（renderTacBoard 调用；可用「隐藏时刻点」关闭）
+function renderTacAnimDots() {
+  if (tacDrawSettings.hideAnimDots) return;
+  const obj = tacAnimTargetOf(tacManageSel);
+  if (!obj || !obj.anim) return;
+  (obj.anim.points || []).forEach((pt, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'tac-anim-dot';
+    dot.dataset.pt = i;
+    dot.style.left = `${pt.x * 100}%`;
+    dot.style.top = `${pt.y * 100}%`;
+    dot.textContent = i + 1;
+    tacLayer().appendChild(dot);
+  });
+}
+
+// 管理卡片动画区：模式切换 + 路径点行 + 播放控制
+function buildTacAnimBox(settings, obj) {
+  const geom = tacAnimGeom();
+  const box = tacManageBox(settings, "ui.tac.anim.title");
+  const hasAnim = obj.anim && Array.isArray(obj.anim.points) && obj.anim.points.length;
+  // 添加路径点：状态按钮 + 状态文字（仅动画工具可加点；进入工具默认开启，可取消）
+  if (tacTool === 'anim') {
+    const armRow = document.createElement('div');
+    armRow.className = 'tac-box-line';
+    const armBtn = document.createElement('button');
+    armBtn.type = 'button';
+    armBtn.className = 'tac-anim-btn tac-anim-arm-btn' + (tacAnimArmed ? ' active' : '');
+    armBtn.textContent = translate(tacAnimArmed ? "ui.tac.anim.disarm" : "ui.tac.anim.addPoints");
+    armBtn.addEventListener('click', () => {
+      tacAnimArmed = !tacAnimArmed;
+      renderTacBoard();
+    });
+    armRow.appendChild(armBtn);
+    const status = document.createElement('span');
+    status.className = 'tac-anim-derive tac-anim-status';
+    status.textContent = tacAnimArmed
+      ? translate("ui.tac.anim.hint.empty")
+      : (hasAnim ? '' : translate("ui.tac.anim.hint.none"));
+    armRow.appendChild(status);
+    box.appendChild(armRow);
+  } else if (!hasAnim) {
+    tacBoxHint(box, translate("ui.tac.anim.hint.none"));
+    return;
+  }
+  if (!hasAnim) return;
+  const anim = tacAnimEnsure(obj);
+  const rerun = () => renderTacBoard();
+
+  // 显示开关：隐藏动画线 / 隐藏时刻点（绘制设置持久化）
+  const hideRow = document.createElement('div');
+  hideRow.className = 'tac-box-line';
+  hideRow.innerHTML =
+    `<label class="tac-manage-hide"><input type="checkbox" data-h="path"`
+    + `${tacDrawSettings.hideAnimPath ? ' checked' : ''}>${translate("ui.tac.anim.hide.path")}</label>`
+    + `<label class="tac-manage-hide"><input type="checkbox" data-h="dots"`
+    + `${tacDrawSettings.hideAnimDots ? ' checked' : ''}>${translate("ui.tac.anim.hide.dots")}</label>`;
+  hideRow.querySelectorAll('input').forEach((cb) => cb.addEventListener('change', () => {
+    if (cb.dataset.h === 'path') tacDrawSettings.hideAnimPath = cb.checked;
+    else tacDrawSettings.hideAnimDots = cb.checked;
+    rerun();
+  }));
+  box.appendChild(hideRow);
+
+  // 模式切换：时刻 | 移速
+  const modeRow = document.createElement('div');
+  modeRow.className = 'tac-box-line tac-anim-mode';
+  ['time', 'speed'].forEach((m) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'tac-anim-btn' + (anim.mode === m ? ' active' : '');
+    b.textContent = translate(m === 'time' ? "ui.tac.anim.mode.time" : "ui.tac.anim.mode.speed");
+    b.addEventListener('click', () => {
+      if (anim.mode === m) return;
+      const prev = structuredClone(obj.anim);
+      tacAnimConvertMode(anim, geom, m, tacAnimSegDurFn(obj));
+      tacAnimPushUndo(obj, prev);
+      rerun();
+    });
+    modeRow.appendChild(b);
+  });
+  box.appendChild(modeRow);
+
+  const segDurFn = tacAnimSegDurFn(obj);
+  const segs = animSegments(anim, geom, segDurFn);
+  const round2 = (v) => Math.round(v * 100) / 100;
+
+  // 路径点行
+  anim.points.forEach((pt, i) => {
+    let afterRow = null;
+    const row = document.createElement('div');
+    row.className = 'tac-box-line tac-anim-pt';
+    const label = document.createElement('span');
+    label.className = 'tac-anim-pt-label';
+    label.textContent = translate("ui.tac.anim.point", { index: i + 1 });
+    row.appendChild(label);
+
+    if (anim.mode === 'time') {
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.className = 'tac-anim-num';
+      input.min = 0;
+      input.step = 0.5;
+      input.value = round2(anim.times[i] ?? 0); // 显示两位小数，存储保持全精度
+      input.addEventListener('change', () => {
+        const prev = structuredClone(obj.anim);
+        anim.times[i] = Math.max(0, parseFloat(input.value) || 0);
+        tacAnimPushUndo(obj, prev);
+        rerun();
+      });
+      row.appendChild(input);
+      const unitS = document.createElement('span');
+      unitS.className = 'tac-anim-derive';
+      unitS.textContent = 's';
+      row.appendChild(unitS);
+      if (i > 0) {
+        const dv = document.createElement('span');
+        dv.className = 'tac-anim-derive';
+        const avg = segs[i - 1] && segs[i - 1].avgSpeed;
+        dv.textContent = avg != null
+          ? translate("ui.tac.anim.avgSpeed", { speed: round2(avg) })
+          : '∞';
+        row.appendChild(dv);
+      }
+    } else if (i > 0) {
+      // 移速模式：段 i-1 的预设下拉 + 自定义数值（预设按角色过滤）
+      const seg = anim.speeds[i - 1] || tacAnimDefaultSpeed(obj);
+      anim.speeds[i - 1] = seg;
+      const sel = document.createElement('select');
+      sel.className = 'tac-anim-speed-sel';
+      const groups = tacAnimSpeedPresets(obj);
+      const matched = groups.find((g) => Math.abs(g.speed - seg.speed) < 1e-9);
+      sel.innerHTML = groups.map((g) =>
+        `<option value="${g.speed}">${g.name} ${g.speed}m/s</option>`).join('')
+        + `<option value="custom">${translate("common.custom")}</option>`;
+      sel.value = matched ? String(matched.speed) : 'custom';
+      sel.addEventListener('change', () => {
+        if (sel.value === 'custom') return;
+        const g = groups.find((gg) => String(gg.speed) === sel.value);
+        if (!g) return;
+        const prev = structuredClone(obj.anim);
+        anim.speeds[i - 1] = { name: g.name, speed: g.speed, buffs: seg.buffs };
+        tacAnimPushUndo(obj, prev);
+        rerun();
+      });
+      row.appendChild(sel);
+      const num = document.createElement('input');
+      num.type = 'number';
+      num.className = 'tac-anim-num';
+      num.min = 0.1;
+      num.step = 0.1;
+      num.value = round2(seg.speed); // 显示两位小数，存储保持全精度
+      num.addEventListener('change', () => {
+        const v = parseFloat(num.value);
+        if (!(v > 0)) return;
+        const prev = structuredClone(obj.anim);
+        const g = groups.find((gg) => Math.abs(gg.speed - v) < 1e-9);
+        anim.speeds[i - 1] = { name: g ? g.name : translate("common.custom"), speed: v, buffs: seg.buffs };
+        tacAnimPushUndo(obj, prev);
+        rerun();
+      });
+      row.appendChild(num);
+      const unitV = document.createElement('span');
+      unitV.className = 'tac-anim-derive';
+      unitV.textContent = 'm/s';
+      row.appendChild(unitV);
+      const dv = document.createElement('span');
+      dv.className = 'tac-anim-derive';
+      dv.textContent = segs[i - 1] ? `${round2(segs[i - 1].t1)}s` : '';
+      row.appendChild(dv);
+
+      // 加成 buff：chips 列表 + 按角色/姿态过滤的添加器（时长计算与测算卡片同款）
+      const buffLine = document.createElement('div');
+      buffLine.className = 'tac-box-line tac-anim-buffs';
+      (seg.buffs || []).forEach((buff, bi) => {
+        const chip = document.createElement('span');
+        chip.className = 'tac-anim-chip';
+        chip.textContent = buff.name;
+        chip.title = `${Math.round(((buff.mult ?? 1) - 1) * 100)}%`
+          + (buff.duration ? ` ${buff.duration}s` : '');
+        const x = document.createElement('button');
+        x.type = 'button';
+        x.className = 'tac-anim-chip-x';
+        x.textContent = '✕';
+        x.addEventListener('click', () => {
+          const prev = structuredClone(obj.anim);
+          seg.buffs.splice(bi, 1);
+          tacAnimPushUndo(obj, prev);
+          rerun();
+        });
+        chip.appendChild(x);
+        buffLine.appendChild(chip);
+      });
+      const opts = tacAnimBuffOptions(obj, seg);
+      if (opts.length) {
+        const bsel = document.createElement('select');
+        bsel.className = 'tac-anim-buff-sel';
+        const groupDefs = [
+          ['trait', translate("application.velocity.buff.trait")],
+          ['talent', translate("application.velocity.buff.talent")],
+          ['other', translate("application.velocity.buff.other")],
+        ];
+        bsel.innerHTML = groupDefs.map(([type, label]) => {
+          const list = opts.map((o, oi) => ({ ...o, oi })).filter((o) => o.type === type);
+          if (!list.length) return '';
+          return `<optgroup label="${label}">`
+            + list.map((o) => `<option value="${o.oi}">${o.def.name}</option>`).join('')
+            + '</optgroup>';
+        }).join('');
+        buffLine.appendChild(bsel);
+        const lvSel = document.createElement('select');
+        lvSel.className = 'tac-anim-buff-sel';
+        const syncLv = () => {
+          const o = opts[+bsel.value];
+          lvSel.style.display = o && o.def.levels ? '' : 'none';
+          if (o && o.def.levels) {
+            lvSel.innerHTML = o.def.levels.map((_, li) =>
+              `<option value="${li}"${li === o.def.levels.length - 1 ? ' selected' : ''}>`
+              + `${translate("application.buff.common.level", { value: li + 1 })}</option>`).join('');
+          }
+        };
+        bsel.addEventListener('change', syncLv);
+        syncLv();
+        buffLine.appendChild(lvSel);
+        const addBtn = document.createElement('button');
+        addBtn.type = 'button';
+        addBtn.className = 'tac-anim-btn tac-anim-buff-add';
+        addBtn.textContent = translate("common.add");
+        addBtn.addEventListener('click', () => {
+          const o = opts[+bsel.value];
+          if (!o) return;
+          const def = o.def;
+          const lv = def.levels ? +lvSel.value : null;
+          const lvName = def.levels
+            ? ` ${translate("application.buff.common.level", { value: lv + 1 })}` : '';
+          const entry = { type: o.type, key: o.key, name: def.name + lvName,
+            mult: def.levels ? def.levels[lv] : def.mult, duration: def.duration || 0 };
+          if (def.postMult) entry.postMult = true;
+          const prev = structuredClone(obj.anim);
+          seg.buffs ||= [];
+          seg.buffs.push(entry);
+          if (def.extra) {
+            const ex = { type: o.type, key: o.key, name: def.extra.name,
+              mult: def.extra.mult, duration: def.extra.duration || 0 };
+            if (def.extra.postMult) ex.postMult = true;
+            seg.buffs.push(ex);
+          }
+          tacAnimPushUndo(obj, prev);
+          rerun();
+        });
+        buffLine.appendChild(addBtn);
+      }
+      afterRow = buffLine;
+    }
+
+    // 删除路径点（首点删除后路径整体前移）
+    if (anim.points.length > 1) {
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'tac-manage-del';
+      del.textContent = translate("common.delete");
+      del.addEventListener('click', () => {
+        const prev = structuredClone(obj.anim);
+        anim.points.splice(i, 1);
+        anim.times.splice(i, 1);
+        if (anim.points.length) anim.speeds.splice(i === 0 ? 0 : i - 1, 1);
+        tacAnimPushUndo(obj, prev);
+        rerun();
+      });
+      row.appendChild(del);
+    }
+    box.appendChild(row);
+    if (afterRow) box.appendChild(afterRow);
+  });
+
+  // 播放控制行：▶ 播放 / 重置 / 清除动画 + 总时长
+  const ctl = document.createElement('div');
+  ctl.className = 'tac-box-line tac-anim-ctl';
+  const playBtn = document.createElement('button');
+  playBtn.type = 'button';
+  playBtn.className = 'tac-anim-btn tac-anim-play-btn';
+  playBtn.textContent = translate("ui.tac.anim.play");
+  playBtn.disabled = anim.points.length < 2 || animDuration(anim, geom, segDurFn).total <= 0;
+  playBtn.addEventListener('click', () => tacAnimPlayStart());
+  ctl.appendChild(playBtn);
+  const resetBtn = document.createElement('button');
+  resetBtn.type = 'button';
+  resetBtn.className = 'tac-anim-btn';
+  resetBtn.textContent = translate("ui.tac.anim.reset");
+  resetBtn.addEventListener('click', () => tacAnimReset());
+  ctl.appendChild(resetBtn);
+  const clearBtn = document.createElement('button');
+  clearBtn.type = 'button';
+  clearBtn.className = 'tac-anim-btn';
+  clearBtn.textContent = translate("ui.tac.anim.clear");
+  clearBtn.addEventListener('click', () => {
+    tacAnimStop(true);
+    const prev = structuredClone(obj.anim);
+    delete obj.anim;
+    tacAnimPushUndo(obj, prev);
+    rerun();
+  });
+  ctl.appendChild(clearBtn);
+  const total = document.createElement('span');
+  total.className = 'tac-anim-derive';
+  total.textContent = translate("ui.tac.anim.totalTime",
+    { seconds: round2(animDuration(anim, geom, segDurFn).total) });
+  ctl.appendChild(total);
+  box.appendChild(ctl);
 }
 
 
 export function renderTacBoard() {
   tacSave(); 
-  tacMapWrap.querySelectorAll('.tac-token, .tac-role-circle, .tac-item-circle, .tac-item-pin, .tac-measure-dot, .tac-text')
+  tacMapWrap.querySelectorAll('.tac-token, .tac-role-circle, .tac-item-circle, .tac-item-pin, .tac-measure-dot, .tac-anim-dot, .tac-text')
     .forEach((el) => el.remove());
   renderTacFixedSpawns();
   renderTacTreasure();
@@ -5165,7 +5906,7 @@ export function renderTacBoard() {
       if (isChain && !((isChainStart && end === 'a') || (isChainEnd && end === 'b'))) return;
       const dot = document.createElement('div');
       dot.className = 'tac-measure-dot';
-      if (tacDisplay.hideEndpoints) dot.classList.add('hidden-endpoint');
+      if (tacDrawSettings.hideEndpoints) dot.classList.add('hidden-endpoint');
       dot.dataset.idx = idx;
       dot.dataset.end = end;
       dot.style.left = `${m[kx] * 100}%`;
@@ -5190,7 +5931,9 @@ export function renderTacBoard() {
     el.textContent = t.text;
     tacLayer().appendChild(el);
   });
+  renderTacAnimDots();
   renderTacArrows();
+  renderTacTimeline();
   updateTacPanel();
 }
 
@@ -6163,12 +6906,12 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     const row = document.createElement('div');
     row.className = 'tac-manage-row';
     row.innerHTML =
-      `<label class="tac-manage-slider">${translate("ui.common.icon.size")}`
+      `<label class="tac-manage-slider">${translate("application.common.icon.size")}`
       + `<input type="range" min="3" max="12" step="0.5" value="${token.size}"></label>`
       + `<label class="tac-manage-hide"><input type="checkbox"`
-      + `${token.hideIcon ? ' checked' : ''}>${translate("ui.tac.manangeBox.icon.hide")}</label>`
+      + `${token.hideIcon ? ' checked' : ''}>${translate("application.common.icon.hide")}</label>`
       + `<label class="tac-manage-glow"><input type="checkbox"`
-      + `${token.glow ? ' checked' : ''}>${translate("ui.tac.manangeBox.highlight")}</label>`
+      + `${token.glow ? ' checked' : ''}>${translate("application.common.highlight")}</label>`
       + `<label class="tac-manage-def"><input type="checkbox"`
       + `${isRoleDefault() ? ' checked' : ''}>${translate("common.default")}</label>`
       + `<button type="button" class="tac-manage-del">${translate("common.delete")}</button>`;
@@ -6217,6 +6960,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
       tacManageSel = null;
       renderTacBoard();
     });
+    buildTacAnimBox(settings, token);
     settings.appendChild(row);
     return;
   }
@@ -6285,16 +7029,19 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
         labelPostfix: translate("common.range") });
   }
 
-  
+
+  buildTacAnimBox(settings, it);
+
+
   const row = document.createElement('div');
   row.className = 'tac-manage-row';
   row.innerHTML =
-    `<label class="tac-manage-slider">${translate("ui.common.icon.size")}`
+    `<label class="tac-manage-slider">${translate("application.common.icon.size")}`
     + `<input type="range" min="1.5" max="10" step="0.2" value="${curIcon}"></label>`
     + `<label class="tac-manage-hide"><input type="checkbox"`
-    + `${it.hideIcon ? ' checked' : ''}>${translate("ui.tac.manangeBox.icon.hide")}</label>`
+    + `${it.hideIcon ? ' checked' : ''}>${translate("application.common.icon.hide")}</label>`
     + `<label class="tac-manage-glow"><input type="checkbox"`
-    + `${it.glow ? ' checked' : ''}>${translate("ui.tac.manangeBox.highlight")}</label>`
+    + `${it.glow ? ' checked' : ''}>${translate("application.common.highlight")}</label>`
     + `<label class="tac-manage-def"><input type="checkbox"`
     + `${isDefault ? ' checked' : ''}>${translate("common.default")}</label>`
     + `<button type="button" class="tac-manage-del">${translate("common.delete")}</button>`;
@@ -6660,7 +7407,7 @@ export function tacBuildRoleOptions() {
     let opts = Object.entries(TAC_MOVEMENT_SURVIVOR.states).map(([k, st]) =>
       `<option value="${k}">${st.name} ${st.speed}m/s</option>`).join('');
     opts += `<option value="role">${translate("common.roles")}</option>`;
-    opts += `<option value="fixed">${translate("ui.common.fixed")}</option>`;
+    opts += `<option value="fixed">${translate("application.common.fixed")}</option>`;
     tacSpeedRole.innerHTML = opts + `<option value="custom">${translate("common.custom")}</option>`;
     tacSpeedRole.value = 'run';
     return;
@@ -7693,12 +8440,39 @@ export function buildTacSpeedPanel() {
   syncTacSpeedForm();
   tacBaseSpeedEl.value = tacPending.base.speed;
   
-  tacMStyleToggle.addEventListener('click', () => {
-    const open = tacMStyleBody.style.display === 'none'; 
-    tacMStyleBody.style.display = open ? '' : 'none';
-    tacMStyleToggle.classList.toggle('open', open);
-    tacMStyleToggle.textContent = open ? translate("ui.common.style.title.show") : translate("ui.common.style.title.hide");
+  // 通用「样式设置」折叠开关：测算卡片的样式设置、图形绘制卡片、文本书写卡片共用
+  const makeStyleToggle = (toggleEl, bodyEl) => {
+    let open = true;
+    const sync = () => {
+      toggleEl.textContent = translate("application.draw.style.title", { value: open ? '▾' : '▸' });
+      bodyEl.style.display = open ? '' : 'none';
+    };
+    toggleEl.addEventListener('click', () => { open = !open; sync(); });
+    sync();
+  };
+
+  // 绘制设置区：整体可收起，默认收起；样式设置、其它设置默认展开
+  const syncTacDrawSettings = () => {
+    tacDrawSettingsToggle.textContent = translate("ui.tac.measure.setting.draw.title", { value: tacDrawSettingsOpen ? '▾' : '▸' });
+    tacDrawSettingsBody.style.display = tacDrawSettingsOpen ? '' : 'none';
+  };
+  const syncTacDrawOther = () => {
+    tacDrawOtherToggle.textContent = translate("application.draw.other.title", { value: tacDrawOtherOpen ? '▾' : '▸' });
+    tacDrawOtherBody.style.display = tacDrawOtherOpen ? '' : 'none';
+  };
+  tacDrawSettingsToggle.addEventListener('click', () => {
+    tacDrawSettingsOpen = !tacDrawSettingsOpen;
+    syncTacDrawSettings();
   });
+  tacDrawOtherToggle.addEventListener('click', () => {
+    tacDrawOtherOpen = !tacDrawOtherOpen;
+    syncTacDrawOther();
+  });
+  syncTacDrawSettings();
+  syncTacDrawOther();
+  makeStyleToggle(tacDrawStyleToggle, tacMStyleBody);
+  makeStyleToggle(tacShapeStyleToggle, tacShapeStyleBody);
+  makeStyleToggle(tacTextStyleToggle, tacTextStyleBody);
   
   tacMeasureModesEl.querySelectorAll('.side-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -7748,6 +8522,8 @@ buildTacSpeedPanel();
 export function enterTactic() {
   tacMapTitle.textContent = MAPS_DATA[S.currentMapId].mapName;
   tacMapTitleEn.textContent = MAPS_DATA[S.currentMapId].mapNameEn;
+  tacAnimStop(true);
+  tacTimelineStop(true);
   tacMeasurePending = null;
   tacMeasureHover = null;
   tacChainRoute = null;
@@ -7758,7 +8534,7 @@ export function enterTactic() {
 
 
 export function syncTacSubCards() {
-  tacManageCard.style.display = tacTool === 'select' ? '' : 'none';
+  tacManageCard.style.display = (tacTool === 'select' || tacTool === 'anim') ? '' : 'none';
   if (tacCipherCard) tacCipherCard.style.display = tacTool === 'select' ? '' : 'none';
   tacRolesCard.style.display = tacTool === 'roles' ? '' : 'none';
   tacDrawCard.style.display = tacTool === 'draw' ? '' : 'none';
@@ -7770,7 +8546,15 @@ export function syncTacSubCards() {
   }
   if (tacPathCard) tacPathCard.style.display = tacTool === 'deduce' ? '' : 'none';
   tacDisplayCard.style.display = tacTool === 'display' ? '' : 'none';
-  if (tacTool === 'select') { tacManageCard.open = true; if (tacCipherCard) tacCipherCard.open = true; }
+  if (tacTimelineEl) {
+    const show = tacTool === 'anim';
+    tacTimelineEl.style.display = show ? '' : 'none';
+    document.body.classList.toggle('tac-timeline-open', show);
+  }
+  if (tacTool === 'select' || tacTool === 'anim') {
+    tacManageCard.open = true;
+    if (tacTool === 'select' && tacCipherCard) tacCipherCard.open = true;
+  }
   if (tacTool === 'roles') tacRolesCard.open = true;
   if (tacTool === 'draw') { tacDrawCard.open = true; tacTextCard.open = true; }
   if (tacTool === 'measure') tacMeasureCard.open = true;
@@ -7779,6 +8563,9 @@ export function syncTacSubCards() {
 }
 
 export function setTacTool(tool) {
+  tacAnimStop(true);
+  tacTimelineStop(true);
+  tacAnimArmed = tool === 'anim';
   tacTool = tool;
   tacUpdateTouchAction(); 
   tacPlaceRole = null;
@@ -7791,11 +8578,12 @@ export function setTacTool(tool) {
   tacChainRoute = null; 
   tacSelMeasure = null;
   if (tool !== 'deduce') { tacCarryDisarm(); tacPathDisarm(); }
-  tacticView.querySelectorAll('.tac-tool').forEach((b) =>
+  document.querySelectorAll('.tac-tool').forEach((b) =>
     b.classList.toggle('active', !!b.dataset.tool && b.dataset.tool === tool));
   tacticView.classList.toggle('tac-mode-draw', tool === 'draw');
   tacticView.classList.toggle('tac-mode-delete', tool === 'delete');
   tacticView.classList.toggle('tac-mode-measure', tool === 'measure');
+  tacticView.classList.toggle('tac-mode-anim', tool === 'anim');
   if (tacZoomState.pan) tacSetPanMode(false); 
   syncTacSubCards();
   renderTacArrows();
@@ -7803,7 +8591,7 @@ export function setTacTool(tool) {
 }
 
 
-tacticView.querySelectorAll('.tac-tool[data-tool]').forEach((btn) =>
+document.querySelectorAll('.tac-tool[data-tool]').forEach((btn) =>
   btn.addEventListener('click', () => setTacTool(btn.dataset.tool)));
 
 
@@ -8198,11 +8986,12 @@ export async function tacExportImage() {
   });
   ctx.restore();
 
-  const [ciphIcon, dungeonIcon, doorIcon, chairIcon, lockerIcon, boxIcon, spawnSurvIcon, spawnHuntIcon] = await Promise.all([
-    tacLoadImg(CIPHER_ICON_URL), tacLoadImg(DUNGEON_ICON_URL),
-    tacLoadImg(ESCAPE_DOOR_ICON_URL), tacLoadImg(CHAIR_ICON_URL),
-    tacLoadImg(LOCKER_ICON_URL), tacLoadImg(BOX_ICON_URL),
-    tacLoadImg(SPAWN_SURVIVOR_ICON_URL), tacLoadImg(SPAWN_HUNTER_ICON_URL)]);
+  const [ciphIcon, dungeonIcon, doorIcon, chairIcon, lockerIcon, boxIcon, phoneBoothIcon, spawnSurvIcon, spawnHuntIcon] = await Promise.all([
+    tacLoadImg(CIPHER_ICON_URL), tacLoadImg(COMMON_ICON_URL.dungeon),
+    tacLoadImg(COMMON_ICON_URL.escapeDoor), tacLoadImg(COMMON_ICON_URL.rocketChair),
+    tacLoadImg(COMMON_ICON_URL.locker), tacLoadImg(COMMON_ICON_URL.box),
+    tacLoadImg(COMMON_ICON_URL.phoneBooth),
+    tacLoadImg(COMMON_ICON_URL.survivor), tacLoadImg(COMMON_ICON_URL.hunter)]);
 
   
   // 正立叠加层：地标/造物/角色图标与图文文字。
@@ -8241,8 +9030,8 @@ export async function tacExportImage() {
       const [x, y] = PXY(pt[0] / W0, pt[1] / H0);
       uctx.drawImage(dungeonIcon, x - size / 2, y - size / 2, size, size);
     }
-    if (tacDisplay.doors && doorIcon) {
-      const size = tacDisplay.doorSize / 100 * W * K;
+    if (tacDisplay.escapeDoors && doorIcon) {
+      const size = tacDisplay.escapeDoorSize / 100 * W * K;
       tacDoorPoints(map).forEach((pt) => {
         const [x, y] = PXY(pt[0] / W0, pt[1] / H0);
         uctx.drawImage(doorIcon, x - size / 2, y - size / 2, size, size);
@@ -8263,18 +9052,18 @@ export async function tacExportImage() {
     const xzOf = (pt) => (pt.length > 2 ? [pt[0], pt[2]] : pt);
     if (chairIcon && map.rocketChairs) {
       const ch = map.rocketChairs;
-      const size = tacDisplay.chairSize / 100 * W * K;
+      const size = tacDisplay.rocketChairSize / 100 * W * K;
       const drawChair = (pt) => {
         const [px, pz] = xzOf(pt);
         const [x, y] = PXY(px / W0, pz / H0);
         uctx.drawImage(chairIcon, x - size / 2, y - size / 2, size, size);
       };
-      if (tacDisplay.chairs) {
+      if (tacDisplay.rocketChairs) {
         ch.fixed.forEach(drawChair);
         if (ch.sets.length) ch.sets[S.tacChairIndex % ch.sets.length].forEach(drawChair);
       }
       const bs = tacBasementList();
-      if (tacDisplay.chairsBasement && bs.length) {
+      if (tacDisplay.rocketChairsBasement && bs.length) {
         bs[S.tacChairBasementIndex % bs.length].rocketChairs.forEach(drawChair);
       }
     }
@@ -8285,6 +9074,15 @@ export async function tacExportImage() {
       map.lockers.forEach(([px, pz]) => {
         const [x, y] = PXY(px / W0, pz / H0);
         uctx.drawImage(lockerIcon, x - size / 2, y - size / 2, size, size);
+      });
+    }
+
+    // 电话亭：固定点位
+    if (phoneBoothIcon && tacDisplay.phoneBooths && map.phoneBooths) {
+      const size = tacDisplay.phoneBoothSize / 100 * W * K;
+      map.phoneBooths.forEach(([px, pz]) => {
+        const [x, y] = PXY(px / W0, pz / H0);
+        uctx.drawImage(phoneBoothIcon, x - size / 2, y - size / 2, size, size);
       });
     }
 
@@ -8314,7 +9112,7 @@ export async function tacExportImage() {
           const p = Array.isArray(pt) ? pt : pt.p;
           const [x, y] = PXY(p[0] / W0, p[1] / H0);
           if (item.flag_orientation) {
-            const fsIcon = TAC_FIXED_SPAWN_ICONS[item.icon] || item.icon;
+            const fsIcon = (TAC_ITEM_TYPES[item.icon] || {}).icon || COMMON_ICON_URL[item.icon] || item.icon;
             if (fsIcon) {
               const isz = 0.03 * W * K;
               const camImg = await tacLoadImg(fsIcon);
@@ -8411,7 +9209,7 @@ export async function tacExportImage() {
     const ringLw = Math.max(1.5, 2 * (W * K) / wrapW);
     const drawRing = (x, z) => {
       const [cx, cy] = PXY(x / W0, z / H0);
-      const d = tacDisplay.chairSize * 1.5 / 100 * W * K;
+      const d = tacDisplay.rocketChairSize * 1.5 / 100 * W * K;
       uctx.save();
       uctx.strokeStyle = '#ff5252';
       uctx.lineWidth = ringLw;
@@ -8450,7 +9248,7 @@ export async function tacExportImage() {
     // 选中椅的正圆红框（与屏幕一致：椅子模式、未勾选隐藏选中圈、对应图标组显示中）
     const sel = tacCarryState.chair;
     if (sel && sel.kind !== 'point' && !tacDisplay.carryHideRing
-        && (sel.kind === 'basement' ? tacDisplay.chairsBasement : tacDisplay.chairs)) {
+        && (sel.kind === 'basement' ? tacDisplay.rocketChairsBasement : tacDisplay.rocketChairs)) {
       drawRing(sel.x, sel.z);
     }
     // 明细行点击的标记红圈
@@ -8592,7 +9390,7 @@ export async function tacExportImage() {
   ctx.save();
   ctx.lineWidth = Math.max(1.5, W * K / 400);
   board.measures.forEach((m, idx) => {
-    if (tacDisplay.hideEndpoints) return;
+    if (tacDrawSettings.hideEndpoints) return;
     const isChain = m.chain != null;
     if (isChain && !(chainFirst[m.chain] === idx || chainLast[m.chain] === idx)) return;
     const dotColor = tacMeasureSegColor(m);
@@ -8738,6 +9536,10 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
   const textEl = e.target.closest('.tac-text');
   const p = tacPos(e);
 
+  // 任何地图点击都先停止正在播放的动画（还原到真实位置）
+  if (tacAnimPlay) tacAnimStop(true);
+  if (tacTimeline.playing) tacTimelineStop(true);
+
   // 推算选择模式：选椅=点击椅子选中；选点=点击任意位置选起点
   // （椅子图标 pointer-events:none，按地图坐标找最近椅子）
   if (tacCarryState.armed) {
@@ -8831,6 +9633,63 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
 
   
   
+  if (tacTool === 'anim') {
+    // 拖动编号路径点
+    const dotEl = e.target.closest('.tac-anim-dot');
+    const animObj = tacAnimTargetOf(tacManageSel);
+    if (dotEl && animObj && animObj.anim) {
+      tacDragAnimDot = { ptIdx: +dotEl.dataset.pt, prev: structuredClone(animObj.anim) };
+      tacMapWrap.setPointerCapture(e.pointerId);
+      return;
+    }
+    // 点击造物：选中并展开管理卡片
+    if (tokenEl) {
+      const tid = +tokenEl.dataset.tid;
+      tacSelected = tid;
+      tacSelectedItem = null;
+      tacManageSel = { type: 'role', tid };
+      tacMapWrap.querySelectorAll('.tac-token').forEach((el) =>
+        el.classList.toggle('selected', el === tokenEl && tacDisplay.selGlow));
+      renderTacBoard();
+      return;
+    }
+    if (itemEl) {
+      const idx = +itemEl.dataset.idx;
+      tacSelectedItem = idx;
+      tacSelected = null;
+      tacManageSel = { type: 'item', idx };
+      tacMapWrap.querySelectorAll('.tac-item-circle, .tac-item-pin').forEach((el) =>
+        el.classList.toggle('selected', +el.dataset.idx === idx && tacDisplay.selGlow));
+      renderTacBoard();
+      return;
+    }
+    // 空地图：添加状态下为选中造物追加路径点（首点自动取造物当前位置，t=0）
+    if (animObj && tacAnimArmed) {
+      const prev = animObj.anim ? structuredClone(animObj.anim) : null;
+      const anim = tacAnimEnsure(animObj);
+      if (!anim.points.length) {
+        anim.points.push({ x: animObj.x, y: animObj.y });
+        anim.times.push(0);
+      }
+      anim.points.push({ x: p.x, y: p.y });
+      if (anim.mode === 'time') {
+        anim.times.push((anim.times[anim.times.length - 1] ?? 0) + 3);
+        while (anim.speeds.length < anim.points.length - 1) {
+          anim.speeds.push(tacAnimDefaultSpeed(animObj));
+        }
+      } else {
+        anim.speeds.push(tacAnimDefaultSpeed(animObj));
+        while (anim.times.length < anim.points.length) {
+          anim.times.push((anim.times[anim.times.length - 1] ?? 0) + 3);
+        }
+      }
+      tacAnimPushUndo(animObj, prev);
+      renderTacBoard();
+    }
+    return;
+  }
+
+
   if (tacTool === 'draw') {
     const sp = tacSnapLandmark(p);
     tacDrawing = { x1: sp.x, y1: sp.y, x2: sp.x, y2: sp.y };
@@ -9041,6 +9900,20 @@ tacMapWrap.addEventListener('pointermove', (e) => {
   }
   tacUpdateCoordsTip(p, e);
   
+  if (tacDragAnimDot) {
+    const obj = tacAnimTargetOf(tacManageSel);
+    const pt = obj && obj.anim && obj.anim.points[tacDragAnimDot.ptIdx];
+    if (!pt) { tacDragAnimDot = null; return; }
+    obj.anim.points[tacDragAnimDot.ptIdx] = { x: p.x, y: p.y };
+    const dot = tacMapWrap.querySelector(`.tac-anim-dot[data-pt="${tacDragAnimDot.ptIdx}"]`);
+    if (dot) {
+      dot.style.left = `${p.x * 100}%`;
+      dot.style.top = `${p.y * 100}%`;
+    }
+    renderTacArrows();
+    return;
+  }
+
   if (tacDragMeasure) {
     const m = tacBoard().measures[tacDragMeasure.idx];
     if (!m) { tacDragMeasure = null; return; }
@@ -9232,13 +10105,19 @@ tacMapWrap.addEventListener('pointerup', (e) => {
     tacMapWrap.classList.remove('grabbing');
     return;
   }
-  const changed = tacDrawing || tacDrag || tacDragItem || tacDragText || tacDragMeasure;
+  const changed = tacDrawing || tacDrag || tacDragItem || tacDragText || tacDragMeasure || tacDragAnimDot;
+  if (tacDragAnimDot) {
+    const obj = tacAnimTargetOf(tacManageSel);
+    if (obj) tacAnimPushUndo(obj, tacDragAnimDot.prev);
+    tacDragAnimDot = null;
+    renderTacBoard();
+  }
   if (tacDrawing) {
     const p = tacPos(e);
     const dx = (tacDrawing.x2 - tacDrawing.x1) * p.W;
     const dy = (tacDrawing.y2 - tacDrawing.y1) * p.H;
     
-    const bigEnough = tacDrawShape === 'arrow'
+    const bigEnough = (tacDrawShape === 'arrow' || tacDrawShape === 'line')
       ? Math.hypot(dx, dy) > 20
       : Math.abs(dx) > 20 && Math.abs(dy) > 20;
     if (bigEnough) {
@@ -9259,7 +10138,7 @@ tacMapWrap.addEventListener('pointerup', (e) => {
 });
 
 tacMapWrap.addEventListener('pointercancel', () => {
-  const changed = tacDrag || tacDragItem || tacDragText || tacDragMeasure;
+  const changed = tacDrag || tacDragItem || tacDragText || tacDragMeasure || tacDragAnimDot;
   tacPanDrag = null;
   tacMapWrap.classList.remove('grabbing');
   tacDrawing = null;
@@ -9267,7 +10146,13 @@ tacMapWrap.addEventListener('pointercancel', () => {
   tacDragItem = null;
   tacDragText = null;
   tacDragMeasure = null;
-  tacAbyssFinalize(); 
+  if (tacDragAnimDot) {
+    const obj = tacAnimTargetOf(tacManageSel);
+    if (obj && tacDragAnimDot.prev) obj.anim = tacDragAnimDot.prev;
+    tacDragAnimDot = null;
+    renderTacBoard();
+  }
+  tacAbyssFinalize();
   renderTacArrows();
   if (changed) tacSave();
 });
@@ -9370,7 +10255,7 @@ tacArrowSvg.addEventListener('click', (e) => {
     const board = tacBoard();
     const m = board.measures[idx];
     
-    if (m && m.chain != null && !tacDisplay.delSegOnly) {
+    if (m && m.chain != null && !tacDrawSettings.delSegOnly) {
       const removedList = [];
       for (let i = board.measures.length - 1; i >= 0; i--) {
         if (board.measures[i].chain === m.chain) {
@@ -9471,6 +10356,8 @@ export function tacDeleteMeasureAt(idx) {
 export function tacUndo() {
   const act = tacUndoStack.pop();
   if (!act) return;
+  tacAnimStop(true);
+  tacTimelineStop(true);
   const board = tacBoard();
   if (act.type === 'addArrow') board.arrows.pop();
   else if (act.type === 'delArrow') board.arrows.splice(act.idx, 0, act.arrow);
@@ -9508,11 +10395,21 @@ export function tacUndo() {
     tacSelectedText = null;
   } else if (act.type === 'delText') {
     board.texts.splice(act.idx, 0, act.text);
+  } else if (act.type === 'anim') {
+    const obj = act.kind === 'role'
+      ? board.tokens.find((t) => t.tid === act.tid)
+      : board.items[act.idx];
+    if (obj) {
+      if (act.prev) obj.anim = act.prev;
+      else delete obj.anim;
+    }
   }
   renderTacBoard();
 }
 
 export function tacClear() {
+  tacAnimStop(true);
+  tacTimelineStop(true);
   const board = tacBoard();
   if (!board.tokens.length && !board.arrows.length && !board.items.length && !board.measures.length && !board.texts.length)
     return;
@@ -9624,6 +10521,7 @@ window.addEventListener('keydown', (e) => {
     tacMeasureHover = null;
     tacSelMeasure = null; 
     tacChainRoute = null; 
+    if (tacAnimArmed) tacAnimArmed = false;
     renderTacBoard();
   } else if (e.key === 'Delete' || e.key === 'Backspace') {
     const board = tacBoard();

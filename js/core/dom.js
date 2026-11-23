@@ -278,15 +278,42 @@ export const tacCipherList = $('tacCipherList');
 
 export const tacManageList = $('tacManageList');
 
-export const tacMStyleToggle = $('tacMStyleToggle');
+export const tacDrawSettingsToggle = $('tacDrawSettingsToggle');
+
+export const tacDrawSettingsBody = $('tacDrawSettingsBody');
 
 export const tacMStyleBody = $('tacMStyleBody');
+
+export const tacDrawStyleToggle = $('tacDrawStyleToggle');
+
+export const tacShapeStyleToggle = $('tacShapeStyleToggle');
+
+export const tacShapeStyleBody = $('tacShapeStyleBody');
+
+export const tacTextStyleToggle = $('tacTextStyleToggle');
+
+export const tacTextStyleBody = $('tacTextStyleBody');
+
+export const tacDrawOtherToggle = $('tacDrawOtherToggle');
+
+export const tacDrawOtherBody = $('tacDrawOtherBody');
 
 export const tacBaseSpeedEl = $('tacBaseSpeed');
 
 export const tacShapesEl = $('tacShapes');
 
 export const tacMapWrap = $('tacMapWrap');
+
+export const tacTimelineEl = $('tacTimeline');
+export const tacTimelineFold = $('tacTimelineFold');
+
+export const tacTimelinePlay = $('tacTimelinePlay');
+
+export const tacTimelineScrub = $('tacTimelineScrub');
+
+export const tacTimelineTime = $('tacTimelineTime');
+
+export const tacTimelineTracks = $('tacTimelineTracks');
 
 export const tacRot = $('tacRot');
 
@@ -496,6 +523,10 @@ export const tacBasementText = $('tacBasementText');
 
 export const tacSnapBoxEl = $('tacSnapBox');
 
+export const tacSnapLockerEl = $('tacSnapLocker');
+
+export const tacSnapPhoneBoothEl = $('tacSnapPhoneBooth');
+
 export const tacShowLockersEl = $('tacShowLockers');
 
 export const tacLockerSizeEl = $('tacLockerSize');
@@ -507,5 +538,11 @@ export const tacShowBoxesEl = $('tacShowBoxes');
 export const tacBoxSizeEl = $('tacBoxSize');
 
 export const tacBoxSizeDefEl = $('tacBoxSizeDef');
+
+export const tacShowPhoneBoothsEl = $('tacShowPhoneBooths');
+
+export const tacPhoneBoothSizeEl = $('tacPhoneBoothSize');
+
+export const tacPhoneBoothSizeDefEl = $('tacPhoneBoothSizeDef');
 
 export const tacShowBoxBasementEl = $('tacShowBoxBasement');

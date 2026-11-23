@@ -1,12 +1,17 @@
 import { test, expect, tool } from './helpers.js';
 
-test('toolbar card collapses and expands via summary', async ({ page }) => {
-  const card = page.locator('#tacPanel details.ded-card').first();
-  await expect(card.locator('.tac-tools')).toBeVisible();
+test('top toolbar buttons are visible in the sticky header', async ({ page }) => {
+  const tools = page.locator('#tacTopTools .tac-tool');
+  await expect(tools).toHaveCount(10);
+  await expect(page.locator('#tacTopTools .tac-tool[data-tool="select"]')).toBeVisible();
+  await expect(page.locator('#tacTopTools #tacExportBtn')).toBeVisible();
+  // 管理卡片仍是面板第一张卡片，可折叠展开
+  const card = page.locator('#tacManageCard');
+  await expect(card).toHaveJSProperty('open', true);
   await card.locator('summary').first().click();
-  await expect(card.locator('.tac-tools')).toBeHidden();
+  await expect(card).toHaveJSProperty('open', false);
   await card.locator('summary').first().click();
-  await expect(card.locator('.tac-tools')).toBeVisible();
+  await expect(card).toHaveJSProperty('open', true);
 });
 
 test('switching tools reopens the matching sub card', async ({ page }) => {
