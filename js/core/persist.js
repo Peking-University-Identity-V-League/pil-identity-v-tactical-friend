@@ -203,7 +203,7 @@ export const tacDisplay = {
   boxes: false, boxSize: TAC_DISPLAY_DEFAULT.boxSize,
   boxesBasement: false,
   
-  snap: { cipher: true, dungeon: true, door: true, chair: true, box: true, point: true },
+  snap: { cipher: true, dungeon: true, door: true, chair: true, locker: true, box: true, point: true },
   delSegOnly: false, 
   showCoords: false, 
   selGlow: true,

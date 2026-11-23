@@ -3687,7 +3687,6 @@ div.tac-fixed-spawn .cam-dir.up {
   background: linear-gradient(135deg, #34d399, #10b981);
   box-shadow: 0 3px 13px rgba(52, 211, 153, 0.35);
 }
-.tac-mstyle-body { margin-top: 10px; }
 
 .tac-result { font-size: 11px; }
 .tac-result table { width: 100%; border-collapse: collapse; }

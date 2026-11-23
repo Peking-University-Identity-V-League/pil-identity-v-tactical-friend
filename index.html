@@ -240,17 +240,32 @@
           <span class="arrow">▶</span>
         </summary>
         <div style="margin-top:12px">
-        <div class="tac-sec-label" data-i18n="ui.tac.measure.setting.draw.title"></div>
         <div class="side-toggle tac-mmodes" id="tacMeasureModes">
           <button class="side-btn active" data-mmode="single" data-i18n="ui.tac.measure.line.straightline.button"></button>
           <button class="side-btn" data-mmode="chain" data-i18n="ui.tac.measure.line.polyline.button"></button>
           <button class="tac-mstyle-toggle open" id="tacMStyleToggle" type="button"
             title="" data-i18n="ui.common.style.title.show" data-i18n-attributes="{&quot;title&quot;:&quot;ui.common.style.message&quot;}"></button>
         </div>
-        <div class="tac-mstyle-body" id="tacMStyleBody">
-          <div class="tac-style-flex">
-            <span data-i18n="common.color"></span>
-            <div class="tac-colors" id="tacMeasureColors">
+
+        <div class="tac-sec-label tac-speed-title">
+          <button type="button" class="tac-deselect" id="tacDeselect" data-i18n="ui.tac.measure.line.choose"></button>
+          <span class="tac-status" id="tacStatus"></span>
+          <span class="tac-status2" id="tacStatus2"></span>
+        </div>
+        <div class="tac-carry-sep"></div>
+        <div class="tac-detail">
+          <div class="tac-detail-head">
+            <button type="button" class="tac-detail-toggle tac-lvl1" id="tacDrawSettingsToggle"></button>
+          </div>
+          <div class="tac-detail-body" id="tacDrawSettingsBody" style="display:none">
+            <div class="tac-detail">
+              <div class="tac-detail-head">
+                <button type="button" class="tac-detail-toggle" id="tacDrawStyleToggle"></button>
+              </div>
+              <div class="tac-detail-body" id="tacMStyleBody">
+                <div class="tac-style-flex">
+                  <span data-i18n="common.color"></span>
+                  <div class="tac-colors" id="tacMeasureColors">
               <button class="tac-color" data-color="#ef4444" style="--c:#ef4444" title="" data-i18n-attributes="{&quot;title&quot;:&quot;colors.red&quot;}"></button>
               <button class="tac-color" data-color="#f97316" style="--c:#f97316" title="" data-i18n-attributes="{&quot;title&quot;:&quot;colors.orange&quot;}"></button>
               <button class="tac-color" data-color="#eab308" style="--c:#eab308" title="" data-i18n-attributes="{&quot;title&quot;:&quot;colors.yellow&quot;}"></button>
@@ -260,16 +275,32 @@
               <button class="tac-color" data-color="#f1f5f9" style="--c:#f1f5f9" title="" data-i18n-attributes="{&quot;title&quot;:&quot;colors.white&quot;}"></button>
               <button class="tac-color" data-color="#0f172a" style="--c:#0f172a" title="" data-i18n-attributes="{&quot;title&quot;:&quot;colors.black&quot;}"></button>
             </div>
-            <label class="tac-display-toggle"><input type="checkbox" id="tacHideEndpoints"><span data-i18n="ui.tac.measure.setting.draw.hide.button"></span></label>
-            <span class="tac-width-group"><span data-i18n="ui.common.strokeWidth"></span><input type="range" id="tacMeasureWidth" min="2" max="8" step="1" value="3" /><span class="tac-width-val" id="tacMeasureWidthVal">3</span></span>
+                  <span class="tac-width-group"><span data-i18n="ui.common.strokeWidth"></span><input type="range" id="tacMeasureWidth" min="2" max="8" step="1" value="3" /><span class="tac-width-val" id="tacMeasureWidthVal">3</span></span>
+                </div>
+              </div>
+            </div>
+            <div class="tac-detail">
+              <div class="tac-detail-head">
+                <button type="button" class="tac-detail-toggle" id="tacDrawOtherToggle"></button>
+              </div>
+              <div class="tac-detail-body" id="tacDrawOtherBody">
+                <div class="tac-display-snap no-line">
+                  <span class="tac-display-snap-label" data-i18n="ui.tac.draw.setting.autoSnap.button"></span>
+                  <label class="tac-display-toggle"><input type="checkbox" id="tacSnapDoor" checked><span data-i18n="common.escapeDoor"></span></label>
+                  <label class="tac-display-toggle"><input type="checkbox" id="tacSnapCipher" checked><span data-i18n="common.cipherMachine"></span></label>
+                  <label class="tac-display-toggle"><input type="checkbox" id="tacSnapDungeon" checked><span data-i18n="common.dungeon"></span></label>
+                  <label class="tac-display-toggle"><input type="checkbox" id="tacSnapChair" checked><span data-i18n="common.rocketChair"></span></label>
+                  <label class="tac-display-toggle"><input type="checkbox" id="tacSnapLocker" checked><span data-i18n="common.locker"></span></label>
+                  <label class="tac-display-toggle"><input type="checkbox" id="tacSnapBox" checked><span data-i18n="common.box"></span></label>
+                  <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.draw.setting.autoSnap.button.message&quot;}"><input type="checkbox" id="tacSnapPoint" checked><span data-i18n="common.endpoint"></span></label>
+                </div>
+                <div class="tac-display-snap no-line">
+                  <label class="tac-display-toggle"><input type="checkbox" id="tacHideEndpoints"><span data-i18n="ui.tac.measure.setting.draw.hide.button"></span></label>
+                  <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.draw.setting.deleteSingle.button.message&quot;}"><input type="checkbox" id="tacDelSegOnly"><span data-i18n="ui.tac.draw.setting.deleteSingle.button"></span></label>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-
-        
-        <div class="tac-sec-label tac-speed-title">
-          <button type="button" class="tac-deselect" id="tacDeselect" data-i18n="ui.tac.measure.line.choose"></button>
-          <span class="tac-status" id="tacStatus"></span>
-          <span class="tac-status2" id="tacStatus2"></span>
         </div>
         <div class="tac-carry-sep"></div>
         <div class="tac-detail">
@@ -723,22 +754,6 @@
           <div class="tac-display-snap no-line">
               <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.coord.button.message&quot;}"><input type="checkbox" id="tacShowCoords"><span data-i18n="ui.tac.display.coord.button"></span></label>
               <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.creationHighlight.button.message&quot;}"><input type="checkbox" id="tacSelGlow" checked><span data-i18n="ui.tac.display.creationHighlight.button"></span></label>
-            </div>
-          </div>
-
-          <div class="tac-display-group">
-            <div class="tac-display-group-label" data-i18n="ui.tac.draw.setting.label"></div>
-            <div class="tac-display-snap no-line">
-              <span class="tac-display-snap-label" data-i18n="ui.tac.draw.setting.autoSnap.button"></span>
-              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapDoor" checked><span data-i18n="common.escapeDoor"></span></label>
-              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapCipher" checked><span data-i18n="common.cipherMachine"></span></label>
-              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapDungeon" checked><span data-i18n="common.dungeon"></span></label>
-              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapChair" checked><span data-i18n="common.rocketChair"></span></label>
-              <label class="tac-display-toggle"><input type="checkbox" id="tacSnapBox" checked><span data-i18n="common.box"></span></label>
-              <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.draw.setting.autoSnap.button.message&quot;}"><input type="checkbox" id="tacSnapPoint" checked><span data-i18n="common.endpoint"></span></label>
-            </div>
-            <div class="tac-display-snap no-line">
-              <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.draw.setting.deleteSingle.button.message&quot;}"><input type="checkbox" id="tacDelSegOnly"><span data-i18n="ui.tac.draw.setting.deleteSingle.button"></span></label>
             </div>
           </div>
 

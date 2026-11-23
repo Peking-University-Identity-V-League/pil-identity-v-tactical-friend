@@ -282,6 +282,16 @@ export const tacMStyleToggle = $('tacMStyleToggle');
 
 export const tacMStyleBody = $('tacMStyleBody');
 
+export const tacDrawSettingsToggle = $('tacDrawSettingsToggle');
+
+export const tacDrawSettingsBody = $('tacDrawSettingsBody');
+
+export const tacDrawStyleToggle = $('tacDrawStyleToggle');
+
+export const tacDrawOtherToggle = $('tacDrawOtherToggle');
+
+export const tacDrawOtherBody = $('tacDrawOtherBody');
+
 export const tacBaseSpeedEl = $('tacBaseSpeed');
 
 export const tacShapesEl = $('tacShapes');
@@ -495,6 +505,8 @@ export const tacShowChairBasementEl = $('tacShowChairBasement');
 export const tacBasementText = $('tacBasementText');
 
 export const tacSnapBoxEl = $('tacSnapBox');
+
+export const tacSnapLockerEl = $('tacSnapLocker');
 
 export const tacShowLockersEl = $('tacShowLockers');
 
