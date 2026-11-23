@@ -3326,7 +3326,8 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
   box-shadow: 0 3px 13px rgba(52, 211, 153, 0.35);
 }
 
-.tac-shapes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+/* 直线/箭头/虚线圈/虚线框优先一行四个，文字过长时在按钮内换行 */
+.tac-shapes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
 .tac-shape {
   padding: 8px 4px;
   border: 1px solid rgba(255, 255, 255, 0.28); 

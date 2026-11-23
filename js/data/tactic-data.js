@@ -90,8 +90,8 @@ export const TAC_MOVEMENT_BUFFS = {
 
 
 export const TAC_MEASURE_DEFAULT = {
-  single: { color: '#eab308', width: 3 },
-  chain: { color: '#f97316', width: 3 },
+  single: { color: '#eab308', width: 2 },
+  chain: { color: '#f97316', width: 2 },
 };
 
 

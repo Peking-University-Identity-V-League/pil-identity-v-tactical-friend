@@ -1,6 +1,6 @@
 
 import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacCipherCard, tacCipherCardShowEl, tacCipherCardPrevBtn, tacCipherCardNextBtn, tacCipherCardText, tacCipherCardSizeEl, tacCipherCardSizeDefEl, tacCipherList, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDrawSettingsToggle, tacDrawSettingsBody, tacDrawStyleToggle, tacDrawOtherToggle, tacDrawOtherBody, tacShapeStyleToggle, tacShapeStyleBody, tacTextStyleToggle, tacTextStyleBody, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacHideEndpointsEl, tacItemSection, tacMStyleBody, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacRot, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacCarryBuffBody, tacCarryCard, tacCarryChairName, tacCarryChairNextBtn, tacCarryChairPrevBtn, tacCarryChairSizeDefEl, tacCarryChairSizeEl, tacCarryChairText, tacCarryClearBtn, tacCarryBuffToggleEl, tacCarryHuntClose, tacCarryHuntList, tacCarryHuntModal, tacCarryHuntTalentBtn, tacCarryHunterEl, tacCarryHunterFormEl, tacCarryHunterSpeedEl, tacCarryInitialEl, tacCarryInitialVal, tacCarryLegend, tacCarryNote, tacCarryOpacityEl, tacCarryOpacityRowEl, tacCarryHideRingEl, tacCarryChairBasementEl, tacCarryBoxBasementEl, tacCarryBasementPrevBtn, tacCarryBasementNextBtn, tacCarryBasementTextEl, tacCarryPickBtn, tacCarryPickupEl, tacCarryResultBoxEl, tacCarryResultToggleEl, tacCarryResultBodyEl, tacCarrySettingsToggleEl, tacCarrySettingsBodyEl, tacCarryModeChairEl, tacCarryModePointEl, tacCarryHideRingLabelEl, tacCarryChairCountEl, tacCarryDetailBoxEl, tacCarryDetailToggleEl, tacCarryDetailBodyEl, tacCarryPickupModeEl, tacCarryProgressBar, tacCarryProgressBox, tacCarryRunBtn, tacCarryShowChairsEl, tacCarrySpeedClose, tacCarrySpeedList, tacCarrySpeedModal, tacCarrySpeedTalentBtn, tacCarrySummary, tacCarrySurvClose, tacCarrySurvList, tacCarrySurvModal, tacCarrySurvTalentBtn, tacCarrySurvivorEl, tacShowChairBasementEl, tacBasementText, tacShowSpawnsEl, tacSpawnSizeEl, tacSpawnSizeDefEl, tacSpawnText, tacSnapBoxEl, tacSnapLockerEl, tacSnapPhoneBoothEl, tacShowLockersEl, tacLockerSizeEl, tacLockerSizeDefEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowPhoneBoothsEl, tacPhoneBoothSizeEl, tacPhoneBoothSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacSpeedSettingsToggleEl, tacSpeedSettingsBodyEl, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacDedScenarioCarryEl, tacDedScenarioTideEl, tacDedSettingsCarryEl, tacDedSettingsTideEl, tacTideBaseSpeedEl, tacTideSpeedRoleEl, tacTideSpeedFormEl, tacTideTraitAddBtn, tacTideTalentAddBtn, tacTideOtherAddBtn, tacTideBuffAddBtn, tacTideBaseDetailToggleEl, tacTideBaseDetailBodyEl, tacTideBuffToggleEl, tacTideBuffBodyEl, tacTideTraitModal, tacTideTraitList, tacTideTraitClose, tacTideTalentModal, tacTideTalentList, tacTideTalentClose, tacTideOtherModal, tacTideOtherList, tacTideOtherClose, tacTideBuffModal, tacTideBuffName, tacTideBuffPct, tacTideBuffDur, tacTideBuffOk, tacTideBuffClose, tacPathCard, tacPathPickA, tacPathPickB, tacPathStatusA, tacPathStatusB, tacPathRunBtn, tacPathClearBtn, tacPathProgressBox, tacPathProgressBar, tacPathResultBoxEl, tacPathResultToggleEl, tacPathResultBodyEl, tacPathSummary, tacPathNote, tacPathFixNote, tacPathSettingsToggleEl, tacPathSettingsBodyEl, tacPathVaultEl, tacPathFixEl, tacPathCampToggle, tacPathBaseSpeedEl, tacPathSpeedRoleEl, tacPathSpeedFormEl, tacPathTraitAddBtn, tacPathTalentAddBtn, tacPathOtherAddBtn, tacPathBuffAddBtn, tacPathBaseDetailToggleEl, tacPathBaseDetailBodyEl, tacPathBuffToggleEl, tacPathBuffBodyEl, tacPathTraitModal, tacPathTraitList, tacPathTraitClose, tacPathTalentModal, tacPathTalentList, tacPathTalentClose, tacPathOtherModal, tacPathOtherList, tacPathOtherClose, tacPathBuffModal, tacPathBuffName, tacPathBuffPct, tacPathBuffDur, tacPathBuffOk, tacPathBuffClose, tacticView } from './core/dom.js';
-import { restoredMeasureIds, saveRegionSel, savedRot, tacBoard, tacDisplay, tacMeasureStyle, tacPersisted, tacSave, flushSave } from './core/persist.js';
+import { restoredMeasureIds, saveRegionSel, savedRot, tacBoard, tacDisplay, tacDrawSettings, tacMeasureStyle, tacSave, flushSave } from './core/persist.js';
 import { measureBaseAt, simulateMovement } from './core/measurements.js';
 import { measurementEndpoints, resolveMap3dTarget, isExternalMap3dEntry } from './core/map-handoff.js';
 import { CARRY_BAND_COLORS, CARRY_BAND_OPACITY, CARRY_DEFAULTS, CARRY_SURVIVORS, CARRY_TALENTS, carryBandAt, carryDropBudget, createCarryProfile } from './core/carry-model.js';
@@ -296,10 +296,10 @@ export function syncTacDisplayUI() {
   tacShowSpawnsEl.checked = tacDisplay.spawns;
   tacSpawnSizeEl.value = tacDisplay.spawnSize;
   tacSpawnSizeDefEl.checked = tacDisplay.spawnSize === TAC_DISPLAY_DEFAULT.spawnSize;
-  tacShowChairsEl.checked = tacDisplay.chairs;
-  tacChairSizeEl.value = tacDisplay.chairSize;
-  tacChairSizeDefEl.checked = tacDisplay.chairSize === TAC_DISPLAY_DEFAULT.rocketChairSize;
-  tacShowChairBasementEl.checked = tacDisplay.chairsBasement;
+  tacShowChairsEl.checked = tacDisplay.rocketChairs;
+  tacChairSizeEl.value = tacDisplay.rocketChairSize;
+  tacChairSizeDefEl.checked = tacDisplay.rocketChairSize === TAC_DISPLAY_DEFAULT.rocketChairSize;
+  tacShowChairBasementEl.checked = tacDisplay.rocketChairsBasement;
   tacShowLockersEl.checked = tacDisplay.lockers;
   tacLockerSizeEl.value = tacDisplay.lockerSize;
   tacLockerSizeDefEl.checked = tacDisplay.lockerSize === TAC_DISPLAY_DEFAULT.lockerSize;
@@ -310,22 +310,22 @@ export function syncTacDisplayUI() {
   tacPhoneBoothSizeEl.value = tacDisplay.phoneBoothSize;
   tacPhoneBoothSizeDefEl.checked = tacDisplay.phoneBoothSize === TAC_DISPLAY_DEFAULT.phoneBoothSize;
   tacShowBoxBasementEl.checked = tacDisplay.boxesBasement;
-  tacShowDoorsEl.checked = tacDisplay.doors;
-  tacDoorSizeEl.value = tacDisplay.doorSize;
-  tacDoorSizeDefEl.checked = tacDisplay.doorSize === TAC_DISPLAY_DEFAULT.escapeDoorSize;
-  tacDoorLockEl.checked = tacDisplay.doorLock;
-  tacSnapCipherEl.checked = tacDisplay.snap.cipher;
-  tacSnapDungeonEl.checked = tacDisplay.snap.dungeon;
-  tacSnapDoorEl.checked = tacDisplay.snap.door;
-  tacSnapChairEl.checked = tacDisplay.snap.chair;
-  tacSnapLockerEl.checked = tacDisplay.snap.locker;
-  tacSnapBoxEl.checked = tacDisplay.snap.box;
-  tacSnapPhoneBoothEl.checked = tacDisplay.snap.phoneBooth;
-  tacSnapPointEl.checked = tacDisplay.snap.point;
-  tacDelSegOnlyEl.checked = tacDisplay.delSegOnly;
+  tacShowDoorsEl.checked = tacDisplay.escapeDoors;
+  tacDoorSizeEl.value = tacDisplay.escapeDoorSize;
+  tacDoorSizeDefEl.checked = tacDisplay.escapeDoorSize === TAC_DISPLAY_DEFAULT.escapeDoorSize;
+  tacDoorLockEl.checked = tacDisplay.escapeDoorLock;
+  tacSnapCipherEl.checked = tacDrawSettings.snap.cipher;
+  tacSnapDungeonEl.checked = tacDrawSettings.snap.dungeon;
+  tacSnapDoorEl.checked = tacDrawSettings.snap.escapeDoor;
+  tacSnapChairEl.checked = tacDrawSettings.snap.rocketChair;
+  tacSnapLockerEl.checked = tacDrawSettings.snap.locker;
+  tacSnapBoxEl.checked = tacDrawSettings.snap.box;
+  tacSnapPhoneBoothEl.checked = tacDrawSettings.snap.phoneBooth;
+  tacSnapPointEl.checked = tacDrawSettings.snap.endpoint;
+  tacDelSegOnlyEl.checked = tacDrawSettings.delSegOnly;
   tacShowCoordsEl.checked = tacDisplay.showCoords;
   tacSelGlowEl.checked = tacDisplay.selGlow;
-  tacHideEndpointsEl.checked = !!tacDisplay.hideEndpoints;
+  tacHideEndpointsEl.checked = !!tacDrawSettings.hideEndpoints;
   tacCarryHideRingEl.checked = !!tacDisplay.carryHideRing;
   const cropEl = $('tacExportCrop');
   if (cropEl) cropEl.checked = tacDisplay.exportCrop;
@@ -369,7 +369,7 @@ export let tacSelectedItem = null;
   
 export let tacArrowColor = '#ef4444';
 
-export let tacArrowWidth = 4;
+export let tacArrowWidth = 2;
 
 export let tacDrawShape = 'arrow';
 
@@ -741,7 +741,7 @@ export function renderTacZones() {
 
 export function tacDoorPoints(map) {
   const d = map.escapeDoors;
-  if (tacDisplay.doorLock && d.length >= 4) return [d[2], d[3]];
+  if (tacDisplay.escapeDoorLock && d.length >= 4) return [d[2], d[3]];
   return d.slice(0, 2);
 }
 
@@ -804,7 +804,7 @@ export function renderTacLandmarks() {
     el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
     tacLayer().appendChild(el);
   }
-  if (tacDisplay.doors) {
+  if (tacDisplay.escapeDoors) {
     tacDoorPoints(map).forEach((pt, i) => {
       const el = document.createElement('img');
       el.className = 'tac-door';
@@ -813,7 +813,7 @@ export function renderTacLandmarks() {
       el.draggable = false;
       el.style.left = `${(pt[0] / imgW) * 100}%`;
       el.style.top = `${(pt[1] / imgH) * 100}%`;
-      el.style.width = `${tacDisplay.doorSize}%`;
+      el.style.width = `${tacDisplay.escapeDoorSize}%`;
       el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
       tacLayer().appendChild(el);
     });
@@ -970,7 +970,7 @@ export function renderTacChairs() {
     el.draggable = false;
     el.style.left = `${(px / imgW) * 100}%`;
     el.style.top = `${(pz / imgH) * 100}%`;
-    el.style.width = `${tacDisplay.chairSize}%`;
+    el.style.width = `${tacDisplay.rocketChairSize}%`;
     el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
     tacLayer().appendChild(el);
     // 选中椅子的正圆红框：img 是替换元素不支持伪元素，用独立 div 画正圆
@@ -979,11 +979,11 @@ export function renderTacChairs() {
       ring.className = 'tac-chair tac-carry-ring';
       ring.style.left = el.style.left;
       ring.style.top = el.style.top;
-      ring.style.width = `${tacDisplay.chairSize * 1.5}%`;
+      ring.style.width = `${tacDisplay.rocketChairSize * 1.5}%`;
       tacLayer().appendChild(ring);
     }
   };
-  if (tacDisplay.chairs) {
+  if (tacDisplay.rocketChairs) {
     ch.fixed.forEach((pt, i) => draw(pt, 'fixed', i));
     const setIdx = ch.sets.length ? S.tacChairIndex % ch.sets.length : -1;
     if (setIdx >= 0) {
@@ -991,7 +991,7 @@ export function renderTacChairs() {
     }
   }
   const bs = tacBasementList();
-  if (tacDisplay.chairsBasement && bs.length) {
+  if (tacDisplay.rocketChairsBasement && bs.length) {
     const bIdx = S.tacChairBasementIndex % bs.length;
     bs[bIdx].rocketChairs.forEach((pt, i) => draw(pt, 'basement', i));
   }
@@ -1143,7 +1143,7 @@ export function tacSnapTarget(p, excl) {
   const map = MAPS_DATA[S.currentMapId];
   const [imgW, imgH] = map.mapSize;
   const pts = [];
-  if (tacDisplay.snap.cipher && tacDisplay.ciphers) {
+  if (tacDrawSettings.snap.cipher && tacDisplay.ciphers) {
     map.cipherCombinations[S.currentCipherIndex].forEach((cid) => {
       const c = cipherOf(S.currentMapId, cid);
       if (c) pts.push({
@@ -1152,36 +1152,36 @@ export function tacSnapTarget(p, excl) {
       });
     });
   }
-  if (tacDisplay.snap.dungeon && tacDisplay.dungeon && map.dungeons.length) {
+  if (tacDrawSettings.snap.dungeon && tacDisplay.dungeon && map.dungeons.length) {
     const pt = map.dungeons[S.tacDungeonIndex % map.dungeons.length];
     pts.push({
       x: pt[0] / imgW, y: pt[1] / imgH,
       size: tacDisplay.dungeonSize, kind: 'dungeon',
     });
   }
-  if (tacDisplay.snap.door && tacDisplay.doors) {
+  if (tacDrawSettings.snap.escapeDoor && tacDisplay.escapeDoors) {
     tacDoorPoints(map).forEach((pt) =>
       pts.push({
         x: pt[0] / imgW, y: pt[1] / imgH,
-        size: tacDisplay.doorSize, kind: 'door',
+        size: tacDisplay.escapeDoorSize, kind: 'door',
       }));
   }
-  if (tacDisplay.snap.chair && map.rocketChairs) {
+  if (tacDrawSettings.snap.rocketChair && map.rocketChairs) {
     const ch = map.rocketChairs;
     const pushChair = (pt) => {
       const px = pt[0], pz = pt.length > 2 ? pt[2] : pt[1];
-      pts.push({ x: px / imgW, y: pz / imgH, size: tacDisplay.chairSize, kind: 'chair' });
+      pts.push({ x: px / imgW, y: pz / imgH, size: tacDisplay.rocketChairSize, kind: 'chair' });
     };
-    if (tacDisplay.chairs) {
+    if (tacDisplay.rocketChairs) {
       ch.fixed.forEach(pushChair);
       if (ch.sets.length) ch.sets[S.tacChairIndex % ch.sets.length].forEach(pushChair);
     }
     const bs = tacBasementList();
-    if (tacDisplay.chairsBasement && bs.length) {
+    if (tacDisplay.rocketChairsBasement && bs.length) {
       bs[S.tacChairBasementIndex % bs.length].rocketChairs.forEach(pushChair);
     }
   }
-  if (tacDisplay.snap.box && map.chests) {
+  if (tacDrawSettings.snap.box && map.chests) {
     const bx = map.chests;
     const pushBox = (pt) => {
       const px = pt[0], pz = pt.length > 2 ? pt[2] : pt[1];
@@ -1195,21 +1195,21 @@ export function tacSnapTarget(p, excl) {
       bs[S.tacChairBasementIndex % bs.length].chest.forEach(pushBox);
     }
   }
-  if (tacDisplay.snap.locker && tacDisplay.lockers && map.lockers) {
+  if (tacDrawSettings.snap.locker && tacDisplay.lockers && map.lockers) {
     map.lockers.forEach(([px, pz]) => {
       pts.push({ x: px / imgW, y: pz / imgH, size: tacDisplay.lockerSize, kind: 'locker' });
     });
   }
-  if (tacDisplay.snap.phoneBooth && tacDisplay.phoneBooths && map.phoneBooths) {
+  if (tacDrawSettings.snap.phoneBooth && tacDisplay.phoneBooths && map.phoneBooths) {
     map.phoneBooths.forEach(([px, pz]) => {
       pts.push({ x: px / imgW, y: pz / imgH, size: tacDisplay.phoneBoothSize, kind: 'phoneBooth' });
     });
   }
-  if (tacDisplay.snap.point) {
+  if (tacDrawSettings.snap.endpoint) {
     const b = tacBoard();
     
     b.arrows.forEach((a) => {
-      if (a.shape !== 'arrow') return;
+      if (a.shape !== 'arrow' && a.shape !== 'line') return;
       pts.push({ x: a.x1, y: a.y1, kind: 'point', color: a.color });
       pts.push({ x: a.x2, y: a.y2, kind: 'point', color: a.color });
     });
@@ -1566,12 +1566,12 @@ bindTacDisplayRow(tacShowSpawnsEl, tacSpawnSizeEl, tacSpawnSizeDefEl,
   (v) => { tacDisplay.spawnSize = v; renderTacSpawns(); });
 
 bindTacDisplayRow(tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl,
-  (v) => { tacDisplay.chairs = v; renderTacChairs(); },
-  (v) => { tacDisplay.chairSize = v; renderTacChairs(); });
+  (v) => { tacDisplay.rocketChairs = v; renderTacChairs(); },
+  (v) => { tacDisplay.rocketChairSize = v; renderTacChairs(); });
 
 tacShowChairBasementEl.addEventListener('change', () => {
-  tacDisplay.chairsBasement = tacShowChairBasementEl.checked;
-  tacCarryChairBasementEl.checked = tacDisplay.chairsBasement;
+  tacDisplay.rocketChairsBasement = tacShowChairBasementEl.checked;
+  tacCarryChairBasementEl.checked = tacDisplay.rocketChairsBasement;
   renderTacChairs();
   tacSave();
 });
@@ -1596,8 +1596,8 @@ tacShowBoxBasementEl.addEventListener('change', () => {
 });
 
 bindTacDisplayRow(tacShowDoorsEl, tacDoorSizeEl, tacDoorSizeDefEl,
-  (v) => { tacDisplay.doors = v; renderTacLandmarks(); },
-  (v) => { tacDisplay.doorSize = v; renderTacLandmarks(); });
+  (v) => { tacDisplay.escapeDoors = v; renderTacLandmarks(); },
+  (v) => { tacDisplay.escapeDoorSize = v; renderTacLandmarks(); });
 
 // ---- 狂欢之椅推算（挂人范围二维近似，数据来自三维导航栅格） ----
 export const tacCarryState = {
@@ -1762,7 +1762,7 @@ function tacCarryGroundChairs() {
       if (ground(pt)) out.push({ kind: 'set', index: i, x: xz(pt)[0], z: xz(pt)[1] });
     });
   }
-  if (tacDisplay.chairsBasement) {
+  if (tacDisplay.rocketChairsBasement) {
     const bs = tacBasementList();
     if (bs.length) {
       const bIdx = S.tacChairBasementIndex % bs.length;
@@ -1777,13 +1777,13 @@ function tacCarryGroundChairs() {
 
 export function syncTacCarryChairRow() {
   if (!tacCarryCard) return;
-  tacCarryShowChairsEl.checked = tacDisplay.chairs;
-  tacCarryChairSizeEl.value = tacDisplay.chairSize;
-  tacCarryChairSizeDefEl.checked = tacDisplay.chairSize === TAC_DISPLAY_DEFAULT.rocketChairSize;
+  tacCarryShowChairsEl.checked = tacDisplay.rocketChairs;
+  tacCarryChairSizeEl.value = tacDisplay.rocketChairSize;
+  tacCarryChairSizeDefEl.checked = tacDisplay.rocketChairSize === TAC_DISPLAY_DEFAULT.rocketChairSize;
   const ch = MAPS_DATA[S.currentMapId].rocketChairs;
   tacCarryChairText.textContent = (!ch || !ch.sets.length) ? '--'
     : translate('ui.tac.display.rocketChair.layout', { index: S.tacChairIndex + 1, count: ch.sets.length });
-  tacCarryChairBasementEl.checked = tacDisplay.chairsBasement;
+  tacCarryChairBasementEl.checked = tacDisplay.rocketChairsBasement;
   tacCarryBoxBasementEl.checked = tacDisplay.boxesBasement;
   syncTacBasementText();
 }
@@ -2157,7 +2157,7 @@ function renderTacCarryMark() {
   ring.className = 'tac-carry-mark-ring';
   ring.style.left = `${(rows[i].x / imgW) * 100}%`;
   ring.style.top = `${(rows[i].z / imgH) * 100}%`;
-  ring.style.width = `${tacDisplay.chairSize * 1.5}%`;
+  ring.style.width = `${tacDisplay.rocketChairSize * 1.5}%`;
   tacLayer().appendChild(ring);
 }
 
@@ -2369,8 +2369,8 @@ function buildTacCarryCard() {
   // 与显示设置共享的椅子行
   tacCarryChairSizeDefEl._default = TAC_DISPLAY_DEFAULT.rocketChairSize;
   bindTacDisplayRow(tacCarryShowChairsEl, tacCarryChairSizeEl, tacCarryChairSizeDefEl,
-    (v) => { tacDisplay.chairs = v; renderTacChairs(); syncTacDisplayUI(); },
-    (v) => { tacDisplay.chairSize = v; renderTacChairs(); syncTacDisplayUI(); });
+    (v) => { tacDisplay.rocketChairs = v; renderTacChairs(); syncTacDisplayUI(); },
+    (v) => { tacDisplay.rocketChairSize = v; renderTacChairs(); syncTacDisplayUI(); });
   tacCarryChairPrevBtn.addEventListener('click', () => { switchTacChair(-1); syncTacCarryChairRow(); });
   tacCarryChairNextBtn.addEventListener('click', () => { switchTacChair(1); syncTacCarryChairRow(); });
 
@@ -2444,8 +2444,8 @@ function buildTacCarryCard() {
 
   // 地下室椅子/箱子开关与组切换（与显示设置的地下室行共享状态）
   tacCarryChairBasementEl.addEventListener('change', () => {
-    tacDisplay.chairsBasement = tacCarryChairBasementEl.checked;
-    tacShowChairBasementEl.checked = tacDisplay.chairsBasement;
+    tacDisplay.rocketChairsBasement = tacCarryChairBasementEl.checked;
+    tacShowChairBasementEl.checked = tacDisplay.rocketChairsBasement;
     renderTacChairs();
     tacSave();
   });
@@ -3952,55 +3952,55 @@ window.addEventListener('resize', () => {
 
 
 tacDoorLockEl.addEventListener('change', () => {
-  tacDisplay.doorLock = tacDoorLockEl.checked;
+  tacDisplay.escapeDoorLock = tacDoorLockEl.checked;
   renderTacLandmarks();
   tacSave();
 });
 
 
 tacSnapCipherEl.addEventListener('change', () => {
-  tacDisplay.snap.cipher = tacSnapCipherEl.checked;
+  tacDrawSettings.snap.cipher = tacSnapCipherEl.checked;
   tacSave();
 });
 
 tacSnapDungeonEl.addEventListener('change', () => {
-  tacDisplay.snap.dungeon = tacSnapDungeonEl.checked;
+  tacDrawSettings.snap.dungeon = tacSnapDungeonEl.checked;
   tacSave();
 });
 
 tacSnapDoorEl.addEventListener('change', () => {
-  tacDisplay.snap.door = tacSnapDoorEl.checked;
+  tacDrawSettings.snap.escapeDoor = tacSnapDoorEl.checked;
   tacSave();
 });
 
 tacSnapChairEl.addEventListener('change', () => {
-  tacDisplay.snap.chair = tacSnapChairEl.checked;
+  tacDrawSettings.snap.rocketChair = tacSnapChairEl.checked;
   tacSave();
 });
 
 tacSnapLockerEl.addEventListener('change', () => {
-  tacDisplay.snap.locker = tacSnapLockerEl.checked;
+  tacDrawSettings.snap.locker = tacSnapLockerEl.checked;
   tacSave();
 });
 
 tacSnapBoxEl.addEventListener('change', () => {
-  tacDisplay.snap.box = tacSnapBoxEl.checked;
+  tacDrawSettings.snap.box = tacSnapBoxEl.checked;
   tacSave();
 });
 
 tacSnapPhoneBoothEl.addEventListener('change', () => {
-  tacDisplay.snap.phoneBooth = tacSnapPhoneBoothEl.checked;
+  tacDrawSettings.snap.phoneBooth = tacSnapPhoneBoothEl.checked;
   tacSave();
 });
 
 tacSnapPointEl.addEventListener('change', () => {
-  tacDisplay.snap.point = tacSnapPointEl.checked;
+  tacDrawSettings.snap.endpoint = tacSnapPointEl.checked;
   tacSave();
 });
 
 
 tacDelSegOnlyEl.addEventListener('change', () => {
-  tacDisplay.delSegOnly = tacDelSegOnlyEl.checked;
+  tacDrawSettings.delSegOnly = tacDelSegOnlyEl.checked;
   tacSave();
 });
 
@@ -4020,7 +4020,7 @@ tacSelGlowEl.addEventListener('change', () => {
 
 
 tacHideEndpointsEl.addEventListener('change', () => {
-  tacDisplay.hideEndpoints = tacHideEndpointsEl.checked;
+  tacDrawSettings.hideEndpoints = tacHideEndpointsEl.checked;
   renderTacBoard();
   tacSave();
 });
@@ -4046,17 +4046,7 @@ $('tacBasementPrev').addEventListener('click', () => switchTacBasement(-1));
 $('tacBasementNext').addEventListener('click', () => switchTacBasement(1));
 
 
-if (tacPersisted && tacPersisted.display) {
-  const sd = tacPersisted.display;
-  Object.assign(tacDisplay, sd);
-  tacDisplay.snap = Object.assign({ cipher: true, dungeon: true, door: true, chair: true, locker: false, box: false, phoneBooth: false, point: true }, sd.snap || {});
-}
-
-if (tacPersisted && tacPersisted.mstyle) {
-  if (tacPersisted.mstyle.single) Object.assign(tacMeasureStyle.single, tacPersisted.mstyle.single);
-  if (tacPersisted.mstyle.chain) Object.assign(tacMeasureStyle.chain, tacPersisted.mstyle.chain);
-}
-
+// 显示/绘制/样式设置的持久化恢复已收拢在 persist.js 顶部（只认当前结构的键）
 syncTacDisplayUI();
 
 
@@ -4156,7 +4146,33 @@ export function rectNode(a, W, H, idx) {
 }
 
 
+export function lineNode(a, W, H, idx) {
+  const x1 = a.x1 * W, y1 = a.y1 * H;
+  const x2 = a.x2 * W, y2 = a.y2 * H;
+
+  const g = document.createElementNS(TAC_SVG_NS, 'g');
+  if (idx >= 0) g.dataset.idx = idx;
+
+  const hit = document.createElementNS(TAC_SVG_NS, 'line');
+  hit.setAttribute('x1', x1); hit.setAttribute('y1', y1);
+  hit.setAttribute('x2', x2); hit.setAttribute('y2', y2);
+  hit.setAttribute('stroke', 'rgba(0,0,0,0)');
+  hit.setAttribute('stroke-width', Math.max(16, a.width * 4));
+
+  const line = document.createElementNS(TAC_SVG_NS, 'line');
+  line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+  line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+  line.setAttribute('stroke', a.color);
+  line.setAttribute('stroke-width', a.width);
+  line.setAttribute('stroke-linecap', 'round');
+
+  g.append(hit, line);
+  return g;
+}
+
+
 export function shapeNode(a, W, H, idx) {
+  if (a.shape === 'line') return lineNode(a, W, H, idx);
   if (a.shape === 'circle') return circleNode(a, W, H, idx);
   if (a.shape === 'rect') return rectNode(a, W, H, idx);
   return arrowNode(a, W, H, idx);
@@ -5225,7 +5241,7 @@ export function renderTacBoard() {
       if (isChain && !((isChainStart && end === 'a') || (isChainEnd && end === 'b'))) return;
       const dot = document.createElement('div');
       dot.className = 'tac-measure-dot';
-      if (tacDisplay.hideEndpoints) dot.classList.add('hidden-endpoint');
+      if (tacDrawSettings.hideEndpoints) dot.classList.add('hidden-endpoint');
       dot.dataset.idx = idx;
       dot.dataset.end = end;
       dot.style.left = `${m[kx] * 100}%`;
@@ -8329,8 +8345,8 @@ export async function tacExportImage() {
       const [x, y] = PXY(pt[0] / W0, pt[1] / H0);
       uctx.drawImage(dungeonIcon, x - size / 2, y - size / 2, size, size);
     }
-    if (tacDisplay.doors && doorIcon) {
-      const size = tacDisplay.doorSize / 100 * W * K;
+    if (tacDisplay.escapeDoors && doorIcon) {
+      const size = tacDisplay.escapeDoorSize / 100 * W * K;
       tacDoorPoints(map).forEach((pt) => {
         const [x, y] = PXY(pt[0] / W0, pt[1] / H0);
         uctx.drawImage(doorIcon, x - size / 2, y - size / 2, size, size);
@@ -8351,18 +8367,18 @@ export async function tacExportImage() {
     const xzOf = (pt) => (pt.length > 2 ? [pt[0], pt[2]] : pt);
     if (chairIcon && map.rocketChairs) {
       const ch = map.rocketChairs;
-      const size = tacDisplay.chairSize / 100 * W * K;
+      const size = tacDisplay.rocketChairSize / 100 * W * K;
       const drawChair = (pt) => {
         const [px, pz] = xzOf(pt);
         const [x, y] = PXY(px / W0, pz / H0);
         uctx.drawImage(chairIcon, x - size / 2, y - size / 2, size, size);
       };
-      if (tacDisplay.chairs) {
+      if (tacDisplay.rocketChairs) {
         ch.fixed.forEach(drawChair);
         if (ch.sets.length) ch.sets[S.tacChairIndex % ch.sets.length].forEach(drawChair);
       }
       const bs = tacBasementList();
-      if (tacDisplay.chairsBasement && bs.length) {
+      if (tacDisplay.rocketChairsBasement && bs.length) {
         bs[S.tacChairBasementIndex % bs.length].rocketChairs.forEach(drawChair);
       }
     }
@@ -8508,7 +8524,7 @@ export async function tacExportImage() {
     const ringLw = Math.max(1.5, 2 * (W * K) / wrapW);
     const drawRing = (x, z) => {
       const [cx, cy] = PXY(x / W0, z / H0);
-      const d = tacDisplay.chairSize * 1.5 / 100 * W * K;
+      const d = tacDisplay.rocketChairSize * 1.5 / 100 * W * K;
       uctx.save();
       uctx.strokeStyle = '#ff5252';
       uctx.lineWidth = ringLw;
@@ -8547,7 +8563,7 @@ export async function tacExportImage() {
     // 选中椅的正圆红框（与屏幕一致：椅子模式、未勾选隐藏选中圈、对应图标组显示中）
     const sel = tacCarryState.chair;
     if (sel && sel.kind !== 'point' && !tacDisplay.carryHideRing
-        && (sel.kind === 'basement' ? tacDisplay.chairsBasement : tacDisplay.chairs)) {
+        && (sel.kind === 'basement' ? tacDisplay.rocketChairsBasement : tacDisplay.rocketChairs)) {
       drawRing(sel.x, sel.z);
     }
     // 明细行点击的标记红圈
@@ -8689,7 +8705,7 @@ export async function tacExportImage() {
   ctx.save();
   ctx.lineWidth = Math.max(1.5, W * K / 400);
   board.measures.forEach((m, idx) => {
-    if (tacDisplay.hideEndpoints) return;
+    if (tacDrawSettings.hideEndpoints) return;
     const isChain = m.chain != null;
     if (isChain && !(chainFirst[m.chain] === idx || chainLast[m.chain] === idx)) return;
     const dotColor = tacMeasureSegColor(m);
@@ -9335,7 +9351,7 @@ tacMapWrap.addEventListener('pointerup', (e) => {
     const dx = (tacDrawing.x2 - tacDrawing.x1) * p.W;
     const dy = (tacDrawing.y2 - tacDrawing.y1) * p.H;
     
-    const bigEnough = tacDrawShape === 'arrow'
+    const bigEnough = (tacDrawShape === 'arrow' || tacDrawShape === 'line')
       ? Math.hypot(dx, dy) > 20
       : Math.abs(dx) > 20 && Math.abs(dy) > 20;
     if (bigEnough) {
@@ -9467,7 +9483,7 @@ tacArrowSvg.addEventListener('click', (e) => {
     const board = tacBoard();
     const m = board.measures[idx];
     
-    if (m && m.chain != null && !tacDisplay.delSegOnly) {
+    if (m && m.chain != null && !tacDrawSettings.delSegOnly) {
       const removedList = [];
       for (let i = board.measures.length - 1; i >= 0; i--) {
         if (board.measures[i].chain === m.chain) {

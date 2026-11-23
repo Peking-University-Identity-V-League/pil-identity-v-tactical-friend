@@ -1555,6 +1555,7 @@
   "ui.tac.path.unsupported.B": "No walkable area near end B",
   "ui.tac.pattern.arrow": "➤ Arrow",
   "ui.tac.pattern.circle": "◯ Circle",
+  "ui.tac.pattern.line": "— Line",
   "ui.tac.pattern.square": "▭ Box",
   "ui.tac.pattern.title": "✏️ Shape Drawing",
   "ui.tac.rocketChair.balloon": "Balloon",

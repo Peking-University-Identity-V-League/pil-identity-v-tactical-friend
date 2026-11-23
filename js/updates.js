@@ -6,7 +6,7 @@ export const UPDATE_NOTES = `
 点击右下角前往官网：https://pkuidv.com/tactical-friend
 可以体验“切换三维”功能，十分震撼！（官网访问速度比b站toy慢，请耐心等待加载）
 
-## 2026-11-23
+## 2026-11-24
 
 - 1、新增联合狩猎电话亭点位
 - 2、规范测算卡片的样式设置

@@ -1,5 +1,5 @@
 
-import { CN_NUM, cnNum } from '../core/utils.js';
+import { cnNum } from '../core/utils.js';
 
 
 import { translate } from '../core/i18n.js';
@@ -65,7 +65,7 @@ export function dedHelpers(positions) {
   const exactly = (o = {}) =>
     build('exactly', withDefaults(
       o,
-      { name: translate("deduction.rule.type.exactly", { n: CN_NUM[o.n] }) }));
+      { name: translate("deduction.rule.type.exactly", { n: cnNum(o.n) }) }));
 
   const either = (o = {}) =>
     exactly({ n: 1, name: translate("deduction.rule.type.either"), ...o });

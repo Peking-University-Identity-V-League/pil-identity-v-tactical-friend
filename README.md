@@ -711,7 +711,7 @@ export const dedSteps = $('dedSteps');
 | 导出 | 用途 |
 |---|---|
 | `$` | `document.getElementById()` 的简写 |
-| `CN_NUM`、`cnNum()` | 中文数字显示，用于规则说明 |
+| `cnNum()` | 中文数字显示（惰性翻译），用于规则说明 |
 | `mountImageOverlays()` | 给地图容器加入加载中和加载失败覆盖层 |
 | `loadImageWithStatus()` | 预加载图片、显示状态、丢弃过期请求、失败后每 5 秒重试 |
 
@@ -1131,7 +1131,8 @@ identityV.locale
 | `v` | 存档版本 |
 | `map` | 最近使用地图 |
 | `boards` | 各地图战术板 |
-| `display` | 战术显示设置 |
+| `display` | 战术显示设置（显示什么、显示多大） |
+| `draw` | 绘制设置（吸附、隐藏端点、折线删段） |
 | `mstyle` | 直线和折线样式 |
 | `regions` | 各地图阵营、选区和密码机组 |
 | `dedMarks` | 各地图推演标记 |

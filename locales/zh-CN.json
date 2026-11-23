@@ -1555,6 +1555,7 @@
   "ui.tac.path.unsupported.B": "终点 B 附近没有可行走区域",
   "ui.tac.pattern.arrow": "➤ 箭头",
   "ui.tac.pattern.circle": "◯ 虚线圈",
+  "ui.tac.pattern.line": "— 直线",
   "ui.tac.pattern.square": "▭ 虚线框",
   "ui.tac.pattern.title": "✏️ 图形绘制",
   "ui.tac.rocketChair.balloon": "牵气球-上椅",

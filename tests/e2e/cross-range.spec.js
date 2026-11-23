@@ -48,7 +48,10 @@ test('timeBomb: fill toggles cross fill; selected highlight is circular', async 
   await expect(cross).toHaveCount(1);
   await fillCb.uncheck();
   await expect(rect).toHaveCSS('fill', /none/);
-  // 选中高亮边框为圆形
+  // 选中高亮默认关闭：无高亮；打开“造物选中高亮”后出现圆形高亮边框
+  await expect(cross).not.toHaveClass(/selected/);
+  await tool(page, 'display');
+  await page.locator('#tacSelGlow').check();
   await expect(cross).toHaveClass(/selected/);
   await expect(cross).toHaveCSS('border-radius', '50%');
 });
