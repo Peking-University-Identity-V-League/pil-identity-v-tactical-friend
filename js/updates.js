@@ -6,6 +6,10 @@ export const UPDATE_NOTES = `
 点击右下角前往官网：https://pkuidv.com/tactical-friend
 可以体验“切换三维”功能，十分震撼！（官网访问速度比b站toy慢，请耐心等待加载）
 
+## 2026-11-23
+
+- 1、补充天赋、赛事相关造物
+
 ## 2026-11-22
 
 - 1、English（英语）、Tiếng Việt（越南语）语言包上线！
