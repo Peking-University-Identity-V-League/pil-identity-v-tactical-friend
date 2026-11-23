@@ -3357,13 +3357,19 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 
 .tac-display-row .tac-display-toggle,
 .tac-display-snap .tac-display-toggle {
-  color: var(--text);
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+}
+/* 卡片设置区勾选按钮统一格式：字号、字重、勾选框与文字间距一致 */
+.tac-display-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
 }
 .tac-display-mid {
   flex: 1 1 auto;
@@ -3398,9 +3404,9 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 .tac-display-snap.no-line { padding-top: 2px; }
 .tac-display-snap.no-line::before { display: none; }
 .tac-display-snap-label {
-  color: var(--text);
-  font-size: 12px;
-  font-weight: 700;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 600;
 }
 
 .tac-display-group { display: flex; flex-direction: column; gap: 8px; }

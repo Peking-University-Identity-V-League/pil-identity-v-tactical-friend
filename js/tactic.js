@@ -2709,7 +2709,7 @@ function buildTacTideRoleOptions() {
   let opts = Object.entries(TAC_MOVEMENT_SURVIVOR.states).map(([k, st]) =>
     `<option value="${k}">${st.name} ${st.speed}m/s</option>`).join('');
   opts += `<option value="role">${translate("common.roles")}</option>`;
-  opts += `<option value="fixed">${translate("ui.common.fixed")}</option>`;
+  opts += `<option value="fixed">${translate("application.common.fixed")}</option>`;
   tacTideSpeedRoleEl.innerHTML = opts + `<option value="custom">${translate("common.custom")}</option>`;
   tacTideSpeedRoleEl.value = 'run';
 }
@@ -3436,7 +3436,7 @@ function buildTacPathRoleOptions() {
     let opts = Object.entries(TAC_MOVEMENT_SURVIVOR.states).map(([k, st]) =>
       `<option value="${k}">${st.name} ${st.speed}m/s</option>`).join('');
     opts += `<option value="role">${translate("common.roles")}</option>`;
-    opts += `<option value="fixed">${translate("ui.common.fixed")}</option>`;
+    opts += `<option value="fixed">${translate("application.common.fixed")}</option>`;
     tacPathSpeedRoleEl.innerHTML = opts + `<option value="custom">${translate("common.custom")}</option>`;
     tacPathSpeedRoleEl.value = 'run';
     return;
@@ -6178,7 +6178,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     const row = document.createElement('div');
     row.className = 'tac-manage-row';
     row.innerHTML =
-      `<label class="tac-manage-slider">${translate("ui.common.icon.size")}`
+      `<label class="tac-manage-slider">${translate("application.common.icon.size")}`
       + `<input type="range" min="3" max="12" step="0.5" value="${token.size}"></label>`
       + `<label class="tac-manage-hide"><input type="checkbox"`
       + `${token.hideIcon ? ' checked' : ''}>${translate("ui.tac.manangeBox.icon.hide")}</label>`
@@ -6304,7 +6304,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
   const row = document.createElement('div');
   row.className = 'tac-manage-row';
   row.innerHTML =
-    `<label class="tac-manage-slider">${translate("ui.common.icon.size")}`
+    `<label class="tac-manage-slider">${translate("application.common.icon.size")}`
     + `<input type="range" min="1.5" max="10" step="0.2" value="${curIcon}"></label>`
     + `<label class="tac-manage-hide"><input type="checkbox"`
     + `${it.hideIcon ? ' checked' : ''}>${translate("ui.tac.manangeBox.icon.hide")}</label>`
@@ -6675,7 +6675,7 @@ export function tacBuildRoleOptions() {
     let opts = Object.entries(TAC_MOVEMENT_SURVIVOR.states).map(([k, st]) =>
       `<option value="${k}">${st.name} ${st.speed}m/s</option>`).join('');
     opts += `<option value="role">${translate("common.roles")}</option>`;
-    opts += `<option value="fixed">${translate("ui.common.fixed")}</option>`;
+    opts += `<option value="fixed">${translate("application.common.fixed")}</option>`;
     tacSpeedRole.innerHTML = opts + `<option value="custom">${translate("common.custom")}</option>`;
     tacSpeedRole.value = 'run';
     return;
@@ -7712,7 +7712,7 @@ export function buildTacSpeedPanel() {
   const makeStyleToggle = (toggleEl, bodyEl) => {
     let open = true;
     const sync = () => {
-      toggleEl.textContent = translate("ui.common.style.section.title", { value: open ? '▾' : '▸' });
+      toggleEl.textContent = translate("application.draw.style.title", { value: open ? '▾' : '▸' });
       bodyEl.style.display = open ? '' : 'none';
     };
     toggleEl.addEventListener('click', () => { open = !open; sync(); });
@@ -7721,11 +7721,11 @@ export function buildTacSpeedPanel() {
 
   // 绘制设置区：整体可收起，默认收起；样式设置、其它设置默认展开
   const syncTacDrawSettings = () => {
-    tacDrawSettingsToggle.textContent = translate("ui.tac.measure.setting.draw.section.title", { value: tacDrawSettingsOpen ? '▾' : '▸' });
+    tacDrawSettingsToggle.textContent = translate("ui.tac.measure.setting.draw.title", { value: tacDrawSettingsOpen ? '▾' : '▸' });
     tacDrawSettingsBody.style.display = tacDrawSettingsOpen ? '' : 'none';
   };
   const syncTacDrawOther = () => {
-    tacDrawOtherToggle.textContent = translate("ui.tac.measure.setting.draw.other.title", { value: tacDrawOtherOpen ? '▾' : '▸' });
+    tacDrawOtherToggle.textContent = translate("application.draw.other.title", { value: tacDrawOtherOpen ? '▾' : '▸' });
     tacDrawOtherBody.style.display = tacDrawOtherOpen ? '' : 'none';
   };
   tacDrawSettingsToggle.addEventListener('click', () => {
