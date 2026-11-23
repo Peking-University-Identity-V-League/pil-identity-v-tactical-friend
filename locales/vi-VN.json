@@ -1372,6 +1372,8 @@
   "ui.sel.nav.status.hunter": "Thợ Săn đã chọn {count} / 1 khu vực",
   "ui.sel.nav.status.survivor": "Kẻ Sống Sót đã chọn {count} / 4 khu vực",
   "ui.sel.title": "Chọn khu vực Identity V",
+  "ui.theme.toDark": "Chuyển sang tối",
+  "ui.theme.toLight": "Chuyển sang sáng",
   "ui.tac.anim.addPoints": "Thêm điểm",
   "ui.tac.anim.avgSpeed": "TB {speed} m/s",
   "ui.tac.anim.clear": "Xóa hoạt ảnh",

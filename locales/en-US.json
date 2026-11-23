@@ -1371,6 +1371,8 @@
   "ui.sel.nav.status.hunter": "Hunter picked {count} / 1 zone",
   "ui.sel.nav.status.survivor": "Survivors picked {count} / 4 zones",
   "ui.sel.title": "Identity V Region Selection",
+  "ui.theme.toDark": "Switch to dark",
+  "ui.theme.toLight": "Switch to light",
   "ui.tac.anim.addPoints": "Add waypoints",
   "ui.tac.anim.avgSpeed": "Avg {speed} m/s",
   "ui.tac.anim.clear": "Clear animation",
