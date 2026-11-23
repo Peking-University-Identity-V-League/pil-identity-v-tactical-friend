@@ -190,21 +190,16 @@ function tacTalentButtons(hostRole, camp) {
     const opt = def.ranges.options[0];
     if (!opt || opt.size_m == null) continue;
     if (kind === 'fearRadius') {
-      if (camp === 'hunter' && hostRole === 'geisha') {
+      // 恐惧半径修正数据在角色条目下（survivor.js / hunter.js 的 fearRadius 字段）
+      const fr = (TAC_ROLES[hostRole] || {}).fearRadius;
+      if (camp === 'hunter' && fr && fr.forms) {
         out.push({
           tk: 'fearRadius', kind, label: def.name, base: opt.size_m,
-          variants: [
-            { key: 'beauty', label: translate("characters.geisha.beautyForm"), mult: 0.8 },
-            { key: 'prajna', label: translate("characters.geisha.prajnaForm"), mult: 1.1 },
-          ],
+          variants: fr.forms.map((f) => ({ key: f.key, label: f.name, mult: f.mult })),
         });
         continue;
       }
-      let mult = 1;
-      if (camp !== 'hunter') {
-        if (hostRole === 'prisoner') mult = 0.8;
-        else if (hostRole === 'archer') mult = 0.76;
-      }
+      const mult = (camp !== 'hunter' && fr && fr.mult) || 1;
       out.push({ tk: 'fearRadius', kind, label: def.name, base: opt.size_m, mult });
       continue;
     }

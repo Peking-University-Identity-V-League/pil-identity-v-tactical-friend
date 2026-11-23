@@ -1,14 +1,29 @@
 import { translate, getActiveLocale } from '../core/i18n.js';
+import { TAC_SURVIVOR_ROLES } from './survivor.js';
+import { TAC_HUNTER_ROLES } from './hunter.js';
 
 
 // 恐惧半径的修正标签：角色名（可选形态名）+ 由倍率推导的百分比，避免把加成值写死在语言键里
-const fearLabel = (roleKey, formKey, mult) => {
-  const role = translate(`characters.${roleKey}.name`);
-  const form = formKey ? translate(`characters.${roleKey}.${formKey}`) : '';
-  const name = [role, form].filter(Boolean).join(getActiveLocale() === 'zh-CN' ? '' : ' ');
+const fearLabel = (roleName, formName, mult) => {
+  const name = [roleName, formName].filter(Boolean).join(getActiveLocale() === 'zh-CN' ? '' : ' ');
   return translate("talent.survivor.fearRadius.range.mode.fmt", {
     name, value: `${mult > 1 ? '+' : ''}${Math.round((mult - 1) * 100)}%` });
 };
+
+// 恐惧半径修正：数据源在角色条目下（survivor.js / hunter.js 的 fearRadius 字段），此处派生
+const FEAR_MODS = {
+  hunter: [['hunter', translate("characters.camps.hunter"), 1]],
+  survivor: [['survivor', translate("characters.camps.survivor"), 1]],
+};
+Object.entries(TAC_HUNTER_ROLES).forEach(([, r]) => {
+  ((r.fearRadius || {}).forms || []).forEach((f) => {
+    FEAR_MODS.hunter.push([f.key, fearLabel(r.name, f.name, f.mult), f.mult]);
+  });
+});
+Object.entries(TAC_SURVIVOR_ROLES).forEach(([roleKey, r]) => {
+  const fr = r.fearRadius || {};
+  if (fr.mult) FEAR_MODS.survivor.push([roleKey, fearLabel(r.name, null, fr.mult), fr.mult]);
+});
 
 
 // 角色人格（天赋）注册表：求生者 40 人格 + 恐惧半径，监管者 40 人格 + 耳鸣。
@@ -19,10 +34,7 @@ export const TAC_TALENT_TYPES = {
     camp: 'survivor',
     ranges: {
       key: 'showItem',
-      fearMods: {
-        hunter: [['hunter', translate("characters.camps.hunter"), 1], ['beauty', fearLabel('geisha', 'beautyForm', 0.8), 0.8], ['prajna', fearLabel('geisha', 'prajnaForm', 1.1), 1.1]],
-        survivor: [['survivor', translate("characters.camps.survivor"), 1], ['prisoner', fearLabel('prisoner', null, 0.8), 0.8], ['archer', fearLabel('archer', null, 0.76), 0.76]],
-      },
+      fearMods: FEAR_MODS,
       options: [
         { size_m: 32.07, label: translate("talent.survivor.fearRadius") },
       ],

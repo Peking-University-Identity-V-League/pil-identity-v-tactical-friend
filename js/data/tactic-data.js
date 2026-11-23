@@ -1,5 +1,7 @@
 import { translate } from '../core/i18n.js';
 import { TAC_TALENT_TYPES } from './talents.js';
+import { TAC_SURVIVOR_ROLES } from './survivor.js';
+import { TAC_HUNTER_ROLES } from './hunter.js';
 
 
 // 天赋速度加成：数据源统一在 talents.js 的 buff.speedBuff，此处派生成 tactic.js 消费的既有形状
@@ -15,6 +17,16 @@ const TAC_TALENT_SPEED_BUFFS = Object.fromEntries(
         camp: t.camp,
       };
       return [key, out];
+    }));
+
+
+// 角色特质速度加成：数据源统一在 survivor.js / hunter.js 的 traits 字段，此处派生成 tactic.js 消费的既有形状
+const deriveTraitSpeedBuffs = (roles) => Object.entries(roles).flatMap(([roleKey, r]) =>
+  Object.entries(r.traits || {})
+    .filter(([, t]) => t.speedBuff)
+    .map(([traitKey, t]) => {
+      const { aim, ...rest } = t.speedBuff;
+      return { key: traitKey, role: r.name, name: t.name, ...rest };
     }));
 
 
@@ -47,66 +59,8 @@ export const TAC_MOVEMENT_SURVIVOR = {
 
 export const TAC_MOVEMENT_BUFFS = {
   trait: {
-    survivor: [
-      { key: 'sensitivity', role: translate("characters.doctor.name"), name: translate("movement.buff.trait.doctor.sensitivity.name"), mult: 1.45, duration: 2 },
-      { key: 'takeNotes', role: translate("characters.lawyer.name"), name: translate("movement.buff.trait.lawyer.takeNotes.name"), mult: 1.035 },
-      { key: 'illusion', role: translate("characters.magician.name"), name: translate("movement.buff.trait.magician.illusion.name"), mult: 1.5, duration: 0.87 },
-      { key: 'tinyLilliputian', role: translate("characters.explorer.name"), name: translate("movement.buff.trait.explorer.tinyLilliputian.name"), mult: 0.9 },
-      { key: 'energyReserves', role: translate("characters.explorer.name"), name: translate("movement.buff.trait.explorer.energyReserves.name"), mult: 1.35, duration: 4 },
-      { key: 'tapTapWalk', role: translate("characters.theMindsEye.name"), name: translate("movement.buff.trait.theMindsEye.tapTapWalk.name"), mult: 1.25, states: ['walk'] },
-      { key: 'tapTap', role: translate("characters.theMindsEye.name"), name: translate("movement.buff.trait.theMindsEye.tapTap.name"), mult: 1.3, duration: 2, states: ['run'] },
-      { key: 'armyBond', role: translate("characters.coordinator.name"), name: translate("movement.buff.trait.coordinator.armyBond.name"), mult: 1.05 },
-      { key: 'dashFootball', role: translate("characters.forward.name"), name: translate("movement.buff.trait.forward.dashFootball.name"), mult: 3 },
-      { key: 'ridingFullRage', role: translate("characters.wildling.name"), name: translate("movement.buff.trait.wildling.ridingFullRage.name"), mult: 1.33 },
-      { key: 'duphrin', role: translate("characters.barmaid.name"), name: translate("movement.buff.trait.barmaid.duphrin.name"), mult: 1.5, duration: 2 },
-      { key: 'undergroundSneak', role: translate("characters.graveKeeper.name"), name: translate("movement.buff.trait.graveKeeper.undergroundSneak.name"), mult: 1.1 },
-      { key: 'aestheticResonance', role: translate("characters.painter.name"), name: translate("movement.buff.trait.painter.aestheticResonance.name"), levels: [1.02, 1.04] },
-      { key: 'altruism', role: translate("characters.batter.name"), name: translate("movement.buff.trait.batter.altruism.name"), mult: 1.5, duration: 10 },
-      { key: 'landing', role: translate("characters.toyMerchant.name"), name: translate("movement.buff.trait.toyMerchant.landing.name"), mult: 1.3, duration: 2 },
-      { key: 'resonance', role: translate("characters.novelist.name"), name: translate("movement.buff.trait.novelist.resonance.name"), mult: 1.5, duration: 2.5 },
-      { key: 'rocketDash', role: translate("characters.weepingClown.name"), name: translate("movement.buff.trait.weepingClown.rocketDash.name"), mult: 1.5 },
-      { key: 'firefightingTraining', role: translate("characters.fireInvestigator.name"), name: translate("movement.buff.trait.fireInvestigator.firefightingTraining.name"), mult: 1.5, duration: 2 },
-      { key: 'smokeScreen', role: translate("characters.escapologist.name"), name: translate("movement.buff.trait.escapologist.smokeScreen.name"), mult: 1.35, duration: 1 },
-      { key: 'stratus', role: translate("characters.meteorologist.name"), name: translate("movement.buff.trait.meteorologist.stratus.name"), levels: [1.33, 1.77] },
-      { key: 'concealedSpin', role: translate("characters.antiquarian.name"), name: translate("movement.buff.trait.antiquarian.concealedSpin.name"), mult: 1.05 },
-      { key: 'tuning', role: translate("characters.composer.name"), name: translate("movement.buff.trait.composer.tuning.name"), mult: 1.5 },
-      { key: 'motivate', role: translate("characters.cheerleader.name"), name: translate("movement.buff.trait.cheerleader.motivate.name"), mult: 1.7, duration: 4 },
-      { key: 'flexibleJoints', role: translate("characters.puppeteer.name"), name: translate("movement.buff.trait.puppeteer.flexibleJoints.name"), mult: 1.08, duration: 9 },
-    ],
-    hunter: [
-      { key: 'kindlingWrath', role: translate("characters.hellEmber.name"), name: translate("movement.buff.trait.hellEmber.kindlingWrath.name"), mult: 1.08, duration: 8 },
-      { key: 'puppetSwitchPosition', role: translate("characters.hellEmber.name"), name: translate("movement.buff.trait.hellEmber.puppetSwitchPosition.name"), mult: 1.5, duration: 1.5 },
-      { key: 'rockerDash', role: translate("characters.smileyFace.name"), name: translate("movement.buff.trait.smileyFace.rockerDash.name"), levels: [1.55, 1.62, 2] },
-      { key: 'windWings', role: translate("characters.smileyFace.name"), name: translate("movement.buff.trait.smileyFace.windWings.name"), mult: 1.2 },
-      { key: 'propeller', role: translate("characters.smileyFace.name"), name: translate("movement.buff.trait.smileyFace.propeller.name"), mult: 0.9, postMult: true },
-      { key: 'chainHookSwing', role: translate("characters.gameKeeper.name"), name: translate("movement.buff.trait.gameKeeper.chainHookSwing.name"), mult: 0.95, postMult: true },
-      { key: 'hiddenInMist', role: translate("characters.theRipper.name"), name: translate("movement.buff.trait.theRipper.hiddenInMist.name"), mult: 1.15 },
-      { key: 'fogZone', role: translate("characters.theRipper.name"), name: translate("movement.buff.trait.theRipper.fogZone.name"), mult: 1.2 },
-      { key: 'entangled', role: translate("characters.soulWeaver.name"), name: translate("movement.buff.trait.soulWeaver.entangled.name"), levels: [1.25, 1.46, 1.675] },
-      { key: 'dashHit', role: translate("characters.geisha.name"), name: translate("movement.buff.trait.geisha.dashHit.name"), mult: 3 },
-      { key: 'withoutUmbrella', role: translate("characters.wuchang.name"), name: translate("movement.buff.trait.wuchang.withoutUmbrella.name"), mult: 1.1 },
-      { key: 'siphonSoul', role: translate("characters.wuchang.name"), name: translate("movement.buff.trait.wuchang.siphonSoul.name"), mult: 1.65, forms: [0] },
-      { key: 'tentaclesCharged', role: translate("characters.theFeaster.name"), name: translate("movement.buff.trait.theFeaster.tentaclesCharged.name"), mult: 0.94, postMult: true },
-      { key: 'followerOutOfRadius', role: translate("characters.dreamWitch.name"), name: translate("movement.buff.trait.dreamWitch.followerOutOfRadius.name"), mult: 1.3, postMult: true, forms: [1] },
-      { key: 'restfulRoad', role: translate("characters.axeBoy.name"), name: translate("movement.buff.trait.axeBoy.restfulRoad.name"), mult: 2 },
-      { key: 'dispelSouls', role: translate("characters.axeBoy.name"), name: translate("movement.buff.trait.axeBoy.dispelSouls.name"), mult: 1.4, duration: 2.6 },
-      { key: 'musicNoteCharged', role: translate("characters.violinist.name"), name: translate("movement.buff.trait.violinist.musicNoteCharged.name"), mult: 0.97, postMult: true },
-      { key: 'sculptureCharged', role: translate("characters.sculptor.name"), name: translate("movement.buff.trait.sculptor.sculptureCharged.name"), mult: 0.97, postMult: true },
-      { key: 'overload', role: translate("characters.undead.name"), name: translate("movement.buff.trait.undead.overload.name"), mult: 0.92, postMult: true },
-      { key: 'slipstream', role: translate("characters.naiad.name"), name: translate("movement.buff.trait.naiad.slipstream.name"), mult: 1.3 },
-      { key: 'poaching', role: translate("characters.nightmare.name"), name: translate("movement.buff.trait.nightmare.poaching.name"), mult: 1.13 },
-      { key: 'justVerdict', role: translate("characters.clerk.name"), name: translate("movement.buff.trait.clerk.justVerdict.name"), mult: 1.06, duration: 15 },
-      { key: 'windwalk', role: translate("characters.nightWatch.name"), name: translate("movement.buff.trait.nightWatch.windwalk.name"), mult: 1.12, duration: 6 },
-      { key: 'stealth', role: translate("characters.operaSinger.name"), name: translate("movement.buff.trait.operaSinger.stealth.name"), mult: 1.08 },
-      { key: 'anotherShadowRealmBonus', role: translate("characters.operaSinger.name"), name: translate("movement.buff.trait.operaSinger.anotherShadowRealmBonus.name"), mult: 1.45 },
-      { key: 'attackMiss', role: translate("characters.hullabaloo.name"), name: translate("movement.buff.trait.hullabaloo.attackMiss.name"), mult: 0.3, postMult: true },
-      { key: 'pettyGains', role: translate("characters.peddler.name"), name: translate("movement.buff.trait.peddler.pettyGains.name"), mult: 1.08, duration: 10 },
-      { key: 'metalAffinity', role: translate("characters.peddler.name"), name: translate("movement.buff.trait.peddler.metalAffinity.name"), mult: 0.5, duration: 1, postMult: true },
-      { key: 'inertia', role: translate("characters.cueist.name"), name: translate("movement.buff.trait.cueist.inertia.name"), mult: 1.18, duration: 6 },
-      { key: 'assimilationEffect', role: translate("characters.queenBee.name"), name: translate("movement.buff.trait.queenBee.assimilationEffect.name"), mult: 1.12 },
-      { key: 'bacterialSymbiosis', role: translate("characters.dentist.name"), name: translate("movement.buff.trait.dentist.bacterialSymbiosis.name"), mult: 1.05 },
-      { key: 'heightenedSenses', role: translate("characters.herztier.name"), name: translate("movement.buff.trait.herztier.heightenedSenses.name"), mult: 1.08, duration: 10 },
-    ],
+    survivor: deriveTraitSpeedBuffs(TAC_SURVIVOR_ROLES),
+    hunter: deriveTraitSpeedBuffs(TAC_HUNTER_ROLES),
   },
   talent: TAC_TALENT_SPEED_BUFFS,
 

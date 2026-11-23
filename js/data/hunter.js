@@ -6,6 +6,12 @@ export const TAC_HUNTER_ROLES = {
   hellEmber: {
     name: translate("characters.hellEmber.name"),
     camp: 'hunter',
+    traits: {
+      kindlingWrath: { name: translate("movement.buff.trait.hellEmber.kindlingWrath.name"),
+                       speedBuff: { aim: 'hunter', mult: 1.08, duration: 8 } },
+      puppetSwitchPosition: { name: translate("movement.buff.trait.hellEmber.puppetSwitchPosition.name"),
+                              speedBuff: { aim: 'hunter', mult: 1.5, duration: 1.5 } },
+    },
     speed: 4.73,
     ranges: {
       key: 'showTrait',
@@ -19,6 +25,14 @@ export const TAC_HUNTER_ROLES = {
   smileyFace: {
     name: translate("characters.smileyFace.name"),
     camp: 'hunter',
+    traits: {
+      rockerDash: { name: translate("movement.buff.trait.smileyFace.rockerDash.name"),
+                    speedBuff: { aim: 'hunter', levels: [1.55, 1.62, 2] } },
+      windWings: { name: translate("movement.buff.trait.smileyFace.windWings.name"),
+                   speedBuff: { aim: 'hunter', mult: 1.2 } },
+      propeller: { name: translate("movement.buff.trait.smileyFace.propeller.name"),
+                   speedBuff: { aim: 'hunter', mult: 0.9, postMult: true } },
+    },
     speed: 4.56,
     ranges: {
       key: 'showTrait',
@@ -34,6 +48,10 @@ export const TAC_HUNTER_ROLES = {
   gameKeeper: {
     name: translate("characters.gameKeeper.name"),
     camp: 'hunter',
+    traits: {
+      chainHookSwing: { name: translate("movement.buff.trait.gameKeeper.chainHookSwing.name"),
+                        speedBuff: { aim: 'hunter', mult: 0.95, postMult: true } },
+    },
     speed: 4.64,
     items: ['chainHook', 'trap'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/e/e3/jr41oyh7dug7kstuwjaqpt0twtmuk4t.png/90px-%E9%B9%BF%E5%A4%B4%E5%A4%B4%E5%83%8F.png',
@@ -41,6 +59,12 @@ export const TAC_HUNTER_ROLES = {
   theRipper: {
     name: translate("characters.theRipper.name"),
     camp: 'hunter',
+    traits: {
+      hiddenInMist: { name: translate("movement.buff.trait.theRipper.hiddenInMist.name"),
+                      speedBuff: { aim: 'hunter', mult: 1.15 } },
+      fogZone: { name: translate("movement.buff.trait.theRipper.fogZone.name"),
+                 speedBuff: { aim: 'hunter', mult: 1.2 } },
+    },
     speed: 4.73,
     items: ['fogZone', 'freezingFog', 'hiddenInMist'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/97/ivu0gnyhfvshbheysxmqaeqcq6j5pi3.png/90px-%E2%80%9C%E6%9D%B0%E5%85%8B%E2%80%9D%E5%A4%B4%E5%83%8F.png',
@@ -48,6 +72,10 @@ export const TAC_HUNTER_ROLES = {
   soulWeaver: {
     name: translate("characters.soulWeaver.name"),
     camp: 'hunter',
+    traits: {
+      entangled: { name: translate("movement.buff.trait.soulWeaver.entangled.name"),
+                   speedBuff: { aim: 'hunter', levels: [1.25, 1.46, 1.675] } },
+    },
     speed: 4.56,
     items: ['cocoon', 'webbing', 'spinning'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/97/dpvb1d7e4f03tqh9s0l0ulua91ouuab.png/90px-%E8%9C%98%E8%9B%9B%E5%A4%B4%E5%83%8F.png',
@@ -55,6 +83,14 @@ export const TAC_HUNTER_ROLES = {
   geisha: {
     name: translate("characters.geisha.name"),
     camp: 'hunter',
+    traits: {
+      dashHit: { name: translate("movement.buff.trait.geisha.dashHit.name"),
+                 speedBuff: { aim: 'hunter', mult: 3 } },
+    },
+    fearRadius: { forms: [
+      { key: 'beauty', name: translate("characters.geisha.beautyForm"), mult: 0.8 },
+      { key: 'prajna', name: translate("characters.geisha.prajnaForm"), mult: 1.1 },
+    ] },
     speed: { [translate("characters.geisha.beautyForm")]: 4.73, [translate("characters.geisha.prajnaForm")]: 4.56 },
     items: ['swallowtailButterfly', 'dashHit', 'soulDeparture'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/bd/qcstapls4hnm6fckekl6l6890h19vst.png/90px-%E7%BA%A2%E8%9D%B6%E5%A4%B4%E5%83%8F.png',
@@ -62,6 +98,12 @@ export const TAC_HUNTER_ROLES = {
   wuchang: {
     name: translate("characters.wuchang.name"),
     camp: 'hunter',
+    traits: {
+      withoutUmbrella: { name: translate("movement.buff.trait.wuchang.withoutUmbrella.name"),
+                         speedBuff: { aim: 'hunter', mult: 1.1 } },
+      siphonSoul: { name: translate("movement.buff.trait.wuchang.siphonSoul.name"),
+                    speedBuff: { aim: 'hunter', mult: 1.65, forms: [0] } },
+    },
     speed: { [translate("characters.wuchang.xieBiAn")]: 4.73, [translate("characters.wuchang.fanWuJiu")]: 4.56 },
     items: ['umbrella', 'siphonSoulWaveringSoul'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/2a/gd5yd3hfaohhj2pozgqf2cfivpadbn6.png/90px-%E5%AE%BF%E4%BC%9E%E4%B9%8B%E9%AD%82%E5%A4%B4%E5%83%8F.png',
@@ -89,6 +131,10 @@ export const TAC_HUNTER_ROLES = {
   theFeaster: {
     name: translate("characters.theFeaster.name"),
     camp: 'hunter',
+    traits: {
+      tentaclesCharged: { name: translate("movement.buff.trait.theFeaster.tentaclesCharged.name"),
+                          speedBuff: { aim: 'hunter', mult: 0.94, postMult: true } },
+    },
     speed: 4.64,
     ranges: {
       key: 'showTrait',
@@ -104,6 +150,10 @@ export const TAC_HUNTER_ROLES = {
   dreamWitch: {
     name: translate("characters.dreamWitch.name"),
     camp: 'hunter',
+    traits: {
+      followerOutOfRadius: { name: translate("movement.buff.trait.dreamWitch.followerOutOfRadius.name"),
+                             speedBuff: { aim: 'hunter', mult: 1.3, postMult: true, forms: [1] } },
+    },
     speed: { [translate("characters.dreamWitch.originalBody")]: 6.08, [translate("items.dreamWitch.follower.name")]: 4.56 },
     ranges: {
       key: 'showTrait',
@@ -119,6 +169,12 @@ export const TAC_HUNTER_ROLES = {
   axeBoy: {
     name: translate("characters.axeBoy.name"),
     camp: 'hunter',
+    traits: {
+      restfulRoad: { name: translate("movement.buff.trait.axeBoy.restfulRoad.name"),
+                     speedBuff: { aim: 'hunter', mult: 2 } },
+      dispelSouls: { name: translate("movement.buff.trait.axeBoy.dispelSouls.name"),
+                     speedBuff: { aim: 'hunter', mult: 1.4, duration: 2.6 } },
+    },
     speed: 4.56,
     items: ['peacefulPine', 'resentfulSoul', 'restfulRoad'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/1c/jtvvska3lxcxlxq9vpto2mq2lj3l2q9.png/90px-%E7%88%B1%E5%93%AD%E9%AC%BC%E5%A4%B4%E5%83%8F.png',
@@ -180,6 +236,10 @@ export const TAC_HUNTER_ROLES = {
   violinist: {
     name: translate("characters.violinist.name"),
     camp: 'hunter',
+    traits: {
+      musicNoteCharged: { name: translate("movement.buff.trait.violinist.musicNoteCharged.name"),
+                          speedBuff: { aim: 'hunter', mult: 0.97, postMult: true } },
+    },
     speed: 4.64,
     ranges: {
       key: 'showTrait',
@@ -193,6 +253,10 @@ export const TAC_HUNTER_ROLES = {
   sculptor: {
     name: translate("characters.sculptor.name"),
     camp: 'hunter',
+    traits: {
+      sculptureCharged: { name: translate("movement.buff.trait.sculptor.sculptureCharged.name"),
+                          speedBuff: { aim: 'hunter', mult: 0.97, postMult: true } },
+    },
     speed: 4.64,
     ranges: {
       key: 'showTrait',
@@ -207,6 +271,10 @@ export const TAC_HUNTER_ROLES = {
   undead: {
     name: translate("characters.undead.name"),
     camp: 'hunter',
+    traits: {
+      overload: { name: translate("movement.buff.trait.undead.overload.name"),
+                  speedBuff: { aim: 'hunter', mult: 0.92, postMult: true } },
+    },
     speed: 4.73,
     items: ['kineticDashHit', 'chargedStrike', 'energyConversion'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/b/b7/6bjonfiuioth8cvmi8vvfae13ii1f3d.png/90px-%E2%80%9C%E5%8D%9A%E5%A3%AB%E2%80%9D%E5%A4%B4%E5%83%8F.png',
@@ -228,6 +296,10 @@ export const TAC_HUNTER_ROLES = {
   naiad: {
     name: translate("characters.naiad.name"),
     camp: 'hunter',
+    traits: {
+      slipstream: { name: translate("movement.buff.trait.naiad.slipstream.name"),
+                    speedBuff: { aim: 'hunter', mult: 1.3 } },
+    },
     speed: 4.64,
     items: ['spearfishing', 'surgingTides'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/d/dc/dah1qypfv56191rerxkkvdytfvki1jh.png/90px-%E6%B8%94%E5%A5%B3%E5%A4%B4%E5%83%8F.png',
@@ -248,6 +320,10 @@ export const TAC_HUNTER_ROLES = {
   nightmare: {
     name: translate("characters.nightmare.name"),
     camp: 'hunter',
+    traits: {
+      poaching: { name: translate("movement.buff.trait.nightmare.poaching.name"),
+                  speedBuff: { aim: 'hunter', mult: 1.13 } },
+    },
     speed: 4.64,
     ranges: {
       key: 'showTrait',
@@ -261,6 +337,10 @@ export const TAC_HUNTER_ROLES = {
   clerk: {
     name: translate("characters.clerk.name"),
     camp: 'hunter',
+    traits: {
+      justVerdict: { name: translate("movement.buff.trait.clerk.justVerdict.name"),
+                     speedBuff: { aim: 'hunter', mult: 1.06, duration: 15 } },
+    },
     speed: 4.73,
     ranges: {
       key: 'showTrait',
@@ -281,6 +361,10 @@ export const TAC_HUNTER_ROLES = {
   nightWatch: {
     name: translate("characters.nightWatch.name"),
     camp: 'hunter',
+    traits: {
+      windwalk: { name: translate("movement.buff.trait.nightWatch.windwalk.name"),
+                  speedBuff: { aim: 'hunter', mult: 1.12, duration: 6 } },
+    },
     speed: 4.64,
     ranges: {
       key: 'showTrait',
@@ -296,6 +380,12 @@ export const TAC_HUNTER_ROLES = {
   operaSinger: {
     name: translate("characters.operaSinger.name"),
     camp: 'hunter',
+    traits: {
+      stealth: { name: translate("movement.buff.trait.operaSinger.stealth.name"),
+                 speedBuff: { aim: 'hunter', mult: 1.08 } },
+      anotherShadowRealmBonus: { name: translate("movement.buff.trait.operaSinger.anotherShadowRealmBonus.name"),
+                                 speedBuff: { aim: 'hunter', mult: 1.45 } },
+    },
     speed: 4.56,
     ranges: {
       key: 'showTrait',
@@ -345,6 +435,10 @@ export const TAC_HUNTER_ROLES = {
   hullabaloo: {
     name: translate("characters.hullabaloo.name"),
     camp: 'hunter',
+    traits: {
+      attackMiss: { name: translate("movement.buff.trait.hullabaloo.attackMiss.name"),
+                    speedBuff: { aim: 'hunter', mult: 0.3, postMult: true } },
+    },
     speed: 5.10,
     ranges: {
       key: 'showTrait',
@@ -358,6 +452,12 @@ export const TAC_HUNTER_ROLES = {
   peddler: {
     name: translate("characters.peddler.name"),
     camp: 'hunter',
+    traits: {
+      pettyGains: { name: translate("movement.buff.trait.peddler.pettyGains.name"),
+                    speedBuff: { aim: 'hunter', mult: 1.08, duration: 10 } },
+      metalAffinity: { name: translate("movement.buff.trait.peddler.metalAffinity.name"),
+                       speedBuff: { aim: 'hunter', mult: 0.5, duration: 1, postMult: true } },
+    },
     speed: 4.64,
     items: ['pettyGains', 'natureAffinity', 'mineralAffinity', 'metalAffinity'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/a/af/c1idozmlwq4h20eylgrl3zzuueatha9.png/90px-%E6%9D%82%E8%B4%A7%E5%95%86%E5%A4%B4%E5%83%8F.png',
@@ -365,6 +465,10 @@ export const TAC_HUNTER_ROLES = {
   cueist: {
     name: translate("characters.cueist.name"),
     camp: 'hunter',
+    traits: {
+      inertia: { name: translate("movement.buff.trait.cueist.inertia.name"),
+                 speedBuff: { aim: 'hunter', mult: 1.18, duration: 6 } },
+    },
     speed: 4.64,
     ranges: {
       key: 'showTrait',
@@ -380,6 +484,10 @@ export const TAC_HUNTER_ROLES = {
   queenBee: {
     name: translate("characters.queenBee.name"),
     camp: 'hunter',
+    traits: {
+      assimilationEffect: { name: translate("movement.buff.trait.queenBee.assimilationEffect.name"),
+                            speedBuff: { aim: 'hunter', mult: 1.12 } },
+    },
     speed: { [translate("characters.queenBee.name")]: 4.64, [translate("characters.queenBee.speed.hiveCluster")]: 12 },
     ranges: {
       key: 'showTrait',
@@ -393,6 +501,10 @@ export const TAC_HUNTER_ROLES = {
   dentist: {
     name: translate("characters.dentist.name"),
     camp: 'hunter',
+    traits: {
+      bacterialSymbiosis: { name: translate("movement.buff.trait.dentist.bacterialSymbiosis.name"),
+                            speedBuff: { aim: 'hunter', mult: 1.05 } },
+    },
     speed: 4.73,
     ranges: {
       key: 'showTrait',
@@ -410,6 +522,10 @@ export const TAC_HUNTER_ROLES = {
   herztier: {
     name: translate("characters.herztier.name"),
     camp: 'hunter',
+    traits: {
+      heightenedSenses: { name: translate("movement.buff.trait.herztier.heightenedSenses.name"),
+                          speedBuff: { aim: 'hunter', mult: 1.08, duration: 10 } },
+    },
     speed: 4.64,
     ranges: {
       key: 'showTrait',

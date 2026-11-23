@@ -18,12 +18,20 @@ export const TAC_SURVIVOR_ROLES = {
   doctor: {
     name: translate("characters.doctor.name"),
     camp: 'survivor',
+    traits: {
+      sensitivity: { name: translate("movement.buff.trait.doctor.sensitivity.name"),
+                     speedBuff: { aim: 'survivor', mult: 1.45, duration: 2 } },
+    },
     items: ['syringe'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/3f/1w5x3hebebapsytc5agra0mfbk1evwk.png/90px-%E5%8C%BB%E7%94%9F%E5%A4%B4%E5%83%8F.png',
   },
   lawyer: {
     name: translate("characters.lawyer.name"),
     camp: 'survivor',
+    traits: {
+      takeNotes: { name: translate("movement.buff.trait.lawyer.takeNotes.name"),
+                   speedBuff: { aim: 'survivor', mult: 1.035 } },
+    },
     items: ['map'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/7/75/cbk98bqc51i4mojakibyl03xd20uk14.png/90px-%E5%BE%8B%E5%B8%88%E5%A4%B4%E5%83%8F.png',
   },
@@ -54,12 +62,22 @@ export const TAC_SURVIVOR_ROLES = {
   magician: {
     name: translate("characters.magician.name"),
     camp: 'survivor',
+    traits: {
+      illusion: { name: translate("movement.buff.trait.magician.illusion.name"),
+                  speedBuff: { aim: 'survivor', mult: 1.5, duration: 0.87 } },
+    },
     items: ['wand'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/d/df/rsppa4etapj4i0a9vpqeary620yfpu6.png/90px-%E9%AD%94%E6%9C%AF%E5%B8%88%E5%A4%B4%E5%83%8F.png',
   },
   explorer: {
     name: translate("characters.explorer.name"),
     camp: 'survivor',
+    traits: {
+      tinyLilliputian: { name: translate("movement.buff.trait.explorer.tinyLilliputian.name"),
+                         speedBuff: { aim: 'survivor', mult: 0.9 } },
+      energyReserves: { name: translate("movement.buff.trait.explorer.energyReserves.name"),
+                        speedBuff: { aim: 'survivor', mult: 1.35, duration: 4 } },
+    },
     ranges: {
       key: 'showTrait',
       options: [
@@ -79,6 +97,10 @@ export const TAC_SURVIVOR_ROLES = {
   coordinator: {
     name: translate("characters.coordinator.name"),
     camp: 'survivor',
+    traits: {
+      armyBond: { name: translate("movement.buff.trait.coordinator.armyBond.name"),
+                  speedBuff: { aim: 'survivor', mult: 1.05 } },
+    },
     ranges: {
       key: 'showTrait',
       options: [
@@ -97,12 +119,24 @@ export const TAC_SURVIVOR_ROLES = {
   forward: {
     name: translate("characters.forward.name"),
     camp: 'survivor',
+    traits: {
+      dashFootball: { name: translate("movement.buff.trait.forward.dashFootball.name"),
+                      speedBuff: { aim: 'survivor', mult: 3 } },
+      struggle: { name: translate("struggle.buff.trait.forward.struggle.name"),
+                  struggleBuff: { aim: 'survivor', levels: [0.10] } },
+    },
     items: ['football'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/17/adh59za8e9rtz8cfqzxyalsa1ipa3n0.png/90px-%E5%89%8D%E9%94%8B%E5%A4%B4%E5%83%8F.png',
   },
   theMindsEye: {
     name: translate("characters.theMindsEye.name"),
     camp: 'survivor',
+    traits: {
+      tapTapWalk: { name: translate("movement.buff.trait.theMindsEye.tapTapWalk.name"),
+                    speedBuff: { aim: 'survivor', mult: 1.25, states: ['walk'] } },
+      tapTap: { name: translate("movement.buff.trait.theMindsEye.tapTap.name"),
+                speedBuff: { aim: 'survivor', mult: 1.3, duration: 2, states: ['run'] } },
+    },
     ranges: {
       key: 'showTrait',
       options: [
@@ -192,6 +226,10 @@ export const TAC_SURVIVOR_ROLES = {
   wildling: {
     name: translate("characters.wildling.name"),
     camp: 'survivor',
+    traits: {
+      ridingFullRage: { name: translate("movement.buff.trait.wildling.ridingFullRage.name"),
+                        speedBuff: { aim: 'survivor', mult: 1.33 } },
+    },
     ranges: {
       key: 'showTrait',
       options: [
@@ -233,6 +271,10 @@ export const TAC_SURVIVOR_ROLES = {
   barmaid: {
     name: translate("characters.barmaid.name"),
     camp: 'survivor',
+    traits: {
+      duphrin: { name: translate("movement.buff.trait.barmaid.duphrin.name"),
+                 speedBuff: { aim: 'survivor', mult: 1.5, duration: 2 } },
+    },
     items: ['duphrin', 'strongDovlin', 'mixDovlin'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/d/d1/qxsohhayojydlkq1rvfpb9fefsvei2m.png/90px-%E8%B0%83%E9%85%92%E5%B8%88%E5%A4%B4%E5%83%8F.png',
   },
@@ -251,6 +293,10 @@ export const TAC_SURVIVOR_ROLES = {
   graveKeeper: {
     name: translate("characters.graveKeeper.name"),
     camp: 'survivor',
+    traits: {
+      undergroundSneak: { name: translate("movement.buff.trait.graveKeeper.undergroundSneak.name"),
+                          speedBuff: { aim: 'survivor', mult: 1.1 } },
+    },
     ranges: {
       key: 'showTrait',
       options: [
@@ -263,6 +309,7 @@ export const TAC_SURVIVOR_ROLES = {
   prisoner: {
     name: translate("characters.prisoner.name"),
     camp: 'survivor',
+    fearRadius: { mult: 0.8 },
     ranges: {
       key: 'showTrait',
       options: [
@@ -281,12 +328,20 @@ export const TAC_SURVIVOR_ROLES = {
   painter: {
     name: translate("characters.painter.name"),
     camp: 'survivor',
+    traits: {
+      aestheticResonance: { name: translate("movement.buff.trait.painter.aestheticResonance.name"),
+                            speedBuff: { aim: 'survivor', levels: [1.02, 1.04] } },
+    },
     items: ['paintBruahAndDrawingBoard', 'drawingBoard'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/5/56/821z7af4xzflb8o5ad3jxjzqzxswqqh.png/90px-%E7%94%BB%E5%AE%B6%E5%A4%B4%E5%83%8F.png',
   },
   batter: {
     name: translate("characters.batter.name"),
     camp: 'survivor',
+    traits: {
+      altruism: { name: translate("movement.buff.trait.batter.altruism.name"),
+                  speedBuff: { aim: 'survivor', mult: 1.5, duration: 10 } },
+    },
     ranges: {
       key: 'showTrait',
       options: [
@@ -301,6 +356,10 @@ export const TAC_SURVIVOR_ROLES = {
   toyMerchant: {
     name: translate("characters.toyMerchant.name"),
     camp: 'survivor',
+    traits: {
+      landing: { name: translate("movement.buff.trait.toyMerchant.landing.name"),
+                 speedBuff: { aim: 'survivor', mult: 1.3, duration: 2 } },
+    },
     items: ['catapult', 'woodenWings', 'toyBox', 'toyContainer'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/9e/sjqzxjfh9dr8zjhdl3y9g5xoibszlck.png/90px-%E7%8E%A9%E5%85%B7%E5%95%86%E5%A4%B4%E5%83%8F.png',
   },
@@ -332,6 +391,10 @@ export const TAC_SURVIVOR_ROLES = {
   novelist: {
     name: translate("characters.novelist.name"),
     camp: 'survivor',
+    traits: {
+      resonance: { name: translate("movement.buff.trait.novelist.resonance.name"),
+                   speedBuff: { aim: 'survivor', mult: 1.5, duration: 2.5 } },
+    },
     ranges: {
       key: 'showTrait',
       options: [
@@ -357,6 +420,10 @@ export const TAC_SURVIVOR_ROLES = {
   weepingClown: {
     name: translate("characters.weepingClown.name"),
     camp: 'survivor',
+    traits: {
+      rocketDash: { name: translate("movement.buff.trait.weepingClown.rocketDash.name"),
+                    speedBuff: { aim: 'survivor', mult: 1.5 } },
+    },
     ranges: {
       key: 'showTrait',
       options: [
@@ -376,6 +443,10 @@ export const TAC_SURVIVOR_ROLES = {
   antiquarian: {
     name: translate("characters.antiquarian.name"),
     camp: 'survivor',
+    traits: {
+      concealedSpin: { name: translate("movement.buff.trait.antiquarian.concealedSpin.name"),
+                       speedBuff: { aim: 'survivor', mult: 1.05 } },
+    },
     ranges: {
       key: 'showTrait',
       options: [
@@ -391,6 +462,10 @@ export const TAC_SURVIVOR_ROLES = {
   composer: {
     name: translate("characters.composer.name"),
     camp: 'survivor',
+    traits: {
+      tuning: { name: translate("movement.buff.trait.composer.tuning.name"),
+                speedBuff: { aim: 'survivor', mult: 1.5 } },
+    },
     items: ['tuningFork'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/3/3a/4cdodjbq2m7ie64pms8fxearjbhn2cm.png/90px-%E4%BD%9C%E6%9B%B2%E5%AE%B6%E5%A4%B4%E5%83%8F.png',
   },
@@ -422,6 +497,10 @@ export const TAC_SURVIVOR_ROLES = {
   cheerleader: {
     name: translate("characters.cheerleader.name"),
     camp: 'survivor',
+    traits: {
+      motivate: { name: translate("movement.buff.trait.cheerleader.motivate.name"),
+                  speedBuff: { aim: 'survivor', mult: 1.7, duration: 4 } },
+    },
     ranges: {
       key: 'showTrait',
       options: [
@@ -434,12 +513,20 @@ export const TAC_SURVIVOR_ROLES = {
   puppeteer: {
     name: translate("characters.puppeteer.name"),
     camp: 'survivor',
+    traits: {
+      flexibleJoints: { name: translate("movement.buff.trait.puppeteer.flexibleJoints.name"),
+                        speedBuff: { aim: 'survivor', mult: 1.08, duration: 9 } },
+    },
     items: ['louis'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/f3/1t653qhzktgem5iwo2ma4gkjucf4xuq.png/90px-%E6%9C%A8%E5%81%B6%E5%B8%88%E5%A4%B4%E5%83%8F.png',
   },
   fireInvestigator: {
     name: translate("characters.fireInvestigator.name"),
     camp: 'survivor',
+    traits: {
+      firefightingTraining: { name: translate("movement.buff.trait.fireInvestigator.firefightingTraining.name"),
+                              speedBuff: { aim: 'survivor', mult: 1.5, duration: 2 } },
+    },
     ranges: {
       key: 'showTrait',
       options: [
@@ -479,6 +566,10 @@ export const TAC_SURVIVOR_ROLES = {
   meteorologist: {
     name: translate("characters.meteorologist.name"),
     camp: 'survivor',
+    traits: {
+      stratus: { name: translate("movement.buff.trait.meteorologist.stratus.name"),
+                 speedBuff: { aim: 'survivor', levels: [1.33, 1.77] } },
+    },
     ranges: {
       key: 'showTrait',
       options: [
@@ -491,6 +582,7 @@ export const TAC_SURVIVOR_ROLES = {
   archer: {
     name: translate("characters.archer.name"),
     camp: 'survivor',
+    fearRadius: { mult: 0.76 },
     ranges: {
       key: 'showTrait',
       options: [
@@ -505,6 +597,10 @@ export const TAC_SURVIVOR_ROLES = {
   escapologist: {
     name: translate("characters.escapologist.name"),
     camp: 'survivor',
+    traits: {
+      smokeScreen: { name: translate("movement.buff.trait.escapologist.smokeScreen.name"),
+                     speedBuff: { aim: 'survivor', mult: 1.35, duration: 1 } },
+    },
     items: ['thurible', 'escapeAct'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/f/fe/b5912707v68vwuk88fyr8d2lqs66to0.png/90px-%E2%80%9C%E9%80%83%E8%84%B1%E5%A4%A7%E5%B8%88%E2%80%9D%E5%A4%B4%E5%83%8F.png',
   },
