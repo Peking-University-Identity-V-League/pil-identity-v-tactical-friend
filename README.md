@@ -117,7 +117,7 @@ npm run dev -- --host 127.0.0.1 --port 7200
 
 - JavaScript ES Modules；
 - 动态 `import()`；
-- `fetch()` 加载 `locales/zh-CN.json`。
+- `fetch()` 加载当前语言包（`zh-CN` / `en-US` / `vi-VN`），其它语言缺键时回退 `zh-CN`。
 
 直接通过 `file://` 打开时，浏览器可能因安全策略阻止模块或语言包加载。因此，日常开发请使用 `npm run dev`，也可以在 VS Code 中用 Live Server 打开 `index.html`；后一种方式不需要 Node.js 或 npm。
 
@@ -151,6 +151,7 @@ app/
 ├── README.md                  ← 项目说明文档
 │
 ├── .github/workflows/test.yml ← 推送与 PR 的自动化测试
+├── grid-data/               ← 导航栅格源数据（各图栅格 PNG）
 ├── tests/
 │   ├── unit/                  ← 测算与存档恢复的单元测试
 │   ├── server/                ← 开发服务器的 HTTP 集成测试
@@ -160,10 +161,14 @@ app/
 │   └── style.css              ← 全部样式：布局、组件、地图标记、响应式
 │
 ├── locales/
-│   └── zh-CN.json             ← 简体中文语言包，集中保存中文文案
+│   ├── zh-CN.json             ← 简体中文词典（默认，缺键回退来源）
+│   ├── en-US.json             ← 英语语言包
+│   └── vi-VN.json             ← 越南语语言包
 │
 ├── scripts/
-│   └── dev-server.js          ← 零依赖本地静态服务器
+│   ├── dev-server.js          ← 零依赖本地静态服务器
+│   ├── build_nav_grid_exact.mjs ← 生成导航栅格源数据（写入 grid-data/）
+│   └── rename-locale-keys.cjs ← 批量重命名语言包键名的工具脚本
 │
 └── js/
     ├── bootstrap.js           ← 真正的启动入口：先加载语言，再启动应用
@@ -180,12 +185,23 @@ app/
     │   ├── persist.js         ← localStorage 持久化与默认值
     │   ├── measurements.js    ← 折线配置恢复、编号和移动时间计算
     │   ├── treasure.js        ← 页面与导出共用的书页范围计算
-    │   └── i18n.js            ← 多语言加载、翻译、插值、语言切换
+    │   ├── carry-model.js     ← 狂欢之椅推算（牵起/挣扎/放下按 buff 类型驱动）
+    │   ├── tide-model.js      ← 化险为夷（下椅）相关计算
+    │   ├── nav-grid.js        ← 导航栅格加载与寻路
+    │   ├── map-handoff.js     ← 二维与三维地图测距端点同步
+    │   ├── tactic-loader.js   ← 战术板数据加载
+    │   └── i18n.js            ← 多语言加载、翻译、插值、语言切换与缺键回退
     │
     └── data/
-        ├── maps.js            ← 九图数据与推演规则
-        ├── tactic-data.js     ← 加成、速度和默认常量
-        ├── role.js             ← 角色和道具注册表（TAC_ITEM_TYPES、TAC_ROLES）
+        ├── maps.js            ← 九图数据（各图推演规则仍写在各图 deduction 字段）
+        ├── deduction.js       ← 推演规则辅助（DED_EMPTY_HINT、dedHelpers、dedRuleBook、makeDeduction）
+        ├── tactic-data.js     ← 速度、加成和默认常量
+        ├── roles.js           ← 角色注册表（TAC_ROLES）
+        ├── items.js           ← 道具注册表（TAC_ITEM_TYPES，聚合人格/段位/赛事）
+        ├── talents.js         ← 人格（天赋）注册表（TAC_TALENT_TYPES、TAC_TALENT_KEYS）
+        ├── items_tier.js      ← 段位分组道具（TAC_TIER_KEYS）
+        ├── items_match.js     ← 赛事分组道具（TAC_MATCH_KEYS）
+        ├── nav-grid-manifest.js ← 导航栅格清单
         └── geo.js             ← 像素坐标、相对坐标、区域中心与距离换算
 ```
 
@@ -237,10 +253,11 @@ app/
 | 改区域点击和阵营选择 | `js/region.js` | `handleMapClick`、`changeStates`、`toggleSide` |
 | 改封禁密码机显示或分析面板 | `js/region.js` | `checkLock`、`updateDistancePanel` |
 | 改封禁密码机的计算方式 | `js/data/geo.js` | `calculateLockCipher` |
-| 新增角色 | `js/data/role.js` | `TAC_ROLES`，必要时同时改 `TAC_ITEM_TYPES` 和语言包 |
-| 新增道具 | `js/data/role.js` | `TAC_ITEM_TYPES`，并加入拥有者的 `items` |
-| 改角色基础速度或形态速度 | `js/data/tactic-data.js` + `js/data/role.js` | `TAC_MOVEMENT_SURVIVOR.states`、`TAC_MOVEMENT_SURVIVOR.roles`、`TAC_MOVEMENT_SURVIVOR.fixed`、`TAC_ROLES` |
-| 改特质、天赋、其它加成 | `js/data/tactic-data.js` | `TAC_MOVEMENT_BUFFS.trait`、`TAC_MOVEMENT_BUFFS.talent`、`TAC_MOVEMENT_BUFFS.other` |
+| 新增角色 | `js/data/roles.js` | `TAC_ROLES`，必要时同时改 `items` 和语言包 |
+| 新增道具 | `js/data/items.js` | `TAC_ITEM_TYPES`，并加入拥有者的 `items` |
+| 改角色基础速度或形态速度 | `js/data/tactic-data.js` + `js/data/roles.js` | `TAC_MOVEMENT_SURVIVOR.states`、`TAC_MOVEMENT_SURVIVOR.roles`、`TAC_MOVEMENT_SURVIVOR.fixed`、`TAC_ROLES` |
+| 改天赋加成 | `js/data/talents.js` | 对应天赋的 `buff.speedBuff` / `buff.pickupBuff` / `buff.struggleBuff` / `buff.dropBuff` |
+| 改特质、其它加成 | `js/data/tactic-data.js` | `TAC_MOVEMENT_BUFFS.trait`、`TAC_MOVEMENT_BUFFS.other` |
 | 改战术面板放置、拖动、删除 | `js/tactic.js` | `tacMapWrap.addEventListener('pointerdown'` 及后续事件 |
 | 改范围圈、箭头、测距线外观逻辑 | `js/tactic.js` | `shapeNode`、`measureNode`、`renderTacArrows` |
 | 改移动时间计算 | `js/core/measurements.js`、`js/tactic.js` | `simulateMovement`、`tacSimLine`、`updateTacMeasureInfo` |
@@ -265,12 +282,12 @@ app/
         │
         ▼
 initializeI18n()
-读取语言偏好 → 请求 locales/zh-CN.json → 翻译静态 HTML
+读取语言偏好 → 请求当前语言包（缺键回退 zh-CN）→ 翻译静态 HTML
         │
         ▼
 动态 import('./main.js')
         │
-        ├── 加载 data/maps.js、data/tactic-data.js 和 data/role.js
+        ├── 加载 data/maps.js、data/deduction.js、data/tactic-data.js、data/roles.js、data/items.js 等数据模块
         ├── 加载 region.js、shell.js、tactic.js、deduce.js 等模块
         └── 各模块注册事件并准备共享状态
         │
@@ -285,7 +302,7 @@ enterMap(mapId) → selectMap(mapId) → 默认进入战术面板
 
 ### 4.1 为什么不是直接加载 `main.js`
 
-`maps.js`、`tactic-data.js` 和 `role.js` 中的名称、规则和提示也使用 `translate()`。如果语言包尚未加载就执行这些模块，会得到缺失翻译。因此，`bootstrap.js` 必须先把语言准备好，再动态加载 `main.js`。
+`maps.js`、`deduction.js`、`tactic-data.js`、`roles.js`、`items.js` 等数据模块中的名称、规则和提示也使用 `translate()`。如果语言包尚未加载就执行这些模块，会得到缺失翻译。因此，`bootstrap.js` 必须先把语言准备好，再动态加载 `main.js`。
 
 新增启动逻辑时，通常：
 
@@ -301,7 +318,7 @@ enterMap(mapId) → selectMap(mapId) → 默认进入战术面板
 
 主要负责：
 
-- 记录项目名称 `pil-identity-v-tool`；
+- 记录项目名称 `pil-identity-v-tactical-friend`；
 - 声明 `"type": "module"`，让 Node.js 启动脚本使用 ES Module；
 - 提供 `npm run dev` 和自动化测试命令；
 - 声明仅用于测试的 Playwright 开发依赖，网页运行不依赖 npm 包。
@@ -634,7 +651,7 @@ deduce(map, marks)
 | `buildTacOtherList()` | 构建其它加成弹窗 |
 | `updateTacMeasureInfo()` | 显示距离、时间和分段结果 |
 
-修改具体角色速度和加成数值，优先去 `tactic-data.js`，不要直接改计算函数。
+修改具体角色速度和加成数值，优先去 `tactic-data.js`（天赋加成则在 `talents.js` 的 `buff` 字段），不要直接改计算函数。
 
 ### F. 导出、撤销、清空和快捷键
 
@@ -733,6 +750,14 @@ export const dedSteps = $('dedSteps');
 
 函数不依赖 DOM 或密码机图标的加载状态。书页规则数值仍放在 `js/data/tactic-data.js`；显示样式由页面 CSS 和导出绘制代码处理。
 
+## 9.8 其它 core 模块
+
+- `js/core/carry-model.js`：狂欢之椅推算，按 `pickupBuff` / `struggleBuff` / `dropBuff` / `speedBuff` 类型驱动计算，不按天赋名写死判断；
+- `js/core/tide-model.js`：化险为夷（下椅）相关计算；
+- `js/core/nav-grid.js`：导航栅格数据的加载与寻路计算；
+- `js/core/map-handoff.js`：二维与三维地图之间的测距端点同步；
+- `js/core/tactic-loader.js`：战术板存档的加载与恢复。
+
 ---
 
 ## 10. data：地图、角色与坐标数据
@@ -779,6 +804,10 @@ MAPS_DATA
 | `law_urls` | B 站和抖音教学链接 |
 | `fixedHint` | 固定提示 |
 | `hints` | 按密码机组或场景使用的提示 |
+| `rocketChairs` | 狂欢之椅分组坐标 |
+| `chests` | 箱子位置 |
+| `lockers` | 柜子位置 |
+| `basements` | 地下室（含其中狂欢之椅与箱子） |
 | `deduction` | 推演规则、布局和规律速查数据 |
 
 ### `zonesInfo` 的格式
@@ -798,9 +827,9 @@ MAPS_DATA
 ```js
 {
   id: 'M_4',
-  name: translate('maps.armsFactory.m4.name'),
+  name: translate('maps.armsFactory.cipher.m4.name'),
   location: [284, 529],
-  feature: translate('maps.armsFactory.m4.feature'),
+  feature: translate('maps.armsFactory.cipher.m4.feature'),
   locked: true
 }
 ```
@@ -844,7 +873,7 @@ MAPS_DATA
 
 ### 推演辅助函数
 
-`dedHelpers(ciphers)` 返回一组规则构造函数，让地图数据可以用点位名称描述规则，而不是手写下标。
+`dedHelpers(ciphers)` 返回一组规则构造函数，让地图数据可以用点位名称描述规则，而不是手写下标。`DED_EMPTY_HINT`、`dedHelpers`、`dedRuleBook`、`makeDeduction` 现位于 `js/data/deduction.js`，由 `maps.js` 引入；各图的具体规则仍写在各图的 `deduction` 字段里。
 
 | 辅助函数 | 用途 |
 |---|---|
@@ -867,7 +896,7 @@ MAPS_DATA
 
 用于补充不属于常规点位列表、但需要参与坐标查找的密码机。普通修改优先改目标地图自己的 `ciphers`，只有确需额外点位时才使用这里。
 
-## 10.2 `js/data/tactic-data.js` 与 `js/data/role.js`：角色、道具和常量
+## 10.2 `js/data/tactic-data.js`、`js/data/roles.js`、`js/data/items.js` 与 `js/data/talents.js`：角色、道具和常量
 
 ### 速度相关数据
 
@@ -884,7 +913,7 @@ MAPS_DATA
 | 常量 | 对应界面 |
 |---|---|
 | `TAC_MOVEMENT_BUFFS.trait` | 特质加成 |
-| `TAC_MOVEMENT_BUFFS.talent` | 天赋加成 |
+| `TAC_MOVEMENT_BUFFS.talent` | 天赋加成（数据源在 `talents.js`，此处派生） |
 | `TAC_MOVEMENT_BUFFS.other` | 其它加成 |
 
 常见字段：
@@ -901,9 +930,20 @@ MAPS_DATA
 - `postMult`：是否在最后再次乘算；
 - `extra`：添加时附带的额外加成。
 
+### `TAC_TALENT_TYPES`：人格（天赋）注册表
+
+位于 `js/data/talents.js`。每个条目包含 `name`、`camp`（`survivor`/`hunter`）和 `icon`；可选 `buff` 字段按类型描述加成：
+
+- `speedBuff`：影响移动速度（可选 `levels`、`mult`、`duration`、`states`、`roles`、`forms`、`carry` 等）；
+- `pickupBuff`：影响牵起气球用时（如嬉弄）；
+- `struggleBuff`：影响气球上挣扎进度（如求生意志、巨钳）；
+- `dropBuff`：放下气球时直接增加的挣扎进度（如巨钳）。
+
+狂欢之椅推算由 `js/core/carry-model.js` 按 buff 类型驱动计算，不按天赋名写死判断。`TAC_TALENT_KEYS` 按阵营列出人格道具键，供 `roles.js` 的 `items` 直接引用。
+
 ### `TAC_ITEM_TYPES`：道具注册表
 
-每个道具以稳定英文键登记，例如 `flashlight`、`fastMusicbox`。
+位于 `js/data/items.js`，聚合了 `items_tier.js` 的段位道具（`TAC_TIER_KEYS`）、`items_match.js` 的赛事道具（`TAC_MATCH_KEYS`）和 `talents.js` 的人格道具（`TAC_TALENT_KEYS`）。每个道具以稳定英文键登记，例如 `flashlight`、`fastMusicbox`。
 
 常见字段：
 
@@ -927,6 +967,8 @@ MAPS_DATA
 
 ### `TAC_ROLES`：角色注册表
 
+位于 `js/data/roles.js`。
+
 常见字段：
 
 - `name`：角色显示名；
@@ -935,20 +977,20 @@ MAPS_DATA
 - `icon`：头像 URL；
 - `speed`：固定数值或按形态区分的速度对象；
 - `ranges`：角色范围配置；
-- `maxItems`：道具相关数量限制。
 
-`items` 中的字符串必须能在 `TAC_ITEM_TYPES` 找到，否则道具无法正确显示。
+`items` 中的字符串必须能在 `TAC_ITEM_TYPES` 找到；也可以直接引用 `TAC_TALENT_KEYS`、`TAC_TIER_KEYS`、`TAC_MATCH_KEYS` 的分组数组，否则道具无法正确显示。
 
 ### 其它默认常量
 
 | 常量 | 用途 |
 |---|---|
 | `TAC_MEASURE_DEFAULT` | 直线和折线默认颜色、线宽 |
-| `TAC_DISPLAY_DEFAULT` | 密码机、地窖、逃生门默认图标大小 |
+| `TAC_DISPLAY_DEFAULT` | 密码机、地窖、逃生门、狂欢之椅、柜子、箱子、出生点默认图标大小 |
 | `TAC_MANAGE_DEFAULT` | 角色和道具默认显示大小 |
 | `TAC_ZOOM_MIN`、`TAC_ZOOM_MAX` | 地图缩放范围 |
 | `DUNGEON_ICON_URL` | 地窖图标 |
 | `ESCAPE_DOOR_ICON_URL` | 逃生门图标 |
+| `LOCKER_ICON_URL` | 柜子图标 |
 | `TAC_ZOOM_LOCK_ICONS` | 锁定和解锁 SVG |
 | `TAC_ABYSS_MAX_M` | 水渊相关最大距离 |
 | `TAC_SVG_NS` | SVG 命名空间，一般不用改 |
@@ -979,7 +1021,9 @@ MAPS_DATA
 ## 11.1 文件分工
 
 - `js/core/i18n.js`：翻译机制。
-- `locales/zh-CN.json`：简体中文词典。
+- `locales/zh-CN.json`：简体中文词典（默认，缺键回退来源）。
+- `locales/en-US.json`：英语词典。
+- `locales/vi-VN.json`：越南语词典。
 - `index.html`：通过 `data-i18n` 绑定静态文字。
 - JS 和数据文件：通过 `translate()` 获取动态文字。
 
@@ -1042,7 +1086,7 @@ numbers.one
 4. 通过 `changeLocale('en-US')` 切换，或使用 `?lang=en-US` 测试；
 5. 检查所有页面，尤其注意长文本、按钮换行和表格宽度。
 
-不要删除某个语言包里的键；缺失时控制台会出现 `Missing translation`，界面可能直接显示键名。
+不要删除 `zh-CN.json` 里的键。其它语言包允许缺键：缺失时自动回退中文显示，控制台同时出现 `Missing translation` 提示。
 
 ---
 
@@ -1152,7 +1196,7 @@ location.reload();
 
 假设新增角色没有复杂道具：
 
-1. 打开 `role.js` 的 `TAC_ROLES`；
+1. 打开 `roles.js` 的 `TAC_ROLES`；
 2. 复制一个结构相近的角色；
 3. 改成唯一英文键；
 4. 设置 `camp`、`icon`，没有道具时使用空数组或参考现有结构；
@@ -1165,7 +1209,7 @@ location.reload();
 
 ## 13.6 新增一个道具
 
-1. 在 `TAC_ITEM_TYPES` 中登记道具；
+1. 在 `items.js` 的 `TAC_ITEM_TYPES` 中登记道具；
 2. 设置唯一英文键、显示名和图标；
 3. 需要范围圈时配置 `render` 和 `ranges.modes`；
 4. 在拥有它的角色 `TAC_ROLES[role].items` 中加入道具键；
@@ -1176,9 +1220,9 @@ location.reload();
 
 ## 13.7 修改或新增加成
 
-- 特质：修改 `TAC_MOVEMENT_BUFFS.trait`；
-- 天赋：修改 `TAC_MOVEMENT_BUFFS.talent`；
-- 其它：修改 `TAC_MOVEMENT_BUFFS.other`。
+- 特质：修改 `tactic-data.js` 的 `TAC_MOVEMENT_BUFFS.trait`；
+- 天赋：修改 `talents.js` 对应天赋的 `buff`（速度加成是 `buff.speedBuff`）；
+- 其它：修改 `tactic-data.js` 的 `TAC_MOVEMENT_BUFFS.other`。
 
 步骤：
 
@@ -1255,7 +1299,7 @@ window.addEventListener('keydown'
 推荐：
 
 - 新地图数据放 `maps.js`；
-- 新角色和道具放 `role.js`；
+- 新角色放 `roles.js`，新道具放 `items.js`；
 - 新文案放语言包；
 - 新通用算法才放业务 JS；
 - 新样式放 `style.css`。
@@ -1382,9 +1426,9 @@ window.addEventListener('keydown'
 4. **`core/state.js` 和 `core/dom.js`**：理解共享状态和元素引用。
 5. **`data/maps.js` 中一张地图**：先只看军工厂，不必一次读完九张图。
 6. **`region.js`**：学习一个相对集中的业务页面。
-7. **`data/tactic-data.js`** 和 **`data/role.js`**：了解角色、道具和速度配置。
+7. **`data/tactic-data.js`**、**`data/roles.js`**、**`data/items.js`** 和 **`data/talents.js`**：了解角色、道具、人格和速度配置。
 8. **`tactic.js` 中与你任务相关的函数**：按功能阅读，不必通读。
-9. **`deduce.js` 和推演辅助函数**：最后再研究规则引擎。
+9. **`deduce.js`、`data/deduction.js` 和推演辅助函数**：最后再研究规则引擎。
 
 最重要的一句话是：**先判断要改的是文字、样式、数据还是逻辑，再用本文的速查表定位；不要为了改一个数值而通读整个项目。**
 
