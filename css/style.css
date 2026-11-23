@@ -2797,6 +2797,36 @@ details.ded-card[open] > summary .arrow { transform: rotate(90deg); }
   font-size: 12px;
 }
 .tac-anim-pt-label { font-size: 12px; }
+.tac-anim-buffs { flex-wrap: wrap; gap: 4px; }
+.tac-anim-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 4px 1px 7px;
+  border-radius: 9px;
+  background: rgba(74, 222, 128, 0.16);
+  border: 1px solid rgba(74, 222, 128, 0.5);
+  color: #86efac;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.tac-anim-chip-x {
+  border: none;
+  background: none;
+  color: #86efac;
+  font-size: 10px;
+  cursor: pointer;
+  padding: 0 2px;
+}
+.tac-anim-buff-sel {
+  max-width: 130px;
+  padding: 1px 4px;
+  border-radius: 5px;
+  border: 1px solid var(--border, rgba(148, 163, 184, 0.4));
+  background: rgba(15, 23, 42, 0.5);
+  color: var(--text, #e2e8f0);
+  font-size: 12px;
+}
 .tac-measure-dot.hidden-endpoint { opacity: 0; }
 .tac-mode-measure .tac-measure-dot:active { cursor: grabbing; }
 .tac-measure-label {

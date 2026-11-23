@@ -85,3 +85,19 @@ test('time mode: missing times default to continuous schedule', () => {
   assert.equal(segs[1].t0, 4);
   assert.equal(segs[1].t1, 4); // 缺失时刻默认与上一时刻相同（瞬移段）
 });
+
+test('speed mode: segDurFn overrides segment duration (buff simulation hook)', () => {
+  const anim = { mode: 'speed', points: [{ x: 0, y: 0 }, { x: 0.1, y: 0 }, { x: 0.2, y: 0 }],
+    speeds: [{ name: 'a', speed: 2 }, { name: 'b', speed: 5 }] };
+  // 无 fn：10m/2 + 10m/5 = 7s
+  assert.equal(animDuration(anim, GEOM).total, 7);
+  // 有 fn：第一段时长翻倍（模拟减速 buff），第二段不变
+  const fn = (i, lenM, v) => (i === 0 ? (lenM / v) * 2 : lenM / v);
+  const segs = animSegments(anim, GEOM, fn);
+  assert.deepEqual([segs[0].t0, segs[0].t1], [0, 10]);
+  assert.deepEqual([segs[1].t0, segs[1].t1], [10, 12]);
+  assert.equal(animDuration(anim, GEOM, fn).total, 12);
+  // 位置插值也走覆盖后的时长
+  const pos = animPositionAt(anim, GEOM, 11, fn);
+  assert.ok(Math.abs(pos.x - 0.15) < 1e-9 && !pos.done);
+});

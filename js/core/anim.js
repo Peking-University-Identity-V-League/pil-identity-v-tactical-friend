@@ -18,7 +18,8 @@ export function animSegmentLenM(a, b, geom) {
 
 // 各段时间表：[{ t0, t1, dur, lenM, avgSpeed }]
 // dur<=0 的段视为瞬移；avgSpeed 在 dur>0 时为 lenM/dur（米/秒），否则为 null
-export function animSegments(anim, geom) {
+// segDurFn(segIdx, lenM, baseSpeed) 可覆盖移速模式的段时长（用于加成 buff 计算）
+export function animSegments(anim, geom, segDurFn) {
   const pts = anim.points || [];
   const out = [];
   for (let i = 0; i + 1 < pts.length; i++) {
@@ -29,7 +30,8 @@ export function animSegments(anim, geom) {
       const prev = out[i - 1];
       t0 = prev ? prev.t1 : 0;
       const v = ((anim.speeds || [])[i] || {}).speed;
-      t1 = t0 + (v > 0 ? lenM / v : 0);
+      const dur = segDurFn ? segDurFn(i, lenM, v) : (v > 0 ? lenM / v : 0);
+      t1 = t0 + Math.max(0, dur || 0);
     } else {
       const times = anim.times || [];
       t0 = times[i] ?? (out[i - 1] ? out[i - 1].t1 : 0);
@@ -43,8 +45,8 @@ export function animSegments(anim, geom) {
 
 
 // 播放起止时刻：{ start, end, total }；路径不足两点时 total 为 0
-export function animDuration(anim, geom) {
-  const segs = animSegments(anim, geom);
+export function animDuration(anim, geom, segDurFn) {
+  const segs = animSegments(anim, geom, segDurFn);
   if (!segs.length) return { start: 0, end: 0, total: 0 };
   const start = segs[0].t0;
   const end = segs[segs.length - 1].t1;
@@ -54,12 +56,12 @@ export function animDuration(anim, geom) {
 
 // t 时刻的位置：{ x, y, done }
 // t 在起点时刻之前时停在第一个点，超过终点时刻时停在最后一个点且 done=true
-export function animPositionAt(anim, geom, t) {
+export function animPositionAt(anim, geom, t, segDurFn) {
   const pts = anim.points || [];
   if (!pts.length) return null;
   if (pts.length === 1) return { x: pts[0].x, y: pts[0].y, done: true };
-  const segs = animSegments(anim, geom);
-  const { start, end } = animDuration(anim, geom);
+  const segs = animSegments(anim, geom, segDurFn);
+  const { start, end } = animDuration(anim, geom, segDurFn);
   if (t <= start) return { x: pts[0].x, y: pts[0].y, done: end <= start };
   if (t >= end) {
     const last = pts[pts.length - 1];
@@ -87,8 +89,8 @@ export function animPositionAt(anim, geom, t) {
 }
 
 
-// 时刻模式下某段的平均速度（米/秒，dur<=0 返回 null）：供界面派生显示
-export function animAvgSpeed(anim, geom, segIdx) {
-  const s = animSegments(anim, geom)[segIdx];
+// 某段的平均速度（米/秒，dur<=0 返回 null）：供界面派生显示
+export function animAvgSpeed(anim, geom, segIdx, segDurFn) {
+  const s = animSegments(anim, geom, segDurFn)[segIdx];
   return s ? s.avgSpeed : null;
 }

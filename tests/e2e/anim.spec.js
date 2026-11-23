@@ -116,7 +116,61 @@ test('anim: hint differs between select tool and anim tool', async ({ page }) =>
   await clickPoint(page, 0.3, 0.3);
   await expect(page.locator('.tac-manage-box .tac-box-hint').last()).toHaveText('未设置动画');
   await tool(page, 'anim');
-  await expect(page.locator('.tac-manage-box .tac-box-hint').last()).toHaveText('在地图上点击添加路径点');
+  await expect(page.locator('.tac-anim-status')).toHaveText('在地图上点击添加路径点');
+});
+
+test('anim: arm toggle controls map-click adding and shows status', async ({ page }) => {
+  await placeRole(page, 'luckyGuy', 0.3, 0.3);
+  await tool(page, 'anim');
+  await clickPoint(page, 0.3, 0.3);
+  // 进入动画工具默认处于添加状态
+  const status = page.locator('.tac-anim-status');
+  await expect(status).toHaveText('在地图上点击添加路径点');
+  await expect(page.locator('.tac-anim-arm-btn')).toHaveClass(/active/);
+  // 取消添加：无动画时状态文字变为「未设置动画」，地图点击不再加点
+  await page.locator('.tac-anim-arm-btn').click();
+  await expect(status).toHaveText('未设置动画');
+  await clickPoint(page, 0.6, 0.3);
+  await expect(page.locator('.tac-anim-dot')).toHaveCount(0);
+  // 重新开启后可以加点
+  await page.locator('.tac-anim-arm-btn').click();
+  await clickPoint(page, 0.6, 0.3);
+  await expect(page.locator('.tac-anim-dot')).toHaveCount(2);
+  // Esc 取消添加状态
+  await page.keyboard.press('Escape');
+  await expect(page.locator('.tac-anim-arm-btn')).not.toHaveClass(/active/);
+});
+
+test('anim: time and speed inputs carry units', async ({ page }) => {
+  await setupAnim(page);
+  // 时刻模式：数字框后有 s
+  const timeRow = page.locator('.tac-anim-pt').nth(1);
+  await expect(timeRow.locator('.tac-anim-derive').first()).toHaveText('s');
+  // 移速模式：数字框后有 m/s
+  await page.locator('.tac-anim-mode .tac-anim-btn', { hasText: '移速' }).click();
+  const speedRow = page.locator('.tac-anim-pt').nth(1);
+  await expect(speedRow.locator('.tac-anim-derive').nth(0)).toHaveText('m/s');
+});
+
+test('anim: speed buff shortens segment time and can be removed', async ({ page }) => {
+  await setupAnim(page);
+  await page.locator('.tac-anim-mode .tac-anim-btn', { hasText: '移速' }).click();
+  const total = page.locator('.tac-anim-ctl .tac-anim-derive');
+  const before = parseFloat((await total.textContent()).match(/[\d.]+/)[0]);
+  // 给第一段添加「膝跳反射」（+50% 持续 3s）
+  const buffLine = page.locator('.tac-anim-buffs').first();
+  await buffLine.locator('.tac-anim-buff-sel').first().selectOption({ label: '膝跳反射' });
+  await buffLine.locator('.tac-anim-buff-add').click();
+  await expect(page.locator('.tac-anim-chip')).toHaveCount(1);
+  const during = parseFloat((await total.textContent()).match(/[\d.]+/)[0]);
+  expect(during).toBeLessThan(before);
+  // buff 已写入存档
+  const token = (await read(page)).board.tokens[0];
+  expect(token.anim.speeds[0].buffs.length).toBe(1);
+  // 删除 chip 后恢复
+  await page.locator('.tac-anim-chip-x').click();
+  const after = parseFloat((await total.textContent()).match(/[\d.]+/)[0]);
+  expect(after).toBeCloseTo(before, 2);
 });
 
 test('anim: speed presets follow the animated role', async ({ page }) => {

@@ -467,6 +467,10 @@ export let tacDragAnimDot = null;
 // 播放中的动画：{ kind:'role'|'item', ref, raf }；只改 DOM 位置，不写回造物坐标
 export let tacAnimPlay = null;
 
+
+// 动画工具下是否处于「添加路径点」状态：进入动画工具自动开启，可手动取消
+export let tacAnimArmed = false;
+
       
 export let tacTextPlacing = false;
 
@@ -5154,14 +5158,63 @@ function tacAnimDefaultSpeed(obj) {
   return { name: TAC_MOVEMENT_SURVIVOR.states.run.name, speed: TAC_MOVEMENT_SURVIVOR.states.run.speed };
 }
 
+// 段时长函数：段上有加成 buff 时，用与测算卡片同款的 simulateMovement 计算实际时长
+function tacAnimSegDurFn(obj) {
+  const speeds = (obj.anim && obj.anim.speeds) || [];
+  if (!speeds.some((s) => s && s.buffs && s.buffs.length)) return null;
+  return (i, lenM, v) => {
+    const buffs = speeds[i] && speeds[i].buffs;
+    if (!buffs || !buffs.length || !(v > 0)) return v > 0 ? lenM / v : 0;
+    return simulateMovement([lenM], {
+      bases: [{ from: 0, to: 1, speed: v }],
+      buffs: buffs.map((b) => ({ ...b, from: 0, to: 1 })),
+    }).total;
+  };
+}
+
+// 该造物当前段可用的加成列表：按阵营/角色/姿态/形态过滤（与测算卡片同规则）
+function tacAnimBuffOptions(obj, seg) {
+  const def = TAC_ROLES[obj.role] || {};
+  const camp = def.camp === 'hunter' ? 'hunter' : 'survivor';
+  // 段基础速度对应的姿态（仅求生者有姿态概念）与监管者形态序号
+  const stKey = camp === 'survivor'
+    ? Object.keys(TAC_MOVEMENT_SURVIVOR.states)
+      .find((k) => Math.abs(TAC_MOVEMENT_SURVIVOR.states[k].speed - seg.speed) < 1e-9) || null
+    : null;
+  let formIdx = 0;
+  if (def.speed != null && typeof def.speed === 'object') {
+    const fi = Object.values(def.speed).findIndex((v) => Math.abs(v - seg.speed) < 1e-9);
+    if (fi >= 0) formIdx = fi;
+  }
+  const stateOk = (states) => !states || (stKey && states.includes(stKey));
+  const out = [];
+  (TAC_MOVEMENT_BUFFS.trait[camp] || []).forEach((t) => {
+    if (t.role && t.role !== def.name) return;
+    if (t.forms && t.forms.length && !t.forms.includes(formIdx)) return;
+    if (!stateOk(t.states)) return;
+    out.push({ type: 'trait', key: t.key, def: t });
+  });
+  Object.entries(TAC_MOVEMENT_BUFFS.talent).forEach(([k, b]) => {
+    if (b.camp && b.camp !== camp) return;
+    if (!stateOk(b.states)) return;
+    out.push({ type: 'talent', key: k, def: b });
+  });
+  (TAC_MOVEMENT_BUFFS.other[camp] || []).forEach((t) => {
+    if (!stateOk(t.states)) return;
+    out.push({ type: 'other', key: t.key, def: t });
+  });
+  return out;
+}
+
 // 模式互转：位置保留，派生值互算（时刻<->移速）
-function tacAnimConvertMode(anim, geom, toMode) {
+function tacAnimConvertMode(anim, geom, toMode, segDurFn) {
   if (anim.mode === toMode) return;
-  const segs = animSegments(anim, geom);
+  const segs = animSegments(anim, geom, segDurFn);
   if (toMode === 'speed') {
-    anim.speeds = segs.map((s) => ({
+    anim.speeds = segs.map((s, i) => ({
       name: translate("common.custom"),
       speed: s.avgSpeed ? Math.round(s.avgSpeed * 100) / 100 : TAC_MOVEMENT_SURVIVOR.states.run.speed,
+      buffs: (anim.speeds[i] || {}).buffs,
     }));
   } else {
     anim.times = segs.length ? [segs[0].t0, ...segs.map((s) => Math.round(s.t1 * 100) / 100)] : [];
@@ -5207,7 +5260,8 @@ export function tacAnimPlayStart() {
   if (!obj || !obj.anim || (obj.anim.points || []).length < 2) return;
   tacAnimStop(true);
   const geom = tacAnimGeom();
-  const { start, end } = animDuration(obj.anim, geom);
+  const fn = tacAnimSegDurFn(obj);
+  const { start, end } = animDuration(obj.anim, geom, fn);
   if (end <= start) return;
   const kind = tacManageSel.type;
   const ref = kind === 'role' ? tacManageSel.tid : tacManageSel.idx;
@@ -5215,7 +5269,7 @@ export function tacAnimPlayStart() {
   const step = (now) => {
     if (!tacAnimPlay) return;
     const t = start + (now - t0) / 1000;
-    const pos = animPositionAt(obj.anim, geom, t);
+    const pos = animPositionAt(obj.anim, geom, t, fn);
     if (!pos) { tacAnimStop(true); return; }
     tacAnimSetElPos(kind, ref, pos.x, pos.y);
     if (pos.done) { tacAnimStop(false); return; }
@@ -5245,11 +5299,31 @@ function buildTacAnimBox(settings, obj) {
   const geom = tacAnimGeom();
   const box = tacManageBox(settings, "ui.tac.anim.title");
   const hasAnim = obj.anim && Array.isArray(obj.anim.points) && obj.anim.points.length;
-  if (!hasAnim) {
-    // 动画工具下引导放点；其它工具下只说明未设置
-    tacBoxHint(box, translate(tacTool === 'anim' ? "ui.tac.anim.hint.empty" : "ui.tac.anim.hint.none"));
+  // 添加路径点：状态按钮 + 状态文字（仅动画工具可加点；进入工具默认开启，可取消）
+  if (tacTool === 'anim') {
+    const armRow = document.createElement('div');
+    armRow.className = 'tac-box-line';
+    const armBtn = document.createElement('button');
+    armBtn.type = 'button';
+    armBtn.className = 'tac-anim-btn tac-anim-arm-btn' + (tacAnimArmed ? ' active' : '');
+    armBtn.textContent = translate("ui.tac.anim.addPoints");
+    armBtn.addEventListener('click', () => {
+      tacAnimArmed = !tacAnimArmed;
+      renderTacBoard();
+    });
+    armRow.appendChild(armBtn);
+    const status = document.createElement('span');
+    status.className = 'tac-anim-derive tac-anim-status';
+    status.textContent = tacAnimArmed
+      ? translate("ui.tac.anim.hint.empty")
+      : (hasAnim ? '' : translate("ui.tac.anim.hint.none"));
+    armRow.appendChild(status);
+    box.appendChild(armRow);
+  } else if (!hasAnim) {
+    tacBoxHint(box, translate("ui.tac.anim.hint.none"));
     return;
   }
+  if (!hasAnim) return;
   const anim = tacAnimEnsure(obj);
   const rerun = () => renderTacBoard();
 
@@ -5279,7 +5353,7 @@ function buildTacAnimBox(settings, obj) {
     b.addEventListener('click', () => {
       if (anim.mode === m) return;
       const prev = structuredClone(obj.anim);
-      tacAnimConvertMode(anim, geom, m);
+      tacAnimConvertMode(anim, geom, m, tacAnimSegDurFn(obj));
       tacAnimPushUndo(obj, prev);
       rerun();
     });
@@ -5287,11 +5361,13 @@ function buildTacAnimBox(settings, obj) {
   });
   box.appendChild(modeRow);
 
-  const segs = animSegments(anim, geom);
+  const segDurFn = tacAnimSegDurFn(obj);
+  const segs = animSegments(anim, geom, segDurFn);
   const round2 = (v) => Math.round(v * 100) / 100;
 
   // 路径点行
   anim.points.forEach((pt, i) => {
+    let afterRow = null;
     const row = document.createElement('div');
     row.className = 'tac-box-line tac-anim-pt';
     const label = document.createElement('span');
@@ -5313,6 +5389,10 @@ function buildTacAnimBox(settings, obj) {
         rerun();
       });
       row.appendChild(input);
+      const unitS = document.createElement('span');
+      unitS.className = 'tac-anim-derive';
+      unitS.textContent = 's';
+      row.appendChild(unitS);
       if (i > 0) {
         const dv = document.createElement('span');
         dv.className = 'tac-anim-derive';
@@ -5339,7 +5419,7 @@ function buildTacAnimBox(settings, obj) {
         const g = groups.find((gg) => String(gg.speed) === sel.value);
         if (!g) return;
         const prev = structuredClone(obj.anim);
-        anim.speeds[i - 1] = { name: g.name, speed: g.speed };
+        anim.speeds[i - 1] = { name: g.name, speed: g.speed, buffs: seg.buffs };
         tacAnimPushUndo(obj, prev);
         rerun();
       });
@@ -5355,15 +5435,102 @@ function buildTacAnimBox(settings, obj) {
         if (!(v > 0)) return;
         const prev = structuredClone(obj.anim);
         const g = groups.find((gg) => Math.abs(gg.speed - v) < 1e-9);
-        anim.speeds[i - 1] = { name: g ? g.name : translate("common.custom"), speed: v };
+        anim.speeds[i - 1] = { name: g ? g.name : translate("common.custom"), speed: v, buffs: seg.buffs };
         tacAnimPushUndo(obj, prev);
         rerun();
       });
       row.appendChild(num);
+      const unitV = document.createElement('span');
+      unitV.className = 'tac-anim-derive';
+      unitV.textContent = 'm/s';
+      row.appendChild(unitV);
       const dv = document.createElement('span');
       dv.className = 'tac-anim-derive';
       dv.textContent = segs[i - 1] ? `${round2(segs[i - 1].t1)}s` : '';
       row.appendChild(dv);
+
+      // 加成 buff：chips 列表 + 按角色/姿态过滤的添加器（时长计算与测算卡片同款）
+      const buffLine = document.createElement('div');
+      buffLine.className = 'tac-box-line tac-anim-buffs';
+      (seg.buffs || []).forEach((buff, bi) => {
+        const chip = document.createElement('span');
+        chip.className = 'tac-anim-chip';
+        chip.textContent = buff.name;
+        chip.title = `${Math.round(((buff.mult ?? 1) - 1) * 100)}%`
+          + (buff.duration ? ` ${buff.duration}s` : '');
+        const x = document.createElement('button');
+        x.type = 'button';
+        x.className = 'tac-anim-chip-x';
+        x.textContent = '✕';
+        x.addEventListener('click', () => {
+          const prev = structuredClone(obj.anim);
+          seg.buffs.splice(bi, 1);
+          tacAnimPushUndo(obj, prev);
+          rerun();
+        });
+        chip.appendChild(x);
+        buffLine.appendChild(chip);
+      });
+      const opts = tacAnimBuffOptions(obj, seg);
+      if (opts.length) {
+        const bsel = document.createElement('select');
+        bsel.className = 'tac-anim-buff-sel';
+        const groupDefs = [
+          ['trait', translate("application.velocity.buff.trait")],
+          ['talent', translate("application.velocity.buff.talent")],
+          ['other', translate("application.velocity.buff.other")],
+        ];
+        bsel.innerHTML = groupDefs.map(([type, label]) => {
+          const list = opts.map((o, oi) => ({ ...o, oi })).filter((o) => o.type === type);
+          if (!list.length) return '';
+          return `<optgroup label="${label}">`
+            + list.map((o) => `<option value="${o.oi}">${o.def.name}</option>`).join('')
+            + '</optgroup>';
+        }).join('');
+        buffLine.appendChild(bsel);
+        const lvSel = document.createElement('select');
+        lvSel.className = 'tac-anim-buff-sel';
+        const syncLv = () => {
+          const o = opts[+bsel.value];
+          lvSel.style.display = o && o.def.levels ? '' : 'none';
+          if (o && o.def.levels) {
+            lvSel.innerHTML = o.def.levels.map((_, li) =>
+              `<option value="${li}"${li === o.def.levels.length - 1 ? ' selected' : ''}>`
+              + `${translate("application.buff.common.level", { value: li + 1 })}</option>`).join('');
+          }
+        };
+        bsel.addEventListener('change', syncLv);
+        syncLv();
+        buffLine.appendChild(lvSel);
+        const addBtn = document.createElement('button');
+        addBtn.type = 'button';
+        addBtn.className = 'tac-anim-btn tac-anim-buff-add';
+        addBtn.textContent = translate("common.add");
+        addBtn.addEventListener('click', () => {
+          const o = opts[+bsel.value];
+          if (!o) return;
+          const def = o.def;
+          const lv = def.levels ? +lvSel.value : null;
+          const lvName = def.levels
+            ? ` ${translate("application.buff.common.level", { value: lv + 1 })}` : '';
+          const entry = { type: o.type, key: o.key, name: def.name + lvName,
+            mult: def.levels ? def.levels[lv] : def.mult, duration: def.duration || 0 };
+          if (def.postMult) entry.postMult = true;
+          const prev = structuredClone(obj.anim);
+          seg.buffs ||= [];
+          seg.buffs.push(entry);
+          if (def.extra) {
+            const ex = { type: o.type, key: o.key, name: def.extra.name,
+              mult: def.extra.mult, duration: def.extra.duration || 0 };
+            if (def.extra.postMult) ex.postMult = true;
+            seg.buffs.push(ex);
+          }
+          tacAnimPushUndo(obj, prev);
+          rerun();
+        });
+        buffLine.appendChild(addBtn);
+      }
+      afterRow = buffLine;
     }
 
     // 删除路径点（首点删除后路径整体前移）
@@ -5383,6 +5550,7 @@ function buildTacAnimBox(settings, obj) {
       row.appendChild(del);
     }
     box.appendChild(row);
+    if (afterRow) box.appendChild(afterRow);
   });
 
   // 播放控制行：▶ 播放 / 重置 / 清除动画 + 总时长
@@ -5392,7 +5560,7 @@ function buildTacAnimBox(settings, obj) {
   playBtn.type = 'button';
   playBtn.className = 'tac-anim-btn tac-anim-play-btn';
   playBtn.textContent = translate("ui.tac.anim.play");
-  playBtn.disabled = anim.points.length < 2 || animDuration(anim, geom).total <= 0;
+  playBtn.disabled = anim.points.length < 2 || animDuration(anim, geom, segDurFn).total <= 0;
   playBtn.addEventListener('click', () => tacAnimPlayStart());
   ctl.appendChild(playBtn);
   const resetBtn = document.createElement('button');
@@ -5416,7 +5584,7 @@ function buildTacAnimBox(settings, obj) {
   const total = document.createElement('span');
   total.className = 'tac-anim-derive';
   total.textContent = translate("ui.tac.anim.totalTime",
-    { seconds: round2(animDuration(anim, geom).total) });
+    { seconds: round2(animDuration(anim, geom, segDurFn).total) });
   ctl.appendChild(total);
   box.appendChild(ctl);
 }
@@ -8242,6 +8410,7 @@ export function syncTacSubCards() {
 
 export function setTacTool(tool) {
   tacAnimStop(true);
+  tacAnimArmed = tool === 'anim';
   tacTool = tool;
   tacUpdateTouchAction(); 
   tacPlaceRole = null;
@@ -9338,8 +9507,8 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
       renderTacBoard();
       return;
     }
-    // 空地图：为选中造物追加路径点（首点自动取造物当前位置，t=0）
-    if (animObj) {
+    // 空地图：添加状态下为选中造物追加路径点（首点自动取造物当前位置，t=0）
+    if (animObj && tacAnimArmed) {
       const prev = animObj.anim ? structuredClone(animObj.anim) : null;
       const anim = tacAnimEnsure(animObj);
       if (!anim.points.length) {
@@ -10194,6 +10363,7 @@ window.addEventListener('keydown', (e) => {
     tacMeasureHover = null;
     tacSelMeasure = null; 
     tacChainRoute = null; 
+    if (tacAnimArmed) tacAnimArmed = false;
     renderTacBoard();
   } else if (e.key === 'Delete' || e.key === 'Backspace') {
     const board = tacBoard();

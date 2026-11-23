@@ -1371,6 +1371,7 @@
   "ui.sel.nav.status.hunter": "监管者已选择 {count} / 1 个区域",
   "ui.sel.nav.status.survivor": "求生者已选择 {count} / 4 个区域",
   "ui.sel.title": "第五人格区域选择",
+  "ui.tac.anim.addPoints": "添加路径点",
   "ui.tac.anim.avgSpeed": "平均 {speed} m/s",
   "ui.tac.anim.clear": "清除动画",
   "ui.tac.anim.hide.dots": "隐藏时刻点",
