@@ -217,6 +217,8 @@ export const tacDrawSettings = {
   snap: { escapeDoor: true, cipher: true, dungeon: true, rocketChair: true, locker: false, box: false, phoneBooth: false, endpoint: true },
   delSegOnly: false,
   hideEndpoints: true,
+  hideAnimPath: false,
+  hideAnimDots: false,
 };
 
 // 恢复持久化的设置：只读取当前结构定义的键，历史遗留键自动忽略

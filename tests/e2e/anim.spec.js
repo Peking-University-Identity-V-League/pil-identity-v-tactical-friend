@@ -90,3 +90,65 @@ test('anim: dragging a waypoint updates its position', async ({ page }) => {
   expect(token.anim.points[2].x).toBeLessThan(0.6);
   expect(token.anim.points[2].y).toBeLessThan(0.6);
 });
+
+test('anim: dots and path stay visible in select tool; hide toggles work', async ({ page }) => {
+  await setupAnim(page);
+  await tool(page, 'select');
+  // 选择工具下：时刻点与动画线仍然显示（选中造物有动画时）
+  await expect(page.locator('.tac-anim-dot')).toHaveCount(3);
+  await expect(page.locator('#tacArrowSvg polyline')).toHaveCount(1);
+
+  // 隐藏时刻点 / 隐藏动画线
+  await page.locator('.tac-manage-box input[data-h="dots"]').click();
+  await expect(page.locator('.tac-anim-dot')).toHaveCount(0);
+  await page.locator('.tac-manage-box input[data-h="path"]').click();
+  await expect(page.locator('#tacArrowSvg polyline')).toHaveCount(0);
+
+  // 取消勾选恢复显示
+  await page.locator('.tac-manage-box input[data-h="dots"]').click();
+  await expect(page.locator('.tac-anim-dot')).toHaveCount(3);
+  await page.locator('.tac-manage-box input[data-h="path"]').click();
+  await expect(page.locator('#tacArrowSvg polyline')).toHaveCount(1);
+});
+
+test('anim: hint differs between select tool and anim tool', async ({ page }) => {
+  await placeRole(page, 'luckyGuy', 0.3, 0.3);
+  await clickPoint(page, 0.3, 0.3);
+  await expect(page.locator('.tac-manage-box .tac-box-hint').last()).toHaveText('未设置动画');
+  await tool(page, 'anim');
+  await expect(page.locator('.tac-manage-box .tac-box-hint').last()).toHaveText('在地图上点击添加路径点');
+});
+
+test('anim: speed presets follow the animated role', async ({ page }) => {
+  // 普通求生者：四姿态 + 自定义，无角色专属移速
+  await setupAnim(page);
+  await page.locator('.tac-anim-mode .tac-anim-btn', { hasText: '移速' }).click();
+  const opts1 = await page.locator('.tac-anim-speed-sel').first().locator('option').allTextContents();
+  expect(opts1.some((o) => o.includes('3.8'))).toBe(true);
+  expect(opts1.some((o) => o.includes('滑翔'))).toBe(false);
+  expect(opts1[opts1.length - 1]).toContain('自定义');
+
+  // 玩具商：含专属移速「滑翔」
+  await tool(page, 'roles');
+  await pickRole(page, 'toyMerchant');
+  await clickPoint(page, 0.8, 0.8);
+  await tool(page, 'anim');
+  await clickPoint(page, 0.8, 0.8);
+  await clickPoint(page, 0.7, 0.7);
+  await page.locator('.tac-anim-mode .tac-anim-btn', { hasText: '移速' }).click();
+  const opts2 = await page.locator('.tac-anim-speed-sel').first().locator('option').allTextContents();
+  expect(opts2.some((o) => o.includes('滑翔') && o.includes('5.74'))).toBe(true);
+
+  // 红蝶：美人相 / 般若相 两档
+  await tool(page, 'roles');
+  await pickRole(page, 'geisha');
+  await clickPoint(page, 0.5, 0.8);
+  await tool(page, 'anim');
+  await clickPoint(page, 0.5, 0.8);
+  await clickPoint(page, 0.4, 0.7);
+  await page.locator('.tac-anim-mode .tac-anim-btn', { hasText: '移速' }).click();
+  const opts3 = await page.locator('.tac-anim-speed-sel').first().locator('option').allTextContents();
+  expect(opts3.some((o) => o.includes('美人相') && o.includes('4.73'))).toBe(true);
+  expect(opts3.some((o) => o.includes('般若相') && o.includes('4.56'))).toBe(true);
+  expect(opts3.some((o) => o.includes('3.8'))).toBe(false);
+});

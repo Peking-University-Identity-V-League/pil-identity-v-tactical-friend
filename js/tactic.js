@@ -5079,8 +5079,8 @@ export function renderTacArrows() {
       { ...tacDrawing, shape: tacDrawShape, color: tacArrowColor, width: tacArrowWidth }, W, H, -1));
   }
 
-  // 动画路径折线：仅动画工具下显示当前选中造物的路径
-  if (tacTool === 'anim') {
+  // 动画路径折线：显示当前选中造物的路径（可用「隐藏动画线」关闭）
+  if (!tacDrawSettings.hideAnimPath) {
     const animObj = tacAnimTargetOf(tacManageSel);
     if (animObj && animObj.anim && (animObj.anim.points || []).length >= 2) {
       const poly = document.createElementNS(TAC_SVG_NS, 'polyline');
@@ -5129,15 +5129,28 @@ function tacAnimPushUndo(obj, prev) {
   else tacUndoStack.push({ type: 'anim', kind: 'item', idx: tacBoard().items.indexOf(obj), prev });
 }
 
-// 新路径点的默认移速：角色取自身移速（多形态取首形），否则取求生者跑速
-function tacAnimDefaultSpeed(obj) {
-  if (obj.tid != null) {
-    const def = TAC_ROLES[obj.role];
-    if (def && def.speed != null) {
-      const v = typeof def.speed === 'object' ? Object.values(def.speed)[0] : def.speed;
-      if (v > 0) return { name: def.name, speed: v };
+// 移速预设：监管者取自身移速（多形态多档）；求生者取四姿态 + 角色专属移速（如玩具商滑翔）
+function tacAnimSpeedPresets(obj) {
+  const def = TAC_ROLES[obj.role];
+  if (def && def.camp === 'hunter') {
+    if (def.speed != null && typeof def.speed === 'object') {
+      return Object.entries(def.speed).map(([name, v]) => ({ name, speed: v }));
     }
+    if (def.speed > 0) return [{ name: def.name, speed: def.speed }];
+    return [];
   }
+  const out = Object.values(TAC_MOVEMENT_SURVIVOR.states)
+    .map((s) => ({ name: s.name, speed: s.speed }));
+  if (def && Array.isArray(def.speeds)) {
+    def.speeds.forEach((s) => out.push({ name: s.name, speed: s.speed }));
+  }
+  return out;
+}
+
+// 新路径点的默认移速：预设第一项（监管者=自身移速，求生者=跑速）
+function tacAnimDefaultSpeed(obj) {
+  const first = tacAnimSpeedPresets(obj)[0];
+  if (first) return { ...first };
   return { name: TAC_MOVEMENT_SURVIVOR.states.run.name, speed: TAC_MOVEMENT_SURVIVOR.states.run.speed };
 }
 
@@ -5211,9 +5224,9 @@ export function tacAnimPlayStart() {
   tacAnimPlay = { kind, ref, raf: requestAnimationFrame(step) };
 }
 
-// 地图上的编号路径点（renderTacBoard 调用）
+// 地图上的编号路径点（renderTacBoard 调用；可用「隐藏时刻点」关闭）
 function renderTacAnimDots() {
-  if (tacTool !== 'anim') return;
+  if (tacDrawSettings.hideAnimDots) return;
   const obj = tacAnimTargetOf(tacManageSel);
   if (!obj || !obj.anim) return;
   (obj.anim.points || []).forEach((pt, i) => {
@@ -5233,11 +5246,27 @@ function buildTacAnimBox(settings, obj) {
   const box = tacManageBox(settings, "ui.tac.anim.title");
   const hasAnim = obj.anim && Array.isArray(obj.anim.points) && obj.anim.points.length;
   if (!hasAnim) {
-    tacBoxHint(box, translate("ui.tac.anim.hint.empty"));
+    // 动画工具下引导放点；其它工具下只说明未设置
+    tacBoxHint(box, translate(tacTool === 'anim' ? "ui.tac.anim.hint.empty" : "ui.tac.anim.hint.none"));
     return;
   }
   const anim = tacAnimEnsure(obj);
   const rerun = () => renderTacBoard();
+
+  // 显示开关：隐藏动画线 / 隐藏时刻点（绘制设置持久化）
+  const hideRow = document.createElement('div');
+  hideRow.className = 'tac-box-line';
+  hideRow.innerHTML =
+    `<label class="tac-manage-hide"><input type="checkbox" data-h="path"`
+    + `${tacDrawSettings.hideAnimPath ? ' checked' : ''}>${translate("ui.tac.anim.hide.path")}</label>`
+    + `<label class="tac-manage-hide"><input type="checkbox" data-h="dots"`
+    + `${tacDrawSettings.hideAnimDots ? ' checked' : ''}>${translate("ui.tac.anim.hide.dots")}</label>`;
+  hideRow.querySelectorAll('input').forEach((cb) => cb.addEventListener('change', () => {
+    if (cb.dataset.h === 'path') tacDrawSettings.hideAnimPath = cb.checked;
+    else tacDrawSettings.hideAnimDots = cb.checked;
+    rerun();
+  }));
+  box.appendChild(hideRow);
 
   // 模式切换：时刻 | 移速
   const modeRow = document.createElement('div');
@@ -5294,16 +5323,12 @@ function buildTacAnimBox(settings, obj) {
         row.appendChild(dv);
       }
     } else if (i > 0) {
-      // 移速模式：段 i-1 的预设下拉 + 自定义数值
+      // 移速模式：段 i-1 的预设下拉 + 自定义数值（预设按角色过滤）
       const seg = anim.speeds[i - 1] || tacAnimDefaultSpeed(obj);
       anim.speeds[i - 1] = seg;
       const sel = document.createElement('select');
       sel.className = 'tac-anim-speed-sel';
-      const groups = [
-        ...Object.values(TAC_MOVEMENT_SURVIVOR.states),
-        ...Object.values(TAC_MOVEMENT_SURVIVOR.roles),
-        ...Object.values(TAC_MOVEMENT_SURVIVOR.fixed),
-      ];
+      const groups = tacAnimSpeedPresets(obj);
       const matched = groups.find((g) => Math.abs(g.speed - seg.speed) < 1e-9);
       sel.innerHTML = groups.map((g) =>
         `<option value="${g.speed}">${g.name} ${g.speed}m/s</option>`).join('')
