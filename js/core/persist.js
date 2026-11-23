@@ -204,7 +204,7 @@ export const tacDisplay = {
   boxesBasement: false,
   phoneBooths: false, phoneBoothSize: TAC_DISPLAY_DEFAULT.phoneBoothSize,
   
-  snap: { cipher: true, dungeon: true, door: true, chair: true, locker: true, box: true, point: true },
+  snap: { cipher: true, dungeon: true, door: true, chair: true, locker: false, box: false, phoneBooth: false, point: true },
   delSegOnly: false, 
   showCoords: false, 
   selGlow: true,

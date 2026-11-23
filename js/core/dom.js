@@ -514,6 +514,8 @@ export const tacSnapBoxEl = $('tacSnapBox');
 
 export const tacSnapLockerEl = $('tacSnapLocker');
 
+export const tacSnapPhoneBoothEl = $('tacSnapPhoneBooth');
+
 export const tacShowLockersEl = $('tacShowLockers');
 
 export const tacLockerSizeEl = $('tacLockerSize');

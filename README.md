@@ -195,9 +195,12 @@ app/
     └── data/
         ├── maps.js            ← 九图数据（各图推演规则仍写在各图 deduction 字段）
         ├── deduction.js       ← 推演规则辅助（DED_EMPTY_HINT、dedHelpers、dedRuleBook、makeDeduction）
-        ├── tactic-data.js     ← 速度、加成和默认常量
-        ├── roles.js           ← 角色注册表（TAC_ROLES）
-        ├── items.js           ← 道具注册表（TAC_ITEM_TYPES，聚合人格/段位/赛事）
+        ├── tactic-data.js     ← 姿态速度、其它加成和默认常量（特质与角色移速由角色数据派生）
+        ├── survivor.js        ← 求生者角色数据（TAC_SURVIVOR_ROLES：特殊移速、特质、恐惧半径）
+        ├── hunter.js          ← 监管者角色数据（TAC_HUNTER_ROLES：形态移速、特质、恐惧半径）
+        ├── roles.js           ← 角色注册表（TAC_ROLES，聚合求生者与监管者）
+        ├── items.js           ← 道具注册表（TAC_ITEM_TYPES，聚合通用造物/人格/段位/赛事）
+        ├── items_common.js    ← 通用图标与自定义造物（COMMON_ICON_URL、TAC_COMMON_ITEM_TYPES）
         ├── talents.js         ← 人格（天赋）注册表（TAC_TALENT_TYPES、TAC_TALENT_KEYS）
         ├── items_tier.js      ← 段位分组道具（TAC_TIER_KEYS）
         ├── items_match.js     ← 赛事分组道具（TAC_MATCH_KEYS）
@@ -253,11 +256,11 @@ app/
 | 改区域点击和阵营选择 | `js/region.js` | `handleMapClick`、`changeStates`、`toggleSide` |
 | 改封禁密码机显示或分析面板 | `js/region.js` | `checkLock`、`updateDistancePanel` |
 | 改封禁密码机的计算方式 | `js/data/geo.js` | `calculateLockCipher` |
-| 新增角色 | `js/data/roles.js` | `TAC_ROLES`，必要时同时改 `items` 和语言包 |
+| 新增角色 | `js/data/survivor.js` 或 `js/data/hunter.js` | `TAC_SURVIVOR_ROLES` / `TAC_HUNTER_ROLES`，必要时同时改 `items` 和语言包 |
 | 新增道具 | `js/data/items.js` | `TAC_ITEM_TYPES`，并加入拥有者的 `items` |
-| 改角色基础速度或形态速度 | `js/data/tactic-data.js` + `js/data/roles.js` | `TAC_MOVEMENT_SURVIVOR.states`、`TAC_MOVEMENT_SURVIVOR.roles`、`TAC_MOVEMENT_SURVIVOR.fixed`、`TAC_ROLES` |
+| 改角色基础速度或形态速度 | `js/data/tactic-data.js`、`js/data/survivor.js`、`js/data/hunter.js` | 姿态速度 `TAC_MOVEMENT_SURVIVOR.states`；求生者特殊移速 `speeds`；监管者形态速度 `speed` |
 | 改天赋加成 | `js/data/talents.js` | 对应天赋的 `buff.speedBuff` / `buff.pickupBuff` / `buff.struggleBuff` / `buff.dropBuff` |
-| 改特质、其它加成 | `js/data/tactic-data.js` | `TAC_MOVEMENT_BUFFS.trait`、`TAC_MOVEMENT_BUFFS.other` |
+| 改特质、其它加成 | `js/data/survivor.js` / `js/data/hunter.js`、`js/data/tactic-data.js` | 特质在角色条目的 `traits`；其它加成在 `TAC_MOVEMENT_BUFFS.other` |
 | 改战术面板放置、拖动、删除 | `js/tactic.js` | `tacMapWrap.addEventListener('pointerdown'` 及后续事件 |
 | 改范围圈、箭头、测距线外观逻辑 | `js/tactic.js` | `shapeNode`、`measureNode`、`renderTacArrows` |
 | 改移动时间计算 | `js/core/measurements.js`、`js/tactic.js` | `simulateMovement`、`tacSimLine`、`updateTacMeasureInfo` |
@@ -651,7 +654,7 @@ deduce(map, marks)
 | `buildTacOtherList()` | 构建其它加成弹窗 |
 | `updateTacMeasureInfo()` | 显示距离、时间和分段结果 |
 
-修改具体角色速度和加成数值，优先去 `tactic-data.js`（天赋加成则在 `talents.js` 的 `buff` 字段），不要直接改计算函数。
+修改具体数值时不要直接改计算函数：姿态速度和默认常量在 `tactic-data.js`，角色特殊移速和特质加成在 `survivor.js` / `hunter.js` 的角色条目，天赋加成在 `talents.js` 的 `buff` 字段。
 
 ### F. 导出、撤销、清空和快捷键
 
@@ -807,6 +810,8 @@ MAPS_DATA
 | `rocketChairs` | 狂欢之椅分组坐标 |
 | `chests` | 箱子位置 |
 | `lockers` | 柜子位置 |
+| `phoneBooths` | 电话亭位置（仅有电话亭的地图） |
+| `spawnPoints` | 出生点候选坐标 |
 | `basements` | 地下室（含其中狂欢之椅与箱子） |
 | `deduction` | 推演规则、布局和规律速查数据 |
 
@@ -904,16 +909,16 @@ MAPS_DATA
 |---|---|
 | `TAC_MOVEMENT_SURVIVOR.states.run.speed` | 通用求生者跑动速度 |
 | `TAC_MOVEMENT_SURVIVOR.states` | 跑、走、蹲、爬的基础速度 |
-| `TAC_MOVEMENT_SURVIVOR.roles` | 角色或角色形态的基础速度 |
-| `TAC_MOVEMENT_SURVIVOR.fixed` | 不允许继续添加加成的固定速度状态 |
+| `TAC_MOVEMENT_SURVIVOR.roles` | 角色移速组（数据源在 `survivor.js` 各角色的 `speeds`，此处派生） |
+| `TAC_MOVEMENT_SURVIVOR.fixed` | 固定移速组（同上派生；固定速度不允许继续添加加成） |
 | `TAC_MOVEMENT_SURVIVOR.stateNames` | 基础状态的显示名称 |
 
 ### 加成相关数据
 
 | 常量 | 对应界面 |
 |---|---|
-| `TAC_MOVEMENT_BUFFS.trait` | 特质加成 |
-| `TAC_MOVEMENT_BUFFS.talent` | 天赋加成（数据源在 `talents.js`，此处派生） |
+| `TAC_MOVEMENT_BUFFS.trait` | 特质加成（数据源在 `survivor.js` / `hunter.js` 各角色的 `traits`，此处派生） |
+| `TAC_MOVEMENT_BUFFS.talent` | 天赋加成（数据源在 `talents.js` 的 `buff`，此处派生） |
 | `TAC_MOVEMENT_BUFFS.other` | 其它加成 |
 
 常见字段：
@@ -967,16 +972,19 @@ MAPS_DATA
 
 ### `TAC_ROLES`：角色注册表
 
-位于 `js/data/roles.js`。
+位于 `js/data/roles.js`，聚合 `survivor.js` 的 `TAC_SURVIVOR_ROLES`、`hunter.js` 的 `TAC_HUNTER_ROLES` 及自定义条目。新增或修改角色时，求生者改 `survivor.js`，监管者改 `hunter.js`，一般不动 `roles.js` 本身。
 
-常见字段：
+角色条目的常见字段：
 
 - `name`：角色显示名；
 - `camp`：`survivor`、`hunter` 或 `other`；
+- `speeds`：求生者角色专属基础移速列表；`group: 'role'` 归入角色移速组（可继续添加加成），`group: 'fixed'` 归入固定移速组（不可添加加成）；`tactic-data.js` 据此派生 `TAC_MOVEMENT_SURVIVOR.roles` / `fixed`；
+- `speed`：固定数值或按形态区分的速度对象（监管者形态速度；求生者特殊移速只写 `speeds`，不要重复填写）；
+- `traits`：角色特质，键为特质键，值含 `name` 与加成字段，如 `speedBuff`（移动速度）、`struggleBuff`（挣扎进度，如前锋）；`tactic-data.js` 和 `carry-model.js` 按加成类型派生消费，不按角色名写死判断；
+- `fearRadius`：恐惧半径修正，`{ mult }` 或按形态的 `{ forms }`；
 - `items`：该角色可放置的道具键数组；
-- `icon`：头像 URL；
-- `speed`：固定数值或按形态区分的速度对象；
 - `ranges`：角色范围配置；
+- `icon`：头像 URL；
 
 `items` 中的字符串必须能在 `TAC_ITEM_TYPES` 找到；也可以直接引用 `TAC_TALENT_KEYS`、`TAC_TIER_KEYS`、`TAC_MATCH_KEYS` 的分组数组，否则道具无法正确显示。
 
@@ -985,12 +993,10 @@ MAPS_DATA
 | 常量 | 用途 |
 |---|---|
 | `TAC_MEASURE_DEFAULT` | 直线和折线默认颜色、线宽 |
-| `TAC_DISPLAY_DEFAULT` | 密码机、地窖、逃生门、狂欢之椅、柜子、箱子、出生点默认图标大小 |
+| `TAC_DISPLAY_DEFAULT` | 密码机、地窖、逃生门、狂欢之椅、柜子、箱子、电话亭、出生点默认图标大小 |
 | `TAC_MANAGE_DEFAULT` | 角色和道具默认显示大小 |
 | `TAC_ZOOM_MIN`、`TAC_ZOOM_MAX` | 地图缩放范围 |
-| `DUNGEON_ICON_URL` | 地窖图标 |
-| `ESCAPE_DOOR_ICON_URL` | 逃生门图标 |
-| `LOCKER_ICON_URL` | 柜子图标 |
+| `COMMON_ICON_URL`（`items_common.js`） | 通用地图图标：出生点、逃生门、地窖、狂欢之椅、柜子、箱子、电话亭 |
 | `TAC_ZOOM_LOCK_ICONS` | 锁定和解锁 SVG |
 | `TAC_ABYSS_MAX_M` | 水渊相关最大距离 |
 | `TAC_SVG_NS` | SVG 命名空间，一般不用改 |
@@ -1196,13 +1202,13 @@ location.reload();
 
 假设新增角色没有复杂道具：
 
-1. 打开 `roles.js` 的 `TAC_ROLES`；
+1. 求生者打开 `survivor.js` 的 `TAC_SURVIVOR_ROLES`，监管者打开 `hunter.js` 的 `TAC_HUNTER_ROLES`；
 2. 复制一个结构相近的角色；
 3. 改成唯一英文键；
 4. 设置 `camp`、`icon`，没有道具时使用空数组或参考现有结构；
 5. 在语言包增加 `characters.yourRole.name`；
 6. 将 `name` 设为对应 `translate()`；
-7. 如有特殊速度，再配置 `speed` 或相关基础速度表；
+7. 如有特殊移速，求生者配置 `speeds`、监管者配置 `speed`；如有特质或恐惧半径修正，配置 `traits` / `fearRadius`；
 8. 打开战术面板检查角色是否出现在正确阵营。
 
 如果角色有道具，还要完成下一节。
@@ -1220,7 +1226,7 @@ location.reload();
 
 ## 13.7 修改或新增加成
 
-- 特质：修改 `tactic-data.js` 的 `TAC_MOVEMENT_BUFFS.trait`；
+- 特质：修改 `survivor.js` / `hunter.js` 对应角色 `traits` 中的加成字段（速度加成是 `speedBuff`）；
 - 天赋：修改 `talents.js` 对应天赋的 `buff`（速度加成是 `buff.speedBuff`）；
 - 其它：修改 `tactic-data.js` 的 `TAC_MOVEMENT_BUFFS.other`。
 
