@@ -163,7 +163,9 @@ body.tab-tactic .tac-top-tools { display: flex; }
   align-items: center;
   gap: 8px;
   min-width: 0;
-  flex: none;
+  /* 不撑大（首页两侧子元素隐藏时宽度为 0，标题保持居中），
+     但允许在窄屏收缩，内部工具按钮走横向滚动 */
+  flex: 0 1 auto;
 }
 
 /* 冻结顶栏最右侧的语言切换（仅进入地图后的冻结栏显示，主界面不显示） */
