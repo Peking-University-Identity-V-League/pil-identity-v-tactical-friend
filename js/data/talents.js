@@ -27,7 +27,7 @@ export const TAC_TALENT_TYPES = {
         { size_m: 32.07, label: translate("talent.survivor.fearRadius") },
       ],
     },
-    icon: 'https://patchwiki.biligame.com/images/dwrg/2/24/dv1pstoj7a8ftqf9l3jazt1cpe4sxwo.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/b/bf/5uwoh832o6c0dv3jc6zm00rymjlegwj.png',
   },
   borrowedTime: {
     name: translate("talent.survivor.borrowedTime"),

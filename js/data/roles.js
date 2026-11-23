@@ -979,7 +979,7 @@ export const TAC_ROLES = {
     },
     color: '#fbbf24',
     items: ['customSurvivor', 'customHunter', 'customEscapeDoor', 'customCipherMachine', 'customDungeon', 'customRocketChair', 'customLocker', 'customBox'],
-    icon: 'https://patchwiki.biligame.com/images/dwrg/f/f6/o8ixpxb56avrj5e2tzdyps58h8rfa7i.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/1/12/p5icajuxyhyj8wd46bmz212bzb0z3yz.png',
   },
   skill: {
     name: translate("characters.skill.name"),
@@ -991,13 +991,13 @@ export const TAC_ROLES = {
     name: translate("characters.talentSurvivor.name"),
     camp: 'other',
     items: TAC_TALENT_KEYS.survivor,
-    icon: 'https://patchwiki.biligame.com/images/dwrg/0/07/r5uy2z33ro1xgmw8qpp847h4bfvf8ld.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/a/aa/cg3jqluevkjed5x981bhgtu5i7hwjjg.png',
   },
   talentHunter: {
     name: translate("characters.talentHunter.name"),
     camp: 'other',
     items: TAC_TALENT_KEYS.hunter,
-    icon: 'https://patchwiki.biligame.com/images/dwrg/a/ad/8ea9e6vugcfryv3zygj9bspjgqhj76j.png',
+    icon: 'https://patchwiki.biligame.com/images/dwrg/2/2c/f6qtopnneu5e8l50p3ocix9b7m3nyr6.png',
   },
   violentStruggle: {
     name: translate("characters.violentStruggle.name"),
