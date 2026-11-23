@@ -4,9 +4,6 @@ import { dedHelpers, makeDeduction } from './deduction.js';
 
 export const MAPS_DATA = [
   (() => {
-
-
-
     const mapId = 0;
     const mapName = translate("maps.armsFactory.mapName");
     const mapNameEn = translateEn("maps.armsFactory.mapName");
@@ -21,6 +18,7 @@ export const MAPS_DATA = [
       translate("maps.armsFactory.zoneNames.zoneNames6"), translate("maps.armsFactory.zoneNames.zoneNames7"), translate("maps.armsFactory.zoneNames.zoneNames8")
     ];
     const law_urls = ['https://www.bilibili.com/video/BV1oauC6kEy9', 'https://v.douyin.com/b_OabxYks7k/'];
+
     const ciphers = [
       { id: 'M_4', name: translate("maps.armsFactory.cipher.m4.name"), location: [284, 529], feature: translate("maps.armsFactory.cipher.m4.feature"), locked: true },
       { id: 'M_1', name: translate("maps.armsFactory.cipher.m1.name"), location: [444, 103], feature: translate("maps.armsFactory.cipher.m1.feature") },
@@ -43,6 +41,7 @@ export const MAPS_DATA = [
       ['M_4', 'M_2', 'M_3', 'W_1', 'W_3', 'E_1', 'E_3'],
       ['M_4', 'M_1', 'M_3', 'W_4', 'W_3', 'E_2', 'E_3']
     ];
+
     const fixedHint = translate("maps.armsFactory.fixedHint");
     const hints = [
       translate("maps.armsFactory.hint.hint0"),
@@ -238,6 +237,7 @@ export const MAPS_DATA = [
       translate("maps.sacredHeartHospital.zoneNames.zoneNames6"), translate("maps.sacredHeartHospital.zoneNames.zoneNames7"), translate("maps.sacredHeartHospital.zoneNames.zoneNames8")
     ];
     const law_urls = ['https://www.bilibili.com/video/BV117tB6pE5R', 'https://v.douyin.com/WLJ-VhInJbE'];
+
     const ciphers = [
       { id: 'A_1', name: translate("maps.sacredHeartHospital.cipher.a1.name"), location: [356, 297], feature: translate("maps.sacredHeartHospital.cipher.a1.feature") },
       { id: 'A_2', name: translate("maps.sacredHeartHospital.cipher.a2.name"), location: [324, 396], feature: translate("maps.sacredHeartHospital.cipher.a2.feature") },
@@ -259,6 +259,7 @@ export const MAPS_DATA = [
       ['A_1', 'B_1', 'B_2', 'C_1', 'C_3', 'D_1', 'D_2'],
       ['A_2', 'B_1', 'B_2', 'C_1', 'C_2', 'D_1', 'D_2']
     ];
+
     const fixedHint = translate("maps.sacredHeartHospital.fixedHint");
     const hints = [
       '',
@@ -456,6 +457,7 @@ export const MAPS_DATA = [
       translate("maps.theRedChurch.zoneNames.zoneNames6"), translate("maps.theRedChurch.zoneNames.zoneNames7"), translate("maps.theRedChurch.zoneNames.zoneNames8")
     ];
     const law_urls = ['https://www.bilibili.com/video/BV169Y66PEiS', 'https://v.douyin.com/t7aa5IHJh9M'];
+
     const ciphers = [
       { id: 'E_4', name: translate("maps.theRedChurch.cipher.e4.name"), location: [527, 435], feature: translate("maps.theRedChurch.cipher.e4.feature"), locked: true },
       { id: 'E_1', name: translate("maps.theRedChurch.cipher.e1.name"), location: [444, 160], feature: translate("maps.theRedChurch.cipher.e1.feature") },
@@ -477,6 +479,7 @@ export const MAPS_DATA = [
       ['E_4', 'E_1', 'E_2', 'M_2', 'M_3', 'W_1', 'W_3'],
       ['E_4', 'E_2', 'M_1', 'M_2', 'M_3', 'W_2', 'W_4']
     ];
+
     const fixedHint = translate("maps.theRedChurch.fixedHint");
     const hints = [
       translate("maps.theRedChurch.hint.hint0"),
@@ -679,6 +682,7 @@ export const MAPS_DATA = [
       translate("maps.lakesideVillage.zoneNames.zoneNames9"), translate("maps.lakesideVillage.zoneNames.zoneNames10"), translate("maps.lakesideVillage.zoneNames.zoneNames11")
     ];
     const law_urls = ['https://www.bilibili.com/video/BV1HvbD6pE9k', 'https://v.douyin.com/JM1zFSML9hw'];
+
     const ciphers = [
       { id: 'E_1', name: translate("maps.lakesideVillage.cipher.e1.name"), location: [1132, 680], feature: translate("maps.lakesideVillage.cipher.e1.feature"), locked: true },
       { id: 'E_2', name: translate("maps.lakesideVillage.cipher.e2.name"), location: [993, 364], feature: translate("maps.lakesideVillage.cipher.e2.feature") },
@@ -700,6 +704,7 @@ export const MAPS_DATA = [
       ['E_1', 'E_3', 'M_1', 'M_2', 'W_1', 'W_3', 'W_5'],
       ['E_1', 'E_2', 'E_3', 'M_2', 'M_3', 'W_2', 'W_4']
     ];
+
     const fixedHint = translate("maps.lakesideVillage.fixedHint");
     const hints = [
       '',
@@ -913,6 +918,7 @@ export const MAPS_DATA = [
       translate("maps.moonlitRiverPark.zoneNames.zoneNames9"), translate("maps.moonlitRiverPark.zoneNames.zoneNames10"), translate("maps.moonlitRiverPark.zoneNames.zoneNames11")
     ];
     const law_urls = ['https://www.bilibili.com/video/BV1gN8t6BEJp', 'https://v.douyin.com/W5bCLGlPRYg'];
+    
     const ciphers = [
       { id: 'M_1', name: translate("maps.moonlitRiverPark.cipher.m1.name"), location: [711, 261], feature: translate("maps.moonlitRiverPark.cipher.m1.feature"), locked: true },
       { id: 'E_1', name: translate("maps.moonlitRiverPark.cipher.e1.name"), location: [967, 757], feature: translate("maps.moonlitRiverPark.cipher.e1.feature"), locked: true },
@@ -934,6 +940,7 @@ export const MAPS_DATA = [
       ['M_1', 'E_1', 'E_3', 'E_5', 'W_1', 'W_3', 'W_5'],
       ['M_1', 'E_1', 'E_2', 'E_4', 'W_2', 'W_4', 'W_5']
     ];
+
     const fixedHint = translate("maps.moonlitRiverPark.fixedHint");
     const hints = [
       '',
@@ -1135,6 +1142,7 @@ export const MAPS_DATA = [
       translate("maps.leosMemory.zoneNames.zoneNames6"), translate("maps.leosMemory.zoneNames.zoneNames7"), translate("maps.leosMemory.zoneNames.zoneNames8")
     ];
     const law_urls = ['https://www.bilibili.com/video/BV1zFgW6oEfS', 'https://v.douyin.com/FxKkE1nBno4'];
+
     const ciphers = [
       { id: 'E_1', name: translate("maps.leosMemory.cipher.e1.name"), location: [508, 113], feature: translate("maps.leosMemory.cipher.e1.feature") },
       { id: 'E_2', name: translate("maps.leosMemory.cipher.e2.name"), location: [647, 198], feature: translate("maps.leosMemory.cipher.e2.feature") },
@@ -1157,6 +1165,7 @@ export const MAPS_DATA = [
       ['E_2', 'E_4', 'M_1', 'M_2', 'M_4', 'W_2', 'W_4'],
       ['E_2', 'E_3', 'M_1', 'M_3', 'W_1', 'W_3', 'W_4']
     ];
+
     const fixedHint = translate("maps.leosMemory.fixedHint");
     const hints = [
       '',
@@ -1363,7 +1372,6 @@ export const MAPS_DATA = [
     const mapName = translate("maps.eversleepingTown.mapName");
     const mapNameEn = translateEn("maps.eversleepingTown.mapName");
     const mapImage = 'https://patchwiki.biligame.com/images/dwrg/thumb/2/2f/cdwrcy0q4j8t8wqmo6gv50xbe0mptak.png/750px-%E6%B0%B8%E7%9C%A0%E9%95%87_%E4%BF%AF%E8%A7%86%E5%9B%BE_%E5%85%A8.png';
-
     const mapSize = [750, 874];
 
     const widthM = 137;
@@ -1375,6 +1383,7 @@ export const MAPS_DATA = [
       translate("maps.eversleepingTown.zoneNames.zoneNames9")
     ];
     const law_urls = [];
+
     const ciphers = [
       { id: 'W_1', name: translate("maps.eversleepingTown.cipher.w1.name"), location: [101, 462], feature: translate("maps.eversleepingTown.cipher.w1.feature"), locked: true },
       { id: 'W_2', name: translate("maps.eversleepingTown.cipher.w2.name"), location: [161, 234], feature: translate("maps.eversleepingTown.cipher.w2.feature") },
@@ -1398,6 +1407,7 @@ export const MAPS_DATA = [
       ['W_1', 'W_3', 'E_1', 'E_3', 'E_5', 'M_2', 'M_4'],
       ['W_1', 'W_2', 'E_1', 'E_3', 'E_6', 'M_2', 'M_3']
     ];
+
     const fixedHint = translate("maps.eversleepingTown.fixedHint");
     const hints = [
       '',
@@ -1591,6 +1601,7 @@ export const MAPS_DATA = [
       translate("maps.chinaTown.zoneNames.zoneNames6"), translate("maps.chinaTown.zoneNames.zoneNames7"), translate("maps.chinaTown.zoneNames.zoneNames8")
     ];
     const law_urls = ['https://www.bilibili.com/video/BV1QGpF6CEos', ''];
+
     const ciphers = [
       { id: 'E_2', name: translate("maps.chinaTown.cipher.e2.name"), location: [1094, 563], feature: translate("maps.chinaTown.cipher.e2.feature"), locked: true },
       { id: 'E_1', name: translate("maps.chinaTown.cipher.e1.name"), location: [1042, 249], feature: translate("maps.chinaTown.cipher.e1.feature") },
@@ -1614,6 +1625,7 @@ export const MAPS_DATA = [
       ['E_2', 'E_3', 'M_1', 'M_3', 'W_1', 'W_3', 'W_4'],
       ['E_2', 'E_1', 'M_2', 'M_4', 'M_5', 'W_1', 'W_3']
     ];
+
     const fixedHint = translate("maps.chinaTown.fixedHint");
     const hints = [
       translate("maps.chinaTown.hint.hint0"),
@@ -1824,6 +1836,7 @@ export const MAPS_DATA = [
       translate("maps.darkwoods.zoneNames.zoneNames6"), translate("maps.darkwoods.zoneNames.zoneNames7"), translate("maps.darkwoods.zoneNames.zoneNames8")
     ];
     const law_urls = [];
+
     const ciphers = [
       { id: 'W_1', name: translate("maps.darkwoods.cipher.w1.name"), location: [379, 265], feature: translate("maps.darkwoods.cipher.w1.feature") },
       { id: 'W_2', name: translate("maps.darkwoods.cipher.w2.name"), location: [261, 442], feature: translate("maps.darkwoods.cipher.w2.feature") },
@@ -1849,6 +1862,7 @@ export const MAPS_DATA = [
       ['W_2', 'W_4', 'E_2', 'E_5', 'M_1', 'M_3', 'M_5'],
       ['W_2', 'W_4', 'E_1', 'E_5', 'M_1', 'M_3', 'M_5']
     ];
+
     const fixedHint = translate("maps.darkwoods.fixedHint");
     const hints = [
       '',
@@ -2037,12 +2051,9 @@ export const MAPS_DATA = [
 ];
 
 
-
 export const CIPHER_EXTRA = {
   4: [{ id: 'E_0', location: [768, 550], name: translate("maps.moonlitRiverPark.cipher.e0.name"), feature: translate("maps.moonlitRiverPark.cipher.e0.feature") }],
 };
-
-
 
 
 export function getImageUrl(mapId) {
