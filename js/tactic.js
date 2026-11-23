@@ -1,5 +1,5 @@
 
-import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacCipherCard, tacCipherCardShowEl, tacCipherCardPrevBtn, tacCipherCardNextBtn, tacCipherCardText, tacCipherCardSizeEl, tacCipherCardSizeDefEl, tacCipherList, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDrawSettingsToggle, tacDrawSettingsBody, tacDrawStyleToggle, tacDrawOtherToggle, tacDrawOtherBody, tacShapeStyleToggle, tacShapeStyleBody, tacTextStyleToggle, tacTextStyleBody, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacHideEndpointsEl, tacItemSection, tacMStyleBody, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacRot, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacCarryBuffBody, tacCarryCard, tacCarryChairName, tacCarryChairNextBtn, tacCarryChairPrevBtn, tacCarryChairSizeDefEl, tacCarryChairSizeEl, tacCarryChairText, tacCarryClearBtn, tacCarryBuffToggleEl, tacCarryHuntClose, tacCarryHuntList, tacCarryHuntModal, tacCarryHuntTalentBtn, tacCarryHunterEl, tacCarryHunterFormEl, tacCarryHunterSpeedEl, tacCarryInitialEl, tacCarryInitialVal, tacCarryLegend, tacCarryNote, tacCarryOpacityEl, tacCarryOpacityRowEl, tacCarryHideRingEl, tacCarryChairBasementEl, tacCarryBoxBasementEl, tacCarryBasementPrevBtn, tacCarryBasementNextBtn, tacCarryBasementTextEl, tacCarryPickBtn, tacCarryPickupEl, tacCarryResultBoxEl, tacCarryResultToggleEl, tacCarryResultBodyEl, tacCarrySettingsToggleEl, tacCarrySettingsBodyEl, tacCarryModeChairEl, tacCarryModePointEl, tacCarryHideRingLabelEl, tacCarryChairCountEl, tacCarryDetailBoxEl, tacCarryDetailToggleEl, tacCarryDetailBodyEl, tacCarryPickupModeEl, tacCarryProgressBar, tacCarryProgressBox, tacCarryRunBtn, tacCarryShowChairsEl, tacCarrySpeedClose, tacCarrySpeedList, tacCarrySpeedModal, tacCarrySpeedTalentBtn, tacCarrySummary, tacCarrySurvClose, tacCarrySurvList, tacCarrySurvModal, tacCarrySurvTalentBtn, tacCarrySurvivorEl, tacShowChairBasementEl, tacBasementText, tacShowSpawnsEl, tacSpawnSizeEl, tacSpawnSizeDefEl, tacSpawnText, tacSnapBoxEl, tacSnapLockerEl, tacShowLockersEl, tacLockerSizeEl, tacLockerSizeDefEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacSpeedSettingsToggleEl, tacSpeedSettingsBodyEl, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacDedScenarioCarryEl, tacDedScenarioTideEl, tacDedSettingsCarryEl, tacDedSettingsTideEl, tacTideBaseSpeedEl, tacTideSpeedRoleEl, tacTideSpeedFormEl, tacTideTraitAddBtn, tacTideTalentAddBtn, tacTideOtherAddBtn, tacTideBuffAddBtn, tacTideBaseDetailToggleEl, tacTideBaseDetailBodyEl, tacTideBuffToggleEl, tacTideBuffBodyEl, tacTideTraitModal, tacTideTraitList, tacTideTraitClose, tacTideTalentModal, tacTideTalentList, tacTideTalentClose, tacTideOtherModal, tacTideOtherList, tacTideOtherClose, tacTideBuffModal, tacTideBuffName, tacTideBuffPct, tacTideBuffDur, tacTideBuffOk, tacTideBuffClose, tacPathCard, tacPathPickA, tacPathPickB, tacPathStatusA, tacPathStatusB, tacPathRunBtn, tacPathClearBtn, tacPathProgressBox, tacPathProgressBar, tacPathResultBoxEl, tacPathResultToggleEl, tacPathResultBodyEl, tacPathSummary, tacPathNote, tacPathFixNote, tacPathSettingsToggleEl, tacPathSettingsBodyEl, tacPathVaultEl, tacPathFixEl, tacPathCampToggle, tacPathBaseSpeedEl, tacPathSpeedRoleEl, tacPathSpeedFormEl, tacPathTraitAddBtn, tacPathTalentAddBtn, tacPathOtherAddBtn, tacPathBuffAddBtn, tacPathBaseDetailToggleEl, tacPathBaseDetailBodyEl, tacPathBuffToggleEl, tacPathBuffBodyEl, tacPathTraitModal, tacPathTraitList, tacPathTraitClose, tacPathTalentModal, tacPathTalentList, tacPathTalentClose, tacPathOtherModal, tacPathOtherList, tacPathOtherClose, tacPathBuffModal, tacPathBuffName, tacPathBuffPct, tacPathBuffDur, tacPathBuffOk, tacPathBuffClose, tacticView } from './core/dom.js';
+import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacCipherCard, tacCipherCardShowEl, tacCipherCardPrevBtn, tacCipherCardNextBtn, tacCipherCardText, tacCipherCardSizeEl, tacCipherCardSizeDefEl, tacCipherList, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDrawSettingsToggle, tacDrawSettingsBody, tacDrawStyleToggle, tacDrawOtherToggle, tacDrawOtherBody, tacShapeStyleToggle, tacShapeStyleBody, tacTextStyleToggle, tacTextStyleBody, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacHideEndpointsEl, tacItemSection, tacMStyleBody, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacRot, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacCarryBuffBody, tacCarryCard, tacCarryChairName, tacCarryChairNextBtn, tacCarryChairPrevBtn, tacCarryChairSizeDefEl, tacCarryChairSizeEl, tacCarryChairText, tacCarryClearBtn, tacCarryBuffToggleEl, tacCarryHuntClose, tacCarryHuntList, tacCarryHuntModal, tacCarryHuntTalentBtn, tacCarryHunterEl, tacCarryHunterFormEl, tacCarryHunterSpeedEl, tacCarryInitialEl, tacCarryInitialVal, tacCarryLegend, tacCarryNote, tacCarryOpacityEl, tacCarryOpacityRowEl, tacCarryHideRingEl, tacCarryChairBasementEl, tacCarryBoxBasementEl, tacCarryBasementPrevBtn, tacCarryBasementNextBtn, tacCarryBasementTextEl, tacCarryPickBtn, tacCarryPickupEl, tacCarryResultBoxEl, tacCarryResultToggleEl, tacCarryResultBodyEl, tacCarrySettingsToggleEl, tacCarrySettingsBodyEl, tacCarryModeChairEl, tacCarryModePointEl, tacCarryHideRingLabelEl, tacCarryChairCountEl, tacCarryDetailBoxEl, tacCarryDetailToggleEl, tacCarryDetailBodyEl, tacCarryPickupModeEl, tacCarryProgressBar, tacCarryProgressBox, tacCarryRunBtn, tacCarryShowChairsEl, tacCarrySpeedClose, tacCarrySpeedList, tacCarrySpeedModal, tacCarrySpeedTalentBtn, tacCarrySummary, tacCarrySurvClose, tacCarrySurvList, tacCarrySurvModal, tacCarrySurvTalentBtn, tacCarrySurvivorEl, tacShowChairBasementEl, tacBasementText, tacShowSpawnsEl, tacSpawnSizeEl, tacSpawnSizeDefEl, tacSpawnText, tacSnapBoxEl, tacSnapLockerEl, tacShowLockersEl, tacLockerSizeEl, tacLockerSizeDefEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowPhoneBoothsEl, tacPhoneBoothSizeEl, tacPhoneBoothSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacSpeedSettingsToggleEl, tacSpeedSettingsBodyEl, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacDedScenarioCarryEl, tacDedScenarioTideEl, tacDedSettingsCarryEl, tacDedSettingsTideEl, tacTideBaseSpeedEl, tacTideSpeedRoleEl, tacTideSpeedFormEl, tacTideTraitAddBtn, tacTideTalentAddBtn, tacTideOtherAddBtn, tacTideBuffAddBtn, tacTideBaseDetailToggleEl, tacTideBaseDetailBodyEl, tacTideBuffToggleEl, tacTideBuffBodyEl, tacTideTraitModal, tacTideTraitList, tacTideTraitClose, tacTideTalentModal, tacTideTalentList, tacTideTalentClose, tacTideOtherModal, tacTideOtherList, tacTideOtherClose, tacTideBuffModal, tacTideBuffName, tacTideBuffPct, tacTideBuffDur, tacTideBuffOk, tacTideBuffClose, tacPathCard, tacPathPickA, tacPathPickB, tacPathStatusA, tacPathStatusB, tacPathRunBtn, tacPathClearBtn, tacPathProgressBox, tacPathProgressBar, tacPathResultBoxEl, tacPathResultToggleEl, tacPathResultBodyEl, tacPathSummary, tacPathNote, tacPathFixNote, tacPathSettingsToggleEl, tacPathSettingsBodyEl, tacPathVaultEl, tacPathFixEl, tacPathCampToggle, tacPathBaseSpeedEl, tacPathSpeedRoleEl, tacPathSpeedFormEl, tacPathTraitAddBtn, tacPathTalentAddBtn, tacPathOtherAddBtn, tacPathBuffAddBtn, tacPathBaseDetailToggleEl, tacPathBaseDetailBodyEl, tacPathBuffToggleEl, tacPathBuffBodyEl, tacPathTraitModal, tacPathTraitList, tacPathTraitClose, tacPathTalentModal, tacPathTalentList, tacPathTalentClose, tacPathOtherModal, tacPathOtherList, tacPathOtherClose, tacPathBuffModal, tacPathBuffName, tacPathBuffPct, tacPathBuffDur, tacPathBuffOk, tacPathBuffClose, tacticView } from './core/dom.js';
 import { restoredMeasureIds, saveRegionSel, savedRot, tacBoard, tacDisplay, tacMeasureStyle, tacPersisted, tacSave, flushSave } from './core/persist.js';
 import { measureBaseAt, simulateMovement } from './core/measurements.js';
 import { measurementEndpoints, resolveMap3dTarget, isExternalMap3dEntry } from './core/map-handoff.js';
@@ -303,7 +303,7 @@ export function syncTacDisplayUI() {
   tacSpawnSizeDefEl.checked = tacDisplay.spawnSize === TAC_DISPLAY_DEFAULT.spawnSize;
   tacShowChairsEl.checked = tacDisplay.chairs;
   tacChairSizeEl.value = tacDisplay.chairSize;
-  tacChairSizeDefEl.checked = tacDisplay.chairSize === TAC_DISPLAY_DEFAULT.chairSize;
+  tacChairSizeDefEl.checked = tacDisplay.chairSize === TAC_DISPLAY_DEFAULT.rocketChairSize;
   tacShowChairBasementEl.checked = tacDisplay.chairsBasement;
   tacShowLockersEl.checked = tacDisplay.lockers;
   tacLockerSizeEl.value = tacDisplay.lockerSize;
@@ -311,10 +311,13 @@ export function syncTacDisplayUI() {
   tacShowBoxesEl.checked = tacDisplay.boxes;
   tacBoxSizeEl.value = tacDisplay.boxSize;
   tacBoxSizeDefEl.checked = tacDisplay.boxSize === TAC_DISPLAY_DEFAULT.boxSize;
+  tacShowPhoneBoothsEl.checked = tacDisplay.phoneBooths;
+  tacPhoneBoothSizeEl.value = tacDisplay.phoneBoothSize;
+  tacPhoneBoothSizeDefEl.checked = tacDisplay.phoneBoothSize === TAC_DISPLAY_DEFAULT.phoneBoothSize;
   tacShowBoxBasementEl.checked = tacDisplay.boxesBasement;
   tacShowDoorsEl.checked = tacDisplay.doors;
   tacDoorSizeEl.value = tacDisplay.doorSize;
-  tacDoorSizeDefEl.checked = tacDisplay.doorSize === TAC_DISPLAY_DEFAULT.doorSize;
+  tacDoorSizeDefEl.checked = tacDisplay.doorSize === TAC_DISPLAY_DEFAULT.escapeDoorSize;
   tacDoorLockEl.checked = tacDisplay.doorLock;
   tacSnapCipherEl.checked = tacDisplay.snap.cipher;
   tacSnapDungeonEl.checked = tacDisplay.snap.dungeon;
@@ -502,6 +505,9 @@ export function syncTacImage() {
   renderTacBoxes();
   const boxEntry = $('tacBoxEntry');
   if (boxEntry) boxEntry.style.display = MAPS_DATA[S.currentMapId].chests ? '' : 'none';
+  renderTacPhoneBooths();
+  const phoneBoothEntry = $('tacPhoneBoothEntry');
+  if (phoneBoothEntry) phoneBoothEntry.style.display = MAPS_DATA[S.currentMapId].phoneBooths ? '' : 'none';
   const basementEntry = $('tacBasementEntry');
   if (basementEntry) {
     const map = MAPS_DATA[S.currentMapId];
@@ -858,7 +864,7 @@ export function renderTacFixedSpawns() {
         const p = Array.isArray(pt) ? pt : pt.p;
         let el;
         if (item.flag_orientation) {
-          const iconUrl = COMMON_ICON_URL[item.icon] || item.icon;
+          const iconUrl = (TAC_ITEM_TYPES[item.icon] || {}).icon || COMMON_ICON_URL[item.icon] || item.icon;
           el = document.createElement('div');
           const dirSvg = token.showSpawnDir
             ? (() => {
@@ -1082,6 +1088,27 @@ export function renderTacLockers() {
   });
 }
 
+export function renderTacPhoneBooths() {
+  if (!tacMapWrap) return;
+  tacMapWrap.querySelectorAll('.tac-phone-booth').forEach((el) => el.remove());
+  if (!tacDisplay.phoneBooths) return;
+  const map = MAPS_DATA[S.currentMapId];
+  if (!map || !map.phoneBooths || !map.phoneBooths.length) return;
+  const [imgW, imgH] = map.mapSize;
+  map.phoneBooths.forEach(([px, pz]) => {
+    const el = document.createElement('img');
+    el.className = 'tac-phone-booth';
+    el.src = COMMON_ICON_URL.phoneBooth;
+    el.alt = translate("common.phoneBooth");
+    el.draggable = false;
+    el.style.left = `${(px / imgW) * 100}%`;
+    el.style.top = `${(pz / imgH) * 100}%`;
+    el.style.width = `${tacDisplay.phoneBoothSize}%`;
+    el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
+    tacLayer().appendChild(el);
+  });
+}
+
 export function renderTacBoxes() {
   if (!tacMapWrap) return;
   tacMapWrap.querySelectorAll('.tac-box').forEach((el) => el.remove());
@@ -1237,6 +1264,7 @@ export function tacSetRot(k) {
   renderTacChairs();
   renderTacLockers();
   renderTacBoxes();
+  renderTacPhoneBooths();
   renderTacBoard();
 }
 
@@ -1507,13 +1535,15 @@ tacDungeonSizeDefEl._default = TAC_DISPLAY_DEFAULT.dungeonSize;
 
 tacSpawnSizeDefEl._default = TAC_DISPLAY_DEFAULT.spawnSize;
 
-tacChairSizeDefEl._default = TAC_DISPLAY_DEFAULT.chairSize;
+tacChairSizeDefEl._default = TAC_DISPLAY_DEFAULT.rocketChairSize;
 
 tacLockerSizeDefEl._default = TAC_DISPLAY_DEFAULT.lockerSize;
 
 tacBoxSizeDefEl._default = TAC_DISPLAY_DEFAULT.boxSize;
 
-tacDoorSizeDefEl._default = TAC_DISPLAY_DEFAULT.doorSize;
+tacPhoneBoothSizeDefEl._default = TAC_DISPLAY_DEFAULT.phoneBoothSize;
+
+tacDoorSizeDefEl._default = TAC_DISPLAY_DEFAULT.escapeDoorSize;
 
 
 tacShowZonesEl.addEventListener('change', () => {
@@ -1552,6 +1582,10 @@ bindTacDisplayRow(tacShowLockersEl, tacLockerSizeEl, tacLockerSizeDefEl,
 bindTacDisplayRow(tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl,
   (v) => { tacDisplay.boxes = v; renderTacBoxes(); },
   (v) => { tacDisplay.boxSize = v; renderTacBoxes(); });
+
+bindTacDisplayRow(tacShowPhoneBoothsEl, tacPhoneBoothSizeEl, tacPhoneBoothSizeDefEl,
+  (v) => { tacDisplay.phoneBooths = v; renderTacPhoneBooths(); },
+  (v) => { tacDisplay.phoneBoothSize = v; renderTacPhoneBooths(); });
 
 tacShowBoxBasementEl.addEventListener('change', () => {
   tacDisplay.boxesBasement = tacShowBoxBasementEl.checked;
@@ -1744,7 +1778,7 @@ export function syncTacCarryChairRow() {
   if (!tacCarryCard) return;
   tacCarryShowChairsEl.checked = tacDisplay.chairs;
   tacCarryChairSizeEl.value = tacDisplay.chairSize;
-  tacCarryChairSizeDefEl.checked = tacDisplay.chairSize === TAC_DISPLAY_DEFAULT.chairSize;
+  tacCarryChairSizeDefEl.checked = tacDisplay.chairSize === TAC_DISPLAY_DEFAULT.rocketChairSize;
   const ch = MAPS_DATA[S.currentMapId].rocketChairs;
   tacCarryChairText.textContent = (!ch || !ch.sets.length) ? '--'
     : translate('ui.tac.display.rocketChair.layout', { index: S.tacChairIndex + 1, count: ch.sets.length });
@@ -2328,7 +2362,7 @@ function renderTacCarryBuffs() {
 function buildTacCarryCard() {
   if (!tacCarryCard) return;
   // 与显示设置共享的椅子行
-  tacCarryChairSizeDefEl._default = TAC_DISPLAY_DEFAULT.chairSize;
+  tacCarryChairSizeDefEl._default = TAC_DISPLAY_DEFAULT.rocketChairSize;
   bindTacDisplayRow(tacCarryShowChairsEl, tacCarryChairSizeEl, tacCarryChairSizeDefEl,
     (v) => { tacDisplay.chairs = v; renderTacChairs(); syncTacDisplayUI(); },
     (v) => { tacDisplay.chairSize = v; renderTacChairs(); syncTacDisplayUI(); });
@@ -8241,10 +8275,11 @@ export async function tacExportImage() {
   });
   ctx.restore();
 
-  const [ciphIcon, dungeonIcon, doorIcon, chairIcon, lockerIcon, boxIcon, spawnSurvIcon, spawnHuntIcon] = await Promise.all([
+  const [ciphIcon, dungeonIcon, doorIcon, chairIcon, lockerIcon, boxIcon, phoneBoothIcon, spawnSurvIcon, spawnHuntIcon] = await Promise.all([
     tacLoadImg(CIPHER_ICON_URL), tacLoadImg(COMMON_ICON_URL.dungeon),
     tacLoadImg(COMMON_ICON_URL.escapeDoor), tacLoadImg(COMMON_ICON_URL.rocketChair),
     tacLoadImg(COMMON_ICON_URL.locker), tacLoadImg(COMMON_ICON_URL.box),
+    tacLoadImg(COMMON_ICON_URL.phoneBooth),
     tacLoadImg(COMMON_ICON_URL.survivor), tacLoadImg(COMMON_ICON_URL.hunter)]);
 
   
@@ -8331,6 +8366,15 @@ export async function tacExportImage() {
       });
     }
 
+    // 电话亭：固定点位
+    if (phoneBoothIcon && tacDisplay.phoneBooths && map.phoneBooths) {
+      const size = tacDisplay.phoneBoothSize / 100 * W * K;
+      map.phoneBooths.forEach(([px, pz]) => {
+        const [x, y] = PXY(px / W0, pz / H0);
+        uctx.drawImage(phoneBoothIcon, x - size / 2, y - size / 2, size, size);
+      });
+    }
+
     // 箱子：固定箱 + 当前地下室组
     if (boxIcon && map.chests) {
       const bx = map.chests;
@@ -8357,7 +8401,7 @@ export async function tacExportImage() {
           const p = Array.isArray(pt) ? pt : pt.p;
           const [x, y] = PXY(p[0] / W0, p[1] / H0);
           if (item.flag_orientation) {
-            const fsIcon = COMMON_ICON_URL[item.icon] || item.icon;
+            const fsIcon = (TAC_ITEM_TYPES[item.icon] || {}).icon || COMMON_ICON_URL[item.icon] || item.icon;
             if (fsIcon) {
               const isz = 0.03 * W * K;
               const camImg = await tacLoadImg(fsIcon);

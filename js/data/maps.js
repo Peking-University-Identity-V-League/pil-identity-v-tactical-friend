@@ -12,12 +12,15 @@ export const MAPS_DATA = [
     const mapNameEn = translateEn("maps.armsFactory.mapName");
     const mapImage = 'https://patchwiki.biligame.com/images/dwrg/thumb/4/44/bk8sfefxhz54qr2uxqq6grugfshrczs.png/750px-%E5%86%9B%E5%B7%A5%E5%8E%82_%E4%BF%AF%E8%A7%86%E5%9B%BE_%E5%85%A8.png';
     const mapSize = [750, 644];
+
+    const widthM = 166.2;
     const zonesInfo = [27, 30, 226.1, 197, 3, 3];
     const zoneNames = [
       translate("maps.armsFactory.zoneNames.zoneNames0"), translate("maps.armsFactory.zoneNames.zoneNames1"), translate("maps.armsFactory.zoneNames.zoneNames2"),
       translate("maps.armsFactory.zoneNames.zoneNames3"), translate("maps.armsFactory.zoneNames.zoneNames4"), translate("maps.armsFactory.zoneNames.zoneNames5"),
       translate("maps.armsFactory.zoneNames.zoneNames6"), translate("maps.armsFactory.zoneNames.zoneNames7"), translate("maps.armsFactory.zoneNames.zoneNames8")
     ];
+    const law_urls = ['https://www.bilibili.com/video/BV1oauC6kEy9', 'https://v.douyin.com/b_OabxYks7k/'];
     const ciphers = [
       { id: 'M_4', name: translate("maps.armsFactory.cipher.m4.name"), location: [284, 529], feature: translate("maps.armsFactory.cipher.m4.feature"), locked: true },
       { id: 'M_1', name: translate("maps.armsFactory.cipher.m1.name"), location: [444, 103], feature: translate("maps.armsFactory.cipher.m1.feature") },
@@ -40,6 +43,16 @@ export const MAPS_DATA = [
       ['M_4', 'M_2', 'M_3', 'W_1', 'W_3', 'E_1', 'E_3'],
       ['M_4', 'M_1', 'M_3', 'W_4', 'W_3', 'E_2', 'E_3']
     ];
+    const fixedHint = translate("maps.armsFactory.fixedHint");
+    const hints = [
+      translate("maps.armsFactory.hint.hint0"),
+      translate("maps.armsFactory.hint.hint1"),
+      translate("maps.armsFactory.hint.hint0"),
+      translate("maps.armsFactory.hint.hint3"),
+      translate("maps.armsFactory.hint.hint0")
+    ];
+
+    const escapeDoors = [[682, 240], [45, 320], [682, 260], [45, 300]];
 
     const dungeons = [[385, 554], [175, 133], [428, 284]];
 
@@ -54,11 +67,11 @@ export const MAPS_DATA = [
       ],
     };
 
+    const lockers = [[557, 112], [686, 161], [128, 166], [632, 182], [323, 184], [584, 189], [412, 368], [386, 560], [195, 583], [268, 594]];
+
     const chests = {
       fixed: [[129, 140], [570, 186], [202, 303], [382, 357]],
     };
-
-    const lockers = [[557, 112], [686, 161], [128, 166], [632, 182], [323, 184], [584, 189], [412, 368], [386, 560], [195, 583], [268, 594]];
 
     const basements = {
       basement_1: {
@@ -71,9 +84,6 @@ export const MAPS_DATA = [
       },
     };
 
-
-    const escapeDoors = [[682, 240], [45, 320], [682, 260], [45, 300]];
-
     const spawnPoints = [
       { survivor: [[143, 235], [292, 250], [366, 382], [498, 452]], hunter: [556, 212] },
       { survivor: [[132, 344], [292, 250], [400, 200], [672, 182]], hunter: [430, 450] },
@@ -82,20 +92,6 @@ export const MAPS_DATA = [
       { survivor: [[456, 132], [542, 306], [403, 496], [630, 414]], hunter: [248, 272] },
       { survivor: [[132, 344], [212, 238], [316, 376], [498, 452]], hunter: [450, 136] },
     ];
-
-    const widthM = 166.2;
-    const law_urls = ['https://www.bilibili.com/video/BV1oauC6kEy9', 'https://v.douyin.com/b_OabxYks7k/'];
-    const fixedHint = translate("maps.armsFactory.fixedHint");
-    const hints = [
-      translate("maps.armsFactory.hint.hint0"),
-      translate("maps.armsFactory.hint.hint1"),
-      translate("maps.armsFactory.hint.hint0"),
-      translate("maps.armsFactory.hint.hint3"),
-      translate("maps.armsFactory.hint.hint0")
-    ];
-
-
-
 
     const fixedSpawns = {
       professor: { label: translate("maps.fixedSpawns.professor"), item: { icon: 'scale', points: [[348, 551], [389, 144]] } },
@@ -201,11 +197,10 @@ export const MAPS_DATA = [
 
     return {
       mapId, mapName, mapNameEn,
-      mapImage, mapSize,
-      zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
-      fixedSpawns, spawnPoints,
-      law_urls, fixedHint, hints,
+      mapImage, mapSize, widthM, zonesInfo, zoneNames,
+      law_urls, ciphers, cipherCombinations, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, lockers, chests,
+      basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { fixed, region, exactly, either } = dedHelpers(ciphers);
         const CIPHERS_EAST = [translate("maps.armsFactory.cipher.e1.name"), translate("maps.armsFactory.cipher.e2.name"), translate("maps.armsFactory.cipher.e3.name"), translate("maps.armsFactory.cipher.e4.name")];
@@ -234,12 +229,15 @@ export const MAPS_DATA = [
     const mapNameEn = translateEn("maps.sacredHeartHospital.mapName");
     const mapImage = 'https://patchwiki.biligame.com/images/dwrg/6/64/1znuvz3676hq8xyjdd26vxz99l3n3ds.png';
     const mapSize = [644, 604];
+
+    const widthM = 151.5;
     const zonesInfo = [65.5, 19.5, 188, 174.5, 3, 3];
     const zoneNames = [
       translate("maps.sacredHeartHospital.zoneNames.zoneNames0"), translate("maps.sacredHeartHospital.zoneNames.zoneNames1"), translate("maps.sacredHeartHospital.zoneNames.zoneNames2"),
       translate("maps.sacredHeartHospital.zoneNames.zoneNames3"), translate("maps.sacredHeartHospital.zoneNames.zoneNames4"), translate("maps.sacredHeartHospital.zoneNames.zoneNames5"),
       translate("maps.sacredHeartHospital.zoneNames.zoneNames6"), translate("maps.sacredHeartHospital.zoneNames.zoneNames7"), translate("maps.sacredHeartHospital.zoneNames.zoneNames8")
     ];
+    const law_urls = ['https://www.bilibili.com/video/BV117tB6pE5R', 'https://v.douyin.com/WLJ-VhInJbE'];
     const ciphers = [
       { id: 'A_1', name: translate("maps.sacredHeartHospital.cipher.a1.name"), location: [356, 297], feature: translate("maps.sacredHeartHospital.cipher.a1.feature") },
       { id: 'A_2', name: translate("maps.sacredHeartHospital.cipher.a2.name"), location: [324, 396], feature: translate("maps.sacredHeartHospital.cipher.a2.feature") },
@@ -261,6 +259,16 @@ export const MAPS_DATA = [
       ['A_1', 'B_1', 'B_2', 'C_1', 'C_3', 'D_1', 'D_2'],
       ['A_2', 'B_1', 'B_2', 'C_1', 'C_2', 'D_1', 'D_2']
     ];
+    const fixedHint = translate("maps.sacredHeartHospital.fixedHint");
+    const hints = [
+      '',
+      translate("maps.sacredHeartHospital.hint.hint1"),
+      translate("maps.sacredHeartHospital.hint.hint2"),
+      translate("maps.sacredHeartHospital.hint.hint3"),
+      translate("maps.sacredHeartHospital.hint.hint4")
+    ];
+
+    const escapeDoors = [[326, 530], [615, 88], [311, 530], [615, 104]];
 
     const dungeons = [[146, 321], [512, 480], [581, 297]];
 
@@ -273,11 +281,11 @@ export const MAPS_DATA = [
       ],
     };
 
+    const lockers = [[270, 41], [581, 277], [106, 291], [156, 306]];
+
     const chests = {
       fixed: [[239, 58], [292, 108], [373, 1, 195], [150, 345], [391, 348], [366, 476], [564, 495]],
     };
-
-    const lockers = [[270, 41], [581, 277], [106, 291], [156, 306]];
 
     const basements = {
       basement_1: {
@@ -290,9 +298,6 @@ export const MAPS_DATA = [
       },
     };
 
-
-    const escapeDoors = [[326, 530], [615, 88], [311, 530], [615, 104]];
-
     const spawnPoints = [
       { survivor: [[250, 72], [362, 87], [420, 309], [395, 482]], hunter: [181, 305] },
       { survivor: [[443, 179], [361, 336], [347, 466], [192, 475]], hunter: [167, 179] },
@@ -300,17 +305,6 @@ export const MAPS_DATA = [
       { survivor: [[200, 113], [266, 220], [482, 298], [361, 336]], hunter: [433, 41] },
       { survivor: [[516, 92], [443, 179], [266, 220], [291, 343]], hunter: [537, 398] },
       { survivor: [[317, 49], [516, 92], [200, 113], [192, 475]], hunter: [370, 302] },
-    ];
-
-    const widthM = 151.5;
-    const law_urls = ['https://www.bilibili.com/video/BV117tB6pE5R', 'https://v.douyin.com/WLJ-VhInJbE'];
-    const fixedHint = translate("maps.sacredHeartHospital.fixedHint");
-    const hints = [
-      '',
-      translate("maps.sacredHeartHospital.hint.hint1"),
-      translate("maps.sacredHeartHospital.hint.hint2"),
-      translate("maps.sacredHeartHospital.hint.hint3"),
-      translate("maps.sacredHeartHospital.hint.hint4")
     ];
 
     const fixedSpawns = {
@@ -417,11 +411,10 @@ export const MAPS_DATA = [
 
     return {
       mapId, mapName, mapNameEn,
-      mapImage, mapSize,
-      zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
-      fixedSpawns, spawnPoints,
-      law_urls, fixedHint, hints,
+      mapImage, mapSize, widthM, zonesInfo, zoneNames,
+      law_urls, ciphers, cipherCombinations, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, lockers, chests,
+      basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { exactly, either, same, atLeast1, chain } = dedHelpers(ciphers);
         const rules = [
@@ -454,12 +447,15 @@ export const MAPS_DATA = [
     const mapNameEn = translateEn("maps.theRedChurch.mapName");
     const mapImage = 'https://patchwiki.biligame.com/images/dwrg/2/21/tqsaom4k0h9tijgczzutlq6tyatxtty.png';
     const mapSize = [596, 599];
+
+    const widthM = 153.5;
     const zonesInfo = [72.5, 104.3, 163.7, 141.7, 3, 3];
     const zoneNames = [
       translate("maps.theRedChurch.zoneNames.zoneNames0"), translate("maps.theRedChurch.zoneNames.zoneNames1"), translate("maps.theRedChurch.zoneNames.zoneNames2"),
       translate("maps.theRedChurch.zoneNames.zoneNames3"), translate("maps.theRedChurch.zoneNames.zoneNames4"), translate("maps.theRedChurch.zoneNames.zoneNames5"),
       translate("maps.theRedChurch.zoneNames.zoneNames6"), translate("maps.theRedChurch.zoneNames.zoneNames7"), translate("maps.theRedChurch.zoneNames.zoneNames8")
     ];
+    const law_urls = ['https://www.bilibili.com/video/BV169Y66PEiS', 'https://v.douyin.com/t7aa5IHJh9M'];
     const ciphers = [
       { id: 'E_4', name: translate("maps.theRedChurch.cipher.e4.name"), location: [527, 435], feature: translate("maps.theRedChurch.cipher.e4.feature"), locked: true },
       { id: 'E_1', name: translate("maps.theRedChurch.cipher.e1.name"), location: [444, 160], feature: translate("maps.theRedChurch.cipher.e1.feature") },
@@ -481,6 +477,16 @@ export const MAPS_DATA = [
       ['E_4', 'E_1', 'E_2', 'M_2', 'M_3', 'W_1', 'W_3'],
       ['E_4', 'E_2', 'M_1', 'M_2', 'M_3', 'W_2', 'W_4']
     ];
+    const fixedHint = translate("maps.theRedChurch.fixedHint");
+    const hints = [
+      translate("maps.theRedChurch.hint.hint0"),
+      translate("maps.theRedChurch.hint.hint1"),
+      translate("maps.theRedChurch.hint.hint2"),
+      '',
+      translate("maps.theRedChurch.hint.hint4")
+    ];
+
+    const escapeDoors = [[297, 543], [474, 90], [283, 543], [488, 90]];
 
     const dungeons = [[121, 474], [418, 417], [539, 225]];
 
@@ -494,11 +500,11 @@ export const MAPS_DATA = [
       ],
     };
 
+    const lockers = [[549, 130], [431, 144], [328, 149], [487, 225], [523, 244], [239, 263], [449, 298], [123, 301], [204, 506], [362, 518]];
+
     const chests = {
       fixed: [[153, 142], [145, 261], [442, 370], [132, 381], [138, 470], [525, 477], [330, 497]],
     };
-
-    const lockers = [[549, 130], [431, 144], [328, 149], [487, 225], [523, 244], [239, 263], [449, 298], [123, 301], [204, 506], [362, 518]];
 
     const basements = {
       basement_1: {
@@ -511,9 +517,6 @@ export const MAPS_DATA = [
       },
     };
 
-
-    const escapeDoors = [[297, 543], [474, 90], [283, 543], [488, 90]];
-
     const spawnPoints = [
       { survivor: [[510, 195], [401, 236], [295, 355], [295, 520]], hunter: [501, 440] },
       { survivor: [[370, 195], [485, 243], [211, 304], [207, 426]], hunter: [428, 447] },
@@ -521,17 +524,6 @@ export const MAPS_DATA = [
       { survivor: [[212, 195], [150, 284], [388, 295], [447, 385]], hunter: [236, 478] },
       { survivor: [[212, 195], [150, 277], [295, 355], [370, 483]], hunter: [114, 481] },
       { survivor: [[253, 101], [439, 165], [519, 313], [112, 480]], hunter: [296, 319] },
-    ];
-
-    const widthM = 153.5;
-    const law_urls = ['https://www.bilibili.com/video/BV169Y66PEiS', 'https://v.douyin.com/t7aa5IHJh9M'];
-    const fixedHint = translate("maps.theRedChurch.fixedHint");
-    const hints = [
-      translate("maps.theRedChurch.hint.hint0"),
-      translate("maps.theRedChurch.hint.hint1"),
-      translate("maps.theRedChurch.hint.hint2"),
-      '',
-      translate("maps.theRedChurch.hint.hint4")
     ];
 
     const fixedSpawns = {
@@ -635,12 +627,10 @@ export const MAPS_DATA = [
 
     return {
       mapId, mapName, mapNameEn,
-      mapImage, mapSize,
-      zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
-      fixedSpawns,
-      spawnPoints,
-      law_urls, fixedHint, hints,
+      mapImage, mapSize, widthM, zonesInfo, zoneNames,
+      law_urls, ciphers, cipherCombinations, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, lockers, chests,
+      basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { fixed, region, exactly, atLeast1, chain } = dedHelpers(ciphers);
         const CIPHERS_EAST = [translate("maps.theRedChurch.cipher.e1.name"), translate("maps.theRedChurch.cipher.e2.name"), translate("maps.theRedChurch.cipher.e3.name"), translate("maps.theRedChurch.cipher.e4.name")];
@@ -679,6 +669,8 @@ export const MAPS_DATA = [
     const mapNameEn = translateEn("maps.lakesideVillage.mapName");
     const mapImage = 'https://patchwiki.biligame.com/images/dwrg/0/0e/h7t6n6gum5qpc0h8mhhk5fissh04xbq.png';
     const mapSize = [1280, 1208];
+
+    const widthM = 199.1;
     const zonesInfo = [154, 202, 244, 281, 4, 3];
     const zoneNames = [
       translate("maps.lakesideVillage.zoneNames.zoneNames0"), translate("maps.lakesideVillage.zoneNames.zoneNames1"), translate("maps.lakesideVillage.zoneNames.zoneNames2"),
@@ -686,6 +678,7 @@ export const MAPS_DATA = [
       translate("maps.lakesideVillage.zoneNames.zoneNames6"), translate("maps.lakesideVillage.zoneNames.zoneNames7"), translate("maps.lakesideVillage.zoneNames.zoneNames8"),
       translate("maps.lakesideVillage.zoneNames.zoneNames9"), translate("maps.lakesideVillage.zoneNames.zoneNames10"), translate("maps.lakesideVillage.zoneNames.zoneNames11")
     ];
+    const law_urls = ['https://www.bilibili.com/video/BV1HvbD6pE9k', 'https://v.douyin.com/JM1zFSML9hw'];
     const ciphers = [
       { id: 'E_1', name: translate("maps.lakesideVillage.cipher.e1.name"), location: [1132, 680], feature: translate("maps.lakesideVillage.cipher.e1.feature"), locked: true },
       { id: 'E_2', name: translate("maps.lakesideVillage.cipher.e2.name"), location: [993, 364], feature: translate("maps.lakesideVillage.cipher.e2.feature") },
@@ -707,6 +700,16 @@ export const MAPS_DATA = [
       ['E_1', 'E_3', 'M_1', 'M_2', 'W_1', 'W_3', 'W_5'],
       ['E_1', 'E_2', 'E_3', 'M_2', 'M_3', 'W_2', 'W_4']
     ];
+    const fixedHint = translate("maps.lakesideVillage.fixedHint");
+    const hints = [
+      '',
+      '',
+      '',
+      '',
+      ''
+    ];
+
+    const escapeDoors = [[878, 1066], [200, 134], [834, 1066], [238, 134]];
 
     const dungeons = [[254, 638], [386, 858], [770, 860], [940, 530], [922, 308]];
 
@@ -721,11 +724,13 @@ export const MAPS_DATA = [
       ],
     };
 
+    const lockers = [[496, 296], [273, 402], [276, 579], [399, 995]];
+
     const chests = {
       fixed: [[157, 516], [346, 555], [230, 668], [854, 703], [195, 839], [818, 996], [324, 1065]],
     };
 
-    const lockers = [[496, 296], [273, 402], [276, 579], [399, 995]];
+    const phoneBooths = [[292, 572], [432, 870], [608, 320], [750, 686], [1026, 742]];
 
     const basements = {
       basement_1: {
@@ -738,9 +743,6 @@ export const MAPS_DATA = [
       },
     };
 
-
-    const escapeDoors = [[878, 1066], [200, 134], [834, 1066], [238, 134]];
-
     const spawnPoints = [
       { survivor: [[644, 347], [369, 462], [494, 658], [955, 738]], hunter: [1032, 378] },
       { survivor: [[764, 295], [873, 485], [521, 630], [677, 787]], hunter: [1162, 717] },
@@ -749,17 +751,6 @@ export const MAPS_DATA = [
       { survivor: [[992, 704], [297, 842], [678, 858], [1018, 950]], hunter: [540, 485] },
       { survivor: [[697, 506], [959, 735], [297, 842], [736, 894]], hunter: [289, 303] },
       { survivor: [[330, 310], [783, 384], [636, 690], [678, 858]], hunter: [253, 730] },
-    ];
-
-    const widthM = 199.1;
-    const law_urls = ['https://www.bilibili.com/video/BV1HvbD6pE9k', 'https://v.douyin.com/JM1zFSML9hw'];
-    const fixedHint = translate("maps.lakesideVillage.fixedHint");
-    const hints = [
-      '',
-      '',
-      '',
-      '',
-      ''
     ];
 
     const fixedSpawns = {
@@ -868,12 +859,10 @@ export const MAPS_DATA = [
 
     return {
       mapId, mapName, mapNameEn,
-      mapImage, mapSize,
-      zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
-      fixedSpawns,
-      spawnPoints,
-      law_urls, fixedHint, hints,
+      mapImage, mapSize, widthM, zonesInfo, zoneNames,
+      law_urls, ciphers, cipherCombinations, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, lockers, chests, phoneBooths,
+      basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { fixed, region, exactly, either, same, chain } = dedHelpers(ciphers);
         const CIPHERS_EAST = [translate("maps.lakesideVillage.cipher.e2.name"), translate("maps.lakesideVillage.cipher.e1.name"), translate("maps.lakesideVillage.cipher.e3.name")];
@@ -914,6 +903,8 @@ export const MAPS_DATA = [
     const mapNameEn = translateEn("maps.moonlitRiverPark.mapName");
     const mapImage = 'https://patchwiki.biligame.com/images/dwrg/1/10/3qp1mkiy5mhg421bfbytquibtwyh5j8.png';
     const mapSize = [1492, 1028];
+
+    const widthM = 184.4;
     const zonesInfo = [14, 89.8, 364.6, 281.2, 4, 3];
     const zoneNames = [
       translate("maps.moonlitRiverPark.zoneNames.zoneNames0"), translate("maps.moonlitRiverPark.zoneNames.zoneNames1"), translate("maps.moonlitRiverPark.zoneNames.zoneNames2"),
@@ -921,6 +912,7 @@ export const MAPS_DATA = [
       translate("maps.moonlitRiverPark.zoneNames.zoneNames6"), translate("maps.moonlitRiverPark.zoneNames.zoneNames7"), translate("maps.moonlitRiverPark.zoneNames.zoneNames8"),
       translate("maps.moonlitRiverPark.zoneNames.zoneNames9"), translate("maps.moonlitRiverPark.zoneNames.zoneNames10"), translate("maps.moonlitRiverPark.zoneNames.zoneNames11")
     ];
+    const law_urls = ['https://www.bilibili.com/video/BV1gN8t6BEJp', 'https://v.douyin.com/W5bCLGlPRYg'];
     const ciphers = [
       { id: 'M_1', name: translate("maps.moonlitRiverPark.cipher.m1.name"), location: [711, 261], feature: translate("maps.moonlitRiverPark.cipher.m1.feature"), locked: true },
       { id: 'E_1', name: translate("maps.moonlitRiverPark.cipher.e1.name"), location: [967, 757], feature: translate("maps.moonlitRiverPark.cipher.e1.feature"), locked: true },
@@ -942,6 +934,16 @@ export const MAPS_DATA = [
       ['M_1', 'E_1', 'E_3', 'E_5', 'W_1', 'W_3', 'W_5'],
       ['M_1', 'E_1', 'E_2', 'E_4', 'W_2', 'W_4', 'W_5']
     ];
+    const fixedHint = translate("maps.moonlitRiverPark.fixedHint");
+    const hints = [
+      '',
+      '',
+      '',
+      '',
+      ''
+    ];
+
+    const escapeDoors = [[1312, 88], [130, 946], [1340, 88], [101, 946]];
 
     const dungeons = [[1288, 709], [746, 469], [417, 911], [68, 425], [532, 138]];
     const rocketChairs = {
@@ -956,11 +958,11 @@ export const MAPS_DATA = [
       ],
     };
 
+    const lockers = [[454, 146], [144, 509], [1094, 520], [1005, 762]];
+
     const chests = {
       fixed: [[834, 184], [63, 223], [1280, 319], [855, 458], [1402, 781], [734, 789], [249, 802]],
     };
-
-    const lockers = [[454, 146], [144, 509], [1094, 520], [1005, 762]];
 
     const phoneBooths = [[203, 420], [478, 644], [720, 280], [1013, 781], [1234, 304]];
 
@@ -975,9 +977,6 @@ export const MAPS_DATA = [
       },
     };
 
-
-    const escapeDoors = [[1312, 88], [130, 946], [1340, 88], [101, 946]];
-
     const spawnPoints = [
       { survivor: [[1116, 296], [736, 308], [551, 627], [740, 759]], hunter: [1191, 764] },
       { survivor: [[275, 281], [1247, 461], [669, 733], [925, 753]], hunter: [743, 219] },
@@ -986,17 +985,6 @@ export const MAPS_DATA = [
       { survivor: [[736, 308], [963, 463], [229, 517], [1260, 829]], hunter: [616, 723] },
       { survivor: [[1070, 297], [589, 317], [276, 371], [1024, 754]], hunter: [549, 772] },
       { survivor: [[589, 317], [1031, 749], [525, 759], [167, 841]], hunter: [125, 343] },
-    ];
-
-    const widthM = 184.4;
-    const law_urls = ['https://www.bilibili.com/video/BV1gN8t6BEJp', 'https://v.douyin.com/W5bCLGlPRYg'];
-    const fixedHint = translate("maps.moonlitRiverPark.fixedHint");
-    const hints = [
-      '',
-      '',
-      '',
-      '',
-      ''
     ];
 
     const fixedSpawns = {
@@ -1104,12 +1092,10 @@ export const MAPS_DATA = [
 
     return {
       mapId, mapName, mapNameEn,
-      mapImage, mapSize,
-      zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
-      fixedSpawns,
-      spawnPoints,
-      law_urls, fixedHint, hints,
+      mapImage, mapSize, widthM, zonesInfo, zoneNames,
+      law_urls, ciphers, cipherCombinations, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, lockers, chests, phoneBooths,
+      basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { fixed, region, exactly, either, chain } = dedHelpers(ciphers);
         const CIPHERS_EAST = [translate("maps.moonlitRiverPark.cipher.e2.name"), translate("maps.moonlitRiverPark.cipher.e3.name"), translate("maps.moonlitRiverPark.cipher.e4.name"), translate("maps.moonlitRiverPark.cipher.e1.name"), translate("maps.moonlitRiverPark.cipher.e5.name")];
@@ -1140,12 +1126,15 @@ export const MAPS_DATA = [
     const mapNameEn = translateEn("maps.leosMemory.mapName");
     const mapImage = 'https://patchwiki.biligame.com/images/dwrg/thumb/5/53/t9v9ezb7qvnlatez60eex59ab1f7w8p.png/750px-%E9%87%8C%E5%A5%A5%E7%9A%84%E5%9B%9E%E5%BF%86_%E4%BF%AF%E8%A7%86%E5%9B%BE_%E5%85%A8.png';
     const mapSize = [750, 635];
+
+    const widthM = 168.6;
     const zonesInfo = [38.5, 28.5, 222.3, 194.7, 3, 3];
     const zoneNames = [
       translate("maps.leosMemory.zoneNames.zoneNames0"), translate("maps.leosMemory.zoneNames.zoneNames1"), translate("maps.leosMemory.zoneNames.zoneNames2"),
       translate("maps.leosMemory.zoneNames.zoneNames3"), translate("maps.leosMemory.zoneNames.zoneNames4"), translate("maps.leosMemory.zoneNames.zoneNames5"),
       translate("maps.leosMemory.zoneNames.zoneNames6"), translate("maps.leosMemory.zoneNames.zoneNames7"), translate("maps.leosMemory.zoneNames.zoneNames8")
     ];
+    const law_urls = ['https://www.bilibili.com/video/BV1zFgW6oEfS', 'https://v.douyin.com/FxKkE1nBno4'];
     const ciphers = [
       { id: 'E_1', name: translate("maps.leosMemory.cipher.e1.name"), location: [508, 113], feature: translate("maps.leosMemory.cipher.e1.feature") },
       { id: 'E_2', name: translate("maps.leosMemory.cipher.e2.name"), location: [647, 198], feature: translate("maps.leosMemory.cipher.e2.feature") },
@@ -1168,6 +1157,16 @@ export const MAPS_DATA = [
       ['E_2', 'E_4', 'M_1', 'M_2', 'M_4', 'W_2', 'W_4'],
       ['E_2', 'E_3', 'M_1', 'M_3', 'W_1', 'W_3', 'W_4']
     ];
+    const fixedHint = translate("maps.leosMemory.fixedHint");
+    const hints = [
+      '',
+      '',
+      '',
+      '',
+      ''
+    ];
+
+    const escapeDoors = [[64, 230], [612, 58], [64, 211], [630, 58]];
 
     const dungeons = [[533, 208], [645, 505], [346, 93], [103, 90], [188, 535]];
 
@@ -1182,11 +1181,11 @@ export const MAPS_DATA = [
       ],
     };
 
+    const lockers = [[248, 59], [89, 114], [388, 127], [635, 166], [112, 325], [652, 475], [126, 576], [75, 577]];
+
     const chests = {
       fixed: [[274, 115], [538, 166], [622, 234], [175, 337], [381, 402], [592, 423], [183, 556]],
     };
-
-    const lockers = [[248, 59], [89, 114], [388, 127], [635, 166], [112, 325], [652, 475], [126, 576], [75, 577]];
 
     const phoneBooths = [[178, 163], [146, 602], [356, 329], [528, 164], [606, 443]];
 
@@ -1201,8 +1200,6 @@ export const MAPS_DATA = [
       },
     };
 
-    const escapeDoors = [[64, 230], [612, 58], [64, 211], [630, 58]];
-
     const spawnPoints = [
       { survivor: [[131, 233], [345, 308], [178, 334], [423, 596]], hunter: [175, 578] },
       { survivor: [[131, 233], [267, 254], [491, 367], [521, 483]], hunter: [265, 514] },
@@ -1213,17 +1210,6 @@ export const MAPS_DATA = [
       { survivor: [[478, 143], [483, 280], [371, 471], [230, 540]], hunter: [200, 253] },
       { survivor: [[267, 254], [577, 403], [86, 446], [574, 539]], hunter: [328, 530] },
       { survivor: [[478, 143], [360, 150], [318, 455], [423, 596]], hunter: [574, 367] },
-    ];
-
-    const widthM = 168.6;
-    const law_urls = ['https://www.bilibili.com/video/BV1zFgW6oEfS', 'https://v.douyin.com/FxKkE1nBno4'];
-    const fixedHint = translate("maps.leosMemory.fixedHint");
-    const hints = [
-      '',
-      '',
-      '',
-      '',
-      ''
     ];
 
     const fixedSpawns = {
@@ -1329,12 +1315,10 @@ export const MAPS_DATA = [
 
     return {
       mapId, mapName, mapNameEn,
-      mapImage, mapSize,
-      zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
-      fixedSpawns,
-      spawnPoints,
-      law_urls, fixedHint, hints,
+      mapImage, mapSize, widthM, zonesInfo, zoneNames,
+      law_urls, ciphers, cipherCombinations, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, lockers, chests, phoneBooths,
+      basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { region, exactly, chain, implies, link } = dedHelpers(ciphers);
         const CIPHERS_EAST = [translate("maps.leosMemory.cipher.e1.name"), translate("maps.leosMemory.cipher.e2.name"), translate("maps.leosMemory.cipher.e3.name"), translate("maps.leosMemory.cipher.e4.name")];
@@ -1381,6 +1365,8 @@ export const MAPS_DATA = [
     const mapImage = 'https://patchwiki.biligame.com/images/dwrg/thumb/2/2f/cdwrcy0q4j8t8wqmo6gv50xbe0mptak.png/750px-%E6%B0%B8%E7%9C%A0%E9%95%87_%E4%BF%AF%E8%A7%86%E5%9B%BE_%E5%85%A8.png';
 
     const mapSize = [750, 874];
+
+    const widthM = 137;
     const zonesInfo = [89.4, 30.2, 206.1, 196.3, 3, 3];
     const zoneNames = [
       translate("maps.eversleepingTown.zoneNames.zoneNames0"), translate("maps.eversleepingTown.zoneNames.zoneNames1"), translate("maps.eversleepingTown.zoneNames.zoneNames2"),
@@ -1388,6 +1374,7 @@ export const MAPS_DATA = [
       translate("maps.eversleepingTown.zoneNames.zoneNames6"), translate("maps.eversleepingTown.zoneNames.zoneNames7"), translate("maps.eversleepingTown.zoneNames.zoneNames8"),
       translate("maps.eversleepingTown.zoneNames.zoneNames9")
     ];
+    const law_urls = [];
     const ciphers = [
       { id: 'W_1', name: translate("maps.eversleepingTown.cipher.w1.name"), location: [101, 462], feature: translate("maps.eversleepingTown.cipher.w1.feature"), locked: true },
       { id: 'W_2', name: translate("maps.eversleepingTown.cipher.w2.name"), location: [161, 234], feature: translate("maps.eversleepingTown.cipher.w2.feature") },
@@ -1411,6 +1398,16 @@ export const MAPS_DATA = [
       ['W_1', 'W_3', 'E_1', 'E_3', 'E_5', 'M_2', 'M_4'],
       ['W_1', 'W_2', 'E_1', 'E_3', 'E_6', 'M_2', 'M_3']
     ];
+    const fixedHint = translate("maps.eversleepingTown.fixedHint");
+    const hints = [
+      '',
+      '',
+      '',
+      '',
+      ''
+    ];
+
+    const escapeDoors = [[387, 20], [225, 616], [404, 20], [209, 616]];
 
     const dungeons = [[173, 304], [627, 526], [410, 340]];
 
@@ -1422,11 +1419,13 @@ export const MAPS_DATA = [
       ],
     };
 
+    const lockers = [[564, 210], [229, 328], [412, 358], [458, 548], [105, 597], [674, 743], [348, 850]];
+
     const chests = {
       fixed: [[231, 139], [576, 217], [302, 358], [180, 371], [428, 704]],
     };
 
-    const lockers = [[564, 210], [229, 328], [412, 358], [458, 548], [105, 597], [674, 743], [348, 850]];
+    const phoneBooths = [[250, 397], [264, 196], [378, 553], [563, 216], [602, 416]];
 
     const basements = {
       basement_1: {
@@ -1439,9 +1438,6 @@ export const MAPS_DATA = [
       },
     };
 
-
-    const escapeDoors = [[387, 20], [225, 616], [404, 20], [209, 616]];
-
     const spawnPoints = [
       { survivor: [[394, 320], [611, 325], [618, 511], [366, 667]], hunter: [109, 417] },
       { survivor: [[638, 180], [394, 320], [331, 493], [496, 701]], hunter: [100, 213] },
@@ -1450,18 +1446,6 @@ export const MAPS_DATA = [
       { survivor: [[291, 230], [443, 248], [250, 342], [367, 521]], hunter: [720, 363] },
       { survivor: [[271, 181], [601, 315], [394, 320], [331, 493]], hunter: [614, 628] },
       { survivor: [[248, 243], [394, 320], [730, 355], [662, 483]], hunter: [242, 596] },
-    ];
-
-
-    const widthM = 137;
-    const law_urls = [];
-    const fixedHint = translate("maps.eversleepingTown.fixedHint");
-    const hints = [
-      '',
-      '',
-      '',
-      '',
-      ''
     ];
 
     const fixedSpawns = {
@@ -1565,12 +1549,10 @@ export const MAPS_DATA = [
 
     return {
       mapId, mapName, mapNameEn,
-      mapImage, mapSize,
-      zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
-      fixedSpawns,
-      spawnPoints,
-      law_urls, fixedHint, hints,
+      mapImage, mapSize, widthM, zonesInfo, zoneNames,
+      law_urls, ciphers, cipherCombinations, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, lockers, chests, phoneBooths,
+      basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { fixed, region, either, atMost1 } = dedHelpers(ciphers);
         const CIPHERS_EAST = [translate("maps.eversleepingTown.cipher.e1.name"), translate("maps.eversleepingTown.cipher.e2.name"), translate("maps.eversleepingTown.cipher.e3.name"), translate("maps.eversleepingTown.cipher.e4.name"), translate("maps.eversleepingTown.cipher.e5.name"), translate("maps.eversleepingTown.cipher.e6.name")];
@@ -1600,12 +1582,15 @@ export const MAPS_DATA = [
     const mapNameEn = translateEn("maps.chinaTown.mapName");
     const mapImage = 'https://patchwiki.biligame.com/images/dwrg/c/cb/4g9knengpuuk8uyssm4zvpf1evw3d80.png';
     const mapSize = [1345, 1152];
+
+    const widthM = 144.1;
     const zonesInfo = [83, 39, 406.5, 355.1, 3, 3];
     const zoneNames = [
       translate("maps.chinaTown.zoneNames.zoneNames0"), translate("maps.chinaTown.zoneNames.zoneNames1"), translate("maps.chinaTown.zoneNames.zoneNames2"),
       translate("maps.chinaTown.zoneNames.zoneNames3"), translate("maps.chinaTown.zoneNames.zoneNames4"), translate("maps.chinaTown.zoneNames.zoneNames5"),
       translate("maps.chinaTown.zoneNames.zoneNames6"), translate("maps.chinaTown.zoneNames.zoneNames7"), translate("maps.chinaTown.zoneNames.zoneNames8")
     ];
+    const law_urls = ['https://www.bilibili.com/video/BV1QGpF6CEos', ''];
     const ciphers = [
       { id: 'E_2', name: translate("maps.chinaTown.cipher.e2.name"), location: [1094, 563], feature: translate("maps.chinaTown.cipher.e2.feature"), locked: true },
       { id: 'E_1', name: translate("maps.chinaTown.cipher.e1.name"), location: [1042, 249], feature: translate("maps.chinaTown.cipher.e1.feature") },
@@ -1629,6 +1614,17 @@ export const MAPS_DATA = [
       ['E_2', 'E_3', 'M_1', 'M_3', 'W_1', 'W_3', 'W_4'],
       ['E_2', 'E_1', 'M_2', 'M_4', 'M_5', 'W_1', 'W_3']
     ];
+    const fixedHint = translate("maps.chinaTown.fixedHint");
+    const hints = [
+      translate("maps.chinaTown.hint.hint0"),
+      translate("maps.chinaTown.hint.hint1"),
+      '',
+      translate("maps.chinaTown.hint.hint3"),
+      translate("maps.chinaTown.hint.hint4"),
+      ''
+    ];
+
+    const escapeDoors = [[705, 1134], [780, 18], [667, 1134], [818, 18]];
 
     const dungeons = [[157, 994], [351, 456], [1209, 404]];
 
@@ -1641,11 +1637,11 @@ export const MAPS_DATA = [
       ],
     };
 
+    const lockers = [[259, 148], [824, 184], [942, 382], [1259, 539], [229, 904], [936, 1114]];
+
     const chests = {
       fixed: [[959, 1, 324], [225, 1, 527], [505, 1, 918], [950, 1, 1038]],
     };
-
-    const lockers = [[259, 148], [824, 184], [942, 382], [1259, 539], [229, 904], [936, 1114]];
 
     const basements = {
       basement_1: {
@@ -1658,9 +1654,6 @@ export const MAPS_DATA = [
       },
     };
 
-
-    const escapeDoors = [[705, 1134], [780, 18], [667, 1134], [818, 18]];
-
     const spawnPoints = [
       { survivor: [[924, 123], [1003, 582], [416, 771], [739, 994]], hunter: [170, 177] },
       { survivor: [[570, 218], [836, 396], [288, 449], [916, 856]], hunter: [437, 951] },
@@ -1668,18 +1661,6 @@ export const MAPS_DATA = [
       { survivor: [[639, 207], [1129, 388], [505, 603], [191, 908]], hunter: [1110, 947] },
       { survivor: [[190, 398], [332, 653], [700, 703], [1028, 994]], hunter: [1013, 102] },
       { survivor: [[356, 169], [774, 235], [1259, 473], [1087, 871]], hunter: [399, 665] },
-    ];
-
-    const widthM = 144.1;
-    const law_urls = ['https://www.bilibili.com/video/BV1QGpF6CEos', ''];
-    const fixedHint = translate("maps.chinaTown.fixedHint");
-    const hints = [
-      translate("maps.chinaTown.hint.hint0"),
-      translate("maps.chinaTown.hint.hint1"),
-      '',
-      translate("maps.chinaTown.hint.hint3"),
-      translate("maps.chinaTown.hint.hint4"),
-      ''
     ];
 
     const fixedSpawns = {
@@ -1785,12 +1766,10 @@ export const MAPS_DATA = [
 
     return {
       mapId, mapName, mapNameEn,
-      mapImage, mapSize,
-      zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
-      fixedSpawns,
-      spawnPoints,
-      law_urls, fixedHint, hints,
+      mapImage, mapSize, widthM, zonesInfo, zoneNames,
+      law_urls, ciphers, cipherCombinations, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, lockers, chests,
+      basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { fixed, region, either, same, atLeast1, atMost1, chainThree, allAbsent } = dedHelpers(ciphers);
         const CIPHERS_EAST = [translate("maps.chinaTown.cipher.e1.name"), translate("maps.chinaTown.cipher.e2.name"), translate("maps.chinaTown.cipher.e3.name")];
@@ -1836,12 +1815,15 @@ export const MAPS_DATA = [
     const mapNameEn = translateEn("maps.darkwoods.mapName");
     const mapImage = 'https://patchwiki.biligame.com/images/dwrg/f/f7/40wez8dwwtlpyuljfmydkle6lpp0gdv.png';
     const mapSize = [1247, 1265];
+
+    const widthM = 133.8;
     const zonesInfo = [41.5, 40.5, 393.2, 381.5, 3, 3];
     const zoneNames = [
       translate("maps.darkwoods.zoneNames.zoneNames0"), translate("maps.darkwoods.zoneNames.zoneNames1"), translate("maps.darkwoods.zoneNames.zoneNames2"),
       translate("maps.darkwoods.zoneNames.zoneNames3"), translate("maps.darkwoods.zoneNames.zoneNames4"), translate("maps.darkwoods.zoneNames.zoneNames5"),
       translate("maps.darkwoods.zoneNames.zoneNames6"), translate("maps.darkwoods.zoneNames.zoneNames7"), translate("maps.darkwoods.zoneNames.zoneNames8")
     ];
+    const law_urls = [];
     const ciphers = [
       { id: 'W_1', name: translate("maps.darkwoods.cipher.w1.name"), location: [379, 265], feature: translate("maps.darkwoods.cipher.w1.feature") },
       { id: 'W_2', name: translate("maps.darkwoods.cipher.w2.name"), location: [261, 442], feature: translate("maps.darkwoods.cipher.w2.feature") },
@@ -1867,6 +1849,16 @@ export const MAPS_DATA = [
       ['W_2', 'W_4', 'E_2', 'E_5', 'M_1', 'M_3', 'M_5'],
       ['W_2', 'W_4', 'E_1', 'E_5', 'M_1', 'M_3', 'M_5']
     ];
+    const fixedHint = translate("maps.darkwoods.fixedHint");
+    const hints = [
+      '',
+      '',
+      '',
+      '',
+      ''
+    ];
+
+    const escapeDoors = [[1214, 772], [50, 224], [1214, 816], [50, 180]];
 
     const dungeons = [[661, 134], [164, 943], [737, 957], [978, 351]];
 
@@ -1876,11 +1868,11 @@ export const MAPS_DATA = [
       ],
     };
 
+    const lockers = [[307, 71], [1013, 206], [672, 261], [512, 436], [959, 549], [128, 656], [1029, 893], [128, 982], [686, 1043]];
+
     const chests = {
       fixed: [[305, 125], [1023, 223], [503, 574], [966, 882], [418, 57, 983]],
     };
-
-    const lockers = [[307, 71], [1013, 206], [672, 261], [512, 436], [959, 549], [128, 656], [1029, 893], [128, 982], [686, 1043]];
 
     const basements = {
       basement_1: {
@@ -1893,26 +1885,12 @@ export const MAPS_DATA = [
       },
     };
 
-
-    const escapeDoors = [[1214, 772], [50, 224], [1214, 816], [50, 180]];
-
     const spawnPoints = [
       { survivor: [[602, 266], [237, 401], [1018, 463], [352, 805]], hunter: [894, 974] },
       { survivor: [[1011, 241], [863, 472], [641, 626], [472, 1075]], hunter: [306, 211] },
       { survivor: [[473, 183], [457, 620], [793, 823], [1090, 883]], hunter: [1030, 196] },
       { survivor: [[696, 272], [257, 355], [756, 580], [967, 913]], hunter: [295, 928] },
       { survivor: [[458, 419], [312, 667], [765, 1015], [548, 1004]], hunter: [997, 545] },
-    ];
-
-    const widthM = 133.8;
-    const law_urls = [];
-    const fixedHint = translate("maps.darkwoods.fixedHint");
-    const hints = [
-      '',
-      '',
-      '',
-      '',
-      ''
     ];
 
     const fixedSpawns = {
@@ -2020,12 +1998,10 @@ export const MAPS_DATA = [
 
     return {
       mapId, mapName, mapNameEn,
-      mapImage, mapSize,
-      zonesInfo, zoneNames, ciphers,
-      cipherCombinations, dungeons, escapeDoors, rocketChairs, chests, lockers, basements, widthM,
-      fixedSpawns,
-      spawnPoints,
-      law_urls, fixedHint, hints,
+      mapImage, mapSize, widthM, zonesInfo, zoneNames,
+      law_urls, ciphers, cipherCombinations, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, lockers, chests,
+      basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { region, exactly, either, atMost1, same, chain } = dedHelpers(ciphers);
         const CIPHERS_EAST = [translate("maps.darkwoods.cipher.e1.name"), translate("maps.darkwoods.cipher.e2.name"), translate("maps.darkwoods.cipher.e3.name"), translate("maps.darkwoods.cipher.e4.name"), translate("maps.darkwoods.cipher.e5.name")];

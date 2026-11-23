@@ -3491,6 +3491,7 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 .tac-chair,
 .tac-locker,
 .tac-box,
+.tac-phone-booth,
 .tac-spawn {
   position: absolute;
   z-index: 2;

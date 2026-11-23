@@ -526,4 +526,10 @@ export const tacBoxSizeEl = $('tacBoxSize');
 
 export const tacBoxSizeDefEl = $('tacBoxSizeDef');
 
+export const tacShowPhoneBoothsEl = $('tacShowPhoneBooths');
+
+export const tacPhoneBoothSizeEl = $('tacPhoneBoothSize');
+
+export const tacPhoneBoothSizeDefEl = $('tacPhoneBoothSizeDef');
+
 export const tacShowBoxBasementEl = $('tacShowBoxBasement');

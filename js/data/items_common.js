@@ -1,7 +1,7 @@
 import { translate } from '../core/i18n.js';
 
 
-// 通用地图图标 URL：出生点、逃生门、地窖、狂欢之椅、柜子、箱子与固定点位（摄像机、控制台）共用
+// 通用地图图标 URL：出生点、逃生门、地窖、狂欢之椅、柜子、箱子、电话亭共用
 export const COMMON_ICON_URL = {
   survivor: 'https://patchwiki.biligame.com/images/dwrg/4/45/omv2vmop0j63s9aprhjjkt4psykuy5p.png',
   hunter: 'https://patchwiki.biligame.com/images/dwrg/7/7a/f3sec5gnnhzh1xprcbxeaxa1uuzhkmo.png',
@@ -11,8 +11,6 @@ export const COMMON_ICON_URL = {
   locker: 'https://website.homeworkkun.top/WIKI/%E5%9C%B0%E5%9B%BE/guizi.png',
   box: 'https://patchwiki.biligame.com/images/dwrg/3/31/hs9ynk4iy1nqn0jhybqux5e60yuoxbb.png',
   phoneBooth: 'https://patchwiki.biligame.com/images/dwrg/5/52/cunw06ks9ek7s8njb400kyvhev8n1ms.png',
-  camera: 'https://patchwiki.biligame.com/images/dwrg/6/64/mx0ydtuij8mg5bp32tuu9e1lq8usba6.png',
-  console: 'https://patchwiki.biligame.com/images/dwrg/f/f7/jbqdvznjphrq602qh303r24qdn3ti4b.png',
 };
 
 

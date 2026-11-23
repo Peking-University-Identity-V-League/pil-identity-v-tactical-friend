@@ -137,11 +137,10 @@ export const TAC_MEASURE_DEFAULT = {
 };
 
 
-export const TAC_DISPLAY_DEFAULT = { cipherSize: 6, dungeonSize: 6, doorSize: 6, chairSize: 6, lockerSize: 6, boxSize: 6, spawnSize: 6 };
+export const TAC_DISPLAY_DEFAULT = { spawnSize: 6, escapeDoorSize: 6, cipherSize: 6, dungeonSize: 6, rocketChairSize: 6, lockerSize: 6, boxSize: 6, phoneBoothSize: 6 };
+
 
 export const TAC_ZOOM_MIN = 1, TAC_ZOOM_MAX = 5;
-
-
 
 
 export const TAC_ZOOM_LOCK_ICONS = {
@@ -153,9 +152,7 @@ export const TAC_ZOOM_LOCK_ICONS = {
 export const TAC_ABYSS_MAX_M = 57.5;
 
 
-
 export const TAC_TREASURE_RULE = { rangeM: 70, ringM: [5.5, 7.3] };
-
 
 
 export const TAC_MANAGE_DEFAULT = { roleSize: 6, iconSize: 3.4 };
