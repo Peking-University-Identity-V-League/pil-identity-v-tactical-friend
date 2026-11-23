@@ -40,6 +40,10 @@ export const TAC_ITEM_TYPES = {
     name: translate("items.explorer.gulliversTravels.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/1/16/efejhb0yhmpztz2a919brwu81lfcn7s.png/120px-%E6%A0%BC%E5%88%97%E4%BD%9B%E6%B8%B8%E8%AE%B0.png',
   },
+  passwordPage: {
+    name: translate("items.explorer.passwordPage.name"),
+    icon: 'https://patchwiki.biligame.com/images/dwrg/9/99/9yoyc7osuiuwlc0no1a3mipp43vt6ad.png',
+  },
   elbowPads: {
     name: translate("items.mercenary.elbowPads.name"),
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/2/23/tgvqrsppifmb5k5q07vyqiavzp9okqb.png/120px-%E9%92%A2%E9%93%81%E6%8A%A4%E8%82%98.png',

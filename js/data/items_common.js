@@ -9,7 +9,8 @@ export const COMMON_ICON_URL = {
   dungeon: 'https://patchwiki.biligame.com/images/dwrg/2/2c/52o7vcf15w5r12t4nh6aji1uglpa036.png',
   rocketChair: 'https://i0.hdslb.com/bfs/new_dyn/f120fa1a2f8db7da9b90e20821aa86e3262863779.png@176w_192h.avif',
   locker: 'https://website.homeworkkun.top/WIKI/%E5%9C%B0%E5%9B%BE/guizi.png',
-  box: 'https://website.homeworkkun.top/WIKI/%E5%9C%B0%E5%9B%BE/xiangzi.png',
+  box: 'https://patchwiki.biligame.com/images/dwrg/3/31/hs9ynk4iy1nqn0jhybqux5e60yuoxbb.png',
+  phoneBooth: 'https://patchwiki.biligame.com/images/dwrg/5/52/cunw06ks9ek7s8njb400kyvhev8n1ms.png',
   camera: 'https://patchwiki.biligame.com/images/dwrg/6/64/mx0ydtuij8mg5bp32tuu9e1lq8usba6.png',
   console: 'https://patchwiki.biligame.com/images/dwrg/f/f7/jbqdvznjphrq602qh303r24qdn3ti4b.png',
 };
@@ -61,6 +62,10 @@ export const TAC_COMMON_ITEM_TYPES = {
     name: translate("common.box"),
     icon: COMMON_ICON_URL.box,
   },
+  customPhoneBooth: {
+    name: translate("common.phoneBooth"),
+    icon: COMMON_ICON_URL.phoneBooth,
+  },
 };
 
 export const TAC_CUSTOM_KEYS = [
@@ -71,5 +76,6 @@ export const TAC_CUSTOM_KEYS = [
   'customDungeon',
   'customRocketChair',
   'customLocker',
-  'customBox'
+  'customBox',
+  'customPhoneBooth'
 ];

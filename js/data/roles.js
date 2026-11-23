@@ -70,7 +70,7 @@ export const TAC_ROLES = {
         { size_m: 70, label: translate("characters.explorer.range.passwordPage") },
       ],
     },
-    items: ['gulliversTravels'],
+    items: ['gulliversTravels' ,'passwordPage'],
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/8/8d/4bayjt56xydhpwb91pcie4hpbnm6gp7.png/90px-%E5%86%92%E9%99%A9%E5%AE%B6%E5%A4%B4%E5%83%8F.png',
   },
   mercenary: {
