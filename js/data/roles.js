@@ -1,5 +1,6 @@
 import { translate } from '../core/i18n.js';
 import { TAC_TALENT_KEYS } from './talents.js';
+import { TAC_CUSTOM_KEYS } from './items_common.js';
 import { TAC_TIER_KEYS } from './items_tier.js';
 import { TAC_MATCH_KEYS } from './items_match.js';
 
@@ -978,7 +979,7 @@ export const TAC_ROLES = {
       ],
     },
     color: '#fbbf24',
-    items: ['customSurvivor', 'customHunter', 'customEscapeDoor', 'customCipherMachine', 'customDungeon', 'customRocketChair', 'customLocker', 'customBox'],
+    items: TAC_CUSTOM_KEYS,
     icon: 'https://patchwiki.biligame.com/images/dwrg/1/12/p5icajuxyhyj8wd46bmz212bzb0z3yz.png',
   },
   skill: {

@@ -11,7 +11,8 @@ import { S } from './core/state.js';
 import { $, loadImageWithStatus, mountImageOverlays } from './core/utils.js';
 import { cipherOf, mapsZonesRelative } from './data/geo.js';
 import { MAPS_DATA, getImageUrl } from './data/maps.js';
-import { BOX_ICON_URL, CHAIR_ICON_URL, DUNGEON_ICON_URL, ESCAPE_DOOR_ICON_URL, LOCKER_ICON_URL, SPAWN_HUNTER_ICON_URL, SPAWN_SURVIVOR_ICON_URL, TAC_ABYSS_MAX_M, TAC_DISPLAY_DEFAULT, TAC_FIXED_SPAWN_ICONS, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_MOVEMENT_SURVIVOR, TAC_MOVEMENT_BUFFS, TAC_SVG_NS, TAC_TREASURE_RULE, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
+import { COMMON_ICON_URL } from './data/items_common.js';
+import { TAC_ABYSS_MAX_M, TAC_DISPLAY_DEFAULT, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_MOVEMENT_SURVIVOR, TAC_MOVEMENT_BUFFS, TAC_SVG_NS, TAC_TREASURE_RULE, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
 import { TAC_ITEM_TYPES } from './data/items.js';
 import { TAC_ROLES } from './data/roles.js';
 import { CIPHER_ICON_URL, cipherIcon } from './region.js';
@@ -764,8 +765,8 @@ export function renderTacSpawns() {
     el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
     tacLayer().appendChild(el);
   };
-  group.survivor.forEach((pt) => place(pt, SPAWN_SURVIVOR_ICON_URL, translate("common.spawnPoint")));
-  place(group.hunter, SPAWN_HUNTER_ICON_URL, translate("common.spawnPoint"));
+  group.survivor.forEach((pt) => place(pt, COMMON_ICON_URL.survivor, translate("common.spawnPoint")));
+  place(group.hunter, COMMON_ICON_URL.hunter, translate("common.spawnPoint"));
 }
 
 export function syncTacSpawnText() {
@@ -792,7 +793,7 @@ export function renderTacLandmarks() {
     const pt = map.dungeons[S.tacDungeonIndex % map.dungeons.length];
     const el = document.createElement('img');
     el.className = 'tac-dungeon';
-    el.src = DUNGEON_ICON_URL;
+    el.src = COMMON_ICON_URL.dungeon;
     el.alt = translate("common.dungeon");
     el.draggable = false;
     el.style.left = `${(pt[0] / imgW) * 100}%`;
@@ -805,7 +806,7 @@ export function renderTacLandmarks() {
     tacDoorPoints(map).forEach((pt, i) => {
       const el = document.createElement('img');
       el.className = 'tac-door';
-      el.src = ESCAPE_DOOR_ICON_URL;
+      el.src = COMMON_ICON_URL.escapeDoor;
       el.alt = translate("common.escapeDoor.alt", { value: i + 1 });
       el.draggable = false;
       el.style.left = `${(pt[0] / imgW) * 100}%`;
@@ -857,7 +858,7 @@ export function renderTacFixedSpawns() {
         const p = Array.isArray(pt) ? pt : pt.p;
         let el;
         if (item.flag_orientation) {
-          const iconUrl = TAC_FIXED_SPAWN_ICONS[item.icon] || item.icon;
+          const iconUrl = COMMON_ICON_URL[item.icon] || item.icon;
           el = document.createElement('div');
           const dirSvg = token.showSpawnDir
             ? (() => {
@@ -962,7 +963,7 @@ export function renderTacChairs() {
         el.classList.add('tac-carry-selected');
       }
     }
-    el.src = CHAIR_ICON_URL;
+    el.src = COMMON_ICON_URL.rocketChair;
     el.alt = translate("common.rocketChair");
     el.draggable = false;
     el.style.left = `${(px / imgW) * 100}%`;
@@ -1070,7 +1071,7 @@ export function renderTacLockers() {
   map.lockers.forEach(([px, pz]) => {
     const el = document.createElement('img');
     el.className = 'tac-locker';
-    el.src = LOCKER_ICON_URL;
+    el.src = COMMON_ICON_URL.locker;
     el.alt = translate("common.locker");
     el.draggable = false;
     el.style.left = `${(px / imgW) * 100}%`;
@@ -1094,7 +1095,7 @@ export function renderTacBoxes() {
     const [px, pz] = xz(pt);
     const el = document.createElement('img');
     el.className = 'tac-box';
-    el.src = BOX_ICON_URL;
+    el.src = COMMON_ICON_URL.box;
     el.alt = translate("common.box");
     el.draggable = false;
     el.style.left = `${(px / imgW) * 100}%`;
@@ -6181,9 +6182,9 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
       `<label class="tac-manage-slider">${translate("application.common.icon.size")}`
       + `<input type="range" min="3" max="12" step="0.5" value="${token.size}"></label>`
       + `<label class="tac-manage-hide"><input type="checkbox"`
-      + `${token.hideIcon ? ' checked' : ''}>${translate("ui.tac.manangeBox.icon.hide")}</label>`
+      + `${token.hideIcon ? ' checked' : ''}>${translate("application.common.icon.hide")}</label>`
       + `<label class="tac-manage-glow"><input type="checkbox"`
-      + `${token.glow ? ' checked' : ''}>${translate("ui.tac.manangeBox.highlight")}</label>`
+      + `${token.glow ? ' checked' : ''}>${translate("application.common.highlight")}</label>`
       + `<label class="tac-manage-def"><input type="checkbox"`
       + `${isRoleDefault() ? ' checked' : ''}>${translate("common.default")}</label>`
       + `<button type="button" class="tac-manage-del">${translate("common.delete")}</button>`;
@@ -6307,9 +6308,9 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     `<label class="tac-manage-slider">${translate("application.common.icon.size")}`
     + `<input type="range" min="1.5" max="10" step="0.2" value="${curIcon}"></label>`
     + `<label class="tac-manage-hide"><input type="checkbox"`
-    + `${it.hideIcon ? ' checked' : ''}>${translate("ui.tac.manangeBox.icon.hide")}</label>`
+    + `${it.hideIcon ? ' checked' : ''}>${translate("application.common.icon.hide")}</label>`
     + `<label class="tac-manage-glow"><input type="checkbox"`
-    + `${it.glow ? ' checked' : ''}>${translate("ui.tac.manangeBox.highlight")}</label>`
+    + `${it.glow ? ' checked' : ''}>${translate("application.common.highlight")}</label>`
     + `<label class="tac-manage-def"><input type="checkbox"`
     + `${isDefault ? ' checked' : ''}>${translate("common.default")}</label>`
     + `<button type="button" class="tac-manage-del">${translate("common.delete")}</button>`;
@@ -8241,10 +8242,10 @@ export async function tacExportImage() {
   ctx.restore();
 
   const [ciphIcon, dungeonIcon, doorIcon, chairIcon, lockerIcon, boxIcon, spawnSurvIcon, spawnHuntIcon] = await Promise.all([
-    tacLoadImg(CIPHER_ICON_URL), tacLoadImg(DUNGEON_ICON_URL),
-    tacLoadImg(ESCAPE_DOOR_ICON_URL), tacLoadImg(CHAIR_ICON_URL),
-    tacLoadImg(LOCKER_ICON_URL), tacLoadImg(BOX_ICON_URL),
-    tacLoadImg(SPAWN_SURVIVOR_ICON_URL), tacLoadImg(SPAWN_HUNTER_ICON_URL)]);
+    tacLoadImg(CIPHER_ICON_URL), tacLoadImg(COMMON_ICON_URL.dungeon),
+    tacLoadImg(COMMON_ICON_URL.escapeDoor), tacLoadImg(COMMON_ICON_URL.rocketChair),
+    tacLoadImg(COMMON_ICON_URL.locker), tacLoadImg(COMMON_ICON_URL.box),
+    tacLoadImg(COMMON_ICON_URL.survivor), tacLoadImg(COMMON_ICON_URL.hunter)]);
 
   
   // 正立叠加层：地标/造物/角色图标与图文文字。
@@ -8356,7 +8357,7 @@ export async function tacExportImage() {
           const p = Array.isArray(pt) ? pt : pt.p;
           const [x, y] = PXY(p[0] / W0, p[1] / H0);
           if (item.flag_orientation) {
-            const fsIcon = TAC_FIXED_SPAWN_ICONS[item.icon] || item.icon;
+            const fsIcon = COMMON_ICON_URL[item.icon] || item.icon;
             if (fsIcon) {
               const isz = 0.03 * W * K;
               const camImg = await tacLoadImg(fsIcon);

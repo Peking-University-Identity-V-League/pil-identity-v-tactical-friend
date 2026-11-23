@@ -5,7 +5,7 @@ import { S } from './core/state.js';
 import { $, loadImageWithStatus, mountImageOverlays } from './core/utils.js';
 import { calculateLockCipher, calculateZoneCenters, cipherOf, ciphersCoordsRelative, mapsZonesRelative } from './data/geo.js';
 import { MAPS_DATA, getImageUrl } from './data/maps.js';
-import { ESCAPE_DOOR_ICON_URL } from './data/tactic-data.js';
+import { COMMON_ICON_URL } from './data/items_common.js';
 import { updateLawBtn } from './deduce.js';
 import { dedDataOf, showView, updateTabUi } from './shell.js';
 import { enterTactic, renderTacCiphers, tacResetTransient } from './core/tactic-loader.js';
@@ -662,7 +662,7 @@ export const doorIcon = { img: null, loaded: false };
     doorIcon.loaded = true;
     drawCanvas();
   };
-  img.src = ESCAPE_DOOR_ICON_URL;
+  img.src = COMMON_ICON_URL.escapeDoor;
 })();
 
 export function bindSelDisplay() {

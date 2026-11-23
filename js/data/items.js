@@ -1,4 +1,5 @@
 import { translate } from '../core/i18n.js';
+import { TAC_COMMON_ITEM_TYPES } from './items_common.js';
 import { TAC_TALENT_TYPES } from './talents.js';
 import { TAC_TIER_TYPES } from './items_tier.js';
 import { TAC_MATCH_TYPES } from './items_match.js';
@@ -1455,50 +1456,7 @@ export const TAC_ITEM_TYPES = {
     icon: 'https://patchwiki.biligame.com/images/dwrg/thumb/9/91/hu0fnv6ev967sdypg7bgso8f6ch8jzr.png/90px-%E2%80%9C%E5%BF%83%E5%85%BD%E2%80%9D1%E9%98%B6%E6%8A%80%E8%83%BD.png',
   },
 
-  customSurvivor: {
-    name: translate("common.survivor"),
-    ranges: {
-      key: 'showItem',
-      options: [
-        { size_m: { min: 0, max: null }, label: translate("common.survivor") },
-      ],
-    },
-    icon: 'https://patchwiki.biligame.com/images/dwrg/4/45/omv2vmop0j63s9aprhjjkt4psykuy5p.png',
-  },
-  customHunter: {
-    name: translate("common.hunter"),
-    ranges: {
-      key: 'showItem',
-      options: [
-        { size_m: { min: 0, max: null }, label: translate("common.hunter") },
-      ],
-    },
-    icon: 'https://patchwiki.biligame.com/images/dwrg/7/7a/f3sec5gnnhzh1xprcbxeaxa1uuzhkmo.png',
-  },
-  customEscapeDoor: {
-    name: translate("common.escapeDoor"),
-    icon: 'https://patchwiki.biligame.com/images/dwrg/e/e2/0n8mxk798sa4wj1awprw72pyrthwepv.png',
-  },
-  customCipherMachine: {
-    name: translate("common.cipherMachine"),
-    icon: 'https://patchwiki.biligame.com/images/dwrg/9/93/eorb4lhtk2n7ej9iuuufhaadh3l2ec9.png',
-  },
-  customDungeon: {
-    name: translate("common.dungeon"),
-    icon: 'https://patchwiki.biligame.com/images/dwrg/2/2c/52o7vcf15w5r12t4nh6aji1uglpa036.png',
-  },
-  customRocketChair: {
-    name: translate("common.rocketChair"),
-    icon: 'https://patchwiki.biligame.com/images/dwrg/d/d2/knxq0splk1giitvevupgf0oezgyhl7e.png',
-  },
-  customLocker: {
-    name: translate("common.locker"),
-    icon: 'https://website.homeworkkun.top/WIKI/%E5%9C%B0%E5%9B%BE/guizi.png',
-  },
-  customBox: {
-    name: translate("common.box"),
-    icon: 'https://website.homeworkkun.top/WIKI/%E5%9C%B0%E5%9B%BE/xiangzi.png',
-  },
+  ...TAC_COMMON_ITEM_TYPES,
 
   listen: {
     name: translate("items.skill.listen.name"),
