@@ -1381,6 +1381,8 @@
   "ui.tac.anim.hint.none": "未设置动画",
   "ui.tac.anim.mode.speed": "移速",
   "ui.tac.anim.mode.time": "时刻",
+  "ui.tac.anim.timeline.fold": "收起轨道",
+  "ui.tac.anim.timeline.unfold": "展开轨道",
   "ui.tac.anim.play": "▶ 播放",
   "ui.tac.anim.point": "路径点 {index}",
   "ui.tac.anim.reset": "重置",
@@ -1670,7 +1672,6 @@
   "ui.tac.tool.measure": "⟷ 测算",
   "ui.tac.tool.role": "✚ 角色",
   "ui.tac.tool.setting": "⚙ 设置",
-  "ui.tac.tool.title": "🧰 工具栏",
   "ui.tac.tool.undo": "↩ 撤销",
   "ui.title": "第五人格战术演练学习工具"
 }

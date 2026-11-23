@@ -1381,6 +1381,8 @@
   "ui.tac.anim.hint.none": "No animation set",
   "ui.tac.anim.mode.speed": "Speed",
   "ui.tac.anim.mode.time": "Time",
+  "ui.tac.anim.timeline.fold": "Collapse tracks",
+  "ui.tac.anim.timeline.unfold": "Expand tracks",
   "ui.tac.anim.play": "▶ Play",
   "ui.tac.anim.point": "Point {index}",
   "ui.tac.anim.reset": "Reset",
@@ -1670,7 +1672,6 @@
   "ui.tac.tool.measure": "⟷ Measure",
   "ui.tac.tool.role": "✚ Characters",
   "ui.tac.tool.setting": "⚙ Settings",
-  "ui.tac.tool.title": "🧰 Tool",
   "ui.tac.tool.undo": "↩ Undo",
   "ui.title": "Identity V Tactical Friend"
 }

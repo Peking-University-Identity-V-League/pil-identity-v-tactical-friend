@@ -38,6 +38,26 @@
       <button class="tab-btn" data-tab="deduce" data-i18n="ui.nav.ded.label"></button>
     </div>
   </div>
+  <div class="header-right">
+  <div class="tac-top-tools" id="tacTopTools">
+      <button class="tac-tool active" data-tool="select" data-i18n="ui.tac.tool.choose"></button>
+      <button class="tac-tool" data-tool="roles" data-i18n="ui.tac.tool.role"></button>
+      <button class="tac-tool" data-tool="draw" data-i18n="ui.tac.tool.draw"></button>
+      <button class="tac-tool" data-tool="measure" data-i18n="ui.tac.tool.measure"></button>
+      <button class="tac-tool" data-tool="deduce" data-i18n="ui.tac.tool.calculation"></button>
+      <button class="tac-tool" data-tool="anim" data-i18n="ui.tac.tool.anim"></button>
+      <span class="tac-top-tools-sep"></span>
+      <button class="tac-tool" data-tool="display" data-i18n="ui.tac.tool.setting"></button>
+      <button class="tac-tool" data-tool="delete" data-i18n="ui.tac.tool.delete"></button>
+      <button class="tac-tool" id="tacUndoBtn" disabled data-i18n="ui.tac.tool.undo"></button>
+      <button class="tac-tool" id="tacExportBtn" data-i18n="ui.tac.tool.export"></button>
+  </div>
+  <div class="header-lang">
+    <button class="footer-lang-btn" id="footerLangBtn" type="button" aria-haspopup="true" aria-expanded="false"
+      title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.footer.language.message&quot;}"><span id="footerLangCurrent">简体中文</span><span class="footer-lang-arrow">▴</span></button>
+    <div class="footer-lang-menu" id="footerLangMenu" role="menu" hidden></div>
+  </div>
+  </div>
   <div class="header-title">
     <h1 id="pageTitle" data-i18n="ui.title"></h1>
     <div class="subtitle" id="pageSubtitle">Identity V Tactical Friend</div>
@@ -89,42 +109,10 @@
             <div class="tac-coords-tip" id="tacCoordsTip" aria-hidden="true"></div>
           </div>
         </div>
-        <div class="tac-timeline" id="tacTimeline" style="display:none">
-          <div class="tac-timeline-ctl">
-            <button type="button" class="tac-anim-btn tac-timeline-play" id="tacTimelinePlay">▶</button>
-            <input type="range" class="tac-timeline-scrub" id="tacTimelineScrub" min="0" max="0" step="0.1" value="0">
-            <span class="tac-timeline-time" id="tacTimelineTime">0.0s / 0.0s</span>
-          </div>
-          <div class="tac-timeline-tracks" id="tacTimelineTracks"></div>
-        </div>
       </div>
     </div>
 
     <div class="ded-panel tac-panel" id="tacPanel">
-      
-      <details class="ded-card" open>
-        <summary>
-          <span class="ded-sec-title" style="margin-bottom:0">
-            <span class="ded-sec-zh" data-i18n="ui.tac.tool.title"></span>
-            <span class="ded-sec-en" data-i18n-en="ui.tac.tool.title"></span>
-          </span>
-          <span class="arrow">▶</span>
-        </summary>
-
-        <div class="tac-tools" style="margin-top:12px">
-          <button class="tac-tool active" data-tool="select" data-i18n="ui.tac.tool.choose"></button>
-          <button class="tac-tool" data-tool="roles" data-i18n="ui.tac.tool.role"></button>
-          <button class="tac-tool" data-tool="draw" data-i18n="ui.tac.tool.draw"></button>
-          <button class="tac-tool" data-tool="measure" data-i18n="ui.tac.tool.measure"></button>
-          <button class="tac-tool" data-tool="deduce" data-i18n="ui.tac.tool.calculation"></button>
-          <button class="tac-tool" data-tool="anim" data-i18n="ui.tac.tool.anim"></button>
-          <button class="tac-tool" data-tool="display" data-i18n="ui.tac.tool.setting"></button>
-          <button class="tac-tool" data-tool="delete" data-i18n="ui.tac.tool.delete"></button>
-          <button class="tac-tool" id="tacUndoBtn" disabled data-i18n="ui.tac.tool.undo"></button>
-          <button class="tac-tool" id="tacExportBtn" data-i18n="ui.tac.tool.export"></button>
-        </div>
-      </details>
-
       
       <details class="ded-card" id="tacManageCard" open>
         <summary>
@@ -825,6 +813,16 @@
       </details>
     </div>
   </div>
+  <div class="tac-timeline" id="tacTimeline" style="display:none">
+    <div class="tac-timeline-ctl">
+      <button type="button" class="tac-anim-btn tac-timeline-play" id="tacTimelinePlay">▶</button>
+      <input type="range" class="tac-timeline-scrub" id="tacTimelineScrub" min="0" max="0" step="0.1" value="0">
+      <span class="tac-timeline-time" id="tacTimelineTime">0.0s / 0.0s</span>
+      <button type="button" class="tac-anim-btn tac-timeline-fold" id="tacTimelineFold"
+        title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.anim.timeline.fold&quot;}">▾</button>
+    </div>
+    <div class="tac-timeline-tracks" id="tacTimelineTracks"></div>
+  </div>
   </div>
 
   
@@ -1135,8 +1133,6 @@
 
 <div class="footer">
   <div class="footer-lang">
-    <button class="footer-lang-btn" id="footerLangBtn" type="button" aria-haspopup="true" aria-expanded="false"
-      title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.footer.language.message&quot;}"><span id="footerLangCurrent">简体中文</span><span class="footer-lang-arrow">▴</span></button>
     <button class="footer-lang-btn footer-updates-btn" id="footerUpdatesBtn" type="button"
       title="" aria-label="" data-i18n="ui.footer.updates.button.text" data-i18n-attributes="{&quot;title&quot;:&quot;ui.footer.updates.button.text&quot;,&quot;aria-label&quot;:&quot;ui.footer.updates.button.text&quot;}">
       <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
@@ -1145,7 +1141,6 @@
         <circle cx="8" cy="4.8" r="0.9" fill="currentColor"/>
       </svg>
     </button>
-    <div class="footer-lang-menu" id="footerLangMenu" role="menu" hidden></div>
   </div>
   <div class="footer-center">
     <p class="footer-line"><a class="footer-brand-link"
@@ -1153,17 +1148,17 @@
       rel="noopener noreferrer"
       title="" data-i18n="ui.footer.brand.text" data-i18n-attributes="{&quot;title&quot;:&quot;ui.footer.brand.message&quot;}"></a></p>
     <p class="footer-line footer-line-pil" data-i18n-en="ui.footer.brand.text"></p>
-    <p class="footer-line footer-sponsor-line"><a class="footer-sponsor" href="https://afdian.com/a/pkuidv"
+    <p class="footer-line version">2026.10</p>
+  </div>
+  <div class="footer-contact">
+    <a class="footer-sponsor" href="https://afdian.com/a/pkuidv"
       target="_blank" rel="noopener noreferrer" title="" aria-label="" data-umami-event="sponsor_afdian_open"
       data-i18n-attributes="{&quot;title&quot;:&quot;ui.footer.sponsor.message&quot;,&quot;aria-label&quot;:&quot;ui.footer.sponsor.message&quot;}">
       <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M8 13.4S2.4 10.1 2.4 6.2A2.8 2.8 0 0 1 8 5a2.8 2.8 0 0 1 5.6 1.2c0 3.9-5.6 7.2-5.6 7.2Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
       <span data-i18n="ui.footer.sponsor.text1"></span>
       <span class="footer-sponsor-platform" data-i18n="ui.footer.sponsor.text2"></span>
       <span aria-hidden="true">↗</span>
-    </a></p>
-    <p class="footer-line version">2026.10</p>
-  </div>
-  <div class="footer-contact">
+    </a>
     <span class="footer-contact-label" data-i18n="ui.footer.contactUs.text"></span>
     <a class="footer-contact-btn gold-btn" href="https://pkuidv.com"
       target="_blank" rel="noopener noreferrer" title="" aria-label="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.footer.brand.text&quot;,&quot;aria-label&quot;:&quot;ui.footer.brand.text&quot;}">

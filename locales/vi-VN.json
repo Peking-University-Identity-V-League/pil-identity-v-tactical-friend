@@ -1382,6 +1382,8 @@
   "ui.tac.anim.hint.none": "Chưa đặt hoạt ảnh",
   "ui.tac.anim.mode.speed": "Tốc độ",
   "ui.tac.anim.mode.time": "Thời điểm",
+  "ui.tac.anim.timeline.fold": "Thu gọn",
+  "ui.tac.anim.timeline.unfold": "Mở rộng",
   "ui.tac.anim.play": "▶ Phát",
   "ui.tac.anim.point": "Điểm {index}",
   "ui.tac.anim.reset": "Đặt lại",
@@ -1671,7 +1673,6 @@
   "ui.tac.tool.measure": "⟷ Đo",
   "ui.tac.tool.role": "✚ Nhân vật",
   "ui.tac.tool.setting": "⚙ Cài đặt",
-  "ui.tac.tool.title": "🧰 Thanh công cụ",
   "ui.tac.tool.undo": "↩ Hoàn tác",
   "ui.title": "Công cụ học tập diễn tập chiến thuật Identity V"
 }

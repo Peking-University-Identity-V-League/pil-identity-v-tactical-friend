@@ -207,7 +207,7 @@ export const tacDisplay = {
   phoneBooths: false, phoneBoothSize: TAC_DISPLAY_DEFAULT.phoneBoothSize,
 
   showCoords: false,
-  selGlow: false,
+  selGlow: true,
   carryHideRing: false,
   exportCrop: true, exportRot: true,
 };
