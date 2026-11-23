@@ -10,21 +10,21 @@
   --secondary: #c9a063;
   --secondary-light: #ddbe8c;
   --secondary-glow: rgba(201, 160, 99, 0.3);
-  --accent: #c9962e;
-  --accent-light: #e3b855;
+  --accent: #b07d1f;
+  --accent-light: #d0a03a;
   --accent-glow: rgba(201, 150, 46, 0.3);
   --success: #2e9e6b;
   --success-glow: rgba(46, 158, 107, 0.25);
-  --gold: #c9962e;
+  --gold: #a87b1f;
   --bg: #faf7f2;
   --bg-elevated: #ffffff;
   --bg-hover: rgba(158, 27, 50, 0.06);
   --bg-card: #ffffff;
-  --border: #d8ccba;
-  --border-hover: #c9a063;
-  --text: #3e3630;
-  --text-secondary: #7a6f61;
-  --text-muted: #a79b8c;
+  --border: #c6b394;
+  --border-hover: #a9884f;
+  --text: #2e2721;
+  --text-secondary: #5f554a;
+  --text-muted: #8d8072;
   /* 双主题语义变量：浅色值 */
   --header-bg: rgba(255, 255, 255, 0.88);
   --menu-bg: rgba(255, 255, 255, 0.96);
@@ -35,8 +35,9 @@
   --row-dim: var(--text-secondary);
   --info-blue: #2563eb;
   --title-grad: linear-gradient(135deg, #9e1b32 0%, #c0485c 55%, #c9a063 100%);
-  --sec-grad: linear-gradient(90deg, #9e1b32, #c9a063);
+  --sec-grad: linear-gradient(90deg, #9e1b32, #b07d28);
   --map-fade: rgba(255, 255, 255, 0.85);
+  --measure-num: #9e1b32;
   --icon-chip: rgba(255, 255, 255, 0.65);
   /* 浅色交互语义：红色系 */
   --hover-bg: rgba(158, 27, 50, 0.08);
@@ -49,8 +50,8 @@
   --track-hover-text: #c0485c;
   --anim-active-bg: rgba(158, 27, 50, 0.12);
   --anim-active-border: #9e1b32;
-  --active-grad: var(--active-grad);
-  --active-shadow: var(--active-shadow);
+  --active-grad: linear-gradient(135deg, #9e1b32, #c0485c);
+  --active-shadow: rgba(158, 27, 50, 0.3);
   --ded-active-bg: linear-gradient(90deg, rgba(158, 27, 50, 0.1), rgba(158, 27, 50, 0.03));
   --ded-active-border: rgba(158, 27, 50, 0.45);
   --ded-active-shadow: rgba(158, 27, 50, 0.1);
@@ -123,6 +124,7 @@
   --ded-kind-border: rgba(244, 114, 182, 0.8);
   --ded-num: #f9a8d4;
   --ring-color: #f472b6;
+  --measure-num: #fde68a;
   --contact-border: rgba(251, 114, 153, 0.45);
   --contact-bg: rgba(251, 114, 153, 0.12);
   --contact-text: #fb7299;
@@ -486,7 +488,7 @@ body:not(.has-tabs) .header-lang { display: none; }
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 40%, var(--map-fade) 100%);
+  background: linear-gradient(180deg, transparent 62%, var(--map-fade) 100%);
 }
 .home-card-icon {
   position: absolute;
@@ -1743,7 +1745,7 @@ html[lang="vi-VN"] .coord-pair .coord-value {
   padding: 11px 13px;
   background: var(--btn-bg);
   border-radius: var(--radius-sm);
-  border: 1px solid transparent;
+  border: 1px solid var(--border);
   transition: all 0.3s;
   align-items: center;
   margin-bottom: 4px;
@@ -3073,7 +3075,7 @@ body.tac-timeline-open .footer { display: none; }
   color: var(--text-secondary);
   line-height: 1.7;
 }
-.tac-measure-info b { color: #fde68a; font-size: 14px; }
+.tac-measure-info b { color: var(--measure-num); font-size: 14px; }
 
 
 .tac-speed-role {
@@ -4107,7 +4109,7 @@ div.tac-fixed-spawn .cam-dir.up {
   padding: 6px 10px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--btn-bg);
   font-size: 12px;
   flex-wrap: wrap;
 }
@@ -4166,7 +4168,7 @@ div.tac-fixed-spawn .cam-dir.up {
   padding: 6px 10px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--btn-bg);
   font-size: 12px;
 }
 
@@ -5115,7 +5117,7 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--accent-ui); }
   color: var(--text);
   padding: 6px 0 2px;
 }
-.tac-detail-toggle.tac-lvl1:hover { color: #fde68a; }
+.tac-detail-toggle.tac-lvl1:hover { color: var(--hover-text); }
 .tac-detail:has(> .tac-detail-head > .tac-detail-toggle.tac-lvl1) { margin-top: 10px; }
 /* 测算卡片：分区细线分隔（与推算卡片一致） */
 #tacMeasureCard .tac-carry-sep { border-top: 1px solid var(--border); margin-top: 12px; }
