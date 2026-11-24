@@ -189,6 +189,7 @@ export function restoreRegionSel(mapId) {
 export const tacMeasureStyle = {
   single: { ...TAC_MEASURE_DEFAULT.single },
   chain: { ...TAC_MEASURE_DEFAULT.chain },
+  route: { ...TAC_MEASURE_DEFAULT.chain }, // 路径线：同折线的连续分段，段内按最优路径
 };
 
 // 显示设置：只放“地图上显示什么、显示多大”的开关与尺寸
@@ -221,6 +222,7 @@ export const tacDrawSettings = {
   hideAnimDots: false,
   animAutoRoute: false,
   animVault: true,
+  measureVault: true,
 };
 
 // 恢复持久化的设置：只读取当前结构定义的键，历史遗留键自动忽略
@@ -238,5 +240,6 @@ if (tacPersisted && tacPersisted.draw) {
 if (tacPersisted && tacPersisted.mstyle) {
   if (tacPersisted.mstyle.single) Object.assign(tacMeasureStyle.single, tacPersisted.mstyle.single);
   if (tacPersisted.mstyle.chain) Object.assign(tacMeasureStyle.chain, tacPersisted.mstyle.chain);
+  if (tacPersisted.mstyle.route) Object.assign(tacMeasureStyle.route, tacPersisted.mstyle.route);
 }
 
