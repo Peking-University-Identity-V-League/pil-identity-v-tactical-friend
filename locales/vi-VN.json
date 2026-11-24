@@ -1375,6 +1375,8 @@
   "ui.theme.toDark": "Chuyển sang tối",
   "ui.theme.toLight": "Chuyển sang sáng",
   "ui.tac.anim.addPoints": "Thêm điểm",
+  "ui.tac.anim.autoRoute": "Tự động vạch lộ trình tối ưu",
+  "ui.tac.anim.autoRoute.message": "Khi bật, điểm mới tự nối với điểm trước bằng lộ trình tối ưu (dùng lại tìm đường hai điểm); khoảng cách và phát lại theo lộ trình đó. Tắt thì theo đường thẳng.",
   "ui.tac.anim.avgSpeed": "TB {speed} m/s",
   "ui.tac.anim.clear": "Xóa hoạt ảnh",
   "ui.tac.anim.disarm": "Nhấn để hủy thêm",

@@ -4824,6 +4824,9 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--accent-ui); }
     align-items: center;
     justify-content: center;
   }
+  /* 胶囊形大圆角按钮：收紧手机端尺寸，避免统一 44px 触控加高后显得臃肿（参考 tac-anim-btn 的小巧） */
+  .tac-range-opt { min-height: 30px; }
+  .reset-btn { min-height: 32px; }
 }
 
 /* The map switch remains available in each 2D module and on narrow screens. */

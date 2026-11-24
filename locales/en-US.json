@@ -1374,6 +1374,8 @@
   "ui.theme.toDark": "Switch to dark",
   "ui.theme.toLight": "Switch to light",
   "ui.tac.anim.addPoints": "Add waypoints",
+  "ui.tac.anim.autoRoute": "Auto-plan optimal route",
+  "ui.tac.anim.autoRoute.message": "When on, each new waypoint is connected to the previous one by the optimal path (reusing two-point pathfinding); distance and playback follow that path. Off uses a straight line.",
   "ui.tac.anim.avgSpeed": "Avg {speed} m/s",
   "ui.tac.anim.clear": "Clear animation",
   "ui.tac.anim.disarm": "Click to stop adding",

@@ -2,7 +2,7 @@
 import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacCipherCard, tacCipherCardShowEl, tacCipherCardPrevBtn, tacCipherCardNextBtn, tacCipherCardText, tacCipherCardSizeEl, tacCipherCardSizeDefEl, tacCipherList, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDrawSettingsToggle, tacDrawSettingsBody, tacDrawStyleToggle, tacDrawOtherToggle, tacDrawOtherBody, tacShapeStyleToggle, tacShapeStyleBody, tacTextStyleToggle, tacTextStyleBody, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacHideEndpointsEl, tacItemSection, tacMStyleBody, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacRot, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacCarryBuffBody, tacCarryCard, tacCarryChairName, tacCarryChairNextBtn, tacCarryChairPrevBtn, tacCarryChairSizeDefEl, tacCarryChairSizeEl, tacCarryChairText, tacCarryClearBtn, tacCarryBuffToggleEl, tacCarryHuntClose, tacCarryHuntList, tacCarryHuntModal, tacCarryHuntTalentBtn, tacCarryHunterEl, tacCarryHunterFormEl, tacCarryHunterSpeedEl, tacCarryInitialEl, tacCarryInitialVal, tacCarryLegend, tacCarryNote, tacCarryOpacityEl, tacCarryOpacityRowEl, tacCarryHideRingEl, tacCarryChairBasementEl, tacCarryBoxBasementEl, tacCarryBasementPrevBtn, tacCarryBasementNextBtn, tacCarryBasementTextEl, tacCarryPickBtn, tacCarryPickupEl, tacCarryResultBoxEl, tacCarryResultToggleEl, tacCarryResultBodyEl, tacCarrySettingsToggleEl, tacCarrySettingsBodyEl, tacCarryModeChairEl, tacCarryModePointEl, tacCarryHideRingLabelEl, tacCarryChairCountEl, tacCarryDetailBoxEl, tacCarryDetailToggleEl, tacCarryDetailBodyEl, tacCarryPickupModeEl, tacCarryProgressBar, tacCarryProgressBox, tacCarryRunBtn, tacCarryShowChairsEl, tacCarrySpeedClose, tacCarrySpeedList, tacCarrySpeedModal, tacCarrySpeedTalentBtn, tacCarrySummary, tacCarrySurvClose, tacCarrySurvList, tacCarrySurvModal, tacCarrySurvTalentBtn, tacCarrySurvivorEl, tacShowChairBasementEl, tacBasementText, tacShowSpawnsEl, tacSpawnSizeEl, tacSpawnSizeDefEl, tacSpawnText, tacSnapBoxEl, tacSnapLockerEl, tacSnapPhoneBoothEl, tacShowLockersEl, tacLockerSizeEl, tacLockerSizeDefEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowPhoneBoothsEl, tacPhoneBoothSizeEl, tacPhoneBoothSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacSpeedSettingsToggleEl, tacSpeedSettingsBodyEl, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTimelineEl, tacTimelineFold, tacTimelinePlay, tacTimelineScrub, tacTimelineTime, tacTimelineTracks, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacDedScenarioCarryEl, tacDedScenarioTideEl, tacDedSettingsCarryEl, tacDedSettingsTideEl, tacTideBaseSpeedEl, tacTideSpeedRoleEl, tacTideSpeedFormEl, tacTideTraitAddBtn, tacTideTalentAddBtn, tacTideOtherAddBtn, tacTideBuffAddBtn, tacTideBaseDetailToggleEl, tacTideBaseDetailBodyEl, tacTideBuffToggleEl, tacTideBuffBodyEl, tacTideTraitModal, tacTideTraitList, tacTideTraitClose, tacTideTalentModal, tacTideTalentList, tacTideTalentClose, tacTideOtherModal, tacTideOtherList, tacTideOtherClose, tacTideBuffModal, tacTideBuffName, tacTideBuffPct, tacTideBuffDur, tacTideBuffOk, tacTideBuffClose, tacPathCard, tacPathPickA, tacPathPickB, tacPathStatusA, tacPathStatusB, tacPathRunBtn, tacPathClearBtn, tacPathProgressBox, tacPathProgressBar, tacPathResultBoxEl, tacPathResultToggleEl, tacPathResultBodyEl, tacPathSummary, tacPathNote, tacPathFixNote, tacPathSettingsToggleEl, tacPathSettingsBodyEl, tacPathVaultEl, tacPathFixEl, tacPathCampToggle, tacPathBaseSpeedEl, tacPathSpeedRoleEl, tacPathSpeedFormEl, tacPathTraitAddBtn, tacPathTalentAddBtn, tacPathOtherAddBtn, tacPathBuffAddBtn, tacPathBaseDetailToggleEl, tacPathBaseDetailBodyEl, tacPathBuffToggleEl, tacPathBuffBodyEl, tacPathTraitModal, tacPathTraitList, tacPathTraitClose, tacPathTalentModal, tacPathTalentList, tacPathTalentClose, tacPathOtherModal, tacPathOtherList, tacPathOtherClose, tacPathBuffModal, tacPathBuffName, tacPathBuffPct, tacPathBuffDur, tacPathBuffOk, tacPathBuffClose, tacticView } from './core/dom.js';
 import { restoredMeasureIds, saveRegionSel, savedRot, tacBoard, tacDisplay, tacDrawSettings, tacMeasureStyle, tacSave, flushSave } from './core/persist.js';
 import { measureBaseAt, simulateMovement } from './core/measurements.js';
-import { animAllPositions, animDuration, animPositionAt, animSegments } from './core/anim.js';
+import { animAllPositions, animDuration, animPositionAt, animSegPath, animSegments } from './core/anim.js';
 import { measurementEndpoints, resolveMap3dTarget, isExternalMap3dEntry } from './core/map-handoff.js';
 import { CARRY_BAND_COLORS, CARRY_BAND_OPACITY, CARRY_DEFAULTS, CARRY_SURVIVORS, CARRY_TALENTS, carryBandAt, carryDropBudget, createCarryProfile } from './core/carry-model.js';
 import { computeCarryField, computePath, computeTideField, loadNavGrid, navGridAvailable, snapToWalkable, smoothPathOnGrid } from './core/nav-grid.js';
@@ -5086,10 +5086,18 @@ export function renderTacArrows() {
   // 动画路径折线：显示当前选中造物的路径（可用「隐藏动画线」关闭）
   if (!tacDrawSettings.hideAnimPath) {
     const animObj = tacAnimTargetOf(tacManageSel);
-    if (animObj && animObj.anim && (animObj.anim.points || []).length >= 2) {
+    const anim = animObj && animObj.anim;
+    if (anim && (anim.points || []).length >= 2) {
+      // 「自动规划最优路线」的段沿最优路径绘制，其余段仍为直线；逐段拼接并去重共享端点
+      const pts = [];
+      for (let i = 0; i + 1 < anim.points.length; i++) {
+        animSegPath(anim, i).forEach((pt, j) => {
+          if (i > 0 && j === 0) return;
+          pts.push(`${pt.x * W},${pt.y * H}`);
+        });
+      }
       const poly = document.createElementNS(TAC_SVG_NS, 'polyline');
-      poly.setAttribute('points',
-        animObj.anim.points.map((pt) => `${pt.x * W},${pt.y * H}`).join(' '));
+      poly.setAttribute('points', pts.join(' '));
       poly.setAttribute('fill', 'none');
       poly.setAttribute('stroke', '#f472b6');
       poly.setAttribute('stroke-width', 2.5);
@@ -5119,11 +5127,12 @@ function tacAnimTargetOf(sel) {
 }
 
 function tacAnimEnsure(obj) {
-  if (!obj.anim) obj.anim = { mode: 'time', points: [], times: [], speeds: [] };
+  if (!obj.anim) obj.anim = { mode: 'time', points: [], times: [], speeds: [], paths: [] };
   const a = obj.anim;
   a.points ||= [];
   a.times ||= [];
   a.speeds ||= [];
+  a.paths ||= [];
   return a;
 }
 
@@ -5131,6 +5140,41 @@ function tacAnimEnsure(obj) {
 function tacAnimPushUndo(obj, prev) {
   if (obj.tid != null) tacUndoStack.push({ type: 'anim', kind: 'role', tid: obj.tid, prev });
   else tacUndoStack.push({ type: 'anim', kind: 'item', idx: tacBoard().items.indexOf(obj), prev });
+}
+
+// 自动规划最优路线：异步计算 anim.points[segIdx]→[segIdx+1] 的最优路径并写入 anim.paths[segIdx]。
+// 复用两点最优路径规划（computePath + smoothPathOnGrid）；恒速 profile 下 Dijkstra 退化为
+// 最短距离路径（即直觉上的「最优路线」），速度值只影响快慢、不影响路径形状。
+// 计算期间造物可能已被继续编辑：返回后校验该段端点未变，变了则丢弃，避免覆盖后续操作。
+async function tacAnimRouteSegment(animObj, segIdx) {
+  if (!navGridAvailable(S.currentMapId)) return;
+  const anim = animObj && animObj.anim;
+  if (!anim || segIdx < 0 || segIdx + 1 >= (anim.points || []).length) return;
+  const geom = tacAnimGeom();
+  const from = { ...anim.points[segIdx] };
+  const to = { ...anim.points[segIdx + 1] };
+  const g = await loadNavGrid(S.currentMapId);
+  if (!g) return;
+  const profile = createTideProfile({ baseSpeed: TAC_MOVEMENT_SURVIVOR.states.run.speed, buffs: [] });
+  const cellOf = (pt) => snapToWalkable(g, pt.x * geom.dw, pt.y * geom.dh);
+  const sA = cellOf(from);
+  const sB = cellOf(to);
+  if (!sA || !sB) return;
+  const result = await computePath(g, sA, sB, profile, {}).promise;
+  if (!result || result.cancelled || result.unreachable || result.path.length < 2) return;
+  // 栅格视线拉直去锯齿，再换算回 0~1 相对坐标
+  const smoothed = smoothPathOnGrid(g, result.path, false);
+  const pts = smoothed.map((c) => ({
+    x: ((c.x + 0.5) * g.cellPx) / geom.dw,
+    y: ((c.y + 0.5) * g.cellPx) / geom.dh,
+  }));
+  if (pts.length < 2) return;
+  const cur = animObj.anim;
+  if (!cur || segIdx + 1 >= (cur.points || []).length) return;
+  const near = (a, b) => Math.hypot(a.x - b.x, a.y - b.y) < 1e-6;
+  if (!near(cur.points[segIdx], from) || !near(cur.points[segIdx + 1], to)) return;
+  cur.paths[segIdx] = pts;
+  renderTacBoard();
 }
 
 // 移速预设：监管者取自身移速（多形态多档）；求生者取四姿态 + 角色专属移速（如玩具商滑翔）
@@ -5489,6 +5533,18 @@ function buildTacAnimBox(settings, obj) {
   }));
   box.appendChild(hideRow);
 
+  // 自动规划最优路线：勾选后新增路径点时自动与上一点连成最优路径（复用两点最优路径规划）
+  const routeRow = document.createElement('div');
+  routeRow.className = 'tac-box-line';
+  routeRow.innerHTML =
+    `<label class="tac-display-toggle" title="${translate("ui.tac.anim.autoRoute.message")}"><input type="checkbox" data-ar="1"`
+    + `${tacDrawSettings.animAutoRoute ? ' checked' : ''}><span>${translate("ui.tac.anim.autoRoute")}</span></label>`;
+  routeRow.querySelector('input').addEventListener('change', (e) => {
+    tacDrawSettings.animAutoRoute = e.target.checked;
+    rerun();
+  });
+  box.appendChild(routeRow);
+
   // 模式切换：时刻 | 移速
   const modeRow = document.createElement('div');
   modeRow.className = 'tac-box-line tac-anim-mode';
@@ -5691,6 +5747,17 @@ function buildTacAnimBox(settings, obj) {
         anim.points.splice(i, 1);
         anim.times.splice(i, 1);
         if (anim.points.length) anim.speeds.splice(i === 0 ? 0 : i - 1, 1);
+        // 段索引整体前移：与被删点相连的两段合并成新跨段（旧路径作废，回退直线），其余段平移
+        if (anim.paths && anim.paths.length) {
+          const old = anim.paths;
+          const np = [];
+          for (let k = 0; k < old.length - 1; k++) {
+            if (k < i - 1) np[k] = old[k];
+            else if (k === i - 1) np[k] = undefined;
+            else np[k] = old[k + 1];
+          }
+          anim.paths = np;
+        }
         tacAnimPushUndo(obj, prev);
         rerun();
       });
@@ -9639,6 +9706,11 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
     const animObj = tacAnimTargetOf(tacManageSel);
     if (dotEl && animObj && animObj.anim) {
       tacDragAnimDot = { ptIdx: +dotEl.dataset.pt, prev: structuredClone(animObj.anim) };
+      // 拖动使相邻两段的旧路径失效：立即清除，拖动中显示直线，松手后再按需重算
+      if (animObj.anim.paths) {
+        delete animObj.anim.paths[tacDragAnimDot.ptIdx - 1];
+        delete animObj.anim.paths[tacDragAnimDot.ptIdx];
+      }
       tacMapWrap.setPointerCapture(e.pointerId);
       return;
     }
@@ -9685,6 +9757,10 @@ tacMapWrap.addEventListener('pointerdown', (e) => {
       }
       tacAnimPushUndo(animObj, prev);
       renderTacBoard();
+      // 勾选自动规划最优路线：异步补上与前一点的最优路径（粉色虚线随之改为最优路径）
+      if (tacDrawSettings.animAutoRoute && anim.points.length >= 2) {
+        tacAnimRouteSegment(animObj, anim.points.length - 2);
+      }
     }
     return;
   }
@@ -10108,9 +10184,16 @@ tacMapWrap.addEventListener('pointerup', (e) => {
   const changed = tacDrawing || tacDrag || tacDragItem || tacDragText || tacDragMeasure || tacDragAnimDot;
   if (tacDragAnimDot) {
     const obj = tacAnimTargetOf(tacManageSel);
+    const ptIdx = tacDragAnimDot.ptIdx;
     if (obj) tacAnimPushUndo(obj, tacDragAnimDot.prev);
     tacDragAnimDot = null;
     renderTacBoard();
+    // 勾选自动规划最优路线：拖动结束后重算被改动点相邻的两段
+    const anim = obj && obj.anim;
+    if (anim && tacDrawSettings.animAutoRoute) {
+      if (ptIdx - 1 >= 0) tacAnimRouteSegment(obj, ptIdx - 1);
+      if (ptIdx + 1 < anim.points.length) tacAnimRouteSegment(obj, ptIdx);
+    }
   }
   if (tacDrawing) {
     const p = tacPos(e);

@@ -267,3 +267,47 @@ test('anim: speed presets follow the animated role', async ({ page }) => {
   expect(opts3.some((o) => o.includes('般若相') && o.includes('4.56'))).toBe(true);
   expect(opts3.some((o) => o.includes('3.8'))).toBe(false);
 });
+
+test('anim: auto-route plans an optimal path for new waypoints only', async ({ page }) => {
+  await placeRole(page, 'luckyGuy', 0.3, 0.3);
+  await tool(page, 'anim');
+  await clickPoint(page, 0.3, 0.3); // 选中造物
+  await clickPoint(page, 0.6, 0.3); // 路径点 2（未勾选，保持直线）
+  let token = (await read(page)).board.tokens[0];
+  expect(token.anim.paths?.[0] ?? null).toBeNull();
+
+  // 勾选「自动规划最优路线」后，新增路径点自动与上一点连成最优路径
+  await page.locator('label.tac-display-toggle:has(input[data-ar])').click();
+  await clickPoint(page, 0.6, 0.6); // 路径点 3 → 异步规划第 2 段
+  await expect.poll(async () => {
+    const t = (await read(page)).board.tokens[0];
+    return t.anim.paths && t.anim.paths[1] ? t.anim.paths[1].length : 0;
+  }).toBeGreaterThanOrEqual(2);
+
+  token = (await read(page)).board.tokens[0];
+  expect(token.anim.paths[0] ?? null).toBeNull(); // 勾选前的旧段不受影响
+  const path = token.anim.paths[1];
+  expect(path[0].x).toBeCloseTo(0.6, 1);
+  expect(path[0].y).toBeCloseTo(0.3, 1);
+  expect(path[path.length - 1].x).toBeCloseTo(0.6, 1);
+  expect(path[path.length - 1].y).toBeCloseTo(0.6, 1);
+});
+
+test('anim: deleting a middle waypoint reindexes planned paths', async ({ page }) => {
+  await placeRole(page, 'luckyGuy', 0.3, 0.3);
+  await tool(page, 'anim');
+  await clickPoint(page, 0.3, 0.3);
+  await page.locator('label.tac-display-toggle:has(input[data-ar])').click();
+  await clickPoint(page, 0.6, 0.3);
+  await clickPoint(page, 0.6, 0.6);
+  await expect.poll(async () => {
+    const t = (await read(page)).board.tokens[0];
+    return (t.anim.paths?.[0]?.length || 0) + (t.anim.paths?.[1]?.length || 0);
+  }).toBeGreaterThanOrEqual(4);
+
+  // 删除中间点（路径点 2）：两段合并成新跨段，旧路径作废回退直线
+  await page.locator('.tac-anim-pt .tac-manage-del').nth(1).click();
+  const token = (await read(page)).board.tokens[0];
+  expect(token.anim.points.length).toBe(2);
+  expect(token.anim.paths?.[0] ?? null).toBeNull();
+});

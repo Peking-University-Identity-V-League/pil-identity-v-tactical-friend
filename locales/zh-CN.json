@@ -1374,6 +1374,8 @@
   "ui.theme.toDark": "切换暗色",
   "ui.theme.toLight": "切换浅色",
   "ui.tac.anim.addPoints": "添加路径点",
+  "ui.tac.anim.autoRoute": "自动规划最优路线",
+  "ui.tac.anim.autoRoute.message": "勾选后，新增路径点时自动与上一路径点连成最优路径（复用两点最优路径规划），距离与播放均按最优路径计算；不勾选则按直线",
   "ui.tac.anim.avgSpeed": "平均 {speed} m/s",
   "ui.tac.anim.clear": "清除动画",
   "ui.tac.anim.disarm": "点此取消添加",
