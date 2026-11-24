@@ -1,6 +1,6 @@
 import { test, expect, tool, clickPoint, read } from './helpers.js';
 
-// 路径线模式：连续分段、段内按最优路径连接；「点此取消添加」行；「允许翻窗」开关。
+// 路径线模式：连续分段、段内按最优路径连接；「点此取消添加」按钮；「允许翻窗」开关。
 
 async function drawRouteSeg(page) {
   await tool(page, 'measure');
@@ -35,43 +35,47 @@ test('measure: route mode draws chain segments that bend to the optimal path', a
   await expect(page.locator('#tacArrowSvg polyline').first()).toBeVisible();
 });
 
-test('measure: arm row shows only in chain/route modes; cancel stops drawing', async ({ page }) => {
+test('measure: cancel-adding button appears only while drawing', async ({ page }) => {
   await tool(page, 'measure');
-  // 直线模式：不显示「点此取消添加」行
-  await expect(page.locator('#tacMeasureArm')).toBeHidden();
-
   await page.locator('[data-mmode="chain"]').click();
-  await expect(page.locator('#tacMeasureArm')).toBeVisible();
-  await expect(page.locator('#tacMeasureCancel')).toBeDisabled();
+  // 未在绘制：按钮隐藏
+  await expect(page.locator('#tacMeasureCancel')).toBeHidden();
 
-  // 开始连续绘制后按钮可点，点击后取消绘制（等价 Esc）
+  // 开始连续绘制：按钮出现；点击后取消绘制（等价 Esc）并隐藏
   await clickPoint(page, 0.3, 0.3);
-  await expect(page.locator('#tacMeasureCancel')).toBeEnabled();
+  await expect(page.locator('#tacMeasureCancel')).toBeVisible();
   await page.locator('#tacMeasureCancel').click();
-  await expect(page.locator('#tacMeasureCancel')).toBeDisabled();
+  await expect(page.locator('#tacMeasureCancel')).toBeHidden();
   // 取消后下一点是新起点，不产生分段
   await clickPoint(page, 0.6, 0.3);
   expect((await read(page)).board.measures).toHaveLength(0);
 
-  // 路径线模式同样显示
+  // 路径线模式同样：绘制中出现
   await page.locator('[data-mmode="route"]').click();
-  await expect(page.locator('#tacMeasureArm')).toBeVisible();
+  await clickPoint(page, 0.4, 0.4);
+  await expect(page.locator('#tacMeasureCancel')).toBeVisible();
+});
 
-  // 切回直线模式：隐藏
-  await page.locator('[data-mmode="single"]').click();
-  await expect(page.locator('#tacMeasureArm')).toBeHidden();
+test('measure: route mode shows route-specific status text', async ({ page }) => {
+  await tool(page, 'measure');
+  await page.locator('[data-mmode="route"]').click();
+  await expect(page.locator('#tacStatus2')).toHaveText('添加改动将对新绘制整条路径线生效');
+  await expect(page.locator('#tacScopeWrap .tac-scope-label')).toHaveText('应用到路径线');
+  await page.locator('[data-mmode="chain"]').click();
+  await expect(page.locator('#tacStatus2')).toHaveText('添加改动将对新绘制整条折线生效');
+  await expect(page.locator('#tacScopeWrap .tac-scope-label')).toHaveText('应用到折线');
 });
 
 test('measure: vault checkbox defaults on and persists', async ({ page }) => {
   await tool(page, 'measure');
+  // 展开绘制设置区（其它设置默认已展开）
   await page.locator('#tacDrawSettingsToggle').click();
-  await page.locator('#tacDrawOtherToggle').click();
   await expect(page.locator('#tacMeasureVault')).toBeChecked();
-  await page.locator('#tacMeasureVault').uncheck();
+  await page.locator('#tacDrawOtherBody label', { hasText: '允许翻窗' }).click();
+  await expect(page.locator('#tacMeasureVault')).not.toBeChecked();
   await page.reload();
   await page.locator('.home-card').first().click();
   await tool(page, 'measure');
   await page.locator('#tacDrawSettingsToggle').click();
-  await page.locator('#tacDrawOtherToggle').click();
   await expect(page.locator('#tacMeasureVault')).not.toBeChecked();
 });
