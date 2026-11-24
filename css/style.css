@@ -61,6 +61,11 @@
   --gold-text: #8a6410;
   --gold-bg: rgba(176, 125, 31, 0.1);
   --gold-border: rgba(176, 125, 31, 0.45);
+  --navpill-bg: var(--btn-bg);
+  --legend-bg: var(--btn-bg);
+  --legend-text: var(--text-secondary);
+  --toggle-bg: var(--btn-bg);
+  --toggle-inset: inset 0 1px 3px rgba(0, 0, 0, 0.06);
   --contact-border: rgba(158, 27, 50, 0.35);
   --contact-bg: rgba(158, 27, 50, 0.07);
   --contact-text: #9e1b32;
@@ -131,6 +136,11 @@
   --gold-text: #fde68a;
   --gold-bg: rgba(251, 191, 36, 0.08);
   --gold-border: rgba(251, 191, 36, 0.35);
+  --navpill-bg: rgba(0, 0, 0, 0.2);
+  --legend-bg: rgba(0, 0, 0, 0.4);
+  --legend-text: rgba(255, 255, 255, 0.85);
+  --toggle-bg: rgba(0, 0, 0, 0.25);
+  --toggle-inset: inset 0 1px 5px rgba(0, 0, 0, 0.2);
   --contact-border: rgba(251, 114, 153, 0.45);
   --contact-bg: rgba(251, 114, 153, 0.12);
   --contact-text: #fb7299;
@@ -929,7 +939,7 @@ html[lang="vi-VN"] .coord-pair .coord-value {
   justify-content: center;
   gap: 13px;
   padding: 7px 16px;
-  background: rgba(0,0,0,0.2);
+  background: var(--navpill-bg);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   justify-self: center;
@@ -1017,13 +1027,13 @@ html[lang="vi-VN"] .coord-pair .coord-value {
 }
 .side-toggle {
   display: flex;
-  background: rgba(0,0,0,0.25);
+  background: var(--toggle-bg);
   border-radius: 20px;
   padding: 3px;
   border: 1px solid var(--border);
   position: relative;
   flex-shrink: 0;
-  box-shadow: inset 0 1px 5px rgba(0,0,0,0.2);
+  box-shadow: var(--toggle-inset);
 }
 .side-btn {
   display: inline-flex;
@@ -1044,11 +1054,31 @@ html[lang="vi-VN"] .coord-pair .coord-value {
   letter-spacing: 1px;
 }
 .side-btn.active { color: #fff; }
-.side-btn:first-child.active {
+/* 普通模式切换（单段/整体、牵气球/化险为夷、选椅/选点等）：北大红 */
+.side-btn:first-child.active,
+.side-btn:last-child.active {
+  background: var(--active-grad);
+  box-shadow: 0 3px 13px var(--active-shadow), 0 0 0 1px rgba(255,255,255,0.1);
+}
+/* 阵营切换：求生蓝、监管粉、其它燕园金（按 data-camp，优先于普通切换） */
+.side-btn[data-camp="survivor"].active {
   background: linear-gradient(135deg, #3b82f6, #2563eb);
   box-shadow: 0 3px 13px rgba(59, 130, 246, 0.4), 0 0 0 1px rgba(255,255,255,0.1);
 }
-.side-btn:last-child.active {
+.side-btn[data-camp="hunter"].active {
+  background: linear-gradient(135deg, #f472b6, #fb7185);
+  box-shadow: 0 3px 13px var(--secondary-glow), 0 0 0 1px rgba(255,255,255,0.1);
+}
+.side-btn[data-camp="other"].active {
+  background: linear-gradient(135deg, #a87f3f, #c9a063);
+  box-shadow: 0 3px 13px rgba(201, 160, 99, 0.4), 0 0 0 1px rgba(255,255,255,0.1);
+}
+/* 区域选择页阵营切换（用 data-side）：求生蓝、监管粉 */
+.side-btn[data-side="1"].active {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  box-shadow: 0 3px 13px rgba(59, 130, 246, 0.4), 0 0 0 1px rgba(255,255,255,0.1);
+}
+.side-btn[data-side="-1"].active {
   background: linear-gradient(135deg, #f472b6, #fb7185);
   box-shadow: 0 3px 13px var(--secondary-glow), 0 0 0 1px rgba(255,255,255,0.1);
 }
@@ -1180,10 +1210,10 @@ html[lang="vi-VN"] .coord-pair .coord-value {
   gap: 13px;
   align-items: center;
   padding: 7px 13px;
-  background: rgba(0,0,0,0.4);
+  background: var(--legend-bg);
   backdrop-filter: blur(10px);
   border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid var(--border);
   flex-shrink: 0;
 }
 .legend-item {
@@ -1191,7 +1221,7 @@ html[lang="vi-VN"] .coord-pair .coord-value {
   align-items: center;
   gap: 7px;
   font-size: 11px;
-  color: rgba(255,255,255,0.85);
+  color: var(--legend-text);
   white-space: nowrap;
   font-weight: 500;
 }
@@ -3926,18 +3956,6 @@ div.tac-fixed-spawn .cam-dir.up {
 #tacRolesCard .tac-camp-tabs { display: flex; gap: 8px; margin-top: 0; }
 #tacRolesCard .tac-camp-tabs .side-btn { flex: 1 1 0; }
 #tacRolesCard .tac-camp-tabs .side-btn.active { color: #fff; }
-#tacRolesCard .tac-camp-tabs .side-btn[data-camp="survivor"].active {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  box-shadow: 0 3px 13px rgba(59, 130, 246, 0.4), 0 0 0 1px rgba(255,255,255,0.1);
-}
-#tacRolesCard .tac-camp-tabs .side-btn[data-camp="hunter"].active {
-  background: linear-gradient(135deg, #f472b6, #fb7185);
-  box-shadow: 0 3px 13px var(--secondary-glow), 0 0 0 1px rgba(255,255,255,0.1);
-}
-#tacRolesCard .tac-camp-tabs .side-btn[data-camp="other"].active {
-  background: linear-gradient(135deg, #34d399, #10b981);
-  box-shadow: 0 3px 13px rgba(52, 211, 153, 0.35), 0 0 0 1px rgba(255,255,255,0.1);
-}
 #tacRolesCard .tac-carry-sep { border-top: 1px solid var(--border); margin-top: 12px; }
 #tacRolesCard .tac-roles { margin-top: 12px; }
 .tac-role {
@@ -5093,15 +5111,7 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--accent-ui); }
   font-size: 11px;
 }
 
-/* 狂欢之椅推算：模式按钮配色与全局 first/last 相反（选椅看范围=红，选点看挂椅=蓝） */
-#tacCarryCard .tac-carry-modes .side-btn:first-child.active {
-  background: linear-gradient(135deg, #f472b6, #fb7185);
-  box-shadow: 0 3px 13px var(--secondary-glow), 0 0 0 1px rgba(255,255,255,0.1);
-}
-#tacCarryCard .tac-carry-modes .side-btn:last-child.active {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  box-shadow: 0 3px 13px rgba(59, 130, 246, 0.4), 0 0 0 1px rgba(255,255,255,0.1);
-}
+/* 狂欢之椅推算：模式切换与普通切换一致，使用北大红 */
 /* 挂椅明细：行可点击，点击后地图上用正圆红框框出对应椅子 */
 #tacCarryDetailBody tr[data-row] { cursor: pointer; }
 #tacCarryDetailBody tr[data-row]:hover td { background: rgba(255, 213, 79, 0.12); }

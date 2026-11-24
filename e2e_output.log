@@ -1,0 +1,47 @@
+[WebServer] (node:7968) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `Kimi --trace-warnings ...` to show where the warning was created)
+
+
+Running 147 tests using 2 workers
+
+(node:92852) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `Kimi --trace-warnings ...` to show where the warning was created)
+
+
+(node:99364) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `Kimi --trace-warnings ...` to show where the warning was created)
+
+
+[1/147] tests\e2e\abyss.spec.js:20:1 › two naiad-spearfishing pairs simulate water independently
+[2/147] tests\e2e\abyss.spec.js:61:1 › hidden role token renders as a dot instead of a character
+[3/147] tests\e2e\anim.spec.js:23:1 › anim: waypoints get default times; first point is the token position
+[4/147] tests\e2e\anim.spec.js:39:1 › anim: play moves the token to the last point; reset restores it
+[5/147] tests\e2e\anim.spec.js:58:1 › anim: mode switch keeps points and derives speeds both ways
+[6/147] tests\e2e\anim.spec.js:73:1 › anim: undo removes the last waypoint
+[7/147] tests\e2e\anim.spec.js:81:1 › anim: dragging a waypoint updates its position
+[8/147] tests\e2e\anim.spec.js:94:1 › anim: dots and path stay visible in select tool; hide toggles work
+[9/147] tests\e2e\anim.spec.js:114:1 › anim: hint differs between select tool and anim tool
+[10/147] tests\e2e\anim.spec.js:122:1 › anim: arm toggle controls map-click adding and shows status
+[11/147] tests\e2e\anim.spec.js:147:1 › anim: time and speed inputs carry units
+[12/147] tests\e2e\anim.spec.js:158:1 › anim: speed buff shortens segment time and can be removed
+[13/147] tests\e2e\anim.spec.js:179:1 › anim: global timeline plays all creations together and scrubs
+[14/147] tests\e2e\anim.spec.js:225:1 › anim: repeated mode toggles keep the total time stable
+[15/147] tests\e2e\anim.spec.js:237:1 › anim: speed presets follow the animated role
+[16/147] tests\e2e\carry-range.spec.js:10:1 › carry range card picks a chair, computes bands and clears
+[17/147] tests\e2e\carry-range.spec.js:51:1 › switching tools while picking disarms the chair picker
+[18/147] tests\e2e\carry-range.spec.js:63:1 › talent modals fill the buff detail table and change the budget
+[19/147] tests\e2e\carry-range.spec.js:102:1 › initial struggle progress shrinks the band count
+[20/147] tests\e2e\carry-range.spec.js:118:1 › legend band buttons toggle their overlay band
+[21/147] tests\e2e\carry-range.spec.js:139:1 › opacity slider re-renders bands without recomputing
+[22/147] tests\e2e\carry-range.spec.js:158:1 › basement chairs become pickable when the basement row is enabled
+[23/147] tests\e2e\carry-range.spec.js:181:1 › hide-ring checkbox suppresses the selected-chair circle
+[24/147] tests\e2e\carry-range.spec.js:198:1 › hunter dropdown exposes a form select for dual-form hunters
+[25/147] tests\e2e\carry-range.spec.js:215:1 › point mode picks a start point, computes and resets on mode switch
+[26/147] tests\e2e\carry-range.spec.js:312:1 › switching maps keeps each map's own carry selection and result
+[27/147] tests\e2e\cipher-card.spec.js:4:1 › cipher card progress & shared row sync
+[28/147] tests\e2e\client-cache.spec.js:7:3 › a warm browser updates the entire module graph under /tactical-friend without losing saved tactics
+[29/147] tests\e2e\client-cache.spec.js:7:3 › a warm browser updates the entire module graph under /zhanshuyanlian without losing saved tactics
+[30/147] tests\e2e\cross-range.spec.js:18:1 › timeBomb: cross range two tiers, radius/width desc, multi-select
+[31/147] tests\e2e\cross-range.spec.js:37:1 › timeBomb: fill toggles cross fill; selected highlight is circular
+[32/147] tests\e2e\cross-range.spec.js:59:1 › dentist: mirror ranges render as annulus with inner/outer desc and fill
+[33/147] tests\e2e\cross-range.spec.js:87:1 › remoteControlledBomb: angle box rotates cross and icon
