@@ -5516,8 +5516,8 @@ function buildTacAnimBox(settings, obj) {
     tacBoxHint(box, translate("ui.tac.anim.hint.none"));
     return;
   }
-  if (!hasAnim) return;
-  const anim = tacAnimEnsure(obj);
+  // 清除动画后仍保留常规显示（隐藏开关/自动规划/播放控制等），anim 为空时按 0 时长渲染
+  const anim = hasAnim ? tacAnimEnsure(obj) : null;
   const rerun = () => renderTacBoard();
 
   // 显示开关：隐藏动画线 / 隐藏时刻点（绘制设置持久化）
@@ -5553,10 +5553,11 @@ function buildTacAnimBox(settings, obj) {
   ['time', 'speed'].forEach((m) => {
     const b = document.createElement('button');
     b.type = 'button';
-    b.className = 'tac-anim-btn' + (anim.mode === m ? ' active' : '');
+    b.className = 'tac-anim-btn' + (anim && anim.mode === m ? ' active' : '');
+    b.disabled = !anim;
     b.textContent = translate(m === 'time' ? "ui.tac.anim.mode.time" : "ui.tac.anim.mode.speed");
     b.addEventListener('click', () => {
-      if (anim.mode === m) return;
+      if (!anim || anim.mode === m) return;
       const prev = structuredClone(obj.anim);
       tacAnimConvertMode(anim, geom, m, tacAnimSegDurFn(obj));
       tacAnimPushUndo(obj, prev);
@@ -5566,12 +5567,12 @@ function buildTacAnimBox(settings, obj) {
   });
   box.appendChild(modeRow);
 
-  const segDurFn = tacAnimSegDurFn(obj);
-  const segs = animSegments(anim, geom, segDurFn);
+  const segDurFn = anim ? tacAnimSegDurFn(obj) : null;
+  const segs = anim ? animSegments(anim, geom, segDurFn) : [];
   const round2 = (v) => Math.round(v * 100) / 100;
 
   // 路径点行
-  anim.points.forEach((pt, i) => {
+  if (anim) anim.points.forEach((pt, i) => {
     let afterRow = null;
     const row = document.createElement('div');
     row.className = 'tac-box-line tac-anim-pt';
@@ -5777,7 +5778,7 @@ function buildTacAnimBox(settings, obj) {
   playBtn.type = 'button';
   playBtn.className = 'tac-anim-btn tac-anim-play-btn';
   playBtn.textContent = translate(tacAnimPlay ? "ui.tac.anim.stop" : "ui.tac.anim.play");
-  playBtn.disabled = anim.points.length < 2 || animDuration(anim, geom, segDurFn).total <= 0;
+  playBtn.disabled = !anim || anim.points.length < 2 || animDuration(anim, geom, segDurFn).total <= 0;
   playBtn.addEventListener('click', () => {
     if (tacAnimPlay) tacAnimReset();
     else {
@@ -5801,7 +5802,7 @@ function buildTacAnimBox(settings, obj) {
   const total = document.createElement('span');
   total.className = 'tac-anim-derive';
   total.textContent = translate("ui.tac.anim.totalTime",
-    { seconds: round2(animDuration(anim, geom, segDurFn).total) });
+    { seconds: anim ? round2(animDuration(anim, geom, segDurFn).total) : 0 });
   ctl.appendChild(total);
   box.appendChild(ctl);
 }

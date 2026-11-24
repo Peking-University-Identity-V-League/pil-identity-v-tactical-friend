@@ -3009,11 +3009,12 @@ details.ded-card[open] > summary .arrow { transform: rotate(90deg); }
   max-width: 150px;
   padding: 1px 4px;
   border-radius: 5px;
-  border: 1px solid var(--border, rgba(148, 163, 184, 0.4));
-  background: var(--chip-bg);
-  color: var(--text, #e2e8f0);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  background: #fff; color: #000;
   font-size: 12px;
+  cursor: pointer;
 }
+.tac-anim-speed-sel option, .tac-anim-buff-sel option { color: #000; background: #fff; }
 .tac-anim-derive {
   color: var(--text-secondary, #94a3b8);
   font-size: 12px;
@@ -3044,10 +3045,10 @@ details.ded-card[open] > summary .arrow { transform: rotate(90deg); }
   max-width: 130px;
   padding: 1px 4px;
   border-radius: 5px;
-  border: 1px solid var(--border, rgba(148, 163, 184, 0.4));
-  background: var(--chip-bg);
-  color: var(--text, #e2e8f0);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  background: #fff; color: #000;
   font-size: 12px;
+  cursor: pointer;
 }
 
 /* 全局时间轴：冻结底栏，仅动画工具下显示 */
@@ -3577,7 +3578,7 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
   padding: 9px 12px;
   border-radius: 10px;
   border: 1px solid var(--border);
-  background: rgba(0, 0, 0, 0.25);
+  background: var(--bg-elevated);
   color: var(--text);
   font-family: inherit;
   font-size: 13px;
@@ -3626,7 +3627,7 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
   padding: 8px 10px;
   border-radius: 9px;
   border: 1px solid var(--border);
-  background: rgba(0, 0, 0, 0.25);
+  background: var(--bg-elevated);
   color: var(--text);
   font-family: inherit;
   font-size: 13px;
