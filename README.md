@@ -691,7 +691,7 @@ deduce(map, marks)
 | `buildTacAnimBox()` | 「动画管理」小卡片：加点开关、隐藏动画线 / 隐藏时刻点、自动规划最优路线、模式切换、路径点行、播放控制；清除动画后这些控件保留常规显示 |
 | `renderTacAnimDots()` | 动画工具下绘制编号路径点 |
 | `tacAnimPlayStart()` / `tacAnimStop()` / `tacAnimReset()` | 播放（rAF 平滑移动）、停止、还原位置；播放 / 停止合并为一个按钮，播放中按钮变为「⏹ 停止」，再点停止并重置 |
-| `tacAnimRouteSegment()` | 「自动规划最优路线」勾选后，新增 / 拖动路径点时异步复用两点最优路径规划（`computePath` + `smoothPathOnGrid`），结果写入 `anim.paths[段号]` |
+| `tacAnimRouteSegment()` | 「自动规划最优路线」勾选后，新增 / 拖动路径点时异步复用两点最优路径规划（`computePath` + `smoothPathOnGrid`），结果写入 `anim.paths[段号]`；右侧「允许翻窗」（默认勾选）控制窗带是否视为可走 |
 | `tacDragAnimDot` | 正在拖动的路径点；拖动开始会清除相邻两段的旧路径，删除路径点时 `paths` 索引随段重排 |
 | `tacTimeline` / `renderTacTimeline()` | 全局时间轴：统一时钟下所有动画造物协同播放、拖动寻址 |
 | `renderTacManage()` | 管理卡片随工具切换双形态：选择工具显示「🧩 造物管理」（范围、图标等设置，隐藏动画卡片）；动画工具变为「🧩 造物动画」，只显示动画卡片。顶栏的恢复默认顺序 / 取消选中 / 数量统计两种形态下都保留；「取消选中」同时清除地图上的选中高亮（不影响造物本身的「高亮」属性）并退出加点状态 |

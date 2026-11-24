@@ -5156,14 +5156,15 @@ async function tacAnimRouteSegment(animObj, segIdx) {
   const g = await loadNavGrid(S.currentMapId);
   if (!g) return;
   const profile = createTideProfile({ baseSpeed: TAC_MOVEMENT_SURVIVOR.states.run.speed, buffs: [] });
+  const vault = !!tacDrawSettings.animVault; // 勾选「允许翻窗」后窗带视为可走
   const cellOf = (pt) => snapToWalkable(g, pt.x * geom.dw, pt.y * geom.dh);
   const sA = cellOf(from);
   const sB = cellOf(to);
   if (!sA || !sB) return;
-  const result = await computePath(g, sA, sB, profile, {}).promise;
+  const result = await computePath(g, sA, sB, profile, { vault }).promise;
   if (!result || result.cancelled || result.unreachable || result.path.length < 2) return;
   // 栅格视线拉直去锯齿，再换算回 0~1 相对坐标
-  const smoothed = smoothPathOnGrid(g, result.path, false);
+  const smoothed = smoothPathOnGrid(g, result.path, vault);
   const pts = smoothed.map((c) => ({
     x: ((c.x + 0.5) * g.cellPx) / geom.dw,
     y: ((c.y + 0.5) * g.cellPx) / geom.dh,
@@ -5540,11 +5541,14 @@ function buildTacAnimBox(settings, obj) {
   routeRow.className = 'tac-box-line';
   routeRow.innerHTML =
     `<label class="tac-display-toggle" title="${translate("ui.tac.anim.autoRoute.message")}"><input type="checkbox" data-ar="1"`
-    + `${tacDrawSettings.animAutoRoute ? ' checked' : ''}><span>${translate("ui.tac.anim.autoRoute")}</span></label>`;
-  routeRow.querySelector('input').addEventListener('change', (e) => {
-    tacDrawSettings.animAutoRoute = e.target.checked;
+    + `${tacDrawSettings.animAutoRoute ? ' checked' : ''}><span>${translate("ui.tac.anim.autoRoute")}</span></label>`
+    + `<label class="tac-display-toggle" title="${translate("ui.tac.path.result.note")}"><input type="checkbox" data-vault="1"`
+    + `${tacDrawSettings.animVault ? ' checked' : ''}><span>${translate("ui.tac.path.setting.vaultAllow")}</span></label>`;
+  routeRow.querySelectorAll('input').forEach((cb) => cb.addEventListener('change', () => {
+    if (cb.dataset.ar) tacDrawSettings.animAutoRoute = cb.checked;
+    else tacDrawSettings.animVault = cb.checked;
     rerun();
-  });
+  }));
   box.appendChild(routeRow);
 
   // 模式切换：时刻 | 移速

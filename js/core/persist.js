@@ -220,6 +220,7 @@ export const tacDrawSettings = {
   hideAnimPath: false,
   hideAnimDots: false,
   animAutoRoute: false,
+  animVault: true,
 };
 
 // 恢复持久化的设置：只读取当前结构定义的键，历史遗留键自动忽略
