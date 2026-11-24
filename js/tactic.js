@@ -9427,7 +9427,8 @@ export async function tacExportImage() {
     uctx.textBaseline = 'middle';
     uctx.lineJoin = 'round';
     board.texts.forEach((t) => {
-      const px = Math.max(2.2, t.size * 0.18) / 100 * (oW / wrapX) * K;
+      // 字号与屏幕 cqw 口径一致：units/100 * 地图宽（随导出缩放 K），与角色图标 d = size/100 * W * K 同基准
+      const px = Math.max(2.2, t.size * 0.18) / 100 * W * K;
       uctx.font = `700 ${px}px 'Noto Sans SC', sans-serif`;
       const lines = String(t.text).split('\n');
       const lh = px * 1.35;
