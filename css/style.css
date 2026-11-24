@@ -66,6 +66,16 @@
   --legend-text: var(--text-secondary);
   --toggle-bg: var(--btn-bg);
   --toggle-inset: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+  --progress-bg: var(--btn-bg);
+  --thead-bg: var(--btn-bg);
+  --pct-text: var(--accent-ui);
+  --sky-text: var(--info-blue);
+  --amber-text: var(--gold-text);
+  --more-name-text: var(--text);
+  --more-name-border: var(--border);
+  --more-name-bg: var(--btn-bg);
+  --more-name-hover-text: #ffffff;
+  --more-name-hover-bg: var(--primary);
   --contact-border: rgba(158, 27, 50, 0.35);
   --contact-bg: rgba(158, 27, 50, 0.07);
   --contact-text: #9e1b32;
@@ -141,6 +151,16 @@
   --legend-text: rgba(255, 255, 255, 0.85);
   --toggle-bg: rgba(0, 0, 0, 0.25);
   --toggle-inset: inset 0 1px 5px rgba(0, 0, 0, 0.2);
+  --progress-bg: rgba(0, 0, 0, 0.2);
+  --thead-bg: rgba(0, 0, 0, 0.25);
+  --pct-text: #7dd3fc;
+  --sky-text: #7dd3fc;
+  --amber-text: #fbbf24;
+  --more-name-text: #f5f5f7;
+  --more-name-border: rgba(255, 255, 255, 0.22);
+  --more-name-bg: rgba(255, 255, 255, 0.06);
+  --more-name-hover-text: #1a1a2e;
+  --more-name-hover-bg: #f5f5f7;
   --contact-border: rgba(251, 114, 153, 0.45);
   --contact-bg: rgba(251, 114, 153, 0.12);
   --contact-text: #fb7299;
@@ -1434,7 +1454,7 @@ html[lang="vi-VN"] .coord-pair .coord-value {
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
 }
-.updates-title { font-size: 15px; font-weight: 700; color: #fbbf24; }
+.updates-title { font-size: 15px; font-weight: 700; color: var(--amber-text); }
 .updates-close {
   border: none;
   background: transparent;
@@ -1454,7 +1474,7 @@ html[lang="vi-VN"] .coord-pair .coord-value {
   line-height: 1.7;
   color: var(--text);
 }
-.updates-body .upd-h { font-size: 14px; color: #fbbf24; margin: 12px 0 6px; }
+.updates-body .upd-h { font-size: 14px; color: var(--amber-text); margin: 12px 0 6px; }
 .updates-body .upd-h:first-child { margin-top: 0; }
 .updates-body .upd-list { margin: 4px 0 8px; padding-left: 20px; }
 .updates-body .upd-list li { margin: 3px 0; }
@@ -1491,9 +1511,9 @@ html[lang="vi-VN"] .coord-pair .coord-value {
 .footer-lang-option:hover { background: var(--hover-bg); color: var(--hover-text); }
 .footer-lang-option.active { color: var(--primary); }
 .gold-btn {
-  border-color: rgba(251, 191, 36, 0.5) !important;
-  background: rgba(251, 191, 36, 0.1) !important;
-  color: #fbbf24 !important;
+  border-color: var(--gold-border) !important;
+  background: var(--gold-bg) !important;
+  color: var(--amber-text) !important;
 }
 .gold-btn:hover {
   background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
@@ -1763,7 +1783,7 @@ html[lang="vi-VN"] .coord-pair .coord-value {
   grid-template-columns: 35px 0.9fr 1.8fr;
   gap: 7px;
   padding: 11px 13px;
-  background: rgba(0,0,0,0.25);
+  background: var(--thead-bg);
   border-radius: var(--radius-sm);
   font-size: 13px;
   font-weight: 700;
@@ -1833,16 +1853,16 @@ html[lang="vi-VN"] .coord-pair .coord-value {
   letter-spacing: 0.5px;
 }
 .cipher-row.farthest .cipher-coord:nth-child(2) {
-  color: #fbbf24;
-  text-shadow: 0 0 7px rgba(251, 191, 36, 0.3);
+  color: var(--amber-text);
+  text-shadow: 0 0 7px var(--accent-glow);
 }
 .cipher-dist {
   color: var(--text-secondary);
 }
 .cipher-row.farthest .cipher-dist {
-  color: #fbbf24;
+  color: var(--amber-text);
   font-weight: 800;
-  text-shadow: 0 0 7px rgba(251, 191, 36, 0.3);
+  text-shadow: 0 0 7px var(--accent-glow);
 }
 .cipher-row.selected-cipher {
   background: linear-gradient(90deg, rgba(52, 211, 153, 0.1), rgba(52, 211, 153, 0.02));
@@ -1865,9 +1885,9 @@ html[lang="vi-VN"] .coord-pair .coord-value {
   box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
 }
 .cipher-row.locked .cipher-coord:nth-child(2) {
-  color: #fbbf24;
+  color: var(--amber-text);
   font-weight: 800;
-  text-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+  text-shadow: 0 0 8px var(--accent-glow);
 }
 
 
@@ -2120,7 +2140,7 @@ html[lang="vi-VN"] .coord-pair .coord-value {
   min-width: 0;
   flex-shrink: 1;
   padding: 7px 14px;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--progress-bg);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   justify-self: center;
@@ -2176,10 +2196,10 @@ html[lang="vi-VN"] .coord-pair .coord-value {
   color: var(--text-secondary);
 }
 .ded-conclusion.gold {
-  border-color: rgba(251, 191, 36, 0.5);
-  background: rgba(251, 191, 36, 0.08);
-  color: var(--gold);
-  text-shadow: 0 0 17px rgba(251, 191, 36, 0.4);
+  border-color: var(--accent-glow);
+  background: var(--gold-bg);
+  color: var(--accent);
+  text-shadow: 0 0 17px var(--accent-glow);
 }
 .ded-conclusion.bad {
   border-color: rgba(251, 113, 133, 0.5);
@@ -2375,13 +2395,13 @@ html[lang="vi-VN"] .coord-pair .coord-value {
   align-items: center;
   flex-wrap: wrap;
   padding: 7px 13px;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--legend-bg);
   backdrop-filter: blur(10px);
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
   font-size: 11px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--legend-text);
 }
 .ded-legend .legend-item { display: flex; align-items: center; gap: 6px; }
 .ded-legend .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
@@ -2481,7 +2501,7 @@ html[lang="vi-VN"] .coord-pair .coord-value {
 .ded-empty { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
 .ded-step {
   border-radius: var(--radius);
-  border: 1px solid transparent;
+  border: 1px solid var(--border);
   background: var(--btn-bg);
   transition: all 0.3s;
 }
@@ -2525,10 +2545,10 @@ html[lang="vi-VN"] .coord-pair .coord-value {
 }
 .ded-step-kind {
   font-weight: 700;
-  color: var(--gold);
+  color: var(--accent);
   padding: 2px 6px;
   border-radius: 4px;
-  border: 1px solid rgba(158, 27, 50, 0.4);
+  border: 1px solid var(--ded-kind-border);
 }
 .ded-step.active .ded-step-kind { border-color: var(--ded-kind-border); }
 .ded-step-rest { color: var(--info-blue); }
@@ -2646,13 +2666,13 @@ details.ded-card[open] > summary .arrow { transform: rotate(90deg); }
 .ded-more-name {
   grid-column: 1;
   justify-self: stretch;
-  color: #f5f5f7;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.06);
+  color: var(--more-name-text);
+  border: 1px solid var(--more-name-border);
+  background: var(--more-name-bg);
 }
 .ded-more-name:hover {
-  color: #1a1a2e;
-  background: #f5f5f7;
+  color: var(--more-name-hover-text);
+  background: var(--more-name-hover-bg);
   border-color: transparent;
 }
 .ded-more-go {
@@ -2917,7 +2937,7 @@ details.ded-card[open] > summary .arrow { transform: rotate(90deg); }
   min-width: 0;
   text-align: right;
   font-weight: 700;
-  color: #7dd3fc;
+  color: var(--pct-text);
   font-variant-numeric: tabular-nums;
 }
 
@@ -3818,7 +3838,7 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.88);
   border: 1px solid var(--border);
-  color: #7dd3fc;
+  color: var(--sky-text);
   font-size: 11px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   white-space: nowrap;
@@ -4169,7 +4189,7 @@ div.tac-fixed-spawn .cam-dir.up {
   border: 1px solid rgba(125, 211, 252, 0.5);
   border-radius: var(--radius-sm);
   background: rgba(125, 211, 252, 0.12);
-  color: #7dd3fc;
+  color: var(--sky-text);
   font-size: 12px;
   cursor: pointer;
 }
@@ -4204,7 +4224,7 @@ div.tac-fixed-spawn .cam-dir.up {
 .tac-box-title {
   font-weight: 700;
   font-size: 12px;
-  color: #fbbf24;
+  color: var(--amber-text);
   letter-spacing: 0.5px;
 }
 .tac-box-hint {
@@ -4230,9 +4250,9 @@ div.tac-fixed-spawn .cam-dir.up {
   cursor: pointer;
 }
 .tac-manage-toggle.on {
-  border-color: rgba(251, 191, 36, 0.6);
-  background: rgba(251, 191, 36, 0.16);
-  color: #fbbf24;
+  border-color: var(--gold-border);
+  background: var(--gold-bg);
+  color: var(--amber-text);
 }
 .tac-manage-toggle:disabled {
   opacity: 0.45;
@@ -4494,7 +4514,7 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--accent-ui); }
   cursor: pointer;
   transition: all 0.2s;
 }
-.tac-help-btn:hover { border-color: #38bdf8; color: #7dd3fc; background: rgba(56, 189, 248, 0.1); }
+.tac-help-btn:hover { border-color: var(--accent-ui); color: var(--sky-text); background: var(--hover-bg); }
 .tac-help-text {
   font-size: 12px;
   color: var(--text-secondary);
@@ -4697,7 +4717,7 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--accent-ui); }
 }
 .tac-link-status {
   display: block;
-  color: #7dd3fc;
+  color: var(--sky-text);
 }
 .tac-range-fill {
   display: flex;
