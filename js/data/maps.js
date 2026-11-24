@@ -1417,7 +1417,7 @@ export const MAPS_DATA = [
       ''
     ];
 
-    const escapeDoors = [[387, 20], [225, 616], [404, 20], [209, 616]];
+    const escapeDoors = [[357, 20], [225, 616], [374, 20], [209, 616]];
 
     const dungeons = [[173, 304], [627, 526], [410, 340]];
 
