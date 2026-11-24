@@ -291,7 +291,8 @@ test('anim: auto-route plans an optimal path for new waypoints only', async ({ p
   let token = (await read(page)).board.tokens[0];
   expect(token.anim.paths?.[0] ?? null).toBeNull();
 
-  // 勾选「自动规划最优路线」后，新增路径点自动与上一点连成最优路径
+  // 「允许翻窗」默认勾选；勾选「自动规划最优路线」后，新增路径点自动与上一点连成最优路径
+  await expect(page.locator('.tac-manage-box input[data-vault]')).toBeChecked();
   await page.locator('label.tac-display-toggle:has(input[data-ar])').click();
   await clickPoint(page, 0.6, 0.6); // 路径点 3 → 异步规划第 2 段
   await expect.poll(async () => {
