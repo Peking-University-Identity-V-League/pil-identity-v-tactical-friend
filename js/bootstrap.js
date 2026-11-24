@@ -109,7 +109,7 @@ function initThemeToggle() {
   const apply = (theme) => {
     root.dataset.theme = theme;
     const toDark = theme !== 'dark';
-    btn.textContent = toDark ? '🌙' : '☀️';
+    btn.textContent = toDark ? '☀️' : '🌙';
     btn.title = translate(toDark ? 'ui.theme.toDark' : 'ui.theme.toLight');
     btn.setAttribute('aria-label', btn.title);
   };

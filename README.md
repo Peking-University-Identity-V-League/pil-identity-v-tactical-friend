@@ -265,6 +265,7 @@ app/
 | 改战术面板放置、拖动、删除 | `js/tactic.js` | `tacMapWrap.addEventListener('pointerdown'` 及后续事件 |
 | 改范围圈、箭头、测距线外观逻辑 | `js/tactic.js` | `shapeNode`、`measureNode`、`renderTacArrows` |
 | 改移动时间计算 | `js/core/measurements.js`、`js/tactic.js` | `simulateMovement`、`tacSimLine`、`updateTacMeasureInfo` |
+| 改造物动画（播放、路径点、时间轴、最优路线） | `js/tactic.js`、`js/core/anim.js` | `buildTacAnimBox`、`tacAnimRouteSegment`、`animSegments`、`tacTimeline` |
 | 改导出图片 | `js/tactic.js` | `tacExportImage` |
 | 改快捷键 | `js/tactic.js` | `window.addEventListener('keydown'` |
 | 改默认图标大小、缩放范围 | `js/data/tactic-data.js` | `TAC_DISPLAY_DEFAULT`、`TAC_MANAGE_DEFAULT`、`TAC_ZOOM_MIN/MAX` |
@@ -686,14 +687,16 @@ deduce(map, marks)
 | 函数或状态 | 用途 |
 |---|---|
 | `tacAnimEnsure()` | 取出或初始化造物的 `anim` 字段 |
-| `tacAnimConvertMode()` | 时刻 / 移速两种模式互转，路径点保留、派生值互算 |
-| `buildTacAnimBox()` | 管理卡片里的动画编辑区（模式、路径点行、播放控制） |
+| `tacAnimConvertMode()` | 按时刻设置 / 按移速设置两种模式互转，路径点保留、派生值互算 |
+| `buildTacAnimBox()` | 「动画管理」小卡片：加点开关、隐藏动画线 / 隐藏时刻点、自动规划最优路线、模式切换、路径点行、播放控制；清除动画后这些控件保留常规显示 |
 | `renderTacAnimDots()` | 动画工具下绘制编号路径点 |
-| `tacAnimPlayStart()` / `tacAnimStop()` / `tacAnimReset()` | 播放（rAF 平滑移动）、停止、还原位置 |
-| `tacDragAnimDot` | 正在拖动的路径点 |
+| `tacAnimPlayStart()` / `tacAnimStop()` / `tacAnimReset()` | 播放（rAF 平滑移动）、停止、还原位置；播放 / 停止合并为一个按钮，播放中按钮变为「⏹ 停止」，再点停止并重置 |
+| `tacAnimRouteSegment()` | 「自动规划最优路线」勾选后，新增 / 拖动路径点时异步复用两点最优路径规划（`computePath` + `smoothPathOnGrid`），结果写入 `anim.paths[段号]` |
+| `tacDragAnimDot` | 正在拖动的路径点；拖动开始会清除相邻两段的旧路径，删除路径点时 `paths` 索引随段重排 |
 | `tacTimeline` / `renderTacTimeline()` | 全局时间轴：统一时钟下所有动画造物协同播放、拖动寻址 |
+| `renderTacManage()` | 管理卡片随工具切换双形态：选择工具显示「🧩 造物管理」（范围、图标等设置，隐藏动画卡片）；动画工具变为「🧩 造物动画」，只显示动画卡片。顶栏的恢复默认顺序 / 取消选中 / 数量统计两种形态下都保留；「取消选中」同时清除地图上的选中高亮（不影响造物本身的「高亮」属性）并退出加点状态 |
 
-全局时间轴（`tacTimeline`）是页面底部的冻结底栏，仅在动画工具下显示（`body.tac-timeline-open` 为内容让出底部空间）。动画数据存放在角色 / 道具的 `anim` 字段，随战术板自动存档。播放只改 DOM 位置、不写回造物坐标；切工具、切图、拖动、删除、撤销都会停止播放并还原。段时长、时刻插值等纯计算在 `js/core/anim.js`，可直接单元测试；移速模式的每段可挂加成 buff（特质 / 天赋 / 其它，按角色、姿态、形态过滤），段时长用与测算卡片同款的 `simulateMovement()` 计算。
+全局时间轴（`tacTimeline`）是页面底部的冻结底栏，仅在动画工具下显示（`body.tac-timeline-open` 为内容让出底部空间）。动画数据存放在角色 / 道具的 `anim` 字段，随战术板自动存档；`anim.paths` 存各段的栅格最优路径（相对坐标折线），没有路径的段回退为端点直线。播放只改 DOM 位置、不写回造物坐标；切工具、切图、拖动、删除、撤销都会停止播放并还原。段时长、时刻插值、路径长度等纯计算在 `js/core/anim.js`（`animSegPath()` / `animPathLenM()` / `animPointAlongPath()`），可直接单元测试；移速模式的每段可挂加成 buff（特质 / 天赋 / 其它，按角色、姿态、形态过滤），段时长用与测算卡片同款的 `simulateMovement()` 计算。
 
 ---
 

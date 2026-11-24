@@ -333,9 +333,11 @@ test('anim: deselect button clears selection and disarms adding points', async (
   await expect(page.locator('.tac-anim-arm-btn')).toHaveText('点此取消添加');
   await expect(page.locator('.tac-manage-btn.active')).toHaveCount(1);
 
-  // 取消选中：清除所有造物选中，并退出添加状态
+  // 取消选中：清除所有造物选中（含地图上的选中高亮），并退出添加状态
+  await expect(page.locator('.tac-token.selected')).toHaveCount(1);
   await page.locator('.tac-manage-side button', { hasText: '取消选中' }).click();
   await expect(page.locator('.tac-manage-btn.active')).toHaveCount(0);
+  await expect(page.locator('.tac-token.selected')).toHaveCount(0);
 
   // 重新选中造物：添加状态保持取消（按钮显示「添加路径点」而非「点此取消添加」）
   await clickPoint(page, 0.3, 0.3);

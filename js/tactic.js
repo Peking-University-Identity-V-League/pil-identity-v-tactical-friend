@@ -6806,8 +6806,10 @@ export function renderTacManage() {
   deselectBtn.className = 'tac-manage-reset';
   deselectBtn.textContent = translate("ui.tac.creation.deselect");
   deselectBtn.addEventListener('click', () => {
-    // 取消所有造物选中，同时退出动画的「添加路径点」状态
+    // 取消所有造物选中（清除地图选中高亮，不影响造物本身的「高亮」属性），并退出动画的「添加路径点」状态
     tacManageSel = null;
+    tacSelected = null;
+    tacSelectedItem = null;
     if (tacAnimArmed) tacAnimArmed = false;
     renderTacBoard();
     renderTacManage();
