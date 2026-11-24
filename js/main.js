@@ -7,7 +7,7 @@ import { translate } from './core/i18n.js';
 
 export function initParticles() {
   const container = document.getElementById('particles');
-  const colors = ['#6366f1', '#f472b6', '#fbbf24', '#8b5cf6', '#34d399'];
+  const colors = ['#9e1b32', '#c9a063', '#c0485c', '#ddbe8c', '#c9962e'];
   for (let i = 0; i < 30; i++) {
     const p = document.createElement('div');
     p.className = 'particle';

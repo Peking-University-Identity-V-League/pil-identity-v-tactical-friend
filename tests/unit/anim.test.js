@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { animAllPositions, animAvgSpeed, animDuration, animPositionAt, animSegmentLenM, animSegments }
+import { animAllPositions, animAvgSpeed, animDuration, animPathLenM, animPointAlongPath, animPositionAt, animSegPath, animSegmentLenM, animSegments }
   from '../../js/core/anim.js';
 
 // 1000×1000 底图、横向 100m：0.1 相对距离 = 10m
@@ -114,4 +114,35 @@ test('animAllPositions: batch-locates entries for the global timeline', () => {
   assert.ok(Math.abs(at3[1].y - 0.525) < 1e-9);
   const at9 = animAllPositions([{ anim: a }, { anim: b }], GEOM, 9);
   assert.ok(at9[0].done && at9[1].done);
+});
+
+test('optimal route: segment length and position follow the route polyline', () => {
+  // L 形最优路径 (0,0)→(0.1,0)→(0.1,0.1)：沿路径 20m，直线仅 ~14.14m
+  const anim = {
+    mode: 'time',
+    points: [{ x: 0, y: 0 }, { x: 0.1, y: 0.1 }],
+    times: [0, 10],
+    paths: [[{ x: 0, y: 0 }, { x: 0.1, y: 0 }, { x: 0.1, y: 0.1 }]],
+  };
+  const segs = animSegments(anim, GEOM);
+  assert.equal(segs[0].lenM, 20); // 距离采用最优路径长度
+  // t=5（弧长一半=10m）：正好到达拐角 (0.1, 0)
+  const mid = animPositionAt(anim, GEOM, 5);
+  assert.ok(Math.abs(mid.x - 0.1) < 1e-9 && Math.abs(mid.y) < 1e-9 && !mid.done);
+  // t=2.5（5m）：水平段中点
+  const q = animPositionAt(anim, GEOM, 2.5);
+  assert.ok(Math.abs(q.x - 0.05) < 1e-9 && Math.abs(q.y) < 1e-9);
+});
+
+test('animSegPath falls back to the straight segment when no route is stored', () => {
+  const anim = { points: [{ x: 0, y: 0 }, { x: 0.2, y: 0 }] };
+  assert.deepEqual(animSegPath(anim, 0), [{ x: 0, y: 0 }, { x: 0.2, y: 0 }]);
+  assert.equal(animPathLenM(animSegPath(anim, 0), GEOM), 20);
+});
+
+test('animPointAlongPath clamps to both ends and tolerates degenerate paths', () => {
+  const path = [{ x: 0, y: 0 }, { x: 0.1, y: 0 }];
+  assert.deepEqual(animPointAlongPath(path, -1, GEOM), { x: 0, y: 0 });
+  assert.deepEqual(animPointAlongPath(path, 2, GEOM), { x: 0.1, y: 0 });
+  assert.deepEqual(animPointAlongPath([{ x: 0.3, y: 0.3 }], 0.5, GEOM), { x: 0.3, y: 0.3 });
 });

@@ -10,7 +10,7 @@ PIL (Peking University Identity V League) Identity V Tactical Friend
 
 ## 使用与免责声明
 
-最后更新：2026-11-16
+最后更新：2026-11-24
 
 访问本项目网站，或下载、运行、修改、转载本项目的代码、教程及相关资源前，请仔细阅读本声明。继续使用即表明您已阅读并愿意遵守其中依法有效的条款；如不接受，请停止使用。
 
@@ -47,7 +47,7 @@ https://pil-tactical-friend.ok.kimi.link
 
 项目目前包含三个主要工作视图：
 
-1. **战术面板**：放置角色和道具、绘制图形与文字、测距、计算移动时间、导出图片。
+1. **战术面板**：放置角色和道具、绘制图形与文字、测距、计算移动时间、制作造物移动动画（含全局时间轴协同播放）、导出图片。
 2. **区域选择**：选择求生者和监管者区域、切换密码机组、查看封禁密码机和距离分析。
 3. **密码机推演**：手动标记点位有无密码机，根据地图规则推断剩余点位和可能的密码机布局。
 
@@ -265,6 +265,7 @@ app/
 | 改战术面板放置、拖动、删除 | `js/tactic.js` | `tacMapWrap.addEventListener('pointerdown'` 及后续事件 |
 | 改范围圈、箭头、测距线外观逻辑 | `js/tactic.js` | `shapeNode`、`measureNode`、`renderTacArrows` |
 | 改移动时间计算 | `js/core/measurements.js`、`js/tactic.js` | `simulateMovement`、`tacSimLine`、`updateTacMeasureInfo` |
+| 改造物动画（播放、路径点、时间轴、最优路线） | `js/tactic.js`、`js/core/anim.js` | `buildTacAnimBox`、`tacAnimRouteSegment`、`animSegments`、`tacTimeline` |
 | 改导出图片 | `js/tactic.js` | `tacExportImage` |
 | 改快捷键 | `js/tactic.js` | `window.addEventListener('keydown'` |
 | 改默认图标大小、缩放范围 | `js/data/tactic-data.js` | `TAC_DISPLAY_DEFAULT`、`TAC_MANAGE_DEFAULT`、`TAC_ZOOM_MIN/MAX` |
@@ -365,7 +366,7 @@ node scripts/dev-server.js
 
 | 区域 | 关键 ID | 用途 |
 |---|---|---|
-| 页头 | `appHeader` | 冻结顶栏：返回键、页签、战术工具按钮组（`tacTopTools`）；子页面隐藏居中大标题 |
+| 页头 | `appHeader` | 冻结顶栏：返回键、页签、战术工具按钮组（`tacTopTools`）、深浅主题切换（`themeToggle`）与语言切换；子页面隐藏居中大标题 |
 | 首页 | `homeView` | 放置由 `main.js` 生成的地图卡片 |
 | 战术面板 | `tacticView` | 地图、角色、绘制、测算、设置等卡片；动画工具下底部显示冻结时间轴（`tacTimeline`） |
 | 区域选择 | `selectView` | 区域地图、密码机组切换、阵营切换、分析面板 |
@@ -405,6 +406,18 @@ node scripts/dev-server.js
 - 战术角色、道具、范围圈、文字、图形和测距线；
 - 弹窗、表格、滑杆、按钮和开关；
 - 不同屏幕宽度下的响应式布局。
+
+### 深浅双主题
+
+页面支持**暗色（默认）+ 浅色**双主题，顶栏右侧的 🌙/☀️ 按钮切换，选择持久化到 `localStorage` 的 `pil-theme` 键；`index.html` 头部的内联脚本在加载早期就落地主题，避免闪烁。实现上是按主题取值的 CSS 变量组：
+
+- `:root`：浅色「燕园红」变量（默认主题的完整定义）；
+- `:root[data-theme="dark"]`：暗色变量，覆盖同名变量即可；
+- 除颜色基础变量外，还有一组交互语义变量（`--hover-bg/--hover-text/--sel-border/--sel-text/--accent-ui/--active-grad/--ded-active-*/--anim-active-*/--gold-*` 等），组件只引用语义变量，不写死颜色。
+
+语义变量分组（浅色值 / 暗色值）：面板与胶囊底 `--btn-bg`/`--chip-bg`/`--navpill-bg`/`--legend-bg`/`--toggle-bg`/`--progress-bg`/`--thead-bg`；文字 `--text`/`--text-secondary`/`--row-text`/`--legend-text`；强调文字 `--accent-ui`（浅红 / 暗蓝）、`--sky-text`（亮蓝，浅用信息蓝 / 暗 `#7dd3fc`）、`--amber-text`（亮黄，浅用深金 / 暗 `#fbbf24`）、`--pct-text`（密码机进度百分比，浅红 / 暗亮蓝）、`--gold-text`；金色三件套 `--gold-text/--gold-bg/--gold-border`；首页推荐工具 `--more-name-*`；悬停选中 `--hover-*/--sel-*`、推演 `--ded-active-*`、动画 `--anim-active-*`。
+
+新增组件样式时**不要写死颜色**：面板背景用 `var(--btn-bg)`/`var(--chip-bg)`，文字用 `var(--text)`/`var(--text-secondary)`，边框用 `var(--border)`，悬停和选中用 `var(--hover-*)`/`var(--sel-*)`；亮蓝/亮黄强调文字分别用 `var(--sky-text)`/`var(--amber-text)`，不要直接写 `#7dd3fc`/`#fbbf24`（浅色下会看不见）；否则暗色或浅色下会出现白字白底。地图内部元素（角色点、测距线、推演标记色）有意不随主题变化。
 
 ### 常见修改位置
 
@@ -674,14 +687,16 @@ deduce(map, marks)
 | 函数或状态 | 用途 |
 |---|---|
 | `tacAnimEnsure()` | 取出或初始化造物的 `anim` 字段 |
-| `tacAnimConvertMode()` | 时刻 / 移速两种模式互转，路径点保留、派生值互算 |
-| `buildTacAnimBox()` | 管理卡片里的动画编辑区（模式、路径点行、播放控制） |
+| `tacAnimConvertMode()` | 按时刻设置 / 按移速设置两种模式互转，路径点保留、派生值互算 |
+| `buildTacAnimBox()` | 「动画管理」小卡片：加点开关、隐藏动画线 / 隐藏时刻点、自动规划最优路线、模式切换、路径点行、播放控制；清除动画后这些控件保留常规显示 |
 | `renderTacAnimDots()` | 动画工具下绘制编号路径点 |
-| `tacAnimPlayStart()` / `tacAnimStop()` / `tacAnimReset()` | 播放（rAF 平滑移动）、停止、还原位置 |
-| `tacDragAnimDot` | 正在拖动的路径点 |
+| `tacAnimPlayStart()` / `tacAnimStop()` / `tacAnimReset()` | 播放（rAF 平滑移动）、停止、还原位置；播放 / 停止合并为一个按钮，播放中按钮变为「⏹ 停止」，再点停止并重置 |
+| `tacAnimRouteSegment()` | 「自动规划最优路线」勾选后，新增 / 拖动路径点时异步复用两点最优路径规划（`computePath` + `smoothPathOnGrid`），结果写入 `anim.paths[段号]` |
+| `tacDragAnimDot` | 正在拖动的路径点；拖动开始会清除相邻两段的旧路径，删除路径点时 `paths` 索引随段重排 |
 | `tacTimeline` / `renderTacTimeline()` | 全局时间轴：统一时钟下所有动画造物协同播放、拖动寻址 |
+| `renderTacManage()` | 管理卡片随工具切换双形态：选择工具显示「🧩 造物管理」（范围、图标等设置，隐藏动画卡片）；动画工具变为「🧩 造物动画」，只显示动画卡片。顶栏的恢复默认顺序 / 取消选中 / 数量统计两种形态下都保留；「取消选中」同时清除地图上的选中高亮（不影响造物本身的「高亮」属性）并退出加点状态 |
 
-全局时间轴（`tacTimeline`）是页面底部的冻结底栏，仅在动画工具下显示（`body.tac-timeline-open` 为内容让出底部空间）。动画数据存放在角色 / 道具的 `anim` 字段，随战术板自动存档。播放只改 DOM 位置、不写回造物坐标；切工具、切图、拖动、删除、撤销都会停止播放并还原。段时长、时刻插值等纯计算在 `js/core/anim.js`，可直接单元测试；移速模式的每段可挂加成 buff（特质 / 天赋 / 其它，按角色、姿态、形态过滤），段时长用与测算卡片同款的 `simulateMovement()` 计算。
+全局时间轴（`tacTimeline`）是页面底部的冻结底栏，仅在动画工具下显示（`body.tac-timeline-open` 为内容让出底部空间）。动画数据存放在角色 / 道具的 `anim` 字段，随战术板自动存档；`anim.paths` 存各段的栅格最优路径（相对坐标折线），没有路径的段回退为端点直线。播放只改 DOM 位置、不写回造物坐标；切工具、切图、拖动、删除、撤销都会停止播放并还原。段时长、时刻插值、路径长度等纯计算在 `js/core/anim.js`（`animSegPath()` / `animPathLenM()` / `animPointAlongPath()`），可直接单元测试；移速模式的每段可挂加成 buff（特质 / 天赋 / 其它，按角色、姿态、形态过滤），段时长用与测算卡片同款的 `simulateMovement()` 计算。
 
 ---
 
@@ -1124,6 +1139,12 @@ idv5_tactic_v1
 
 ```text
 identityV.locale
+```
+
+主题偏好（`dark` / `light`，缺省暗色）使用：
+
+```text
+pil-theme
 ```
 
 ### 12.1 战术板数据

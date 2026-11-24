@@ -1,4 +1,4 @@
-import { changeLocale, getActiveLocale, initializeI18n, SUPPORTED_LOCALE_LIST } from './core/i18n.js';
+import { changeLocale, getActiveLocale, initializeI18n, SUPPORTED_LOCALE_LIST, translate } from './core/i18n.js';
 import { homeView } from './core/dom.js';
 import { S } from './core/state.js';
 import { initUpdatesUI } from './updates-ui.js';
@@ -99,6 +99,28 @@ async function startApplication() {
     closeMenu();
   });
 }
+
+// 深浅主题切换：localStorage 优先，默认暗色
+const THEME_KEY = 'pil-theme';
+function initThemeToggle() {
+  const btn = document.getElementById('themeToggle');
+  if (!btn) return;
+  const root = document.documentElement;
+  const apply = (theme) => {
+    root.dataset.theme = theme;
+    const toDark = theme !== 'dark';
+    btn.textContent = toDark ? '☀️' : '🌙';
+    btn.title = translate(toDark ? 'ui.theme.toDark' : 'ui.theme.toLight');
+    btn.setAttribute('aria-label', btn.title);
+  };
+  apply(root.dataset.theme === 'light' ? 'light' : 'dark');
+  btn.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* 忽略隐私模式 */ }
+    apply(next);
+  });
+}
+initThemeToggle();
 
 // 软键盘遮挡：iOS 键盘不压缩布局窗口，靠 visualViewport 把焦点输入框滚回可视区
 if (window.visualViewport) {
