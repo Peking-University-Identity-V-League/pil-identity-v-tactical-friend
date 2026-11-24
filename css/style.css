@@ -58,6 +58,9 @@
   --ded-kind-border: rgba(158, 27, 50, 0.7);
   --ded-num: var(--primary);
   --ring-color: var(--secondary);
+  --gold-text: #8a6410;
+  --gold-bg: rgba(176, 125, 31, 0.1);
+  --gold-border: rgba(176, 125, 31, 0.45);
   --contact-border: rgba(158, 27, 50, 0.35);
   --contact-bg: rgba(158, 27, 50, 0.07);
   --contact-text: #9e1b32;
@@ -125,6 +128,9 @@
   --ded-num: #f9a8d4;
   --ring-color: #f472b6;
   --measure-num: #fde68a;
+  --gold-text: #fde68a;
+  --gold-bg: rgba(251, 191, 36, 0.08);
+  --gold-border: rgba(251, 191, 36, 0.35);
   --contact-border: rgba(251, 114, 153, 0.45);
   --contact-bg: rgba(251, 114, 153, 0.12);
   --contact-text: #fb7299;
@@ -488,7 +494,7 @@ body:not(.has-tabs) .header-lang { display: none; }
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 62%, var(--map-fade) 100%);
+  background: linear-gradient(180deg, transparent 74%, var(--map-fade) 100%);
 }
 .home-card-icon {
   position: absolute;
@@ -3097,7 +3103,7 @@ body.tac-timeline-open .footer { display: none; }
   gap: 4px;
   padding: 3px 8px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--border);
   background: var(--btn-bg);
   font-size: 11px;
   color: var(--text-secondary);
@@ -3105,9 +3111,9 @@ body.tac-timeline-open .footer { display: none; }
   user-select: none;
 }
 .tac-buff:has(input:checked) {
-  border-color: #fbbf24;
-  color: #fde68a;
-  background: rgba(251, 191, 36, 0.12);
+  border-color: var(--gold-border);
+  color: var(--gold-text);
+  background: var(--gold-bg);
 }
 .tac-buff input { display: none; }
 .tac-buff select {
@@ -3160,8 +3166,8 @@ body.tac-timeline-open .footer { display: none; }
   min-width: 0;
   padding: 4px 10px;
   border-radius: 999px;
-  border: 1px solid rgba(251, 191, 36, 0.4);
-  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid var(--gold-border);
+  background: var(--gold-bg);
   font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0;
@@ -3173,7 +3179,7 @@ body.tac-timeline-open .footer { display: none; }
   cursor: default;
   user-select: none;
 }
-.tac-status b { color: #fde68a; font-weight: 800; }
+.tac-status b { color: var(--gold-text); font-weight: 800; }
 
 .tac-status2 {
   flex: 0 1 auto; min-width: 0;
@@ -3186,7 +3192,7 @@ body.tac-timeline-open .footer { display: none; }
   padding: 4px 10px;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--btn-bg);
   color: var(--text-secondary);
   font-size: 10.5px;
   font-weight: 700;
@@ -3199,14 +3205,14 @@ body.tac-timeline-open .footer { display: none; }
 .tac-add-btn {
   padding: 5px 12px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--border);
   background: var(--btn-bg);
   color: var(--text-secondary);
   font-size: 11px;
   cursor: pointer;
   transition: all 0.2s;
 }
-.tac-add-btn:hover { border-color: #fbbf24; color: #fde68a; background: rgba(251, 191, 36, 0.12); }
+.tac-add-btn:hover { border-color: var(--gold-border); color: var(--gold-text); background: var(--gold-bg); }
 #tacBuffModal .tac-buff-rows { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 4px 2px; }
 #tacBuffModal .tac-buff-rows input {
   width: 200px; box-sizing: border-box; padding: 6px 8px;
@@ -3241,8 +3247,8 @@ body.tac-timeline-open .footer { display: none; }
 }
 .tac-buff-filter select {
   padding: 1px 2px; border-radius: 5px;
-  border: 1px solid rgba(251, 191, 36, 0.35);
-  background: rgba(251, 191, 36, 0.08); color: #fde68a;
+  border: 1px solid var(--gold-border);
+  background: var(--gold-bg); color: var(--gold-text);
   font-size: 11px; cursor: pointer;
 }
 .tac-merge-toggle {
@@ -3268,8 +3274,8 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 
 .tac-detail-body td select {
   padding: 1px 2px; border-radius: 5px;
-  border: 1px solid rgba(251, 191, 36, 0.35);
-  background: rgba(251, 191, 36, 0.08); color: #fde68a;
+  border: 1px solid var(--gold-border);
+  background: var(--gold-bg); color: var(--gold-text);
   font-size: 11px; cursor: pointer;
 }
 .tac-detail-body td select option { color: #000; background: #fff; }
@@ -3281,7 +3287,7 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 .tac-detail-body tr:hover .tac-buff-del { opacity: 1; }
 .tac-detail-empty {
   padding: 10px 6px; text-align: center;
-  color: var(--color-text-dim); font-size: 11px;
+  color: var(--text-secondary); font-size: 11px;
   border: 1px dashed var(--color-border); border-radius: var(--radius-sm);
 }
 
@@ -3473,7 +3479,7 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 #tacCarryPickBtn, #tacPathPickA, #tacPathPickB { padding: 6px 14px; font-size: 12px; flex: none; }
 #tacCarryCard .tac-carry-pick .tac-carry-chair-name,
 #tacPathCard .tac-carry-pick .tac-carry-chair-name {
-  color: #ffd54f;
+  color: var(--gold-text);
   font-weight: 700;
 }
 #tacCarryCard .tac-carry-pick .tac-display-toggle {
@@ -3642,10 +3648,10 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 .tac-shapes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
 .tac-shape {
   padding: 8px 4px;
-  border: 1px solid rgba(255, 255, 255, 0.28); 
+  border: 1px solid var(--border); 
   border-radius: var(--radius-sm);
-  background: var(--color-surface-2);
-  color: var(--color-text-dim);
+  background: var(--btn-bg);
+  color: var(--text-secondary);
   font-size: 12px;
   font-weight: 600;
   font-family: inherit;
@@ -3993,7 +3999,7 @@ div.tac-fixed-spawn .cam-dir.up {
   border-radius: 17px;
   border: 1px solid var(--border);
   background: rgba(0, 0, 0, 0.25);
-  color: var(--color-text-dim);
+  color: var(--text-secondary);
   font-size: 12px;
   font-weight: 600;
   font-family: inherit;
@@ -4028,7 +4034,7 @@ div.tac-fixed-spawn .cam-dir.up {
 .tac-result-empty {
   padding: 14px 8px;
   text-align: center;
-  color: var(--color-text-dim);
+  color: var(--text-secondary);
   font-size: 12px;
   border: 1px dashed var(--color-border);
   border-radius: var(--radius-sm);
@@ -4225,7 +4231,7 @@ div.tac-fixed-spawn .cam-dir.up {
 .tac-manage-empty {
   padding: 14px 8px;
   text-align: center;
-  color: var(--color-text-dim);
+  color: var(--text-secondary);
   font-size: 12px;
   border: 1px dashed var(--color-border);
   border-radius: var(--radius-sm);
@@ -4446,7 +4452,7 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--accent-ui); }
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 1px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--btn-bg);
   border: 1px solid var(--border);
   color: var(--text);
   cursor: pointer;
