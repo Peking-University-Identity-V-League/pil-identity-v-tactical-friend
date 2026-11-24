@@ -46,7 +46,7 @@ test('anim: play/stop toggle moves the token and resets it', async ({ page }) =>
   const playBtn = page.locator('.tac-anim-play-btn');
   await expect(playBtn).toHaveText('▶ 播放');
   await playBtn.click();
-  await expect(playBtn).toHaveText('停止');
+  await expect(playBtn).toHaveText('⏹ 停止');
 
   // 趁播放未结束（总时长 0.4s）立即点击停止：停止并重置到起点
   await playBtn.click();
@@ -100,14 +100,16 @@ test('anim: dragging a waypoint updates its position', async ({ page }) => {
   expect(token.anim.points[2].y).toBeLessThan(0.6);
 });
 
-test('anim: dots and path stay visible in select tool; hide toggles work', async ({ page }) => {
+test('anim: dots and path stay visible in select tool; hide toggles live in anim tool', async ({ page }) => {
   await setupAnim(page);
   await tool(page, 'select');
-  // 选择工具下：时刻点与动画线仍然显示（选中造物有动画时）
+  // 选择工具下：时刻点与动画线仍然显示（选中造物有动画时），但不显示动画设置卡片
   await expect(page.locator('.tac-anim-dot')).toHaveCount(3);
   await expect(page.locator('#tacArrowSvg polyline')).toHaveCount(1);
+  await expect(page.locator('.tac-manage-box input[data-h]')).toHaveCount(0);
 
-  // 隐藏时刻点 / 隐藏动画线
+  // 隐藏开关位于动画工具的管理卡片里
+  await tool(page, 'anim');
   await page.locator('.tac-manage-box input[data-h="dots"]').click();
   await expect(page.locator('.tac-anim-dot')).toHaveCount(0);
   await page.locator('.tac-manage-box input[data-h="path"]').click();
@@ -120,11 +122,15 @@ test('anim: dots and path stay visible in select tool; hide toggles work', async
   await expect(page.locator('#tacArrowSvg polyline')).toHaveCount(1);
 });
 
-test('anim: hint differs between select tool and anim tool', async ({ page }) => {
+test('anim: manage card shows anim box only in anim tool', async ({ page }) => {
   await placeRole(page, 'luckyGuy', 0.3, 0.3);
   await clickPoint(page, 0.3, 0.3);
-  await expect(page.locator('.tac-manage-box .tac-box-hint').last()).toHaveText('未设置动画');
+  // 选择工具：标题为「造物管理」，隐藏动画卡片
+  await expect(page.locator('#tacManageCard .ded-sec-zh')).toHaveText('🧩 造物管理');
+  await expect(page.locator('.tac-manage-box input[data-ar]')).toHaveCount(0);
+  // 动画工具：标题变为「造物动画」，显示加点状态
   await tool(page, 'anim');
+  await expect(page.locator('#tacManageCard .ded-sec-zh')).toHaveText('🧩 造物动画');
   await expect(page.locator('.tac-anim-status')).toHaveText('在地图上点击添加路径点');
 });
 

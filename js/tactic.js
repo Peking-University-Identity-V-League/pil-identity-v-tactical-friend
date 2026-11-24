@@ -18,7 +18,7 @@ import { TAC_ITEM_TYPES } from './data/items.js';
 import { TAC_ROLES } from './data/roles.js';
 import { CIPHER_ICON_URL, cipherIcon } from './region.js';
 
-import { translate, getActiveLocale } from './core/i18n.js';
+import { translate, translateEn, getActiveLocale } from './core/i18n.js';
 
 export const { loading: tacLoading, error: tacImageError } =
   mountImageOverlays(tacMapWrap);
@@ -6766,6 +6766,17 @@ export function renderTacManage() {
   const board = tacBoard();
   board.order ||= [];
   tacManageList.innerHTML = '';
+  // 卡片标题随工具切换：动画工具下变为「造物动画」
+  {
+    const titleKey = tacTool === 'anim' ? "ui.tac.creation.title.anim" : "ui.tac.creation.title";
+    const zhEl = document.querySelector('#tacManageCard .ded-sec-zh');
+    const enEl = document.querySelector('#tacManageCard .ded-sec-en');
+    if (zhEl) { zhEl.dataset.i18n = titleKey; zhEl.textContent = translate(titleKey); }
+    if (enEl) {
+      enEl.dataset.i18nEn = titleKey;
+      enEl.textContent = translateEn(titleKey).replace(/^[^\p{L}\p{N}]+\s*/u, '');
+    }
+  }
   const entries = tacSortedEntries(board);
 
   if (!entries.length) {
@@ -6848,8 +6859,9 @@ export function renderTacManage() {
   settings.className = 'tac-manage-settings';
   tacManageList.appendChild(settings);
   if (!tacManageSel) {
+    const hintKey = tacTool === 'anim' ? "ui.tac.creation.hint.anim" : "ui.tac.creation.hint";
     settings.innerHTML =
-      `<div class="tac-manage-empty">${translate("ui.tac.creation.hint")}</div>`;
+      `<div class="tac-manage-empty">${translate(hintKey)}</div>`;
     return;
   }
 
@@ -6862,6 +6874,12 @@ export function renderTacManage() {
     const rangeShown = !!rgCfg && tacRangeEntries(rgCfg, token, true).length > 0;
     const isRoleDefault = () =>
       token.size === TAC_MANAGE_DEFAULT.roleSize && !rangeShown && !token.hideIcon;
+
+    // 动画工具：管理卡片只保留「动画管理」，隐藏范围/图标等其它设置卡片
+    if (tacTool === 'anim') {
+      buildTacAnimBox(settings, token);
+      return;
+    }
 
 
     if (role === 'explorer') {
@@ -7042,7 +7060,6 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
       tacManageSel = null;
       renderTacBoard();
     });
-    buildTacAnimBox(settings, token);
     settings.appendChild(row);
     return;
   }
@@ -7075,7 +7092,13 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
       && itemRangeIsDefault();
   };
 
-  
+  // 动画工具：管理卡片只保留「动画管理」，隐藏范围/图标等其它设置卡片
+  if (tacTool === 'anim') {
+    buildTacAnimBox(settings, it);
+    return;
+  }
+
+
   if (it.kind === 'aquaMirror' || it.kind === 'mirrorImage') {
     buildMirrorManageBox(settings, it);
   }
@@ -7110,9 +7133,6 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
         labelPrefix: translate("common.show"),
         labelPostfix: translate("common.range") });
   }
-
-
-  buildTacAnimBox(settings, it);
 
 
   const row = document.createElement('div');
