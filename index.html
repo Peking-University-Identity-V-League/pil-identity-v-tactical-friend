@@ -62,7 +62,7 @@ try {
   <button type="button" class="theme-toggle" id="themeToggle" aria-label="theme">🌙</button>
   <div class="header-lang">
     <button class="footer-lang-btn" id="footerLangBtn" type="button" aria-haspopup="true" aria-expanded="false"
-      title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.footer.language.message&quot;}"><span id="footerLangCurrent">简体中文</span><span class="footer-lang-arrow">▴</span></button>
+      title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.footer.language.message&quot;}"><span id="footerLangCurrent">简体中文</span><span class="footer-lang-arrow">▾</span></button>
     <div class="footer-lang-menu" id="footerLangMenu" role="menu" hidden></div>
   </div>
   </div>
@@ -258,9 +258,11 @@ try {
         <div class="side-toggle tac-mmodes" id="tacMeasureModes">
           <button class="side-btn active" data-mmode="single" data-i18n="ui.tac.measure.line.straightline.button"></button>
           <button class="side-btn" data-mmode="chain" data-i18n="ui.tac.measure.line.polyline.button"></button>
+          <button class="side-btn" data-mmode="route" data-i18n="ui.tac.measure.line.routeline.button"></button>
         </div>
 
         <div class="tac-sec-label tac-speed-title">
+          <button type="button" class="tac-deselect" id="tacMeasureCancel" style="display:none" data-i18n="ui.tac.measure.draw.disarm"></button>
           <button type="button" class="tac-deselect" id="tacDeselect" data-i18n="ui.tac.measure.line.choose"></button>
           <span class="tac-status" id="tacStatus"></span>
           <span class="tac-status2" id="tacStatus2"></span>
@@ -311,6 +313,7 @@ try {
                 <div class="tac-display-snap no-line">
                   <label class="tac-display-toggle"><input type="checkbox" id="tacHideEndpoints" checked><span data-i18n="ui.tac.measure.setting.draw.hide.button"></span></label>
                   <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.measure.setting.draw.deleteSingle.button.message&quot;}"><input type="checkbox" id="tacDelSegOnly"><span data-i18n="ui.tac.measure.setting.draw.deleteSingle.button"></span></label>
+                  <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.path.result.note&quot;}"><input type="checkbox" id="tacMeasureVault" checked><span data-i18n="ui.tac.path.setting.vaultAllow"></span></label>
                 </div>
               </div>
             </div>

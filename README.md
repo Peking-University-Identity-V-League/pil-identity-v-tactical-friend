@@ -265,6 +265,7 @@ app/
 | 改战术面板放置、拖动、删除 | `js/tactic.js` | `tacMapWrap.addEventListener('pointerdown'` 及后续事件 |
 | 改范围圈、箭头、测距线外观逻辑 | `js/tactic.js` | `shapeNode`、`measureNode`、`renderTacArrows` |
 | 改移动时间计算 | `js/core/measurements.js`、`js/tactic.js` | `simulateMovement`、`tacSimLine`、`updateTacMeasureInfo` |
+| 改测算路径线（连续点位间按最优路径连接） | `js/tactic.js`、`js/core/persist.js` | `tacRouteBetween`、`tacMeasureMode === 'route'`、`tacDrawSettings.measureVault` |
 | 改造物动画（播放、路径点、时间轴、最优路线） | `js/tactic.js`、`js/core/anim.js` | `buildTacAnimBox`、`tacAnimRouteSegment`、`animSegments`、`tacTimeline` |
 | 改导出图片 | `js/tactic.js` | `tacExportImage` |
 | 改快捷键 | `js/tactic.js` | `window.addEventListener('keydown'` |
@@ -630,8 +631,9 @@ deduce(map, marks)
 | `circleNode()` | 创建虚线圈 |
 | `rectNode()` | 创建虚线框 |
 | `shapeNode()` | 按类型分发图形创建 |
-| `measureNode()` | 创建测距线或折线段 |
-| `chainTotalNode()` | 创建整条折线汇总 |
+| `measureNode()` | 创建测距线、折线段或路径线段 |
+| `chainTotalNode()` | 创建整条折线或路径线汇总 |
+| `tacRouteBetween()` | 通用最优路径计算（测算路径线与动画自动规划共用） |
 | `renderTacArrows()` | 刷新 SVG 图形层 |
 | `tacLinkPartner()` | 计算同类道具的连线伙伴 |
 | `tacClampLinkPos()` | 限制连线道具的最大距离 |
@@ -1023,7 +1025,7 @@ MAPS_DATA
 
 | 常量 | 用途 |
 |---|---|
-| `TAC_MEASURE_DEFAULT` | 直线和折线默认颜色、线宽 |
+| `TAC_MEASURE_DEFAULT` | 直线、折线和路径线默认颜色、线宽 |
 | `TAC_DISPLAY_DEFAULT` | 密码机、地窖、逃生门、狂欢之椅、柜子、箱子、电话亭、出生点默认图标大小 |
 | `TAC_MANAGE_DEFAULT` | 角色和道具默认显示大小 |
 | `TAC_ZOOM_MIN`、`TAC_ZOOM_MAX` | 地图缩放范围 |
@@ -1169,8 +1171,8 @@ pil-theme
 | `map` | 最近使用地图 |
 | `boards` | 各地图战术板 |
 | `display` | 战术显示设置（显示什么、显示多大） |
-| `draw` | 绘制设置（吸附、隐藏端点、折线删段） |
-| `mstyle` | 直线和折线样式 |
+| `draw` | 绘制设置（吸附、隐藏端点、折线删段、测算允许翻窗） |
+| `mstyle` | 直线、折线和路径线样式 |
 | `regions` | 各地图阵营、选区和密码机组 |
 | `dedMarks` | 各地图推演标记 |
 | `dungeon` | 各地图地窖组 |
