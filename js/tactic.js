@@ -5287,9 +5287,11 @@ export function tacAnimStop(restore) {
   cancelAnimationFrame(tacAnimPlay.raf);
   const { kind, ref } = tacAnimPlay;
   tacAnimPlay = null;
-  if (!restore) return;
-  const obj = kind === 'role' ? tacTokenByTid(ref) : tacBoard().items[ref];
-  if (obj) tacAnimSetElPos(kind, ref, obj.x, obj.y);
+  if (restore) {
+    const obj = kind === 'role' ? tacTokenByTid(ref) : tacBoard().items[ref];
+    if (obj) tacAnimSetElPos(kind, ref, obj.x, obj.y);
+  }
+  renderTacManage(); // 播放/停止合并按钮的文字随播放状态刷新
 }
 
 // 重置按钮：无论是否播完，都把选中造物的 DOM 位置还原到真实坐标
@@ -5770,19 +5772,20 @@ function buildTacAnimBox(settings, obj) {
   // 播放控制行：▶ 播放 / 重置 / 清除动画 + 总时长
   const ctl = document.createElement('div');
   ctl.className = 'tac-box-line tac-anim-ctl';
+  // 播放/停止合并为一个按钮：未播放时「▶ 播放」，播放中变「停止」，再点停止并重置
   const playBtn = document.createElement('button');
   playBtn.type = 'button';
   playBtn.className = 'tac-anim-btn tac-anim-play-btn';
-  playBtn.textContent = translate("ui.tac.anim.play");
+  playBtn.textContent = translate(tacAnimPlay ? "ui.tac.anim.stop" : "ui.tac.anim.play");
   playBtn.disabled = anim.points.length < 2 || animDuration(anim, geom, segDurFn).total <= 0;
-  playBtn.addEventListener('click', () => tacAnimPlayStart());
+  playBtn.addEventListener('click', () => {
+    if (tacAnimPlay) tacAnimReset();
+    else {
+      tacAnimPlayStart();
+      if (tacAnimPlay) renderTacManage(); // 播放开始，按钮文字切为「停止」
+    }
+  });
   ctl.appendChild(playBtn);
-  const resetBtn = document.createElement('button');
-  resetBtn.type = 'button';
-  resetBtn.className = 'tac-anim-btn';
-  resetBtn.textContent = translate("ui.tac.anim.reset");
-  resetBtn.addEventListener('click', () => tacAnimReset());
-  ctl.appendChild(resetBtn);
   const clearBtn = document.createElement('button');
   clearBtn.type = 'button';
   clearBtn.className = 'tac-anim-btn';
@@ -6786,6 +6789,17 @@ export function renderTacManage() {
     renderTacManage();
     renderTacBoard();
   });
+  const deselectBtn = document.createElement('button');
+  deselectBtn.type = 'button';
+  deselectBtn.className = 'tac-manage-reset';
+  deselectBtn.textContent = translate("ui.tac.creation.deselect");
+  deselectBtn.addEventListener('click', () => {
+    // 取消所有造物选中，同时退出动画的「添加路径点」状态
+    tacManageSel = null;
+    if (tacAnimArmed) tacAnimArmed = false;
+    renderTacBoard();
+    renderTacManage();
+  });
   const side = document.createElement('span');
   side.className = 'tac-manage-side';
   const hint = document.createElement('span');
@@ -6793,6 +6807,7 @@ export function renderTacManage() {
   hint.textContent = translate("ui.tac.creation.order.hint");
   side.appendChild(hint);
   side.appendChild(resetBtn);
+  side.appendChild(deselectBtn);
   info.appendChild(side);
   tacManageList.appendChild(info);
   const isSelEntry = (e) => tacManageSel && e.type === tacManageSel.type

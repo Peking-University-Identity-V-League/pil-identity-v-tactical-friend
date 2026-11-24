@@ -36,23 +36,32 @@ test('anim: waypoints get default times; first point is the token position', asy
   await expect(page.locator('.tac-anim-ctl .tac-anim-derive')).toContainText('6');
 });
 
-test('anim: play moves the token to the last point; reset restores it', async ({ page }) => {
+test('anim: play/stop toggle moves the token and resets it', async ({ page }) => {
   await setupAnim(page);
   // 缩短到 0.4s 总时长：0 → 0.2 → 0.4
   await setTime(page, 1, '0.2');
   await setTime(page, 2, '0.4');
 
   const token = page.locator('.tac-token').first();
-  await page.locator('.tac-anim-play-btn').click();
-  await expect.poll(async () => token.evaluate((el) => el.style.left)).toBe('60%');
-  await expect.poll(async () => token.evaluate((el) => el.style.top)).toBe('60%');
+  const playBtn = page.locator('.tac-anim-play-btn');
+  await expect(playBtn).toHaveText('▶ 播放');
+  await playBtn.click();
+  await expect(playBtn).toHaveText('停止');
+
+  // 趁播放未结束（总时长 0.4s）立即点击停止：停止并重置到起点
+  await playBtn.click();
+  await expect(playBtn).toHaveText('▶ 播放');
+  await expect.poll(async () => token.evaluate((el) => el.style.left)).toBe('30%');
+  await expect.poll(async () => token.evaluate((el) => el.style.top)).toBe('30%');
+
+  // 播放到自然结束：token 停在终点，按钮文字自动切回「播放」
+  await playBtn.click();
+  await expect.poll(async () => token.evaluate((el) => el.style.left), { timeout: 5000 }).toBe('60%');
+  await expect.poll(async () => token.evaluate((el) => el.style.top), { timeout: 5000 }).toBe('60%');
+  await expect(playBtn).toHaveText('▶ 播放');
   // 坐标不写回：动画只改 DOM
   const st = (await read(page)).board.tokens[0];
   expect(st.x).toBeCloseTo(0.3, 3);
-
-  await page.locator('.tac-anim-ctl .tac-anim-btn', { hasText: '重置' }).click();
-  await expect.poll(async () => token.evaluate((el) => el.style.left)).toBe('30%');
-  await expect.poll(async () => token.evaluate((el) => el.style.top)).toBe('30%');
 });
 
 test('anim: mode switch keeps points and derives speeds both ways', async ({ page }) => {
@@ -297,8 +306,8 @@ test('anim: deleting a middle waypoint reindexes planned paths', async ({ page }
   await placeRole(page, 'luckyGuy', 0.3, 0.3);
   await tool(page, 'anim');
   await clickPoint(page, 0.3, 0.3);
+  await clickPoint(page, 0.6, 0.3); // 先加一个路径点（动画设置区仅对已设动画的造物展示）
   await page.locator('label.tac-display-toggle:has(input[data-ar])').click();
-  await clickPoint(page, 0.6, 0.3);
   await clickPoint(page, 0.6, 0.6);
   await expect.poll(async () => {
     const t = (await read(page)).board.tokens[0];
@@ -310,4 +319,19 @@ test('anim: deleting a middle waypoint reindexes planned paths', async ({ page }
   const token = (await read(page)).board.tokens[0];
   expect(token.anim.points.length).toBe(2);
   expect(token.anim.paths?.[0] ?? null).toBeNull();
+});
+
+test('anim: deselect button clears selection and disarms adding points', async ({ page }) => {
+  await setupAnim(page);
+  // 动画工具默认处于添加路径点状态
+  await expect(page.locator('.tac-anim-arm-btn')).toHaveText('点此取消添加');
+  await expect(page.locator('.tac-manage-btn.active')).toHaveCount(1);
+
+  // 取消选中：清除所有造物选中，并退出添加状态
+  await page.locator('.tac-manage-side button', { hasText: '取消选中' }).click();
+  await expect(page.locator('.tac-manage-btn.active')).toHaveCount(0);
+
+  // 重新选中造物：添加状态保持取消（按钮显示「添加路径点」而非「点此取消添加」）
+  await clickPoint(page, 0.3, 0.3);
+  await expect(page.locator('.tac-anim-arm-btn')).toHaveText('添加路径点');
 });
