@@ -6100,7 +6100,7 @@ export function renderTacBoard() {
     el.style.top = `${t.y * 100}%`;
     el.style.transform = `translate(-50%, -50%) rotate(${tacUpRot()}deg)`;
     el.style.color = t.color;
-    setTacFontSize(el, Math.max(2.2, t.size * 0.18));
+    setTacFontSize(el, Math.max(1, t.size * 0.18));
     el.textContent = t.text;
     tacLayer().appendChild(el);
   });
@@ -7183,18 +7183,29 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
   
   const itemRangeIsDefault = () => {
     if (!rgCfg) return true;
-    return !it.rangeBox;
+    const rb = it.rangeBox;
+    if (!rb) return true;
+    // 道具范围默认形态：第一项显示、无天赋/档位/自定义半径/恐惧修正，填充与定义一致
+    if (rb.tab !== 'range') return false;
+    if (!Array.isArray(rb.subs) || rb.subs.length !== 1 || rb.subs[0] !== 0) return false;
+    if (rb.talents && Object.keys(rb.talents).length) return false;
+    if (rb.m != null || rb.fearH != null || rb.fearS != null) return false;
+    if (rb.gear != null && rb.gear !== 0) return false;
+    if (rb.fill !== undefined && rb.fill !== !!itDef.fill) return false;
+    return true;
   };
   const isDefault = !it.hideIcon
     && curIcon === TAC_MANAGE_DEFAULT.iconSize
-    && itemRangeIsDefault();
+    && itemRangeIsDefault()
+    && (it.angle == null || it.angle === 0);
 
   
   const refreshDefault = () => {
     defCb.checked = !it.hideIcon
       && (it.iconSize ?? TAC_MANAGE_DEFAULT.iconSize)
         === TAC_MANAGE_DEFAULT.iconSize
-      && itemRangeIsDefault();
+      && itemRangeIsDefault()
+      && (it.angle == null || it.angle === 0);
   };
 
   // 动画工具：管理卡片只保留「动画管理」，隐藏范围/图标等其它设置卡片
@@ -7287,8 +7298,7 @@ const fixedSpawnCfg = (MAPS_DATA[S.currentMapId].fixedSpawns || {})[role];
     delete it.fearHunter;
     delete it.fearSurv;
     delete it.rangeBox;
-    delete it.angle;
-    it.iconSize = TAC_MANAGE_DEFAULT.iconSize;
+    delete it.angle;it.iconSize = TAC_MANAGE_DEFAULT.iconSize;
     it.hideIcon = false;
     renderTacBoard();
   });
@@ -9428,7 +9438,7 @@ export async function tacExportImage() {
     uctx.lineJoin = 'round';
     board.texts.forEach((t) => {
       // 字号与屏幕 cqw 口径一致：units/100 * 地图宽（随导出缩放 K），与角色图标 d = size/100 * W * K 同基准
-      const px = Math.max(2.2, t.size * 0.18) / 100 * W * K;
+      const px = Math.max(1, t.size * 0.18) / 100 * W * K;
       uctx.font = `700 ${px}px 'Noto Sans SC', sans-serif`;
       const lines = String(t.text).split('\n');
       const lh = px * 1.35;
