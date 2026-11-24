@@ -501,6 +501,9 @@ export const tacSnapPointEl = $('tacSnapPoint');
 
 export const tacDelSegOnlyEl = $('tacDelSegOnly');
 
+export const tacMeasureVaultEl = $('tacMeasureVault');
+export const tacMeasureCancelEl = $('tacMeasureCancel');
+
 export const tacShowCoordsEl = $('tacShowCoords');
 
 export const tacSelGlowEl = $('tacSelGlow');
