@@ -414,7 +414,9 @@ node scripts/dev-server.js
 - `:root[data-theme="dark"]`：暗色变量，覆盖同名变量即可；
 - 除颜色基础变量外，还有一组交互语义变量（`--hover-bg/--hover-text/--sel-border/--sel-text/--accent-ui/--active-grad/--ded-active-*/--anim-active-*/--gold-*` 等），组件只引用语义变量，不写死颜色。
 
-新增组件样式时**不要写死颜色**：面板背景用 `var(--btn-bg)`/`var(--chip-bg)`，文字用 `var(--text)`/`var(--text-secondary)`，边框用 `var(--border)`，悬停和选中用 `var(--hover-*)`/`var(--sel-*)`；否则暗色或浅色下会出现白字白底。地图内部元素（角色点、测距线、推演标记色）有意不随主题变化。
+语义变量分组（浅色值 / 暗色值）：面板与胶囊底 `--btn-bg`/`--chip-bg`/`--navpill-bg`/`--legend-bg`/`--toggle-bg`/`--progress-bg`/`--thead-bg`；文字 `--text`/`--text-secondary`/`--row-text`/`--legend-text`；强调文字 `--accent-ui`（浅红 / 暗蓝）、`--sky-text`（亮蓝，浅用信息蓝 / 暗 `#7dd3fc`）、`--amber-text`（亮黄，浅用深金 / 暗 `#fbbf24`）、`--pct-text`（密码机进度百分比，浅红 / 暗亮蓝）、`--gold-text`；金色三件套 `--gold-text/--gold-bg/--gold-border`；首页推荐工具 `--more-name-*`；悬停选中 `--hover-*/--sel-*`、推演 `--ded-active-*`、动画 `--anim-active-*`。
+
+新增组件样式时**不要写死颜色**：面板背景用 `var(--btn-bg)`/`var(--chip-bg)`，文字用 `var(--text)`/`var(--text-secondary)`，边框用 `var(--border)`，悬停和选中用 `var(--hover-*)`/`var(--sel-*)`；亮蓝/亮黄强调文字分别用 `var(--sky-text)`/`var(--amber-text)`，不要直接写 `#7dd3fc`/`#fbbf24`（浅色下会看不见）；否则暗色或浅色下会出现白字白底。地图内部元素（角色点、测距线、推演标记色）有意不随主题变化。
 
 ### 常见修改位置
 

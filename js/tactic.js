@@ -5478,10 +5478,10 @@ function buildTacAnimBox(settings, obj) {
   const hideRow = document.createElement('div');
   hideRow.className = 'tac-box-line';
   hideRow.innerHTML =
-    `<label class="tac-manage-hide"><input type="checkbox" data-h="path"`
-    + `${tacDrawSettings.hideAnimPath ? ' checked' : ''}>${translate("ui.tac.anim.hide.path")}</label>`
-    + `<label class="tac-manage-hide"><input type="checkbox" data-h="dots"`
-    + `${tacDrawSettings.hideAnimDots ? ' checked' : ''}>${translate("ui.tac.anim.hide.dots")}</label>`;
+    `<label class="tac-display-toggle"><input type="checkbox" data-h="path"`
+    + `${tacDrawSettings.hideAnimPath ? ' checked' : ''}><span>${translate("ui.tac.anim.hide.path")}</span></label>`
+    + `<label class="tac-display-toggle"><input type="checkbox" data-h="dots"`
+    + `${tacDrawSettings.hideAnimDots ? ' checked' : ''}><span>${translate("ui.tac.anim.hide.dots")}</span></label>`;
   hideRow.querySelectorAll('input').forEach((cb) => cb.addEventListener('change', () => {
     if (cb.dataset.h === 'path') tacDrawSettings.hideAnimPath = cb.checked;
     else tacDrawSettings.hideAnimDots = cb.checked;
