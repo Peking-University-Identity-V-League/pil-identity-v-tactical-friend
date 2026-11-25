@@ -10837,9 +10837,16 @@ window.addEventListener('keydown', (e) => {
 });
 
 
+// 观察旋转层而非外层容器：换图后新图片加载完成前 rot 高度仍是旧图比例，
+// 图片加载完成后 rot 高度才变化；监听 wrap 捕获不到这种内部尺寸变化，
+// 会导致 SVG viewBox 停留在旧地图宽高比，测距线/路径线与地图错位。
 new ResizeObserver(() => {
   if (tacticView.classList.contains('active')) { renderTacArrows(); tacApplyZoom(); }
-}).observe(tacMapWrap);
+}).observe(tacRot);
+// 兜底：图片加载完成后也强制重绘一次（首次加载或缓存命中时序差异）
+tacMapImage.addEventListener('load', () => {
+  if (tacticView.classList.contains('active')) { renderTacArrows(); tacApplyZoom(); }
+});
 
 
 export function tacResetTransient() {
