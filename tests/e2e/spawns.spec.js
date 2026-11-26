@@ -9,7 +9,7 @@ test('spawn display: hidden by default, toggle shows one survivor squad and one 
   await expect(entry(page)).toBeVisible();
   await expect(entry(page).locator('#tacShowSpawns')).not.toBeChecked();
   await expect(icons(page)).toHaveCount(0);
-  await expect(entry(page).locator('#tacSpawnText')).toHaveText('第 1 / 6 组位置');
+  await expect(entry(page).locator('#tacSpawnText')).toHaveText('第 1 / 6 组');
 
   await entry(page).locator('#tacShowSpawns').check();
   await expect(icons(page)).toHaveCount(5);
@@ -23,14 +23,14 @@ test('switching spawn groups cycles through all six groups and persists per map'
   await tool(page, 'display');
   await entry(page).locator('#tacShowSpawns').check();
   await entry(page).locator('#tacSpawnNext').click();
-  await expect(entry(page).locator('#tacSpawnText')).toHaveText('第 2 / 6 组位置');
+  await expect(entry(page).locator('#tacSpawnText')).toHaveText('第 2 / 6 组');
   await expect(icons(page)).toHaveCount(5);
   await entry(page).locator('#tacSpawnPrev').click();
   await entry(page).locator('#tacSpawnPrev').click();
-  await expect(entry(page).locator('#tacSpawnText')).toHaveText('第 6 / 6 组位置');
+  await expect(entry(page).locator('#tacSpawnText')).toHaveText('第 6 / 6 组');
 
   await reloadMap(page);
-  await expect(entry(page).locator('#tacSpawnText')).toHaveText('第 6 / 6 组位置');
+  await expect(entry(page).locator('#tacSpawnText')).toHaveText('第 6 / 6 组');
   await expect(entry(page).locator('#tacShowSpawns')).toBeChecked();
   await expect(icons(page)).toHaveCount(5);
 });
@@ -45,7 +45,7 @@ test('all nine maps expose their own spawn groups', async ({ page }) => {
       await tool(page, 'display');
     }
     await expect(entry(page)).toBeVisible();
-    await expect(entry(page).locator('#tacSpawnText')).toHaveText(`第 1 / ${groups[i]} 组位置`);
+    await expect(entry(page).locator('#tacSpawnText')).toHaveText(`第 1 / ${groups[i]} 组`);
   }
 });
 
@@ -54,7 +54,7 @@ test('sacred heart hospital has its own six spawn groups', async ({ page }) => {
   await switchMap(page, 1);
   await tool(page, 'display');
   await expect(entry(page)).toBeVisible();
-  await expect(entry(page).locator('#tacSpawnText')).toHaveText('第 1 / 6 组位置');
+  await expect(entry(page).locator('#tacSpawnText')).toHaveText('第 1 / 6 组');
   await entry(page).locator('#tacShowSpawns').check();
   await expect(icons(page)).toHaveCount(5);
   // 圣心医院第 1 组：首个求生者出生点 (250, 72) / 地图 (644, 604)

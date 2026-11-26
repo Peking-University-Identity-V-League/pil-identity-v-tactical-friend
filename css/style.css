@@ -3759,6 +3759,14 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
   font-weight: 600;
   cursor: pointer;
 }
+/* 显示设置：名称与勾选合并后，名称勾选沿用原名称条的醒目样式 */
+.tac-display-name {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 700;
+}
 .tac-display-mid {
   flex: 1 1 auto;
   min-width: 0;

@@ -600,7 +600,7 @@ deduce(map, marks)
 
 | 函数 | 用途 |
 |---|---|
-| `syncTacDisplayUI()` | 同步显示设置控件 |
+| `syncTacDisplayUI()` | 同步显示设置控件（名称即勾选；密码机/地窖/狂欢之椅另有「全部」开关 `cipherAll`/`dungeonAll`/`chairAll`，勾选后按 `cipherAll`、`dungeons`、`rocketChairs` 全量渲染，渲染、吸附、导出画布与牵气球可选椅子共用同一判断） |
 | `syncTacImage()` | 同步当前地图底图 |
 | `renderTacCiphers()` | 绘制密码机 |
 | `renderTacZones()` | 绘制区域划分 |
@@ -833,7 +833,7 @@ MAPS_DATA
 | `zoneNames` | 区域名称，顺序必须与网格换算后的顺序一致 |
 | `ciphers` | 所有密码机点位 |
 | `cipherCombinations` | 每组实际出现的七个密码机 ID |
-| `cipherAll` | 全部密码机 ID（由 `ciphers` 推导，预留给后续功能） |
+| `cipherAll` | 全部密码机 ID（由 `ciphers` 推导，显示设置「全部」使用） |
 | `dungeons` | 地窖候选坐标 |
 | `escapeDoors` | 逃生门与门锁坐标 |
 | `widthM` | 地图横向对应的游戏内米数 |
@@ -843,7 +843,7 @@ MAPS_DATA
 | `hints` | 按密码机组或场景使用的提示 |
 | `rocketChairs` | 狂欢之椅全部点位 `[{ id, location }]` |
 | `rocketChairCombinations` | 狂欢之椅分组 `{ fixed: [id...], sets: [[id...]...] }`，id 引用 `rocketChairs`；消费端经 `rocketChairGroups(map)` 解析为坐标 |
-| `rocketChairAll` | 全部狂欢之椅 id（由 `rocketChairs` 推导，预留给后续功能） |
+| `rocketChairAll` | 全部狂欢之椅 id（由 `rocketChairs` 推导，显示设置「全部」使用） |
 | `chests` | 箱子位置 |
 | `lockers` | 柜子位置 |
 | `phoneBooths` | 电话亭位置（仅有电话亭的地图） |

@@ -463,6 +463,12 @@ export const tacShowZonesEl = $('tacShowZones');
 
 export const tacShowCiphersEl = $('tacShowCiphers');
 
+export const tacCipherAllEl = $('tacCipherAll');
+
+export const tacDungeonAllEl = $('tacDungeonAll');
+
+export const tacChairAllEl = $('tacChairAll');
+
 export const tacCipherSizeEl = $('tacCipherSize');
 
 export const tacCipherSizeDefEl = $('tacCipherSizeDef');
