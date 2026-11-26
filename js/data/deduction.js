@@ -90,14 +90,22 @@ export function dedHelpers(positions) {
       o,
       { name: translate("deduction.rule.type.atMost1"), n: 1 }));
 
+  // 连线类规则的文案由点位名按连线顺序拼接 + 公共后缀键生成（suffix 取值见 locales 中 chain.suffix.*），
+  // 与 cipherNames 共用同一数据来源，点位改名时文案自动跟随
+  const chainText = (o) => {
+    if (o.text != null) return o.text;
+    if (!o.cipherNames || o.suffix == null) return null;
+    return o.cipherNames.join('-') + translate(`deduction.rule.type.chain.suffix.${o.suffix}`);
+  };
+
   const chain = (o = {}) =>
     build('chain', withDefaults(
-      { list: (o.cipherNames ?? []).join(' - '), ...o },
+      { list: (o.cipherNames ?? []).join(' - '), ...o, text: chainText(o) },
       { name: translate("deduction.rule.type.chain") }));
 
   const chainThree = (o = {}) =>
     build('chainThree', withDefaults(
-      { list: (o.cipherNames ?? []).join(' - '), ...o },
+      { list: (o.cipherNames ?? []).join(' - '), ...o, text: chainText(o) },
       { name: translate("deduction.rule.type.chain") }));
 
   // 唐人街特殊规律

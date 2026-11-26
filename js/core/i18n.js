@@ -32,15 +32,39 @@ function interpolate(template, parameters) {
   });
 }
 
-export function translate(messageKey, parameters = {}) {
-  let template = activeMessages[messageKey];
-  // 其它语言包缺键时回退中文
+// 语言包值中可引用其它键："{@maps.chinaTown.cipher.m1.name}"，引用按当前语言包解析、缺键回退中文，
+// 可嵌套（深度上限 MAX_REF_DEPTH，防循环引用）
+const REFERENCE_PATTERN = /\{@([A-Za-z0-9_.-]+)\}/g;
+const MAX_REF_DEPTH = 5;
+
+function lookupMessage(messages, fallbackMessages, messageKey) {
+  let template = messages[messageKey];
   if (typeof template !== 'string' && fallbackMessages) template = fallbackMessages[messageKey];
-  if (typeof template !== 'string') {
+  return typeof template === 'string' ? template : null;
+}
+
+function resolveReferences(template, messages, fallback, depth = 0) {
+  return template.replace(REFERENCE_PATTERN, (placeholder, referenceKey) => {
+    if (depth >= MAX_REF_DEPTH) {
+      console.warn(`Translation reference too deep (possible cycle): ${referenceKey}`);
+      return placeholder;
+    }
+    const referenced = lookupMessage(messages, fallback, referenceKey);
+    if (referenced == null) {
+      console.warn(`Missing translation reference: ${referenceKey}`);
+      return placeholder;
+    }
+    return resolveReferences(referenced, messages, fallback, depth + 1);
+  });
+}
+
+export function translate(messageKey, parameters = {}) {
+  const template = lookupMessage(activeMessages, fallbackMessages, messageKey);
+  if (template == null) {
     console.warn(`Missing translation: ${messageKey}`);
     return messageKey;
   }
-  return interpolate(template, parameters);
+  return interpolate(resolveReferences(template, activeMessages, fallbackMessages), parameters);
 }
 
 // 非英语界面下，英文副标注一律取英语语言包中同一键的值
@@ -48,7 +72,7 @@ export function translateEn(messageKey, parameters = {}) {
   const source = activeLocale === 'en-US' ? activeMessages : (englishMessages || activeMessages);
   const template = source[messageKey];
   if (typeof template !== 'string') return translate(messageKey, parameters);
-  return interpolate(template, parameters);
+  return interpolate(resolveReferences(template, source, source), parameters);
 }
 
 export function translateDocument(root = document) {
