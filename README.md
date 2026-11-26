@@ -1113,6 +1113,7 @@ translate('navigation.switchMap', { name: map.mapName })
 - 引用的是**键名**，三个语言包要写同一个键；英语 / 越南语包只负责被引用值的翻译。
 - 被引用的值里不能再含未解析的 `{@}`（`tests/unit/locale-refs.test.js` 会校验三语包内所有引用闭合）。
 - 数据侧本来就有结构化点位列表的场合（如连线规律的 `cipherNames` 数组），优先在 JS 里组合文案，而不是在语言包里拼引用；`{@key}` 用于没有数据可依的纯文案。
+- 目前已引用化的场景：`maps.*.hint.*`、`maps.*.fixedHint`（地图名用 `maps.*.mapName`）、`maps.*.cipher.*.feature`、`maps.*.zoneNames.*`（点位名用 `maps.*.cipher.*.name`）。替换时要求名称两侧是分隔符（空白、`/`、`：`、`的`、所有格 `'` 等），长名优先，避免"正门"误入"正门废墟"；紧贴名称的词语（如"湖景村密码机"中的"湖景村"靠句首规则）只处理句首情况。
 
 ## 11.4 翻译键命名
 
