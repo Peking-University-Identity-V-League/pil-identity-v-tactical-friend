@@ -980,7 +980,7 @@ export const MAPS_DATA = [
         { id: 'h_6', location: [253, 303] },
         { id: 'h_7', location: [217, 730] },
         { id: 'h_8', location: [590, 970] },
-        { id: 'h_9', location: [920, 300] },
+        { id: 'h_9', location: [920, 320] },
       ],
     };
 
@@ -1293,6 +1293,8 @@ export const MAPS_DATA = [
         { id: 'h_5', location: [616, 723] },
         { id: 'h_6', location: [549, 772] },
         { id: 'h_7', location: [125, 343] },
+        { id: 'h_8', location: [1080, 742] },
+        { id: 'h_9', location: [320, 516] },
       ],
     };
 
@@ -1307,7 +1309,8 @@ export const MAPS_DATA = [
     ];
 
     const spawnPointsHunterDuoHunters = [
-      ['h_1', 'h_3'], ['h_1', 'h_4'], ['h_2', 'h_3'], ['h_2', 'h_6']
+      ['h_3', 'h_6'], ['h_3', 'h_8'], ['h_3', 'h_9'],
+      ['h_6', 'h_8'], ['h_6', 'h_8'], ['h_8', 'h_9'],
     ];
 
     const fixedSpawns = {
