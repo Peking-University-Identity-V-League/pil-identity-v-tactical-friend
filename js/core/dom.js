@@ -119,6 +119,8 @@ export const tacTextCard = $('tacTextCard');
 export const tacMeasureCard = $('tacMeasureCard');
 export const tacCarryCard = $('tacCarryCard');
 export const tacCarryShowChairsEl = $('tacCarryShowChairs');
+
+export const tacCarryChairAllEl = $('tacCarryChairAll');
 export const tacCarryChairPrevBtn = $('tacCarryChairPrev');
 export const tacCarryChairNextBtn = $('tacCarryChairNext');
 export const tacCarryChairText = $('tacCarryChairText');
@@ -263,6 +265,8 @@ export const tacManageCard = $('tacManageCard');
 export const tacCipherCard = $('tacCipherCard');
 
 export const tacCipherCardShowEl = $('tacCipherCardShow');
+
+export const tacCipherCardAllEl = $('tacCipherCardAll');
 
 export const tacCipherCardPrevBtn = $('tacCipherCardPrev');
 

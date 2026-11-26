@@ -3759,21 +3759,72 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
   font-weight: 600;
   cursor: pointer;
 }
-/* 显示设置：名称与勾选合并后，名称勾选沿用原名称条的醒目样式 */
-.tac-display-name {
+/* 显示设置/推算卡片：框外名称亮灭按钮（隐藏 checkbox，label 即按钮）。
+   小型按钮：高度与圆角跟随右侧设置框，等宽、文字居中 */
+.tac-manage-entry > .tac-manage-head { align-self: stretch; }
+.tac-onoff {
+  cursor: pointer;
+  display: flex;
+  flex: 1 1 auto;
+  align-self: stretch;
+  position: relative;
+}
+/* checkbox 铺满按钮并保持透明：视觉隐藏但保有点击/可见性（e2e 可直接 check） */
+.tac-onoff input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.tac-onoff span {
+  flex: 1 1 auto;
   display: inline-flex;
   align-items: center;
-  color: var(--text);
-  font-size: 12px;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 10.5px;
   font-weight: 700;
+  color: var(--text-secondary);
+  background: var(--btn-bg);
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+  user-select: none;
+  white-space: nowrap;
+}
+.tac-onoff input:checked + span {
+  color: #fff;
+  background: var(--active-grad);
+  border-color: transparent;
+  box-shadow: 0 3px 13px var(--active-shadow);
+}
+.tac-onoff input:focus-visible + span {
+  outline: 2px solid var(--text-secondary);
+  outline-offset: 2px;
+}
+/* 无功能的长亮按钮（如「地下室」），仅为外观对齐 */
+.tac-onoff-static { cursor: default; }
+.tac-onoff-static span {
+  color: #fff;
+  background: var(--active-grad);
+  border-color: transparent;
+  box-shadow: 0 3px 13px var(--active-shadow);
 }
 .tac-display-mid {
   flex: 1 1 auto;
   min-width: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 6px;
+}
+/* 显示设置各行按列对齐：组切换靠左，图标大小/默认靠右且列宽一致 */
+.tac-display-row label.tac-manage-slider {
+  width: 168px;
+  margin-left: auto;
 }
 .tac-display-text {
   font-size: 11px;

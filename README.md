@@ -600,7 +600,7 @@ deduce(map, marks)
 
 | 函数 | 用途 |
 |---|---|
-| `syncTacDisplayUI()` | 同步显示设置控件（名称即勾选；密码机/地窖/狂欢之椅另有「全部」开关 `cipherAll`/`dungeonAll`/`chairAll`，勾选后按 `cipherAll`、`dungeons`、`rocketChairs` 全量渲染，渲染、吸附、导出画布与牵气球可选椅子共用同一判断） |
+| `syncTacDisplayUI()` | 同步显示设置控件（行格式：框外名称亮灭按钮 `.tac-onoff`（隐藏 checkbox，label 点击原生切换）+ 框内组切换/全部/图标大小/默认；密码机/地窖/狂欢之椅另有「全部」开关 `cipherAll`/`dungeonAll`/`chairAll`，勾选后按 `cipherAll`、`dungeons`、`rocketChairs` 全量渲染，渲染、吸附、导出画布与牵气球可选椅子共用同一判断；密码机卡片与狂欢之椅推算卡片的对应行复用同一格式，`tacSetCipherAll()`/`tacSetChairAll()` 双向同步两处「全部」勾选） |
 | `syncTacImage()` | 同步当前地图底图 |
 | `renderTacCiphers()` | 绘制密码机 |
 | `renderTacZones()` | 绘制区域划分 |

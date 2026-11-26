@@ -760,11 +760,13 @@ export const MAPS_DATA = [
       { id: 'M_1', name: translate("maps.lakesideVillage.cipher.m1.name"), location: [709, 325], feature: translate("maps.lakesideVillage.cipher.m1.feature") },
       { id: 'M_2', name: translate("maps.lakesideVillage.cipher.m2.name"), location: [651, 719], feature: translate("maps.lakesideVillage.cipher.m2.feature") },
       { id: 'M_3', name: translate("maps.lakesideVillage.cipher.m3.name"), location: [719, 994], feature: translate("maps.lakesideVillage.cipher.m3.feature") },
+      { id: 'M_4', name: translate("maps.lakesideVillage.cipher.m4.name"), location: [792, 636], feature: translate("maps.default.cipher.feature") },
       { id: 'W_1', name: translate("maps.lakesideVillage.cipher.w1.name"), location: [387, 245], feature: translate("maps.lakesideVillage.cipher.w1.feature") },
       { id: 'W_2', name: translate("maps.lakesideVillage.cipher.w2.name"), location: [467, 352], feature: translate("maps.lakesideVillage.cipher.w2.feature") },
       { id: 'W_3', name: translate("maps.lakesideVillage.cipher.w3.name"), location: [370, 656], feature: translate("maps.lakesideVillage.cipher.w3.feature") },
       { id: 'W_4', name: translate("maps.lakesideVillage.cipher.w4.name"), location: [393, 830], feature: translate("maps.lakesideVillage.cipher.w4.feature") },
       { id: 'W_5', name: translate("maps.lakesideVillage.cipher.w5.name"), location: [307, 963], feature: translate("maps.lakesideVillage.cipher.w5.feature") },
+      { id: 'W_6', name: translate("maps.lakesideVillage.cipher.w6.name"), location: [248, 1034], feature: translate("maps.default.cipher.feature") },
     ];
 
     const cipherCombinations = [
@@ -775,7 +777,14 @@ export const MAPS_DATA = [
       ['E_1', 'E_2', 'E_3', 'M_2', 'M_3', 'W_2', 'W_4']
     ];
 
-    const cipherAll = ciphers.map((c) => c.id);
+    const cipherCombinationsDuoHunters = [
+      ['E_1', 'E_2', 'E_3', 'M_1', 'M_2', 'M_3', 'M_4', 'W_3', 'W_4', 'W_5', 'W_6'],
+      ['E_1', 'E_2', 'E_3', 'M_1', 'M_2', 'M_3', 'M_4', 'W_1', 'W_2', 'W_4', 'W_6']
+    ];
+
+    const cipherAll = ['E_1', 'E_2', 'E_3', 'M_1', 'M_2', 'M_3', 'W_1', 'W_2', 'W_3', 'W_4', 'W_5']
+
+    const cipherAllDuoHunters = ciphers.map((c) => c.id);
 
     const fixedHint = translate("maps.lakesideVillage.fixedHint");
     const hints = [
@@ -1023,11 +1032,13 @@ export const MAPS_DATA = [
       { id: 'E_3', name: translate("maps.moonlitRiverPark.cipher.e3.name"), location: [1036, 289], feature: translate("maps.moonlitRiverPark.cipher.e3.feature") },
       { id: 'E_4', name: translate("maps.moonlitRiverPark.cipher.e4.name"), location: [1174, 517], feature: translate("maps.moonlitRiverPark.cipher.e4.feature") },
       { id: 'E_5', name: translate("maps.moonlitRiverPark.cipher.e5.name"), location: [1323, 769], feature: translate("maps.moonlitRiverPark.cipher.e5.feature") },
+      { id: 'E_6', name: translate("maps.moonlitRiverPark.cipher.e0.name"), location: [768, 550], feature: translate("maps.default.cipher.feature") },
       { id: 'W_1', name: translate("maps.moonlitRiverPark.cipher.w1.name"), location: [257, 301], feature: translate("maps.moonlitRiverPark.cipher.w1.feature") },
       { id: 'W_2', name: translate("maps.moonlitRiverPark.cipher.w2.name"), location: [72, 464], feature: translate("maps.moonlitRiverPark.cipher.w2.feature") },
       { id: 'W_3', name: translate("maps.moonlitRiverPark.cipher.w3.name"), location: [165, 753], feature: translate("maps.moonlitRiverPark.cipher.w3.feature") },
       { id: 'W_4', name: translate("maps.moonlitRiverPark.cipher.w4.name"), location: [444, 873], feature: translate("maps.moonlitRiverPark.cipher.w4.feature") },
       { id: 'W_5', name: translate("maps.moonlitRiverPark.cipher.w5.name"), location: [517, 607], feature: translate("maps.moonlitRiverPark.cipher.w5.feature") },
+      { id: 'W_6', name: translate("maps.moonlitRiverPark.cipher.w6.name"), location: [482, 148], feature: translate("maps.default.cipher.feature") },
     ];
 
     const cipherCombinations = [
@@ -1038,7 +1049,14 @@ export const MAPS_DATA = [
       ['M_1', 'E_1', 'E_2', 'E_4', 'W_2', 'W_4', 'W_5']
     ];
 
-    const cipherAll = ciphers.map((c) => c.id);
+    const cipherCombinationsDuoHunters = [
+      ['E_1', 'E_2', 'E_3', 'E_4', 'E_6', 'M_1', 'W_1', 'W_2', 'W_3', 'W_5', 'W_6'],
+      ['E_1', 'E_2', 'E_3', 'E_4', 'E_5', 'E_6', 'M_1', 'W_1', 'W_2', 'W_4', 'W_5']
+    ];
+
+    const cipherAll = ['E_1', 'E_2', 'E_3', 'E_4', 'E_5', 'M_1', 'W_1', 'W_2', 'W_3', 'W_4', 'W_5']
+
+    const cipherAllDuoHunters = ciphers.map((c) => c.id);
 
     const fixedHint = translate("maps.moonlitRiverPark.fixedHint");
     const hints = [
@@ -1269,6 +1287,7 @@ export const MAPS_DATA = [
       { id: 'M_2', name: translate("maps.leosMemory.cipher.m2.name"), location: [344, 281], feature: translate("maps.leosMemory.cipher.m2.feature") },
       { id: 'M_3', name: translate("maps.leosMemory.cipher.m3.name"), location: [351, 526], feature: translate("maps.leosMemory.cipher.m3.feature") },
       { id: 'M_4', name: translate("maps.leosMemory.cipher.m4.name"), location: [457, 516], feature: translate("maps.leosMemory.cipher.m4.feature") },
+      { id: 'M_5', name: translate("maps.leosMemory.cipher.m5.name"), location: [446, 360], feature: translate("maps.default.cipher.feature") },
       { id: 'W_1', name: translate("maps.leosMemory.cipher.w1.name"), location: [135, 126], feature: translate("maps.leosMemory.cipher.w1.feature") },
       { id: 'W_2', name: translate("maps.leosMemory.cipher.w2.name"), location: [133, 340], feature: translate("maps.leosMemory.cipher.w2.feature") },
       { id: 'W_3', name: translate("maps.leosMemory.cipher.w3.name"), location: [206, 308], feature: translate("maps.leosMemory.cipher.w3.feature") },
@@ -1283,7 +1302,15 @@ export const MAPS_DATA = [
       ['E_2', 'E_3', 'M_1', 'M_3', 'W_1', 'W_3', 'W_4']
     ];
 
-    const cipherAll = ciphers.map((c) => c.id);
+    const cipherCombinationsDuoHunters = [
+      ['E_1', 'E_2', 'E_3', 'E_4', 'M_1', 'M_4', 'M_5', 'W_1', 'W_2', 'W_3', 'W_4'],
+      ['E_2', 'E_3', 'E_4', 'M_1', 'M_2', 'M_3', 'M_4', 'M_5', 'W_1', 'W_3', 'W_4'],
+      ['E_1', 'E_2', 'E_3', 'E_4', 'M_1', 'M_2', 'M_3', 'M_5', 'W_1', 'W_2', 'W_4']
+    ];
+
+    const cipherAll = ['E_1', 'E_2', 'E_3', 'E_4', 'M_1', 'M_2', 'M_3', 'M_4', 'W_1', 'W_2', 'W_3', 'W_4']
+
+    const cipherAllDuoHunters = ciphers.map((c) => c.id);
 
     const fixedHint = translate("maps.leosMemory.fixedHint");
     const hints = [
@@ -1536,10 +1563,13 @@ export const MAPS_DATA = [
       { id: 'E_4', name: translate("maps.eversleepingTown.cipher.e4.name"), location: [656, 496], feature: translate("maps.eversleepingTown.cipher.e4.feature") },
       { id: 'E_5', name: translate("maps.eversleepingTown.cipher.e5.name"), location: [546, 711], feature: translate("maps.eversleepingTown.cipher.e5.feature") },
       { id: 'E_6', name: translate("maps.eversleepingTown.cipher.e6.name"), location: [470, 623], feature: translate("maps.eversleepingTown.cipher.e6.feature") },
+      { id: 'E_7', name: translate("maps.eversleepingTown.cipher.e7.name"), location: [496, 270], feature: translate("maps.default.cipher.feature") },
+      { id: 'E_8', name: translate("maps.eversleepingTown.cipher.e8.name"), location: [722, 328], feature: translate("maps.default.cipher.feature") },
       { id: 'M_1', name: translate("maps.eversleepingTown.cipher.m1.name"), location: [454, 144], feature: translate("maps.eversleepingTown.cipher.m1.feature") },
       { id: 'M_2', name: translate("maps.eversleepingTown.cipher.m2.name"), location: [388, 359], feature: translate("maps.eversleepingTown.cipher.m2.feature") },
       { id: 'M_3', name: translate("maps.eversleepingTown.cipher.m3.name"), location: [374, 500], feature: translate("maps.eversleepingTown.cipher.m3.feature") },
       { id: 'M_4', name: translate("maps.eversleepingTown.cipher.m4.name"), location: [318, 559], feature: translate("maps.eversleepingTown.cipher.m4.feature") },
+      { id: 'M_5', name: translate("maps.eversleepingTown.cipher.m5.name"), location: [256, 360], feature: translate("maps.default.cipher.feature") },
     ];
 
     const cipherCombinations = [
@@ -1550,7 +1580,15 @@ export const MAPS_DATA = [
       ['W_1', 'W_2', 'E_1', 'E_3', 'E_6', 'M_2', 'M_3']
     ];
 
-    const cipherAll = ciphers.map((c) => c.id);
+    const cipherCombinationsDuoHunters = [
+      ['E_3', 'E_5', 'E_6', 'M_1', 'M_2', 'M_3', 'M_4', 'M_5', 'W_1', 'W_2', 'W_3'],
+      ['E_2', 'E_4', 'E_6', 'E_7', 'E_8', 'M_2', 'M_3', 'M_4', 'W_1', 'W_2', 'W_3'],
+      ['E_2', 'E_4', 'E_5', 'E_6', 'E_7', 'M_1', 'M_2', 'M_3', 'M_4', 'W_1', 'W_2'],
+    ];
+
+    const cipherAll = ['E_1', 'E_2', 'E_3', 'E_4', 'E_5', 'E_6', 'M_1', 'M_2', 'M_3', 'M_4', 'W_1', 'W_2', 'W_3']
+
+    const cipherAllDuoHunters = ciphers.map((c) => c.id);
 
     const fixedHint = translate("maps.eversleepingTown.fixedHint");
     const hints = [
