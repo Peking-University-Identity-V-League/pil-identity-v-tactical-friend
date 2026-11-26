@@ -833,6 +833,7 @@ MAPS_DATA
 | `zoneNames` | 区域名称，顺序必须与网格换算后的顺序一致 |
 | `ciphers` | 所有密码机点位 |
 | `cipherCombinations` | 每组实际出现的七个密码机 ID |
+| `cipherAll` | 全部密码机 ID（由 `ciphers` 推导，预留给后续功能） |
 | `dungeons` | 地窖候选坐标 |
 | `escapeDoors` | 逃生门与门锁坐标 |
 | `widthM` | 地图横向对应的游戏内米数 |
@@ -840,7 +841,9 @@ MAPS_DATA
 | `law_urls` | B 站和抖音教学链接 |
 | `fixedHint` | 固定提示 |
 | `hints` | 按密码机组或场景使用的提示 |
-| `rocketChairs` | 狂欢之椅分组坐标 |
+| `rocketChairs` | 狂欢之椅全部点位 `[{ id, location }]` |
+| `rocketChairCombinations` | 狂欢之椅分组 `{ fixed: [id...], sets: [[id...]...] }`，id 引用 `rocketChairs`；消费端经 `rocketChairGroups(map)` 解析为坐标 |
+| `rocketChairAll` | 全部狂欢之椅 id（由 `rocketChairs` 推导，预留给后续功能） |
 | `chests` | 箱子位置 |
 | `lockers` | 柜子位置 |
 | `phoneBooths` | 电话亭位置（仅有电话亭的地图） |

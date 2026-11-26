@@ -11,7 +11,7 @@ import { getTreasureRings } from './core/treasure.js';
 import { S } from './core/state.js';
 import { $, loadImageWithStatus, mountImageOverlays } from './core/utils.js';
 import { cipherOf, mapsZonesRelative } from './data/geo.js';
-import { MAPS_DATA, getImageUrl } from './data/maps.js';
+import { MAPS_DATA, getImageUrl, rocketChairGroups } from './data/maps.js';
 import { COMMON_ICON_URL } from './data/items_common.js';
 import { TAC_ABYSS_MAX_M, TAC_DISPLAY_DEFAULT, TAC_MANAGE_DEFAULT, TAC_MEASURE_DEFAULT, TAC_MOVEMENT_SURVIVOR, TAC_MOVEMENT_BUFFS, TAC_SVG_NS, TAC_TREASURE_RULE, TAC_ZOOM_LOCK_ICONS, TAC_ZOOM_MAX, TAC_ZOOM_MIN } from './data/tactic-data.js';
 import { TAC_ITEM_TYPES } from './data/items.js';
@@ -966,7 +966,7 @@ export function renderTacChairs() {
   if (!tacMapWrap) return;
   tacMapWrap.querySelectorAll('.tac-chair, .tac-carry-point, .tac-carry-time-start, .tac-path-point, .tac-path-label').forEach((el) => el.remove());
   const map = MAPS_DATA[S.currentMapId];
-  const ch = map.rocketChairs;
+  const ch = rocketChairGroups(map);
   if (!ch) return;
   const [imgW, imgH] = map.mapSize;
   // 椅子点格式：[x, z]（地面）或 [x, y, z]（地下室，y 为高度）
@@ -1035,7 +1035,7 @@ export function renderTacChairs() {
 }
 
 export function syncTacChairText() {
-  const ch = MAPS_DATA[S.currentMapId].rocketChairs;
+  const ch = rocketChairGroups(MAPS_DATA[S.currentMapId]);
   if (!ch || !ch.sets.length) { tacChairText.textContent = '--'; return; }
   tacChairText.textContent = translate("ui.tac.display.rocketChair.layout",
     { index: S.tacChairIndex + 1, count: ch.sets.length });
@@ -1051,7 +1051,7 @@ function tacCarryDeselectIfGone(kind) {
 }
 
 export function switchTacChair(step) {
-  const ch = MAPS_DATA[S.currentMapId].rocketChairs;
+  const ch = rocketChairGroups(MAPS_DATA[S.currentMapId]);
   if (!ch || !ch.sets.length) return;
   S.tacChairIndex = (S.tacChairIndex + step + ch.sets.length) % ch.sets.length;
   tacCarryDeselectIfGone('set');
@@ -1183,8 +1183,8 @@ export function tacSnapTarget(p, excl) {
         size: tacDisplay.escapeDoorSize, kind: 'door',
       }));
   }
-  if (tacDrawSettings.snap.rocketChair && map.rocketChairs) {
-    const ch = map.rocketChairs;
+  if (tacDrawSettings.snap.rocketChair && map.rocketChairCombinations) {
+    const ch = rocketChairGroups(map);
     const pushChair = (pt) => {
       const px = pt[0], pz = pt.length > 2 ? pt[2] : pt[1];
       pts.push({ x: px / imgW, y: pz / imgH, size: tacDisplay.rocketChairSize, kind: 'chair' });
@@ -1765,7 +1765,7 @@ function tacDedOnMapSwitch() {
 // 当前地图上显示的可选椅子（与显示设置共享刷点组与开关；
 // 地下室椅子仅在「地下室」显示开启时纳入，x/z 投影到地面层做二维近似）
 function tacCarryGroundChairs() {
-  const ch = MAPS_DATA[S.currentMapId].rocketChairs;
+  const ch = rocketChairGroups(MAPS_DATA[S.currentMapId]);
   if (!ch) return [];
   const out = [];
   const xz = (pt) => (pt.length > 2 ? [pt[0], pt[2]] : pt);
@@ -1797,7 +1797,7 @@ export function syncTacCarryChairRow() {
   tacCarryShowChairsEl.checked = tacDisplay.rocketChairs;
   tacCarryChairSizeEl.value = tacDisplay.rocketChairSize;
   tacCarryChairSizeDefEl.checked = tacDisplay.rocketChairSize === TAC_DISPLAY_DEFAULT.rocketChairSize;
-  const ch = MAPS_DATA[S.currentMapId].rocketChairs;
+  const ch = rocketChairGroups(MAPS_DATA[S.currentMapId]);
   tacCarryChairText.textContent = (!ch || !ch.sets.length) ? '--'
     : translate('ui.tac.display.rocketChair.layout', { index: S.tacChairIndex + 1, count: ch.sets.length });
   tacCarryChairBasementEl.checked = tacDisplay.rocketChairsBasement;
@@ -9300,8 +9300,8 @@ export async function tacExportImage() {
 
     // 狂欢之椅：固定椅 + 当前刷点组 + 当前地下室组
     const xzOf = (pt) => (pt.length > 2 ? [pt[0], pt[2]] : pt);
-    if (chairIcon && map.rocketChairs) {
-      const ch = map.rocketChairs;
+    if (chairIcon && map.rocketChairCombinations) {
+      const ch = rocketChairGroups(map);
       const size = tacDisplay.rocketChairSize / 100 * W * K;
       const drawChair = (pt) => {
         const [px, pz] = xzOf(pt);

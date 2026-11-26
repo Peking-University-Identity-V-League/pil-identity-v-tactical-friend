@@ -1,6 +1,6 @@
 
 import { mapsZonesRelative } from '../data/geo.js';
-import { MAPS_DATA } from '../data/maps.js';
+import { MAPS_DATA, rocketChairGroups } from '../data/maps.js';
 import { TAC_DISPLAY_DEFAULT, TAC_MEASURE_DEFAULT } from '../data/tactic-data.js';
 import { selDisplay, updateLockCipher } from '../region.js';
 import { sideToggle } from './dom.js';
@@ -156,7 +156,7 @@ export function restoreRegionSel(mapId) {
   const spawnCount = (MAPS_DATA[mapId].spawnPoints || []).length;
   S.tacSpawnIndex = spawnCount
     ? Math.min(Math.max(0, savedSpawns[mapId] | 0), spawnCount - 1) : 0;
-  const ch = MAPS_DATA[mapId].rocketChairs;
+  const ch = rocketChairGroups(MAPS_DATA[mapId]);
   const sc = savedChairs[mapId] || {};
   S.tacChairIndex = ch && ch.sets.length
     ? Math.min(Math.max(0, sc.set | 0), ch.sets.length - 1) : 0;

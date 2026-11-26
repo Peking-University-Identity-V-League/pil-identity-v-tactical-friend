@@ -42,6 +42,8 @@ export const MAPS_DATA = [
       ['M_4', 'M_1', 'M_3', 'W_4', 'W_3', 'E_2', 'E_3']
     ];
 
+    const cipherAll = ciphers.map((c) => c.id);
+
     const fixedHint = translate("maps.armsFactory.fixedHint");
     const hints = [
       translate("maps.armsFactory.hint.hint0"),
@@ -55,16 +57,40 @@ export const MAPS_DATA = [
 
     const dungeons = [[385, 554], [175, 133], [428, 284]];
 
-    const rocketChairs = {
-      fixed: [[603, 113], [532, 282], [191, 326], [671, 363], [379, 368], [407, 549], [233, 560], [123, 562], [619, 567]],
+    const rocketChairs = [
+      { id: '1', location: [603, 113] },
+      { id: '2', location: [532, 282] },
+      { id: '3', location: [191, 326] },
+      { id: '4', location: [671, 363] },
+      { id: '5', location: [379, 368] },
+      { id: '6', location: [407, 549] },
+      { id: '7', location: [233, 560] },
+      { id: '8', location: [123, 562] },
+      { id: '9', location: [619, 567] },
+      { id: '10', location: [216, 137] },
+      { id: '11', location: [476, 160] },
+      { id: '12', location: [128, 220] },
+      { id: '13', location: [330, 119] },
+      { id: '14', location: [117, 138] },
+      { id: '15', location: [416, 222] },
+      { id: '17', location: [128, 220] },
+      { id: '18', location: [117, 138] },
+      { id: '19', location: [291, 318] },
+    ];
+
+    const rocketChairCombinations = {
+      fixed: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
       sets: [
-        [[216, 137], [476, 160], [128, 220]],
-        [[330, 119], [117, 138]],
-        [[216, 137], [117, 138], [416, 222]],
-        [[330, 119], [128, 220], [416, 222]],
-        [[330, 119], [117, 138], [291, 318]],
+        ['10', '11', '12'],
+        ['13', '14'],
+        ['10', '14', '15'],
+        ['13', '17', '15'],
+        ['13', '18', '19'],
       ],
     };
+
+    const rocketChairAll = rocketChairs.map((c) => c.id);
+
 
     const lockers = [[557, 112], [686, 161], [128, 166], [632, 182], [323, 184], [584, 189], [412, 368], [386, 560], [195, 583], [268, 594]];
 
@@ -197,8 +223,8 @@ export const MAPS_DATA = [
     return {
       mapId, mapName, mapNameEn,
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
-      law_urls, ciphers, cipherCombinations, fixedHint, hints,
-      escapeDoors, dungeons, rocketChairs, lockers, chests,
+      law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests,
       basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { fixed, region, exactly, either } = dedHelpers(ciphers);
@@ -260,6 +286,8 @@ export const MAPS_DATA = [
       ['A_2', 'B_1', 'B_2', 'C_1', 'C_2', 'D_1', 'D_2']
     ];
 
+    const cipherAll = ciphers.map((c) => c.id);
+
     const fixedHint = translate("maps.sacredHeartHospital.fixedHint");
     const hints = [
       '',
@@ -273,14 +301,33 @@ export const MAPS_DATA = [
 
     const dungeons = [[146, 321], [512, 480], [581, 297]];
 
-    const rocketChairs = {
-      fixed: [[361, 62], [538, 116], [244, 141], [343, 172], [149, 223], [588, 308], [242, 322], [241, 412], [137, 471], [552, 503], [279, 505]],
+    const rocketChairs = [
+      { id: '1', location: [361, 62] },
+      { id: '2', location: [538, 116] },
+      { id: '3', location: [244, 141] },
+      { id: '4', location: [343, 172] },
+      { id: '5', location: [149, 223] },
+      { id: '6', location: [588, 308] },
+      { id: '7', location: [242, 322] },
+      { id: '8', location: [241, 412] },
+      { id: '9', location: [137, 471] },
+      { id: '10', location: [552, 503] },
+      { id: '11', location: [279, 505] },
+      { id: '12', location: [545, 396] },
+      { id: '13', location: [425, 503] },
+      { id: '14', location: [487, 398] },
+    ];
+
+    const rocketChairCombinations = {
+      fixed: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'],
       sets: [
-        [[545, 396], [425, 503]],
-        [[487, 398], [425, 503]],
-        [[545, 396], [487, 398]],
+        ['12', '13'],
+        ['14', '13'],
+        ['12', '14'],
       ],
     };
+
+    const rocketChairAll = rocketChairs.map((c) => c.id);
 
     const lockers = [[270, 41], [581, 277], [106, 291], [156, 306]];
 
@@ -413,8 +460,8 @@ export const MAPS_DATA = [
     return {
       mapId, mapName, mapNameEn,
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
-      law_urls, ciphers, cipherCombinations, fixedHint, hints,
-      escapeDoors, dungeons, rocketChairs, lockers, chests,
+      law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests,
       basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { exactly, either, same, atLeast1, chain } = dedHelpers(ciphers);
@@ -480,6 +527,8 @@ export const MAPS_DATA = [
       ['E_4', 'E_2', 'M_1', 'M_2', 'M_3', 'W_2', 'W_4']
     ];
 
+    const cipherAll = ciphers.map((c) => c.id);
+
     const fixedHint = translate("maps.theRedChurch.fixedHint");
     const hints = [
       translate("maps.theRedChurch.hint.hint0"),
@@ -494,14 +543,35 @@ export const MAPS_DATA = [
     const dungeons = [[121, 474], [418, 417], [539, 225]];
 
     // 狂欢之椅（回放数据提取）：fixed 固定椅，sets 随机椅刷点组，basements 两处地下室各4把
-    const rocketChairs = {
-      fixed: [[167, 144], [213, 346], [511, 441], [267, 449]],
+    const rocketChairs = [
+      { id: '1', location: [167, 144] },
+      { id: '2', location: [213, 346] },
+      { id: '3', location: [511, 441] },
+      { id: '4', location: [267, 449] },
+      { id: '5', location: [348, 75] },
+      { id: '6', location: [431, 174] },
+      { id: '7', location: [451, 226] },
+      { id: '8', location: [445, 306] },
+      { id: '9', location: [135, 411] },
+      { id: '10', location: [356, 440] },
+      { id: '11', location: [210, 500] },
+      { id: '12', location: [253, 171] },
+      { id: '13', location: [354, 181] },
+      { id: '14', location: [155, 276] },
+      { id: '15', location: [382, 375] },
+      { id: '16', location: [507, 184] },
+    ];
+
+    const rocketChairCombinations = {
+      fixed: ['1', '2', '3', '4'],
       sets: [
-        [[348, 75], [431, 174], [451, 226], [445, 306], [135, 411], [356, 440], [210, 500]],
-        [[253, 171], [431, 174], [354, 181], [155, 276], [445, 306], [382, 375], [210, 500]],
-        [[348, 75], [253, 171], [507, 184], [451, 226], [155, 276], [382, 375], [135, 411], [356, 440]],
+        ['5', '6', '7', '8', '9', '10', '11'],
+        ['12', '6', '13', '14', '8', '15', '11'],
+        ['5', '12', '16', '7', '14', '15', '9', '10'],
       ],
     };
+
+    const rocketChairAll = rocketChairs.map((c) => c.id);
 
     const lockers = [[549, 130], [431, 144], [328, 149], [487, 225], [523, 244], [239, 263], [449, 298], [123, 301], [204, 506], [362, 518]];
 
@@ -631,8 +701,8 @@ export const MAPS_DATA = [
     return {
       mapId, mapName, mapNameEn,
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
-      law_urls, ciphers, cipherCombinations, fixedHint, hints,
-      escapeDoors, dungeons, rocketChairs, lockers, chests,
+      law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests,
       basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { fixed, region, exactly, atLeast1, chain } = dedHelpers(ciphers);
@@ -705,6 +775,8 @@ export const MAPS_DATA = [
       ['E_1', 'E_2', 'E_3', 'M_2', 'M_3', 'W_2', 'W_4']
     ];
 
+    const cipherAll = ciphers.map((c) => c.id);
+
     const fixedHint = translate("maps.lakesideVillage.fixedHint");
     const hints = [
       '',
@@ -718,16 +790,41 @@ export const MAPS_DATA = [
 
     const dungeons = [[254, 638], [386, 858], [770, 860], [940, 530], [922, 308]];
 
-    const rocketChairs = {
-      fixed: [[759, 265], [947, 369], [1080, 43, 574], [461, 621], [195, 697], [775, 733], [292, 878], [973, 896], [406, 1000]],
+    const rocketChairs = [
+      { id: '1', location: [759, 265] },
+      { id: '2', location: [947, 369] },
+      { id: '3', location: [461, 621] },
+      { id: '4', location: [195, 697] },
+      { id: '5', location: [775, 733] },
+      { id: '6', location: [292, 878] },
+      { id: '7', location: [973, 896] },
+      { id: '8', location: [406, 1000] },
+      { id: '9', location: [171, 276] },
+      { id: '10', location: [770, 1023] },
+      { id: '11', location: [315, 203] },
+      { id: '12', location: [564, 874] },
+      { id: '13', location: [465, 379] },
+      { id: '14', location: [998, 745] },
+      { id: '15', location: [237, 497] },
+      { id: '16', location: [859, 626] },
+      { id: '17', location: [728, 585] },
+      { id: '18', location: [664, 449] },
+      { id: '19', location: [170, 284] },
+      { id: '20', location: [314, 211] },
+    ];
+
+    const rocketChairCombinations = {
+      fixed: ['1', '2', '3', '4', '5', '6', '7', '8'],
       sets: [
-        [[171, 276], [770, 1023], [315, 203], [564, 874], [465, 379], [998, 745], [237, 497]], // 3/8 局
-        [[171, 276], [859, 626], [770, 1023], [315, 203], [728, 585], [664, 449], [564, 874]], // 2/8 局
-        [[859, 626], [770, 1023], [728, 585], [664, 449], [564, 874], [170, 284], [314, 211]], // 1/8 局
-        [[171, 276], [859, 626], [770, 1023], [728, 585], [564, 874], [465, 379], [237, 497]], // 1/8 局
-        [[171, 276], [859, 626], [315, 203], [664, 449], [465, 379], [696, -1, 988]], // 1/8 局
+        ['9', '10', '11', '12', '13', '14', '15'],
+        ['9', '16', '10', '11', '17', '18', '12'],
+        ['16', '10', '17', '18', '12', '19', '20'],
+        ['9', '16', '10', '17', '12', '13', '15'],
+        ['9', '16', '11', '18', '13'],
       ],
     };
+
+    const rocketChairAll = rocketChairs.map((c) => c.id);
 
     const lockers = [[496, 296], [273, 402], [276, 579], [399, 995]];
 
@@ -865,8 +962,8 @@ export const MAPS_DATA = [
     return {
       mapId, mapName, mapNameEn,
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
-      law_urls, ciphers, cipherCombinations, fixedHint, hints,
-      escapeDoors, dungeons, rocketChairs, lockers, chests, phoneBooths,
+      law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests, phoneBooths,
       basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { fixed, region, exactly, either, same, chain } = dedHelpers(ciphers);
@@ -941,6 +1038,8 @@ export const MAPS_DATA = [
       ['M_1', 'E_1', 'E_2', 'E_4', 'W_2', 'W_4', 'W_5']
     ];
 
+    const cipherAll = ciphers.map((c) => c.id);
+
     const fixedHint = translate("maps.moonlitRiverPark.fixedHint");
     const hints = [
       '',
@@ -953,17 +1052,35 @@ export const MAPS_DATA = [
     const escapeDoors = [[1312, 88], [130, 946], [1340, 88], [101, 946]];
 
     const dungeons = [[1288, 709], [746, 469], [417, 911], [68, 425], [532, 138]];
-    const rocketChairs = {
-      fixed: [[1164, 192], [463, 276], [925, 374], [120, 382], [1333, 409], [158, 603], [1351, 679], [1044, 6, 722], [238, 815]],
+    const rocketChairs = [
+      { id: '1', location: [1164, 192] },
+      { id: '2', location: [463, 276] },
+      { id: '3', location: [925, 374] },
+      { id: '4', location: [120, 382] },
+      { id: '5', location: [1333, 409] },
+      { id: '6', location: [158, 603] },
+      { id: '7', location: [1351, 679] },
+      { id: '8', location: [238, 815] },
+      { id: '9', location: [347, 437] },
+      { id: '10', location: [993, 517] },
+      { id: '11', location: [531, 516] },
+      { id: '12', location: [1177, 583] },
+      { id: '13', location: [430, 851] },
+    ];
+
+    const rocketChairCombinations = {
+      fixed: ['1', '2', '3', '4', '5', '6', '7', '8'],
       sets: [
-        [[347, 437], [993, 517], [667, 1, 771]], // 3/9 局
-        [[531, 516], [1177, 583], [430, 851]], // 2/9 局
-        [[347, 437], [1177, 583], [667, 1, 771]], // 1/9 局
-        [[531, 516], [993, 517], [667, 1, 771]], // 1/9 局
-        [[531, 516], [1177, 583], [667, 1, 771]], // 1/9 局
-        [[531, 516], [993, 517], [430, 851]], // 1/9 局
+        ['9', '10'],
+        ['11', '12', '13'],
+        ['9', '12'],
+        ['11', '10'],
+        ['11', '12'],
+        ['11', '10', '13'],
       ],
     };
+
+    const rocketChairAll = rocketChairs.map((c) => c.id);
 
     const lockers = [[454, 146], [144, 509], [1094, 520], [1005, 762]];
 
@@ -1100,8 +1217,8 @@ export const MAPS_DATA = [
     return {
       mapId, mapName, mapNameEn,
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
-      law_urls, ciphers, cipherCombinations, fixedHint, hints,
-      escapeDoors, dungeons, rocketChairs, lockers, chests, phoneBooths,
+      law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests, phoneBooths,
       basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { fixed, region, exactly, either, chain } = dedHelpers(ciphers);
@@ -1166,6 +1283,8 @@ export const MAPS_DATA = [
       ['E_2', 'E_3', 'M_1', 'M_3', 'W_1', 'W_3', 'W_4']
     ];
 
+    const cipherAll = ciphers.map((c) => c.id);
+
     const fixedHint = translate("maps.leosMemory.fixedHint");
     const hints = [
       '',
@@ -1179,16 +1298,39 @@ export const MAPS_DATA = [
 
     const dungeons = [[533, 208], [645, 505], [346, 93], [103, 90], [188, 535]];
 
-    const rocketChairs = {
-      fixed: [[507, 271], [239, 301], [344, 365], [498, 386], [191, 477], [96, 505], [368, 516], [519, 562]],
+    const rocketChairs = [
+      { id: '1', location: [507, 271] },
+      { id: '2', location: [239, 301] },
+      { id: '3', location: [344, 365] },
+      { id: '4', location: [498, 386] },
+      { id: '5', location: [191, 477] },
+      { id: '6', location: [96, 505] },
+      { id: '7', location: [368, 516] },
+      { id: '8', location: [519, 562] },
+      { id: '9', location: [204, 84] },
+      { id: '10', location: [555, 127] },
+      { id: '11', location: [108, 284] },
+      { id: '12', location: [643, 322] },
+      { id: '13', location: [589, 492] },
+      { id: '14', location: [91, 102] },
+      { id: '15', location: [382, 115] },
+      { id: '16', location: [612, 197] },
+      { id: '17', location: [145, 201] },
+      { id: '18', location: [657, 488] },
+    ];
+
+    const rocketChairCombinations = {
+      fixed: ['1', '2', '3', '4', '5', '6', '7', '8'],
       sets: [
-        [[204, 84], [555, 127], [108, 284], [643, 322], [589, 492]], // 4/11 局
-        [[91, 102], [382, 115], [555, 127], [612, 197], [145, 201], [657, 488]], // 3/11 局
-        [[204, 84], [91, 102], [382, 115], [555, 127], [145, 201], [643, 322], [657, 488]], // 2/11 局       
-        [[91, 102], [382, 115], [612, 197], [145, 201], [643, 322], [657, 488]], // 1/11 局
-        [[91, 102], [382, 115], [555, 127], [612, 197], [108, 284], [589, 492]], // 1/11 局
+        ['9', '10', '11', '12', '13'],
+        ['14', '15', '10', '16', '17', '18'],
+        ['9', '14', '15', '10', '17', '12', '18'],
+        ['14', '15', '16', '17', '12', '18'],
+        ['14', '15', '10', '16', '11', '13'],
       ],
     };
+
+    const rocketChairAll = rocketChairs.map((c) => c.id);
 
     const lockers = [[248, 59], [89, 114], [388, 127], [635, 166], [112, 325], [652, 475], [126, 576], [75, 577]];
 
@@ -1325,8 +1467,8 @@ export const MAPS_DATA = [
     return {
       mapId, mapName, mapNameEn,
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
-      law_urls, ciphers, cipherCombinations, fixedHint, hints,
-      escapeDoors, dungeons, rocketChairs, lockers, chests, phoneBooths,
+      law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests, phoneBooths,
       basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { region, exactly, chain, implies, link } = dedHelpers(ciphers);
@@ -1408,6 +1550,8 @@ export const MAPS_DATA = [
       ['W_1', 'W_2', 'E_1', 'E_3', 'E_6', 'M_2', 'M_3']
     ];
 
+    const cipherAll = ciphers.map((c) => c.id);
+
     const fixedHint = translate("maps.eversleepingTown.fixedHint");
     const hints = [
       '',
@@ -1421,13 +1565,33 @@ export const MAPS_DATA = [
 
     const dungeons = [[173, 304], [627, 526], [410, 340]];
 
-    const rocketChairs = {
-      fixed: [[515, 101], [186, 136], [375, 226], [222, 250], [645, 385], [309, 421], [178, 431], [517, 440], [276, 540], [585, 622], [379, 637], [540, 739]],
+    const rocketChairs = [
+      { id: '1', location: [515, 101] },
+      { id: '2', location: [186, 136] },
+      { id: '3', location: [375, 226] },
+      { id: '4', location: [222, 250] },
+      { id: '5', location: [645, 385] },
+      { id: '6', location: [309, 421] },
+      { id: '7', location: [178, 431] },
+      { id: '8', location: [517, 440] },
+      { id: '9', location: [276, 540] },
+      { id: '10', location: [585, 622] },
+      { id: '11', location: [379, 637] },
+      { id: '12', location: [540, 739] },
+      { id: '13', location: [279, 118] },
+      { id: '14', location: [613, 219] },
+      { id: '15', location: [549, 313] },
+    ];
+
+    const rocketChairCombinations = {
+      fixed: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
       sets: [
-        [[279, 118], [613, 219]], // 4/5 局
-        [[549, 313]], // 1/5 局
+        ['13', '14'],
+        ['15'],
       ],
     };
+
+    const rocketChairAll = rocketChairs.map((c) => c.id);
 
     const lockers = [[564, 210], [229, 328], [412, 358], [458, 548], [105, 597], [674, 743], [348, 850]];
 
@@ -1560,8 +1724,8 @@ export const MAPS_DATA = [
     return {
       mapId, mapName, mapNameEn,
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
-      law_urls, ciphers, cipherCombinations, fixedHint, hints,
-      escapeDoors, dungeons, rocketChairs, lockers, chests, phoneBooths,
+      law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests, phoneBooths,
       basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { fixed, region, either, atMost1 } = dedHelpers(ciphers);
@@ -1626,6 +1790,8 @@ export const MAPS_DATA = [
       ['E_2', 'E_1', 'M_2', 'M_4', 'M_5', 'W_1', 'W_3']
     ];
 
+    const cipherAll = ciphers.map((c) => c.id);
+
     const fixedHint = translate("maps.chinaTown.fixedHint");
     const hints = [
       translate("maps.chinaTown.hint.hint0"),
@@ -1640,14 +1806,35 @@ export const MAPS_DATA = [
 
     const dungeons = [[157, 994], [351, 456], [1209, 404]];
 
-    const rocketChairs = {
-      fixed: [[1009, 164], [789, 215], [1298, 1, 280], [1081, 487], [783, 516], [105, 622], [270, 749], [728, 770], [936, 988], [435, 1030], [1072, 1057]],
+    const rocketChairs = [
+      { id: '1', location: [1009, 164] },
+      { id: '2', location: [789, 215] },
+      { id: '3', location: [1081, 487] },
+      { id: '4', location: [783, 516] },
+      { id: '5', location: [105, 622] },
+      { id: '6', location: [270, 749] },
+      { id: '7', location: [728, 770] },
+      { id: '8', location: [936, 988] },
+      { id: '9', location: [435, 1030] },
+      { id: '10', location: [1072, 1057] },
+      { id: '11', location: [230, 178] },
+      { id: '12', location: [489, 341] },
+      { id: '13', location: [1295, 909] },
+      { id: '14', location: [468, 197] },
+      { id: '15', location: [449, 511] },
+      { id: '16', location: [1185, 797] },
+    ];
+
+    const rocketChairCombinations = {
+      fixed: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
       sets: [
-        [[230, 178], [489, 341], [1295, 909]], // 7/15 局
-        [[468, 197], [449, 511], [1185, 797]], // 5/15 局
-        [[230, 178], [489, 341], [1185, 797]], // 3/15 局
+        ['11', '12', '13'],
+        ['14', '15', '16'],
+        ['11', '12', '16'],
       ],
     };
+
+    const rocketChairAll = rocketChairs.map((c) => c.id);
 
     const lockers = [[259, 148], [824, 184], [942, 382], [1259, 539], [229, 904], [936, 1114]];
 
@@ -1779,8 +1966,8 @@ export const MAPS_DATA = [
     return {
       mapId, mapName, mapNameEn,
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
-      law_urls, ciphers, cipherCombinations, fixedHint, hints,
-      escapeDoors, dungeons, rocketChairs, lockers, chests,
+      law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests,
       basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { fixed, region, either, same, atLeast1, atMost1, chainThree, allAbsent } = dedHelpers(ciphers);
@@ -1863,6 +2050,8 @@ export const MAPS_DATA = [
       ['W_2', 'W_4', 'E_1', 'E_5', 'M_1', 'M_3', 'M_5']
     ];
 
+    const cipherAll = ciphers.map((c) => c.id);
+
     const fixedHint = translate("maps.darkwoods.fixedHint");
     const hints = [
       '',
@@ -1876,11 +2065,30 @@ export const MAPS_DATA = [
 
     const dungeons = [[661, 134], [164, 943], [737, 957], [978, 351]];
 
-    const rocketChairs = {
-      fixed: [[1078, 140], [505, 235], [857, 254], [232, 310], [1059, 449], [582, 452], [885, 569], [140, 681], [1062, 715], [629, 735], [385, 825], [695, 1002], [217, 3, 1022], [1050, 1062], [484, 1132]],
+    const rocketChairs = [
+      { id: '1', location: [1078, 140] },
+      { id: '2', location: [505, 235] },
+      { id: '3', location: [857, 254] },
+      { id: '4', location: [232, 310] },
+      { id: '5', location: [1059, 449] },
+      { id: '6', location: [582, 452] },
+      { id: '7', location: [885, 569] },
+      { id: '8', location: [140, 681] },
+      { id: '9', location: [1062, 715] },
+      { id: '10', location: [629, 735] },
+      { id: '11', location: [385, 825] },
+      { id: '12', location: [695, 1002] },
+      { id: '13', location: [1050, 1062] },
+      { id: '14', location: [484, 1132] },
+    ];
+
+    const rocketChairCombinations = {
+      fixed: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'],
       sets: [
       ],
     };
+
+    const rocketChairAll = rocketChairs.map((c) => c.id);
 
     const lockers = [[307, 71], [1013, 206], [672, 261], [512, 436], [959, 549], [128, 656], [1029, 893], [128, 982], [686, 1043]];
 
@@ -2013,8 +2221,8 @@ export const MAPS_DATA = [
     return {
       mapId, mapName, mapNameEn,
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
-      law_urls, ciphers, cipherCombinations, fixedHint, hints,
-      escapeDoors, dungeons, rocketChairs, lockers, chests,
+      law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
+      escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests,
       basements, spawnPoints, fixedSpawns,
       deduction: (() => {
         const { region, exactly, either, atMost1, same, chain } = dedHelpers(ciphers);
@@ -2050,6 +2258,18 @@ export const MAPS_DATA = [
   })()
 ];
 
+
+// rocketChairs + rocketChairCombinations 的坐标解析视图：
+// 返回与旧结构一致的 { fixed: [[x,y]...], sets: [[[x,y]...], ...] }，供战术板各消费端使用
+export function rocketChairGroups(map) {
+  const comb = map.rocketChairCombinations;
+  if (!comb) return null;
+  const byId = new Map(map.rocketChairs.map((c) => [c.id, c.location]));
+  return {
+    fixed: comb.fixed.map((id) => byId.get(id)),
+    sets: comb.sets.map((idList) => idList.map((id) => byId.get(id))),
+  };
+}
 
 export const CIPHER_EXTRA = {
   4: [{ id: 'E_0', location: [768, 550], name: translate("maps.moonlitRiverPark.cipher.e0.name"), feature: translate("maps.moonlitRiverPark.cipher.e0.feature") }],
