@@ -32,7 +32,7 @@ export function initHomePage() {
     card.className = 'home-card'
     card.innerHTML = `
       <div class="home-card-img-wrap">
-        <img class="home-card-img" src="${map.mapImage}" alt="${map.mapName}" loading="lazy" />
+        <img class="home-card-img" src="images/home-thumb/${index}.webp" alt="${map.mapName}" loading="lazy" decoding="async" />
         <div class="home-card-icon">${icons[index]}</div>
       </div>
       <div class="home-card-info">
@@ -45,7 +45,13 @@ export function initHomePage() {
     `
     card.addEventListener('click', () => enterMap(index))
     const thumb = card.querySelector('.home-card-img')
-    thumb.onerror = () => { thumb.style.display = 'none' }
+    // 本地缩略图缺失时回退原图，再失败才隐藏
+    thumb.onerror = () => {
+      if (!thumb.dataset.fallback) {
+        thumb.dataset.fallback = '1';
+        thumb.src = map.mapImage;
+      } else { thumb.style.display = 'none' }
+    }
     homeMapGrid.appendChild(card)
   })
 }
