@@ -469,6 +469,14 @@ export const tacShowCiphersEl = $('tacShowCiphers');
 
 export const tacCipherAllEl = $('tacCipherAll');
 
+export const tacCipherDuoEl = $('tacCipherDuo');
+
+export const tacCipherDuoWrapEl = $('tacCipherDuoWrap');
+
+export const tacCipherCardDuoEl = $('tacCipherCardDuo');
+
+export const tacCipherCardDuoWrapEl = $('tacCipherCardDuoWrap');
+
 export const tacDungeonAllEl = $('tacDungeonAll');
 
 export const tacChairAllEl = $('tacChairAll');

@@ -834,6 +834,8 @@ MAPS_DATA
 | `ciphers` | 所有密码机点位 |
 | `cipherCombinations` | 每组实际出现的七个密码机 ID |
 | `cipherAll` | 全部密码机 ID（由 `ciphers` 推导，显示设置「全部」使用） |
+| `cipherCombinationsDuoHunters` | 联合狩猎密码机组（仅有该模式的地图；显示设置「联合狩猎」勾选后取代 `cipherCombinations`） |
+| `cipherAllDuoHunters` | 联合狩猎全部密码机 ID（由 `ciphers` 推导，勾选「联合狩猎」后「全部」改用此列表） |
 | `dungeons` | 地窖候选坐标 |
 | `escapeDoors` | 逃生门与门锁坐标 |
 | `widthM` | 地图横向对应的游戏内米数 |
@@ -889,7 +891,7 @@ MAPS_DATA
 ['M_4', 'M_1', 'M_3', 'W_4', 'W_1', 'E_2', 'E_4']
 ```
 
-修改组合时，ID 必须存在于该图 `ciphers`，必要时也可由 `CIPHER_EXTRA` 补充。不要直接抄写另一张地图的 ID。
+修改组合时，ID 必须存在于该图 `ciphers`。不要直接抄写另一张地图的 ID。
 
 ### `escapeDoors` 的顺序
 
@@ -932,10 +934,6 @@ MAPS_DATA
 | `link(name, regionNames, marker, positive, text)` | 区域台数与标志点位联动 |
 
 `makeDeduction()` 会把密码机 ID 组合转成推演引擎需要的点位下标，并通过 `dedRuleBook()` 生成规律速查。
-
-### `CIPHER_EXTRA`
-
-用于补充不属于常规点位列表、但需要参与坐标查找的密码机。普通修改优先改目标地图自己的 `ciphers`，只有确需额外点位时才使用这里。
 
 ## 10.2 `js/data/tactic-data.js`、`js/data/roles.js`、`js/data/items.js` 与 `js/data/talents.js`：角色、道具和常量
 

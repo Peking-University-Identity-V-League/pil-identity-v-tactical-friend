@@ -143,14 +143,15 @@ try {
         </summary>
         <div style="margin-top:12px">
           <div class="tac-manage-entry">
-            <div class="tac-manage-head"><label class="tac-onoff"><input type="checkbox" id="tacCipherCardShow" checked><span data-i18n="common.cipherMachine"></span></label></div>
+            <div class="tac-manage-head"><label class="tac-display-toggle tac-head-toggle"><input type="checkbox" id="tacCipherCardShow" checked><span data-i18n="common.cipherMachine"></span></label></div>
             <div class="tac-manage-row tac-display-row">
               <span class="tac-display-mid">
                 <span class="switch-btn" id="tacCipherCardPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.cipher.layout.prev.message&quot;}">‹</span>
                 <span class="tac-display-text" id="tacCipherCardText"></span>
                 <span class="switch-btn" id="tacCipherCardNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.cipher.layout.next.message&quot;}">›</span>
+                <label class="tac-display-toggle"><input type="checkbox" id="tacCipherCardAll"><span data-i18n="common.all"></span></label>
+                <label class="tac-display-toggle" id="tacCipherCardDuoWrap" style="display:none"><input type="checkbox" id="tacCipherCardDuo"><span data-i18n="ui.tac.display.cipher.duoHunters"></span></label>
               </span>
-              <label class="tac-display-toggle"><input type="checkbox" id="tacCipherCardAll"><span data-i18n="common.all"></span></label>
               <label class="tac-manage-slider"><span data-i18n="application.common.icon.size"></span><input type="range" id="tacCipherCardSize" min="3" max="12" step="0.5" value="6"></label>
               <label class="tac-manage-def"><input type="checkbox" id="tacCipherCardSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
@@ -493,20 +494,20 @@ try {
         <div style="margin-top:12px">
           <div class="tac-display-list">
           <div class="tac-manage-entry">
-            <div class="tac-manage-head"><label class="tac-onoff"><input type="checkbox" id="tacCarryShowChairs"><span data-i18n="common.rocketChair"></span></label></div>
+            <div class="tac-manage-head"><label class="tac-display-toggle tac-head-toggle"><input type="checkbox" id="tacCarryShowChairs"><span data-i18n="common.rocketChair"></span></label></div>
             <div class="tac-manage-row tac-display-row">
               <span class="tac-display-mid">
                 <span class="switch-btn" id="tacCarryChairPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.rocketChair.prev.message&quot;}">‹</span>
                 <span class="tac-display-text" id="tacCarryChairText"></span>
                 <span class="switch-btn" id="tacCarryChairNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.rocketChair.next.message&quot;}">›</span>
+                <label class="tac-display-toggle"><input type="checkbox" id="tacCarryChairAll"><span data-i18n="common.all"></span></label>
               </span>
-              <label class="tac-display-toggle"><input type="checkbox" id="tacCarryChairAll"><span data-i18n="common.all"></span></label>
               <label class="tac-manage-slider"><span data-i18n="application.common.icon.size"></span><input type="range" id="tacCarryChairSize" min="3" max="12" step="0.5" value="6"></label>
               <label class="tac-manage-def"><input type="checkbox" id="tacCarryChairSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
           <div class="tac-manage-entry">
-            <div class="tac-manage-head"><span class="tac-onoff tac-onoff-static"><span data-i18n="common.basement"></span></span></div>
+            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="common.basement"></span></div>
             <div class="tac-manage-row tac-display-row">
               <span class="tac-display-mid">
                 <span class="switch-btn" id="tacCarryBasementPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.basement.layout.prev.message&quot;}">‹</span>
@@ -676,10 +677,10 @@ try {
           <div class="tac-display-group">
             <div class="tac-display-group-label" data-i18n="ui.tac.display.setting.label"></div>
             <div class="tac-manage-entry">
-              <div class="tac-manage-head"><label class="tac-onoff"><input type="checkbox" id="tacShowZones"><span data-i18n="common.regionDivide"></span></label></div>
+              <div class="tac-manage-head"><label class="tac-display-toggle tac-head-toggle"><input type="checkbox" id="tacShowZones"><span data-i18n="common.regionDivide"></span></label></div>
             </div>
           <div class="tac-manage-entry" id="tacSpawnEntry">
-            <div class="tac-manage-head"><label class="tac-onoff"><input type="checkbox" id="tacShowSpawns"><span data-i18n="common.spawnPoint"></span></label></div>
+            <div class="tac-manage-head"><label class="tac-display-toggle tac-head-toggle"><input type="checkbox" id="tacShowSpawns"><span data-i18n="common.spawnPoint"></span></label></div>
             <div class="tac-manage-row tac-display-row">
               <span class="tac-display-mid">
                 <span class="switch-btn" id="tacSpawnPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.spawnPoint.layout.prev.message&quot;}">‹</span>
@@ -691,7 +692,7 @@ try {
             </div>
           </div>
           <div class="tac-manage-entry">
-            <div class="tac-manage-head"><label class="tac-onoff"><input type="checkbox" id="tacShowDoors" checked><span data-i18n="common.escapeDoor"></span></label></div>
+            <div class="tac-manage-head"><label class="tac-display-toggle tac-head-toggle"><input type="checkbox" id="tacShowDoors" checked><span data-i18n="common.escapeDoor"></span></label></div>
             <div class="tac-manage-row tac-display-row">
               <span class="tac-display-mid">
                 <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.escapeDoor.location.message&quot;}"><input type="checkbox" id="tacDoorLock"><span data-i18n="ui.tac.display.escapeDoor.location"></span></label>
@@ -701,67 +702,68 @@ try {
             </div>
           </div>
           <div class="tac-manage-entry">
-            <div class="tac-manage-head"><label class="tac-onoff"><input type="checkbox" id="tacShowCiphers" checked><span data-i18n="common.cipherMachine"></span></label></div>
+            <div class="tac-manage-head"><label class="tac-display-toggle tac-head-toggle"><input type="checkbox" id="tacShowCiphers" checked><span data-i18n="common.cipherMachine"></span></label></div>
             <div class="tac-manage-row tac-display-row">
               <span class="tac-display-mid">
                 <span class="switch-btn" id="tacDispCipherPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.cipher.layout.prev.message&quot;}">‹</span>
                 <span class="tac-display-text" id="tacDispCipherText" data-i18n="ui.tac.display.cipher.layout"></span>
                 <span class="switch-btn" id="tacDispCipherNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.cipher.layout.next.message&quot;}">›</span>
+                <label class="tac-display-toggle"><input type="checkbox" id="tacCipherAll"><span data-i18n="common.all"></span></label>
+                <label class="tac-display-toggle" id="tacCipherDuoWrap" style="display:none"><input type="checkbox" id="tacCipherDuo"><span data-i18n="ui.tac.display.cipher.duoHunters"></span></label>
               </span>
-              <label class="tac-display-toggle"><input type="checkbox" id="tacCipherAll"><span data-i18n="common.all"></span></label>
               <label class="tac-manage-slider"><span data-i18n="application.common.icon.size"></span><input type="range" id="tacCipherSize" min="3" max="12" step="0.5" value="6"></label>
               <label class="tac-manage-def"><input type="checkbox" id="tacCipherSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
           <div class="tac-manage-entry">
-            <div class="tac-manage-head"><label class="tac-onoff"><input type="checkbox" id="tacShowDungeon"><span data-i18n="common.dungeon"></span></label></div>
+            <div class="tac-manage-head"><label class="tac-display-toggle tac-head-toggle"><input type="checkbox" id="tacShowDungeon"><span data-i18n="common.dungeon"></span></label></div>
             <div class="tac-manage-row tac-display-row">
               <span class="tac-display-mid">
                 <span class="switch-btn" id="tacDungeonPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.dungeon.layout.prev.message&quot;}">‹</span>
                 <span class="tac-display-text" id="tacDungeonText"></span>
                 <span class="switch-btn" id="tacDungeonNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.dungeon.layout.next.message&quot;}">›</span>
+                <label class="tac-display-toggle"><input type="checkbox" id="tacDungeonAll"><span data-i18n="common.all"></span></label>
               </span>
-              <label class="tac-display-toggle"><input type="checkbox" id="tacDungeonAll"><span data-i18n="common.all"></span></label>
               <label class="tac-manage-slider"><span data-i18n="application.common.icon.size"></span><input type="range" id="tacDungeonSize" min="3" max="12" step="0.5" value="6"></label>
               <label class="tac-manage-def"><input type="checkbox" id="tacDungeonSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
           <div class="tac-manage-entry" id="tacChairEntry">
-            <div class="tac-manage-head"><label class="tac-onoff"><input type="checkbox" id="tacShowChairs"><span data-i18n="common.rocketChair"></span></label></div>
+            <div class="tac-manage-head"><label class="tac-display-toggle tac-head-toggle"><input type="checkbox" id="tacShowChairs"><span data-i18n="common.rocketChair"></span></label></div>
             <div class="tac-manage-row tac-display-row">
               <span class="tac-display-mid">
                 <span class="switch-btn" id="tacChairPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.rocketChair.prev.message&quot;}">‹</span>
                 <span class="tac-display-text" id="tacChairText"></span>
                 <span class="switch-btn" id="tacChairNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.rocketChair.next.message&quot;}">›</span>
+                <label class="tac-display-toggle"><input type="checkbox" id="tacChairAll"><span data-i18n="common.all"></span></label>
               </span>
-              <label class="tac-display-toggle"><input type="checkbox" id="tacChairAll"><span data-i18n="common.all"></span></label>
               <label class="tac-manage-slider"><span data-i18n="application.common.icon.size"></span><input type="range" id="tacChairSize" min="3" max="12" step="0.5" value="6"></label>
               <label class="tac-manage-def"><input type="checkbox" id="tacChairSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
           <div class="tac-manage-entry" id="tacLockerEntry">
-            <div class="tac-manage-head"><label class="tac-onoff"><input type="checkbox" id="tacShowLockers"><span data-i18n="common.locker"></span></label></div>
+            <div class="tac-manage-head"><label class="tac-display-toggle tac-head-toggle"><input type="checkbox" id="tacShowLockers"><span data-i18n="common.locker"></span></label></div>
             <div class="tac-manage-row tac-display-row">
               <label class="tac-manage-slider"><span data-i18n="application.common.icon.size"></span><input type="range" id="tacLockerSize" min="3" max="12" step="0.5" value="6"></label>
               <label class="tac-manage-def"><input type="checkbox" id="tacLockerSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
           <div class="tac-manage-entry" id="tacBoxEntry">
-            <div class="tac-manage-head"><label class="tac-onoff"><input type="checkbox" id="tacShowBoxes"><span data-i18n="common.box"></span></label></div>
+            <div class="tac-manage-head"><label class="tac-display-toggle tac-head-toggle"><input type="checkbox" id="tacShowBoxes"><span data-i18n="common.box"></span></label></div>
             <div class="tac-manage-row tac-display-row">
               <label class="tac-manage-slider"><span data-i18n="application.common.icon.size"></span><input type="range" id="tacBoxSize" min="3" max="12" step="0.5" value="6"></label>
               <label class="tac-manage-def"><input type="checkbox" id="tacBoxSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
           <div class="tac-manage-entry" id="tacPhoneBoothEntry">
-            <div class="tac-manage-head"><label class="tac-onoff"><input type="checkbox" id="tacShowPhoneBooths"><span data-i18n="common.phoneBooth"></span></label></div>
+            <div class="tac-manage-head"><label class="tac-display-toggle tac-head-toggle"><input type="checkbox" id="tacShowPhoneBooths"><span data-i18n="common.phoneBooth"></span></label></div>
             <div class="tac-manage-row tac-display-row">
               <label class="tac-manage-slider"><span data-i18n="application.common.icon.size"></span><input type="range" id="tacPhoneBoothSize" min="3" max="12" step="0.5" value="6"></label>
               <label class="tac-manage-def"><input type="checkbox" id="tacPhoneBoothSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
           <div class="tac-manage-entry" id="tacBasementEntry">
-            <div class="tac-manage-head"><span class="tac-onoff tac-onoff-static"><span data-i18n="common.basement"></span></span></div>
+            <div class="tac-manage-head"><span class="tac-manage-name" data-i18n="common.basement"></span></div>
             <div class="tac-manage-row tac-display-row">
               <span class="tac-display-mid">
                 <span class="switch-btn" id="tacBasementPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.basement.layout.prev.message&quot;}">‹</span>

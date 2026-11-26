@@ -971,7 +971,7 @@ export const MAPS_DATA = [
     return {
       mapId, mapName, mapNameEn,
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
-      law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
+      law_urls, ciphers, cipherCombinations, cipherAll, cipherCombinationsDuoHunters, cipherAllDuoHunters, fixedHint, hints,
       escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests, phoneBooths,
       basements, spawnPoints, fixedSpawns,
       deduction: (() => {
@@ -1051,7 +1051,10 @@ export const MAPS_DATA = [
 
     const cipherCombinationsDuoHunters = [
       ['E_1', 'E_2', 'E_3', 'E_4', 'E_6', 'M_1', 'W_1', 'W_2', 'W_3', 'W_5', 'W_6'],
-      ['E_1', 'E_2', 'E_3', 'E_4', 'E_5', 'E_6', 'M_1', 'W_1', 'W_2', 'W_4', 'W_5']
+      ['E_1', 'E_2', 'E_3', 'E_4', 'E_5', 'E_6', 'M_1', 'W_1', 'W_2', 'W_4', 'W_5'],
+      ['E_1', 'E_2', 'E_3', 'E_5', 'E_6', 'M_1', 'W_2', 'W_3', 'W_4', 'W_5', 'W_6'],
+      ['E_1', 'E_2', 'E_3', 'E_4', 'E_5', 'M_1', 'W_1', 'W_2', 'W_3', 'W_4', 'W_6'],
+      ['E_1', 'E_3', 'E_4', 'E_5', 'E_6', 'M_1', 'W_1', 'W_3', 'W_4', 'W_5', 'W_6'],
     ];
 
     const cipherAll = ['E_1', 'E_2', 'E_3', 'E_4', 'E_5', 'M_1', 'W_1', 'W_2', 'W_3', 'W_4', 'W_5']
@@ -1235,7 +1238,7 @@ export const MAPS_DATA = [
     return {
       mapId, mapName, mapNameEn,
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
-      law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
+      law_urls, ciphers, cipherCombinations, cipherAll, cipherCombinationsDuoHunters, cipherAllDuoHunters, fixedHint, hints,
       escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests, phoneBooths,
       basements, spawnPoints, fixedSpawns,
       deduction: (() => {
@@ -1494,7 +1497,7 @@ export const MAPS_DATA = [
     return {
       mapId, mapName, mapNameEn,
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
-      law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
+      law_urls, ciphers, cipherCombinations, cipherAll, cipherCombinationsDuoHunters, cipherAllDuoHunters, fixedHint, hints,
       escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests, phoneBooths,
       basements, spawnPoints, fixedSpawns,
       deduction: (() => {
@@ -1762,7 +1765,7 @@ export const MAPS_DATA = [
     return {
       mapId, mapName, mapNameEn,
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
-      law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
+      law_urls, ciphers, cipherCombinations, cipherAll, cipherCombinationsDuoHunters, cipherAllDuoHunters, fixedHint, hints,
       escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests, phoneBooths,
       basements, spawnPoints, fixedSpawns,
       deduction: (() => {
@@ -2308,11 +2311,6 @@ export function rocketChairGroups(map) {
     sets: comb.sets.map((idList) => idList.map((id) => byId.get(id))),
   };
 }
-
-export const CIPHER_EXTRA = {
-  4: [{ id: 'E_0', location: [768, 550], name: translate("maps.moonlitRiverPark.cipher.e0.name"), feature: translate("maps.moonlitRiverPark.cipher.e0.feature") }],
-};
-
 
 export function getImageUrl(mapId) {
   return MAPS_DATA[mapId].mapImage

@@ -198,7 +198,7 @@ export const tacDisplay = {
   spawns: false, spawnSize: TAC_DISPLAY_DEFAULT.spawnSize,
   escapeDoors: true, escapeDoorSize: TAC_DISPLAY_DEFAULT.escapeDoorSize,
   escapeDoorLock: false,
-  ciphers: true, cipherSize: TAC_DISPLAY_DEFAULT.cipherSize, cipherAll: false,
+  ciphers: true, cipherSize: TAC_DISPLAY_DEFAULT.cipherSize, cipherAll: false, cipherDuo: false,
   dungeon: false, dungeonSize: TAC_DISPLAY_DEFAULT.dungeonSize, dungeonAll: false,
   rocketChairs: false, rocketChairSize: TAC_DISPLAY_DEFAULT.rocketChairSize, chairAll: false,
   rocketChairsBasement: false,
