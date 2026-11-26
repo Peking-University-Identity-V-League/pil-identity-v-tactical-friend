@@ -864,6 +864,10 @@ export const MAPS_DATA = [
       { survivor: [[330, 310], [783, 384], [636, 690], [678, 858]], hunter: [253, 730] },
     ];
 
+    const spawnPointsHunterDuoHunters = [
+      ['h_1', 'h_3'], ['h_1', 'h_4'], ['h_2', 'h_3'], ['h_2', 'h_6']
+    ];
+
     const fixedSpawns = {
       professor: { label: translate("maps.fixedSpawns.professor"), item: { icon: 'scale', points: [[885, 876], [345, 454]] } },
       photographer: {
@@ -1132,6 +1136,10 @@ export const MAPS_DATA = [
       { survivor: [[589, 317], [1031, 749], [525, 759], [167, 841]], hunter: [125, 343] },
     ];
 
+    const spawnPointsHunterDuoHunters = [
+      ['h_1', 'h_3'], ['h_1', 'h_4'], ['h_2', 'h_3'], ['h_2', 'h_6']
+    ];
+
     const fixedSpawns = {
       professor: { label: translate("maps.fixedSpawns.professor"), item: { icon: 'scale', points: [[647, 750], [933, 254]] } },
       photographer: {
@@ -1391,6 +1399,10 @@ export const MAPS_DATA = [
       { survivor: [[478, 143], [483, 280], [371, 471], [230, 540]], hunter: [200, 253] },
       { survivor: [[267, 254], [577, 403], [86, 446], [574, 539]], hunter: [328, 530] },
       { survivor: [[478, 143], [360, 150], [318, 455], [423, 596]], hunter: [574, 367] },
+    ];
+
+    const spawnPointsHunterDuoHunters = [
+      ['h_1', 'h_3'], ['h_1', 'h_4'], ['h_2', 'h_6']
     ];
 
     const fixedSpawns = {
@@ -1661,6 +1673,10 @@ export const MAPS_DATA = [
       { survivor: [[291, 230], [443, 248], [250, 342], [367, 521]], hunter: [720, 363] },
       { survivor: [[271, 181], [601, 315], [394, 320], [331, 493]], hunter: [614, 628] },
       { survivor: [[248, 243], [394, 320], [730, 355], [662, 483]], hunter: [242, 596] },
+    ];
+
+    const spawnPointsHunterDuoHunters = [
+      ['h_1', 'h_3'], ['h_1', 'h_4'], ['h_2', 'h_3'], ['h_2', 'h_6'], ['h_5', 'h_6']
     ];
 
     const fixedSpawns = {
