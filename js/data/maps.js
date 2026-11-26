@@ -852,13 +852,16 @@ export const MAPS_DATA = [
       { id: 'M_1', name: translate("maps.lakesideVillage.cipher.m1.name"), location: [709, 325], feature: translate("maps.lakesideVillage.cipher.m1.feature") },
       { id: 'M_2', name: translate("maps.lakesideVillage.cipher.m2.name"), location: [651, 719], feature: translate("maps.lakesideVillage.cipher.m2.feature") },
       { id: 'M_3', name: translate("maps.lakesideVillage.cipher.m3.name"), location: [719, 994], feature: translate("maps.lakesideVillage.cipher.m3.feature") },
-      { id: 'M_4', name: translate("maps.lakesideVillage.cipher.m4.name"), location: [792, 636], feature: translate("maps.default.cipher.feature") },
+      { id: 'M_4', name: translate("maps.lakesideVillage.cipher.m4.name"), location: [782, 392], feature: translate("maps.default.cipher.feature") },
+      { id: 'M_5', name: translate("maps.lakesideVillage.cipher.m5.name"), location: [792, 636], feature: translate("maps.default.cipher.feature") },
+      { id: 'M_6', name: translate("maps.lakesideVillage.cipher.m6.name"), location: [798, 986], feature: translate("maps.default.cipher.feature") },
       { id: 'W_1', name: translate("maps.lakesideVillage.cipher.w1.name"), location: [387, 245], feature: translate("maps.lakesideVillage.cipher.w1.feature") },
       { id: 'W_2', name: translate("maps.lakesideVillage.cipher.w2.name"), location: [467, 352], feature: translate("maps.lakesideVillage.cipher.w2.feature") },
       { id: 'W_3', name: translate("maps.lakesideVillage.cipher.w3.name"), location: [370, 656], feature: translate("maps.lakesideVillage.cipher.w3.feature") },
       { id: 'W_4', name: translate("maps.lakesideVillage.cipher.w4.name"), location: [393, 830], feature: translate("maps.lakesideVillage.cipher.w4.feature") },
       { id: 'W_5', name: translate("maps.lakesideVillage.cipher.w5.name"), location: [307, 963], feature: translate("maps.lakesideVillage.cipher.w5.feature") },
-      { id: 'W_6', name: translate("maps.lakesideVillage.cipher.w6.name"), location: [248, 1034], feature: translate("maps.default.cipher.feature") },
+      { id: 'W_6', name: translate("maps.lakesideVillage.cipher.w6.name"), location: [342, 896], feature: translate("maps.default.cipher.feature") },
+      { id: 'W_7', name: translate("maps.lakesideVillage.cipher.w7.name"), location: [248, 1034], feature: translate("maps.default.cipher.feature") },
     ];
 
     const cipherCombinations = [
@@ -870,8 +873,12 @@ export const MAPS_DATA = [
     ];
 
     const cipherCombinationsDuoHunters = [
-      ['E_1', 'E_2', 'E_3', 'M_1', 'M_2', 'M_3', 'M_4', 'W_3', 'W_4', 'W_5', 'W_6'],
-      ['E_1', 'E_2', 'E_3', 'M_1', 'M_2', 'M_3', 'M_4', 'W_1', 'W_2', 'W_4', 'W_6']
+      ['E_1', 'E_2', 'E_3', 'M_2', 'M_4', 'W_1', 'W_2', 'W_3', 'W_4', 'W_6', 'W_7'],
+      ['E_2', 'E_3', 'M_2', 'M_6', 'M_5', 'W_1', 'W_2', 'W_3', 'W_4', 'W_6', 'W_7'],
+      ['E_1', 'E_2', 'M_2', 'M_6', 'M_4', 'M_5', 'W_1', 'W_2', 'W_3', 'W_4', 'W_6'],
+      ['E_1', 'E_3', 'M_2', 'M_6', 'M_4', 'M_5', 'W_1', 'W_2', 'W_3', 'W_6', 'W_7'],
+      ['E_1', 'E_2', 'E_3', 'M_2', 'M_6', 'M_4', 'M_5', 'W_1', 'W_2', 'W_4', 'W_7'],
+      ['E_1', 'E_2', 'E_3', 'M_2', 'M_6', 'M_4', 'M_5', 'W_3', 'W_4', 'W_6', 'W_7'],
     ];
 
     const cipherAll = ['E_1', 'E_2', 'E_3', 'M_1', 'M_2', 'M_3', 'W_1', 'W_2', 'W_3', 'W_4', 'W_5']
@@ -1168,7 +1175,7 @@ export const MAPS_DATA = [
       { id: 'E_3', name: translate("maps.moonlitRiverPark.cipher.e3.name"), location: [1036, 289], feature: translate("maps.moonlitRiverPark.cipher.e3.feature") },
       { id: 'E_4', name: translate("maps.moonlitRiverPark.cipher.e4.name"), location: [1174, 517], feature: translate("maps.moonlitRiverPark.cipher.e4.feature") },
       { id: 'E_5', name: translate("maps.moonlitRiverPark.cipher.e5.name"), location: [1323, 769], feature: translate("maps.moonlitRiverPark.cipher.e5.feature") },
-      { id: 'E_6', name: translate("maps.moonlitRiverPark.cipher.e0.name"), location: [768, 550], feature: translate("maps.default.cipher.feature") },
+      { id: 'E_6', name: translate("maps.moonlitRiverPark.cipher.e6.name"), location: [768, 550], feature: translate("maps.default.cipher.feature") },
       { id: 'W_1', name: translate("maps.moonlitRiverPark.cipher.w1.name"), location: [257, 301], feature: translate("maps.moonlitRiverPark.cipher.w1.feature") },
       { id: 'W_2', name: translate("maps.moonlitRiverPark.cipher.w2.name"), location: [72, 464], feature: translate("maps.moonlitRiverPark.cipher.w2.feature") },
       { id: 'W_3', name: translate("maps.moonlitRiverPark.cipher.w3.name"), location: [165, 753], feature: translate("maps.moonlitRiverPark.cipher.w3.feature") },
@@ -1186,11 +1193,11 @@ export const MAPS_DATA = [
     ];
 
     const cipherCombinationsDuoHunters = [
-      ['E_1', 'E_2', 'E_3', 'E_4', 'E_6', 'M_1', 'W_1', 'W_2', 'W_3', 'W_5', 'W_6'],
-      ['E_1', 'E_2', 'E_3', 'E_4', 'E_5', 'E_6', 'M_1', 'W_1', 'W_2', 'W_4', 'W_5'],
-      ['E_1', 'E_2', 'E_3', 'E_5', 'E_6', 'M_1', 'W_2', 'W_3', 'W_4', 'W_5', 'W_6'],
       ['E_1', 'E_2', 'E_3', 'E_4', 'E_5', 'M_1', 'W_1', 'W_2', 'W_3', 'W_4', 'W_6'],
       ['E_1', 'E_3', 'E_4', 'E_5', 'E_6', 'M_1', 'W_1', 'W_3', 'W_4', 'W_5', 'W_6'],
+      ['E_1', 'E_2', 'E_3', 'E_5', 'E_6', 'M_1', 'W_2', 'W_3', 'W_4', 'W_5', 'W_6'],
+      ['E_1', 'E_2', 'E_3', 'E_4', 'E_6', 'M_1', 'W_1', 'W_2', 'W_3', 'W_5', 'W_6'],
+      ['E_1', 'E_2', 'E_3', 'E_4', 'E_5', 'E_6', 'M_1', 'W_1', 'W_2', 'W_4', 'W_5'],
     ];
 
     const cipherAll = ['E_1', 'E_2', 'E_3', 'E_4', 'E_5', 'M_1', 'W_1', 'W_2', 'W_3', 'W_4', 'W_5']
@@ -1487,9 +1494,12 @@ export const MAPS_DATA = [
     ];
 
     const cipherCombinationsDuoHunters = [
+      ['E_1', 'E_2', 'E_4', 'M_1', 'M_2', 'M_3', 'M_4', 'M_5', 'W_1', 'W_3', 'W_4'],
       ['E_1', 'E_2', 'E_3', 'E_4', 'M_1', 'M_4', 'M_5', 'W_1', 'W_2', 'W_3', 'W_4'],
+      ['E_1', 'E_2', 'E_3', 'E_4', 'M_1', 'M_2', 'M_3', 'M_4', 'W_1', 'W_3', 'W_4'],
+      ['E_1', 'E_2', 'E_3', 'E_4', 'M_1', 'M_2', 'M_3', 'M_5', 'W_1', 'W_2', 'W_4'],
       ['E_2', 'E_3', 'E_4', 'M_1', 'M_2', 'M_3', 'M_4', 'M_5', 'W_1', 'W_3', 'W_4'],
-      ['E_1', 'E_2', 'E_3', 'E_4', 'M_1', 'M_2', 'M_3', 'M_5', 'W_1', 'W_2', 'W_4']
+      ['E_1', 'E_3', 'E_4', 'M_1', 'M_2', 'M_4', 'M_5', 'W_1', 'W_2', 'W_3', 'W_4']  
     ];
 
     const cipherAll = ['E_1', 'E_2', 'E_3', 'E_4', 'M_1', 'M_2', 'M_3', 'M_4', 'W_1', 'W_2', 'W_3', 'W_4']
@@ -1929,7 +1939,9 @@ export const MAPS_DATA = [
     ];
 
     const spawnPointsHunterDuoHunters = [
-      ['h_1', 'h_3'], ['h_1', 'h_4'], ['h_2', 'h_3'], ['h_2', 'h_6'], ['h_5', 'h_6']
+      ['h_1', 'h_2'], ['h_1', 'h_3'], ['h_1', 'h_4'], ['h_1', 'h_5'], ['h_1', 'h_6'], ['h_1', 'h_7'], ['h_2', 'h_3'],
+      ['h_2', 'h_4'], ['h_2', 'h_5'], ['h_2', 'h_6'], ['h_2', 'h_7'], ['h_3', 'h_4'], ['h_3', 'h_5'], ['h_3', 'h_6'],
+      ['h_3', 'h_7'], ['h_4', 'h_5'], ['h_4', 'h_6'], ['h_4', 'h_7'], ['h_5', 'h_6'], ['h_5', 'h_7'], ['h_6', 'h_7'],
     ];
 
     const fixedSpawns = {
