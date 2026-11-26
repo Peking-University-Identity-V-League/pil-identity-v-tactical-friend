@@ -432,7 +432,7 @@ export const MAPS_DATA = [
             name: translate("deduction.rule.type.chain.sacredHeartHospital"),
             cipherNames: [translate("maps.sacredHeartHospital.cipher.b1.name"), translate("maps.sacredHeartHospital.cipher.b2.name"), translate("maps.sacredHeartHospital.cipher.b3.name"), translate("maps.sacredHeartHospital.cipher.c1.name"), translate("maps.sacredHeartHospital.cipher.c2.name"),
             translate("maps.sacredHeartHospital.cipher.c3.name"), translate("maps.sacredHeartHospital.cipher.d1.name"), translate("maps.sacredHeartHospital.cipher.d2.name"), translate("maps.sacredHeartHospital.cipher.d3.name")],
-            text: translate("deduction.rule.type.chain.text.sacredHeartHospital"),
+            suffix: 'circleNoTwoAbsent',
             mode: 'no', cyclic: true
           }),
         ];
@@ -649,7 +649,7 @@ export const MAPS_DATA = [
           chain({
             name: translate("deduction.rule.type.chain"),
             cipherNames: [translate("maps.theRedChurch.cipher.w3.name"), translate("maps.theRedChurch.cipher.w2.name"), translate("maps.theRedChurch.cipher.e3.name"), translate("maps.theRedChurch.cipher.e2.name")],
-            text: translate("deduction.rule.type.chain.text.theRedChurch"),
+            suffix: 'noTwoAdjacent',
             mode: 'yes', cyclic: false
           }),
           exactly({ n: 2, cipherNames: [translate("maps.theRedChurch.cipher.m2.name"), translate("maps.theRedChurch.cipher.e3.name"), translate("maps.theRedChurch.cipher.m3.name")] }),
@@ -892,7 +892,7 @@ export const MAPS_DATA = [
           chain({
             name: translate("deduction.rule.type.chain.lakesideVillage"),
             cipherNames: CIPHERS_WEST,
-            text: translate("deduction.rule.type.chain.text.lakesideVillage"),
+            suffix: 'noTwoAdjacent',
             mode: 'yes', cyclic: false
           }),
         ];
@@ -1114,7 +1114,7 @@ export const MAPS_DATA = [
           chain({
             name: translate("deduction.rule.type.chain.moonlitRiverPark"),
             cipherNames: CIPHERS_WEST,
-            text: translate("deduction.rule.type.chain.text.moonlitRiverPark"),
+            suffix: 'pentagonNoTwoAbsent',
             mode: 'no', cyclic: true
           }),
           either({ cipherNames: [translate("maps.moonlitRiverPark.cipher.w4.name"), translate("maps.moonlitRiverPark.cipher.e3.name")] }),
@@ -1345,7 +1345,7 @@ export const MAPS_DATA = [
           exactly({ n: 2, cipherNames: [translate("maps.leosMemory.cipher.w4.name"), translate("maps.leosMemory.cipher.m1.name"), translate("maps.leosMemory.cipher.e1.name")] }),
           chain({
             cipherNames: [translate("maps.leosMemory.cipher.w2.name"), translate("maps.leosMemory.cipher.w3.name"), translate("maps.leosMemory.cipher.m2.name"), translate("maps.leosMemory.cipher.e3.name")],
-            text: translate("deduction.rule.type.chain.text.leosMemory"),
+            suffix: 'noTwoAdjacent',
             mode: 'yes', cyclic: false, 
           }),
           link({
@@ -1803,12 +1803,12 @@ export const MAPS_DATA = [
           chainThree({
             name: translate("deduction.rule.type.chain"),
             cipherNames: [translate("maps.chinaTown.cipher.w1.name"), translate("maps.chinaTown.cipher.m1.name"), translate("maps.chinaTown.cipher.e1.name"), translate("maps.chinaTown.cipher.e3.name")],
-            text: translate("deduction.rule.type.chain.text.chinaTown1")
+            suffix: 'noThreeAdjacent'
           }),
           chainThree({
             name: translate("deduction.rule.type.chain"),
             cipherNames: [translate("maps.chinaTown.cipher.w4.name"), translate("maps.chinaTown.cipher.m4.name"), translate("maps.chinaTown.cipher.m5.name"), translate("maps.chinaTown.cipher.e3.name"), translate("maps.chinaTown.cipher.m2.name"), translate("maps.chinaTown.cipher.w3.name"), translate("maps.chinaTown.cipher.w4.name")],
-            text: translate("deduction.rule.type.chain.text.chinaTown2")
+            suffix: 'noThreeAdjacent'
           }),
           allAbsent({
             pres: [translate("maps.chinaTown.cipher.m1.name"), translate("maps.chinaTown.cipher.m2.name")], targets: [translate("maps.chinaTown.cipher.e1.name"), translate("maps.chinaTown.cipher.e3.name"), translate("maps.chinaTown.cipher.m5.name")],
@@ -2038,7 +2038,7 @@ export const MAPS_DATA = [
             name: translate("deduction.rule.type.chain"),
             cipherNames: [translate("maps.darkwoods.cipher.e5.name"), translate("maps.darkwoods.cipher.e4.name"), translate("maps.darkwoods.cipher.w4.name"), translate("maps.darkwoods.cipher.w3.name"), translate("maps.darkwoods.cipher.w2.name"),
             translate("maps.darkwoods.cipher.w1.name"), translate("maps.darkwoods.cipher.m1.name"), translate("maps.darkwoods.cipher.m2.name"), translate("maps.darkwoods.cipher.e2.name"), translate("maps.darkwoods.cipher.e1.name")],
-            text: translate("deduction.rule.type.chain.text.darkwoods"),
+            suffix: 'noTwoAdjacent',
             mode: 'yes', cyclic: false
           }),
         ];

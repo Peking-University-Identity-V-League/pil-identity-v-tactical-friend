@@ -6,7 +6,7 @@ export const UPDATE_NOTES = `
 点击右下角前往官网：https://pkuidv.com/tactical-friend
 可以体验“切换三维”功能，十分震撼！（官网访问速度比b站toy慢，请耐心等待加载）
 
-## 2026-11-24
+## 2026-11-26
 
 - 1、提高加载速度，现在初次加载网页相当于加载约 10s 的 720p 视频
 
