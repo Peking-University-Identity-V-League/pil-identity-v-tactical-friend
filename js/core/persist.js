@@ -141,7 +141,7 @@ export function saveRegionSel() {
   savedDungeons[S.currentMapId] = S.tacDungeonIndex;
   savedChairs[S.currentMapId] = { set: S.tacChairIndex, basement: S.tacChairBasementIndex };
   savedBoxes[S.currentMapId] = { basement: S.tacBoxBasementIndex };
-  savedSpawns[S.currentMapId] = S.tacSpawnIndex;
+  savedSpawns[S.currentMapId] = { n: S.tacSpawnIndex, d: S.tacSpawnDuoHunterIndex };
   tacSave();
 }
 
@@ -153,9 +153,14 @@ export function restoreRegionSel(mapId) {
     Math.max(0, MAPS_DATA[mapId].dungeons.length - 1),
     Math.max(0, savedDungeons[mapId] | 0),
   );
-  const spawnCount = (MAPS_DATA[mapId].spawnPoints || []).length;
+  const spawnCount = (MAPS_DATA[mapId].spawnPointCombinations || []).length;
+  const savedSpawn = savedSpawns[mapId];
+  const savedN = typeof savedSpawn === 'number' ? savedSpawn : (savedSpawn?.n | 0);
   S.tacSpawnIndex = spawnCount
-    ? Math.min(Math.max(0, savedSpawns[mapId] | 0), spawnCount - 1) : 0;
+    ? Math.min(Math.max(0, savedN), spawnCount - 1) : 0;
+  const duoHunterCount = (MAPS_DATA[mapId].spawnPointsHunterDuoHunters || []).length;
+  S.tacSpawnDuoHunterIndex = duoHunterCount
+    ? Math.min(Math.max(0, (typeof savedSpawn === 'object' && savedSpawn ? savedSpawn.d : 0) | 0), duoHunterCount - 1) : 0;
   const ch = rocketChairGroups(MAPS_DATA[mapId]);
   const sc = savedChairs[mapId] || {};
   S.tacChairIndex = ch && ch.sets.length
@@ -195,7 +200,7 @@ export const tacMeasureStyle = {
 // 显示设置：只放“地图上显示什么、显示多大”的开关与尺寸
 export const tacDisplay = {
   zones: false,
-  spawns: false, spawnSize: TAC_DISPLAY_DEFAULT.spawnSize,
+  spawns: false, spawnSize: TAC_DISPLAY_DEFAULT.spawnSize, spawnDuo: false, spawnDuoAll: false,
   escapeDoors: true, escapeDoorSize: TAC_DISPLAY_DEFAULT.escapeDoorSize,
   escapeDoorLock: false,
   ciphers: true, cipherSize: TAC_DISPLAY_DEFAULT.cipherSize, cipherAll: false, cipherDuo: false,

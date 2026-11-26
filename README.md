@@ -600,7 +600,7 @@ deduce(map, marks)
 
 | 函数 | 用途 |
 |---|---|
-| `syncTacDisplayUI()` | 同步显示设置控件（行格式：框外名称亮灭按钮 `.tac-onoff`（隐藏 checkbox，label 点击原生切换）+ 框内组切换/全部/图标大小/默认；密码机/地窖/狂欢之椅另有「全部」开关 `cipherAll`/`dungeonAll`/`chairAll`，勾选后按 `cipherAll`、`dungeons`、`rocketChairs` 全量渲染，渲染、吸附、导出画布与牵气球可选椅子共用同一判断；密码机卡片与狂欢之椅推算卡片的对应行复用同一格式，`tacSetCipherAll()`/`tacSetChairAll()` 双向同步两处「全部」勾选） |
+| `syncTacDisplayUI()` | 同步显示设置控件（行格式：框外名称亮灭按钮 `.tac-onoff`（隐藏 checkbox，label 点击原生切换）+ 框内组切换/全部/图标大小/默认；密码机/地窖/狂欢之椅另有「全部」开关 `cipherAll`/`dungeonAll`/`chairAll`，勾选后按 `cipherAll`、`dungeons`、`rocketChairs` 全量渲染，渲染、吸附、导出画布与牵气球可选椅子共用同一判断；密码机卡片与狂欢之椅推算卡片的对应行复用同一格式，`tacSetCipherAll()`/`tacSetChairAll()` 双向同步两处「全部」勾选；有 `spawnPointsHunterDuoHunters` 的地图出生点行出现「联合狩猎」勾选，勾选后主组切换变灰失效、下方展开「求生者 随机8点/全部 监管者 ‹第 N / M 组›」子行，「随机8点」每次点击从求生者池洗牌取 8 个，`tacSpawnDuoReroll()`） |
 | `syncTacImage()` | 同步当前地图底图 |
 | `renderTacCiphers()` | 绘制密码机 |
 | `renderTacZones()` | 绘制区域划分 |
@@ -849,7 +849,9 @@ MAPS_DATA
 | `chests` | 箱子位置 |
 | `lockers` | 柜子位置 |
 | `phoneBooths` | 电话亭位置（仅有电话亭的地图） |
-| `spawnPoints` | 出生点候选坐标 |
+| `spawnPoints` | 出生点点位池 `{ survivor: [{ id, location }...], hunter: [{ id, location }...] }`（id 形如 `s_1`/`h_1`） |
+| `spawnPointCombinations` | 出生点分组 `[{ survivor: [id...], hunter: id }...]`，id 引用 `spawnPoints`；消费端经 `spawnPointGroups(map)` 解析为 `{ survivor:[坐标], hunter:坐标 }` 数组 |
+| `spawnPointsHunterDuoHunters` | 联合狩猎监管者双人组合 `[[id, id]...]`（仅联合狩猎地图；显示设置出生点行出现「联合狩猎」勾选，勾选后求生者显示随机8点/全部、监管者按此组合切换） |
 | `basements` | 地下室（含其中狂欢之椅与箱子） |
 | `deduction` | 推演规则、布局和规律速查数据 |
 

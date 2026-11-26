@@ -686,9 +686,19 @@ try {
                 <span class="switch-btn" id="tacSpawnPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.spawnPoint.layout.prev.message&quot;}">‹</span>
                 <span class="tac-display-text" id="tacSpawnText"></span>
                 <span class="switch-btn" id="tacSpawnNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.spawnPoint.layout.next.message&quot;}">›</span>
+                <label class="tac-display-toggle" id="tacSpawnDuoWrap" style="display:none"><input type="checkbox" id="tacSpawnDuo"><span data-i18n="ui.tac.display.spawnPoint.duoHunters"></span></label>
               </span>
               <label class="tac-manage-slider"><span data-i18n="application.common.icon.size"></span><input type="range" id="tacSpawnSize" min="3" max="12" step="0.5" value="6"></label>
               <label class="tac-manage-def"><input type="checkbox" id="tacSpawnSizeDef" checked><span data-i18n="common.default"></span></label>
+            </div>
+            <div class="tac-manage-row tac-display-row" id="tacSpawnDuoRow" style="display:none">
+              <span class="tac-display-sub" data-i18n="common.survivor"></span>
+              <button type="button" class="tac-deselect tac-mini-btn" id="tacSpawnDuoRandom" data-i18n="ui.tac.display.spawnPoint.random8"></button>
+              <label class="tac-display-toggle"><input type="checkbox" id="tacSpawnDuoAll"><span data-i18n="common.all"></span></label>
+              <span class="tac-display-sub" data-i18n="common.hunter"></span>
+              <span class="switch-btn" id="tacSpawnDuoHunterPrev" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.spawnPoint.layout.prev.message&quot;}">‹</span>
+              <span class="tac-display-text" id="tacSpawnDuoHunterText"></span>
+              <span class="switch-btn" id="tacSpawnDuoHunterNext" role="button" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.display.spawnPoint.layout.next.message&quot;}">›</span>
             </div>
           </div>
           <div class="tac-manage-entry">

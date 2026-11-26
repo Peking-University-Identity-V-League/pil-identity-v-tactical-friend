@@ -109,13 +109,42 @@ export const MAPS_DATA = [
       },
     };
 
-    const spawnPoints = [
-      { survivor: [[143, 235], [292, 250], [366, 382], [498, 452]], hunter: [556, 212] },
-      { survivor: [[132, 344], [292, 250], [400, 200], [672, 182]], hunter: [430, 450] },
-      { survivor: [[156, 262], [316, 376], [403, 496], [440, 594]], hunter: [105, 556] },
-      { survivor: [[456, 132], [408, 272], [403, 496], [440, 594]], hunter: [150, 345] },
-      { survivor: [[456, 132], [542, 306], [403, 496], [630, 414]], hunter: [248, 272] },
-      { survivor: [[132, 344], [212, 238], [316, 376], [498, 452]], hunter: [450, 136] },
+    const spawnPoints = {
+      survivor: [
+        { id: 's_1', location: [143, 235] },
+        { id: 's_2', location: [292, 250] },
+        { id: 's_3', location: [366, 382] },
+        { id: 's_4', location: [498, 452] },
+        { id: 's_5', location: [132, 344] },
+        { id: 's_6', location: [400, 200] },
+        { id: 's_7', location: [672, 182] },
+        { id: 's_8', location: [156, 262] },
+        { id: 's_9', location: [316, 376] },
+        { id: 's_10', location: [403, 496] },
+        { id: 's_11', location: [440, 594] },
+        { id: 's_12', location: [456, 132] },
+        { id: 's_13', location: [408, 272] },
+        { id: 's_14', location: [542, 306] },
+        { id: 's_15', location: [630, 414] },
+        { id: 's_16', location: [212, 238] },
+      ],
+      hunter: [
+        { id: 'h_1', location: [556, 212] },
+        { id: 'h_2', location: [430, 450] },
+        { id: 'h_3', location: [105, 556] },
+        { id: 'h_4', location: [150, 345] },
+        { id: 'h_5', location: [248, 272] },
+        { id: 'h_6', location: [450, 136] },
+      ],
+    };
+
+    const spawnPointCombinations = [
+      { survivor: ['s_1', 's_2', 's_3', 's_4'], hunter: 'h_1' },
+      { survivor: ['s_5', 's_2', 's_6', 's_7'], hunter: 'h_2' },
+      { survivor: ['s_8', 's_9', 's_10', 's_11'], hunter: 'h_3' },
+      { survivor: ['s_12', 's_13', 's_10', 's_11'], hunter: 'h_4' },
+      { survivor: ['s_12', 's_14', 's_10', 's_15'], hunter: 'h_5' },
+      { survivor: ['s_5', 's_16', 's_9', 's_4'], hunter: 'h_6' },
     ];
 
     const fixedSpawns = {
@@ -225,7 +254,7 @@ export const MAPS_DATA = [
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
       law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
       escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests,
-      basements, spawnPoints, fixedSpawns,
+      basements, spawnPoints, spawnPointCombinations, fixedSpawns,
       deduction: (() => {
         const { fixed, region, exactly, either } = dedHelpers(ciphers);
         const CIPHERS_EAST = [translate("maps.armsFactory.cipher.e1.name"), translate("maps.armsFactory.cipher.e2.name"), translate("maps.armsFactory.cipher.e3.name"), translate("maps.armsFactory.cipher.e4.name")];
@@ -346,13 +375,42 @@ export const MAPS_DATA = [
       },
     };
 
-    const spawnPoints = [
-      { survivor: [[250, 72], [362, 87], [420, 309], [395, 482]], hunter: [181, 305] },
-      { survivor: [[443, 179], [361, 336], [347, 466], [192, 475]], hunter: [167, 179] },
-      { survivor: [[516, 92], [487, 202], [229, 305], [361, 336]], hunter: [252, 46] },
-      { survivor: [[200, 113], [266, 220], [482, 298], [361, 336]], hunter: [433, 41] },
-      { survivor: [[516, 92], [443, 179], [266, 220], [291, 343]], hunter: [537, 398] },
-      { survivor: [[317, 49], [516, 92], [200, 113], [192, 475]], hunter: [370, 302] },
+    const spawnPoints = {
+      survivor: [
+        { id: 's_1', location: [250, 72] },
+        { id: 's_2', location: [362, 87] },
+        { id: 's_3', location: [420, 309] },
+        { id: 's_4', location: [395, 482] },
+        { id: 's_5', location: [443, 179] },
+        { id: 's_6', location: [361, 336] },
+        { id: 's_7', location: [347, 466] },
+        { id: 's_8', location: [192, 475] },
+        { id: 's_9', location: [516, 92] },
+        { id: 's_10', location: [487, 202] },
+        { id: 's_11', location: [229, 305] },
+        { id: 's_12', location: [200, 113] },
+        { id: 's_13', location: [266, 220] },
+        { id: 's_14', location: [482, 298] },
+        { id: 's_15', location: [291, 343] },
+        { id: 's_16', location: [317, 49] },
+      ],
+      hunter: [
+        { id: 'h_1', location: [181, 305] },
+        { id: 'h_2', location: [167, 179] },
+        { id: 'h_3', location: [252, 46] },
+        { id: 'h_4', location: [433, 41] },
+        { id: 'h_5', location: [537, 398] },
+        { id: 'h_6', location: [370, 302] },
+      ],
+    };
+
+    const spawnPointCombinations = [
+      { survivor: ['s_1', 's_2', 's_3', 's_4'], hunter: 'h_1' },
+      { survivor: ['s_5', 's_6', 's_7', 's_8'], hunter: 'h_2' },
+      { survivor: ['s_9', 's_10', 's_11', 's_6'], hunter: 'h_3' },
+      { survivor: ['s_12', 's_13', 's_14', 's_6'], hunter: 'h_4' },
+      { survivor: ['s_9', 's_5', 's_13', 's_15'], hunter: 'h_5' },
+      { survivor: ['s_16', 's_9', 's_12', 's_8'], hunter: 'h_6' },
     ];
 
     const fixedSpawns = {
@@ -462,7 +520,7 @@ export const MAPS_DATA = [
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
       law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
       escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests,
-      basements, spawnPoints, fixedSpawns,
+      basements, spawnPoints, spawnPointCombinations, fixedSpawns,
       deduction: (() => {
         const { exactly, either, same, atLeast1, chain } = dedHelpers(ciphers);
         const rules = [
@@ -590,13 +648,48 @@ export const MAPS_DATA = [
       },
     };
 
-    const spawnPoints = [
-      { survivor: [[510, 195], [401, 236], [295, 355], [295, 520]], hunter: [501, 440] },
-      { survivor: [[370, 195], [485, 243], [211, 304], [207, 426]], hunter: [428, 447] },
-      { survivor: [[297, 177], [514, 189], [184, 236], [138, 436]], hunter: [401, 365] },
-      { survivor: [[212, 195], [150, 284], [388, 295], [447, 385]], hunter: [236, 478] },
-      { survivor: [[212, 195], [150, 277], [295, 355], [370, 483]], hunter: [114, 481] },
-      { survivor: [[253, 101], [439, 165], [519, 313], [112, 480]], hunter: [296, 319] },
+    const spawnPoints = {
+      survivor: [
+        { id: 's_1', location: [510, 195] },
+        { id: 's_2', location: [401, 236] },
+        { id: 's_3', location: [295, 355] },
+        { id: 's_4', location: [295, 520] },
+        { id: 's_5', location: [370, 195] },
+        { id: 's_6', location: [485, 243] },
+        { id: 's_7', location: [211, 304] },
+        { id: 's_8', location: [207, 426] },
+        { id: 's_9', location: [297, 177] },
+        { id: 's_10', location: [514, 189] },
+        { id: 's_11', location: [184, 236] },
+        { id: 's_12', location: [138, 436] },
+        { id: 's_13', location: [212, 195] },
+        { id: 's_14', location: [150, 284] },
+        { id: 's_15', location: [388, 295] },
+        { id: 's_16', location: [447, 385] },
+        { id: 's_17', location: [150, 277] },
+        { id: 's_18', location: [370, 483] },
+        { id: 's_19', location: [253, 101] },
+        { id: 's_20', location: [439, 165] },
+        { id: 's_21', location: [519, 313] },
+        { id: 's_22', location: [112, 480] },
+      ],
+      hunter: [
+        { id: 'h_1', location: [501, 440] },
+        { id: 'h_2', location: [428, 447] },
+        { id: 'h_3', location: [401, 365] },
+        { id: 'h_4', location: [236, 478] },
+        { id: 'h_5', location: [114, 481] },
+        { id: 'h_6', location: [296, 319] },
+      ],
+    };
+
+    const spawnPointCombinations = [
+      { survivor: ['s_1', 's_2', 's_3', 's_4'], hunter: 'h_1' },
+      { survivor: ['s_5', 's_6', 's_7', 's_8'], hunter: 'h_2' },
+      { survivor: ['s_9', 's_10', 's_11', 's_12'], hunter: 'h_3' },
+      { survivor: ['s_13', 's_14', 's_15', 's_16'], hunter: 'h_4' },
+      { survivor: ['s_13', 's_17', 's_3', 's_18'], hunter: 'h_5' },
+      { survivor: ['s_19', 's_20', 's_21', 's_22'], hunter: 'h_6' },
     ];
 
     const fixedSpawns = {
@@ -703,7 +796,7 @@ export const MAPS_DATA = [
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
       law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
       escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests,
-      basements, spawnPoints, fixedSpawns,
+      basements, spawnPoints, spawnPointCombinations, fixedSpawns,
       deduction: (() => {
         const { fixed, region, exactly, atLeast1, chain } = dedHelpers(ciphers);
         const CIPHERS_EAST = [translate("maps.theRedChurch.cipher.e1.name"), translate("maps.theRedChurch.cipher.e2.name"), translate("maps.theRedChurch.cipher.e3.name"), translate("maps.theRedChurch.cipher.e4.name")];
@@ -854,14 +947,50 @@ export const MAPS_DATA = [
       },
     };
 
-    const spawnPoints = [
-      { survivor: [[644, 347], [369, 462], [494, 658], [955, 738]], hunter: [1032, 378] },
-      { survivor: [[764, 295], [873, 485], [521, 630], [677, 787]], hunter: [1162, 717] },
-      { survivor: [[873, 485], [1101, 563], [494, 658], [297, 842]], hunter: [902, 885] },
-      { survivor: [[330, 310], [315, 527], [1127, 634], [816, 826]], hunter: [410, 853] },
-      { survivor: [[992, 704], [297, 842], [678, 858], [1018, 950]], hunter: [540, 485] },
-      { survivor: [[697, 506], [959, 735], [297, 842], [736, 894]], hunter: [289, 303] },
-      { survivor: [[330, 310], [783, 384], [636, 690], [678, 858]], hunter: [253, 730] },
+    const spawnPoints = {
+      survivor: [
+        { id: 's_1', location: [644, 347] },
+        { id: 's_2', location: [369, 462] },
+        { id: 's_3', location: [494, 658] },
+        { id: 's_4', location: [955, 738] },
+        { id: 's_5', location: [764, 295] },
+        { id: 's_6', location: [873, 485] },
+        { id: 's_7', location: [521, 630] },
+        { id: 's_8', location: [677, 787] },
+        { id: 's_9', location: [1101, 563] },
+        { id: 's_10', location: [297, 842] },
+        { id: 's_11', location: [330, 310] },
+        { id: 's_12', location: [315, 527] },
+        { id: 's_13', location: [1127, 634] },
+        { id: 's_14', location: [816, 826] },
+        { id: 's_15', location: [992, 704] },
+        { id: 's_16', location: [678, 858] },
+        { id: 's_17', location: [1018, 950] },
+        { id: 's_18', location: [697, 506] },
+        { id: 's_19', location: [959, 735] },
+        { id: 's_20', location: [736, 894] },
+        { id: 's_21', location: [783, 384] },
+        { id: 's_22', location: [636, 690] },
+      ],
+      hunter: [
+        { id: 'h_1', location: [1032, 378] },
+        { id: 'h_2', location: [1162, 717] },
+        { id: 'h_3', location: [902, 885] },
+        { id: 'h_4', location: [410, 853] },
+        { id: 'h_5', location: [540, 485] },
+        { id: 'h_6', location: [289, 303] },
+        { id: 'h_7', location: [253, 730] },
+      ],
+    };
+
+    const spawnPointCombinations = [
+      { survivor: ['s_1', 's_2', 's_3', 's_4'], hunter: 'h_1' },
+      { survivor: ['s_5', 's_6', 's_7', 's_8'], hunter: 'h_2' },
+      { survivor: ['s_6', 's_9', 's_3', 's_10'], hunter: 'h_3' },
+      { survivor: ['s_11', 's_12', 's_13', 's_14'], hunter: 'h_4' },
+      { survivor: ['s_15', 's_10', 's_16', 's_17'], hunter: 'h_5' },
+      { survivor: ['s_18', 's_19', 's_10', 's_20'], hunter: 'h_6' },
+      { survivor: ['s_11', 's_21', 's_22', 's_16'], hunter: 'h_7' },
     ];
 
     const spawnPointsHunterDuoHunters = [
@@ -977,7 +1106,7 @@ export const MAPS_DATA = [
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
       law_urls, ciphers, cipherCombinations, cipherAll, cipherCombinationsDuoHunters, cipherAllDuoHunters, fixedHint, hints,
       escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests, phoneBooths,
-      basements, spawnPoints, fixedSpawns,
+      basements, spawnPoints, spawnPointCombinations, spawnPointsHunterDuoHunters, fixedSpawns,
       deduction: (() => {
         const { fixed, region, exactly, either, same, chain } = dedHelpers(ciphers);
         const CIPHERS_EAST = [translate("maps.lakesideVillage.cipher.e2.name"), translate("maps.lakesideVillage.cipher.e1.name"), translate("maps.lakesideVillage.cipher.e3.name")];
@@ -1126,14 +1255,52 @@ export const MAPS_DATA = [
       },
     };
 
-    const spawnPoints = [
-      { survivor: [[1116, 296], [736, 308], [551, 627], [740, 759]], hunter: [1191, 764] },
-      { survivor: [[275, 281], [1247, 461], [669, 733], [925, 753]], hunter: [743, 219] },
-      { survivor: [[863, 362], [1291, 464], [364, 516], [493, 808]], hunter: [939, 744] },
-      { survivor: [[589, 317], [1375, 710], [483, 751], [1031, 749]], hunter: [1137, 269] },
-      { survivor: [[736, 308], [963, 463], [229, 517], [1260, 829]], hunter: [616, 723] },
-      { survivor: [[1070, 297], [589, 317], [276, 371], [1024, 754]], hunter: [549, 772] },
-      { survivor: [[589, 317], [1031, 749], [525, 759], [167, 841]], hunter: [125, 343] },
+    const spawnPoints = {
+      survivor: [
+        { id: 's_1', location: [1116, 296] },
+        { id: 's_2', location: [736, 308] },
+        { id: 's_3', location: [551, 627] },
+        { id: 's_4', location: [740, 759] },
+        { id: 's_5', location: [275, 281] },
+        { id: 's_6', location: [1247, 461] },
+        { id: 's_7', location: [669, 733] },
+        { id: 's_8', location: [925, 753] },
+        { id: 's_9', location: [863, 362] },
+        { id: 's_10', location: [1291, 464] },
+        { id: 's_11', location: [364, 516] },
+        { id: 's_12', location: [493, 808] },
+        { id: 's_13', location: [589, 317] },
+        { id: 's_14', location: [1375, 710] },
+        { id: 's_15', location: [483, 751] },
+        { id: 's_16', location: [1031, 749] },
+        { id: 's_17', location: [963, 463] },
+        { id: 's_18', location: [229, 517] },
+        { id: 's_19', location: [1260, 829] },
+        { id: 's_20', location: [1070, 297] },
+        { id: 's_21', location: [276, 371] },
+        { id: 's_22', location: [1024, 754] },
+        { id: 's_23', location: [525, 759] },
+        { id: 's_24', location: [167, 841] },
+      ],
+      hunter: [
+        { id: 'h_1', location: [1191, 764] },
+        { id: 'h_2', location: [743, 219] },
+        { id: 'h_3', location: [939, 744] },
+        { id: 'h_4', location: [1137, 269] },
+        { id: 'h_5', location: [616, 723] },
+        { id: 'h_6', location: [549, 772] },
+        { id: 'h_7', location: [125, 343] },
+      ],
+    };
+
+    const spawnPointCombinations = [
+      { survivor: ['s_1', 's_2', 's_3', 's_4'], hunter: 'h_1' },
+      { survivor: ['s_5', 's_6', 's_7', 's_8'], hunter: 'h_2' },
+      { survivor: ['s_9', 's_10', 's_11', 's_12'], hunter: 'h_3' },
+      { survivor: ['s_13', 's_14', 's_15', 's_16'], hunter: 'h_4' },
+      { survivor: ['s_2', 's_17', 's_18', 's_19'], hunter: 'h_5' },
+      { survivor: ['s_20', 's_13', 's_21', 's_22'], hunter: 'h_6' },
+      { survivor: ['s_13', 's_16', 's_23', 's_24'], hunter: 'h_7' },
     ];
 
     const spawnPointsHunterDuoHunters = [
@@ -1248,7 +1415,7 @@ export const MAPS_DATA = [
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
       law_urls, ciphers, cipherCombinations, cipherAll, cipherCombinationsDuoHunters, cipherAllDuoHunters, fixedHint, hints,
       escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests, phoneBooths,
-      basements, spawnPoints, fixedSpawns,
+      basements, spawnPoints, spawnPointCombinations, spawnPointsHunterDuoHunters, fixedSpawns,
       deduction: (() => {
         const { fixed, region, exactly, either, chain } = dedHelpers(ciphers);
         const CIPHERS_EAST = [translate("maps.moonlitRiverPark.cipher.e2.name"), translate("maps.moonlitRiverPark.cipher.e3.name"), translate("maps.moonlitRiverPark.cipher.e4.name"), translate("maps.moonlitRiverPark.cipher.e1.name"), translate("maps.moonlitRiverPark.cipher.e5.name")];
@@ -1389,16 +1556,55 @@ export const MAPS_DATA = [
       },
     };
 
-    const spawnPoints = [
-      { survivor: [[131, 233], [345, 308], [178, 334], [423, 596]], hunter: [175, 578] },
-      { survivor: [[131, 233], [267, 254], [491, 367], [521, 483]], hunter: [265, 514] },
-      { survivor: [[295, 128], [267, 254], [371, 471], [574, 539]], hunter: [570, 255] },
-      { survivor: [[360, 150], [430, 310], [273, 379], [86, 446]], hunter: [64, 162] },
-      { survivor: [[192, 94], [178, 334], [577, 403], [318, 455]], hunter: [407, 216] },
-      { survivor: [[102, 86], [157, 196], [642, 323], [273, 379]], hunter: [430, 126] },
-      { survivor: [[478, 143], [483, 280], [371, 471], [230, 540]], hunter: [200, 253] },
-      { survivor: [[267, 254], [577, 403], [86, 446], [574, 539]], hunter: [328, 530] },
-      { survivor: [[478, 143], [360, 150], [318, 455], [423, 596]], hunter: [574, 367] },
+    const spawnPoints = {
+      survivor: [
+        { id: 's_1', location: [131, 233] },
+        { id: 's_2', location: [345, 308] },
+        { id: 's_3', location: [178, 334] },
+        { id: 's_4', location: [423, 596] },
+        { id: 's_5', location: [267, 254] },
+        { id: 's_6', location: [491, 367] },
+        { id: 's_7', location: [521, 483] },
+        { id: 's_8', location: [295, 128] },
+        { id: 's_9', location: [371, 471] },
+        { id: 's_10', location: [574, 539] },
+        { id: 's_11', location: [360, 150] },
+        { id: 's_12', location: [430, 310] },
+        { id: 's_13', location: [273, 379] },
+        { id: 's_14', location: [86, 446] },
+        { id: 's_15', location: [192, 94] },
+        { id: 's_16', location: [577, 403] },
+        { id: 's_17', location: [318, 455] },
+        { id: 's_18', location: [102, 86] },
+        { id: 's_19', location: [157, 196] },
+        { id: 's_20', location: [642, 323] },
+        { id: 's_21', location: [478, 143] },
+        { id: 's_22', location: [483, 280] },
+        { id: 's_23', location: [230, 540] },
+      ],
+      hunter: [
+        { id: 'h_1', location: [175, 578] },
+        { id: 'h_2', location: [265, 514] },
+        { id: 'h_3', location: [570, 255] },
+        { id: 'h_4', location: [64, 162] },
+        { id: 'h_5', location: [407, 216] },
+        { id: 'h_6', location: [430, 126] },
+        { id: 'h_7', location: [200, 253] },
+        { id: 'h_8', location: [328, 530] },
+        { id: 'h_9', location: [574, 367] },
+      ],
+    };
+
+    const spawnPointCombinations = [
+      { survivor: ['s_1', 's_2', 's_3', 's_4'], hunter: 'h_1' },
+      { survivor: ['s_1', 's_5', 's_6', 's_7'], hunter: 'h_2' },
+      { survivor: ['s_8', 's_5', 's_9', 's_10'], hunter: 'h_3' },
+      { survivor: ['s_11', 's_12', 's_13', 's_14'], hunter: 'h_4' },
+      { survivor: ['s_15', 's_3', 's_16', 's_17'], hunter: 'h_5' },
+      { survivor: ['s_18', 's_19', 's_20', 's_13'], hunter: 'h_6' },
+      { survivor: ['s_21', 's_22', 's_9', 's_23'], hunter: 'h_7' },
+      { survivor: ['s_5', 's_16', 's_14', 's_10'], hunter: 'h_8' },
+      { survivor: ['s_21', 's_11', 's_17', 's_4'], hunter: 'h_9' },
     ];
 
     const spawnPointsHunterDuoHunters = [
@@ -1511,7 +1717,7 @@ export const MAPS_DATA = [
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
       law_urls, ciphers, cipherCombinations, cipherAll, cipherCombinationsDuoHunters, cipherAllDuoHunters, fixedHint, hints,
       escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests, phoneBooths,
-      basements, spawnPoints, fixedSpawns,
+      basements, spawnPoints, spawnPointCombinations, spawnPointsHunterDuoHunters, fixedSpawns,
       deduction: (() => {
         const { region, exactly, chain, implies, link } = dedHelpers(ciphers);
         const CIPHERS_EAST = [translate("maps.leosMemory.cipher.e1.name"), translate("maps.leosMemory.cipher.e2.name"), translate("maps.leosMemory.cipher.e3.name"), translate("maps.leosMemory.cipher.e4.name")];
@@ -1665,14 +1871,50 @@ export const MAPS_DATA = [
       },
     };
 
-    const spawnPoints = [
-      { survivor: [[394, 320], [611, 325], [618, 511], [366, 667]], hunter: [109, 417] },
-      { survivor: [[638, 180], [394, 320], [331, 493], [496, 701]], hunter: [100, 213] },
-      { survivor: [[164, 322], [560, 327], [412, 424], [366, 667]], hunter: [305, 40] },
-      { survivor: [[248, 243], [181, 404], [331, 482], [530, 556]], hunter: [653, 210] },
-      { survivor: [[291, 230], [443, 248], [250, 342], [367, 521]], hunter: [720, 363] },
-      { survivor: [[271, 181], [601, 315], [394, 320], [331, 493]], hunter: [614, 628] },
-      { survivor: [[248, 243], [394, 320], [730, 355], [662, 483]], hunter: [242, 596] },
+    const spawnPoints = {
+      survivor: [
+        { id: 's_1', location: [394, 320] },
+        { id: 's_2', location: [611, 325] },
+        { id: 's_3', location: [618, 511] },
+        { id: 's_4', location: [366, 667] },
+        { id: 's_5', location: [638, 180] },
+        { id: 's_6', location: [331, 493] },
+        { id: 's_7', location: [496, 701] },
+        { id: 's_8', location: [164, 322] },
+        { id: 's_9', location: [560, 327] },
+        { id: 's_10', location: [412, 424] },
+        { id: 's_11', location: [248, 243] },
+        { id: 's_12', location: [181, 404] },
+        { id: 's_13', location: [331, 482] },
+        { id: 's_14', location: [530, 556] },
+        { id: 's_15', location: [291, 230] },
+        { id: 's_16', location: [443, 248] },
+        { id: 's_17', location: [250, 342] },
+        { id: 's_18', location: [367, 521] },
+        { id: 's_19', location: [271, 181] },
+        { id: 's_20', location: [601, 315] },
+        { id: 's_21', location: [730, 355] },
+        { id: 's_22', location: [662, 483] },
+      ],
+      hunter: [
+        { id: 'h_1', location: [109, 417] },
+        { id: 'h_2', location: [100, 213] },
+        { id: 'h_3', location: [305, 40] },
+        { id: 'h_4', location: [653, 210] },
+        { id: 'h_5', location: [720, 363] },
+        { id: 'h_6', location: [614, 628] },
+        { id: 'h_7', location: [242, 596] },
+      ],
+    };
+
+    const spawnPointCombinations = [
+      { survivor: ['s_1', 's_2', 's_3', 's_4'], hunter: 'h_1' },
+      { survivor: ['s_5', 's_1', 's_6', 's_7'], hunter: 'h_2' },
+      { survivor: ['s_8', 's_9', 's_10', 's_4'], hunter: 'h_3' },
+      { survivor: ['s_11', 's_12', 's_13', 's_14'], hunter: 'h_4' },
+      { survivor: ['s_15', 's_16', 's_17', 's_18'], hunter: 'h_5' },
+      { survivor: ['s_19', 's_20', 's_1', 's_6'], hunter: 'h_6' },
+      { survivor: ['s_11', 's_1', 's_21', 's_22'], hunter: 'h_7' },
     ];
 
     const spawnPointsHunterDuoHunters = [
@@ -1783,7 +2025,7 @@ export const MAPS_DATA = [
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
       law_urls, ciphers, cipherCombinations, cipherAll, cipherCombinationsDuoHunters, cipherAllDuoHunters, fixedHint, hints,
       escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests, phoneBooths,
-      basements, spawnPoints, fixedSpawns,
+      basements, spawnPoints, spawnPointCombinations, spawnPointsHunterDuoHunters, fixedSpawns,
       deduction: (() => {
         const { fixed, region, either, atMost1 } = dedHelpers(ciphers);
         const CIPHERS_EAST = [translate("maps.eversleepingTown.cipher.e1.name"), translate("maps.eversleepingTown.cipher.e2.name"), translate("maps.eversleepingTown.cipher.e3.name"), translate("maps.eversleepingTown.cipher.e4.name"), translate("maps.eversleepingTown.cipher.e5.name"), translate("maps.eversleepingTown.cipher.e6.name")];
@@ -1910,13 +2152,50 @@ export const MAPS_DATA = [
       },
     };
 
-    const spawnPoints = [
-      { survivor: [[924, 123], [1003, 582], [416, 771], [739, 994]], hunter: [170, 177] },
-      { survivor: [[570, 218], [836, 396], [288, 449], [916, 856]], hunter: [437, 951] },
-      { survivor: [[181, 678], [1270, 693], [475, 1002], [1044, 1009]], hunter: [720, 483] },
-      { survivor: [[639, 207], [1129, 388], [505, 603], [191, 908]], hunter: [1110, 947] },
-      { survivor: [[190, 398], [332, 653], [700, 703], [1028, 994]], hunter: [1013, 102] },
-      { survivor: [[356, 169], [774, 235], [1259, 473], [1087, 871]], hunter: [399, 665] },
+    const spawnPoints = {
+      survivor: [
+        { id: 's_1', location: [924, 123] },
+        { id: 's_2', location: [1003, 582] },
+        { id: 's_3', location: [416, 771] },
+        { id: 's_4', location: [739, 994] },
+        { id: 's_5', location: [570, 218] },
+        { id: 's_6', location: [836, 396] },
+        { id: 's_7', location: [288, 449] },
+        { id: 's_8', location: [916, 856] },
+        { id: 's_9', location: [181, 678] },
+        { id: 's_10', location: [1270, 693] },
+        { id: 's_11', location: [475, 1002] },
+        { id: 's_12', location: [1044, 1009] },
+        { id: 's_13', location: [639, 207] },
+        { id: 's_14', location: [1129, 388] },
+        { id: 's_15', location: [505, 603] },
+        { id: 's_16', location: [191, 908] },
+        { id: 's_17', location: [190, 398] },
+        { id: 's_18', location: [332, 653] },
+        { id: 's_19', location: [700, 703] },
+        { id: 's_20', location: [1028, 994] },
+        { id: 's_21', location: [356, 169] },
+        { id: 's_22', location: [774, 235] },
+        { id: 's_23', location: [1259, 473] },
+        { id: 's_24', location: [1087, 871] },
+      ],
+      hunter: [
+        { id: 'h_1', location: [170, 177] },
+        { id: 'h_2', location: [437, 951] },
+        { id: 'h_3', location: [720, 483] },
+        { id: 'h_4', location: [1110, 947] },
+        { id: 'h_5', location: [1013, 102] },
+        { id: 'h_6', location: [399, 665] },
+      ],
+    };
+
+    const spawnPointCombinations = [
+      { survivor: ['s_1', 's_2', 's_3', 's_4'], hunter: 'h_1' },
+      { survivor: ['s_5', 's_6', 's_7', 's_8'], hunter: 'h_2' },
+      { survivor: ['s_9', 's_10', 's_11', 's_12'], hunter: 'h_3' },
+      { survivor: ['s_13', 's_14', 's_15', 's_16'], hunter: 'h_4' },
+      { survivor: ['s_17', 's_18', 's_19', 's_20'], hunter: 'h_5' },
+      { survivor: ['s_21', 's_22', 's_23', 's_24'], hunter: 'h_6' },
     ];
 
     const fixedSpawns = {
@@ -2025,7 +2304,7 @@ export const MAPS_DATA = [
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
       law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
       escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests,
-      basements, spawnPoints, fixedSpawns,
+      basements, spawnPoints, spawnPointCombinations, fixedSpawns,
       deduction: (() => {
         const { fixed, region, either, same, atLeast1, atMost1, chainThree, allAbsent } = dedHelpers(ciphers);
         const CIPHERS_EAST = [translate("maps.chinaTown.cipher.e1.name"), translate("maps.chinaTown.cipher.e2.name"), translate("maps.chinaTown.cipher.e3.name")];
@@ -2164,12 +2443,44 @@ export const MAPS_DATA = [
       },
     };
 
-    const spawnPoints = [
-      { survivor: [[602, 266], [237, 401], [1018, 463], [352, 805]], hunter: [894, 974] },
-      { survivor: [[1011, 241], [863, 472], [641, 626], [472, 1075]], hunter: [306, 211] },
-      { survivor: [[473, 183], [457, 620], [793, 823], [1090, 883]], hunter: [1030, 196] },
-      { survivor: [[696, 272], [257, 355], [756, 580], [967, 913]], hunter: [295, 928] },
-      { survivor: [[458, 419], [312, 667], [765, 1015], [548, 1004]], hunter: [997, 545] },
+    const spawnPoints = {
+      survivor: [
+        { id: 's_1', location: [602, 266] },
+        { id: 's_2', location: [237, 401] },
+        { id: 's_3', location: [1018, 463] },
+        { id: 's_4', location: [352, 805] },
+        { id: 's_5', location: [1011, 241] },
+        { id: 's_6', location: [863, 472] },
+        { id: 's_7', location: [641, 626] },
+        { id: 's_8', location: [472, 1075] },
+        { id: 's_9', location: [473, 183] },
+        { id: 's_10', location: [457, 620] },
+        { id: 's_11', location: [793, 823] },
+        { id: 's_12', location: [1090, 883] },
+        { id: 's_13', location: [696, 272] },
+        { id: 's_14', location: [257, 355] },
+        { id: 's_15', location: [756, 580] },
+        { id: 's_16', location: [967, 913] },
+        { id: 's_17', location: [458, 419] },
+        { id: 's_18', location: [312, 667] },
+        { id: 's_19', location: [765, 1015] },
+        { id: 's_20', location: [548, 1004] },
+      ],
+      hunter: [
+        { id: 'h_1', location: [894, 974] },
+        { id: 'h_2', location: [306, 211] },
+        { id: 'h_3', location: [1030, 196] },
+        { id: 'h_4', location: [295, 928] },
+        { id: 'h_5', location: [997, 545] },
+      ],
+    };
+
+    const spawnPointCombinations = [
+      { survivor: ['s_1', 's_2', 's_3', 's_4'], hunter: 'h_1' },
+      { survivor: ['s_5', 's_6', 's_7', 's_8'], hunter: 'h_2' },
+      { survivor: ['s_9', 's_10', 's_11', 's_12'], hunter: 'h_3' },
+      { survivor: ['s_13', 's_14', 's_15', 's_16'], hunter: 'h_4' },
+      { survivor: ['s_17', 's_18', 's_19', 's_20'], hunter: 'h_5' },
     ];
 
     const fixedSpawns = {
@@ -2280,7 +2591,7 @@ export const MAPS_DATA = [
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
       law_urls, ciphers, cipherCombinations, cipherAll, fixedHint, hints,
       escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests,
-      basements, spawnPoints, fixedSpawns,
+      basements, spawnPoints, spawnPointCombinations, fixedSpawns,
       deduction: (() => {
         const { region, exactly, either, atMost1, same, chain } = dedHelpers(ciphers);
         const CIPHERS_EAST = [translate("maps.darkwoods.cipher.e1.name"), translate("maps.darkwoods.cipher.e2.name"), translate("maps.darkwoods.cipher.e3.name"), translate("maps.darkwoods.cipher.e4.name"), translate("maps.darkwoods.cipher.e5.name")];
@@ -2326,6 +2637,19 @@ export function rocketChairGroups(map) {
     fixed: comb.fixed.map((id) => byId.get(id)),
     sets: comb.sets.map((idList) => idList.map((id) => byId.get(id))),
   };
+}
+
+// 出生点：spawnPoints 为点位池（survivor/hunter 分开），spawnPointCombinations 引用池内 id；
+// 这里解析回「每组 { survivor: [坐标...], hunter: 坐标 }」供消费端使用
+export function spawnPointGroups(map) {
+  const sp = map.spawnPoints;
+  if (!sp || !map.spawnPointCombinations) return [];
+  const survById = new Map(sp.survivor.map((p) => [p.id, p.location]));
+  const huntById = new Map(sp.hunter.map((p) => [p.id, p.location]));
+  return map.spawnPointCombinations.map((g) => ({
+    survivor: g.survivor.map((id) => survById.get(id)),
+    hunter: huntById.get(g.hunter),
+  }));
 }
 
 export function getImageUrl(mapId) {

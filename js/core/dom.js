@@ -499,6 +499,18 @@ export const tacSpawnSizeDefEl = $('tacSpawnSizeDef');
 
 export const tacSpawnText = $('tacSpawnText');
 
+export const tacSpawnDuoEl = $('tacSpawnDuo');
+
+export const tacSpawnDuoWrapEl = $('tacSpawnDuoWrap');
+
+export const tacSpawnDuoRowEl = $('tacSpawnDuoRow');
+
+export const tacSpawnDuoRandomEl = $('tacSpawnDuoRandom');
+
+export const tacSpawnDuoAllEl = $('tacSpawnDuoAll');
+
+export const tacSpawnDuoHunterTextEl = $('tacSpawnDuoHunterText');
+
 export const tacShowDoorsEl = $('tacShowDoors');
 
 export const tacDoorSizeEl = $('tacDoorSize');
