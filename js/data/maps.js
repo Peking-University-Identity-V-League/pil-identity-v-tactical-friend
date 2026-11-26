@@ -73,9 +73,8 @@ export const MAPS_DATA = [
       { id: '13', location: [330, 119] },
       { id: '14', location: [117, 138] },
       { id: '15', location: [416, 222] },
-      { id: '17', location: [128, 220] },
-      { id: '18', location: [117, 138] },
-      { id: '19', location: [291, 318] },
+      { id: '16', location: [128, 220] },
+      { id: '17', location: [291, 318] },
     ];
 
     const rocketChairCombinations = {
@@ -84,8 +83,8 @@ export const MAPS_DATA = [
         ['10', '11', '12'],
         ['13', '14'],
         ['10', '14', '15'],
-        ['13', '17', '15'],
-        ['13', '18', '19'],
+        ['13', '15', '16'],
+        ['13', '14', '17'],
       ],
     };
 
@@ -949,37 +948,39 @@ export const MAPS_DATA = [
 
     const spawnPoints = {
       survivor: [
-        { id: 's_1', location: [644, 347] },
-        { id: 's_2', location: [369, 462] },
-        { id: 's_3', location: [494, 658] },
-        { id: 's_4', location: [955, 738] },
-        { id: 's_5', location: [764, 295] },
-        { id: 's_6', location: [873, 485] },
-        { id: 's_7', location: [521, 630] },
-        { id: 's_8', location: [677, 787] },
-        { id: 's_9', location: [1101, 563] },
-        { id: 's_10', location: [297, 842] },
-        { id: 's_11', location: [330, 310] },
-        { id: 's_12', location: [315, 527] },
-        { id: 's_13', location: [1127, 634] },
-        { id: 's_14', location: [816, 826] },
-        { id: 's_15', location: [992, 704] },
-        { id: 's_16', location: [678, 858] },
-        { id: 's_17', location: [1018, 950] },
-        { id: 's_18', location: [697, 506] },
-        { id: 's_19', location: [959, 735] },
-        { id: 's_20', location: [736, 894] },
-        { id: 's_21', location: [783, 384] },
-        { id: 's_22', location: [636, 690] },
+        { id: 's_1', location: [608, 347] },
+        { id: 's_2', location: [333, 462] },
+        { id: 's_3', location: [458, 658] },
+        { id: 's_4', location: [919, 738] },
+        { id: 's_5', location: [728, 295] },
+        { id: 's_6', location: [837, 485] },
+        { id: 's_7', location: [485, 630] },
+        { id: 's_8', location: [641, 787] },
+        { id: 's_9', location: [1065, 563] },
+        { id: 's_10', location: [261, 842] },
+        { id: 's_11', location: [294, 310] },
+        { id: 's_12', location: [279, 527] },
+        { id: 's_13', location: [1091, 634] },
+        { id: 's_14', location: [780, 826] },
+        { id: 's_15', location: [956, 704] },
+        { id: 's_16', location: [642, 858] },
+        { id: 's_17', location: [982, 950] },
+        { id: 's_18', location: [661, 506] },
+        { id: 's_19', location: [923, 735] },
+        { id: 's_20', location: [700, 894] },
+        { id: 's_21', location: [747, 384] },
+        { id: 's_22', location: [600, 690] },
       ],
       hunter: [
-        { id: 'h_1', location: [1032, 378] },
-        { id: 'h_2', location: [1162, 717] },
-        { id: 'h_3', location: [902, 885] },
-        { id: 'h_4', location: [410, 853] },
-        { id: 'h_5', location: [540, 485] },
-        { id: 'h_6', location: [289, 303] },
-        { id: 'h_7', location: [253, 730] },
+        { id: 'h_1', location: [996, 378] },
+        { id: 'h_2', location: [1126, 717] },
+        { id: 'h_3', location: [866, 885] },
+        { id: 'h_4', location: [374, 853] },
+        { id: 'h_5', location: [504, 485] },
+        { id: 'h_6', location: [253, 303] },
+        { id: 'h_7', location: [217, 730] },
+        { id: 'h_8', location: [590, 970] },
+        { id: 'h_9', location: [920, 300] },
       ],
     };
 
@@ -992,9 +993,11 @@ export const MAPS_DATA = [
       { survivor: ['s_18', 's_19', 's_10', 's_20'], hunter: 'h_6' },
       { survivor: ['s_11', 's_21', 's_22', 's_16'], hunter: 'h_7' },
     ];
-
+235689
     const spawnPointsHunterDuoHunters = [
-      ['h_1', 'h_3'], ['h_1', 'h_4'], ['h_2', 'h_3'], ['h_2', 'h_6']
+      ['h_2', 'h_3'], ['h_2', 'h_5'], ['h_2', 'h_6'], ['h_2', 'h_8'], ['h_2', 'h_9'],
+      ['h_3', 'h_5'], ['h_3', 'h_6'], ['h_3', 'h_8'], ['h_3', 'h_9'], ['h_5', 'h_6'],
+      ['h_5', 'h_8'], ['h_5', 'h_9'], ['h_6', 'h_8'], ['h_6', 'h_9'], ['h_8', 'h_9'],
     ];
 
     const fixedSpawns = {
@@ -1592,6 +1595,9 @@ export const MAPS_DATA = [
         { id: 'h_7', location: [200, 253] },
         { id: 'h_8', location: [328, 530] },
         { id: 'h_9', location: [574, 367] },
+        { id: 'h_10', location: [295, 128] },
+        { id: 'h_11', location: [622, 516] },
+        { id: 'h_12', location: [382, 382] },
       ],
     };
 
@@ -1608,7 +1614,9 @@ export const MAPS_DATA = [
     ];
 
     const spawnPointsHunterDuoHunters = [
-      ['h_1', 'h_3'], ['h_1', 'h_4'], ['h_2', 'h_6']
+      ['h_1', 'h_3'], ['h_1', 'h_4'], ['h_1', 'h_10'], ['h_1', 'h_11'], ['h_1', 'h_12'],
+      ['h_3', 'h_4'], ['h_3', 'h_10'], ['h_3', 'h_11'], ['h_3', 'h_12'], ['h_4', 'h_10'],
+      ['h_4', 'h_11'], ['h_4', 'h_12'], ['h_10', 'h_11'], ['h_10', 'h_12'], ['h_11', 'h_12'],
     ];
 
     const fixedSpawns = {
