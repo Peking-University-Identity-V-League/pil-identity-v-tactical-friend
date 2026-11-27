@@ -1,3 +1,4 @@
+import './core/polyfills.js';
 import { changeLocale, getActiveLocale, initializeI18n, SUPPORTED_LOCALE_LIST, translate } from './core/i18n.js';
 import { homeView } from './core/dom.js';
 import { S } from './core/state.js';

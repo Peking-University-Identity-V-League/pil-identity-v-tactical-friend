@@ -6,6 +6,10 @@ export const UPDATE_NOTES = `
 点击右下角前往官网：https://pkuidv.com/tactical-friend
 可以体验“切换三维”功能，十分震撼！（官网访问速度比b站toy慢，请耐心等待加载）
 
+## 2026-11-28
+
+- 1、修复因手机浏览器内核过旧打不开的问题，对旧内核（Android WebView < Chrome 98 / iOS < 15.4 等）做适配
+
 ## 2026-11-27
 
 - 1、新增联合狩猎密码机和出生点
