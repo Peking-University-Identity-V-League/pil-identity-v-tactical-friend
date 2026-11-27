@@ -680,6 +680,7 @@ deduce(map, marks)
 | `tacUndo()` | 根据操作记录撤销 |
 | `tacClear()` | 清空当前地图战术板，可撤销 |
 | `tacDeleteMeasureAt()` | 删除测距线段并处理折线配置 |
+| `syncTacSubCards()` | 按当前工具切换下方卡片；「删除」工具只切换地图交互、不隐藏任何卡片（类似「撤销」） |
 | `tacResetTransient()` | 换图时清理临时交互和撤销栈并创建新图画板（不重置当前工具栏，切图后保持原工具） |
 | `tacMapWrap` 的指针事件 | 放置、选择、拖动、绘制和删除 |
 | `window` 的 `keydown` 事件 | Esc、Delete、Backspace、Ctrl/Cmd+Z、WASD、方向键 |
@@ -849,6 +850,7 @@ MAPS_DATA
 | `chests` | 箱子位置 |
 | `lockers` | 柜子位置 |
 | `phoneBooths` | 电话亭位置（仅有电话亭的地图） |
+| `springBox` | 弹簧箱位置数组（仅月亮河公园；显示设置出现弹簧箱行，「显示范围」默认不勾，勾后显示 `items_common.js` 中 `customSpringBox` 第一个范围的虚线圈） |
 | `spawnPoints` | 出生点点位池 `{ survivor: [{ id, location }...], hunter: [{ id, location }...] }`（id 形如 `s_1`/`h_1`） |
 | `spawnPointCombinations` | 出生点分组 `[{ survivor: [id...], hunter: id }...]`，id 引用 `spawnPoints`；消费端经 `spawnPointGroups(map)` 解析为 `{ survivor:[坐标], hunter:坐标 }` 数组 |
 | `spawnPointsHunterDuoHunters` | 联合狩猎监管者双人组合 `[[id, id]...]`（仅联合狩猎地图；显示设置出生点行出现「联合狩猎」勾选，勾选后求生者显示随机换一组/全部、监管者按此组合切换；随机时保证求生者与任一监管者距离 ≥ `SPAWN_SURVIVOR_HUNTER_DISTANCE_MIN`（36m，定义于 maps.js），切换监管者组后有点过近会自动重随，`tacSpawnDuoReroll()`） |
@@ -1189,7 +1191,7 @@ pil-theme
 | `map` | 最近使用地图 |
 | `boards` | 各地图战术板 |
 | `display` | 战术显示设置（显示什么、显示多大） |
-| `draw` | 绘制设置（吸附、隐藏端点、折线删段、测算允许翻窗） |
+| `draw` | 绘制设置（吸附、显示端点/距离/时间、折线删段、测算允许翻窗） |
 | `mstyle` | 直线、折线和路径线样式 |
 | `regions` | 各地图阵营、选区和密码机组 |
 | `dedMarks` | 各地图推演标记 |

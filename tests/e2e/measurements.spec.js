@@ -137,7 +137,7 @@ test('trait buff form note derives from the role speed forms (siphon soul / foll
     .toContainText('仅信徒形态生效');
 });
 
-test('hide endpoints checkbox hides measure dots but keeps selected letters', async ({ page }) => {
+test('show endpoints checkbox toggles measure dots but keeps selected letters', async ({ page }) => {
   await tool(page, 'measure');
   await clickPoint(page, 0.15, 0.36);
   await clickPoint(page, 0.4, 0.36);
@@ -145,14 +145,14 @@ test('hide endpoints checkbox hides measure dots but keeps selected letters', as
   await expect(dots).toHaveCount(2);
   await expect(dots.first()).toBeVisible();
   await page.locator('#tacDrawSettingsToggle').click();
-  // 隐藏端点默认勾选，先取消确认圆点恢复显示
-  await page.locator('#tacHideEndpoints').uncheck();
-  await expect(dots.first()).not.toHaveClass(/hidden-endpoint/);
-  await page.locator('#tacHideEndpoints').check();
+  // 显示端点默认不勾选，圆点默认隐藏
+  await expect(page.locator('#tacShowEndpoints')).not.toBeChecked();
   await expect(dots.first()).toHaveClass(/hidden-endpoint/);
+  await page.locator('#tacShowEndpoints').check();
+  await expect(dots.first()).not.toHaveClass(/hidden-endpoint/);
   // 选中该线时 ABCD 字母依然正常显示
   await selectSegment(page, 0);
   await expect(page.locator('.tac-mletter')).toHaveCount(2);
-  await page.locator('#tacHideEndpoints').uncheck();
-  await expect(dots.first()).not.toHaveClass(/hidden-endpoint/);
+  await page.locator('#tacShowEndpoints').uncheck();
+  await expect(dots.first()).toHaveClass(/hidden-endpoint/);
 });

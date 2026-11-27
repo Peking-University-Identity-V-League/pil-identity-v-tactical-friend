@@ -68,6 +68,8 @@ test('measure: route mode shows route-specific status text', async ({ page }) =>
 
 test('measure: vault checkbox defaults on and persists', async ({ page }) => {
   await tool(page, 'measure');
+  // 允许翻窗仅在路径线模式下显示
+  await page.locator('[data-mmode="route"]').click();
   // 展开绘制设置区（其它设置默认已展开）
   await page.locator('#tacDrawSettingsToggle').click();
   await expect(page.locator('#tacMeasureVault')).toBeChecked();
@@ -76,6 +78,7 @@ test('measure: vault checkbox defaults on and persists', async ({ page }) => {
   await page.reload();
   await page.locator('.home-card').first().click();
   await tool(page, 'measure');
+  await page.locator('[data-mmode="route"]').click();
   await page.locator('#tacDrawSettingsToggle').click();
   await expect(page.locator('#tacMeasureVault')).not.toBeChecked();
 });

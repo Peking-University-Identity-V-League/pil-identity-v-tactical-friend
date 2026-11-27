@@ -581,5 +581,9 @@ export const tacShowPhoneBoothsEl = $('tacShowPhoneBooths');
 export const tacPhoneBoothSizeEl = $('tacPhoneBoothSize');
 
 export const tacPhoneBoothSizeDefEl = $('tacPhoneBoothSizeDef');
+export const tacShowSpringBoxesEl = $('tacShowSpringBoxes');
+export const tacSpringBoxRangeEl = $('tacSpringBoxRange');
+export const tacSpringBoxSizeEl = $('tacSpringBoxSize');
+export const tacSpringBoxSizeDefEl = $('tacSpringBoxSizeDef');
 
 export const tacShowBoxBasementEl = $('tacShowBoxBasement');

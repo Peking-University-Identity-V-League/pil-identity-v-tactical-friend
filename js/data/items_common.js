@@ -72,7 +72,7 @@ export const TAC_COMMON_ITEM_TYPES = {
     ranges: {
       key: 'showItem',
       options: [
-        { size_m: 8, label: translate("common.springBox") },
+        { size_m: 9, label: translate("common.springBox") },
       ],
     },
     icon: COMMON_ICON_URL.springBox,

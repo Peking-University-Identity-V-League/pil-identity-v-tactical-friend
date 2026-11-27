@@ -211,6 +211,7 @@ export const tacDisplay = {
   boxes: false, boxSize: TAC_DISPLAY_DEFAULT.boxSize,
   boxesBasement: false,
   phoneBooths: false, phoneBoothSize: TAC_DISPLAY_DEFAULT.phoneBoothSize,
+  springBoxes: false, springBoxRange: false, springBoxSize: TAC_DISPLAY_DEFAULT.springBoxSize,
 
   showCoords: false,
   selGlow: true,
