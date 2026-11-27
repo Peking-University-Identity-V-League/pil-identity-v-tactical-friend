@@ -680,7 +680,7 @@ deduce(map, marks)
 | `tacUndo()` | 根据操作记录撤销 |
 | `tacClear()` | 清空当前地图战术板，可撤销 |
 | `tacDeleteMeasureAt()` | 删除测距线段并处理折线配置 |
-| `tacResetTransient()` | 换图时清理临时交互和撤销栈 |
+| `tacResetTransient()` | 换图时清理临时交互和撤销栈并创建新图画板（不重置当前工具栏，切图后保持原工具） |
 | `tacMapWrap` 的指针事件 | 放置、选择、拖动、绘制和删除 |
 | `window` 的 `keydown` 事件 | Esc、Delete、Backspace、Ctrl/Cmd+Z、WASD、方向键 |
 
@@ -851,7 +851,7 @@ MAPS_DATA
 | `phoneBooths` | 电话亭位置（仅有电话亭的地图） |
 | `spawnPoints` | 出生点点位池 `{ survivor: [{ id, location }...], hunter: [{ id, location }...] }`（id 形如 `s_1`/`h_1`） |
 | `spawnPointCombinations` | 出生点分组 `[{ survivor: [id...], hunter: id }...]`，id 引用 `spawnPoints`；消费端经 `spawnPointGroups(map)` 解析为 `{ survivor:[坐标], hunter:坐标 }` 数组 |
-| `spawnPointsHunterDuoHunters` | 联合狩猎监管者双人组合 `[[id, id]...]`（仅联合狩猎地图；显示设置出生点行出现「联合狩猎」勾选，勾选后求生者显示随机8点/全部、监管者按此组合切换） |
+| `spawnPointsHunterDuoHunters` | 联合狩猎监管者双人组合 `[[id, id]...]`（仅联合狩猎地图；显示设置出生点行出现「联合狩猎」勾选，勾选后求生者显示随机换一组/全部、监管者按此组合切换；随机时保证求生者与任一监管者距离 ≥ `SPAWN_SURVIVOR_HUNTER_DISTANCE_MIN`（36m，定义于 maps.js），切换监管者组后有点过近会自动重随，`tacSpawnDuoReroll()`） |
 | `basements` | 地下室（含其中狂欢之椅与箱子） |
 | `deduction` | 推演规则、布局和规律速查数据 |
 

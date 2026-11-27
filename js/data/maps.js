@@ -1331,7 +1331,7 @@ export const MAPS_DATA = [
 
     const spawnPointsHunterDuoHunters = [
       ['h_3', 'h_6'], ['h_3', 'h_8'], ['h_3', 'h_9'],
-      ['h_6', 'h_8'], ['h_6', 'h_8'], ['h_8', 'h_9'],
+      ['h_6', 'h_8'], ['h_6', 'h_9'], ['h_8', 'h_9'],
     ];
 
     const fixedSpawns = {
@@ -2695,6 +2695,9 @@ export function rocketChairGroups(map) {
 
 // 出生点：spawnPoints 为点位池（survivor/hunter 分开），spawnPointCombinations 引用池内 id；
 // 这里解析回「每组 { survivor: [坐标...], hunter: 坐标 }」供消费端使用
+// 联合狩猎出生点规则：监管者出生位置该距离（米）内不得有求生者
+export const SPAWN_SURVIVOR_HUNTER_DISTANCE_MIN = 36;
+
 export function spawnPointGroups(map) {
   const sp = map.spawnPoints;
   if (!sp || !map.spawnPointCombinations) return [];

@@ -503,7 +503,8 @@ export const tacSpawnDuoEl = $('tacSpawnDuo');
 
 export const tacSpawnDuoWrapEl = $('tacSpawnDuoWrap');
 
-export const tacSpawnDuoRowEl = $('tacSpawnDuoRow');
+export const tacSpawnDuoRowEl = $("tacSpawnDuoRow");
+export const tacSpawnDuoEntryEl = $("tacSpawnDuoEntry");
 
 export const tacSpawnDuoRandomEl = $('tacSpawnDuoRandom');
 
