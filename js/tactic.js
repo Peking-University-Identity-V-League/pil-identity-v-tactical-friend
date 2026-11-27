@@ -1,5 +1,5 @@
 
-import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacCipherCard, tacCipherCardShowEl, tacCipherCardPrevBtn, tacCipherCardNextBtn, tacCipherCardText, tacCipherCardSizeEl, tacCipherCardSizeDefEl, tacCipherList, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDrawSettingsToggle, tacDrawSettingsBody, tacDrawStyleToggle, tacDrawOtherToggle, tacDrawOtherBody, tacShapeStyleToggle, tacShapeStyleBody, tacTextStyleToggle, tacTextStyleBody, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacHideEndpointsEl, tacItemSection, tacMStyleBody, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacRot, tacMeasureCancelEl, tacMeasureVaultEl, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacCarryChairAllEl, tacCipherAllEl, tacCipherCardAllEl, tacCipherCardDuoEl, tacCipherCardDuoWrapEl, tacCipherDuoEl, tacCipherDuoWrapEl, tacChairAllEl, tacDungeonAllEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacCarryBuffBody, tacCarryCard, tacCarryChairName, tacCarryChairNextBtn, tacCarryChairPrevBtn, tacCarryChairSizeDefEl, tacCarryChairSizeEl, tacCarryChairText, tacCarryClearBtn, tacCarryBuffToggleEl, tacCarryHuntClose, tacCarryHuntList, tacCarryHuntModal, tacCarryHuntTalentBtn, tacCarryHunterEl, tacCarryHunterFormEl, tacCarryHunterSpeedEl, tacCarryInitialEl, tacCarryInitialVal, tacCarryLegend, tacCarryNote, tacCarryOpacityEl, tacCarryOpacityRowEl, tacCarryHideRingEl, tacCarryChairBasementEl, tacCarryBoxBasementEl, tacCarryBasementPrevBtn, tacCarryBasementNextBtn, tacCarryBasementTextEl, tacCarryPickBtn, tacCarryPickupEl, tacCarryResultBoxEl, tacCarryResultToggleEl, tacCarryResultBodyEl, tacCarrySettingsToggleEl, tacCarrySettingsBodyEl, tacCarryModeChairEl, tacCarryModePointEl, tacCarryHideRingLabelEl, tacCarryChairCountEl, tacCarryDetailBoxEl, tacCarryDetailToggleEl, tacCarryDetailBodyEl, tacCarryPickupModeEl, tacCarryProgressBar, tacCarryProgressBox, tacCarryRunBtn, tacCarryShowChairsEl, tacCarrySpeedClose, tacCarrySpeedList, tacCarrySpeedModal, tacCarrySpeedTalentBtn, tacCarrySummary, tacCarrySurvClose, tacCarrySurvList, tacCarrySurvModal, tacCarrySurvTalentBtn, tacCarrySurvivorEl, tacShowChairBasementEl, tacBasementText, tacShowSpawnsEl, tacSpawnDuoAllEl, tacSpawnDuoEl, tacSpawnDuoHunterTextEl, tacSpawnDuoRandomEl, tacSpawnDuoEntryEl, tacSpawnDuoRowEl, tacSpawnDuoWrapEl, tacSpawnSizeEl, tacSpawnSizeDefEl, tacSpawnText, tacSnapBoxEl, tacSnapLockerEl, tacSnapPhoneBoothEl, tacShowLockersEl, tacLockerSizeEl, tacLockerSizeDefEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowPhoneBoothsEl, tacPhoneBoothSizeEl, tacPhoneBoothSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacSpeedSettingsToggleEl, tacSpeedSettingsBodyEl, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTimelineEl, tacTimelineFold, tacTimelinePlay, tacTimelineScrub, tacTimelineTime, tacTimelineTracks, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacDedScenarioCarryEl, tacDedScenarioTideEl, tacDedSettingsCarryEl, tacDedSettingsTideEl, tacTideBaseSpeedEl, tacTideSpeedRoleEl, tacTideSpeedFormEl, tacTideTraitAddBtn, tacTideTalentAddBtn, tacTideOtherAddBtn, tacTideBuffAddBtn, tacTideBaseDetailToggleEl, tacTideBaseDetailBodyEl, tacTideBuffToggleEl, tacTideBuffBodyEl, tacTideTraitModal, tacTideTraitList, tacTideTraitClose, tacTideTalentModal, tacTideTalentList, tacTideTalentClose, tacTideOtherModal, tacTideOtherList, tacTideOtherClose, tacTideBuffModal, tacTideBuffName, tacTideBuffPct, tacTideBuffDur, tacTideBuffOk, tacTideBuffClose, tacPathCard, tacPathPickA, tacPathPickB, tacPathStatusA, tacPathStatusB, tacPathRunBtn, tacPathClearBtn, tacPathProgressBox, tacPathProgressBar, tacPathResultBoxEl, tacPathResultToggleEl, tacPathResultBodyEl, tacPathSummary, tacPathNote, tacPathFixNote, tacPathSettingsToggleEl, tacPathSettingsBodyEl, tacPathVaultEl, tacPathFixEl, tacPathCampToggle, tacPathBaseSpeedEl, tacPathSpeedRoleEl, tacPathSpeedFormEl, tacPathTraitAddBtn, tacPathTalentAddBtn, tacPathOtherAddBtn, tacPathBuffAddBtn, tacPathBaseDetailToggleEl, tacPathBaseDetailBodyEl, tacPathBuffToggleEl, tacPathBuffBodyEl, tacPathTraitModal, tacPathTraitList, tacPathTraitClose, tacPathTalentModal, tacPathTalentList, tacPathTalentClose, tacPathOtherModal, tacPathOtherList, tacPathOtherClose, tacPathBuffModal, tacPathBuffName, tacPathBuffPct, tacPathBuffDur, tacPathBuffOk, tacPathBuffClose, tacticView } from './core/dom.js';
+import { showToast, tacArrowSvg, tacBaseDetailBody, tacBaseDetailToggle, tacBaseMerge, tacBaseMergeBox, tacBaseSpeedEl, tacBuffAddBtn, tacBuffClose, tacBuffDetailBody, tacBuffDetailToggle, tacBuffDur, tacBuffFilterBox, tacBuffModal, tacBuffName, tacBuffOk, tacBuffPct, tacCampToggle, tacCipherSizeDefEl, tacCipherSizeEl, tacCipherCard, tacCipherCardShowEl, tacCipherCardPrevBtn, tacCipherCardNextBtn, tacCipherCardText, tacCipherCardSizeEl, tacCipherCardSizeDefEl, tacCipherList, tacClearBtn, tacColorsEl, tacCoordsTip, tacDelSegOnlyEl, tacDeselectBtn, tacDispCipherText, tacDisplayCard, tacDoorLockEl, tacDoorSizeDefEl, tacDoorSizeEl, tacDrawCard, tacDrawSettingsToggle, tacDrawSettingsBody, tacDrawStyleToggle, tacDrawOtherToggle, tacDrawOtherBody, tacShapeStyleToggle, tacShapeStyleBody, tacTextStyleToggle, tacTextStyleBody, tacDungeonSizeDefEl, tacDungeonSizeEl, tacDungeonText, tacExportBtn, tacShowEndpointsEl, tacShowDistEl, tacShowTimeEl, tacItemSection, tacMStyleBody, tacManageCard, tacManageList, tacMapImage, tacMapTitle, tacMapTitleEn, tacMapWrap, tacRot, tacMeasureCancelEl, tacMeasureVaultEl, tacMeasureVaultWrapEl, tacMeasureCard, tacMeasureColorsEl, tacMeasureModesEl, tacMeasureWidthEl, tacMeasureWidthVal, tacOtherAddBtn, tacOtherClose, tacOtherList, tacOtherModal, tacResult, tacResultBody, tacResultToggle, tacRolesCard, tacRolesEl, tacRolesHunterEl, tacRolesOtherEl, tacSaveClose, tacSaveImg, tacSaveOverlay, tacScopeToggle, tacScopeWrap, tacSelGlowEl, tacShapesEl, tacCarryChairAllEl, tacCipherAllEl, tacCipherCardAllEl, tacCipherCardDuoEl, tacCipherCardDuoWrapEl, tacCipherDuoEl, tacCipherDuoWrapEl, tacChairAllEl, tacDungeonAllEl, tacShowCiphersEl, tacShowChairsEl, tacChairSizeEl, tacChairSizeDefEl, tacChairText, tacCarryBuffBody, tacCarryCard, tacCarryChairName, tacCarryChairNextBtn, tacCarryChairPrevBtn, tacCarryChairSizeDefEl, tacCarryChairSizeEl, tacCarryChairText, tacCarryClearBtn, tacCarryBuffToggleEl, tacCarryHuntClose, tacCarryHuntList, tacCarryHuntModal, tacCarryHuntTalentBtn, tacCarryHunterEl, tacCarryHunterFormEl, tacCarryHunterSpeedEl, tacCarryInitialEl, tacCarryInitialVal, tacCarryLegend, tacCarryNote, tacCarryOpacityEl, tacCarryOpacityRowEl, tacCarryHideRingEl, tacCarryChairBasementEl, tacCarryBoxBasementEl, tacCarryBasementPrevBtn, tacCarryBasementNextBtn, tacCarryBasementTextEl, tacCarryPickBtn, tacCarryPickupEl, tacCarryResultBoxEl, tacCarryResultToggleEl, tacCarryResultBodyEl, tacCarrySettingsToggleEl, tacCarrySettingsBodyEl, tacCarryModeChairEl, tacCarryModePointEl, tacCarryHideRingLabelEl, tacCarryChairCountEl, tacCarryDetailBoxEl, tacCarryDetailToggleEl, tacCarryDetailBodyEl, tacCarryPickupModeEl, tacCarryProgressBar, tacCarryProgressBox, tacCarryRunBtn, tacCarryShowChairsEl, tacCarrySpeedClose, tacCarrySpeedList, tacCarrySpeedModal, tacCarrySpeedTalentBtn, tacCarrySummary, tacCarrySurvClose, tacCarrySurvList, tacCarrySurvModal, tacCarrySurvTalentBtn, tacCarrySurvivorEl, tacShowChairBasementEl, tacBasementText, tacShowSpawnsEl, tacSpawnDuoAllEl, tacSpawnDuoEl, tacSpawnDuoHunterTextEl, tacSpawnDuoRandomEl, tacSpawnDuoEntryEl, tacSpawnDuoRowEl, tacSpawnDuoWrapEl, tacSpawnSizeEl, tacSpawnSizeDefEl, tacSpawnText, tacSnapBoxEl, tacSnapLockerEl, tacSnapPhoneBoothEl, tacShowLockersEl, tacLockerSizeEl, tacLockerSizeDefEl, tacShowBoxesEl, tacBoxSizeEl, tacBoxSizeDefEl, tacShowPhoneBoothsEl, tacPhoneBoothSizeEl, tacPhoneBoothSizeDefEl, tacShowBoxBasementEl, tacShowCoordsEl, tacShowDoorsEl, tacShowDungeonEl, tacShowZonesEl, tacSnapCipherEl, tacSnapDoorEl, tacSnapChairEl, tacSnapDungeonEl, tacSnapPointEl, tacSnapRipple, tacSpeedForm, tacSpeedRole, tacSpeedSettingsToggleEl, tacSpeedSettingsBodyEl, tacStatus2El, tacStatusEl, tacTalentAddBtn, tacTalentClose, tacTalentList, tacTalentModal, tacTextAddBtn, tacTextCard, tacTextColorsEl, tacTextHint, tacTextInput, tacTextList, tacTextSizeEl, tacTextSizeVal, tacTextStyle, tacTimelineEl, tacTimelineFold, tacTimelinePlay, tacTimelineScrub, tacTimelineTime, tacTimelineTracks, tacTraitAddBtn, tacTraitClose, tacTraitList, tacTraitModal, tacUndoBtn, tacWidthEl, tacWidthVal, tacDedScenarioCarryEl, tacDedScenarioTideEl, tacDedSettingsCarryEl, tacDedSettingsTideEl, tacTideBaseSpeedEl, tacTideSpeedRoleEl, tacTideSpeedFormEl, tacTideTraitAddBtn, tacTideTalentAddBtn, tacTideOtherAddBtn, tacTideBuffAddBtn, tacTideBaseDetailToggleEl, tacTideBaseDetailBodyEl, tacTideBuffToggleEl, tacTideBuffBodyEl, tacTideTraitModal, tacTideTraitList, tacTideTraitClose, tacTideTalentModal, tacTideTalentList, tacTideTalentClose, tacTideOtherModal, tacTideOtherList, tacTideOtherClose, tacTideBuffModal, tacTideBuffName, tacTideBuffPct, tacTideBuffDur, tacTideBuffOk, tacTideBuffClose, tacPathCard, tacPathPickA, tacPathPickB, tacPathStatusA, tacPathStatusB, tacPathRunBtn, tacPathClearBtn, tacPathProgressBox, tacPathProgressBar, tacPathResultBoxEl, tacPathResultToggleEl, tacPathResultBodyEl, tacPathSummary, tacPathNote, tacPathFixNote, tacPathSettingsToggleEl, tacPathSettingsBodyEl, tacPathVaultEl, tacPathFixEl, tacPathCampToggle, tacPathBaseSpeedEl, tacPathSpeedRoleEl, tacPathSpeedFormEl, tacPathTraitAddBtn, tacPathTalentAddBtn, tacPathOtherAddBtn, tacPathBuffAddBtn, tacPathBaseDetailToggleEl, tacPathBaseDetailBodyEl, tacPathBuffToggleEl, tacPathBuffBodyEl, tacPathTraitModal, tacPathTraitList, tacPathTraitClose, tacPathTalentModal, tacPathTalentList, tacPathTalentClose, tacPathOtherModal, tacPathOtherList, tacPathOtherClose, tacPathBuffModal, tacPathBuffName, tacPathBuffPct, tacPathBuffDur, tacPathBuffOk, tacPathBuffClose, tacticView } from './core/dom.js';
 import { restoredMeasureIds, saveRegionSel, savedRot, tacBoard, tacDisplay, tacDrawSettings, tacMeasureStyle, tacSave, flushSave } from './core/persist.js';
 import { measureBaseAt, simulateMovement } from './core/measurements.js';
 import { animAllPositions, animDuration, animPositionAt, animSegPath, animSegments } from './core/anim.js';
@@ -335,7 +335,9 @@ export function syncTacDisplayUI() {
   tacDelSegOnlyEl.checked = tacDrawSettings.delSegOnly;
   tacShowCoordsEl.checked = tacDisplay.showCoords;
   tacSelGlowEl.checked = tacDisplay.selGlow;
-  tacHideEndpointsEl.checked = !!tacDrawSettings.hideEndpoints;
+  tacShowEndpointsEl.checked = !!tacDrawSettings.showEndpoints;
+  tacShowDistEl.checked = tacDrawSettings.showDist !== false;
+  tacShowTimeEl.checked = !!tacDrawSettings.showTime;
   if (tacMeasureVaultEl) tacMeasureVaultEl.checked = tacDrawSettings.measureVault !== false;
   tacCarryHideRingEl.checked = !!tacDisplay.carryHideRing;
   const cropEl = $('tacExportCrop');
@@ -4201,11 +4203,19 @@ tacSelGlowEl.addEventListener('change', () => {
 });
 
 
-tacHideEndpointsEl.addEventListener('change', () => {
-  tacDrawSettings.hideEndpoints = tacHideEndpointsEl.checked;
+// 显示端点/距离/时间：选中某条线时，改动同步应用到该线（lc.style 覆盖全局设置）
+const tacApplyLineStyle = (key, val) => {
+  tacDrawSettings[key] = val;
+  const L = tacSelLine();
+  if (L && L.segs[0] && L.segs[0].lc) {
+    L.segs[0].lc.style = { ...(L.segs[0].lc.style || {}), [key]: val };
+  }
   renderTacBoard();
   tacSave();
-});
+};
+tacShowEndpointsEl.addEventListener('change', () => tacApplyLineStyle('showEndpoints', tacShowEndpointsEl.checked));
+tacShowDistEl.addEventListener('change', () => tacApplyLineStyle('showDist', tacShowDistEl.checked));
+tacShowTimeEl.addEventListener('change', () => tacApplyLineStyle('showTime', tacShowTimeEl.checked));
 
 // 路径线的「允许翻窗」：控制最优路径是否可穿过窗户
 tacMeasureVaultEl?.addEventListener('change', () => {
@@ -4479,6 +4489,40 @@ export function tacMeasureText(m) {
   const { units, dw } = tacMeasureLen(m);
   const widthM = MAPS_DATA[S.currentMapId].widthM;
   return widthM ? `${(units / dw * widthM).toFixed(1)}m` : units.toFixed(1);
+}
+
+// 线的显示开关解析：lc.style 覆盖 → 全局绘制设置
+export function tacLineStyle(m) {
+  const st = (m && m.lc && m.lc.style) || {};
+  return {
+    showEndpoints: st.showEndpoints ?? !!tacDrawSettings.showEndpoints,
+    showDist: st.showDist ?? (tacDrawSettings.showDist !== false),
+    showTime: st.showTime ?? !!tacDrawSettings.showTime,
+  };
+}
+
+// 单段用时（秒）：有速度配置时按 simulateMovement 精算，否则按求生者跑速
+export function tacMeasureTime(m) {
+  const { units, dw } = tacMeasureLen(m);
+  const widthM = MAPS_DATA[S.currentMapId].widthM;
+  if (!widthM) return null;
+  if (m.lc) {
+    const sim = tacSimLine([m], m.lc);
+    return sim.segs[0] ? sim.segs[0].t : null;
+  }
+  return (units / dw * widthM) / TAC_MOVEMENT_SURVIVOR.states.run.speed;
+}
+
+// 线旁标签文本：按显示开关组合距离与时间
+export function tacMeasureLabelText(m) {
+  const st = tacLineStyle(m);
+  const parts = [];
+  if (st.showDist) parts.push(tacMeasureText(m));
+  if (st.showTime) {
+    const t = tacMeasureTime(m);
+    if (t != null) parts.push(`${t.toFixed(1)}s`);
+  }
+  return parts.join(' ');
 }
 
 
@@ -5043,9 +5087,10 @@ export function measureNode(m, W, H, idx, chain, sel) {
   text.setAttribute('class', 'tac-measure-label');
   text.style.fill = segColor;
   tacUprightSvgText(text, tx, ty);
-  text.textContent = tacMeasureText(m);
+  text.textContent = tacMeasureLabelText(m);
 
-  g.append(hit, line, ...greenLines, text);
+  if (text.textContent) g.append(hit, line, ...greenLines, text);
+  else g.append(hit, line, ...greenLines);
   return g;
 }
 
@@ -5090,8 +5135,15 @@ export function chainTotalNode(segs, W, H, sel) {
   if (sel) text.setAttribute('style',
     `fill:${text.style.fill};stroke:#1e3a8a;stroke-width:4;`
       + 'paint-order:stroke;font-size:15px;');
-  text.textContent = widthM
-    ? `${(units / dw * widthM).toFixed(1)}m` : units.toFixed(1);
+  const cst = tacLineStyle(segs[0]);
+  const cparts = [];
+  if (cst.showDist) cparts.push(widthM
+    ? `${(units / dw * widthM).toFixed(1)}m` : units.toFixed(1));
+  if (cst.showTime && segs[0].lc) {
+    const simT = tacSimLine(segs, segs[0].lc);
+    cparts.push(`${simT.segs.reduce((acc2, sg) => acc2 + sg.t, 0).toFixed(1)}s`);
+  }
+  text.textContent = cparts.join(' ');
   return text;
 }
 
@@ -6278,7 +6330,7 @@ export function renderTacBoard() {
       if (isChain && !((isChainStart && end === 'a') || (isChainEnd && end === 'b'))) return;
       const dot = document.createElement('div');
       dot.className = 'tac-measure-dot';
-      if (tacDrawSettings.hideEndpoints) dot.classList.add('hidden-endpoint');
+      if (!tacLineStyle(m).showEndpoints) dot.classList.add('hidden-endpoint');
       dot.dataset.idx = idx;
       dot.dataset.end = end;
       dot.style.left = `${m[kx] * 100}%`;
@@ -8936,12 +8988,17 @@ export function buildTacSpeedPanel() {
       tacMeasureStyle[tacMeasureMode].color = btn.dataset.color;
       tacMeasureColorsEl.querySelectorAll('.tac-color').forEach((b) =>
         b.classList.toggle('active', b === btn));
+      const L = tacSelLine();
+      if (L) { L.segs.forEach((m) => { m.color = btn.dataset.color; }); renderTacBoard(); }
       tacSave();
     });
   });
   tacMeasureWidthEl.addEventListener('input', () => {
-    tacMeasureStyle[tacMeasureMode].width = parseInt(tacMeasureWidthEl.value, 10);
+    const w = parseInt(tacMeasureWidthEl.value, 10);
+    tacMeasureStyle[tacMeasureMode].width = w;
     tacMeasureWidthVal.textContent = tacMeasureWidthEl.value;
+    const L = tacSelLine();
+    if (L) { L.segs.forEach((m) => { m.width = w; }); renderTacBoard(); }
     tacSave();
   });
   syncTacMeasureStyleUI();
@@ -8956,6 +9013,10 @@ export function syncTacMeasureStyleUI() {
     b.classList.toggle('active', b.dataset.color === st.color));
   tacMeasureWidthEl.value = st.width;
   tacMeasureWidthVal.textContent = st.width;
+  // 「允许翻窗」仅路径线模式可见
+  if (tacMeasureVaultWrapEl) {
+    tacMeasureVaultWrapEl.style.display = tacMeasureMode === 'route' ? '' : 'none';
+  }
 }
 
 // 「点此取消添加」按钮：仅在折线/路径线连续绘制中出现（挨着「取消选中」），其余时刻隐藏
@@ -8983,6 +9044,13 @@ export function enterTactic() {
 
 
 export function syncTacSubCards() {
+  if (tacTimelineEl) {
+    const show = tacTool === 'anim';
+    tacTimelineEl.style.display = show ? '' : 'none';
+    document.body.classList.toggle('tac-timeline-open', show);
+  }
+  // 「删除」与「撤销」一样是即时动作，不影响下方卡片
+  if (tacTool === 'delete') return;
   tacManageCard.style.display = (tacTool === 'select' || tacTool === 'anim') ? '' : 'none';
   if (tacCipherCard) tacCipherCard.style.display = tacTool === 'select' ? '' : 'none';
   tacRolesCard.style.display = tacTool === 'roles' ? '' : 'none';
@@ -8995,11 +9063,6 @@ export function syncTacSubCards() {
   }
   if (tacPathCard) tacPathCard.style.display = tacTool === 'deduce' ? '' : 'none';
   tacDisplayCard.style.display = tacTool === 'display' ? '' : 'none';
-  if (tacTimelineEl) {
-    const show = tacTool === 'anim';
-    tacTimelineEl.style.display = show ? '' : 'none';
-    document.body.classList.toggle('tac-timeline-open', show);
-  }
   if (tacTool === 'select' || tacTool === 'anim') {
     tacManageCard.open = true;
     if (tacTool === 'select' && tacCipherCard) tacCipherCard.open = true;
@@ -9860,7 +9923,7 @@ export async function tacExportImage() {
   ctx.save();
   ctx.lineWidth = Math.max(1.5, W * K / 400);
   board.measures.forEach((m, idx) => {
-    if (tacDrawSettings.hideEndpoints) return;
+    if (!tacLineStyle(m).showEndpoints) return;
     const isChain = m.chain != null;
     if (isChain && !(chainFirst[m.chain] === idx || chainLast[m.chain] === idx)) return;
     const dotColor = tacMeasureSegColor(m);
@@ -11080,6 +11143,7 @@ export function tacResetTransient() {
   tacItemRole = null;
   tacSelectedText = null;
   tacUndoStack.length = 0;
+  S.spawnDuoPicks = []; // 联合狩猎随机点跨图失效，下张图按 36m 规则重随
   tacBoard(); // 确保新图画板已创建（原先由 setTacTool('select') 的渲染副作用完成）
   tacZoomReset(); 
 }

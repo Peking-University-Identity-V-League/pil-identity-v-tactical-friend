@@ -375,7 +375,9 @@ export const tacMeasureModesEl = $('tacMeasureModes');
 export const tacMeasureColorsEl = $('tacMeasureColors');
 
 export const tacMeasureWidthEl = $('tacMeasureWidth');
-export const tacHideEndpointsEl = $('tacHideEndpoints');
+export const tacShowEndpointsEl = $('tacShowEndpoints');
+export const tacShowDistEl = $('tacShowDist');
+export const tacShowTimeEl = $('tacShowTime');
 
 export const tacMeasureWidthVal = $('tacMeasureWidthVal');
 
@@ -533,6 +535,7 @@ export const tacSnapPointEl = $('tacSnapPoint');
 export const tacDelSegOnlyEl = $('tacDelSegOnly');
 
 export const tacMeasureVaultEl = $('tacMeasureVault');
+export const tacMeasureVaultWrapEl = $('tacMeasureVaultWrap');
 export const tacMeasureCancelEl = $('tacMeasureCancel');
 
 export const tacShowCoordsEl = $('tacShowCoords');

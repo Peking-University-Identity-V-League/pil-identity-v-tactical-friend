@@ -166,8 +166,12 @@ export function dedRuleBook(rules) {
 export function makeDeduction(opts) {
   const { mapImage, mapSize, ciphers, cipherCombinations,
     rules, hints } = opts;
+  // 推演只使用 cipherCombinations 涉及的密码机；联合狩猎专属机保留在原位
+  // （索引不变，规则/布局的 positions 不受影响），但打 dedHidden 标记不参与推演
+  const usedIds = new Set(cipherCombinations.flat());
+  const dedCiphers = ciphers.map((c) => (usedIds.has(c.id) ? c : { ...c, dedHidden: true }));
   return {
-    mapImage, mapSize, ciphers,
+    mapImage, mapSize, ciphers: dedCiphers,
     configs: cipherCombinations.map((g) =>
       g.map((cid) => ciphers.findIndex((p) => p.id === cid))),
     rules,

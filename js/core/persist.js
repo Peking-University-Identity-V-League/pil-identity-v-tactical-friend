@@ -222,8 +222,9 @@ export const tacDisplay = {
 export const tacDrawSettings = {
   snap: { escapeDoor: true, cipher: true, dungeon: true, rocketChair: true, locker: false, box: false, phoneBooth: false, endpoint: true },
   delSegOnly: false,
-  hideEndpoints: true,
-  hideAnimPath: false,
+  showEndpoints: false,
+  showDist: true,
+  showTime: false,  hideAnimPath: false,
   hideAnimDots: false,
   animAutoRoute: false,
   animVault: true,
@@ -240,6 +241,10 @@ if (tacPersisted && tacPersisted.draw) {
   for (const k of Object.keys(tacDrawSettings)) {
     if (k === 'snap') tacDrawSettings.snap = { ...tacDrawSettings.snap, ...(dw.snap || {}) };
     else if (k in dw) tacDrawSettings[k] = dw[k];
+  }
+  // 旧键迁移：hideEndpoints → showEndpoints（取反）
+  if ('hideEndpoints' in dw && !('showEndpoints' in dw)) {
+    tacDrawSettings.showEndpoints = !dw.hideEndpoints;
   }
 }
 if (tacPersisted && tacPersisted.mstyle) {
