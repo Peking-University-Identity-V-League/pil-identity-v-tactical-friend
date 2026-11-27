@@ -375,7 +375,9 @@ export const tacMeasureModesEl = $('tacMeasureModes');
 export const tacMeasureColorsEl = $('tacMeasureColors');
 
 export const tacMeasureWidthEl = $('tacMeasureWidth');
-export const tacHideEndpointsEl = $('tacHideEndpoints');
+export const tacShowEndpointsEl = $('tacShowEndpoints');
+export const tacShowDistEl = $('tacShowDist');
+export const tacShowTimeEl = $('tacShowTime');
 
 export const tacMeasureWidthVal = $('tacMeasureWidthVal');
 
@@ -503,7 +505,8 @@ export const tacSpawnDuoEl = $('tacSpawnDuo');
 
 export const tacSpawnDuoWrapEl = $('tacSpawnDuoWrap');
 
-export const tacSpawnDuoRowEl = $('tacSpawnDuoRow');
+export const tacSpawnDuoRowEl = $("tacSpawnDuoRow");
+export const tacSpawnDuoEntryEl = $("tacSpawnDuoEntry");
 
 export const tacSpawnDuoRandomEl = $('tacSpawnDuoRandom');
 
@@ -532,6 +535,7 @@ export const tacSnapPointEl = $('tacSnapPoint');
 export const tacDelSegOnlyEl = $('tacDelSegOnly');
 
 export const tacMeasureVaultEl = $('tacMeasureVault');
+export const tacMeasureVaultWrapEl = $('tacMeasureVaultWrap');
 export const tacMeasureCancelEl = $('tacMeasureCancel');
 
 export const tacShowCoordsEl = $('tacShowCoords');
@@ -577,5 +581,9 @@ export const tacShowPhoneBoothsEl = $('tacShowPhoneBooths');
 export const tacPhoneBoothSizeEl = $('tacPhoneBoothSize');
 
 export const tacPhoneBoothSizeDefEl = $('tacPhoneBoothSizeDef');
+export const tacShowSpringBoxesEl = $('tacShowSpringBoxes');
+export const tacSpringBoxRangeEl = $('tacSpringBoxRange');
+export const tacSpringBoxSizeEl = $('tacSpringBoxSize');
+export const tacSpringBoxSizeDefEl = $('tacSpringBoxSizeDef');
 
 export const tacShowBoxBasementEl = $('tacShowBoxBasement');

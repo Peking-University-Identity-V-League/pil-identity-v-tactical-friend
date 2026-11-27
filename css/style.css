@@ -3742,13 +3742,18 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
   flex-wrap: wrap;
   row-gap: 4px;
 }
-/* 出生点联合狩猎子行：独占一行，左边框与其它行对齐（框外名称 86px + 间距 10px） */
-#tacSpawnEntry { flex-wrap: wrap; }
-#tacSpawnDuoRow {
-  flex: 1 1 calc(100% - 96px);
-  margin-left: 96px;
-  box-sizing: border-box;
-  align-items: center;
+/* 出生点联合狩猎子行：独立行容器（空头部位86px 占位），左边框与其它行对齐 */
+#tacSpawnDuoEntry { align-items: stretch; }
+/* 子行组切换圆钮与主行同尺寸（22px，与 .tac-display-mid 内一致），保证行高一致 */
+#tacSpawnDuoRow .switch-btn { width: 22px; height: 22px; font-size: 13px; }
+/* 出生点行与子行内容不换行，避免框高度跳动、左缘错位（越南语等长文案） */
+#tacSpawnEntry > .tac-display-row,
+#tacSpawnDuoRow { flex-wrap: nowrap; }
+/* 框外名称允许换行，避免长文案（如越南语）溢出压到右边的框 */
+.tac-manage-head .tac-head-toggle span {
+  white-space: normal;
+  line-height: 1.25;
+  min-width: 0;
 }
 /* 随机换一组：更小的胶囊按钮 */
 .tac-mini-btn {
@@ -3913,6 +3918,7 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
 .tac-locker,
 .tac-box,
 .tac-phone-booth,
+.tac-spring-box,
 .tac-spawn {
   position: absolute;
   z-index: 2;

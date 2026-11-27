@@ -93,9 +93,7 @@ export const MAPS_DATA = [
 
     const lockers = [[557, 112], [686, 161], [128, 166], [632, 182], [323, 184], [584, 189], [412, 368], [386, 560], [195, 583], [268, 594]];
 
-    const chests = {
-      fixed: [[129, 140], [570, 186], [202, 303], [382, 357]],
-    };
+    const chests = [[129, 140], [570, 186], [202, 303], [382, 357]];
 
     const basements = {
       basement_1: {
@@ -359,9 +357,7 @@ export const MAPS_DATA = [
 
     const lockers = [[270, 41], [581, 277], [106, 291], [156, 306]];
 
-    const chests = {
-      fixed: [[239, 58], [292, 108], [373, 1, 195], [150, 345], [391, 348], [366, 476], [564, 495]],
-    };
+    const chests = [[239, 58], [292, 108], [373, 1, 195], [150, 345], [391, 348], [366, 476], [564, 495]];
 
     const basements = {
       basement_1: {
@@ -632,9 +628,7 @@ export const MAPS_DATA = [
 
     const lockers = [[549, 130], [431, 144], [328, 149], [487, 225], [523, 244], [239, 263], [449, 298], [123, 301], [204, 506], [362, 518]];
 
-    const chests = {
-      fixed: [[153, 142], [145, 261], [442, 370], [132, 381], [138, 470], [525, 477], [330, 497]],
-    };
+    const chests = [[153, 142], [145, 261], [442, 370], [132, 381], [138, 470], [525, 477], [330, 497]];
 
     const basements = {
       basement_1: {
@@ -936,9 +930,7 @@ export const MAPS_DATA = [
 
     const lockers = [[496, 296], [273, 402], [276, 579], [399, 995]];
 
-    const chests = {
-      fixed: [[157, 516], [346, 555], [230, 668], [854, 703], [195, 839], [818, 996], [324, 1065]],
-    };
+    const chests = [[157, 516], [346, 555], [230, 668], [854, 703], [195, 839], [818, 996], [324, 1065]];
 
     const phoneBooths = [[292, 572], [432, 870], [608, 320], [750, 686], [1026, 742]];
 
@@ -1256,11 +1248,11 @@ export const MAPS_DATA = [
 
     const lockers = [[454, 146], [144, 509], [1094, 520], [1005, 762]];
 
-    const chests = {
-      fixed: [[834, 184], [63, 223], [1280, 319], [855, 458], [1402, 781], [734, 789], [249, 802]],
-    };
+    const chests = [[834, 184], [63, 223], [1280, 319], [855, 458], [1402, 781], [734, 789], [249, 802]];
 
     const phoneBooths = [[203, 420], [478, 644], [720, 280], [1013, 781], [1234, 304]];
+
+    const springBox = [[633, 284], [681, 729]];
 
     const basements = {
       basement_1: {
@@ -1331,7 +1323,7 @@ export const MAPS_DATA = [
 
     const spawnPointsHunterDuoHunters = [
       ['h_3', 'h_6'], ['h_3', 'h_8'], ['h_3', 'h_9'],
-      ['h_6', 'h_8'], ['h_6', 'h_8'], ['h_8', 'h_9'],
+      ['h_6', 'h_8'], ['h_6', 'h_9'], ['h_8', 'h_9'],
     ];
 
     const fixedSpawns = {
@@ -1441,7 +1433,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
       law_urls, ciphers, cipherCombinations, cipherAll, cipherCombinationsDuoHunters, cipherAllDuoHunters, fixedHint, hints,
-      escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests, phoneBooths,
+      escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests, phoneBooths, springBox,
       basements, spawnPoints, spawnPointCombinations, spawnPointsHunterDuoHunters, fixedSpawns,
       deduction: (() => {
         const { fixed, region, exactly, either, chain } = dedHelpers(ciphers);
@@ -1569,9 +1561,7 @@ export const MAPS_DATA = [
 
     const lockers = [[248, 59], [89, 114], [388, 127], [635, 166], [112, 325], [652, 475], [126, 576], [75, 577]];
 
-    const chests = {
-      fixed: [[274, 115], [538, 166], [622, 234], [175, 337], [381, 402], [592, 423], [183, 556]],
-    };
+    const chests = [[274, 115], [538, 166], [622, 234], [175, 337], [381, 402], [592, 423], [183, 556]];
 
     const phoneBooths = [[178, 163], [146, 602], [356, 329], [528, 164], [606, 443]];
 
@@ -1613,7 +1603,7 @@ export const MAPS_DATA = [
         { id: 's_23', location: [230, 540] },
         { id: 's_24', location: [102, 580] },
         { id: 's_25', location: [660, 474] },
-        { id: 's_26', location: [586, 118] },
+        { id: 's_26', location: [586, 100] },
         { id: 's_27', location: [666, 184] },
       ],
       hunter: [
@@ -1629,6 +1619,7 @@ export const MAPS_DATA = [
         { id: 'h_10', location: [295, 128] },
         { id: 'h_11', location: [622, 516] },
         { id: 'h_12', location: [382, 382] },
+        { id: 'h_13', location: [572, 282] },
       ],
     };
 
@@ -1645,8 +1636,8 @@ export const MAPS_DATA = [
     ];
 
     const spawnPointsHunterDuoHunters = [
-      ['h_1', 'h_3'], ['h_1', 'h_4'], ['h_1', 'h_10'], ['h_1', 'h_11'], ['h_1', 'h_12'],
-      ['h_3', 'h_4'], ['h_3', 'h_10'], ['h_3', 'h_11'], ['h_3', 'h_12'], ['h_4', 'h_10'],
+      ['h_1', 'h_13'], ['h_1', 'h_4'], ['h_1', 'h_10'], ['h_1', 'h_11'], ['h_1', 'h_12'],
+      ['h_13', 'h_4'], ['h_13', 'h_10'], ['h_13', 'h_11'], ['h_13', 'h_12'], ['h_4', 'h_10'],
       ['h_4', 'h_11'], ['h_4', 'h_12'], ['h_10', 'h_11'], ['h_10', 'h_12'], ['h_11', 'h_12'],
     ];
 
@@ -1896,9 +1887,7 @@ export const MAPS_DATA = [
 
     const lockers = [[564, 210], [229, 328], [412, 358], [458, 548], [105, 597], [674, 743], [348, 850]];
 
-    const chests = {
-      fixed: [[231, 139], [576, 217], [302, 358], [180, 371], [428, 704]],
-    };
+    const chests = [[231, 139], [576, 217], [302, 358], [180, 371], [428, 704]];
 
     const phoneBooths = [[250, 397], [264, 196], [378, 553], [563, 216], [602, 416]];
 
@@ -2190,9 +2179,7 @@ export const MAPS_DATA = [
 
     const lockers = [[259, 148], [824, 184], [942, 382], [1259, 539], [229, 904], [936, 1114]];
 
-    const chests = {
-      fixed: [[959, 1, 324], [225, 1, 527], [505, 1, 918], [950, 1, 1038]],
-    };
+    const chests = [[959, 1, 324], [225, 1, 527], [505, 1, 918], [950, 1, 1038]];
 
     const basements = {
       basement_1: {
@@ -2481,9 +2468,7 @@ export const MAPS_DATA = [
 
     const lockers = [[307, 71], [1013, 206], [672, 261], [512, 436], [959, 549], [128, 656], [1029, 893], [128, 982], [686, 1043]];
 
-    const chests = {
-      fixed: [[305, 125], [1023, 223], [503, 574], [966, 882], [418, 57, 983]],
-    };
+    const chests = [[305, 125], [1023, 223], [503, 574], [966, 882], [418, 57, 983]];
 
     const basements = {
       basement_1: {
@@ -2694,6 +2679,9 @@ export function rocketChairGroups(map) {
 
 // 出生点：spawnPoints 为点位池（survivor/hunter 分开），spawnPointCombinations 引用池内 id；
 // 这里解析回「每组 { survivor: [坐标...], hunter: 坐标 }」供消费端使用
+// 联合狩猎出生点规则：监管者出生位置该距离（米）内不得有求生者
+export const SPAWN_SURVIVOR_HUNTER_DISTANCE_MIN = 36;
+
 export function spawnPointGroups(map) {
   const sp = map.spawnPoints;
   if (!sp || !map.spawnPointCombinations) return [];

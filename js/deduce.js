@@ -93,7 +93,7 @@ export function deduce(map, marks) {
   
   for (const [k, v] of Object.entries(marks)) {
     const id = Number(k);
-    if (map.ciphers[id] && !map.ciphers[id].locked) state[id] = v;
+    if (map.ciphers[id] && !map.ciphers[id].locked && !map.ciphers[id].dedHidden) state[id] = v;
   }
 
   
@@ -438,7 +438,7 @@ export function enterDeduce() {
 
 export function toggleDedMark(id) {
   const pos = S.dedMap.ciphers[id];
-  if (!pos || pos.locked) return;
+  if (!pos || pos.locked || pos.dedHidden) return;
   const cur = S.dedMarks[id];
   if (cur === undefined) S.dedMarks[id] = 'yes';
   else if (cur === 'yes') S.dedMarks[id] = 'no';
@@ -525,6 +525,7 @@ export function renderDedMap(d) {
 
   
   S.dedMap.ciphers.forEach((pos, id) => {
+    if (pos.dedHidden) return; // 联合狩猎专属机不参与推演
     const eff = S.dedLayoutView !== null
       ? (S.dedMap.configs[S.dedLayoutView].includes(id) ? 'yes' : 'no')
       : d.state[id];

@@ -315,9 +315,11 @@ try {
                   <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.measure.setting.draw.autoSnap.button.message&quot;}"><input type="checkbox" id="tacSnapPoint" checked><span data-i18n="common.endpoint"></span></label>
                 </div>
                 <div class="tac-display-snap no-line">
-                  <label class="tac-display-toggle"><input type="checkbox" id="tacHideEndpoints" checked><span data-i18n="ui.tac.measure.setting.draw.hide.button"></span></label>
+                  <label class="tac-display-toggle"><input type="checkbox" id="tacShowEndpoints"><span data-i18n="ui.tac.measure.setting.draw.showEndpoints"></span></label>
+                  <label class="tac-display-toggle"><input type="checkbox" id="tacShowDist" checked><span data-i18n="ui.tac.measure.setting.draw.showDist"></span></label>
+                  <label class="tac-display-toggle"><input type="checkbox" id="tacShowTime"><span data-i18n="ui.tac.measure.setting.draw.showTime"></span></label>
                   <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.measure.setting.draw.deleteSingle.button.message&quot;}"><input type="checkbox" id="tacDelSegOnly"><span data-i18n="ui.tac.measure.setting.draw.deleteSingle.button"></span></label>
-                  <label class="tac-display-toggle" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.path.result.note&quot;}"><input type="checkbox" id="tacMeasureVault" checked><span data-i18n="ui.tac.path.setting.vaultAllow"></span></label>
+                  <label class="tac-display-toggle" id="tacMeasureVaultWrap" title="" data-i18n-attributes="{&quot;title&quot;:&quot;ui.tac.path.result.note&quot;}"><input type="checkbox" id="tacMeasureVault" checked><span data-i18n="ui.tac.path.setting.vaultAllow"></span></label>
                 </div>
               </div>
             </div>
@@ -691,7 +693,10 @@ try {
               <label class="tac-manage-slider"><span data-i18n="application.common.icon.size"></span><input type="range" id="tacSpawnSize" min="3" max="12" step="0.5" value="6"></label>
               <label class="tac-manage-def"><input type="checkbox" id="tacSpawnSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
-            <div class="tac-manage-row tac-display-row" id="tacSpawnDuoRow" style="display:none">
+          </div>
+          <div class="tac-manage-entry" id="tacSpawnDuoEntry" style="display:none">
+            <div class="tac-manage-head"></div>
+            <div class="tac-manage-row tac-display-row" id="tacSpawnDuoRow">
               <span class="tac-display-sub" data-i18n="common.survivor"></span>
               <button type="button" class="tac-deselect tac-mini-btn" id="tacSpawnDuoRandom" data-i18n="ui.tac.display.spawnPoint.random8"></button>
               <label class="tac-display-toggle"><input type="checkbox" id="tacSpawnDuoAll"><span data-i18n="common.all"></span></label>
@@ -770,6 +775,16 @@ try {
             <div class="tac-manage-row tac-display-row">
               <label class="tac-manage-slider"><span data-i18n="application.common.icon.size"></span><input type="range" id="tacPhoneBoothSize" min="3" max="12" step="0.5" value="6"></label>
               <label class="tac-manage-def"><input type="checkbox" id="tacPhoneBoothSizeDef" checked><span data-i18n="common.default"></span></label>
+            </div>
+          </div>
+          <div class="tac-manage-entry" id="tacSpringBoxEntry">
+            <div class="tac-manage-head"><label class="tac-display-toggle tac-head-toggle"><input type="checkbox" id="tacShowSpringBoxes"><span data-i18n="common.springBox"></span></label></div>
+            <div class="tac-manage-row tac-display-row">
+              <span class="tac-display-mid">
+                <label class="tac-display-toggle"><input type="checkbox" id="tacSpringBoxRange"><span data-i18n="ui.tac.manangeBox.range.showPlain"></span></label>
+              </span>
+              <label class="tac-manage-slider"><span data-i18n="application.common.icon.size"></span><input type="range" id="tacSpringBoxSize" min="3" max="12" step="0.5" value="6"></label>
+              <label class="tac-manage-def"><input type="checkbox" id="tacSpringBoxSizeDef" checked><span data-i18n="common.default"></span></label>
             </div>
           </div>
           <div class="tac-manage-entry" id="tacBasementEntry">

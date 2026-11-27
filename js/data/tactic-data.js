@@ -95,7 +95,7 @@ export const TAC_MEASURE_DEFAULT = {
 };
 
 
-export const TAC_DISPLAY_DEFAULT = { spawnSize: 6, escapeDoorSize: 6, cipherSize: 6, dungeonSize: 6, rocketChairSize: 6, lockerSize: 3, boxSize: 3, phoneBoothSize: 3 };
+export const TAC_DISPLAY_DEFAULT = { spawnSize: 6, escapeDoorSize: 6, cipherSize: 6, dungeonSize: 6, rocketChairSize: 6, lockerSize: 3, boxSize: 3, phoneBoothSize: 3, springBoxSize: 3 };
 
 
 export const TAC_ZOOM_MIN = 1, TAC_ZOOM_MAX = 5;

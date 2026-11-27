@@ -57,7 +57,7 @@ loadRoleIcon('survivor')
 loadRoleIcon('hunter')
 
 
-export const CIPHER_ICON_URL = 'https://patchwiki.biligame.com/images/dwrg/9/93/eorb4lhtk2n7ej9iuuufhaadh3l2ec9.png'
+export const CIPHER_ICON_URL = COMMON_ICON_URL.cipherMachine
 
 export const cipherIcon = { img: null, loaded: false, retryTimer: null }
 
