@@ -945,7 +945,8 @@ export function renderTacLandmarks() {
 
 export function renderTacFixedSpawns() {
   if (!tacMapWrap) return;
-  tacMapWrap.querySelectorAll('.tac-fixed-spawn, .tac-fixed-spawn-range').forEach((el) => el.remove());
+  // 排除弹簧箱范围圈（它带 tac-spring-box-range 标记，由 renderTacSpringBoxes 独立管理）
+  tacMapWrap.querySelectorAll('.tac-fixed-spawn, .tac-fixed-spawn-range:not(.tac-spring-box-range)').forEach((el) => el.remove());
   const map = MAPS_DATA[S.currentMapId];
   const [imgW, imgH] = map.mapSize;
   for (const [role, cfg] of Object.entries(map.fixedSpawns || {})) {
