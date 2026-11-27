@@ -3742,6 +3742,19 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
   flex-wrap: wrap;
   row-gap: 4px;
 }
+/* 出生点联合狩猎子行：独占一行，左边框与其它行对齐（框外名称 86px + 间距 10px） */
+#tacSpawnEntry { flex-wrap: wrap; }
+#tacSpawnDuoRow {
+  flex: 1 1 calc(100% - 96px);
+  margin-left: 96px;
+  box-sizing: border-box;
+  align-items: center;
+}
+/* 随机换一组：更小的胶囊按钮 */
+.tac-mini-btn {
+  padding: 2px 8px;
+  font-size: 10px;
+}
 
 .tac-display-row .tac-display-toggle,
 .tac-display-snap .tac-display-toggle {
@@ -3759,13 +3772,33 @@ tr.tac-base-row:hover td { background: rgba(255, 255, 255, 0.05); }
   font-weight: 600;
   cursor: pointer;
 }
+/* 框外名称勾选按钮：沿用原名称条的醒目样式 */
+.tac-head-toggle {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
 .tac-display-mid {
   flex: 1 1 auto;
   min-width: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 6px;
+}
+/* 显示设置各行：组切换与「全部」等勾选紧挨靠左，图标大小/默认随 mid 撑开靠右 */
+/* 出生点联合狩猎子行的阵营小标签 */
+.tac-display-sub {
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+/* 联合狩猎模式下失效的组切换按钮 */
+.switch-btn.tac-switch-disabled {
+  opacity: 0.35;
+  pointer-events: none;
 }
 .tac-display-text {
   font-size: 11px;

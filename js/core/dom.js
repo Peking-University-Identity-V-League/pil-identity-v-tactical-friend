@@ -119,6 +119,8 @@ export const tacTextCard = $('tacTextCard');
 export const tacMeasureCard = $('tacMeasureCard');
 export const tacCarryCard = $('tacCarryCard');
 export const tacCarryShowChairsEl = $('tacCarryShowChairs');
+
+export const tacCarryChairAllEl = $('tacCarryChairAll');
 export const tacCarryChairPrevBtn = $('tacCarryChairPrev');
 export const tacCarryChairNextBtn = $('tacCarryChairNext');
 export const tacCarryChairText = $('tacCarryChairText');
@@ -263,6 +265,8 @@ export const tacManageCard = $('tacManageCard');
 export const tacCipherCard = $('tacCipherCard');
 
 export const tacCipherCardShowEl = $('tacCipherCardShow');
+
+export const tacCipherCardAllEl = $('tacCipherCardAll');
 
 export const tacCipherCardPrevBtn = $('tacCipherCardPrev');
 
@@ -463,6 +467,20 @@ export const tacShowZonesEl = $('tacShowZones');
 
 export const tacShowCiphersEl = $('tacShowCiphers');
 
+export const tacCipherAllEl = $('tacCipherAll');
+
+export const tacCipherDuoEl = $('tacCipherDuo');
+
+export const tacCipherDuoWrapEl = $('tacCipherDuoWrap');
+
+export const tacCipherCardDuoEl = $('tacCipherCardDuo');
+
+export const tacCipherCardDuoWrapEl = $('tacCipherCardDuoWrap');
+
+export const tacDungeonAllEl = $('tacDungeonAll');
+
+export const tacChairAllEl = $('tacChairAll');
+
 export const tacCipherSizeEl = $('tacCipherSize');
 
 export const tacCipherSizeDefEl = $('tacCipherSizeDef');
@@ -480,6 +498,18 @@ export const tacSpawnSizeEl = $('tacSpawnSize');
 export const tacSpawnSizeDefEl = $('tacSpawnSizeDef');
 
 export const tacSpawnText = $('tacSpawnText');
+
+export const tacSpawnDuoEl = $('tacSpawnDuo');
+
+export const tacSpawnDuoWrapEl = $('tacSpawnDuoWrap');
+
+export const tacSpawnDuoRowEl = $('tacSpawnDuoRow');
+
+export const tacSpawnDuoRandomEl = $('tacSpawnDuoRandom');
+
+export const tacSpawnDuoAllEl = $('tacSpawnDuoAll');
+
+export const tacSpawnDuoHunterTextEl = $('tacSpawnDuoHunterText');
 
 export const tacShowDoorsEl = $('tacShowDoors');
 

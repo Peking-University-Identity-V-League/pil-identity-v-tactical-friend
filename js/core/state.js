@@ -18,6 +18,8 @@ export const S = {
   dedLayoutView: null,      
   tacDungeonIndex: 0,
   tacSpawnIndex: 0,
+  tacSpawnDuoHunterIndex: 0,
+  spawnDuoPicks: [],
   tacChairIndex: 0,
   tacChairBasementIndex: 0, 
   tacBoxBasementIndex: 0,

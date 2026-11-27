@@ -600,7 +600,7 @@ deduce(map, marks)
 
 | 函数 | 用途 |
 |---|---|
-| `syncTacDisplayUI()` | 同步显示设置控件 |
+| `syncTacDisplayUI()` | 同步显示设置控件（行格式：框外名称亮灭按钮 `.tac-onoff`（隐藏 checkbox，label 点击原生切换）+ 框内组切换/全部/图标大小/默认；密码机/地窖/狂欢之椅另有「全部」开关 `cipherAll`/`dungeonAll`/`chairAll`，勾选后按 `cipherAll`、`dungeons`、`rocketChairs` 全量渲染，渲染、吸附、导出画布与牵气球可选椅子共用同一判断；密码机卡片与狂欢之椅推算卡片的对应行复用同一格式，`tacSetCipherAll()`/`tacSetChairAll()` 双向同步两处「全部」勾选；有 `spawnPointsHunterDuoHunters` 的地图出生点行出现「联合狩猎」勾选，勾选后主组切换变灰失效、下方展开「求生者 随机8点/全部 监管者 ‹第 N / M 组›」子行，「随机8点」每次点击从求生者池洗牌取 8 个，`tacSpawnDuoReroll()`） |
 | `syncTacImage()` | 同步当前地图底图 |
 | `renderTacCiphers()` | 绘制密码机 |
 | `renderTacZones()` | 绘制区域划分 |
@@ -833,6 +833,9 @@ MAPS_DATA
 | `zoneNames` | 区域名称，顺序必须与网格换算后的顺序一致 |
 | `ciphers` | 所有密码机点位 |
 | `cipherCombinations` | 每组实际出现的七个密码机 ID |
+| `cipherAll` | 全部密码机 ID（由 `ciphers` 推导，显示设置「全部」使用） |
+| `cipherCombinationsDuoHunters` | 联合狩猎密码机组（仅有该模式的地图；显示设置「联合狩猎」勾选后取代 `cipherCombinations`） |
+| `cipherAllDuoHunters` | 联合狩猎全部密码机 ID（由 `ciphers` 推导，勾选「联合狩猎」后「全部」改用此列表） |
 | `dungeons` | 地窖候选坐标 |
 | `escapeDoors` | 逃生门与门锁坐标 |
 | `widthM` | 地图横向对应的游戏内米数 |
@@ -840,11 +843,15 @@ MAPS_DATA
 | `law_urls` | B 站和抖音教学链接 |
 | `fixedHint` | 固定提示 |
 | `hints` | 按密码机组或场景使用的提示 |
-| `rocketChairs` | 狂欢之椅分组坐标 |
+| `rocketChairs` | 狂欢之椅全部点位 `[{ id, location }]` |
+| `rocketChairCombinations` | 狂欢之椅分组 `{ fixed: [id...], sets: [[id...]...] }`，id 引用 `rocketChairs`；消费端经 `rocketChairGroups(map)` 解析为坐标 |
+| `rocketChairAll` | 全部狂欢之椅 id（由 `rocketChairs` 推导，显示设置「全部」使用） |
 | `chests` | 箱子位置 |
 | `lockers` | 柜子位置 |
 | `phoneBooths` | 电话亭位置（仅有电话亭的地图） |
-| `spawnPoints` | 出生点候选坐标 |
+| `spawnPoints` | 出生点点位池 `{ survivor: [{ id, location }...], hunter: [{ id, location }...] }`（id 形如 `s_1`/`h_1`） |
+| `spawnPointCombinations` | 出生点分组 `[{ survivor: [id...], hunter: id }...]`，id 引用 `spawnPoints`；消费端经 `spawnPointGroups(map)` 解析为 `{ survivor:[坐标], hunter:坐标 }` 数组 |
+| `spawnPointsHunterDuoHunters` | 联合狩猎监管者双人组合 `[[id, id]...]`（仅联合狩猎地图；显示设置出生点行出现「联合狩猎」勾选，勾选后求生者显示随机8点/全部、监管者按此组合切换） |
 | `basements` | 地下室（含其中狂欢之椅与箱子） |
 | `deduction` | 推演规则、布局和规律速查数据 |
 
@@ -886,7 +893,7 @@ MAPS_DATA
 ['M_4', 'M_1', 'M_3', 'W_4', 'W_1', 'E_2', 'E_4']
 ```
 
-修改组合时，ID 必须存在于该图 `ciphers`，必要时也可由 `CIPHER_EXTRA` 补充。不要直接抄写另一张地图的 ID。
+修改组合时，ID 必须存在于该图 `ciphers`。不要直接抄写另一张地图的 ID。
 
 ### `escapeDoors` 的顺序
 
@@ -929,10 +936,6 @@ MAPS_DATA
 | `link(name, regionNames, marker, positive, text)` | 区域台数与标志点位联动 |
 
 `makeDeduction()` 会把密码机 ID 组合转成推演引擎需要的点位下标，并通过 `dedRuleBook()` 生成规律速查。
-
-### `CIPHER_EXTRA`
-
-用于补充不属于常规点位列表、但需要参与坐标查找的密码机。普通修改优先改目标地图自己的 `ciphers`，只有确需额外点位时才使用这里。
 
 ## 10.2 `js/data/tactic-data.js`、`js/data/roles.js`、`js/data/items.js` 与 `js/data/talents.js`：角色、道具和常量
 

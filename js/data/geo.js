@@ -1,10 +1,9 @@
 
-import { CIPHER_EXTRA, MAPS_DATA } from './maps.js';
+import { MAPS_DATA } from './maps.js';
 
 
 export function cipherOf(mapId, cipherId) {
-  return MAPS_DATA[mapId].ciphers.find((p) => p.id === cipherId)
-    || (CIPHER_EXTRA[mapId] || []).find((c) => c.id === cipherId);
+  return MAPS_DATA[mapId].ciphers.find((p) => p.id === cipherId);
 }
 
 
