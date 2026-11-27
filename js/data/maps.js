@@ -1262,6 +1262,8 @@ export const MAPS_DATA = [
 
     const phoneBooths = [[203, 420], [478, 644], [720, 280], [1013, 781], [1234, 304]];
 
+    const springBox = [[640, 284], [890, 729]];
+
     const basements = {
       basement_1: {
         rocketChairs: [[473, -60, 210], [437, -60, 223], [473, -60, 257], [433, -60, 280]],
@@ -1441,7 +1443,7 @@ export const MAPS_DATA = [
       mapId, mapName, mapNameEn,
       mapImage, mapSize, widthM, zonesInfo, zoneNames,
       law_urls, ciphers, cipherCombinations, cipherAll, cipherCombinationsDuoHunters, cipherAllDuoHunters, fixedHint, hints,
-      escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests, phoneBooths,
+      escapeDoors, dungeons, rocketChairs, rocketChairCombinations, rocketChairAll, lockers, chests, phoneBooths, springBox,
       basements, spawnPoints, spawnPointCombinations, spawnPointsHunterDuoHunters, fixedSpawns,
       deduction: (() => {
         const { fixed, region, exactly, either, chain } = dedHelpers(ciphers);
