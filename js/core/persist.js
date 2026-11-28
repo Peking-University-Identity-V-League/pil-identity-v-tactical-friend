@@ -2,7 +2,8 @@
 import { mapsZonesRelative } from '../data/geo.js';
 import { MAPS_DATA, rocketChairGroups } from '../data/maps.js';
 import { TAC_DISPLAY_DEFAULT, TAC_MEASURE_DEFAULT } from '../data/tactic-data.js';
-import { selDisplay, updateLockCipher } from '../region.js';
+import { selDisplay } from '../region-settings.js';
+import { updateLockCipher } from '../region.js';
 import { sideToggle } from './dom.js';
 import { S } from './state.js';
 import { measureIdCounters, restoreMeasureReferences } from './measurements.js';

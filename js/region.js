@@ -1,13 +1,16 @@
 
 import { backHomeBtn, cipherDots, cipherRows, cipherText, currentMapTitle, currentMapTitleEn, hintDynamic, hintFixed, homeView, hunterInfo, hunterPixelCoord, hunterZoneName, lockCipherDist, lockCipherName, mapCanvas, mapImage, nextCipherBtn, prevCipherBtn, resetBtn, showToast, sideToggle, survivorInfo, tabBar, tacticView } from './core/dom.js';
-import { TAC_LS_KEY, restoreRegionSel, saveRegionSel } from './core/persist.js';
+import { restoreRegionSel, saveRegionSel } from './core/persist.js';
 import { S } from './core/state.js';
 import { $, loadImageWithStatus, mountImageOverlays } from './core/utils.js';
 import { calculateLockCipher, calculateZoneCenters, cipherOf, ciphersCoordsRelative, mapsZonesRelative } from './data/geo.js';
 import { MAPS_DATA, getImageUrl } from './data/maps.js';
 import { COMMON_ICON_URL } from './data/items_common.js';
-import { updateLawBtn } from './deduce.js';
+import { ROLE_ICON_URLS, roleIcons, cipherIcon, CIPHER_ICON_URL, doorIcon } from './map-icons.js';
+import { selDisplay } from './region-settings.js';
+
 import { dedDataOf, showView, updateTabUi } from './shell.js';
+import { updateLawBtn } from './deduce.js';
 import { enterTactic, renderTacCiphers, tacResetTransient } from './core/tactic-loader.js';
 
 import { translate } from './core/i18n.js';
@@ -21,68 +24,6 @@ export let canvasWidth = 0
 
 export let canvasHeight = 0
 
-
-export const ROLE_ICON_URLS = {
-  survivor: 'https://patchwiki.biligame.com/images/dwrg/4/45/omv2vmop0j63s9aprhjjkt4psykuy5p.png',
-  hunter: 'https://patchwiki.biligame.com/images/dwrg/7/7a/f3sec5gnnhzh1xprcbxeaxa1uuzhkmo.png',
-}
-
-export const roleIcons = {
-  survivor: { img: null, loaded: false, retryTimer: null },
-  hunter: { img: null, loaded: false, retryTimer: null },
-}
-
-export function loadRoleIcon(role) {
-  const icon = roleIcons[role]
-  const img = new Image()
-  img.crossOrigin = 'anonymous'
-  img.onload = () => {
-    icon.img = img
-    icon.loaded = true
-    if (icon.retryTimer) { clearTimeout(icon.retryTimer); icon.retryTimer = null }
-    drawCanvas()
-  }
-  img.onerror = () => {
-    icon.loaded = false
-    if (icon.retryTimer) clearTimeout(icon.retryTimer)
-    icon.retryTimer = setTimeout(() => loadRoleIcon(role), 3350)
-    drawCanvas()
-  }
-  img.src = ROLE_ICON_URLS[role]
-  if (img.complete && img.naturalWidth > 0) img.onload()
-}
-
-loadRoleIcon('survivor')
-
-loadRoleIcon('hunter')
-
-
-export const CIPHER_ICON_URL = COMMON_ICON_URL.cipherMachine
-
-export const cipherIcon = { img: null, loaded: false, retryTimer: null }
-
-export function loadCipherIcon() {
-  const img = new Image()
-  img.crossOrigin = 'anonymous'
-  img.onload = () => {
-    cipherIcon.img = img
-    cipherIcon.loaded = true
-    if (cipherIcon.retryTimer) {
-      clearTimeout(cipherIcon.retryTimer); cipherIcon.retryTimer = null
-    }
-    drawCanvas()
-    renderTacCiphers()
-  }
-  img.onerror = () => {
-    cipherIcon.loaded = false
-    if (cipherIcon.retryTimer) clearTimeout(cipherIcon.retryTimer)
-    cipherIcon.retryTimer = setTimeout(loadCipherIcon, 3350)
-  }
-  img.src = CIPHER_ICON_URL
-  if (img.complete && img.naturalWidth > 0) img.onload()
-}
-
-loadCipherIcon()
 
 export function setMapContainerHeight() {
   
@@ -114,29 +55,24 @@ export function getImageDrawRect(canvasW, canvasH, mapId) {
 }
 
 export function enterMap(mapId) {
-  selectMap(mapId)
-  
-  S.currentTab = 'tactic'
-  showView(tacticView)
-  backHomeBtn.style.display = 'flex'
-  
-  tabBar.style.display = 'flex'
-  tabBar.querySelector('[data-tab="deduce"]').style.display =
-    dedDataOf(mapId) ? '' : 'none'
-  
-  tacResetTransient(); 
-  updateTabUi()
-  
-  enterTactic()
-  saveRegionSel() 
+  selectMap(mapId);
+  S.currentTab = 'tactic';
+  showView(tacticView);
+  backHomeBtn.style.display = 'flex';
+  tabBar.style.display = 'flex';
+  tabBar.querySelector('[data-tab="deduce"]').style.display = dedDataOf(mapId) ? '' : 'none';
+  tacResetTransient();
+  updateTabUi();
+  enterTactic();
+  saveRegionSel();
 }
 
 export function backToHome() {
-  showView(homeView)
-  backHomeBtn.style.display = 'none'
-  tabBar.style.display = 'none'
-  S.currentTab = 'region'
-  updateTabUi()
+  showView(homeView);
+  backHomeBtn.style.display = 'none';
+  tabBar.style.display = 'none';
+  S.currentTab = 'region';
+  updateTabUi();
 }
 
 export function selectMap(mapId) {
@@ -645,85 +581,3 @@ window.addEventListener('resize', () => {
     initCanvas()
   }
 })
-
-export const SEL_DISPLAY_DEFAULT = { roleSize: 50, cipherSize: 5.2, doorSize: 6 };
-
-export const selDisplay = { doors: false, roleSize: SEL_DISPLAY_DEFAULT.roleSize,
-  cipherSize: SEL_DISPLAY_DEFAULT.cipherSize,
-  doorSize: SEL_DISPLAY_DEFAULT.doorSize };
-
-export const doorIcon = { img: null, loaded: false };
-
-(function loadSelDoorIcon() {
-  const img = new Image();
-  img.crossOrigin = 'anonymous';
-  img.onload = () => {
-    doorIcon.img = img;
-    doorIcon.loaded = true;
-    drawCanvas();
-  };
-  img.src = COMMON_ICON_URL.escapeDoor;
-})();
-
-export function bindSelDisplay() {
-  const roleSizeEl = $('selRoleSize');
-  const roleDefEl = $('selRoleSizeDef');
-  const cipherSizeEl = $('selCipherSize');
-  const cipherDefEl = $('selCipherSizeDef');
-  const showDoorsEl = $('selShowDoors');
-  const doorSizeEl = $('selDoorSize');
-  const doorDefEl = $('selDoorSizeDef');
-  if (!cipherSizeEl) return;
-  
-  try {
-    const pd = JSON.parse(localStorage.getItem(TAC_LS_KEY) || 'null');
-    if (pd && pd.selDisplay) Object.assign(selDisplay, pd.selDisplay);
-  } catch (err) {  }
-  roleSizeEl.value = selDisplay.roleSize;
-  cipherSizeEl.value = selDisplay.cipherSize;
-  showDoorsEl.checked = selDisplay.doors;
-  doorSizeEl.value = selDisplay.doorSize;
-  roleDefEl.checked = selDisplay.roleSize === SEL_DISPLAY_DEFAULT.roleSize;
-  cipherDefEl.checked = selDisplay.cipherSize === SEL_DISPLAY_DEFAULT.cipherSize;
-  doorDefEl.checked = selDisplay.doorSize === SEL_DISPLAY_DEFAULT.doorSize;
-  
-  
-  roleSizeEl.addEventListener('input', () => {
-    selDisplay.roleSize = parseFloat(roleSizeEl.value);
-    roleDefEl.checked = selDisplay.roleSize === SEL_DISPLAY_DEFAULT.roleSize;
-    drawCanvas();
-    saveRegionSel();
-  });
-  roleDefEl.addEventListener('change', () => {
-    if (!roleDefEl.checked) return;
-    roleSizeEl.value = SEL_DISPLAY_DEFAULT.roleSize;
-    roleSizeEl.dispatchEvent(new Event('input'));
-  });
-  cipherSizeEl.addEventListener('input', () => {
-    selDisplay.cipherSize = parseFloat(cipherSizeEl.value);
-    cipherDefEl.checked = selDisplay.cipherSize === SEL_DISPLAY_DEFAULT.cipherSize;
-    drawCanvas();
-    saveRegionSel();
-  });
-  cipherDefEl.addEventListener('change', () => {
-    if (!cipherDefEl.checked) return;
-    cipherSizeEl.value = SEL_DISPLAY_DEFAULT.cipherSize;
-    cipherSizeEl.dispatchEvent(new Event('input'));
-  });
-  showDoorsEl.addEventListener('change', () => {
-    selDisplay.doors = showDoorsEl.checked;
-    drawCanvas();
-    saveRegionSel();
-  });
-  doorSizeEl.addEventListener('input', () => {
-    selDisplay.doorSize = parseFloat(doorSizeEl.value);
-    doorDefEl.checked = selDisplay.doorSize === SEL_DISPLAY_DEFAULT.doorSize;
-    drawCanvas();
-    saveRegionSel();
-  });
-  doorDefEl.addEventListener('change', () => {
-    if (!doorDefEl.checked) return;
-    doorSizeEl.value = SEL_DISPLAY_DEFAULT.doorSize;
-    doorSizeEl.dispatchEvent(new Event('input'));
-  });
-}

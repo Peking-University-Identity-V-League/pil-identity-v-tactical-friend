@@ -1,8 +1,8 @@
 
 import { homeMapGrid } from './core/dom.js';
 import { MAPS_DATA } from './data/maps.js';
-import { bindSelDisplay, enterMap } from './region.js';
-
+import { enterMap } from './region.js';
+import { bindSelDisplay } from './region-settings.js';
 import { translate } from './core/i18n.js';
 
 export function initParticles() {
