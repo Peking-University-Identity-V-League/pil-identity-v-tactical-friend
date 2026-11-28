@@ -4,7 +4,7 @@
 let tacticModulePromise = null;
 
 export function loadTactic() {
-  if (!tacticModulePromise) tacticModulePromise = import('../tactic.js');
+  if (!tacticModulePromise) tacticModulePromise = import('../tactic/index.js');
   return tacticModulePromise;
 }
 
